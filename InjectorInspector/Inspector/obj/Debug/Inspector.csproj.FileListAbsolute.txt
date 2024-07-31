@@ -1,0 +1,7 @@
+W:\InjectorInspector\Inspector\bin\Debug\Inspector.dll
+W:\InjectorInspector\Inspector\bin\Debug\Inspector.pdb
+W:\InjectorInspector\Inspector\obj\Debug\Inspector.Inspector.resources
+W:\InjectorInspector\Inspector\obj\Debug\Inspector.csproj.GenerateResource.cache
+W:\InjectorInspector\Inspector\obj\Debug\Inspector.csproj.CoreCompileInputs.cache
+W:\InjectorInspector\Inspector\obj\Debug\Inspector.dll
+W:\InjectorInspector\Inspector\obj\Debug\Inspector.pdb

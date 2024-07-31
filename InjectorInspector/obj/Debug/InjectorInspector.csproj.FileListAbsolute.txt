@@ -1,0 +1,13 @@
+W:\InjectorInspector\bin\Debug\InjectorInspector.exe.config
+W:\InjectorInspector\bin\Debug\InjectorInspector.exe
+W:\InjectorInspector\bin\Debug\InjectorInspector.pdb
+W:\InjectorInspector\bin\Debug\Inspector.dll
+W:\InjectorInspector\bin\Debug\Inspector.pdb
+W:\InjectorInspector\obj\Debug\InjectorInspector.csprojAssemblyReference.cache
+W:\InjectorInspector\obj\Debug\InjectorInspector.Form1.resources
+W:\InjectorInspector\obj\Debug\InjectorInspector.Properties.Resources.resources
+W:\InjectorInspector\obj\Debug\InjectorInspector.csproj.GenerateResource.cache
+W:\InjectorInspector\obj\Debug\InjectorInspector.csproj.CoreCompileInputs.cache
+W:\InjectorInspector\obj\Debug\InjectorInspector.csproj.CopyComplete
+W:\InjectorInspector\obj\Debug\InjectorInspector.exe
+W:\InjectorInspector\obj\Debug\InjectorInspector.pdb
