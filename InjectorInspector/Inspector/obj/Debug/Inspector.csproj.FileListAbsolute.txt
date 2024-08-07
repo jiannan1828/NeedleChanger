@@ -5,3 +5,11 @@ W:\InjectorInspector\Inspector\obj\Debug\Inspector.csproj.GenerateResource.cache
 W:\InjectorInspector\Inspector\obj\Debug\Inspector.csproj.CoreCompileInputs.cache
 W:\InjectorInspector\Inspector\obj\Debug\Inspector.dll
 W:\InjectorInspector\Inspector\obj\Debug\Inspector.pdb
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\Inspector\bin\Debug\Inspector.dll
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\Inspector\bin\Debug\Inspector.pdb
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\Inspector\obj\Debug\Inspector.csproj.AssemblyReference.cache
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\Inspector\obj\Debug\Inspector.Inspector.resources
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\Inspector\obj\Debug\Inspector.csproj.GenerateResource.cache
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\Inspector\obj\Debug\Inspector.csproj.CoreCompileInputs.cache
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\Inspector\obj\Debug\Inspector.dll
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\Inspector\obj\Debug\Inspector.pdb

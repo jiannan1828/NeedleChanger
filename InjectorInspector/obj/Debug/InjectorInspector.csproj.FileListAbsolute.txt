@@ -11,3 +11,16 @@ W:\InjectorInspector\obj\Debug\InjectorInspector.csproj.CoreCompileInputs.cache
 W:\InjectorInspector\obj\Debug\InjectorInspector.csproj.CopyComplete
 W:\InjectorInspector\obj\Debug\InjectorInspector.exe
 W:\InjectorInspector\obj\Debug\InjectorInspector.pdb
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\bin\Debug\InjectorInspector.exe.config
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\bin\Debug\InjectorInspector.exe
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\bin\Debug\InjectorInspector.pdb
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\bin\Debug\Inspector.dll
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\bin\Debug\Inspector.pdb
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\obj\Debug\InjectorInspector.csproj.AssemblyReference.cache
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\obj\Debug\InjectorInspector.Form1.resources
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\obj\Debug\InjectorInspector.Properties.Resources.resources
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\obj\Debug\InjectorInspector.csproj.GenerateResource.cache
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\obj\Debug\InjectorInspector.csproj.CoreCompileInputs.cache
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\obj\Debug\Injector.7EFAE81D.Up2Date
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\obj\Debug\InjectorInspector.exe
+F:\CCP_Code_Project\NeedleChanger\InjectorInspector\obj\Debug\InjectorInspector.pdb
