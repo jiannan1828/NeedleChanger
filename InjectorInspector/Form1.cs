@@ -48,7 +48,7 @@ namespace InjectorInspector
 
 
 
-        private void strCommunication_Click(object sender, EventArgs e)
+        private void strCommunication_Click_1(object sender, EventArgs e)
         {
             int ret;
             ret = wmx.StartCommunication();
@@ -58,7 +58,7 @@ namespace InjectorInspector
                 MessageBox.Show(str);
             }
         }
-        private void stoCommunication_Click(object sender, EventArgs e)
+        private void stoCommunication_Click_1(object sender, EventArgs e)
         {
             wmx.StopCommunication();//WMX3通訊停止
         }
@@ -73,7 +73,7 @@ namespace InjectorInspector
             }
 
         }
-        private void svOn1_Click(object sender, EventArgs e)
+        private void svOn1_Click_1(object sender, EventArgs e)
         {
             int ret = motion.AxisControl.SetServoOn(1, 1);//啟動伺服
             if (ret != 0)
@@ -83,7 +83,7 @@ namespace InjectorInspector
             }
 
         }
-        private void svOff0_Click(object sender, EventArgs e)
+        private void svOff0_Click_1(object sender, EventArgs e)
         {
             int ret = motion.AxisControl.SetServoOn(0, 0);
             if (ret != 0)
@@ -93,7 +93,7 @@ namespace InjectorInspector
             }
         }
     
-        private void svOff1_Click_1(object sender, EventArgs e)
+        private void svOff1_Click(object sender, EventArgs e)
         {
             int ret = motion.AxisControl.SetServoOn(1, 0);
             if (ret != 0)
@@ -159,7 +159,7 @@ namespace InjectorInspector
             AcTqr1.Text = cmAxis_1.ActualTorque.ToString();
         }
 
-        private void stPos1_Click(object sender, EventArgs e)
+        private void stPos1_Click_1(object sender, EventArgs e)
         {
             int ret1 = motion.AxisControl.SetAxisCommandMode(0, AxisCommandMode.Position);//位置控制設定
             Motion.PosCommand pos = new Motion.PosCommand();//POS參數設置
@@ -182,7 +182,7 @@ namespace InjectorInspector
             
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click_2(object sender, EventArgs e)
        {
             AxisHomeParam.HomeType = Config.HomeType.CurrentPos;
 
@@ -234,7 +234,7 @@ namespace InjectorInspector
             int ret2 = motion.Velocity.Stop(0);
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click_1(object sender, EventArgs e)
         {
           
             AdvMotion.PathIntplCommand path = new AdvMotion.PathIntplCommand();
@@ -284,6 +284,7 @@ namespace InjectorInspector
 
         }
 
+  
 
 
 

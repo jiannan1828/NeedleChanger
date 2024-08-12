@@ -166,6 +166,7 @@
             this.button3.TabIndex = 69;
             this.button3.Text = "button3";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // button2
             // 
@@ -176,6 +177,7 @@
             this.button2.TabIndex = 68;
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_2);
             // 
             // button4
             // 
@@ -197,6 +199,7 @@
             this.svOff1.TabIndex = 66;
             this.svOff1.Text = "Servo Off";
             this.svOff1.UseVisualStyleBackColor = true;
+            this.svOff1.Click += new System.EventHandler(this.svOff1_Click);
             // 
             // svOn1
             // 
@@ -207,6 +210,7 @@
             this.svOn1.TabIndex = 65;
             this.svOn1.Text = "Servo On";
             this.svOn1.UseVisualStyleBackColor = true;
+            this.svOn1.Click += new System.EventHandler(this.svOn1_Click_1);
             // 
             // AcTqr1
             // 
@@ -301,13 +305,10 @@
             // 
             // Home0
             // 
-            this.Home0.Location = new System.Drawing.Point(232, 342);
-            this.Home0.Margin = new System.Windows.Forms.Padding(2);
+            this.Home0.Location = new System.Drawing.Point(0, 0);
             this.Home0.Name = "Home0";
-            this.Home0.Size = new System.Drawing.Size(108, 46);
-            this.Home0.TabIndex = 55;
-            this.Home0.Text = "Home";
-            this.Home0.UseVisualStyleBackColor = true;
+            this.Home0.Size = new System.Drawing.Size(75, 23);
+            this.Home0.TabIndex = 70;
             // 
             // stPos1
             // 
@@ -318,6 +319,7 @@
             this.stPos1.TabIndex = 54;
             this.stPos1.Text = "POSITION";
             this.stPos1.UseVisualStyleBackColor = true;
+            this.stPos1.Click += new System.EventHandler(this.stPos1_Click_1);
             // 
             // label12
             // 
@@ -375,6 +377,7 @@
             this.svOff0.TabIndex = 48;
             this.svOff0.Text = "Servo Off";
             this.svOff0.UseVisualStyleBackColor = true;
+            this.svOff0.Click += new System.EventHandler(this.svOff0_Click_1);
             // 
             // svOn0
             // 
@@ -396,6 +399,7 @@
             this.stoCommunication.TabIndex = 46;
             this.stoCommunication.Text = "通訊關閉";
             this.stoCommunication.UseVisualStyleBackColor = true;
+            this.stoCommunication.Click += new System.EventHandler(this.stoCommunication_Click_1);
             // 
             // label9
             // 
@@ -416,6 +420,7 @@
             this.strCommunication.TabIndex = 44;
             this.strCommunication.Text = "通訊啟動";
             this.strCommunication.UseVisualStyleBackColor = true;
+            this.strCommunication.Click += new System.EventHandler(this.strCommunication_Click_1);
             // 
             // label8
             // 
