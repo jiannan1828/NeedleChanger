@@ -1,0 +1,66 @@
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+#*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+#*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# 忽略 InjectorInspector 下的 Debug 資料夾
+InjectorInspector/bin/Debug
+InjectorInspector/obj/Debug
+InjectorInspector/Inspector/bin/Debug
+InjectorInspector/Inspector/obj/Debug
+
+# 忽略 FileContentIndex 資料夾
+InjectorInspector/.vs/InjectorInspector/FileContentIndex
+
+# 忽略其他檔案
+InjectorInspector.csproj.user
+InjectorInspector/.vs/InjectorInspector/v17/.suo
+InjectorInspector/obj/Debug/DesignTimeResolveAssemblyReferences.cache
