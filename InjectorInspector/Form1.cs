@@ -182,8 +182,8 @@ namespace InjectorInspector
             
         }
 
-        private void button2_Click_2(object sender, EventArgs e)
-       {
+        private void Home0_Click(object sender, EventArgs e) 
+        {
             AxisHomeParam.HomeType = Config.HomeType.CurrentPos;
 
             int ret = motion.Config.SetHomeParam(0, AxisHomeParam);//設置原點參數
@@ -229,7 +229,7 @@ namespace InjectorInspector
 
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
+        private void button2_Click_2(object sender, EventArgs e)
         {
             int ret2 = motion.Velocity.Stop(0);
         }
@@ -284,7 +284,6 @@ namespace InjectorInspector
 
         }
 
-  
 
 
 

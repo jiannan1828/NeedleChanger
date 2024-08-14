@@ -63,4 +63,6 @@ InjectorInspector/.vs/InjectorInspector/FileContentIndex
 # 忽略其他檔案
 InjectorInspector.csproj.user
 InjectorInspector/.vs/InjectorInspector/v17/.suo
+InjectorInspector/.vs/InjectorInspector/v17
+InjectorInspector/.vs/
 InjectorInspector/obj/Debug/DesignTimeResolveAssemblyReferences.cache
