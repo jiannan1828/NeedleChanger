@@ -14,6 +14,8 @@ using System.Diagnostics;
 using static WMX3ApiCLR.AdvMotion;
 using System.Runtime.ConstrainedExecution;
 
+using Namespace_MotorControl;
+
 namespace InjectorInspector
 {
     public partial class Form1 : Form
@@ -282,6 +284,13 @@ namespace InjectorInspector
             //AdvMotion.PathIntplCommand path = new AdvMotion.PathIntplCommand();
 
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            PublicClass_MotorControl MotorControl = new PublicClass_MotorControl();
+            int Get = MotorControl.Class1();
+            Get = Get + 1;
         }
 
 
