@@ -13,11 +13,16 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Diagnostics;
 using static WMX3ApiCLR.AdvMotion;
 using System.Runtime.ConstrainedExecution;
+using System.Runtime.CompilerServices;
 
 namespace InjectorInspector
 {
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// ServoMotor WMX3 Control API
+        /// </summary>
+        /// 
         WMX3Api wmx = new WMX3Api();
         Io io = new Io();
         CoreMotion motion = new CoreMotion();
@@ -27,214 +32,277 @@ namespace InjectorInspector
         Stopwatch stopWatch = new Stopwatch();
         AdvancedMotion advmon= new AdvancedMotion();
        
+        public void WMX3_Initial()
+        {
+            //建立裝置
+            wmx.CreateDevice("C:\\Program Files\\SoftServo\\WMX3", DeviceType.DeviceTypeNormal, 10000);  
+
+            //設定裝置名稱
+            wmx.SetDeviceName("DLF");
+
+            //設置齒輪比
+            int A = motion.Config.SetGearRatio(0, 1048576, 10000);  
+            int B = motion.Config.SetGearRatio(1, 1048576, 10000);
+
+        }  //end of public void WMX3_Initial()
+
+        public int WMX3_establish_Commu()
+        {
+            int rslt = 0;
+
+            int ret = wmx.StartCommunication();
+            if (ret != 0) {
+                string str = WMX3Api.ErrorToString(ret);
+                MessageBox.Show(str);
+            }
+
+            return rslt;
+        }  //end of public void WMX3_establish_Commu()
+
+        public void WMX3_destroy_Commu()
+        {
+            wmx.StopCommunication();
+        }  //end of public void WMX3_destroy_Commu()
+
+        public int WMX3_check_Commu()
+        {
+            int rslt = 0;
+
+            //讀取當前通訊狀態
+            motion.GetStatus(ref CmStatus);
+
+            switch (CmStatus.EngineState) {
+                case EngineState.Running:
+                    rslt = 0;
+                    break;
+
+                case EngineState.Communicating:
+                    rslt = 1;
+                    break;
+            }
+
+            return rslt;
+        }  //end of public int WMX3_check_Commu()
+
+        public void WMX3_ServoOnOff(int axis, int bOn)
+        {
+            int newStatus = bOn;
+
+            //啟動伺服
+            int ret = motion.AxisControl.SetServoOn(axis, newStatus);
+
+            if (ret != 0) {
+                string ers = CoreMotion.ErrorToString(ret);
+                MessageBox.Show($"{ers}");
+            }
+        }  //end of public void WMX3_ServoOn(int axis)
+
+        public int WMX3_check_ServoOnOff(int axis, ref string position, ref string speed)
+        {
+            int rslt = 0;
+
+            //讀取SV ON狀態
+            CoreMotionAxisStatus cmAxis = CmStatus.AxesStatus[axis];
+            if (cmAxis.ServoOn == true) {
+                rslt = 1;
+            } else {
+                rslt = 0;
+            }
+
+            //讀取目前位置
+            string Profile = cmAxis.ActualPos.ToString();
+
+            //strtok info
+            position = Profile.Substring(0, Math.Min(Profile.Length, 6));
+            speed    = cmAxis.ActualVelocity.ToString();
+            //AcTqr0.Text = cmAxis.ActualTorque.ToString();
+
+            return rslt;
+        }  //end of int WMX3_check_ServoOnOff(int axis)
+
+        public int WMX3_Pivot(int axis, int pivot, int speed, int accel, int daccel)
+        {
+            int rslt = 0;
+
+            //位置控制設定
+            int ret1 = motion.AxisControl.SetAxisCommandMode(0, AxisCommandMode.Position);
+
+            //POS參數設置
+            Motion.PosCommand pos = new Motion.PosCommand();
+
+            pos.Profile.Type     = ProfileType.Trapezoidal;  //運動模式
+            pos.Axis             = axis;    //軸
+            pos.Target           = pivot;   //指定位置
+            pos.Profile.Velocity = speed;   //速度
+            pos.Profile.Acc      = accel;   //加速度
+            pos.Profile.Dec      = daccel;  //減速度
+
+            //啟動POS運轉
+            rslt = motion.Motion.StartPos(pos);  
+
+            if (rslt != 0) {
+                string ers = CoreMotion.ErrorToString(rslt);  //如果無法通訊則報錯誤給使用者
+                //   textBox12.Text += "軸" + textBox3.Text + ":" + ers + "\r\n";
+            }
+
+            return rslt;
+        }  //end of public void WMX3_Pivot(int pivot, int speed, int accel, int daccel)
+
+        public int WMX3_SetHomePosition(int axis)
+        {
+            int rslt = 0;
+
+            //讀取當前座標
+            AxisHomeParam.HomeType = Config.HomeType.CurrentPos;
+
+            //設置原點參數
+            rslt = motion.Config.SetHomeParam(axis, AxisHomeParam);
+
+            if (rslt != 0) {
+                string ers = CoreMotion.ErrorToString(rslt);//如果無法通訊則報錯誤給使用者
+                //   textBox12.Text += "軸" + textBox9.Text + "設置HOME錯誤" + ers + "\r\n";
+            }
+
+            //開始回原點
+            rslt = motion.Home.StartHome(axis); 
+
+            return rslt;
+        }  //end of public int WMX3_SetHomePosition(int axis)
 
 
+
+
+
+
+        /// <summary>
+        /// Project Code implement
+        /// </summary>
+        /// 
         public Form1()
         {
+            //C# project code component initialize
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            wmx.CreateDevice("C:\\Program Files\\SoftServo\\WMX3", DeviceType.DeviceTypeNormal, 10000);//建立裝置
-            wmx.SetDeviceName("DLF");//設定裝置名稱
+            WMX3_Initial();
 
-            int A = motion.Config.SetGearRatio(0, 1048576, 10000);//設置齒輪比
-            int B = motion.Config.SetGearRatio(1, 1048576, 10000);//設置齒輪比
+            //先跳到第2頁
+            tabControl1.SelectedTab = tabControl1.TabPages[2-1];
 
-
-            //wmx.CloseDevice();
+            this.Text = "2024/08/20 17:43";
         }
-
-
 
         private void strCommunication_Click_1(object sender, EventArgs e)
         {
-            int ret;
-            ret = wmx.StartCommunication();
-            if (ret != 0)
-            {
-                string str = WMX3Api.ErrorToString(ret);
-                MessageBox.Show(str);
-            }
+            WMX3_establish_Commu();
         }
         private void stoCommunication_Click_1(object sender, EventArgs e)
         {
-            wmx.StopCommunication();//WMX3通訊停止
+            WMX3_destroy_Commu();
         }
-
         private void svOn0_Click(object sender, EventArgs e)
         {
-            int ret = motion.AxisControl.SetServoOn(0, 1);//啟動伺服
-            if (ret != 0)
-            {
-                string ers = CoreMotion.ErrorToString(ret);
-                MessageBox.Show($"{ers}");
-            }
-
+            int axis = 0;
+            int isOn = 1;
+            WMX3_ServoOnOff(axis, isOn);
         }
         private void svOn1_Click_1(object sender, EventArgs e)
         {
-            int ret = motion.AxisControl.SetServoOn(1, 1);//啟動伺服
-            if (ret != 0)
-            {
-                string ers = CoreMotion.ErrorToString(ret);
-                MessageBox.Show($"{ers}");
-            }
-
+            int axis = 1;
+            int isOn = 1;
+            WMX3_ServoOnOff(axis, isOn);
         }
         private void svOff0_Click_1(object sender, EventArgs e)
         {
-            int ret = motion.AxisControl.SetServoOn(0, 0);
-            if (ret != 0)
-            {
-                string ers = CoreMotion.ErrorToString(ret);
-                MessageBox.Show($"{ers}");
-            }
+            int axis = 0;
+            int isOn = 0;
+            WMX3_ServoOnOff(axis, isOn);
         }
-    
         private void svOff1_Click(object sender, EventArgs e)
         {
-            int ret = motion.AxisControl.SetServoOn(1, 0);
-            if (ret != 0)
-            {
-                string ers = CoreMotion.ErrorToString(ret);
-                MessageBox.Show($"{ers}");
-            }
+            int axis = 1;
+            int isOn = 0;
+            WMX3_ServoOnOff(axis, isOn);
         }
-        private void Pos_Click(object sender, EventArgs e)
+
+        private void Home0_Click(object sender, EventArgs e)
         {
-            Config.HomeParam homeParam = new Config.HomeParam();
-            motion.Config.GetHomeParam(0, ref homeParam);
-            homeParam.HomeType = Config.HomeType.CurrentPos;
+            int axis;
 
-            motion.Home.StartHome(0);
+            axis = 0;
+            WMX3_SetHomePosition(axis);
 
+            axis = 1;
+            WMX3_SetHomePosition(axis);
         }
 
         private void timer1_Tick_1(object sender, EventArgs e)
         {
-            motion.GetStatus(ref CmStatus);//狀態回授
-            #region WMX3通訊狀態
-            switch (CmStatus.EngineState)//讀取當前通訊狀態
-            {
-                case EngineState.Running:
-
-                    label12.Text = "尚未連線";
-                    label12.ForeColor = Color.Black;
-
-
-                    break;
-
-                case EngineState.Communicating:
-
-                    label12.Text = "連線中";
-                    label12.ForeColor = Color.Red;
-
-                    break;
+            //WMX3通訊狀態
+            int getCommuStatus = WMX3_check_Commu();
+            if (getCommuStatus == 1) {
+                label12.Text = "連線中";
+                label12.ForeColor = Color.Red;
+            } else {
+                label12.Text = "尚未連線";
+                label12.ForeColor = Color.Black;
             }
-            #endregion WMX3通訊狀態
-            #region 讀取軸狀態
 
-            CoreMotionAxisStatus cmAxis_0 = CmStatus.AxesStatus[0];
-            CoreMotionAxisStatus cmAxis_1 = CmStatus.AxesStatus[1];
-            //讀取SV ON狀態
-            if (cmAxis_0.ServoOn == true)
-            { svOn0.BackColor = Color.Red; }
-            else
-            { svOn0.BackColor = Color.Green;}
-            if (cmAxis_1.ServoOn == true)
-            { svOn1.BackColor = Color.Red; }
-            else
-            { svOn1.BackColor = Color.Green; }
-            //讀取目前位置
-            string P0= cmAxis_0.ActualPos.ToString();           
-            AcPos0.Text = P0.Substring(0,Math.Min(P0.Length,6));
-            AcSpd0.Text = cmAxis_0.ActualVelocity.ToString();
-            AcTqr0.Text = cmAxis_0.ActualTorque.ToString();
+            //region 讀取軸狀態
+            int rslt = 0;
+            int axis;
+            string position = "";
+            string speed = "";
 
-            string P1 = cmAxis_1.ActualPos.ToString();
-            AcPos1.Text = P1.Substring(0, Math.Min(P1.Length, 6));
-            AcSpd1.Text = cmAxis_1.ActualVelocity.ToString();
-            AcTqr1.Text = cmAxis_1.ActualTorque.ToString();
+            axis = 0;
+            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if(rslt == 1) {
+                svOn0.BackColor = Color.Red;
+            } else {
+                svOn0.BackColor = Color.Green;
+            }
+            AcPos0.Text = position;
+            AcSpd0.Text = speed;
+
+            axis = 1;
+            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if (rslt == 1) {
+                svOn1.BackColor = Color.Red;
+            } else {
+                svOn1.BackColor = Color.Green;
+            }
+            AcPos1.Text = position;
+            AcSpd1.Text = speed;
         }
 
         private void stPos1_Click_1(object sender, EventArgs e)
         {
-            int ret1 = motion.AxisControl.SetAxisCommandMode(0, AxisCommandMode.Position);//位置控制設定
-            Motion.PosCommand pos = new Motion.PosCommand();//POS參數設置
-            
-            pos.Target = int.Parse(textBox2.Text);//指定位置
-            pos.Profile.Type = ProfileType.Trapezoidal;//運動模式
-            pos.Profile.Velocity = int.Parse(textBox1.Text);//速度
-            pos.Profile.Acc = 100000 * 10;//加速度
-            pos.Profile.Dec = 100000 * 10;//減速度
+            //單點動
 
+            int axis;
 
-            int ret;
-            pos.Axis = 0;//軸
-            ret = motion.Motion.StartPos(pos);//啟動POS運轉
+            int position = int.Parse(textBox2.Text);
+            int speed    = int.Parse(textBox1.Text);
+            int accel    = 100000 * 10;
+            int daccel   = 100000 * 10;
 
-            pos.Axis = 1;//軸
-            ret = motion.Motion.StartPos(pos);//啟動POS運轉
+            axis = 0;
+            WMX3_Pivot(axis, position, speed, accel, daccel);
 
-            if (ret != 0)
-            {
-                string ers = CoreMotion.ErrorToString(ret);//如果無法通訊則報錯誤給使用者
-                //   textBox12.Text += "軸" + textBox3.Text + ":" + ers + "\r\n";
-
-            }
+            axis = 1;
+            WMX3_Pivot(axis, position * 10, speed * 10, accel * 10, daccel * 10);
         }
 
-        private void Home0_Click(object sender, EventArgs e) 
-        {
-            AxisHomeParam.HomeType = Config.HomeType.CurrentPos;
 
-            int ret = motion.Config.SetHomeParam(0, AxisHomeParam);//設置原點參數
-            int ret1 = motion.Config.SetHomeParam(1, AxisHomeParam);//設置原點參數
-            if (ret != 0)
-           {
-               string ers = CoreMotion.ErrorToString(ret);//如果無法通訊則報錯誤給使用者
-             //   textBox12.Text += "軸" + textBox9.Text + "設置HOME錯誤" + ers + "\r\n";
-            }
-            int ret2 = motion.Home.StartHome(0);//開始回原點
-            int ret3 = motion.Home.StartHome(1);//開始回原點
-        }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            Velocity.VelCommand vel=new Velocity.VelCommand();
-            Torque.TrqCommand trq=new Torque.TrqCommand();
 
-            //Set axis to velocity command mode
-            int ret = motion.AxisControl.SetAxisCommandMode(0, AxisCommandMode.Velocity);
-            //  err = wmxlib_cm.axisControl->SetAxisCommandMode(0, AxisCommandMode::Velocity);
-
-            // if (err != ErrorCode::None)
-            // {
-            //     wmxlib_cm.ErrorToString(err, errString, sizeof(errString));
-            //     printf("Failed to set axis command mode to velocity. Error=%d (%s)\n", err, errString);
-            //     goto exit;
-            // }
-
-            //Set velocity command parameters
-            vel.Axis = 0;
-            vel.Profile.Type = ProfileType.Trapezoidal;
-            vel.Profile.Velocity = 100000;
-            vel.Profile.Acc = 10000;
-            vel.Profile.Dec = 10000;
-            //Execute a velocity command
-            int ret1 = motion.Velocity.StartVel(vel);
-        }
-
-        private void button2_Click_2(object sender, EventArgs e)
-        {
-            int ret2 = motion.Velocity.Stop(0);
-        }
 
         private void button3_Click_1(object sender, EventArgs e)
         {
-          
+            //路徑動
+
             AdvMotion.PathIntplCommand path = new AdvMotion.PathIntplCommand();
             
             path.Axis[0] = 0;
@@ -285,10 +353,52 @@ namespace InjectorInspector
 
 
 
-        #endregion 讀取軸狀態
 
 
 
+        /// <summary>
+        /// Uunknow
+        /// </summary>
+        /// 
+        private void Pos_Click(object sender, EventArgs e)
+        {
+            Config.HomeParam homeParam = new Config.HomeParam();
+            motion.Config.GetHomeParam(0, ref homeParam);
+            homeParam.HomeType = Config.HomeType.CurrentPos;
+
+            motion.Home.StartHome(0);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Velocity.VelCommand vel = new Velocity.VelCommand();
+            Torque.TrqCommand trq = new Torque.TrqCommand();
+
+            //Set axis to velocity command mode
+            int ret = motion.AxisControl.SetAxisCommandMode(0, AxisCommandMode.Velocity);
+            //  err = wmxlib_cm.axisControl->SetAxisCommandMode(0, AxisCommandMode::Velocity);
+
+            // if (err != ErrorCode::None)
+            // {
+            //     wmxlib_cm.ErrorToString(err, errString, sizeof(errString));
+            //     printf("Failed to set axis command mode to velocity. Error=%d (%s)\n", err, errString);
+            //     goto exit;
+            // }
+
+            //Set velocity command parameters
+            vel.Axis = 0;
+            vel.Profile.Type = ProfileType.Trapezoidal;
+            vel.Profile.Velocity = 100000;
+            vel.Profile.Acc = 10000;
+            vel.Profile.Dec = 10000;
+            //Execute a velocity command
+            int ret1 = motion.Velocity.StartVel(vel);
+        }
+
+        private void button2_Click_2(object sender, EventArgs e)
+        {
+            int ret2 = motion.Velocity.Stop(0);
+        }
 
         // Homing.
         // Config.HomeParam homeParam = new Config.HomeParam();
