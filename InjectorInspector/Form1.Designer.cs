@@ -176,7 +176,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(95, 47);
             this.button2.TabIndex = 68;
-            this.button2.Text = "button2";
+            this.button2.Text = "Stop";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click_2);
             // 
@@ -187,7 +187,7 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(99, 57);
             this.button4.TabIndex = 67;
-            this.button4.Text = "button4";
+            this.button4.Text = "Turn";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -310,7 +310,7 @@
             this.Home0.Name = "Home0";
             this.Home0.Size = new System.Drawing.Size(107, 50);
             this.Home0.TabIndex = 70;
-            this.Home0.Text = "Home";
+            this.Home0.Text = "ClearCurrPosition";
             this.Home0.Click += new System.EventHandler(this.Home0_Click);
             // 
             // stPos1

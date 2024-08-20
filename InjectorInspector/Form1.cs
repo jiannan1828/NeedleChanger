@@ -163,23 +163,27 @@ namespace InjectorInspector
         {
             int ret1 = motion.AxisControl.SetAxisCommandMode(0, AxisCommandMode.Position);//位置控制設定
             Motion.PosCommand pos = new Motion.PosCommand();//POS參數設置
-                pos.Axis = 0;//軸
-                pos.Target = int.Parse(textBox2.Text);//指定位置
-                pos.Profile.Type = ProfileType.Trapezoidal;//運動模式
-                pos.Profile.Velocity = int.Parse(textBox1.Text);//速度
-                pos.Profile.Acc = 100000 * 10;//加速度
-                pos.Profile.Dec = 100000 * 10;//減速度
-                int ret = motion.Motion.StartPos(pos);//啟動POS運轉
-   
+            
+            pos.Target = int.Parse(textBox2.Text);//指定位置
+            pos.Profile.Type = ProfileType.Trapezoidal;//運動模式
+            pos.Profile.Velocity = int.Parse(textBox1.Text);//速度
+            pos.Profile.Acc = 100000 * 10;//加速度
+            pos.Profile.Dec = 100000 * 10;//減速度
+
+
+            int ret;
+            pos.Axis = 0;//軸
+            ret = motion.Motion.StartPos(pos);//啟動POS運轉
+
+            pos.Axis = 1;//軸
+            ret = motion.Motion.StartPos(pos);//啟動POS運轉
 
             if (ret != 0)
-                {
-                    string ers = CoreMotion.ErrorToString(ret);//如果無法通訊則報錯誤給使用者
-                 //   textBox12.Text += "軸" + textBox3.Text + ":" + ers + "\r\n";
+            {
+                string ers = CoreMotion.ErrorToString(ret);//如果無法通訊則報錯誤給使用者
+                //   textBox12.Text += "軸" + textBox3.Text + ":" + ers + "\r\n";
 
-                }
-
-            
+            }
         }
 
         private void Home0_Click(object sender, EventArgs e) 
@@ -221,12 +225,6 @@ namespace InjectorInspector
             vel.Profile.Dec = 10000;
             //Execute a velocity command
             int ret1 = motion.Velocity.StartVel(vel);
-            
-
-
-
-
-
         }
 
         private void button2_Click_2(object sender, EventArgs e)
