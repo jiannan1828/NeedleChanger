@@ -1,21 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading;
-
-using System.IO;
-
-using WMX3ApiCLR;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Diagnostics;
-using static WMX3ApiCLR.AdvMotion;
-using System.Runtime.ConstrainedExecution;
 
 namespace InjectorInspector
 {
