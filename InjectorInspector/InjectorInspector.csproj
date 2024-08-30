@@ -157,6 +157,5 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /y "$(ProjectDir)\wmx3\IMDll.dll" "$(TargetDir)"</PostBuildEvent>
-    <PostBuildEvent>copy /y "$(ProjectDir)\SWT\TestItem.sol" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>
