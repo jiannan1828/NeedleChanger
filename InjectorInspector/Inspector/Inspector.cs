@@ -57,7 +57,7 @@ namespace Inspector
                 Init();
         }
 
-        /// <summary>程式庫不再目前目錄，嘗試解析載入</summary>
+        /// <summary>程---式庫不再目前目錄，嘗試解析載入</summary>
         static Assembly onResolve(object sender, ResolveEventArgs args)
         {
             string FName = "";
