@@ -612,7 +612,9 @@
     <Compile Include="Inspector.Designer.cs">
       <DependentUpon>Inspector.cs</DependentUpon>
     </Compile>
-    <Compile Include="mvsg\MVSGESetFrm.cs" />
+    <Compile Include="mvsg\MVSGESetFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="mvsg\MVSGESetFrm.designer.cs">
       <DependentUpon>MVSGESetFrm.cs</DependentUpon>
     </Compile>
@@ -636,4 +638,12 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\ILMerge.3.0.29\build\ILMerge.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILMerge.3.0.29\build\ILMerge.props'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+        xcopy /y /e /i "$(ProjectDir)\finma\TestItem.sol"    "$(ProjectDir)..\bin\Debug\"
+	xcopy /y /e /i "$(ProjectDir)\finma\CCD入料.XML"     "$(ProjectDir)..\bin\Debug\"
+	xcopy /y /e /i "$(ProjectDir)\finma\GwLoadSolution"  "$(ProjectDir)..\bin\Debug\"
+	xcopy /y /e /i "$(ProjectDir)\finma\UiMapFile"       "$(ProjectDir)..\bin\Debug\"
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>
