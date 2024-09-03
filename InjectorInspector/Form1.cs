@@ -25,13 +25,13 @@ namespace InjectorInspector
         /// 
         WMX3Api wmx = new WMX3Api();
         Io io = new Io();
-        CoreMotion motion = new CoreMotion();
-        CoreMotionStatus CmStatus = new CoreMotionStatus();
-        EngineStatus EnStatus = new EngineStatus();
+        CoreMotion motion              = new CoreMotion();
+        CoreMotionStatus CmStatus      = new CoreMotionStatus();
+        EngineStatus EnStatus          = new EngineStatus();
         Config.HomeParam AxisHomeParam = new Config.HomeParam();
-        Stopwatch stopWatch = new Stopwatch();
-        AdvancedMotion advmon= new AdvancedMotion();
-       
+        Stopwatch stopWatch            = new Stopwatch();
+        AdvancedMotion advmon          = new AdvancedMotion();
+
         public void WMX3_Initial()
         {
             //建立裝置
@@ -252,9 +252,9 @@ namespace InjectorInspector
 
             //region 讀取軸狀態
             int rslt = 0;
-            int axis;
+            int axis = 0;
             string position = "";
-            string speed = "";
+            string speed    = "";
 
             axis = 0;
             rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
@@ -295,26 +295,43 @@ namespace InjectorInspector
             WMX3_Pivot(axis, position * 10, speed * 10, accel * 10, daccel * 10);
         }
 
+        private void 緊急停止_Click(object sender, EventArgs e)
+        {
+            int isOn = 0;
+            int axis = 0;
+
+            axis = 0;
+            WMX3_ServoOnOff(axis, isOn);
+
+            axis = 1;
+            WMX3_ServoOnOff(axis, isOn);
+        }
 
 
 
 
+
+
+        /// <summary>
+        /// Reserve function
+        /// </summary>
+        /// 
         private void button3_Click_1(object sender, EventArgs e)
         {
             //路徑動
-
             AdvMotion.PathIntplCommand path = new AdvMotion.PathIntplCommand();
             
             path.Axis[0] = 0;
             path.Axis[1] = 1;
 
-            path.EnableConstProfile = 1;
-            path.Profile[0].Type = ProfileType.Trapezoidal;
-            path.Profile[0].Velocity = 10000;
-            path.Profile[0].Acc = 10000;
-            path.Profile[0].Dec = 10000;
+            path.EnableConstProfile  = 1;
 
+            path.Profile[0].Type = ProfileType.Trapezoidal;
             path.NumPoints = 6;
+            
+            path.Profile[0].Velocity = 10000;
+            path.Profile[0].Acc      = 10000;
+            path.Profile[0].Dec      = 10000;
 
             path.Type[0] = AdvMotion.PathIntplSegmentType.Linear;
             path.Target[0,0] = 0;
@@ -341,15 +358,13 @@ namespace InjectorInspector
             path.Target[1, 5] = 0;
 
             // int ret = motion.Motion.StartPos(path);
-            int a1=advmon.AdvMotion.StartPathIntplPos(path);
+            int a1 = advmon.AdvMotion.StartPathIntplPos(path);
+
             //int a = WmxLib_Adv.AdvMotion.StartCSplinePos(0, splineCommand, 9, splinePoint);
             //AdvMotion.PathIntplCommand path = new AdvMotion.PathIntplCommand();
             //static AdvancedMotion WmxLib_Adv = new AdvancedMotion(Wmx3Lib);
             //AdvMotion.PathIntplCommand path = new AdvMotion.PathIntplCommand();
-
-
         }
-
 
 
 

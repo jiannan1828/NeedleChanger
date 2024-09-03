@@ -32,6 +32,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
+            this.inspector1 = new Inspector.Inspector();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -68,7 +69,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.inspector1 = new Inspector.Inspector();
+            this.EmergencyStop = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -106,8 +107,17 @@
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // inspector1
+            // 
+            this.inspector1.Location = new System.Drawing.Point(8, 8);
+            this.inspector1.Margin = new System.Windows.Forms.Padding(5);
+            this.inspector1.Name = "inspector1";
+            this.inspector1.Size = new System.Drawing.Size(712, 565);
+            this.inspector1.TabIndex = 1;
+            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.EmergencyStop);
             this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.button4);
@@ -505,13 +515,15 @@
             this.timer1.Interval = 10;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick_1);
             // 
-            // inspector1
+            // EmergencyStop
             // 
-            this.inspector1.Location = new System.Drawing.Point(8, 8);
-            this.inspector1.Margin = new System.Windows.Forms.Padding(5);
-            this.inspector1.Name = "inspector1";
-            this.inspector1.Size = new System.Drawing.Size(712, 565);
-            this.inspector1.TabIndex = 1;
+            this.EmergencyStop.Location = new System.Drawing.Point(487, 422);
+            this.EmergencyStop.Name = "EmergencyStop";
+            this.EmergencyStop.Size = new System.Drawing.Size(106, 34);
+            this.EmergencyStop.TabIndex = 71;
+            this.EmergencyStop.Text = "緊急停止";
+            this.EmergencyStop.UseVisualStyleBackColor = true;
+            this.EmergencyStop.Click += new System.EventHandler(this.緊急停止_Click);
             // 
             // Form1
             // 
@@ -576,6 +588,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button EmergencyStop;
     }
 }
 
