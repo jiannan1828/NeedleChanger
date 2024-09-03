@@ -8,12 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+
 using WMX3ApiCLR;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Diagnostics;
 using static WMX3ApiCLR.AdvMotion;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.CompilerServices;
+
+using System.IO;
+using System.Text.Json;
 
 namespace InjectorInspector
 {
@@ -316,6 +320,117 @@ namespace InjectorInspector
         /// Reserve function
         /// </summary>
         /// 
+        public void WriteDataToJsonFile()
+        {
+            // 使用正確的類型來創建對象
+            List<JsonContent> TestReadWriteJson = new List<JsonContent>
+            {
+                new JsonContent { Name = "John", Age = 12, Height = 1.55f, Weight = 45.0f },
+                new JsonContent { Name = "Tom",  Age = 14, Height = 1.70f, Weight = 55.0f },
+                new JsonContent { Name = "Jack", Age = 17, Height = 1.80f, Weight = 70.0f },
+            };
+
+            // 序列化對象為 JSON 字串
+            string jsonString = JsonSerializer.Serialize(TestReadWriteJson, new JsonSerializerOptions { WriteIndented = true });
+
+            // 確保目錄存在，如果不存在則創建
+            string folderPath = AppDomain.CurrentDomain.BaseDirectory;
+            string filePath = Path.Combine(folderPath, "received_data.json");
+
+            try {
+                // 寫入 JSON 字串到文件
+                File.WriteAllText(filePath, jsonString);
+            } catch (Exception ex) {
+                // 捕獲並輸出詳細的錯誤信息
+                this.Text = "發生錯誤";
+            }
+        }
+
+        public string ReadNameFromJsonFile()
+        {
+            string rslt = "";
+
+            // 獲取當前應用程序目錄
+            string folderPath = AppDomain.CurrentDomain.BaseDirectory;
+            string filePath = Path.Combine(folderPath, "received_data.json");
+
+            try {
+                // 讀取 JSON 文件內容
+                string jsonString = File.Exists(filePath) ? File.ReadAllText(filePath) : string.Empty;
+
+                // 如果 JSON 字串不為空，則進行反序列化
+                if (!string.IsNullOrEmpty(jsonString)) {
+                    // 反序列化 JSON 字串為 List<JsonContent> 對象
+                    List<JsonContent> TestReadWriteJson = JsonSerializer.Deserialize<List<JsonContent>>(jsonString);
+
+                    // 查找名字為 "Jack" 的人
+                    JsonContent GotPeople = TestReadWriteJson?.FirstOrDefault(p => p.Name == "Jack");
+
+                    if (GotPeople != null) {
+                        // 找到，輸出 Jack 的信息
+                        rslt = $"{GotPeople.Name} {GotPeople.Age} {GotPeople.Height} {GotPeople.Weight}";
+                        this.Text = rslt;
+                    } else {
+                        // 沒找到滿足條件的人
+                        this.Text = "找不到名字為 Jack 的人";
+                    }
+                } else {
+                    // 沒文件
+                    this.Text = "文件不存在或文件內容為空";
+                }
+            } catch (Exception ex) {
+                // 捕獲並輸出詳細的錯誤信息
+                this.Text = "發生錯誤";
+            }
+
+            return rslt;
+        }
+        public string ReadHeightWeightFromJsonFile()
+        {
+            string rslt = "";
+
+            float maxHeight = 1.82f;
+            float minHeight = 1.68f;
+            float maxWeight = 72f;
+            float minWeight = 53f;
+
+            // 獲取當前應用程序目錄
+            string folderPath = AppDomain.CurrentDomain.BaseDirectory;
+            string filePath = Path.Combine(folderPath, "received_data.json");
+
+            try {
+                // 讀取 JSON 文件內容
+                string jsonString = File.Exists(filePath) ? File.ReadAllText(filePath) : string.Empty;
+
+                // 如果 JSON 字串不為空，則進行反序列化
+                if (!string.IsNullOrEmpty(jsonString)) {
+                    // 反序列化 JSON 字串為 List<JsonContent> 對象
+                    List<JsonContent> people = JsonSerializer.Deserialize<List<JsonContent>>(jsonString);
+
+                    // 根據身高和體重範圍過濾人名
+                    var filteredPeople = people?.Where(p => p.Height >= minHeight && p.Height <= maxHeight &&
+                                                            p.Weight >= minWeight && p.Weight <= maxWeight);
+
+                    if (filteredPeople != null && filteredPeople.Any()) {
+                        // 找到滿足條件的人
+                        rslt = string.Join(", ", filteredPeople.Select(p => $"{p.Name} (年齡: {p.Age}, 身高: {p.Height}, 體重: {p.Weight}) \r\n"));
+                        label8.Text = rslt;
+                    } else {
+                        // 沒找到滿足條件的人
+                        this.Text = "找不到符合條件的人";
+                    }
+                } else {
+                    // 沒文件
+                    this.Text = "文件不存在或文件內容為空";
+                }
+            } catch (Exception ex) {
+                // 捕獲並輸出詳細的錯誤信息
+                this.Text = "發生錯誤";
+            }
+
+            return rslt;
+        }
+
         private void button3_Click_1(object sender, EventArgs e)
         {
             //路徑動
@@ -415,6 +530,12 @@ namespace InjectorInspector
             int ret2 = motion.Velocity.Stop(0);
         }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            WriteDataToJsonFile();
+            ReadHeightWeightFromJsonFile();
+        }
+
         // Homing.
         // Config.HomeParam homeParam = new Config.HomeParam();
         // motion.Config.GetHomeParam(0, ref homeParam);
@@ -423,5 +544,20 @@ namespace InjectorInspector
 
         //Motion.Motion.Wait(0);
     }
+
+
+
+
+
+
+    //Json File format
+    public class JsonContent
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public float Height { get; set; } // 身高（單位：米）
+        public float Weight { get; set; } // 體重（單位：千克）
+    }
+
 }
 

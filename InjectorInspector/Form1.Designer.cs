@@ -34,6 +34,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.inspector1 = new Inspector.Inspector();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.EmergencyStop = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -69,7 +70,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.EmergencyStop = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -117,6 +118,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button5);
             this.tabPage2.Controls.Add(this.EmergencyStop);
             this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Controls.Add(this.button2);
@@ -159,6 +161,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // EmergencyStop
+            // 
+            this.EmergencyStop.Location = new System.Drawing.Point(487, 422);
+            this.EmergencyStop.Name = "EmergencyStop";
+            this.EmergencyStop.Size = new System.Drawing.Size(106, 34);
+            this.EmergencyStop.TabIndex = 71;
+            this.EmergencyStop.Text = "緊急停止";
+            this.EmergencyStop.UseVisualStyleBackColor = true;
+            this.EmergencyStop.Click += new System.EventHandler(this.緊急停止_Click);
             // 
             // button3
             // 
@@ -515,15 +527,15 @@
             this.timer1.Interval = 10;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick_1);
             // 
-            // EmergencyStop
+            // button5
             // 
-            this.EmergencyStop.Location = new System.Drawing.Point(487, 422);
-            this.EmergencyStop.Name = "EmergencyStop";
-            this.EmergencyStop.Size = new System.Drawing.Size(106, 34);
-            this.EmergencyStop.TabIndex = 71;
-            this.EmergencyStop.Text = "緊急停止";
-            this.EmergencyStop.UseVisualStyleBackColor = true;
-            this.EmergencyStop.Click += new System.EventHandler(this.緊急停止_Click);
+            this.button5.Location = new System.Drawing.Point(824, 348);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 72;
+            this.button5.Text = "button5";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
@@ -589,6 +601,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button EmergencyStop;
+        private System.Windows.Forms.Button button5;
     }
 }
 
