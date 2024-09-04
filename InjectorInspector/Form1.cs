@@ -21,11 +21,7 @@ using System.Text.Json;
 
 namespace InjectorInspector
 {
-    public partial class Form1 : Form
-    {
-        //JSON
-        public List<JsonContent> jsonContentList;
-        public string filePath;
+    public partial class Form1 : Form {
 
         //WMX3
         WMX3Api wmx = new WMX3Api();
@@ -36,6 +32,11 @@ namespace InjectorInspector
         Config.HomeParam AxisHomeParam = new Config.HomeParam();
         Stopwatch stopWatch            = new Stopwatch();
         AdvancedMotion advmon          = new AdvancedMotion();
+
+
+
+
+
 
         /// <summary>
         /// ServoMotor WMX3 Control API
@@ -184,6 +185,53 @@ namespace InjectorInspector
 
 
         /// <summary>
+        /// Test function
+        /// </summary>
+        /// 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            //WriteDataToJsonFile();
+
+            var NewNeedleContext = new NeedlePlacementContext {
+                NameNeedlePlacementCoordinates = "NeedlePlacementCoordinates.json"
+            };
+            InitialJsonFile(NewNeedleContext);
+
+            // 創建新的 JsonContent 對象
+            JsonContent newTestContent = new JsonContent
+            {
+                strLabel       = "GGshimida",
+                u32Index       = 87,
+                dblXCoordinate = 1.357,
+                dblYCoordinate = 2.468,
+                bReplace = false,
+                bVisible = true
+            };
+            AddJsonContent(NewNeedleContext, newTestContent);
+
+            JsonContent newTestContent2 = new JsonContent
+            {
+                strLabel = "KKis87",
+                u32Index = 7878,
+                dblXCoordinate = 0.2468,
+                dblYCoordinate = 1.3579,
+                bReplace = false,
+                bVisible = true
+            };
+            AddJsonContent(NewNeedleContext, newTestContent);
+
+            RemoveJsonContentByIndex(NewNeedleContext, 18);
+
+            ReadRangeDataFetcherFromJsonFile(NewNeedleContext);
+            //this.Text = ReadNameFromJsonFile(nameNeedlePlacementCoordinates);
+        }
+
+
+
+
+
+
+        /// <summary>
         /// Project Code implement
         /// </summary>
         /// 
@@ -325,17 +373,17 @@ namespace InjectorInspector
         /// JSON function
         /// </summary>
         /// 
-        public void InitialJsonFile()
+        public void InitialJsonFile(NeedlePlacementContext context)
         {
             // 初始化列表和文件路徑
-            jsonContentList = new List<JsonContent>();
-            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "received_data.json");
+            context.JsonContentList = new List<JsonContent>();
+            context.FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, context.NameNeedlePlacementCoordinates);
 
             // 如果文件存在，讀取現有數據
-            if (File.Exists(filePath)) {
+            if (File.Exists(context.FilePath)) {
                 try {
-                    string jsonString = File.ReadAllText(filePath);
-                    jsonContentList = JsonSerializer.Deserialize<List<JsonContent>>(jsonString) ?? new List<JsonContent>();
+                    string jsonString = File.ReadAllText(context.FilePath);
+                    context.JsonContentList = JsonSerializer.Deserialize<List<JsonContent>>(jsonString) ?? new List<JsonContent>();
                     Console.WriteLine("成功初始化 JSON 文件。");
                 } catch (Exception ex) {
                     Console.WriteLine("讀取 JSON 文件時發生錯誤: " + ex.Message);
@@ -344,30 +392,30 @@ namespace InjectorInspector
                 Console.WriteLine("文件不存在，初始化為空列表。");
             }
         }
-        public void AddJsonContent(JsonContent newContent)
+        public void AddJsonContent(NeedlePlacementContext context, JsonContent newContent)
         {
-            jsonContentList.Add(newContent);
-            WriteDataToJsonFile();
+            context.JsonContentList.Add(newContent);
+            WriteDataToJsonFile(context);
             Console.WriteLine("成功添加新的 JSON 內容並更新文件。");
         }
-        public void RemoveJsonContentByIndex(uint u32Index)
+        public void RemoveJsonContentByIndex(NeedlePlacementContext context, uint u32Index)
         {
             // 使用 RemoveAll 方法來刪除所有符合條件的項目
-            int removedCount = jsonContentList.RemoveAll(p => p.u32Index == u32Index);
+            int removedCount = context.JsonContentList.RemoveAll(p => p.u32Index == u32Index);
 
             if (removedCount > 0) {
                 // 如果有項目被刪除，則寫入更新後的列表到文件
-                WriteDataToJsonFile();
+                WriteDataToJsonFile(context);
                 Console.WriteLine($"成功刪除 {removedCount} 個 u32Index 為 {u32Index} 的項目。");
             } else {
                 // 如果未找到匹配的項目，顯示提示
                 Console.WriteLine($"未找到 u32Index 為 {u32Index} 的項目。");
             }
         }
-        public void SortAndRemoveDuplicates()
+        public void SortAndRemoveDuplicates(NeedlePlacementContext context)
         {
             // 使用 LINQ 去重並排序
-            jsonContentList = jsonContentList
+            context.JsonContentList = context.JsonContentList
                 .GroupBy(p => p.u32Index)
                 .Select(g => g.First())    // 取每個組的第一個項目
                 .OrderBy(p => p.u32Index)  // 按 u32Index 排序
@@ -375,20 +423,28 @@ namespace InjectorInspector
 
             Console.WriteLine("排序並去重完成。");
         }
-        public void WriteDataToJsonFile()
+        public void WriteDataToJsonFile(NeedlePlacementContext context)
         {
             try {
                 // 先排序並去重
-                SortAndRemoveDuplicates();
+                SortAndRemoveDuplicates(context);
+
+                // 四捨五入所有座標
+                if(false) {
+                    foreach (var item in context.JsonContentList) {
+                        int iRound = 8;
+                        item.RoundCoordinates(iRound);  // 這裡假設需要保留6位小數
+                    }
+                }
 
                 // 序列化列表為 JSON 字串
-                string jsonString = JsonSerializer.Serialize(jsonContentList, new JsonSerializerOptions { WriteIndented = true });
+                string jsonString = JsonSerializer.Serialize(context.JsonContentList, new JsonSerializerOptions { WriteIndented = true });
 
                 // 輸出序列化結果到控制台，幫助調試
                 Console.WriteLine("更新後的 JSON 文件內容:\n" + jsonString);
 
                 // 寫入 JSON 字串到文件
-                File.WriteAllText(filePath, jsonString);
+                File.WriteAllText(context.FilePath, jsonString);
 
                 Console.WriteLine("成功寫入 JSON 文件。");
             } catch (Exception ex) {
@@ -396,8 +452,7 @@ namespace InjectorInspector
                 Console.WriteLine("寫入 JSON 文件時發生錯誤: " + ex.Message);
             }
         }
-
-        public void WriteDataToJsonFile_Test()
+        public void WriteDataToJsonFile_Test(NeedlePlacementContext context)
         {
             // 使用正確的類型來創建對象
             List<JsonContent> TestReadWriteJson = new List<JsonContent>
@@ -412,7 +467,7 @@ namespace InjectorInspector
 
             // 確保目錄存在，如果不存在則創建
             string folderPath = AppDomain.CurrentDomain.BaseDirectory;
-            string filePath = Path.Combine(folderPath, "received_data.json");
+            string filePath = Path.Combine(folderPath, context.NameNeedlePlacementCoordinates);
 
             try {
                 // 寫入 JSON 字串到文件
@@ -423,20 +478,15 @@ namespace InjectorInspector
                 Console.WriteLine("測試數據寫入 JSON 文件時發生錯誤: " + ex.Message);
             }
         }
-
-        public string ReadNameFromJsonFile()
+        public string ReadNameFromJsonFile(NeedlePlacementContext context)
         {
             string rslt = "";
 
             uint u32_Index = 3;
 
-            // 獲取當前應用程序目錄
-            string folderPath = AppDomain.CurrentDomain.BaseDirectory;
-            string filePath = Path.Combine(folderPath, "received_data.json");
-
             try {
                 // 讀取 JSON 文件內容
-                string jsonString = File.Exists(filePath) ? File.ReadAllText(filePath) : string.Empty;
+                string jsonString = File.Exists(context.FilePath) ? File.ReadAllText(context.FilePath) : string.Empty;
 
                 // 如果 JSON 字串不為空，則進行反序列化
                 if (!string.IsNullOrEmpty(jsonString)) {
@@ -465,22 +515,18 @@ namespace InjectorInspector
 
             return rslt;
         }
-        public string ReadHeightWeightFromJsonFile()
+        public string ReadRangeDataFetcherFromJsonFile(NeedlePlacementContext context)
         {
             string rslt = "";
 
-            double max_X = 2.82;
-            double min_X = 1.18;
-            double max_Y = 7.2;
-            double min_Y = 5.3;
-
-            // 獲取當前應用程序目錄
-            string folderPath = AppDomain.CurrentDomain.BaseDirectory;
-            string filePath = Path.Combine(folderPath, "received_data.json");
+            double max_X = 4.82;
+            double min_X = 1.58;
+            double max_Y = 5.972;
+            double min_Y = 2.53;
 
             try {
                 // 讀取 JSON 文件內容
-                string jsonString = File.Exists(filePath) ? File.ReadAllText(filePath) : string.Empty;
+                string jsonString = File.Exists(context.FilePath) ? File.ReadAllText(context.FilePath) : string.Empty;
 
                 // 如果 JSON 字串不為空，則進行反序列化
                 if (!string.IsNullOrEmpty(jsonString)) {
@@ -493,7 +539,7 @@ namespace InjectorInspector
 
                     if (filteredNeedle != null && filteredNeedle.Any()) {
                         // 找到滿足條件的
-                        rslt = string.Join(", ", filteredNeedle.Select(p => $"{p.strLabel} (u32Index: {p.u32Index}, X: {p.dblXCoordinate}, Y: {p.dblYCoordinate}) \r\n"));
+                        rslt = string.Join("", filteredNeedle.Select(p => $"{p.strLabel} (u32Index: {p.u32Index}, X: {p.dblXCoordinate}, Y: {p.dblYCoordinate}) \r\n"));
                         Console.WriteLine("篩選結果:\n" + rslt);
                         label8.Text = rslt;
                     } else {
@@ -588,7 +634,6 @@ namespace InjectorInspector
 
             motion.Home.StartHome(0);
         }
-
         private void button4_Click(object sender, EventArgs e)
         {
             Velocity.VelCommand vel = new Velocity.VelCommand();
@@ -614,45 +659,9 @@ namespace InjectorInspector
             //Execute a velocity command
             int ret1 = motion.Velocity.StartVel(vel);
         }
-
         private void button2_Click_2(object sender, EventArgs e)
         {
             int ret2 = motion.Velocity.Stop(0);
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            //WriteDataToJsonFile();
-
-            InitialJsonFile();
-
-            // 創建新的 JsonContent 對象
-            JsonContent newTestContent = new JsonContent
-            {
-                strLabel       = "GGshimida",
-                u32Index       = 87,
-                dblXCoordinate = 1.357,
-                dblYCoordinate = 2.468,
-                bReplace = false,
-                bVisible = true
-            };
-            AddJsonContent(newTestContent);
-
-            JsonContent newTestContent2 = new JsonContent
-            {
-                strLabel = "KKis87",
-                u32Index = 7878,
-                dblXCoordinate = 0.2468,
-                dblYCoordinate = 1.3579,
-                bReplace = false,
-                bVisible = true
-            };
-            AddJsonContent(newTestContent2);
-
-            RemoveJsonContentByIndex(18);
-
-            ReadHeightWeightFromJsonFile();
-            //this.Text = ReadNameFromJsonFile();
         }
 
         // Homing.
@@ -662,7 +671,7 @@ namespace InjectorInspector
         // Motion.Config.SetHomeParam(0, homeParam);
 
         //Motion.Motion.Wait(0);
-    }
+    }  //end of public partial class Form1 : Form {
 
 
 
@@ -673,15 +682,25 @@ namespace InjectorInspector
     /// JSON function
     /// </summary>
     /// 
-    public class JsonContent
-    {
+    public class NeedlePlacementContext { 
+        public List<JsonContent> JsonContentList { get; set; }
+        public string FilePath { get; set; }
+        public string NameNeedlePlacementCoordinates { get; set; }
+    }  //end of public class NeedlePlacementContext 
+    public class JsonContent {
         public string strLabel { get; set; }
-        public uint   u32Index { get; set; }
-        public double dblXCoordinate { get; set; } 
-        public double dblYCoordinate { get; set; } 
-        public bool   bReplace { get; set; }
-        public bool   bVisible { get; set; }
-    }
+        public uint u32Index { get; set; }
+        public double dblXCoordinate { get; set; }
+        public double dblYCoordinate { get; set; }
+        public bool bReplace { get; set; }
+        public bool bVisible { get; set; }
+
+        // 添加控制精度的方法
+        public void RoundCoordinates(int decimalPlaces) {
+            dblXCoordinate = Math.Round(dblXCoordinate, decimalPlaces);
+            dblYCoordinate = Math.Round(dblYCoordinate, decimalPlaces);
+        }
+    }  //end of public class JsonContent {
 
 }
 
