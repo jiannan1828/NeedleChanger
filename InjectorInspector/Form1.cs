@@ -191,13 +191,14 @@ namespace InjectorInspector
         private void button5_Click(object sender, EventArgs e)
         {
 
+
             //Initial WMX3 Profile
                 var NewMorotContext = new JsonWMX3Handle();
                 NewMorotContext.InitialJsonFile("WMX3MotorProfile.json");
 
                 JsonMotorContent newTestMotorContent = new JsonMotorContent {
-                    strLabel = "TracePlate_Y",
-                    u32Index = 3,
+                    strLabel = "TracePlate_U",
+                    u32Index = 17,
                     u32numerator      = 1048576,
                     u32denominator    = 12000,
                     u32Velocity       = 1000,
@@ -212,6 +213,50 @@ namespace InjectorInspector
                 label7.Text = NewMorotContext.ReadRangeDataFetcherFromJsonFile(max_Velocity, min_Velocity);
 
                 label5.Text = NewMorotContext.ReadIndexFromJsonFile(38);
+
+
+            //Initial Trajectory Profile
+                var NewStepProfileContext = new JsonTrajectoryCurveHandle();
+                NewStepProfileContext.InitialJsonFile("TrajectoryCurveProfile.json");
+
+                JsonTrajectoryCurveContent newTrajectoryCurveContent = new JsonTrajectoryCurveContent {
+                    strPositionLabel = "移至取料盤",
+                    u32Index = 0,
+
+                    u32RemainStep = 3,
+                    MotorWorksNum = 7,
+                };
+                newTrajectoryCurveContent.MotorAxisIndex[0] = 0;
+                    newTrajectoryCurveContent.iMotorPosition[0] = 100;
+                    newTrajectoryCurveContent.iMotorSpeed[0] = 2000;
+                    newTrajectoryCurveContent.iMotorAccel[0] = 3000;
+                    newTrajectoryCurveContent.iMotorDaccel[0] = 4000;
+                    newTrajectoryCurveContent.bMotorEnable[0] = true;
+                newTrajectoryCurveContent.MotorAxisIndex[1] = 0;
+                    newTrajectoryCurveContent.iMotorPosition[1] = 100;
+                    newTrajectoryCurveContent.iMotorSpeed[1] = 2000;
+                    newTrajectoryCurveContent.iMotorAccel[1] = 3000;
+                    newTrajectoryCurveContent.iMotorDaccel[1] = 4000;
+                    newTrajectoryCurveContent.bMotorEnable[1] = true;
+                newTrajectoryCurveContent.MotorAxisIndex[2] = 0;
+                    newTrajectoryCurveContent.iMotorPosition[2] = 100;
+                    newTrajectoryCurveContent.iMotorSpeed[2] = 2000;
+                    newTrajectoryCurveContent.iMotorAccel[2] = 3000;
+                    newTrajectoryCurveContent.iMotorDaccel[2] = 4000;
+                    newTrajectoryCurveContent.bMotorEnable[2] = true;
+                newTrajectoryCurveContent.MotorAxisIndex[3] = 0;
+                    newTrajectoryCurveContent.iMotorPosition[3] = 100;
+                    newTrajectoryCurveContent.iMotorSpeed[3] = 2000;
+                    newTrajectoryCurveContent.iMotorAccel[3] = 3000;
+                    newTrajectoryCurveContent.iMotorDaccel[3] = 4000;
+                    newTrajectoryCurveContent.bMotorEnable[3] = true;
+                newTrajectoryCurveContent.MotorAxisIndex[4] = 0;
+                    newTrajectoryCurveContent.iMotorPosition[4] = 100;
+                    newTrajectoryCurveContent.iMotorSpeed[4] = 2000;
+                    newTrajectoryCurveContent.iMotorAccel[4] = 3000;
+                    newTrajectoryCurveContent.iMotorDaccel[4] = 4000;
+                    newTrajectoryCurveContent.bMotorEnable[4] = true;
+                NewStepProfileContext.AddJsonContent(newTrajectoryCurveContent);
 
 
             //Initial Needle Profile
@@ -522,6 +567,7 @@ namespace InjectorInspector
     /// JSON function
     /// </summary>
 
+
     //Profile of Needle 
     public class JsonNeedleContent {
         public string strLabel { get; set; }
@@ -719,7 +765,6 @@ namespace InjectorInspector
     }  //end of public class JsonNeedleHandle { 
 
 
-
     //Profile of WMX3 
     public class JsonMotorContent {
         public string strLabel { get; set; }
@@ -766,7 +811,6 @@ namespace InjectorInspector
                 throw new ArgumentNullException(nameof(newContent), "新內容不能為空");
             }
 
-            //JsonMotorContentList.RemoveJsonContentByIndex(newContent.u32Index);
             JsonMotorContentList.Add(newContent);
             WriteDataToJsonFile();
             Console.WriteLine("成功添加新的 JSON 內容並更新文件。");
@@ -893,5 +937,151 @@ namespace InjectorInspector
             return rslt;
         }  //end of public string ReadRangeDataFetcherFromJsonFile(double max_X, double min_X, double max_Y, double min_Y) {
     }  //end of public class JsonWMX3Handle {
+
+
+    //Profile of Trajectory Curve 
+    public class JsonTrajectoryCurveContent {
+        public string strPositionLabel { get; set; }
+        public uint u32Index { get; set; }
+
+        public uint u32RemainStep { get; set; }
+        //Number of motors working simultaneously
+        public const uint MaxNum = 8;
+        public       uint MotorWorksNum { get; set; }
+        public int[] MotorAxisIndex { get; set; } = new int[MaxNum];
+        public int[] iMotorPosition { get; set; } = new int[MaxNum];
+        public int[] iMotorSpeed { get; set; } = new int[MaxNum];
+        public int[] iMotorAccel { get; set; } = new int[MaxNum];
+        public int[] iMotorDaccel { get; set; } = new int[MaxNum];
+        public bool[] bMotorEnable { get; set; } = new bool[MaxNum];
+    }  //end of public class JsonTrajectoryCurveContent
+
+    //Handle of Trajectory Curve
+    public class JsonTrajectoryCurveHandle {
+        public List<JsonTrajectoryCurveContent> JsonTrajectoryCurveContentList { get; set; }
+        public string FilePath { get; set; }
+        public string strFileName { get; set; }
+
+        public void InitialJsonFile(string strNameFile) {
+            // 初始化列表和文件路徑
+            strFileName = strNameFile; // Set the file name
+            JsonTrajectoryCurveContentList = new List<JsonTrajectoryCurveContent>();
+            GenerateFilePath();
+
+            // 如果文件存在，讀取現有數據
+            if (File.Exists(FilePath)) {
+                try {
+                    var jsonString = File.ReadAllText(FilePath);
+                    JsonTrajectoryCurveContentList = JsonSerializer.Deserialize<List<JsonTrajectoryCurveContent>>(jsonString) ?? new List<JsonTrajectoryCurveContent>();
+                    Console.WriteLine("成功初始化 JSON 文件。");
+                } catch (Exception ex) {
+                    Console.WriteLine("讀取 JSON 文件時發生錯誤: " + ex.Message);
+                }
+            } else {
+                Console.WriteLine("文件不存在，初始化為空列表。");
+            }
+        }  //end of public void InitialJsonFile(string strNameFile) {
+        public string GenerateFilePath() {
+            FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, strFileName);
+            return FilePath;
+        }  //end of public string GenerateFilePath() {
+        public void AddJsonContent(JsonTrajectoryCurveContent newContent) {
+            if (newContent == null) {
+                throw new ArgumentNullException(nameof(newContent), "新內容不能為空");
+            }
+
+            JsonTrajectoryCurveContentList.Add(newContent);
+            WriteDataToJsonFile();
+            Console.WriteLine("成功添加新的 JSON 內容並更新文件。");
+        }  //end of public void AddJsonContent(JsonTrajectoryCurveContent newContent) {
+        public void WriteDataToJsonFile() {
+            try {
+                // 先排序並去重
+                SortAndRemoveDuplicates();
+
+                // 序列化列表為 JSON 字串
+                string jsonString = JsonSerializer.Serialize(JsonTrajectoryCurveContentList, new JsonSerializerOptions { WriteIndented = true });
+
+                // 輸出序列化結果到控制台，幫助調試
+                Console.WriteLine("更新後的 JSON 文件內容:\n" + jsonString);
+
+                // 寫入 JSON 字串到文件
+                File.WriteAllText(FilePath, jsonString);
+
+                Console.WriteLine("成功寫入 JSON 文件。");
+            } catch (Exception ex) {
+                // 處理錯誤，例如記錄錯誤信息
+                Console.WriteLine("寫入 JSON 文件時發生錯誤: " + ex.Message);
+            }
+        }  //end of public void WriteDataToJsonFile() {
+        public void SortAndRemoveDuplicates() {
+            if (JsonTrajectoryCurveContentList == null || !JsonTrajectoryCurveContentList.Any()) {
+                Console.WriteLine("列表為空，無需排序和去重。");
+                return;
+            }
+
+            // 使用 LINQ 去重並排序
+            JsonTrajectoryCurveContentList = JsonTrajectoryCurveContentList
+                .GroupBy(p => p.u32Index)
+                .Select(g => g.First())    // 取每個組的第一個項目
+                .OrderBy(p => p.u32Index)  // 按 u32Index 排序
+                .ToList();
+
+            Console.WriteLine("排序並去重完成。");
+        }  //end of public void SortAndRemoveDuplicates() {
+        public void RemoveJsonContentByIndex(uint u32Index) {
+            if (JsonTrajectoryCurveContentList == null || !JsonTrajectoryCurveContentList.Any()) {
+                Console.WriteLine("列表為空，無需刪除內容。");
+                return;
+            }
+
+            // 使用 RemoveAll 方法來刪除所有符合條件的項目
+            int removedCount = JsonTrajectoryCurveContentList.RemoveAll(p => p.u32Index == u32Index);
+
+            if (removedCount > 0) {
+                // 如果有項目被刪除，則寫入更新後的列表到文件
+                WriteDataToJsonFile();
+                Console.WriteLine($"成功刪除 {removedCount} 個 u32Index 為 {u32Index} 的項目。");
+            } else {
+                // 如果未找到匹配的項目，顯示提示
+                Console.WriteLine($"未找到 u32Index 為 {u32Index} 的項目。");
+            }
+        }  //end of public void RemoveJsonContentByIndex(uint u32Index) {
+        public string ReadIndexFromJsonFile(uint u32Index) {
+            string rslt = "";
+
+            try {
+                // 讀取 JSON 文件內容
+                string jsonString = File.Exists(FilePath) ? File.ReadAllText(FilePath) : string.Empty;
+
+                // 如果 JSON 字串不為空，則進行反序列化
+                if (!string.IsNullOrEmpty(jsonString)) {
+                    // 反序列化 JSON 字串為 List<JsonContent> 對象
+                    List<JsonTrajectoryCurveContent> TestReadWriteJson = JsonSerializer.Deserialize<List<JsonTrajectoryCurveContent>>(jsonString);
+
+                    // 查找 u32_Index
+                    JsonTrajectoryCurveContent GotStepProfile = TestReadWriteJson?.FirstOrDefault(p => p.u32Index == u32Index);
+
+                    if (GotStepProfile != null) {
+                        // 找到，輸出信息
+                        rslt = $"{GotStepProfile.strPositionLabel} {GotStepProfile.u32Index} {GotStepProfile.u32RemainStep} {GotStepProfile.MotorAxisIndex}";
+                        Console.WriteLine("查詢結果: " + rslt);
+                    } else {
+                        // 沒找到滿足條件的
+                        Console.WriteLine("找不到符合條件的");
+                    }
+                } else {
+                    // 沒文件
+                    Console.WriteLine("文件不存在或文件內容為空");
+                }
+            } catch (Exception ex) {
+                // 捕獲並輸出詳細的錯誤信息
+                Console.WriteLine("讀取 JSON 文件時發生錯誤: " + ex.Message);
+            }
+
+            return rslt;
+        }  //end of public string ReadIndexFromJsonFile(uint u32Index) {
+    }  //end of public class JsonNeedleHandle {
+
 }
 
