@@ -224,39 +224,90 @@ namespace InjectorInspector
                     u32Index = 0,
 
                     u32RemainStep = 3,
-                    MotorWorksNum = 7,
+
+                    strMotorAxis_01_Label = "X_Axis",
+                        MotorAxis_01_Index = 3,
+                        iMotorAxis_01_Position = 1357,
+                        iMotorAxis_01_Speed = 2000,
+                        iMotorAxis_01_Accel = 3000,
+                        iMotorAxis_01_Daccel = 4000,
+                        bMotorAxis_01_Enable = true,
+                    strMotorAxis_02_Label = "Y_Axis",
+                        MotorAxis_02_Index = 7,
+                        iMotorAxis_02_Position = 2468,
+                        iMotorAxis_02_Speed = 3000,
+                        iMotorAxis_02_Accel = 4000,
+                        iMotorAxis_02_Daccel = 5000,
+                        bMotorAxis_02_Enable = true,
+                    strMotorAxis_03_Label = "Z_Axis",
+                        MotorAxis_03_Index = 11,
+                        iMotorAxis_03_Position = 3579,
+                        iMotorAxis_03_Speed = 4000,
+                        iMotorAxis_03_Accel = 5000,
+                        iMotorAxis_03_Daccel = 6000,
+                        bMotorAxis_03_Enable = true,
+                    strMotorAxis_04_Label = "U_Axis",
+                        MotorAxis_04_Index = 13,
+                        iMotorAxis_04_Position = 4680,
+                        iMotorAxis_04_Speed = 5000,
+                        iMotorAxis_04_Accel = 6000,
+                        iMotorAxis_04_Daccel = 7000,
+                        bMotorAxis_04_Enable = true,
+                    strMotorAxis_05_Label = "V_Axis",
+                        MotorAxis_05_Index = 17,
+                        iMotorAxis_05_Position = 2580,
+                        iMotorAxis_05_Speed = 6000,
+                        iMotorAxis_05_Accel = 7000,
+                        iMotorAxis_05_Daccel = 8000,
+                        bMotorAxis_05_Enable = true,
                 };
-                newTrajectoryCurveContent.MotorAxisIndex[0] = 0;
-                    newTrajectoryCurveContent.iMotorPosition[0] = 100;
-                    newTrajectoryCurveContent.iMotorSpeed[0] = 2000;
-                    newTrajectoryCurveContent.iMotorAccel[0] = 3000;
-                    newTrajectoryCurveContent.iMotorDaccel[0] = 4000;
-                    newTrajectoryCurveContent.bMotorEnable[0] = true;
-                newTrajectoryCurveContent.MotorAxisIndex[1] = 0;
-                    newTrajectoryCurveContent.iMotorPosition[1] = 100;
-                    newTrajectoryCurveContent.iMotorSpeed[1] = 2000;
-                    newTrajectoryCurveContent.iMotorAccel[1] = 3000;
-                    newTrajectoryCurveContent.iMotorDaccel[1] = 4000;
-                    newTrajectoryCurveContent.bMotorEnable[1] = true;
-                newTrajectoryCurveContent.MotorAxisIndex[2] = 0;
-                    newTrajectoryCurveContent.iMotorPosition[2] = 100;
-                    newTrajectoryCurveContent.iMotorSpeed[2] = 2000;
-                    newTrajectoryCurveContent.iMotorAccel[2] = 3000;
-                    newTrajectoryCurveContent.iMotorDaccel[2] = 4000;
-                    newTrajectoryCurveContent.bMotorEnable[2] = true;
-                newTrajectoryCurveContent.MotorAxisIndex[3] = 0;
-                    newTrajectoryCurveContent.iMotorPosition[3] = 100;
-                    newTrajectoryCurveContent.iMotorSpeed[3] = 2000;
-                    newTrajectoryCurveContent.iMotorAccel[3] = 3000;
-                    newTrajectoryCurveContent.iMotorDaccel[3] = 4000;
-                    newTrajectoryCurveContent.bMotorEnable[3] = true;
-                newTrajectoryCurveContent.MotorAxisIndex[4] = 0;
-                    newTrajectoryCurveContent.iMotorPosition[4] = 100;
-                    newTrajectoryCurveContent.iMotorSpeed[4] = 2000;
-                    newTrajectoryCurveContent.iMotorAccel[4] = 3000;
-                    newTrajectoryCurveContent.iMotorDaccel[4] = 4000;
-                    newTrajectoryCurveContent.bMotorEnable[4] = true;
                 NewStepProfileContext.AddJsonContent(newTrajectoryCurveContent);
+
+                JsonTrajectoryCurveContent newTrajectoryCurveContent2 = new JsonTrajectoryCurveContent {
+                    strPositionLabel = "移至取料盤",
+                    u32Index = 1,
+
+                    u32RemainStep = 2,
+
+                    strMotorAxis_01_Label = "X_Axis",
+                        MotorAxis_01_Index = 3,
+                        iMotorAxis_01_Position = 1355,
+                        iMotorAxis_01_Speed = 2000,
+                        iMotorAxis_01_Accel = 3000,
+                        iMotorAxis_01_Daccel = 4000,
+                        bMotorAxis_01_Enable = true,
+                    strMotorAxis_02_Label = "Y_Axis",
+                        MotorAxis_02_Index = 7,
+                        iMotorAxis_02_Position = 2458,
+                        iMotorAxis_02_Speed = 3000,
+                        iMotorAxis_02_Accel = 4000,
+                        iMotorAxis_02_Daccel = 5000,
+                        bMotorAxis_02_Enable = true,
+                    strMotorAxis_03_Label = "Z_Axis",
+                        MotorAxis_03_Index = 11,
+                        iMotorAxis_03_Position = 3559,
+                        iMotorAxis_03_Speed = 4000,
+                        iMotorAxis_03_Accel = 5000,
+                        iMotorAxis_03_Daccel = 6000,
+                        bMotorAxis_03_Enable = true,
+                    strMotorAxis_04_Label = "U_Axis",
+                        MotorAxis_04_Index = 13,
+                        iMotorAxis_04_Position = 4650,
+                        iMotorAxis_04_Speed = 5000,
+                        iMotorAxis_04_Accel = 6000,
+                        iMotorAxis_04_Daccel = 7000,
+                        bMotorAxis_04_Enable = true,
+                    strMotorAxis_05_Label = "V_Axis",
+                        MotorAxis_05_Index = 17,
+                        iMotorAxis_05_Position = 2550,
+                        iMotorAxis_05_Speed = 6000,
+                        iMotorAxis_05_Accel = 7000,
+                        iMotorAxis_05_Daccel = 8000,
+                        bMotorAxis_05_Enable = true,
+                };
+                NewStepProfileContext.AddJsonContent(newTrajectoryCurveContent2);
+
+                label14.Text = NewStepProfileContext.ReadIndexFromJsonFile(0);
 
 
             //Initial Needle Profile
@@ -945,16 +996,115 @@ namespace InjectorInspector
         public uint u32Index { get; set; }
 
         public uint u32RemainStep { get; set; }
-        //Number of motors working simultaneously
-        public const uint MaxNum = 8;
-        public       uint MotorWorksNum { get; set; }
-        public int[] MotorAxisIndex { get; set; } = new int[MaxNum];
-        public int[] iMotorPosition { get; set; } = new int[MaxNum];
-        public int[] iMotorSpeed { get; set; } = new int[MaxNum];
-        public int[] iMotorAccel { get; set; } = new int[MaxNum];
-        public int[] iMotorDaccel { get; set; } = new int[MaxNum];
-        public bool[] bMotorEnable { get; set; } = new bool[MaxNum];
-    }  //end of public class JsonTrajectoryCurveContent
+
+        //Motor Axis 01
+        public string strMotorAxis_01_Label { get; set; }
+        public int MotorAxis_01_Index { get; set; }
+        public int iMotorAxis_01_Position { get; set; }
+        public int iMotorAxis_01_Speed { get; set; }
+        public int iMotorAxis_01_Accel { get; set; }
+        public int iMotorAxis_01_Daccel { get; set; }
+        public bool bMotorAxis_01_Enable { get; set; }
+
+        //Motor Axis 02
+        public string strMotorAxis_02_Label { get; set; }
+        public int MotorAxis_02_Index { get; set; }
+        public int iMotorAxis_02_Position { get; set; }
+        public int iMotorAxis_02_Speed { get; set; }
+        public int iMotorAxis_02_Accel { get; set; }
+        public int iMotorAxis_02_Daccel { get; set; }
+        public bool bMotorAxis_02_Enable { get; set; }
+
+        //Motor Axis 03
+        public string strMotorAxis_03_Label { get; set; }
+        public int MotorAxis_03_Index { get; set; }
+        public int iMotorAxis_03_Position { get; set; }
+        public int iMotorAxis_03_Speed { get; set; }
+        public int iMotorAxis_03_Accel { get; set; }
+        public int iMotorAxis_03_Daccel { get; set; }
+        public bool bMotorAxis_03_Enable { get; set; }
+
+        //Motor Axis 04
+        public string strMotorAxis_04_Label { get; set; }
+        public int MotorAxis_04_Index { get; set; }
+        public int iMotorAxis_04_Position { get; set; }
+        public int iMotorAxis_04_Speed { get; set; }
+        public int iMotorAxis_04_Accel { get; set; }
+        public int iMotorAxis_04_Daccel { get; set; }
+        public bool bMotorAxis_04_Enable { get; set; }
+
+        //Motor Axis 05
+        public string strMotorAxis_05_Label { get; set; }
+        public int MotorAxis_05_Index { get; set; }
+        public int iMotorAxis_05_Position { get; set; }
+        public int iMotorAxis_05_Speed { get; set; }
+        public int iMotorAxis_05_Accel { get; set; }
+        public int iMotorAxis_05_Daccel { get; set; }
+        public bool bMotorAxis_05_Enable { get; set; }
+
+        //Motor Axis 06
+        public string strMotorAxis_06_Label { get; set; }
+        public int MotorAxis_06_Index { get; set; }
+        public int iMotorAxis_06_Position { get; set; }
+        public int iMotorAxis_06_Speed { get; set; }
+        public int iMotorAxis_06_Accel { get; set; }
+        public int iMotorAxis_06_Daccel { get; set; }
+        public bool bMotorAxis_06_Enable { get; set; }
+
+        //Motor Axis 07
+        public string strMotorAxis_07_Label { get; set; }
+        public int MotorAxis_07_Index { get; set; }
+        public int iMotorAxis_07_Position { get; set; }
+        public int iMotorAxis_07_Speed { get; set; }
+        public int iMotorAxis_07_Accel { get; set; }
+        public int iMotorAxis_07_Daccel { get; set; }
+        public bool bMotorAxis_07_Enable { get; set; }
+
+        //Motor Axis 08
+        public string strMotorAxis_08_Label { get; set; }
+        public int MotorAxis_08_Index { get; set; }
+        public int iMotorAxis_08_Position { get; set; }
+        public int iMotorAxis_08_Speed { get; set; }
+        public int iMotorAxis_08_Accel { get; set; }
+        public int iMotorAxis_08_Daccel { get; set; }
+        public bool bMotorAxis_08_Enable { get; set; }
+
+        //Motor Axis 09
+        public string strMotorAxis_09_Label { get; set; }
+        public int MotorAxis_09_Index { get; set; }
+        public int iMotorAxis_09_Position { get; set; }
+        public int iMotorAxis_09_Speed { get; set; }
+        public int iMotorAxis_09_Accel { get; set; }
+        public int iMotorAxis_09_Daccel { get; set; }
+        public bool bMotorAxis_09_Enable { get; set; }
+
+        //Motor Axis 10
+        public string strMotorAxis_10_Label { get; set; }
+        public int MotorAxis_10_Index { get; set; }
+        public int iMotorAxis_10_Position { get; set; }
+        public int iMotorAxis_10_Speed { get; set; }
+        public int iMotorAxis_10_Accel { get; set; }
+        public int iMotorAxis_10_Daccel { get; set; }
+        public bool bMotorAxis_10_Enable { get; set; }
+
+        //Motor Axis 11
+        public string strMotorAxis_11_Label { get; set; }
+        public int MotorAxis_11_Index { get; set; }
+        public int iMotorAxis_11_Position { get; set; }
+        public int iMotorAxis_11_Speed { get; set; }
+        public int iMotorAxis_11_Accel { get; set; }
+        public int iMotorAxis_11_Daccel { get; set; }
+        public bool bMotorAxis_11_Enable { get; set; }
+
+        //Motor Axis 12
+        public string strMotorAxis_12_Label { get; set; }
+        public int MotorAxis_12_Index { get; set; }
+        public int iMotorAxis_12_Position { get; set; }
+        public int iMotorAxis_12_Speed { get; set; }
+        public int iMotorAxis_12_Accel { get; set; }
+        public int iMotorAxis_12_Daccel { get; set; }
+        public bool bMotorAxis_12_Enable { get; set; }
+    }  //end of public class JsonTrajectoryCurveContent {
 
     //Handle of Trajectory Curve
     public class JsonTrajectoryCurveHandle {
@@ -1064,7 +1214,7 @@ namespace InjectorInspector
 
                     if (GotStepProfile != null) {
                         // 找到，輸出信息
-                        rslt = $"{GotStepProfile.strPositionLabel} {GotStepProfile.u32Index} {GotStepProfile.u32RemainStep} {GotStepProfile.MotorAxisIndex}";
+                        rslt = $"{GotStepProfile.strPositionLabel} {GotStepProfile.u32Index} {GotStepProfile.u32RemainStep} {GotStepProfile.strMotorAxis_01_Label}";
                         Console.WriteLine("查詢結果: " + rslt);
                     } else {
                         // 沒找到滿足條件的
@@ -1081,7 +1231,7 @@ namespace InjectorInspector
 
             return rslt;
         }  //end of public string ReadIndexFromJsonFile(uint u32Index) {
-    }  //end of public class JsonNeedleHandle {
+    }  //end of public class JsonTrajectoryCurveHandle {
 
 }
 
