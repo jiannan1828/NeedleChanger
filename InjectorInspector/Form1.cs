@@ -609,6 +609,12 @@ namespace InjectorInspector
             xeUC_MachineInfo_END                    = 105,
         }
 
+        // 設定伺服器端的 IP 和 Port
+        public IPAddress ip   = IPAddress.Parse("192.168.2.124");
+        public int       port = 6032;
+        TcpListener server;
+        TcpClient   client;
+
         //Command Header
         public const string strCMDU15Header = "AB,1,";
 
@@ -633,136 +639,45 @@ namespace InjectorInspector
 
 
         public void button6_Click(object sender, EventArgs e) {
-            // 設定伺服器端的 IP 和 Port
-            IPAddress ip = IPAddress.Parse("192.168.2.124");
-            int port = 6032;
 
-            // 建立 TcpListener 來監聽指定的 IP 和 Port
-            TcpListener server = new TcpListener(ip, port);
-            server.Start();
-            Console.WriteLine("伺服器啟動中，等待客戶端連接...");
+            try {
+                // 建立 TcpListener 來監聽指定的 IP 和 Port
+                server = new TcpListener(ip, port);
+                server.Start();
+                Console.WriteLine("伺服器啟動中，等待客戶端連接...");
 
-            // 接受來自客戶端的連接
-            TcpClient client = server.AcceptTcpClient();
-            Console.WriteLine("客戶端已連接！");
+                // 接受來自客戶端的連接
+                client = server.AcceptTcpClient();
+                Console.WriteLine("客戶端已連接！");
+            } catch (SocketException ex) {
+                Console.WriteLine("SocketException: " + ex.Message);
+            }
 
             // 延遲0.5秒（500毫秒）
-            Thread.Sleep(500); 
-            
+            Thread.Sleep(500);
+
             //Vibration
             if(true) {  //Test Mode
-                // 儲存變量
-                uint u32SaveFrequency = 0;
-                    uint u32SaveVibrationSource1_StartPhase = 0;
-                    uint u32SaveVibrationSource1_StopPhase  = 0;
-                    uint u32SaveVibrationSource2_StartPhase = 0;
-                    uint u32SaveVibrationSource2_StopPhase  = 0;
-                    uint u32SaveVibrationSource3_StartPhase = 0;
-                    uint u32SaveVibrationSource3_StopPhase  = 0;
-                    uint u32SaveVibrationSource4_StartPhase = 0;
-                    uint u32SaveVibrationSource4_StopPhase  = 0;
-                    uint u32SaveBlackDepotSource_StartPhase = 0;
-                    uint u32SaveBlackDepotSource_StopPhase  = 0;
-                    uint u32SaveVibrationSource1_Power = 0;
-                    uint u32SaveVibrationSource2_Power = 0;
-                    uint u32SaveVibrationSource3_Power = 0;
-                    uint u32SaveVibrationSource4_Power = 0;
-                    uint u32SaveBlackDepotSource_Power = 0;
-
-                // 檢查變量是否變更
-                if (u32SaveFrequency != u32Frequency ||
-                    u32SaveVibrationSource1_StartPhase != u32VibrationSource1_StartPhase ||
-                    u32SaveVibrationSource1_StopPhase  != u32VibrationSource1_StopPhase  ||
-                    u32SaveVibrationSource2_StartPhase != u32VibrationSource2_StartPhase ||
-                    u32SaveVibrationSource2_StopPhase  != u32VibrationSource2_StopPhase  ||
-                    u32SaveVibrationSource3_StartPhase != u32VibrationSource3_StartPhase ||
-                    u32SaveVibrationSource3_StopPhase  != u32VibrationSource3_StopPhase  ||
-                    u32SaveVibrationSource4_StartPhase != u32VibrationSource4_StartPhase ||
-                    u32SaveVibrationSource4_StopPhase  != u32VibrationSource4_StopPhase  ||
-                    u32SaveBlackDepotSource_StartPhase != u32BlackDepotSource_StartPhase ||
-                    u32SaveBlackDepotSource_StopPhase  != u32BlackDepotSource_StopPhase  ||
-                    u32SaveVibrationSource1_Power != u32VibrationSource1_Power ||
-                    u32SaveVibrationSource2_Power != u32VibrationSource2_Power ||
-                    u32SaveVibrationSource3_Power != u32VibrationSource3_Power ||
-                    u32SaveVibrationSource4_Power != u32VibrationSource4_Power ||
-                    u32SaveBlackDepotSource_Power != u32BlackDepotSource_Power) {
-
-                    // 確認變量數值
-                    if(u32Frequency >= 1500) u32Frequency = 1500;
-                        if(u32VibrationSource1_StartPhase >= 1000) u32VibrationSource1_StartPhase = 1000;
-                        if(u32VibrationSource1_StopPhase  >= 1000) u32VibrationSource1_StopPhase  = 1000;
-                        if(u32VibrationSource2_StartPhase >= 1000) u32VibrationSource2_StartPhase = 1000;
-                        if(u32VibrationSource2_StopPhase  >= 1000) u32VibrationSource2_StopPhase  = 1000;
-                        if(u32VibrationSource3_StartPhase >= 1000) u32VibrationSource3_StartPhase = 1000;
-                        if(u32VibrationSource3_StopPhase  >= 1000) u32VibrationSource3_StopPhase  = 1000;
-                        if(u32VibrationSource4_StartPhase >= 1000) u32VibrationSource4_StartPhase = 1000;
-                        if(u32VibrationSource4_StopPhase  >= 1000) u32VibrationSource4_StopPhase  = 1000;
-                        if(u32BlackDepotSource_StartPhase >= 1000) u32BlackDepotSource_StartPhase = 1000;
-                        if(u32BlackDepotSource_StopPhase  >= 1000) u32BlackDepotSource_StopPhase  = 1000;
-                        if(u32VibrationSource1_Power  >= 1000) u32VibrationSource1_Power  = 1000;
-                        if(u32VibrationSource2_Power  >= 1000) u32VibrationSource2_Power  = 1000;
-                        if(u32VibrationSource3_Power  >= 1000) u32VibrationSource3_Power  = 1000;
-                        if(u32VibrationSource4_Power  >= 1000) u32VibrationSource4_Power  = 1000;
-                        if(u32BlackDepotSource_Power  >= 1000) u32BlackDepotSource_Power  = 1000;
-                            
-                    // 更新保存的變量
-                    u32SaveFrequency = u32Frequency;
-                        u32SaveVibrationSource1_StartPhase = u32VibrationSource1_StartPhase;
-                        u32SaveVibrationSource1_StopPhase  = u32VibrationSource1_StopPhase;
-                        u32SaveVibrationSource2_StartPhase = u32VibrationSource2_StartPhase;
-                        u32SaveVibrationSource2_StopPhase  = u32VibrationSource2_StopPhase;
-                        u32SaveVibrationSource3_StartPhase = u32VibrationSource3_StartPhase;
-                        u32SaveVibrationSource3_StopPhase  = u32VibrationSource3_StopPhase;
-                        u32SaveVibrationSource4_StartPhase = u32VibrationSource4_StartPhase;
-                        u32SaveVibrationSource4_StopPhase  = u32VibrationSource4_StopPhase;
-                        u32SaveBlackDepotSource_StartPhase = u32BlackDepotSource_StartPhase;
-                        u32SaveBlackDepotSource_StopPhase  = u32BlackDepotSource_StopPhase;
-                        u32SaveVibrationSource1_Power = u32VibrationSource1_Power;
-                        u32SaveVibrationSource2_Power = u32VibrationSource2_Power;
-                        u32SaveVibrationSource3_Power = u32VibrationSource3_Power;
-                        u32SaveVibrationSource4_Power = u32VibrationSource4_Power;
-                        u32SaveBlackDepotSource_Power = u32BlackDepotSource_Power;
-
-                    // 發送命令
-                    Console.WriteLine("發送命令");
-                    Px16_SendTestCMD(client, xe_U15_CMD.xeUC_TestMode_Parameters, u32SaveFrequency,
-                                                                                  u32SaveVibrationSource1_StartPhase,
-                                                                                  u32SaveVibrationSource1_StopPhase,
-                                                                                  u32SaveVibrationSource2_StartPhase,
-                                                                                  u32SaveVibrationSource2_StopPhase,
-                                                                                  u32SaveVibrationSource3_StartPhase,
-                                                                                  u32SaveVibrationSource3_StopPhase,
-                                                                                  u32SaveVibrationSource4_StartPhase,
-                                                                                  u32SaveVibrationSource4_StopPhase,
-                                                                                  u32SaveBlackDepotSource_StartPhase,
-                                                                                  u32SaveBlackDepotSource_StopPhase,
-                                                                                  u32SaveVibrationSource1_Power,
-                                                                                  u32SaveVibrationSource2_Power,
-                                                                                  u32SaveVibrationSource3_Power,
-                                                                                  u32SaveVibrationSource4_Power,
-                                                                                  u32SaveBlackDepotSource_Power);
-                }
-
+                SetVibration(u32Frequency, u32VibrationSource1_StartPhase,
+                                           u32VibrationSource1_StopPhase,
+                                           u32VibrationSource2_StartPhase,
+                                           u32VibrationSource2_StopPhase,
+                                           u32VibrationSource3_StartPhase,
+                                           u32VibrationSource3_StopPhase,
+                                           u32VibrationSource4_StartPhase,
+                                           u32VibrationSource4_StopPhase,
+                                           u32BlackDepotSource_StartPhase,
+                                           u32BlackDepotSource_StopPhase,
+                                           u32VibrationSource1_Power,
+                                           u32VibrationSource2_Power,
+                                           u32VibrationSource3_Power,
+                                           u32VibrationSource4_Power,
+                                           u32BlackDepotSource_Power);
             }  //end of if (true) {  //Test Mode
             
             //Vibration
             if (true) { //Test LED Level
-                // 保存 LED 等級變數
-                uint u32SaveLED_Level = 0;
-
-                // 檢查 LED 等級是否改變
-                if (u32SaveLED_Level != u32LED_Level) {
-                    
-                    // 確認 LED 等級數值
-                    if(u32LED_Level >= 50) u32LED_Level = 50;
-                    
-                    // 更新 LED 等級變數
-                    u32SaveLED_Level = u32LED_Level;
-
-                    // 更新 LED 等級
-                    Console.WriteLine("更新 LED 等級");
-                    Px1_SendCMD(client, xe_U15_CMD.xeUC_TestMode_LightLevel, u32SaveLED_Level);
-                }
+                SetVibrationLED(u32LED_Level);
             }  //end of if (true) { //Test LED Level
 
             // 處理客戶端連接的任務可交由不同的線程執行
@@ -770,6 +685,20 @@ namespace InjectorInspector
                 Thread thread = new Thread(HandleClient);
                 thread.Start(client);
             }
+        }
+
+        private void button7_Click(object sender, EventArgs e) {
+            uint flagTestOn = 0;
+            Px1_SendCMD(client, xe_U15_CMD.xeUC_TestMode_FunctionOn, flagTestOn);
+        }
+
+        private void button9_Click(object sender, EventArgs e) {
+            SetVibrationLED(u32LED_Level);
+        }
+
+        private void button8_Click(object sender, EventArgs e) {
+            uint u32SaveLED_Level = 0;
+            SetVibrationLED(u32SaveLED_Level);
         }
 
         public void HandleClient(object obj) {
@@ -862,6 +791,120 @@ namespace InjectorInspector
                 default:
                     break;
             }
+        }
+
+        public void SetVibration(uint u32Px1_FRQ, uint u32Px2_M1S,
+                                                  uint u32Px3_M1E,
+                                                  uint u32Px4_M2S,
+                                                  uint u32Px5_M2E,
+                                                  uint u32Px6_M3S,
+                                                  uint u32Px7_M3E,
+                                                  uint u32Px8_M4S,
+                                                  uint u32Px9_M4E,
+                                                  uint u32Px10_MDS,
+                                                  uint u32Px11_MDE,
+                                                  uint u32Px12_M1P,
+                                                  uint u32Px13_M2P,
+                                                  uint u32Px14_M3P,
+                                                  uint u32Px15_M4P,
+                                                  uint u32Px16_MDP) {
+
+            // 確認變量數值
+            if (u32Px1_FRQ  > 1500) u32Px1_FRQ  = 1500;
+            if (u32Px2_M1S  > 1000) u32Px2_M1S  = 1000;
+            if (u32Px3_M1E  > 1000) u32Px3_M1E  = 1000;
+            if (u32Px4_M2S  > 1000) u32Px4_M2S  = 1000;
+            if (u32Px5_M2E  > 1000) u32Px5_M2E  = 1000;
+            if (u32Px6_M3S  > 1000) u32Px6_M3S  = 1000;
+            if (u32Px7_M3E  > 1000) u32Px7_M3E  = 1000;
+            if (u32Px8_M4S  > 1000) u32Px8_M4S  = 1000;
+            if (u32Px9_M4E  > 1000) u32Px9_M4E  = 1000;
+            if (u32Px10_MDS > 1000) u32Px10_MDS = 1000;
+            if (u32Px11_MDE > 1000) u32Px11_MDE = 1000;
+            if (u32Px12_M1P > 1000) u32Px12_M1P = 1000;
+            if (u32Px13_M2P > 1000) u32Px13_M2P = 1000;
+            if (u32Px14_M3P > 1000) u32Px14_M3P = 1000;
+            if (u32Px15_M4P > 1000) u32Px15_M4P = 1000;
+            if (u32Px16_MDP > 1000) u32Px16_MDP = 1000;
+
+            // 儲存變量
+            uint u32SaveFrequency                   = 0;
+            uint u32SaveVibrationSource1_StartPhase = 0;
+            uint u32SaveVibrationSource1_StopPhase  = 0;
+            uint u32SaveVibrationSource2_StartPhase = 0;
+            uint u32SaveVibrationSource2_StopPhase  = 0;
+            uint u32SaveVibrationSource3_StartPhase = 0;
+            uint u32SaveVibrationSource3_StopPhase  = 0;
+            uint u32SaveVibrationSource4_StartPhase = 0;
+            uint u32SaveVibrationSource4_StopPhase  = 0;
+            uint u32SaveBlackDepotSource_StartPhase = 0;
+            uint u32SaveBlackDepotSource_StopPhase  = 0;
+            uint u32SaveVibrationSource1_Power      = 0;
+            uint u32SaveVibrationSource2_Power      = 0;
+            uint u32SaveVibrationSource3_Power      = 0;
+            uint u32SaveVibrationSource4_Power      = 0;
+            uint u32SaveBlackDepotSource_Power      = 0;
+
+            // 檢查變量是否變更
+            if ( u32SaveFrequency                   != u32Px1_FRQ  ||
+                 u32SaveVibrationSource1_StartPhase != u32Px2_M1S  ||
+                 u32SaveVibrationSource1_StopPhase  != u32Px3_M1E  ||
+                 u32SaveVibrationSource2_StartPhase != u32Px4_M2S  ||
+                 u32SaveVibrationSource2_StopPhase  != u32Px5_M2E  ||
+                 u32SaveVibrationSource3_StartPhase != u32Px6_M3S  ||
+                 u32SaveVibrationSource3_StopPhase  != u32Px7_M3E  ||
+                 u32SaveVibrationSource4_StartPhase != u32Px8_M4S  ||
+                 u32SaveVibrationSource4_StopPhase  != u32Px9_M4E  ||
+                 u32SaveBlackDepotSource_StartPhase != u32Px10_MDS ||
+                 u32SaveBlackDepotSource_StopPhase  != u32Px11_MDE ||
+                 u32SaveVibrationSource1_Power      != u32Px12_M1P ||
+                 u32SaveVibrationSource2_Power      != u32Px13_M2P ||
+                 u32SaveVibrationSource3_Power      != u32Px14_M3P ||
+                 u32SaveVibrationSource4_Power      != u32Px15_M4P ||
+                 u32SaveBlackDepotSource_Power      != u32Px16_MDP ) {
+
+                // 更新保存的變量
+                u32SaveFrequency                   = u32Px1_FRQ;
+                u32SaveVibrationSource1_StartPhase = u32Px2_M1S;
+                u32SaveVibrationSource1_StopPhase  = u32Px3_M1E;
+                u32SaveVibrationSource2_StartPhase = u32Px4_M2S;
+                u32SaveVibrationSource2_StopPhase  = u32Px5_M2E;
+                u32SaveVibrationSource3_StartPhase = u32Px6_M3S;
+                u32SaveVibrationSource3_StopPhase  = u32Px7_M3E;
+                u32SaveVibrationSource4_StartPhase = u32Px8_M4S;
+                u32SaveVibrationSource4_StopPhase  = u32Px9_M4E;
+                u32SaveBlackDepotSource_StartPhase = u32Px10_MDS;
+                u32SaveBlackDepotSource_StopPhase  = u32Px11_MDE;
+                u32SaveVibrationSource1_Power      = u32Px12_M1P;
+                u32SaveVibrationSource2_Power      = u32Px13_M2P;
+                u32SaveVibrationSource3_Power      = u32Px14_M3P;
+                u32SaveVibrationSource4_Power      = u32Px15_M4P;
+                u32SaveBlackDepotSource_Power      = u32Px16_MDP;
+
+                // 發送命令
+                Console.WriteLine("發送命令");
+                Px16_SendTestCMD(client, xe_U15_CMD.xeUC_TestMode_Parameters, u32SaveFrequency,
+                                                                              u32SaveVibrationSource1_StartPhase,
+                                                                              u32SaveVibrationSource1_StopPhase,
+                                                                              u32SaveVibrationSource2_StartPhase,
+                                                                              u32SaveVibrationSource2_StopPhase,
+                                                                              u32SaveVibrationSource3_StartPhase,
+                                                                              u32SaveVibrationSource3_StopPhase,
+                                                                              u32SaveVibrationSource4_StartPhase,
+                                                                              u32SaveVibrationSource4_StopPhase,
+                                                                              u32SaveBlackDepotSource_StartPhase,
+                                                                              u32SaveBlackDepotSource_StopPhase,
+                                                                              u32SaveVibrationSource1_Power,
+                                                                              u32SaveVibrationSource2_Power,
+                                                                              u32SaveVibrationSource3_Power,
+                                                                              u32SaveVibrationSource4_Power,
+                                                                              u32SaveBlackDepotSource_Power);
+            }
+        }
+
+        public void SetVibrationLED(uint u32LEDLevel) {
+            Console.WriteLine("更新 LED 等級");
+            Px1_SendCMD(client, xe_U15_CMD.xeUC_TestMode_LightLevel, u32LEDLevel);
         }
 
         public void SendTCPData(object obj, string data) {
