@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdvancedMotionApi_CLRLib">
+      <HintPath>C:\Program Files\SoftServo\WMX3\Lib\AdvancedMotionApi_CLRLib.dll</HintPath>
+    </Reference>
+    <Reference Include="CoreMotionApi_CLRLib">
+      <HintPath>C:\Program Files\SoftServo\WMX3\Lib\CoreMotionApi_CLRLib.dll</HintPath>
+    </Reference>
     <Reference Include="halcondotnetxl, Version=18.11.4.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\MVTec\HALCON-18.11-Steady\bin\dotnet35\halcondotnetxl.dll</HintPath>
@@ -54,6 +60,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WMX3Api_CLRLib">
+      <HintPath>C:\Program Files\SoftServo\WMX3\Lib\WMX3Api_CLRLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Form1.cs">
