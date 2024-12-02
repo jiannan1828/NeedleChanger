@@ -79,10 +79,11 @@
               "Title": "Inspector.cs [\u8A2D\u8A08]",
               "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\Inspector\\Inspector.cs",
               "RelativeDocumentMoniker": "Inspector\\Inspector.cs",
-              "ToolTip": "D:\\NeedleChanger\\Code\\H\u690D\u91DD\u6A5F\\Inspector\\Inspector.cs [\u8A2D\u8A08]",
-              "RelativeToolTip": "..\\H\u690D\u91DD\u6A5F\\Inspector\\Inspector.cs [\u8A2D\u8A08]",
+              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Inspector\\Inspector.cs [\u8A2D\u8A08]",
+              "RelativeToolTip": "Inspector\\Inspector.cs [\u8A2D\u8A08]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T03:59:15.475Z"
+              "WhenOpened": "2024-12-02T03:59:15.475Z",
+              "EditorCaption": " [\u8A2D\u8A08]"
             },
             {
               "$type": "Document",
@@ -105,7 +106,8 @@
               "RelativeToolTip": "Inspector\\Inspector.cs",
               "ViewState": "AgIAAPgBAAAAAAAAAAAmwBgCAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T03:33:18.322Z"
+              "WhenOpened": "2024-12-02T03:33:18.322Z",
+              "EditorCaption": ""
             }
           ]
         }
