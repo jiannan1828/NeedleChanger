@@ -28,21 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.btn_AlarmRST = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.btn_Connect = new System.Windows.Forms.Button();
             this.inspector1 = new Inspector.Inspector();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-
-            this.components = new System.ComponentModel.Container();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnVibrationLEDOff = new System.Windows.Forms.Button();
             this.btnVibrationLED = new System.Windows.Forms.Button();
             this.btnVibrationStop = new System.Windows.Forms.Button();
@@ -53,14 +44,23 @@
             this.AcSpd0 = new System.Windows.Forms.Label();
             this.AcPos1 = new System.Windows.Forms.Label();
             this.AcPos0 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnSetHome = new System.Windows.Forms.Button();
             this.btn_Off1 = new System.Windows.Forms.Button();
             this.btn_Off0 = new System.Windows.Forms.Button();
             this.btn_On1 = new System.Windows.Forms.Button();
             this.btn_On0 = new System.Windows.Forms.Button();
             this.btn_Disconnect = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.btn_AlarmRST = new System.Windows.Forms.Button();
+            this.btn_Connect = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-
+            this.txtDeg = new System.Windows.Forms.TextBox();
+            this.btnChgDeg = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -109,6 +109,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnChgDeg);
+            this.tabPage2.Controls.Add(this.txtDeg);
             this.tabPage2.Controls.Add(this.btnVibrationLEDOff);
             this.tabPage2.Controls.Add(this.btnVibrationLED);
             this.tabPage2.Controls.Add(this.btnVibrationStop);
@@ -236,6 +238,7 @@
             this.AcPos0.Size = new System.Drawing.Size(65, 19);
             this.AcPos0.TabIndex = 16;
             this.AcPos0.Text = "AcPos0";
+            this.AcPos0.Click += new System.EventHandler(this.AcPos0_Click);
             // 
             // label1
             // 
@@ -377,6 +380,24 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // txtDeg
+            // 
+            this.txtDeg.Location = new System.Drawing.Point(67, 612);
+            this.txtDeg.Name = "txtDeg";
+            this.txtDeg.Size = new System.Drawing.Size(100, 30);
+            this.txtDeg.TabIndex = 26;
+            this.txtDeg.Text = "-0.00";
+            // 
+            // btnChgDeg
+            // 
+            this.btnChgDeg.Location = new System.Drawing.Point(67, 559);
+            this.btnChgDeg.Name = "btnChgDeg";
+            this.btnChgDeg.Size = new System.Drawing.Size(165, 39);
+            this.btnChgDeg.TabIndex = 27;
+            this.btnChgDeg.Text = "btnChgDeg";
+            this.btnChgDeg.UseVisualStyleBackColor = true;
+            this.btnChgDeg.Click += new System.EventHandler(this.btnChgDeg_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -433,6 +454,8 @@
         private System.Windows.Forms.Button btnVibrationLEDOff;
         private System.Windows.Forms.Button btnVibrationLED;
         private System.Windows.Forms.Button btnVibrationStop;
+        private System.Windows.Forms.Button btnChgDeg;
+        private System.Windows.Forms.TextBox txtDeg;
     }
 }
 

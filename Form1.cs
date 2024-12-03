@@ -837,6 +837,39 @@ namespace InjectorInspector
             uint u32SaveLED_Level = 0;
             SetVibrationLED(u32SaveLED_Level);
         }
+
+        private void btnChgDeg_Click(object sender, EventArgs e)
+        {
+            try {
+                // 取得txtDeg裡的浮點數
+                float fdegree = float.Parse(txtDeg.Text);
+
+                // 使用 degree 變數進行後續操作
+                int iChgDeg = (int)(fdegree * 100);
+
+                //取得當前吸嘴角度
+                int ideg = int.Parse(AcPos0.Text);
+
+                //計算補正至90度的數值
+                int iTargetDeg = ideg + iChgDeg;
+
+                //執行旋轉吸嘴
+                int axis = 0;
+                int position = iTargetDeg;
+                int speed = 10000;
+                int accel = 10000;
+                int daccel = 10000;
+                WMX3_Pivot(axis, position, speed, accel, daccel);
+
+            } catch (FormatException) {
+                MessageBox.Show("請輸入有效的浮點數");
+            }
+        }
+
+        private void AcPos0_Click(object sender, EventArgs e)
+        {
+
+        }
         //PCCP Xavier Tsai, added for testing <END>
 
 

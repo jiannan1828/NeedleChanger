@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\CodeNeedCnahger\\NeedleChanger\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|D:\\CodeNeedCnahger\\NeedleChanger\\inspector\\inspector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|solutionrelative:inspector\\inspector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|\u4EAC\u5143\u690D\u91DD\u6A5F.csproj|D:\\CodeNeedCnahger\\NeedleChanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|\u4EAC\u5143\u690D\u91DD\u6A5F.csproj|d:\\codeneedcnahger\\needlechanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|\u4EAC\u5143\u690D\u91DD\u6A5F.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|\u4EAC\u5143\u690D\u91DD\u6A5F.csproj|d:\\codeneedcnahger\\needlechanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|\u4EAC\u5143\u690D\u91DD\u6A5F.csproj|D:\\CodeNeedCnahger\\NeedleChanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|\u4EAC\u5143\u690D\u91DD\u6A5F.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|D:\\CodeNeedCnahger\\NeedleChanger\\inspector\\inspector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|solutionrelative:inspector\\inspector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|D:\\CodeNeedCnahger\\NeedleChanger\\inspector\\sisosetfrm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,11 +26,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Form1.cs [\u8A2D\u8A08]",
               "DocumentMoniker": "D:\\CodeNeedCnahger\\NeedleChanger\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
@@ -42,29 +42,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Form1.cs",
               "DocumentMoniker": "D:\\CodeNeedCnahger\\NeedleChanger\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "D:\\CodeNeedCnahger\\NeedleChanger\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAACcDAAAAAAAAAAAEwDsDAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAEADAAAAAAAAAAAqwFcDAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-02T04:00:01.489Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Inspector.cs",
               "DocumentMoniker": "D:\\CodeNeedCnahger\\NeedleChanger\\Inspector\\Inspector.cs",
               "RelativeDocumentMoniker": "Inspector\\Inspector.cs",
               "ToolTip": "D:\\CodeNeedCnahger\\NeedleChanger\\Inspector\\Inspector.cs",
               "RelativeToolTip": "Inspector\\Inspector.cs",
-              "ViewState": "AgIAAHAEAAAAAAAAAAAmwIQEAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAAGIEAAAAAAAAAAAmwIQEAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T03:33:18.322Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-02T03:33:18.322Z"
             },
             {
               "$type": "Document",
