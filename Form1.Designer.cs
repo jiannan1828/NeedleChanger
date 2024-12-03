@@ -31,12 +31,17 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
-            this.inspector1 = new Inspector.Inspector();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btn_AlarmRST = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btn_Connect = new System.Windows.Forms.Button();
             this.btn_DeviceCreate = new System.Windows.Forms.Button();
-            this.btn_AlarmRST = new System.Windows.Forms.Button();
+            this.inspector1 = new Inspector.Inspector();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -74,17 +79,13 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Visible = false;
             // 
-            // inspector1
-            // 
-            this.inspector1.Font = new System.Drawing.Font("新細明體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.inspector1.Location = new System.Drawing.Point(58, 7);
-            this.inspector1.Margin = new System.Windows.Forms.Padding(5);
-            this.inspector1.Name = "inspector1";
-            this.inspector1.Size = new System.Drawing.Size(1112, 744);
-            this.inspector1.TabIndex = 1;
-            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.label3);
+            this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.btn_AlarmRST);
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.btn_Connect);
@@ -96,6 +97,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btn_AlarmRST
+            // 
+            this.btn_AlarmRST.Location = new System.Drawing.Point(33, 150);
+            this.btn_AlarmRST.Name = "btn_AlarmRST";
+            this.btn_AlarmRST.Size = new System.Drawing.Size(165, 39);
+            this.btn_AlarmRST.TabIndex = 3;
+            this.btn_AlarmRST.Text = "btn_AlarmRST";
+            this.btn_AlarmRST.UseVisualStyleBackColor = true;
+            this.btn_AlarmRST.Click += new System.EventHandler(this.btn_AlarmRST_Click);
             // 
             // label1
             // 
@@ -126,15 +137,60 @@
             this.btn_DeviceCreate.UseVisualStyleBackColor = true;
             this.btn_DeviceCreate.Click += new System.EventHandler(this.btn_DeviceCreate_Click);
             // 
-            // btn_AlarmRST
+            // inspector1
             // 
-            this.btn_AlarmRST.Location = new System.Drawing.Point(33, 150);
-            this.btn_AlarmRST.Name = "btn_AlarmRST";
-            this.btn_AlarmRST.Size = new System.Drawing.Size(165, 39);
-            this.btn_AlarmRST.TabIndex = 3;
-            this.btn_AlarmRST.Text = "btn_AlarmRST";
-            this.btn_AlarmRST.UseVisualStyleBackColor = true;
-            this.btn_AlarmRST.Click += new System.EventHandler(this.btn_AlarmRST_Click);
+            this.inspector1.Font = new System.Drawing.Font("新細明體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.inspector1.Location = new System.Drawing.Point(58, 7);
+            this.inspector1.Margin = new System.Windows.Forms.Padding(5);
+            this.inspector1.Name = "inspector1";
+            this.inspector1.Size = new System.Drawing.Size(1112, 744);
+            this.inspector1.TabIndex = 1;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(33, 235);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(165, 38);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(332, 245);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 19);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "label2";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(348, 341);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(53, 19);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "label3";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(353, 407);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 19);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "label4";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(335, 492);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 19);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "label5";
             // 
             // Form1
             // 
@@ -170,6 +226,11 @@
         private System.Windows.Forms.Button btn_DeviceCreate;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn_AlarmRST;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }
 

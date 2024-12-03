@@ -646,6 +646,7 @@ namespace Camera
                     NowBlock = SiSoCsRt.Fg_getStatusEx(dev.handle, SiSoCsRt.NUMBER_OF_BLOCKED_IMAGES, 0, CamIndex, dMem);
                     if (NowBlock < 1)
                         break;
+                    //long PicNo = SiSoCsRt.Fg_getImageEx(dev.handle, SiSoCsRt.SEL_NEXT_IMAGE, 0, CamIndex, 5, dMem);
                     long PicNo = SiSoCsRt.Fg_getImageEx(dev.handle, SiSoCsRt.SEL_NEXT_IMAGE, 0, CamIndex, 5, dMem);
                     if (PicNo > 0)
                     {

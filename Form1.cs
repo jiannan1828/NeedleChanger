@@ -44,6 +44,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Runtime.InteropServices.ComTypes;
+using Inspector;
+using System.Security.Cryptography;
 //PCCP Xavier Tsai, added for testing <END>
 
 namespace InjectorInspector
@@ -63,6 +65,7 @@ namespace InjectorInspector
         private void Form1_Load(object sender, EventArgs e)
         {
             inspector1.xInit();
+            inspector1.on下視覺 = apiCallBackTest;
         }
 
 
@@ -87,6 +90,9 @@ namespace InjectorInspector
         AdvancedMotion advmon = new AdvancedMotion();
 
         int ErrorCode;
+
+        public int cntcallback = 0;
+
         //PCCP Xavier Tsai, added for testing <END>
 
         //PCCP Xavier Tsai, added for testing <START>
@@ -275,12 +281,50 @@ namespace InjectorInspector
             Wmx3Lib_cm.Dispose();
             Wmx3Lib.Dispose();
 
+            
+
             //sw.Close();
         }
 
         private void btn_AlarmRST_Click(object sender, EventArgs e)
         {
             Wmx3Lib_cm.AxisControl.ClearAmpAlarm((int)NUD_Motor_NO.Value);
+        }
+
+        public void apiCallBackTest()
+        {
+            cntcallback++;
+            this.Text = cntcallback.ToString();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //吸料盤校正用
+            PointF pos;
+            bool success = inspector1.xCarb震動盤(out pos);
+            label2.Text = string.Format("分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y);
+
+            //黑色料倉
+            bool 料倉有料 = inspector1.xInsp入料();
+            label3.Text = string.Format("料倉有料 = {0}", 料倉有料);
+
+            //光源震動盤
+            List<Vector3> pins;
+            bool 料盤有料 = inspector1.xInsp震動盤(out pins);
+            Vector3 temp = (料盤有料) ? pins.First() : new Vector3();
+            label4.Text = string.Format("震動盤 = {0} X = {1:F2} Y = {2:F2} θ = {3:F2}", 料盤有料, temp.X, temp.Y, temp.θ);
+
+            if (inspector1.Inspected && inspector1.InspectOK)
+            {
+                double deg = inspector1.PinDeg;
+                label5.Text = string.Format("吸嘴分析  θ = {0:F2}", deg);
+            }
+            else
+                label5.Text = "吸嘴分析失敗";
+
+            int cntdebug = inspector1.RecvCount;
+
+
         }
         //PCCP Xavier Tsai, added for testing <END>
 

@@ -67,7 +67,7 @@ namespace Camera
         {
             Task.Factory.StartNew(() =>
             {
-                Thread.Sleep(500);
+                Thread.Sleep(100);
                 this.BeginInvoke(new Action<string>(ccd.SaveParam), "");
             });
         }

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ParamDefine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Key>DMK 33GJ003e:40424151</Key>
-  <Gamma>1</Gamma>
-  <Exposure>3687</Exposure>
+  <Gamma>1.7</Gamma>
+  <Exposure>29501</Exposure>
   <SpeedRate>10</SpeedRate>
   <MirrorX>false</MirrorX>
   <MirrorY>false</MirrorY>

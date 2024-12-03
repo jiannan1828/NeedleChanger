@@ -56,6 +56,7 @@
             this.ck_Limit = new System.Windows.Forms.CheckBox();
             this.ck_RealTray = new System.Windows.Forms.CheckBox();
             this.ck_PinArea = new System.Windows.Forms.CheckBox();
+            this.ck_NuCarb = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_Throshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_距離限制)).BeginInit();
@@ -225,6 +226,7 @@
             0,
             0,
             65536});
+            this.num_Throshold.ValueChanged += new System.EventHandler(this.num_Pin長Min_ValueChanged);
             // 
             // label10
             // 
@@ -258,6 +260,7 @@
             0,
             0,
             0});
+            this.num_距離限制.ValueChanged += new System.EventHandler(this.num_Pin長Min_ValueChanged);
             // 
             // label9
             // 
@@ -287,10 +290,11 @@
             this.num_Pin寬Max.TabIndex = 34;
             this.num_Pin寬Max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.num_Pin寬Max.Value = new decimal(new int[] {
-            1,
+            100,
             0,
             0,
             65536});
+            this.num_Pin寬Max.ValueChanged += new System.EventHandler(this.num_Pin長Min_ValueChanged);
             // 
             // label7
             // 
@@ -325,10 +329,11 @@
             this.num_Pin寬Min.TabIndex = 32;
             this.num_Pin寬Min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.num_Pin寬Min.Value = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
             65536});
+            this.num_Pin寬Min.ValueChanged += new System.EventHandler(this.num_Pin長Min_ValueChanged);
             // 
             // label8
             // 
@@ -358,10 +363,11 @@
             this.num_Pin長Max.TabIndex = 30;
             this.num_Pin長Max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.num_Pin長Max.Value = new decimal(new int[] {
-            1,
+            100,
             0,
             0,
             65536});
+            this.num_Pin長Max.ValueChanged += new System.EventHandler(this.num_Pin長Min_ValueChanged);
             // 
             // label6
             // 
@@ -396,10 +402,11 @@
             this.num_Pin長Min.TabIndex = 28;
             this.num_Pin長Min.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.num_Pin長Min.Value = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
             65536});
+            this.num_Pin長Min.ValueChanged += new System.EventHandler(this.num_Pin長Min_ValueChanged);
             // 
             // label5
             // 
@@ -455,10 +462,21 @@
             this.ck_PinArea.Text = "PinArea";
             this.ck_PinArea.UseVisualStyleBackColor = true;
             // 
+            // ck_NuCarb
+            // 
+            this.ck_NuCarb.AutoSize = true;
+            this.ck_NuCarb.Location = new System.Drawing.Point(769, 33);
+            this.ck_NuCarb.Name = "ck_NuCarb";
+            this.ck_NuCarb.Size = new System.Drawing.Size(104, 23);
+            this.ck_NuCarb.TabIndex = 47;
+            this.ck_NuCarb.Text = "校正區域";
+            this.ck_NuCarb.UseVisualStyleBackColor = true;
+            // 
             // Inspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.ck_NuCarb);
             this.Controls.Add(this.ck_PinArea);
             this.Controls.Add(this.ck_Limit);
             this.Controls.Add(this.ck_RealTray);
@@ -523,5 +541,6 @@
         public System.Windows.Forms.CheckBox ck_Limit;
         public System.Windows.Forms.CheckBox ck_RealTray;
         public System.Windows.Forms.CheckBox ck_PinArea;
+        public System.Windows.Forms.CheckBox ck_NuCarb;
     }
 }
