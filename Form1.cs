@@ -52,48 +52,29 @@ namespace InjectorInspector
 {
     public partial class Form1 : Form
     {
-        public Form1()
-        {
-            InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //inspector1.xInit();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            inspector1.xInit();
-            inspector1.on下視覺 = apiCallBackTest;
-        }
-
-
-
         //PCCP Xavier Tsai, added for testing <START>
-        public static WMX3Api Wmx3Lib = new WMX3Api();
-        public static EngineStatus EnStatus = new EngineStatus();
-        public static CoreMotionStatus CmStatus = new CoreMotionStatus();
-        public static CoreMotion Wmx3Lib_cm = new CoreMotion();//Wmx3Lib);
-        public static AdvancedMotion WmxLib_Adv = new AdvancedMotion();// Wmx3Lib);
-        public static CoreMotionAxisStatus[] cmAxis = new CoreMotionAxisStatus[8];
-        public System.Windows.Forms.NumericUpDown NUD_Motor_NO;
-
         //WMX3
         WMX3Api wmx = new WMX3Api();
-        //Io io = new Io();
-        CoreMotion motion = new CoreMotion();
-        //CoreMotionStatus CmStatus = new CoreMotionStatus();
-        //EngineStatus EnStatus = new EngineStatus();
+        CoreMotion motion              = new CoreMotion();
+        CoreMotionStatus CmStatus      = new CoreMotionStatus();
+        EngineStatus EnStatus          = new EngineStatus();
         Config.HomeParam AxisHomeParam = new Config.HomeParam();
-        Stopwatch stopWatch = new Stopwatch();
-        AdvancedMotion advmon = new AdvancedMotion();
-
-        int ErrorCode;
-
+        Stopwatch stopWatch            = new Stopwatch();
+        AdvancedMotion advmon          = new AdvancedMotion();
+      //Io io = new Io();
+        public static CoreMotionAxisStatus[] cmAxis = new CoreMotionAxisStatus[8];
+        public System.Windows.Forms.NumericUpDown NUD_Motor_NO;
+        
+        //Debug
+        public int ErrorCode = 0;
         public int cntcallback = 0;
 
+        //Create TCP Vibration Connection
+        public bool isEstablishTCP = false;
         //PCCP Xavier Tsai, added for testing <END>
+
+
+
 
         //PCCP Xavier Tsai, added for testing <START>
         /// <summary>
@@ -103,14 +84,17 @@ namespace InjectorInspector
         public void WMX3_Initial()
         {
             //建立裝置
-            wmx.CreateDevice("C:\\Program Files\\SoftServo\\WMX3", DeviceType.DeviceTypeNormal, 10000);
+            wmx.CreateDevice("C:\\Program Files\\SoftServo\\WMX3", DeviceType.DeviceTypeNormal, 10000);  
 
             //設定裝置名稱
             wmx.SetDeviceName("DLF");
 
             //設置齒輪比
-            int A = motion.Config.SetGearRatio(0, 1048576, 10000);
-            int B = motion.Config.SetGearRatio(1, 1048576, 10000);
+            int axis;
+            axis = 0;
+            //int A = motion.Config.SetGearRatio(axis, 1048576, 10000);  
+            axis = 1;
+            //int B = motion.Config.SetGearRatio(axis, 1048576, 10000);
 
         }  //end of public void WMX3_Initial()
 
@@ -188,7 +172,7 @@ namespace InjectorInspector
 
             //strtok info
             position = Profile.Substring(0, Math.Min(Profile.Length, 6));
-            speed = cmAxis.ActualVelocity.ToString();
+            speed    = cmAxis.ActualVelocity.ToString();
             //AcTqr0.Text = cmAxis.ActualTorque.ToString();
 
             return rslt;
@@ -204,12 +188,12 @@ namespace InjectorInspector
             //POS參數設置
             Motion.PosCommand pos = new Motion.PosCommand();
 
-            pos.Profile.Type = ProfileType.Trapezoidal;  //運動模式
-            pos.Axis = axis;    //軸
-            pos.Target = pivot;   //指定位置
+            pos.Profile.Type     = ProfileType.Trapezoidal;  //運動模式
+            pos.Axis             = axis;    //軸
+            pos.Target           = pivot;   //指定位置
             pos.Profile.Velocity = speed;   //速度
-            pos.Profile.Acc = accel;   //加速度
-            pos.Profile.Dec = daccel;  //減速度
+            pos.Profile.Acc      = accel;   //加速度
+            pos.Profile.Dec      = daccel;  //減速度
 
             //啟動POS運轉
             rslt = motion.Motion.StartPos(pos);
@@ -245,52 +229,15 @@ namespace InjectorInspector
             return rslt;
         }  //end of public int WMX3_SetHomePosition(int axis)
 
-        private void btn_DeviceCreate_Click(object sender, EventArgs e)
-        {
-            Wmx3Lib.CreateDevice("C:\\Program Files\\SoftServo\\WMX3\\", DeviceType.DeviceTypeNormal, 100000);
-            Wmx3Lib.SetDeviceName("MotorControl");
-            label1.Text = "創建無異常";
-        }
 
-        private void btn_Connect_Click(object sender, EventArgs e)
-        {
-            int ret = Wmx3Lib.StartCommunication();//WMX3通訊啟動
-            if (ret != 0)
-            {
 
-                string str = WMX3Api.ErrorToString(ret); //如果無法通訊則報錯誤給使用者
-                label1.Text = "裝置連線失敗-" + str;
-            }
-            else
-            {
-                label1.Text = "裝置已連線";
-                //Main_Timer.Enabled = true;
 
-                //Thread TR_M_Status_Read = new Thread(M_Status_Read);
-                //TR_M_Status_Read.IsBackground = true;
-                //TR_M_Status_Read.Start();
-            }
-        }
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            // Stop Communication.
-            Wmx3Lib.StopCommunication(10000);
-            //Quit device.
-            Wmx3Lib.CloseDevice();
-            Wmx3Lib_cm.Dispose();
-            Wmx3Lib.Dispose();
 
-            
-
-            //sw.Close();
-        }
-
-        private void btn_AlarmRST_Click(object sender, EventArgs e)
-        {
-            Wmx3Lib_cm.AxisControl.ClearAmpAlarm((int)NUD_Motor_NO.Value);
-        }
-
+        /// <summary>
+        /// Test function
+        /// </summary>
+        /// 
         public void apiCallBackTest()
         {
             cntcallback++;
@@ -325,6 +272,570 @@ namespace InjectorInspector
             int cntdebug = inspector1.RecvCount;
 
 
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// Project Code implement
+        /// </summary>
+        /// 
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //init vision
+            inspector1.xInit();
+            //Add the callback api from snapshot api
+            inspector1.on下視覺 = apiCallBackTest;
+            
+            //Active WMX3
+            WMX3_Initial();
+
+            //先跳到第2頁
+            int iAimToPageIndex = 2;
+            tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
+
+            this.Text = "2024/09/04 14:04";
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            WMX3_destroy_Commu();
+            
+            // Stop Communication.
+            wmx.StopCommunication(10000);
+            
+            //Quit device.
+            wmx.CloseDevice();
+            motion.Dispose();
+            wmx.Dispose();
+
+            //sw.Close();
+        }
+
+        private void btn_Connect_Click(object sender, EventArgs e)
+        {
+            WMX3_establish_Commu();
+        }
+        private void btn_Disconnect_Click(object sender, EventArgs e)
+        {
+            WMX3_destroy_Commu();
+        }
+        private void btn_On0_Click(object sender, EventArgs e)
+        {
+            int axis = 0;
+            int isOn = 1;
+            WMX3_ServoOnOff(axis, isOn);
+        }
+        private void btn_On1_Click(object sender, EventArgs e)
+        {
+            int axis = 1;
+            int isOn = 1;
+            WMX3_ServoOnOff(axis, isOn);
+        }
+        private void btn_Off0_Click(object sender, EventArgs e)
+        {
+            int axis = 0;
+            int isOn = 0;
+            WMX3_ServoOnOff(axis, isOn);
+        }
+        private void btn_Off1_Click(object sender, EventArgs e)
+        {
+            int axis = 1;
+            int isOn = 0;
+            WMX3_ServoOnOff(axis, isOn);
+        }
+
+        private void btnSetHome_Click(object sender, EventArgs e)
+        {
+            int axis;
+
+            axis = 0;
+            WMX3_SetHomePosition(axis);
+
+            axis = 1;
+            WMX3_SetHomePosition(axis);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            //WMX3通訊狀態
+            int getCommuStatus = WMX3_check_Commu();
+            if (getCommuStatus == 1) {
+                label1.Text = "連線中";
+                label1.ForeColor = Color.Red;
+            } else {
+                label1.Text = "尚未連線";
+                label1.ForeColor = Color.Black;
+            }
+
+            //region 讀取軸狀態
+            int rslt = 0;
+            int axis = 0;
+            string position = "";
+            string speed    = "";
+
+            axis = 0;
+            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if(rslt == 1) {
+                btn_On0.BackColor = Color.Red;
+            } else {
+                btn_On0.BackColor = Color.Green;
+            }
+            AcPos0.Text = position;
+            AcSpd0.Text = speed;
+
+            axis = 1;
+            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if (rslt == 1) {
+                btn_On1.BackColor = Color.Red;
+            } else {
+                btn_On1.BackColor = Color.Green;
+            }
+            AcPos1.Text = position;
+            AcSpd1.Text = speed;
+        }
+
+        private void btnPosition01_Click(object sender, EventArgs e)
+        {
+            //單點動
+
+            int axis;
+            int position;
+            int speed;
+            int accel;
+            int daccel;
+
+            axis = 0;
+            position = 27500;
+            speed = 10000;
+            accel = 10000;
+            daccel = 10000;
+            WMX3_Pivot(axis, position, speed, accel, daccel);
+
+            axis = 1;
+            position = 41370-1000;
+            speed = 10000;
+            accel = 10000;
+            daccel = 10000;
+            WMX3_Pivot(axis, position, speed, accel, daccel);
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            int isOn = 0;
+            int axis = 0;
+
+            axis = 0;
+            WMX3_ServoOnOff(axis, isOn);
+
+            axis = 1;
+            WMX3_ServoOnOff(axis, isOn);
+        }
+
+        private void btn_AlarmRST_Click(object sender, EventArgs e)
+        {
+            motion.AxisControl.ClearAmpAlarm((int)NUD_Motor_NO.Value);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// Reserve function
+        /// </summary>
+        /// 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //inspector1.xInit();
+        }
+
+
+
+
+
+        /// <summary>
+        /// TCP Server
+        /// Vibration
+        /// </summary>
+        /// 
+        public enum xe_U15_CMD {
+            xeUC_TestMode_Parameters                = 32,
+            xeUC_TestMode_FunctionOn                = 33,
+            xeUC_SendParametersToRecipeNo           = 34,
+            xeUC_SendLightOnToRecipeNo              = 35,
+            xeUC_RunRecipeNo                        = 36,
+            xeUC_Reserve_SendDepotsToRecipeNo       = 37,
+            xeUC_ReadMachineStatus                  = 38,
+            xeUC_ReadParametersOfRecipeNo           = 39,
+            xeUC_TestMode_LightLevel                = 40,
+            xeUC_Reserve_TestMode_ParametersOfDepot = 41,
+            xeUC_NullCMD_AutoReadStatus             = 42,
+            xeUC_Reserve_SetControlMode             = 43,
+            xeUC_Reserve_GetControlMode             = 44,
+            xeUC_RunMultiRecipeNo                   = 45,
+            xeUC_SetRecipeGroupNo                   = 46,
+            xeUC_GetRecipeGroupNo                   = 47,
+            xeUC_RunRecipeGroupNo                   = 48,
+            xeUC_Reserve_GetDIOStatus               = 49,
+            xeUC_ReadMachineInfo                    = 50,
+            xeUC_Reserve01                          = 51,
+            xeUC_Reserve02                          = 52,
+            xeUC_Reserve03                          = 53,
+            xeUC_KillRecipeNo                       = 54,
+            xeUC_KillRecipeGroupNo                  = 55,
+            xeUC_Reserve_UpperLightOn               = 56,
+
+            xeUC_MachineInfo_START                  = 100,
+            xeUC_MachineFirmwareType                = 101,
+            xeUC_MachineFirmwareVersion             = 102,
+            xeUC_MachineType                        = 103,
+            xeUC_MachineSerialNumber                = 104,
+            xeUC_MachineInfo_END                    = 105,
+        }
+
+        // 設定伺服器端的 IP 和 Port
+        public IPAddress ip   = IPAddress.Parse("192.168.2.124");
+        public int       port = 6032;
+        TcpListener server;
+        TcpClient   client;
+
+        //Command Header
+        public const string strCMDU15Header = "AB,1,";
+
+        public uint u32Frequency = 0; 
+            public uint u32VibrationSource1_StartPhase = 0;
+            public uint u32VibrationSource1_StopPhase  = 0;
+            public uint u32VibrationSource2_StartPhase = 0;
+            public uint u32VibrationSource2_StopPhase  = 0;
+            public uint u32VibrationSource3_StartPhase = 0;
+            public uint u32VibrationSource3_StopPhase  = 0;
+            public uint u32VibrationSource4_StartPhase = 0;
+            public uint u32VibrationSource4_StopPhase  = 0;
+            public uint u32BlackDepotSource_StartPhase = 0;
+            public uint u32BlackDepotSource_StopPhase  = 0;
+            public uint u32VibrationSource1_Power = 0;
+            public uint u32VibrationSource2_Power = 0;
+            public uint u32VibrationSource3_Power = 0;
+            public uint u32VibrationSource4_Power = 0;
+            public uint u32BlackDepotSource_Power = 0;
+
+        public uint u32LED_Level = 0;
+
+
+        public void apiEstablishTCPVibration() {
+            if (isEstablishTCP == false) {
+                isEstablishTCP = true;
+
+                try {
+                    // 建立 TcpListener 來監聽指定的 IP 和 Port
+                    server = new TcpListener(ip, port);
+                    server.Start();
+                    Console.WriteLine("伺服器啟動中，等待客戶端連接...");
+
+                    // 接受來自客戶端的連接
+                    client = server.AcceptTcpClient();
+                    Console.WriteLine("客戶端已連接！");
+                } catch (SocketException ex) {
+                    Console.WriteLine("SocketException: " + ex.Message);
+                }
+
+                // 延遲0.5秒（500毫秒）
+                Thread.Sleep(500);
+
+                if (true) {  //Test Mode
+                    SetVibration(u32Frequency, u32VibrationSource1_StartPhase,
+                                               u32VibrationSource1_StopPhase,
+                                               u32VibrationSource2_StartPhase,
+                                               u32VibrationSource2_StopPhase,
+                                               u32VibrationSource3_StartPhase,
+                                               u32VibrationSource3_StopPhase,
+                                               u32VibrationSource4_StartPhase,
+                                               u32VibrationSource4_StopPhase,
+                                               u32BlackDepotSource_StartPhase,
+                                               u32BlackDepotSource_StopPhase,
+                                               u32VibrationSource1_Power,
+                                               u32VibrationSource2_Power,
+                                               u32VibrationSource3_Power,
+                                               u32VibrationSource4_Power,
+                                               u32BlackDepotSource_Power);
+                }  //end of if (true) {  //Test Mode
+
+                //Vibration
+                if (true) { //Test LED Level
+                    SetVibrationLED(u32LED_Level);
+                }  //end of if (true) { //Test LED Level
+
+                // 處理客戶端連接的任務可交由不同的線程執行
+                if (false) {
+                    Thread thread = new Thread(HandleClient);
+                    thread.Start(client);
+                }
+            }
+        }
+
+        public void HandleClient(object obj) {
+            TcpClient client = (TcpClient)obj;
+            NetworkStream stream = client.GetStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            try {
+                // 持續處理客戶端的資料傳輸
+                while (this.IsDisposed == false) {
+                    // 讀取來自客戶端的資料
+                    if ((bytesRead = stream.Read(buffer, 0, buffer.Length)) != 0) {
+                        string message = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+                        Console.WriteLine("收到: " + message);
+
+                        // 伺服器主動回應訊息
+                        byte[] response = Encoding.ASCII.GetBytes("伺服器收到: " + message);
+                        stream.Write(response, 0, response.Length);
+                    }
+
+                    // 伺服器主動發送訊息給客戶端
+                    string serverMessage = "這是伺服器主動發送的訊息";
+                    byte[] serverResponse = Encoding.ASCII.GetBytes(serverMessage);
+                    stream.Write(serverResponse, 0, serverResponse.Length);
+                    Console.WriteLine("伺服器發送: " + serverMessage);
+
+                    // 可以加一些延遲來避免過於頻繁的訊息發送
+                    Thread.Sleep(1000);
+                }
+            } catch (Exception e) {
+                Console.WriteLine("發生錯誤: " + e.Message);
+            } finally {
+                // 關閉連接
+                client.Close();
+                Console.WriteLine("客戶端已斷開連接。");
+            }
+        }
+
+        public void Px1_SendCMD(object obj, xe_U15_CMD Px1_CMD, uint u32Px1) {
+            switch (Px1_CMD) {
+                case xe_U15_CMD.xeUC_TestMode_FunctionOn:
+                case xe_U15_CMD.xeUC_RunRecipeNo:
+                case xe_U15_CMD.xeUC_ReadParametersOfRecipeNo:
+                case xe_U15_CMD.xeUC_TestMode_LightLevel:
+                case xe_U15_CMD.xeUC_GetRecipeGroupNo:
+                case xe_U15_CMD.xeUC_RunRecipeGroupNo:
+                case xe_U15_CMD.xeUC_KillRecipeNo:
+                case xe_U15_CMD.xeUC_KillRecipeGroupNo: {
+                        const uint u32ParaCount = 1;
+                        // 組合命令字串
+                        string CMD_U15 = $"{strCMDU15Header}{(uint)Px1_CMD},{(uint)u32ParaCount},{(uint)u32Px1},\r\n\0";
+
+                        // 發送TCP數據
+                        SendTCPData(obj, CMD_U15);
+                    } break;
+
+                default:
+                    break;
+            }
+        }
+
+        public void Px16_SendTestCMD(object obj, xe_U15_CMD Px16_CMD, uint u32Px1_FRQ,
+                                                                      uint u32Px2_M1S,
+                                                                      uint u32Px3_M1E,
+                                                                      uint u32Px4_M2S,
+                                                                      uint u32Px5_M2E,
+                                                                      uint u32Px6_M3S,
+                                                                      uint u32Px7_M3E,
+                                                                      uint u32Px8_M4S,
+                                                                      uint u32Px9_M4E,
+                                                                      uint u32Px10_MDS,
+                                                                      uint u32Px11_MDE,
+                                                                      uint u32Px12_M1P,
+                                                                      uint u32Px13_M2P,
+                                                                      uint u32Px14_M3P,
+                                                                      uint u32Px15_M4P,
+                                                                      uint u32Px16_MDP) {
+            switch (Px16_CMD) {
+                case xe_U15_CMD.xeUC_TestMode_Parameters: {
+                        const uint u32ParaCount = 16;
+
+                        // 構建指令字串
+                        string CMD_U15 = $"{strCMDU15Header}{(uint)Px16_CMD},{(uint)u32ParaCount},{(uint)u32Px1_FRQ},{(uint)u32Px2_M1S},{(uint)u32Px3_M1E},{(uint)u32Px4_M2S},{(uint)u32Px5_M2E},{(uint)u32Px6_M3S},{(uint)u32Px7_M3E},{(uint)u32Px8_M4S},{(uint)u32Px9_M4E},{(uint)u32Px10_MDS},{(uint)u32Px11_MDE},{(uint)u32Px12_M1P},{(uint)u32Px13_M2P},{(uint)u32Px14_M3P},{(uint)u32Px15_M4P},{(uint)u32Px16_MDP},\r\n\0";
+
+                        // 發送TCP數據
+                        SendTCPData(obj, CMD_U15);
+                } break;
+
+                default:
+                    break;
+            }
+        }
+
+        public void SetVibration(uint u32Px1_FRQ, uint u32Px2_M1S,
+                                                  uint u32Px3_M1E,
+                                                  uint u32Px4_M2S,
+                                                  uint u32Px5_M2E,
+                                                  uint u32Px6_M3S,
+                                                  uint u32Px7_M3E,
+                                                  uint u32Px8_M4S,
+                                                  uint u32Px9_M4E,
+                                                  uint u32Px10_MDS,
+                                                  uint u32Px11_MDE,
+                                                  uint u32Px12_M1P,
+                                                  uint u32Px13_M2P,
+                                                  uint u32Px14_M3P,
+                                                  uint u32Px15_M4P,
+                                                  uint u32Px16_MDP) {
+
+            // 確認變量數值
+            if (u32Px1_FRQ  > 1500) u32Px1_FRQ  = 1500;
+            if (u32Px2_M1S  > 1000) u32Px2_M1S  = 1000;
+            if (u32Px3_M1E  > 1000) u32Px3_M1E  = 1000;
+            if (u32Px4_M2S  > 1000) u32Px4_M2S  = 1000;
+            if (u32Px5_M2E  > 1000) u32Px5_M2E  = 1000;
+            if (u32Px6_M3S  > 1000) u32Px6_M3S  = 1000;
+            if (u32Px7_M3E  > 1000) u32Px7_M3E  = 1000;
+            if (u32Px8_M4S  > 1000) u32Px8_M4S  = 1000;
+            if (u32Px9_M4E  > 1000) u32Px9_M4E  = 1000;
+            if (u32Px10_MDS > 1000) u32Px10_MDS = 1000;
+            if (u32Px11_MDE > 1000) u32Px11_MDE = 1000;
+            if (u32Px12_M1P > 1000) u32Px12_M1P = 1000;
+            if (u32Px13_M2P > 1000) u32Px13_M2P = 1000;
+            if (u32Px14_M3P > 1000) u32Px14_M3P = 1000;
+            if (u32Px15_M4P > 1000) u32Px15_M4P = 1000;
+            if (u32Px16_MDP > 1000) u32Px16_MDP = 1000;
+
+            // 儲存變量
+            uint u32SaveFrequency                   = 0;
+            uint u32SaveVibrationSource1_StartPhase = 0;
+            uint u32SaveVibrationSource1_StopPhase  = 0;
+            uint u32SaveVibrationSource2_StartPhase = 0;
+            uint u32SaveVibrationSource2_StopPhase  = 0;
+            uint u32SaveVibrationSource3_StartPhase = 0;
+            uint u32SaveVibrationSource3_StopPhase  = 0;
+            uint u32SaveVibrationSource4_StartPhase = 0;
+            uint u32SaveVibrationSource4_StopPhase  = 0;
+            uint u32SaveBlackDepotSource_StartPhase = 0;
+            uint u32SaveBlackDepotSource_StopPhase  = 0;
+            uint u32SaveVibrationSource1_Power      = 0;
+            uint u32SaveVibrationSource2_Power      = 0;
+            uint u32SaveVibrationSource3_Power      = 0;
+            uint u32SaveVibrationSource4_Power      = 0;
+            uint u32SaveBlackDepotSource_Power      = 0;
+
+            // 檢查變量是否變更
+            if ( u32SaveFrequency                   != u32Px1_FRQ  ||
+                 u32SaveVibrationSource1_StartPhase != u32Px2_M1S  ||
+                 u32SaveVibrationSource1_StopPhase  != u32Px3_M1E  ||
+                 u32SaveVibrationSource2_StartPhase != u32Px4_M2S  ||
+                 u32SaveVibrationSource2_StopPhase  != u32Px5_M2E  ||
+                 u32SaveVibrationSource3_StartPhase != u32Px6_M3S  ||
+                 u32SaveVibrationSource3_StopPhase  != u32Px7_M3E  ||
+                 u32SaveVibrationSource4_StartPhase != u32Px8_M4S  ||
+                 u32SaveVibrationSource4_StopPhase  != u32Px9_M4E  ||
+                 u32SaveBlackDepotSource_StartPhase != u32Px10_MDS ||
+                 u32SaveBlackDepotSource_StopPhase  != u32Px11_MDE ||
+                 u32SaveVibrationSource1_Power      != u32Px12_M1P ||
+                 u32SaveVibrationSource2_Power      != u32Px13_M2P ||
+                 u32SaveVibrationSource3_Power      != u32Px14_M3P ||
+                 u32SaveVibrationSource4_Power      != u32Px15_M4P ||
+                 u32SaveBlackDepotSource_Power      != u32Px16_MDP ) {
+
+                // 更新保存的變量
+                u32SaveFrequency                   = u32Px1_FRQ;
+                u32SaveVibrationSource1_StartPhase = u32Px2_M1S;
+                u32SaveVibrationSource1_StopPhase  = u32Px3_M1E;
+                u32SaveVibrationSource2_StartPhase = u32Px4_M2S;
+                u32SaveVibrationSource2_StopPhase  = u32Px5_M2E;
+                u32SaveVibrationSource3_StartPhase = u32Px6_M3S;
+                u32SaveVibrationSource3_StopPhase  = u32Px7_M3E;
+                u32SaveVibrationSource4_StartPhase = u32Px8_M4S;
+                u32SaveVibrationSource4_StopPhase  = u32Px9_M4E;
+                u32SaveBlackDepotSource_StartPhase = u32Px10_MDS;
+                u32SaveBlackDepotSource_StopPhase  = u32Px11_MDE;
+                u32SaveVibrationSource1_Power      = u32Px12_M1P;
+                u32SaveVibrationSource2_Power      = u32Px13_M2P;
+                u32SaveVibrationSource3_Power      = u32Px14_M3P;
+                u32SaveVibrationSource4_Power      = u32Px15_M4P;
+                u32SaveBlackDepotSource_Power      = u32Px16_MDP;
+
+                // 發送命令
+                Console.WriteLine("發送命令");
+                Px16_SendTestCMD(client, xe_U15_CMD.xeUC_TestMode_Parameters, u32SaveFrequency,
+                                                                              u32SaveVibrationSource1_StartPhase,
+                                                                              u32SaveVibrationSource1_StopPhase,
+                                                                              u32SaveVibrationSource2_StartPhase,
+                                                                              u32SaveVibrationSource2_StopPhase,
+                                                                              u32SaveVibrationSource3_StartPhase,
+                                                                              u32SaveVibrationSource3_StopPhase,
+                                                                              u32SaveVibrationSource4_StartPhase,
+                                                                              u32SaveVibrationSource4_StopPhase,
+                                                                              u32SaveBlackDepotSource_StartPhase,
+                                                                              u32SaveBlackDepotSource_StopPhase,
+                                                                              u32SaveVibrationSource1_Power,
+                                                                              u32SaveVibrationSource2_Power,
+                                                                              u32SaveVibrationSource3_Power,
+                                                                              u32SaveVibrationSource4_Power,
+                                                                              u32SaveBlackDepotSource_Power);
+            }
+        }
+
+        public void SetVibrationLED(uint u32LEDLevel) {
+            Console.WriteLine("更新 LED 等級");
+            Px1_SendCMD(client, xe_U15_CMD.xeUC_TestMode_LightLevel, u32LEDLevel);
+        }
+
+        public void SendTCPData(object obj, string data) {
+            TcpClient client = (TcpClient)obj;
+            NetworkStream stream = client.GetStream();
+
+            if (client != null && stream != null) {
+                byte[] bytesToSend = Encoding.ASCII.GetBytes(data);
+                stream.Write(bytesToSend, 0, bytesToSend.Length);
+            }
+        }
+
+        public void btnVibrationInit_Click(object sender, EventArgs e) {
+            //Vibration
+            apiEstablishTCPVibration();
+        }
+
+        private void btnVibrationStop_Click(object sender, EventArgs e)
+        {
+            if (isEstablishTCP == true) {
+                uint flagTestOn = 0;
+                Px1_SendCMD(client, xe_U15_CMD.xeUC_TestMode_FunctionOn, flagTestOn);
+            }
+        }
+
+        private void btnVibrationLED_Click(object sender, EventArgs e)
+        {
+            //Vibration
+            apiEstablishTCPVibration();
+
+            u32LED_Level = 10;
+            SetVibrationLED(u32LED_Level);
+        }
+
+        private void btnVibrationLEDOff_Click(object sender, EventArgs e)
+        {
+            //Vibration
+            apiEstablishTCPVibration();
+
+            uint u32SaveLED_Level = 0;
+            SetVibrationLED(u32SaveLED_Level);
         }
         //PCCP Xavier Tsai, added for testing <END>
 
