@@ -825,7 +825,7 @@ namespace InjectorInspector
             //Vibration
             apiEstablishTCPVibration();
 
-            u32LED_Level = 10;
+            u32LED_Level = 50;
             SetVibrationLED(u32LED_Level);
         }
 

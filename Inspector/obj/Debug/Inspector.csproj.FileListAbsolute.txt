@@ -110,3 +110,15 @@ D:\NeedleChanger\Code\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.CoreCom
 D:\NeedleChanger\Code\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.Up2Date
 D:\NeedleChanger\Code\NeedleChanger\Inspector\obj\Debug\Inspector.dll
 D:\NeedleChanger\Code\NeedleChanger\Inspector\obj\Debug\Inspector.pdb
+D:\CodeNeedCnahger\NeedleChanger\Inspector\bin\Debug\ic4core.dll
+D:\CodeNeedCnahger\NeedleChanger\Inspector\bin\Debug\Inspector.dll
+D:\CodeNeedCnahger\NeedleChanger\Inspector\bin\Debug\Inspector.pdb
+D:\CodeNeedCnahger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.AssemblyReference.cache
+D:\CodeNeedCnahger\NeedleChanger\Inspector\obj\Debug\Camera.IMSSetFrm.resources
+D:\CodeNeedCnahger\NeedleChanger\Inspector\obj\Debug\Inspector.Inspector.resources
+D:\CodeNeedCnahger\NeedleChanger\Inspector\obj\Debug\Camera.SisoSetFrm.resources
+D:\CodeNeedCnahger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.GenerateResource.cache
+D:\CodeNeedCnahger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.CoreCompileInputs.cache
+D:\CodeNeedCnahger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.Up2Date
+D:\CodeNeedCnahger\NeedleChanger\Inspector\obj\Debug\Inspector.dll
+D:\CodeNeedCnahger\NeedleChanger\Inspector\obj\Debug\Inspector.pdb
