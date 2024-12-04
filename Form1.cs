@@ -417,15 +417,8 @@ namespace InjectorInspector
             string position = "";
             string speed    = "";
 
-            axis = 吸嘴R軸;
-            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if(rslt == 1) {
-                btn_On_吸嘴R軸.BackColor = Color.Red;
-            } else {
-                btn_On_吸嘴R軸.BackColor = Color.Green;
-            }
-            AcPos0.Text = position;
-            AcSpd0.Text = speed;
+            //讀取 吸嘴R軸 資訊
+            dbapiNozzleDegree(0.0);
 
             axis = 吸嘴Z軸;
             rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
@@ -523,16 +516,56 @@ namespace InjectorInspector
             motion.AxisControl.ClearAmpAlarm((int)NUD_Motor_NO.Value);
         }
 
+        public double dbapiNozzleDegree(double dbIncreaseDegree)
+        {
+            double dbRstNozzleDegree = 0.0;
 
+            {  //吸嘴R軸 讀取與顯示
+                int rslt = 0;
+                int axis = 0;
+                string position = "";
+                string speed = "";
 
+                //讀取 吸嘴R軸 資訊
+                axis = 吸嘴R軸;
+                rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
 
+                //變更顏色
+                btn_On_吸嘴R軸.BackColor = (rslt == 1) ? Color.Red : Color.Green;
 
+                //計算讀取角度
+                dbRstNozzleDegree = double.Parse(position) / 100.0;
+                while (dbRstNozzleDegree >= 360.0)
+                {
+                    dbRstNozzleDegree -= 360.0;
+                }
+                AcPos0.Text = dbRstNozzleDegree.ToString("F2");
 
+                //顯示運動速度
+                AcSpd0.Text = speed;
+            }
 
+            if(dbIncreaseDegree != 0.0) {  //吸嘴R軸 變更位置
+                // 取得欲變更的的浮點數
+                double fChangeDegree = dbIncreaseDegree;
 
+                //取得當前吸嘴角度
+                double fCurrentDegree = dbRstNozzleDegree;
 
+                //計算補正至90度的數值
+                int iTargetDeg = (int)(fChangeDegree) *100;
 
+                //執行旋轉吸嘴
+                int axis = 吸嘴R軸;
+                int position = iTargetDeg;
+                int speed = (int)(360.00 * 100 * 10);
+                int accel = (int)(360.00 * 100 * 10);
+                int daccel = (int)(360.00 * 100 * 10);
+                WMX3_Pivot(axis, position, speed, accel, daccel);
+            }
 
+            return dbRstNozzleDegree;
+        }
 
 
 
@@ -920,25 +953,10 @@ namespace InjectorInspector
         {
             try {
                 // 取得txtDeg裡的浮點數
-                float fdegree = float.Parse(txtDeg.Text);
-
-                // 使用 degree 變數進行後續操作
-                int iChgDeg = (int)(fdegree * 100);
-
-                //取得當前吸嘴角度
-                int ideg = int.Parse(AcPos0.Text);
-
-                //計算補正至90度的數值
-                int iTargetDeg = ideg + iChgDeg;
+                double fChangeDegree = double.Parse(txtDeg.Text);
 
                 //執行旋轉吸嘴
-                int axis = 0;
-                int position = iTargetDeg;
-                int speed = 10000;
-                int accel = 10000;
-                int daccel = 10000;
-                WMX3_Pivot(axis, position, speed, accel, daccel);
-
+                dbapiNozzleDegree(fChangeDegree);
             } catch (FormatException) {
                 MessageBox.Show("請輸入有效的浮點數");
             }
@@ -991,10 +1009,7 @@ namespace InjectorInspector
             }
         }
 
-        private void btnChgY_Click(object sender, EventArgs e)
-        {
 
-        }
 
 
 

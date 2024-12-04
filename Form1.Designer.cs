@@ -182,7 +182,6 @@
             this.btnChgY.TabIndex = 42;
             this.btnChgY.Text = "btnChgY";
             this.btnChgY.UseVisualStyleBackColor = true;
-            this.btnChgY.Click += new System.EventHandler(this.btnChgY_Click);
             // 
             // btnChgX
             // 
