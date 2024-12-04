@@ -34,6 +34,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.inspector1 = new Inspector.Inspector();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnChgNozzleZ = new System.Windows.Forms.Button();
+            this.txtChgNozzleZ = new System.Windows.Forms.TextBox();
             this.btnChgY = new System.Windows.Forms.Button();
             this.btnChgX = new System.Windows.Forms.Button();
             this.AcSpd3 = new System.Windows.Forms.Label();
@@ -46,8 +48,6 @@
             this.btn_On_吸嘴Y軸 = new System.Windows.Forms.Button();
             this.txtY = new System.Windows.Forms.TextBox();
             this.txtX = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.btnNozzleDownPos = new System.Windows.Forms.Button();
             this.btnChgDeg = new System.Windows.Forms.Button();
             this.txtDeg = new System.Windows.Forms.TextBox();
@@ -76,8 +76,6 @@
             this.btn_AlarmRST = new System.Windows.Forms.Button();
             this.btn_Connect = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.btnChgNozzleZ = new System.Windows.Forms.Button();
-            this.txtChgNozzleZ = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -140,8 +138,6 @@
             this.tabPage2.Controls.Add(this.btn_On_吸嘴Y軸);
             this.tabPage2.Controls.Add(this.txtY);
             this.tabPage2.Controls.Add(this.txtX);
-            this.tabPage2.Controls.Add(this.label7);
-            this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.btnNozzleDownPos);
             this.tabPage2.Controls.Add(this.btnChgDeg);
             this.tabPage2.Controls.Add(this.txtDeg);
@@ -177,20 +173,40 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btnChgNozzleZ
+            // 
+            this.btnChgNozzleZ.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnChgNozzleZ.Location = new System.Drawing.Point(150, 569);
+            this.btnChgNozzleZ.Name = "btnChgNozzleZ";
+            this.btnChgNozzleZ.Size = new System.Drawing.Size(100, 39);
+            this.btnChgNozzleZ.TabIndex = 44;
+            this.btnChgNozzleZ.Text = "btnChgNozzleZ";
+            this.btnChgNozzleZ.UseVisualStyleBackColor = true;
+            this.btnChgNozzleZ.Click += new System.EventHandler(this.btnChgNozzleZ_Click);
+            // 
+            // txtChgNozzleZ
+            // 
+            this.txtChgNozzleZ.Location = new System.Drawing.Point(150, 622);
+            this.txtChgNozzleZ.Name = "txtChgNozzleZ";
+            this.txtChgNozzleZ.Size = new System.Drawing.Size(100, 30);
+            this.txtChgNozzleZ.TabIndex = 43;
+            this.txtChgNozzleZ.Text = "-0.00";
+            // 
             // btnChgY
             // 
             this.btnChgY.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnChgY.Location = new System.Drawing.Point(748, 552);
+            this.btnChgY.Location = new System.Drawing.Point(390, 569);
             this.btnChgY.Name = "btnChgY";
             this.btnChgY.Size = new System.Drawing.Size(102, 39);
             this.btnChgY.TabIndex = 42;
             this.btnChgY.Text = "btnChgY";
             this.btnChgY.UseVisualStyleBackColor = true;
+            this.btnChgY.Click += new System.EventHandler(this.btnChgY_Click);
             // 
             // btnChgX
             // 
             this.btnChgX.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnChgX.Location = new System.Drawing.Point(614, 552);
+            this.btnChgX.Location = new System.Drawing.Point(270, 569);
             this.btnChgX.Name = "btnChgX";
             this.btnChgX.Size = new System.Drawing.Size(102, 39);
             this.btnChgX.TabIndex = 41;
@@ -201,7 +217,7 @@
             // AcSpd3
             // 
             this.AcSpd3.AutoSize = true;
-            this.AcSpd3.Location = new System.Drawing.Point(422, 433);
+            this.AcSpd3.Location = new System.Drawing.Point(296, 433);
             this.AcSpd3.Name = "AcSpd3";
             this.AcSpd3.Size = new System.Drawing.Size(67, 19);
             this.AcSpd3.TabIndex = 40;
@@ -210,7 +226,7 @@
             // AcPos3
             // 
             this.AcPos3.AutoSize = true;
-            this.AcPos3.Location = new System.Drawing.Point(422, 404);
+            this.AcPos3.Location = new System.Drawing.Point(296, 404);
             this.AcPos3.Name = "AcPos3";
             this.AcPos3.Size = new System.Drawing.Size(65, 19);
             this.AcPos3.TabIndex = 39;
@@ -219,7 +235,7 @@
             // btn_Off_吸嘴X軸
             // 
             this.btn_Off_吸嘴X軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_Off_吸嘴X軸.Location = new System.Drawing.Point(396, 344);
+            this.btn_Off_吸嘴X軸.Location = new System.Drawing.Point(270, 344);
             this.btn_Off_吸嘴X軸.Name = "btn_Off_吸嘴X軸";
             this.btn_Off_吸嘴X軸.Size = new System.Drawing.Size(114, 39);
             this.btn_Off_吸嘴X軸.TabIndex = 38;
@@ -230,7 +246,7 @@
             // btn_On_吸嘴X軸
             // 
             this.btn_On_吸嘴X軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_On_吸嘴X軸.Location = new System.Drawing.Point(396, 298);
+            this.btn_On_吸嘴X軸.Location = new System.Drawing.Point(270, 298);
             this.btn_On_吸嘴X軸.Name = "btn_On_吸嘴X軸";
             this.btn_On_吸嘴X軸.Size = new System.Drawing.Size(114, 39);
             this.btn_On_吸嘴X軸.TabIndex = 37;
@@ -241,7 +257,7 @@
             // AcSpd7
             // 
             this.AcSpd7.AutoSize = true;
-            this.AcSpd7.Location = new System.Drawing.Point(299, 433);
+            this.AcSpd7.Location = new System.Drawing.Point(416, 433);
             this.AcSpd7.Name = "AcSpd7";
             this.AcSpd7.Size = new System.Drawing.Size(67, 19);
             this.AcSpd7.TabIndex = 36;
@@ -250,7 +266,7 @@
             // AcPos7
             // 
             this.AcPos7.AutoSize = true;
-            this.AcPos7.Location = new System.Drawing.Point(299, 404);
+            this.AcPos7.Location = new System.Drawing.Point(416, 404);
             this.AcPos7.Name = "AcPos7";
             this.AcPos7.Size = new System.Drawing.Size(65, 19);
             this.AcPos7.TabIndex = 35;
@@ -259,7 +275,7 @@
             // btn_Off_吸嘴Y軸
             // 
             this.btn_Off_吸嘴Y軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_Off_吸嘴Y軸.Location = new System.Drawing.Point(273, 344);
+            this.btn_Off_吸嘴Y軸.Location = new System.Drawing.Point(390, 344);
             this.btn_Off_吸嘴Y軸.Name = "btn_Off_吸嘴Y軸";
             this.btn_Off_吸嘴Y軸.Size = new System.Drawing.Size(114, 39);
             this.btn_Off_吸嘴Y軸.TabIndex = 34;
@@ -270,7 +286,7 @@
             // btn_On_吸嘴Y軸
             // 
             this.btn_On_吸嘴Y軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_On_吸嘴Y軸.Location = new System.Drawing.Point(273, 298);
+            this.btn_On_吸嘴Y軸.Location = new System.Drawing.Point(390, 298);
             this.btn_On_吸嘴Y軸.Name = "btn_On_吸嘴Y軸";
             this.btn_On_吸嘴Y軸.Size = new System.Drawing.Size(114, 39);
             this.btn_On_吸嘴Y軸.TabIndex = 33;
@@ -280,7 +296,7 @@
             // 
             // txtY
             // 
-            this.txtY.Location = new System.Drawing.Point(748, 605);
+            this.txtY.Location = new System.Drawing.Point(390, 622);
             this.txtY.Name = "txtY";
             this.txtY.Size = new System.Drawing.Size(100, 30);
             this.txtY.TabIndex = 32;
@@ -288,33 +304,15 @@
             // 
             // txtX
             // 
-            this.txtX.Location = new System.Drawing.Point(616, 605);
+            this.txtX.Location = new System.Drawing.Point(270, 622);
             this.txtX.Name = "txtX";
             this.txtX.Size = new System.Drawing.Size(100, 30);
             this.txtX.TabIndex = 31;
             this.txtX.Text = "-0.00";
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(774, 647);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 19);
-            this.label7.TabIndex = 30;
-            this.label7.Text = "label7";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(640, 647);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 19);
-            this.label6.TabIndex = 29;
-            this.label6.Text = "label6";
-            // 
             // btnNozzleDownPos
             // 
-            this.btnNozzleDownPos.Location = new System.Drawing.Point(655, 498);
+            this.btnNozzleDownPos.Location = new System.Drawing.Point(303, 508);
             this.btnNozzleDownPos.Name = "btnNozzleDownPos";
             this.btnNozzleDownPos.Size = new System.Drawing.Size(165, 39);
             this.btnNozzleDownPos.TabIndex = 28;
@@ -331,7 +329,7 @@
             this.btnChgDeg.TabIndex = 27;
             this.btnChgDeg.Text = "btnChgDeg";
             this.btnChgDeg.UseVisualStyleBackColor = true;
-            this.btnChgDeg.Click += new System.EventHandler(this.btnChgDeg_Click);
+            this.btnChgDeg.Click += new System.EventHandler(this.btnChgNozzleDeg_Click);
             // 
             // txtDeg
             // 
@@ -470,7 +468,7 @@
             // btn_Off_吸嘴R軸
             // 
             this.btn_Off_吸嘴R軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_Off_吸嘴R軸.Location = new System.Drawing.Point(29, 344);
+            this.btn_Off_吸嘴R軸.Location = new System.Drawing.Point(33, 344);
             this.btn_Off_吸嘴R軸.Name = "btn_Off_吸嘴R軸";
             this.btn_Off_吸嘴R軸.Size = new System.Drawing.Size(114, 39);
             this.btn_Off_吸嘴R軸.TabIndex = 12;
@@ -492,7 +490,7 @@
             // btn_On_吸嘴R軸
             // 
             this.btn_On_吸嘴R軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_On_吸嘴R軸.Location = new System.Drawing.Point(29, 298);
+            this.btn_On_吸嘴R軸.Location = new System.Drawing.Point(33, 298);
             this.btn_On_吸嘴R軸.Name = "btn_On_吸嘴R軸";
             this.btn_On_吸嘴R軸.Size = new System.Drawing.Size(114, 39);
             this.btn_On_吸嘴R軸.TabIndex = 10;
@@ -581,25 +579,6 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // btnChgNozzleZ
-            // 
-            this.btnChgNozzleZ.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnChgNozzleZ.Location = new System.Drawing.Point(150, 569);
-            this.btnChgNozzleZ.Name = "btnChgNozzleZ";
-            this.btnChgNozzleZ.Size = new System.Drawing.Size(100, 39);
-            this.btnChgNozzleZ.TabIndex = 44;
-            this.btnChgNozzleZ.Text = "btnChgNozzleZ";
-            this.btnChgNozzleZ.UseVisualStyleBackColor = true;
-            this.btnChgNozzleZ.Click += new System.EventHandler(this.btnChgNozzleZ_Click);
-            // 
-            // txtChgNozzleZ
-            // 
-            this.txtChgNozzleZ.Location = new System.Drawing.Point(150, 622);
-            this.txtChgNozzleZ.Name = "txtChgNozzleZ";
-            this.txtChgNozzleZ.Size = new System.Drawing.Size(100, 30);
-            this.txtChgNozzleZ.TabIndex = 43;
-            this.txtChgNozzleZ.Text = "-0.00";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -661,8 +640,6 @@
         private System.Windows.Forms.Button btnNozzleDownPos;
         private System.Windows.Forms.TextBox txtY;
         private System.Windows.Forms.TextBox txtX;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label AcSpd7;
         private System.Windows.Forms.Label AcPos7;
         private System.Windows.Forms.Button btn_Off_吸嘴Y軸;

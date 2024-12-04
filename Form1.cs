@@ -104,8 +104,11 @@ namespace InjectorInspector
             //axis = 吸嘴Z軸;
             //int B = motion.Config.SetGearRatio(axis, 1048576, 10000);
 
+            axis = 吸嘴X軸;
+            int D = motion.Config.SetGearRatio(axis, 1000, 100);
+
             axis = 吸嘴Y軸;
-            int G = motion.Config.SetGearRatio(axis, 1048576, 2000);
+            int H = motion.Config.SetGearRatio(axis, 1048576, 2000);
         }  //end of public void WMX3_Initial()
 
         public int WMX3_establish_Commu()
@@ -397,6 +400,12 @@ namespace InjectorInspector
 
             axis = 吸嘴Z軸;
             WMX3_SetHomePosition(axis);
+
+            axis = 吸嘴X軸;
+            WMX3_SetHomePosition(axis);
+
+            axis = 吸嘴Y軸;
+            WMX3_SetHomePosition(axis);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -423,31 +432,11 @@ namespace InjectorInspector
             //讀取 吸嘴Z軸 資訊
             dbapiNozzleLength(0.0);
 
-            axis = 吸嘴X軸;
-            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1)
-            {
-                btn_On_吸嘴X軸.BackColor = Color.Red;
-            }
-            else
-            {
-                btn_On_吸嘴X軸.BackColor = Color.Green;
-            }
-            AcPos7.Text = position;
-            AcSpd7.Text = speed;
+            //讀取 吸嘴X軸 資訊
+            dbapiNozzleX(0.0);
 
-            axis = 吸嘴Y軸;
-            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1)
-            {
-                btn_On_吸嘴Y軸.BackColor = Color.Red;
-            }
-            else
-            {
-                btn_On_吸嘴Y軸.BackColor = Color.Green;
-            }
-            AcPos3.Text = position;
-            AcSpd3.Text = speed;
+            //讀取 吸嘴X軸 資訊
+            dbapiNozzleY(0.0);
         }
 
         private void btnPosition01_Click(object sender, EventArgs e)
@@ -477,19 +466,7 @@ namespace InjectorInspector
 
         private void btnNozzleDownPos_Click(object sender, EventArgs e)
         {
-            //單點動
-            int axis;
-            int position;
-            int speed;
-            int accel;
-            int daccel;
-
-            axis     = 吸嘴Z軸;
-            position = 26300;
-            speed    = 10000;
-            accel    = 10000;
-            daccel   = 10000;
-            WMX3_Pivot(axis, position, speed, accel, daccel);
+            dbapiNozzleLength(26.2);
         }
 
         private void btnStop_Click(object sender, EventArgs e)
@@ -509,7 +486,7 @@ namespace InjectorInspector
             motion.AxisControl.ClearAmpAlarm((int)NUD_Motor_NO.Value);
         }
 
-        public double dbapiNozzleDegree(double dbIncreaseDegree)
+        public double dbapiNozzleDegree(double dbIncreaseDegree)  //NozzleR
         {
             double dbRstNozzleDegree = 0.0;
 
@@ -549,25 +526,25 @@ namespace InjectorInspector
                 int axis = 吸嘴R軸;
                 int position = iTargetDeg;
                 int speed = (int)(360.00 * 100 * 20);
-                int accel = (int)(360.00 * 100 * 20);
-                int daccel = (int)(360.00 * 100 * 20);
+                int accel = speed*2;
+                int daccel = speed*2;
                 WMX3_Pivot(axis, position, speed, accel, daccel);
             }
 
             return dbRstNozzleDegree;
         }
 
-        public double dbapiNozzleLength(double dbIncreaseNozzleZ)
+        public double dbapiNozzleLength(double dbIncreaseNozzleZ)  //NozzleZ
         {
             double dbRstNozzleLength = 0.0;
 
-            {  //吸嘴R軸 讀取與顯示
+            {  //吸嘴Z軸 讀取與顯示
                 int rslt = 0;
                 int axis = 0;
                 string position = "";
                 string speed = "";
 
-                //讀取 吸嘴R軸 資訊
+                //讀取 吸嘴Z軸 資訊
                 axis = 吸嘴Z軸;
                 rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
 
@@ -583,7 +560,7 @@ namespace InjectorInspector
             }
 
             if (dbIncreaseNozzleZ != 0.0)
-            {  //吸嘴R軸 變更位置
+            {  //吸嘴Z軸 變更位置
                 // 取得欲變更的的浮點數
                 double fChangeNozzleZ = dbIncreaseNozzleZ;
 
@@ -600,13 +577,117 @@ namespace InjectorInspector
                 int axis = 吸嘴Z軸;
                 int position = iTargetNozzleZ;
                 int speed = (int)(40.00 * 1000 * 20);
-                int accel = (int)(40.00 * 1000 * 20);
-                int daccel = (int)(40.00 * 1000 * 20);
+                int accel = speed*2;
+                int daccel = speed*2;
                 WMX3_Pivot(axis, position, speed, accel, daccel);
             }
 
             return dbRstNozzleLength;
         }
+
+        public double dbapiNozzleX(double dbIncreaseNozzleX)  //NozzleX
+        {
+            double dbRstNozzleX = 0.0;
+
+            {  //吸嘴X軸 讀取與顯示
+                int rslt = 0;
+                int axis = 0;
+                string position = "";
+                string speed = "";
+
+                //讀取 吸嘴X軸 資訊
+                axis = 吸嘴X軸;
+                rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+
+                //變更顏色
+                btn_On_吸嘴X軸.BackColor = (rslt == 1) ? Color.Red : Color.Green;
+
+                //計算讀取長度
+                dbRstNozzleX = double.Parse(position) / 100.0;
+                AcPos3.Text = dbRstNozzleX.ToString("F2");
+
+                //顯示運動速度
+                AcSpd3.Text = speed;
+            }
+
+            if (dbIncreaseNozzleX != 0.0)
+            {  //吸嘴X軸 變更位置
+                // 取得欲變更的的浮點數
+                double fChangeNozzleX = dbIncreaseNozzleX;
+
+                //伸長量overflow保護
+                //if (fChangeNozzleX >= 40.35)
+                //{
+                //    fChangeNozzleX = 40.35;
+                //}
+
+                //計算補正至長度的數值
+                int iTargetNozzleX = (int)(fChangeNozzleX * 100);
+
+                //執行旋轉吸嘴
+                int axis = 吸嘴X軸;
+                int position = iTargetNozzleX;
+                int speed = (int)(50.00 * 100 * 20);
+                int accel = speed * 2;
+                int daccel = speed * 2;
+                WMX3_Pivot(axis, position, speed, accel, daccel);
+            }
+
+            return dbRstNozzleX;
+        }
+
+        public double dbapiNozzleY(double dbIncreaseNozzleY)  //NozzleY
+        {
+            double dbRstNozzleY = 0.0;
+
+            {  //吸嘴Y軸 讀取與顯示
+                int rslt = 0;
+                int axis = 0;
+                string position = "";
+                string speed = "";
+
+                //讀取 吸嘴Y軸 資訊
+                axis = 吸嘴Y軸;
+                rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+
+                //變更顏色
+                btn_On_吸嘴Y軸.BackColor = (rslt == 1) ? Color.Red : Color.Green;
+
+                //計算讀取長度
+                dbRstNozzleY = double.Parse(position) / 100.0;
+                AcPos7.Text = dbRstNozzleY.ToString("F2");
+
+                //顯示運動速度
+                AcSpd7.Text = speed;
+            }
+
+            if (dbIncreaseNozzleY != 0.0)
+            {  //吸嘴X軸 變更位置
+                // 取得欲變更的的浮點數
+                double fChangeNozzleY = dbIncreaseNozzleY;
+
+                //伸長量overflow保護
+                //if (dbIncreaseNozzleY >= 40.35)
+                //{
+                //    dbIncreaseNozzleY = 40.35;
+                //}
+
+                //計算補正至長度的數值
+                int iTargetNozzleY = (int)(fChangeNozzleY * 100);
+
+                //執行旋轉吸嘴
+                int axis = 吸嘴Y軸;
+                int position = iTargetNozzleY;
+                int speed = (int)(50.00 * 100 * 20);
+                int accel = speed * 2;
+                int daccel = speed * 2;
+                WMX3_Pivot(axis, position, speed, accel, daccel);
+            }
+
+            return dbRstNozzleY;
+        }
+
+
 
 
 
@@ -990,7 +1071,7 @@ namespace InjectorInspector
             SetVibrationLED(u32SaveLED_Level);
         }
 
-        private void btnChgDeg_Click(object sender, EventArgs e)
+        private void btnChgNozzleDeg_Click(object sender, EventArgs e)
         {
             try {
                 // 取得txtDeg裡的浮點數
@@ -1011,7 +1092,7 @@ namespace InjectorInspector
         {
             try
             {
-                // 取得txtDeg裡的浮點數
+                // 取得txtChgNozzleZ裡的浮點數
                 double fChangeNozzleZ = double.Parse(txtChgNozzleZ.Text);
 
                 //格式化數值
@@ -1032,41 +1113,34 @@ namespace InjectorInspector
             try
             {
                 // 取得txtX裡的浮點數
-                float ftxtX = float.Parse(txtX.Text);
+                double fChangeNozzleX = double.Parse(txtX.Text);
 
-                // 使用 degree 變數進行後續操作
-                int itxtX = (int)(ftxtX * 1000);
+                //格式化數值
+                txtX.Text = fChangeNozzleX.ToString("F2");
+                fChangeNozzleX = double.Parse(txtX.Text);
 
-                //取得當前吸嘴吸料盤校正用X
-                int rslt = 0;
-                int axis = 0;
-                string position = "";
-                string speed = "";
+                //執行伸縮吸嘴
+                dbapiNozzleX(fChangeNozzleX);
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("請輸入有效的浮點數");
+            }
+        }
 
-                axis = 吸嘴X軸;
-                rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
-                if (rslt == 1)
-                {
-                    btn_On_吸嘴X軸.BackColor = Color.Red;
-                }
-                else
-                {
-                    btn_On_吸嘴X軸.BackColor = Color.Green;
-                }
-                AcPos7.Text = position;
-                AcSpd7.Text = speed;
+        private void btnChgY_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 取得txtX裡的浮點數
+                double fChangeNozzleY = double.Parse(txtY.Text);
 
-                //計算補正至X的數值
-                //int iTargetX = ideg + iChgDeg;
+                //格式化數值
+                txtY.Text = fChangeNozzleY.ToString("F2");
+                fChangeNozzleY = double.Parse(txtY.Text);
 
-                //執行旋轉吸嘴
-                //int axis = 0;
-                //int position = iTargetDeg;
-                //int speed = 10000;
-                //int accel = 10000;
-                //int daccel = 10000;
-                //WMX3_Pivot(axis, position, speed, accel, daccel);
-
+                //執行伸縮吸嘴
+                dbapiNozzleY(fChangeNozzleY);
             }
             catch (FormatException)
             {
