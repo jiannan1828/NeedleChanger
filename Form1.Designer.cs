@@ -34,6 +34,23 @@
             this.button1 = new System.Windows.Forms.Button();
             this.inspector1 = new Inspector.Inspector();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnChgY = new System.Windows.Forms.Button();
+            this.btnChgX = new System.Windows.Forms.Button();
+            this.AcSpd3 = new System.Windows.Forms.Label();
+            this.AcPos3 = new System.Windows.Forms.Label();
+            this.btn_Off_吸嘴X軸 = new System.Windows.Forms.Button();
+            this.btn_On_吸嘴X軸 = new System.Windows.Forms.Button();
+            this.AcSpd7 = new System.Windows.Forms.Label();
+            this.AcPos7 = new System.Windows.Forms.Label();
+            this.btn_Off_吸嘴Y軸 = new System.Windows.Forms.Button();
+            this.btn_On_吸嘴Y軸 = new System.Windows.Forms.Button();
+            this.txtY = new System.Windows.Forms.TextBox();
+            this.txtX = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.btnNozzleDownPos = new System.Windows.Forms.Button();
+            this.btnChgDeg = new System.Windows.Forms.Button();
+            this.txtDeg = new System.Windows.Forms.TextBox();
             this.btnVibrationLEDOff = new System.Windows.Forms.Button();
             this.btnVibrationLED = new System.Windows.Forms.Button();
             this.btnVibrationStop = new System.Windows.Forms.Button();
@@ -46,10 +63,10 @@
             this.AcPos0 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnSetHome = new System.Windows.Forms.Button();
-            this.btn_Off1 = new System.Windows.Forms.Button();
-            this.btn_Off0 = new System.Windows.Forms.Button();
-            this.btn_On1 = new System.Windows.Forms.Button();
-            this.btn_On0 = new System.Windows.Forms.Button();
+            this.btn_Off_吸嘴Z軸 = new System.Windows.Forms.Button();
+            this.btn_Off_吸嘴R軸 = new System.Windows.Forms.Button();
+            this.btn_On_吸嘴Z軸 = new System.Windows.Forms.Button();
+            this.btn_On_吸嘴R軸 = new System.Windows.Forms.Button();
             this.btn_Disconnect = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -59,8 +76,6 @@
             this.btn_AlarmRST = new System.Windows.Forms.Button();
             this.btn_Connect = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.txtDeg = new System.Windows.Forms.TextBox();
-            this.btnChgDeg = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -109,6 +124,21 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnChgY);
+            this.tabPage2.Controls.Add(this.btnChgX);
+            this.tabPage2.Controls.Add(this.AcSpd3);
+            this.tabPage2.Controls.Add(this.AcPos3);
+            this.tabPage2.Controls.Add(this.btn_Off_吸嘴X軸);
+            this.tabPage2.Controls.Add(this.btn_On_吸嘴X軸);
+            this.tabPage2.Controls.Add(this.AcSpd7);
+            this.tabPage2.Controls.Add(this.AcPos7);
+            this.tabPage2.Controls.Add(this.btn_Off_吸嘴Y軸);
+            this.tabPage2.Controls.Add(this.btn_On_吸嘴Y軸);
+            this.tabPage2.Controls.Add(this.txtY);
+            this.tabPage2.Controls.Add(this.txtX);
+            this.tabPage2.Controls.Add(this.label7);
+            this.tabPage2.Controls.Add(this.label6);
+            this.tabPage2.Controls.Add(this.btnNozzleDownPos);
             this.tabPage2.Controls.Add(this.btnChgDeg);
             this.tabPage2.Controls.Add(this.txtDeg);
             this.tabPage2.Controls.Add(this.btnVibrationLEDOff);
@@ -123,10 +153,10 @@
             this.tabPage2.Controls.Add(this.AcPos0);
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.btnSetHome);
-            this.tabPage2.Controls.Add(this.btn_Off1);
-            this.tabPage2.Controls.Add(this.btn_Off0);
-            this.tabPage2.Controls.Add(this.btn_On1);
-            this.tabPage2.Controls.Add(this.btn_On0);
+            this.tabPage2.Controls.Add(this.btn_Off_吸嘴Z軸);
+            this.tabPage2.Controls.Add(this.btn_Off_吸嘴R軸);
+            this.tabPage2.Controls.Add(this.btn_On_吸嘴Z軸);
+            this.tabPage2.Controls.Add(this.btn_On_吸嘴R軸);
             this.tabPage2.Controls.Add(this.btn_Disconnect);
             this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.label4);
@@ -143,9 +173,173 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btnChgY
+            // 
+            this.btnChgY.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnChgY.Location = new System.Drawing.Point(396, 569);
+            this.btnChgY.Name = "btnChgY";
+            this.btnChgY.Size = new System.Drawing.Size(102, 39);
+            this.btnChgY.TabIndex = 42;
+            this.btnChgY.Text = "btnChgY";
+            this.btnChgY.UseVisualStyleBackColor = true;
+            this.btnChgY.Click += new System.EventHandler(this.btnChgY_Click);
+            // 
+            // btnChgX
+            // 
+            this.btnChgX.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnChgX.Location = new System.Drawing.Point(262, 569);
+            this.btnChgX.Name = "btnChgX";
+            this.btnChgX.Size = new System.Drawing.Size(102, 39);
+            this.btnChgX.TabIndex = 41;
+            this.btnChgX.Text = "btnChgX";
+            this.btnChgX.UseVisualStyleBackColor = true;
+            this.btnChgX.Click += new System.EventHandler(this.btnChgX_Click);
+            // 
+            // AcSpd3
+            // 
+            this.AcSpd3.AutoSize = true;
+            this.AcSpd3.Location = new System.Drawing.Point(422, 433);
+            this.AcSpd3.Name = "AcSpd3";
+            this.AcSpd3.Size = new System.Drawing.Size(67, 19);
+            this.AcSpd3.TabIndex = 40;
+            this.AcSpd3.Text = "AcSpd3";
+            // 
+            // AcPos3
+            // 
+            this.AcPos3.AutoSize = true;
+            this.AcPos3.Location = new System.Drawing.Point(422, 404);
+            this.AcPos3.Name = "AcPos3";
+            this.AcPos3.Size = new System.Drawing.Size(65, 19);
+            this.AcPos3.TabIndex = 39;
+            this.AcPos3.Text = "AcPos3";
+            // 
+            // btn_Off_吸嘴X軸
+            // 
+            this.btn_Off_吸嘴X軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_Off_吸嘴X軸.Location = new System.Drawing.Point(396, 344);
+            this.btn_Off_吸嘴X軸.Name = "btn_Off_吸嘴X軸";
+            this.btn_Off_吸嘴X軸.Size = new System.Drawing.Size(114, 39);
+            this.btn_Off_吸嘴X軸.TabIndex = 38;
+            this.btn_Off_吸嘴X軸.Text = "btn_Off_吸嘴X軸";
+            this.btn_Off_吸嘴X軸.UseVisualStyleBackColor = true;
+            this.btn_Off_吸嘴X軸.Click += new System.EventHandler(this.btn_Off_吸嘴X軸_Click);
+            // 
+            // btn_On_吸嘴X軸
+            // 
+            this.btn_On_吸嘴X軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_On_吸嘴X軸.Location = new System.Drawing.Point(396, 298);
+            this.btn_On_吸嘴X軸.Name = "btn_On_吸嘴X軸";
+            this.btn_On_吸嘴X軸.Size = new System.Drawing.Size(114, 39);
+            this.btn_On_吸嘴X軸.TabIndex = 37;
+            this.btn_On_吸嘴X軸.Text = "btn_On_吸嘴X軸";
+            this.btn_On_吸嘴X軸.UseVisualStyleBackColor = true;
+            this.btn_On_吸嘴X軸.Click += new System.EventHandler(this.btn_On_吸嘴X軸_Click);
+            // 
+            // AcSpd7
+            // 
+            this.AcSpd7.AutoSize = true;
+            this.AcSpd7.Location = new System.Drawing.Point(299, 433);
+            this.AcSpd7.Name = "AcSpd7";
+            this.AcSpd7.Size = new System.Drawing.Size(67, 19);
+            this.AcSpd7.TabIndex = 36;
+            this.AcSpd7.Text = "AcSpd7";
+            // 
+            // AcPos7
+            // 
+            this.AcPos7.AutoSize = true;
+            this.AcPos7.Location = new System.Drawing.Point(299, 404);
+            this.AcPos7.Name = "AcPos7";
+            this.AcPos7.Size = new System.Drawing.Size(65, 19);
+            this.AcPos7.TabIndex = 35;
+            this.AcPos7.Text = "AcPos7";
+            // 
+            // btn_Off_吸嘴Y軸
+            // 
+            this.btn_Off_吸嘴Y軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_Off_吸嘴Y軸.Location = new System.Drawing.Point(273, 344);
+            this.btn_Off_吸嘴Y軸.Name = "btn_Off_吸嘴Y軸";
+            this.btn_Off_吸嘴Y軸.Size = new System.Drawing.Size(114, 39);
+            this.btn_Off_吸嘴Y軸.TabIndex = 34;
+            this.btn_Off_吸嘴Y軸.Text = "btn_Off_吸嘴Y軸";
+            this.btn_Off_吸嘴Y軸.UseVisualStyleBackColor = true;
+            this.btn_Off_吸嘴Y軸.Click += new System.EventHandler(this.btn_Off_吸嘴Y軸_Click);
+            // 
+            // btn_On_吸嘴Y軸
+            // 
+            this.btn_On_吸嘴Y軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_On_吸嘴Y軸.Location = new System.Drawing.Point(273, 298);
+            this.btn_On_吸嘴Y軸.Name = "btn_On_吸嘴Y軸";
+            this.btn_On_吸嘴Y軸.Size = new System.Drawing.Size(114, 39);
+            this.btn_On_吸嘴Y軸.TabIndex = 33;
+            this.btn_On_吸嘴Y軸.Text = "btn_On_吸嘴Y軸";
+            this.btn_On_吸嘴Y軸.UseVisualStyleBackColor = true;
+            this.btn_On_吸嘴Y軸.Click += new System.EventHandler(this.btn_On_吸嘴Y軸_Click);
+            // 
+            // txtY
+            // 
+            this.txtY.Location = new System.Drawing.Point(396, 622);
+            this.txtY.Name = "txtY";
+            this.txtY.Size = new System.Drawing.Size(100, 30);
+            this.txtY.TabIndex = 32;
+            this.txtY.Text = "-0.00";
+            // 
+            // txtX
+            // 
+            this.txtX.Location = new System.Drawing.Point(264, 622);
+            this.txtX.Name = "txtX";
+            this.txtX.Size = new System.Drawing.Size(100, 30);
+            this.txtX.TabIndex = 31;
+            this.txtX.Text = "-0.00";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(422, 664);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(53, 19);
+            this.label7.TabIndex = 30;
+            this.label7.Text = "label7";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(288, 664);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 19);
+            this.label6.TabIndex = 29;
+            this.label6.Text = "label6";
+            // 
+            // btnNozzleDownPos
+            // 
+            this.btnNozzleDownPos.Location = new System.Drawing.Point(303, 515);
+            this.btnNozzleDownPos.Name = "btnNozzleDownPos";
+            this.btnNozzleDownPos.Size = new System.Drawing.Size(165, 39);
+            this.btnNozzleDownPos.TabIndex = 28;
+            this.btnNozzleDownPos.Text = "btnNozzleDownPos";
+            this.btnNozzleDownPos.UseVisualStyleBackColor = true;
+            this.btnNozzleDownPos.Click += new System.EventHandler(this.btnNozzleDownPos_Click);
+            // 
+            // btnChgDeg
+            // 
+            this.btnChgDeg.Location = new System.Drawing.Point(33, 569);
+            this.btnChgDeg.Name = "btnChgDeg";
+            this.btnChgDeg.Size = new System.Drawing.Size(165, 39);
+            this.btnChgDeg.TabIndex = 27;
+            this.btnChgDeg.Text = "btnChgDeg";
+            this.btnChgDeg.UseVisualStyleBackColor = true;
+            this.btnChgDeg.Click += new System.EventHandler(this.btnChgDeg_Click);
+            // 
+            // txtDeg
+            // 
+            this.txtDeg.Location = new System.Drawing.Point(33, 622);
+            this.txtDeg.Name = "txtDeg";
+            this.txtDeg.Size = new System.Drawing.Size(100, 30);
+            this.txtDeg.TabIndex = 26;
+            this.txtDeg.Text = "-0.00";
+            // 
             // btnVibrationLEDOff
             // 
-            this.btnVibrationLEDOff.Location = new System.Drawing.Point(946, 173);
+            this.btnVibrationLEDOff.Location = new System.Drawing.Point(1003, 118);
             this.btnVibrationLEDOff.Name = "btnVibrationLEDOff";
             this.btnVibrationLEDOff.Size = new System.Drawing.Size(172, 39);
             this.btnVibrationLEDOff.TabIndex = 25;
@@ -155,7 +349,7 @@
             // 
             // btnVibrationLED
             // 
-            this.btnVibrationLED.Location = new System.Drawing.Point(750, 173);
+            this.btnVibrationLED.Location = new System.Drawing.Point(807, 118);
             this.btnVibrationLED.Name = "btnVibrationLED";
             this.btnVibrationLED.Size = new System.Drawing.Size(165, 39);
             this.btnVibrationLED.TabIndex = 24;
@@ -165,7 +359,7 @@
             // 
             // btnVibrationStop
             // 
-            this.btnVibrationStop.Location = new System.Drawing.Point(946, 109);
+            this.btnVibrationStop.Location = new System.Drawing.Point(1003, 54);
             this.btnVibrationStop.Name = "btnVibrationStop";
             this.btnVibrationStop.Size = new System.Drawing.Size(165, 39);
             this.btnVibrationStop.TabIndex = 23;
@@ -175,7 +369,7 @@
             // 
             // btnVibrationInit
             // 
-            this.btnVibrationInit.Location = new System.Drawing.Point(750, 109);
+            this.btnVibrationInit.Location = new System.Drawing.Point(807, 54);
             this.btnVibrationInit.Name = "btnVibrationInit";
             this.btnVibrationInit.Size = new System.Drawing.Size(165, 39);
             this.btnVibrationInit.TabIndex = 22;
@@ -185,7 +379,7 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(403, 211);
+            this.btnStop.Location = new System.Drawing.Point(499, 129);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(165, 39);
             this.btnStop.TabIndex = 21;
@@ -195,7 +389,7 @@
             // 
             // btnPosition01
             // 
-            this.btnPosition01.Location = new System.Drawing.Point(403, 150);
+            this.btnPosition01.Location = new System.Drawing.Point(499, 68);
             this.btnPosition01.Name = "btnPosition01";
             this.btnPosition01.Size = new System.Drawing.Size(165, 39);
             this.btnPosition01.TabIndex = 20;
@@ -206,7 +400,7 @@
             // AcSpd1
             // 
             this.AcSpd1.AutoSize = true;
-            this.AcSpd1.Location = new System.Drawing.Point(316, 502);
+            this.AcSpd1.Location = new System.Drawing.Point(176, 433);
             this.AcSpd1.Name = "AcSpd1";
             this.AcSpd1.Size = new System.Drawing.Size(67, 19);
             this.AcSpd1.TabIndex = 19;
@@ -215,7 +409,7 @@
             // AcSpd0
             // 
             this.AcSpd0.AutoSize = true;
-            this.AcSpd0.Location = new System.Drawing.Point(126, 502);
+            this.AcSpd0.Location = new System.Drawing.Point(54, 433);
             this.AcSpd0.Name = "AcSpd0";
             this.AcSpd0.Size = new System.Drawing.Size(67, 19);
             this.AcSpd0.TabIndex = 18;
@@ -224,7 +418,7 @@
             // AcPos1
             // 
             this.AcPos1.AutoSize = true;
-            this.AcPos1.Location = new System.Drawing.Point(316, 468);
+            this.AcPos1.Location = new System.Drawing.Point(176, 404);
             this.AcPos1.Name = "AcPos1";
             this.AcPos1.Size = new System.Drawing.Size(65, 19);
             this.AcPos1.TabIndex = 17;
@@ -233,17 +427,16 @@
             // AcPos0
             // 
             this.AcPos0.AutoSize = true;
-            this.AcPos0.Location = new System.Drawing.Point(126, 468);
+            this.AcPos0.Location = new System.Drawing.Point(54, 404);
             this.AcPos0.Name = "AcPos0";
             this.AcPos0.Size = new System.Drawing.Size(65, 19);
             this.AcPos0.TabIndex = 16;
             this.AcPos0.Text = "AcPos0";
-            this.AcPos0.Click += new System.EventHandler(this.AcPos0_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(515, 64);
+            this.label1.Location = new System.Drawing.Point(29, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 19);
             this.label1.TabIndex = 15;
@@ -251,7 +444,7 @@
             // 
             // btnSetHome
             // 
-            this.btnSetHome.Location = new System.Drawing.Point(162, 264);
+            this.btnSetHome.Location = new System.Drawing.Point(77, 225);
             this.btnSetHome.Name = "btnSetHome";
             this.btnSetHome.Size = new System.Drawing.Size(165, 39);
             this.btnSetHome.TabIndex = 14;
@@ -259,45 +452,49 @@
             this.btnSetHome.UseVisualStyleBackColor = true;
             this.btnSetHome.Click += new System.EventHandler(this.btnSetHome_Click);
             // 
-            // btn_Off1
+            // btn_Off_吸嘴Z軸
             // 
-            this.btn_Off1.Location = new System.Drawing.Point(262, 399);
-            this.btn_Off1.Name = "btn_Off1";
-            this.btn_Off1.Size = new System.Drawing.Size(165, 39);
-            this.btn_Off1.TabIndex = 13;
-            this.btn_Off1.Text = "btn_Off1";
-            this.btn_Off1.UseVisualStyleBackColor = true;
-            this.btn_Off1.Click += new System.EventHandler(this.btn_Off1_Click);
+            this.btn_Off_吸嘴Z軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_Off_吸嘴Z軸.Location = new System.Drawing.Point(150, 344);
+            this.btn_Off_吸嘴Z軸.Name = "btn_Off_吸嘴Z軸";
+            this.btn_Off_吸嘴Z軸.Size = new System.Drawing.Size(114, 39);
+            this.btn_Off_吸嘴Z軸.TabIndex = 13;
+            this.btn_Off_吸嘴Z軸.Text = "btn_Off_吸嘴Z軸";
+            this.btn_Off_吸嘴Z軸.UseVisualStyleBackColor = true;
+            this.btn_Off_吸嘴Z軸.Click += new System.EventHandler(this.btn_Off_吸嘴Z軸_Click);
             // 
-            // btn_Off0
+            // btn_Off_吸嘴R軸
             // 
-            this.btn_Off0.Location = new System.Drawing.Point(67, 399);
-            this.btn_Off0.Name = "btn_Off0";
-            this.btn_Off0.Size = new System.Drawing.Size(165, 39);
-            this.btn_Off0.TabIndex = 12;
-            this.btn_Off0.Text = "btn_Off0";
-            this.btn_Off0.UseVisualStyleBackColor = true;
-            this.btn_Off0.Click += new System.EventHandler(this.btn_Off0_Click);
+            this.btn_Off_吸嘴R軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_Off_吸嘴R軸.Location = new System.Drawing.Point(29, 344);
+            this.btn_Off_吸嘴R軸.Name = "btn_Off_吸嘴R軸";
+            this.btn_Off_吸嘴R軸.Size = new System.Drawing.Size(114, 39);
+            this.btn_Off_吸嘴R軸.TabIndex = 12;
+            this.btn_Off_吸嘴R軸.Text = "btn_Off_吸嘴R軸";
+            this.btn_Off_吸嘴R軸.UseVisualStyleBackColor = true;
+            this.btn_Off_吸嘴R軸.Click += new System.EventHandler(this.btn_Off_吸嘴R軸_Click);
             // 
-            // btn_On1
+            // btn_On_吸嘴Z軸
             // 
-            this.btn_On1.Location = new System.Drawing.Point(262, 333);
-            this.btn_On1.Name = "btn_On1";
-            this.btn_On1.Size = new System.Drawing.Size(165, 39);
-            this.btn_On1.TabIndex = 11;
-            this.btn_On1.Text = "btn_On1";
-            this.btn_On1.UseVisualStyleBackColor = true;
-            this.btn_On1.Click += new System.EventHandler(this.btn_On1_Click);
+            this.btn_On_吸嘴Z軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_On_吸嘴Z軸.Location = new System.Drawing.Point(150, 298);
+            this.btn_On_吸嘴Z軸.Name = "btn_On_吸嘴Z軸";
+            this.btn_On_吸嘴Z軸.Size = new System.Drawing.Size(114, 39);
+            this.btn_On_吸嘴Z軸.TabIndex = 11;
+            this.btn_On_吸嘴Z軸.Text = "btn_On_吸嘴Z軸";
+            this.btn_On_吸嘴Z軸.UseVisualStyleBackColor = true;
+            this.btn_On_吸嘴Z軸.Click += new System.EventHandler(this.btn_On_吸嘴Z軸_Click);
             // 
-            // btn_On0
+            // btn_On_吸嘴R軸
             // 
-            this.btn_On0.Location = new System.Drawing.Point(67, 333);
-            this.btn_On0.Name = "btn_On0";
-            this.btn_On0.Size = new System.Drawing.Size(165, 39);
-            this.btn_On0.TabIndex = 10;
-            this.btn_On0.Text = "btn_On0";
-            this.btn_On0.UseVisualStyleBackColor = true;
-            this.btn_On0.Click += new System.EventHandler(this.btn_On0_Click);
+            this.btn_On_吸嘴R軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_On_吸嘴R軸.Location = new System.Drawing.Point(29, 298);
+            this.btn_On_吸嘴R軸.Name = "btn_On_吸嘴R軸";
+            this.btn_On_吸嘴R軸.Size = new System.Drawing.Size(114, 39);
+            this.btn_On_吸嘴R軸.TabIndex = 10;
+            this.btn_On_吸嘴R軸.Text = "btn_On_吸嘴R軸";
+            this.btn_On_吸嘴R軸.UseVisualStyleBackColor = true;
+            this.btn_On_吸嘴R軸.Click += new System.EventHandler(this.btn_On_吸嘴R軸_Click);
             // 
             // btn_Disconnect
             // 
@@ -312,7 +509,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(593, 613);
+            this.label5.Location = new System.Drawing.Point(664, 633);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 19);
             this.label5.TabIndex = 8;
@@ -321,7 +518,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(593, 579);
+            this.label4.Location = new System.Drawing.Point(664, 605);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 19);
             this.label4.TabIndex = 7;
@@ -330,7 +527,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(596, 547);
+            this.label3.Location = new System.Drawing.Point(664, 577);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 19);
             this.label3.TabIndex = 6;
@@ -339,7 +536,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(593, 515);
+            this.label2.Location = new System.Drawing.Point(664, 547);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 19);
             this.label2.TabIndex = 5;
@@ -347,7 +544,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(571, 449);
+            this.button2.Location = new System.Drawing.Point(642, 481);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(165, 38);
             this.button2.TabIndex = 4;
@@ -379,24 +576,6 @@
             // 
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // txtDeg
-            // 
-            this.txtDeg.Location = new System.Drawing.Point(67, 612);
-            this.txtDeg.Name = "txtDeg";
-            this.txtDeg.Size = new System.Drawing.Size(100, 30);
-            this.txtDeg.TabIndex = 26;
-            this.txtDeg.Text = "-0.00";
-            // 
-            // btnChgDeg
-            // 
-            this.btnChgDeg.Location = new System.Drawing.Point(67, 559);
-            this.btnChgDeg.Name = "btnChgDeg";
-            this.btnChgDeg.Size = new System.Drawing.Size(165, 39);
-            this.btnChgDeg.TabIndex = 27;
-            this.btnChgDeg.Text = "btnChgDeg";
-            this.btnChgDeg.UseVisualStyleBackColor = true;
-            this.btnChgDeg.Click += new System.EventHandler(this.btnChgDeg_Click);
             // 
             // Form1
             // 
@@ -438,10 +617,10 @@
         private System.Windows.Forms.Label label2;
 
         private System.Windows.Forms.Button btn_Disconnect;
-        private System.Windows.Forms.Button btn_Off1;
-        private System.Windows.Forms.Button btn_Off0;
-        private System.Windows.Forms.Button btn_On1;
-        private System.Windows.Forms.Button btn_On0;
+        private System.Windows.Forms.Button btn_Off_吸嘴Z軸;
+        private System.Windows.Forms.Button btn_Off_吸嘴R軸;
+        private System.Windows.Forms.Button btn_On_吸嘴Z軸;
+        private System.Windows.Forms.Button btn_On_吸嘴R軸;
         private System.Windows.Forms.Button btnSetHome;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label AcPos1;
@@ -456,6 +635,21 @@
         private System.Windows.Forms.Button btnVibrationStop;
         private System.Windows.Forms.Button btnChgDeg;
         private System.Windows.Forms.TextBox txtDeg;
+        private System.Windows.Forms.Button btnNozzleDownPos;
+        private System.Windows.Forms.TextBox txtY;
+        private System.Windows.Forms.TextBox txtX;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label AcSpd7;
+        private System.Windows.Forms.Label AcPos7;
+        private System.Windows.Forms.Button btn_Off_吸嘴Y軸;
+        private System.Windows.Forms.Button btn_On_吸嘴Y軸;
+        private System.Windows.Forms.Label AcSpd3;
+        private System.Windows.Forms.Label AcPos3;
+        private System.Windows.Forms.Button btn_Off_吸嘴X軸;
+        private System.Windows.Forms.Button btn_On_吸嘴X軸;
+        private System.Windows.Forms.Button btnChgY;
+        private System.Windows.Forms.Button btnChgX;
     }
 }
 

@@ -1076,6 +1076,7 @@ namespace Inspector
             HOperatorSet.Connection(RegionClosing, out ConnectedRegions);
             HOperatorSet.SelectShape(ConnectedRegions, out SelectedCenterW, "column", "and", (W / 2) - 800, (W / 2) + 800);
             HOperatorSet.SelectShape(SelectedCenterW, out SelectedCenterH, "row", "and", (H / 2) - 500, (H / 2) + 500);
+            HOperatorSet.SelectShape(SelectedCenterH, out SelectedCenterH, "height", "and", 600, 99999);
             HOperatorSet.SelectShapeStd(SelectedCenterH, out result, "max_area", 70);
             owner.DisposeObj(regionRC2, redImage, fullRegion, region, RegionClosing, ConnectedRegions, SelectedCenterW, SelectedCenterH);
             return result;
@@ -1152,7 +1153,7 @@ namespace Inspector
             Win.HalconWindow.SetLineWidth(2);
             Win.HalconWindow.SetColor("orange");
             Win.HalconWindow.SetDraw("margin");
-            if (InspOK && (P1x.Length > 0))
+            if (InspOK && (P1x != null) && (P1x.Length > 0))
             {
                 Win.HalconWindow.SetColor("green");
                 HOperatorSet.DispArrow(Win.HalconWindow, P1y, P1x, P2y, P2x, 12);

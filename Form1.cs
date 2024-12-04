@@ -71,6 +71,12 @@ namespace InjectorInspector
 
         //Create TCP Vibration Connection
         public bool isEstablishTCP = false;
+
+        //軸的對應號碼
+        public const int 吸嘴X軸 = 3;
+        public const int 吸嘴Y軸 = 7;
+        public const int 吸嘴Z軸 = 1;
+        public const int 吸嘴R軸 = 0;
         //PCCP Xavier Tsai, added for testing <END>
 
 
@@ -91,11 +97,15 @@ namespace InjectorInspector
 
             //設置齒輪比
             int axis;
-            axis = 0;
+
+            //axis = 吸嘴R軸;
             //int A = motion.Config.SetGearRatio(axis, 1048576, 10000);  
-            axis = 1;
+
+            //axis = 吸嘴Z軸;
             //int B = motion.Config.SetGearRatio(axis, 1048576, 10000);
 
+            axis = 吸嘴Y軸;
+            int G = motion.Config.SetGearRatio(axis, 1048576, 2000);
         }  //end of public void WMX3_Initial()
 
         public int WMX3_establish_Commu()
@@ -211,10 +221,10 @@ namespace InjectorInspector
         {
             int rslt = 0;
 
-            //讀取當前座標
-            AxisHomeParam.HomeType = Config.HomeType.CurrentPos;
+            //設定為讀取內部home
+            AxisHomeParam.HomeType = Config.HomeType.ZPulse;
 
-            //設置原點參數
+            //尋找內部home
             rslt = motion.Config.SetHomeParam(axis, AxisHomeParam);
 
             if (rslt != 0)
@@ -249,25 +259,25 @@ namespace InjectorInspector
             //吸料盤校正用
             PointF pos;
             bool success = inspector1.xCarb震動盤(out pos);
-            label2.Text = string.Format("分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y);
+            label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y);
 
             //黑色料倉
             bool 料倉有料 = inspector1.xInsp入料();
-            label3.Text = string.Format("料倉有料 = {0}", 料倉有料);
+            label3.Text = string.Format("黑色料倉 料倉有料 = {0}", 料倉有料);
 
             //光源震動盤
             List<Vector3> pins;
             bool 料盤有料 = inspector1.xInsp震動盤(out pins);
             Vector3 temp = (料盤有料) ? pins.First() : new Vector3();
-            label4.Text = string.Format("震動盤 = {0} X = {1:F2} Y = {2:F2} θ = {3:F2}", 料盤有料, temp.X, temp.Y, temp.θ);
+            label4.Text = string.Format("光源震動盤 震動盤 = {0} X = {1:F2} Y = {2:F2} θ = {3:F2}", 料盤有料, temp.X, temp.Y, temp.θ);
 
             if (inspector1.Inspected && inspector1.InspectOK)
             {
                 double deg = inspector1.PinDeg;
-                label5.Text = string.Format("吸嘴分析  θ = {0:F2}", deg);
+                label5.Text = string.Format("吸嘴物料分析  θ = {0:F2}", deg);
             }
             else
-                label5.Text = "吸嘴分析失敗";
+                label5.Text = "吸嘴物料分析失敗";
 
             int cntdebug = inspector1.RecvCount;
 
@@ -320,6 +330,55 @@ namespace InjectorInspector
             //sw.Close();
         }
 
+        private void btn_On_吸嘴R軸_Click(object sender, EventArgs e)
+        {
+            int axis = 吸嘴R軸;
+            int isOn = 1;
+            WMX3_ServoOnOff(axis, isOn);
+        }
+        private void btn_Off_吸嘴R軸_Click(object sender, EventArgs e)
+        {
+            int axis = 吸嘴R軸;
+            int isOn = 0;
+            WMX3_ServoOnOff(axis, isOn);
+        }
+        private void btn_On_吸嘴Z軸_Click(object sender, EventArgs e)
+        {
+            int axis = 吸嘴Z軸;
+            int isOn = 1;
+            WMX3_ServoOnOff(axis, isOn);
+        }
+        private void btn_Off_吸嘴Z軸_Click(object sender, EventArgs e)
+        {
+            int axis = 吸嘴Z軸;
+            int isOn = 0;
+            WMX3_ServoOnOff(axis, isOn);
+        }
+        private void btn_On_吸嘴Y軸_Click(object sender, EventArgs e)
+        {
+            int axis = 吸嘴Y軸;
+            int isOn = 1;
+            WMX3_ServoOnOff(axis, isOn);
+        }
+        private void btn_Off_吸嘴Y軸_Click(object sender, EventArgs e)
+        {
+            int axis = 吸嘴Y軸;
+            int isOn = 0;
+            WMX3_ServoOnOff(axis, isOn);
+        }
+        private void btn_On_吸嘴X軸_Click(object sender, EventArgs e)
+        {
+            int axis = 吸嘴X軸;
+            int isOn = 1;
+            WMX3_ServoOnOff(axis, isOn);
+        }
+        private void btn_Off_吸嘴X軸_Click(object sender, EventArgs e)
+        {
+            int axis = 吸嘴X軸;
+            int isOn = 0;
+            WMX3_ServoOnOff(axis, isOn);
+        }
+
         private void btn_Connect_Click(object sender, EventArgs e)
         {
             WMX3_establish_Commu();
@@ -328,39 +387,15 @@ namespace InjectorInspector
         {
             WMX3_destroy_Commu();
         }
-        private void btn_On0_Click(object sender, EventArgs e)
-        {
-            int axis = 0;
-            int isOn = 1;
-            WMX3_ServoOnOff(axis, isOn);
-        }
-        private void btn_On1_Click(object sender, EventArgs e)
-        {
-            int axis = 1;
-            int isOn = 1;
-            WMX3_ServoOnOff(axis, isOn);
-        }
-        private void btn_Off0_Click(object sender, EventArgs e)
-        {
-            int axis = 0;
-            int isOn = 0;
-            WMX3_ServoOnOff(axis, isOn);
-        }
-        private void btn_Off1_Click(object sender, EventArgs e)
-        {
-            int axis = 1;
-            int isOn = 0;
-            WMX3_ServoOnOff(axis, isOn);
-        }
 
         private void btnSetHome_Click(object sender, EventArgs e)
         {
             int axis;
 
-            axis = 0;
+            axis = 吸嘴R軸;
             WMX3_SetHomePosition(axis);
 
-            axis = 1;
+            axis = 吸嘴Z軸;
             WMX3_SetHomePosition(axis);
         }
 
@@ -382,25 +417,51 @@ namespace InjectorInspector
             string position = "";
             string speed    = "";
 
-            axis = 0;
+            axis = 吸嘴R軸;
             rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
             if(rslt == 1) {
-                btn_On0.BackColor = Color.Red;
+                btn_On_吸嘴R軸.BackColor = Color.Red;
             } else {
-                btn_On0.BackColor = Color.Green;
+                btn_On_吸嘴R軸.BackColor = Color.Green;
             }
             AcPos0.Text = position;
             AcSpd0.Text = speed;
 
-            axis = 1;
+            axis = 吸嘴Z軸;
             rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
             if (rslt == 1) {
-                btn_On1.BackColor = Color.Red;
+                btn_On_吸嘴Z軸.BackColor = Color.Red;
             } else {
-                btn_On1.BackColor = Color.Green;
+                btn_On_吸嘴Z軸.BackColor = Color.Green;
             }
             AcPos1.Text = position;
             AcSpd1.Text = speed;
+
+            axis = 吸嘴X軸;
+            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if (rslt == 1)
+            {
+                btn_On_吸嘴X軸.BackColor = Color.Red;
+            }
+            else
+            {
+                btn_On_吸嘴X軸.BackColor = Color.Green;
+            }
+            AcPos7.Text = position;
+            AcSpd7.Text = speed;
+
+            axis = 吸嘴Y軸;
+            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if (rslt == 1)
+            {
+                btn_On_吸嘴Y軸.BackColor = Color.Red;
+            }
+            else
+            {
+                btn_On_吸嘴Y軸.BackColor = Color.Green;
+            }
+            AcPos3.Text = position;
+            AcSpd3.Text = speed;
         }
 
         private void btnPosition01_Click(object sender, EventArgs e)
@@ -413,18 +474,35 @@ namespace InjectorInspector
             int accel;
             int daccel;
 
-            axis = 0;
+            axis     = 吸嘴R軸;
             position = 27500;
-            speed = 10000;
-            accel = 10000;
-            daccel = 10000;
+            speed    = 10000;
+            accel    = 10000;
+            daccel   = 10000;
             WMX3_Pivot(axis, position, speed, accel, daccel);
 
-            axis = 1;
+            axis     = 吸嘴Z軸;
             position = 41370-1000;
-            speed = 10000;
-            accel = 10000;
-            daccel = 10000;
+            speed    = 10000;
+            accel    = 10000;
+            daccel   = 10000;
+            WMX3_Pivot(axis, position, speed, accel, daccel);
+        }
+
+        private void btnNozzleDownPos_Click(object sender, EventArgs e)
+        {
+            //單點動
+            int axis;
+            int position;
+            int speed;
+            int accel;
+            int daccel;
+
+            axis     = 吸嘴Z軸;
+            position = 26300;
+            speed    = 10000;
+            accel    = 10000;
+            daccel   = 10000;
             WMX3_Pivot(axis, position, speed, accel, daccel);
         }
 
@@ -866,10 +944,63 @@ namespace InjectorInspector
             }
         }
 
-        private void AcPos0_Click(object sender, EventArgs e)
+        private void btnChgX_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 取得txtX裡的浮點數
+                float ftxtX = float.Parse(txtX.Text);
+
+                // 使用 degree 變數進行後續操作
+                int itxtX = (int)(ftxtX * 1000);
+
+                //取得當前吸嘴吸料盤校正用X
+                int rslt = 0;
+                int axis = 0;
+                string position = "";
+                string speed = "";
+
+                axis = 吸嘴X軸;
+                rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+                if (rslt == 1)
+                {
+                    btn_On_吸嘴X軸.BackColor = Color.Red;
+                }
+                else
+                {
+                    btn_On_吸嘴X軸.BackColor = Color.Green;
+                }
+                AcPos7.Text = position;
+                AcSpd7.Text = speed;
+
+                //計算補正至X的數值
+                //int iTargetX = ideg + iChgDeg;
+
+                //執行旋轉吸嘴
+                //int axis = 0;
+                //int position = iTargetDeg;
+                //int speed = 10000;
+                //int accel = 10000;
+                //int daccel = 10000;
+                //WMX3_Pivot(axis, position, speed, accel, daccel);
+
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("請輸入有效的浮點數");
+            }
+        }
+
+        private void btnChgY_Click(object sender, EventArgs e)
         {
 
         }
+
+
+
+
+
+
         //PCCP Xavier Tsai, added for testing <END>
 
 
