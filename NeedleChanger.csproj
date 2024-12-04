@@ -45,6 +45,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\MVTec\HALCON-18.11-Steady\bin\dotnet35\halcondotnetxl.dll</HintPath>
     </Reference>
+    <Reference Include="IOApi_CLRLib">
+      <HintPath>C:\Program Files\SoftServo\WMX3\Lib\IOApi_CLRLib.dll</HintPath>
+    </Reference>
     <Reference Include="SiSoCsInterface, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\Basler\FramegrabberSDK\lib\SiSoCsInterface.dll</HintPath>
@@ -106,4 +109,15 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if "$(PlatformName)" == "x86" (
+    if exist "$(WMX3)\Lib\x86\" (
+        copy /Y "$(WMX3)\Lib\x86\IMDll.dll" "$(TargetDir)"
+    ) else (
+        copy /Y "$(WMX3)\Lib\IMDll.dll" "$(TargetDir)"
+    )
+) else if "$(PlatformName)" == "x64" (
+    copy /Y "$(WMX3)\Lib\IMDll.dll" "$(TargetDir)"
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -32,7 +32,12 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
+            this.inspector1 = new Inspector.Inspector();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnSet2 = new System.Windows.Forms.Button();
+            this.btnSet1 = new System.Windows.Forms.Button();
+            this.btnCatchPinXY = new System.Windows.Forms.Button();
+            this.btnCalculate = new System.Windows.Forms.Button();
             this.lblYo = new System.Windows.Forms.Label();
             this.lblXo = new System.Windows.Forms.Label();
             this.txtY2 = new System.Windows.Forms.TextBox();
@@ -80,11 +85,13 @@
             this.btn_AlarmRST = new System.Windows.Forms.Button();
             this.btn_Connect = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.inspector1 = new Inspector.Inspector();
-            this.btnCatchPinXY = new System.Windows.Forms.Button();
-            this.btnSet1 = new System.Windows.Forms.Button();
-            this.btnSet2 = new System.Windows.Forms.Button();
-            this.btnCalculate = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -122,8 +129,23 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Visible = false;
             // 
+            // inspector1
+            // 
+            this.inspector1.Font = new System.Drawing.Font("新細明體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.inspector1.Location = new System.Drawing.Point(58, 7);
+            this.inspector1.Margin = new System.Windows.Forms.Padding(5);
+            this.inspector1.Name = "inspector1";
+            this.inspector1.Size = new System.Drawing.Size(1112, 744);
+            this.inspector1.TabIndex = 1;
+            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button8);
+            this.tabPage2.Controls.Add(this.button7);
+            this.tabPage2.Controls.Add(this.button6);
+            this.tabPage2.Controls.Add(this.button5);
+            this.tabPage2.Controls.Add(this.button4);
+            this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Controls.Add(this.btnSet2);
             this.tabPage2.Controls.Add(this.btnSet1);
             this.tabPage2.Controls.Add(this.btnCatchPinXY);
@@ -182,6 +204,50 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btnSet2
+            // 
+            this.btnSet2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnSet2.Location = new System.Drawing.Point(568, 567);
+            this.btnSet2.Name = "btnSet2";
+            this.btnSet2.Size = new System.Drawing.Size(78, 30);
+            this.btnSet2.TabIndex = 54;
+            this.btnSet2.Text = "btnSet2";
+            this.btnSet2.UseVisualStyleBackColor = true;
+            this.btnSet2.Click += new System.EventHandler(this.btnSet2_Click);
+            // 
+            // btnSet1
+            // 
+            this.btnSet1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnSet1.Location = new System.Drawing.Point(568, 531);
+            this.btnSet1.Name = "btnSet1";
+            this.btnSet1.Size = new System.Drawing.Size(78, 30);
+            this.btnSet1.TabIndex = 53;
+            this.btnSet1.Text = "btnSet1";
+            this.btnSet1.UseVisualStyleBackColor = true;
+            this.btnSet1.Click += new System.EventHandler(this.btnSet1_Click);
+            // 
+            // btnCatchPinXY
+            // 
+            this.btnCatchPinXY.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnCatchPinXY.Location = new System.Drawing.Point(581, 642);
+            this.btnCatchPinXY.Name = "btnCatchPinXY";
+            this.btnCatchPinXY.Size = new System.Drawing.Size(103, 30);
+            this.btnCatchPinXY.TabIndex = 52;
+            this.btnCatchPinXY.Text = "btnCatchPinXY";
+            this.btnCatchPinXY.UseVisualStyleBackColor = true;
+            this.btnCatchPinXY.Click += new System.EventHandler(this.btnCatchPinXY_Click);
+            // 
+            // btnCalculate
+            // 
+            this.btnCalculate.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnCalculate.Location = new System.Drawing.Point(581, 606);
+            this.btnCalculate.Name = "btnCalculate";
+            this.btnCalculate.Size = new System.Drawing.Size(78, 30);
+            this.btnCalculate.TabIndex = 51;
+            this.btnCalculate.Text = "btnCalculate";
+            this.btnCalculate.UseVisualStyleBackColor = true;
+            this.btnCalculate.Click += new System.EventHandler(this.txtCalXYoriginal);
+            // 
             // lblYo
             // 
             this.lblYo.AutoSize = true;
@@ -206,7 +272,7 @@
             this.txtY2.Name = "txtY2";
             this.txtY2.Size = new System.Drawing.Size(100, 30);
             this.txtY2.TabIndex = 48;
-            this.txtY2.Text = "-0.0";
+            this.txtY2.Text = "50.23";
             // 
             // txtY1
             // 
@@ -214,7 +280,7 @@
             this.txtY1.Name = "txtY1";
             this.txtY1.Size = new System.Drawing.Size(100, 30);
             this.txtY1.TabIndex = 47;
-            this.txtY1.Text = "-0.0";
+            this.txtY1.Text = "50.27";
             // 
             // txtX2
             // 
@@ -222,7 +288,7 @@
             this.txtX2.Name = "txtX2";
             this.txtX2.Size = new System.Drawing.Size(100, 30);
             this.txtX2.TabIndex = 46;
-            this.txtX2.Text = "-0.0";
+            this.txtX2.Text = "222.13";
             // 
             // txtX1
             // 
@@ -230,7 +296,7 @@
             this.txtX1.Name = "txtX1";
             this.txtX1.Size = new System.Drawing.Size(100, 30);
             this.txtX1.TabIndex = 45;
-            this.txtX1.Text = "-0.0";
+            this.txtX1.Text = "251.12";
             // 
             // btnChgNozzleZ
             // 
@@ -371,7 +437,7 @@
             // 
             // btnNozzleDownPos
             // 
-            this.btnNozzleDownPos.Location = new System.Drawing.Point(303, 508);
+            this.btnNozzleDownPos.Location = new System.Drawing.Point(99, 501);
             this.btnNozzleDownPos.Name = "btnNozzleDownPos";
             this.btnNozzleDownPos.Size = new System.Drawing.Size(165, 39);
             this.btnNozzleDownPos.TabIndex = 28;
@@ -628,58 +694,71 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // inspector1
+            // button3
             // 
-            this.inspector1.Font = new System.Drawing.Font("新細明體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.inspector1.Location = new System.Drawing.Point(58, 7);
-            this.inspector1.Margin = new System.Windows.Forms.Padding(5);
-            this.inspector1.Name = "inspector1";
-            this.inspector1.Size = new System.Drawing.Size(1112, 744);
-            this.inspector1.TabIndex = 1;
+            this.button3.Location = new System.Drawing.Point(1093, 417);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 55;
+            this.button3.Text = "吸真空";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // btnCatchPinXY
+            // button4
             // 
-            this.btnCatchPinXY.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnCatchPinXY.Location = new System.Drawing.Point(581, 642);
-            this.btnCatchPinXY.Name = "btnCatchPinXY";
-            this.btnCatchPinXY.Size = new System.Drawing.Size(103, 30);
-            this.btnCatchPinXY.TabIndex = 52;
-            this.btnCatchPinXY.Text = "btnCatchPinXY";
-            this.btnCatchPinXY.UseVisualStyleBackColor = true;
-            this.btnCatchPinXY.Click += new System.EventHandler(this.btnCatchPinXY_Click);
+            this.button4.Location = new System.Drawing.Point(1093, 446);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 56;
+            this.button4.Text = "破真空";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // btnSet1
+            // button5
             // 
-            this.btnSet1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnSet1.Location = new System.Drawing.Point(568, 531);
-            this.btnSet1.Name = "btnSet1";
-            this.btnSet1.Size = new System.Drawing.Size(78, 30);
-            this.btnSet1.TabIndex = 53;
-            this.btnSet1.Text = "btnSet1";
-            this.btnSet1.UseVisualStyleBackColor = true;
-            this.btnSet1.Click += new System.EventHandler(this.btnSet1_Click);
+            this.button5.Location = new System.Drawing.Point(1093, 475);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 57;
+            this.button5.Text = "關";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // btnSet2
+            // button6
             // 
-            this.btnSet2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnSet2.Location = new System.Drawing.Point(568, 567);
-            this.btnSet2.Name = "btnSet2";
-            this.btnSet2.Size = new System.Drawing.Size(78, 30);
-            this.btnSet2.TabIndex = 54;
-            this.btnSet2.Text = "btnSet2";
-            this.btnSet2.UseVisualStyleBackColor = true;
-            this.btnSet2.Click += new System.EventHandler(this.btnSet2_Click);
+            this.button6.Location = new System.Drawing.Point(300, 517);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.TabIndex = 58;
+            this.button6.Text = "下視覺";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // btnCalculate
+            // button7
             // 
-            this.btnCalculate.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnCalculate.Location = new System.Drawing.Point(581, 606);
-            this.btnCalculate.Name = "btnCalculate";
-            this.btnCalculate.Size = new System.Drawing.Size(78, 30);
-            this.btnCalculate.TabIndex = 51;
-            this.btnCalculate.Text = "btnCalculate";
-            this.btnCalculate.UseVisualStyleBackColor = true;
-            this.btnCalculate.Click += new System.EventHandler(this.txtCalXYoriginal);
+            this.button7.Location = new System.Drawing.Point(381, 517);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 23);
+            this.button7.TabIndex = 59;
+            this.button7.Text = "拋料";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(977, 644);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(125, 43);
+            this.button8.TabIndex = 60;
+            this.button8.Text = "OneCycle";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Interval = 2000;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // Form1
             // 
@@ -763,6 +842,13 @@
         private System.Windows.Forms.Button btnSet2;
         private System.Windows.Forms.Button btnSet1;
         private System.Windows.Forms.Button btnCalculate;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 

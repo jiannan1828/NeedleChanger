@@ -19,7 +19,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using System.Xml;
-using WMX3ApiCLR;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 using System.Reflection.Emit;
@@ -65,7 +64,7 @@ namespace InjectorInspector
         Config.HomeParam AxisHomeParam = new Config.HomeParam();
         Stopwatch stopWatch            = new Stopwatch();
         AdvancedMotion advmon          = new AdvancedMotion();
-      //Io io = new Io();
+        Io io = new Io();
         public static CoreMotionAxisStatus[] cmAxis = new CoreMotionAxisStatus[8];
         public System.Windows.Forms.NumericUpDown NUD_Motor_NO;
         
@@ -81,6 +80,8 @@ namespace InjectorInspector
         public const int 吸嘴Y軸 = 7;
         public const int 吸嘴Z軸 = 1;
         public const int 吸嘴R軸 = 0;
+
+        public int u8OneCycleFlag = 0;
         //PCCP Xavier Tsai, added for testing <END>
 
 
@@ -325,7 +326,11 @@ namespace InjectorInspector
                 AcSpd3.Text = dbSpeed.ToString("F2");
             }
 
-            if (dbIncreaseNozzleX != 0.0)
+            if (dbIncreaseNozzleX == 99999.9)
+            {
+
+            }
+            else
             {  //吸嘴X軸 變更位置
                 // 取得欲變更的的浮點數
                 double fChangeNozzleX = dbIncreaseNozzleX;
@@ -377,7 +382,11 @@ namespace InjectorInspector
                 AcSpd7.Text = dbSpeed.ToString("F2");
             }
 
-            if (dbIncreaseNozzleY != 0.0)
+            if (dbIncreaseNozzleY == 99999.9)
+            {
+
+            }
+            else
             {  //吸嘴X軸 變更位置
                 // 取得欲變更的的浮點數
                 double fChangeNozzleY = dbIncreaseNozzleY;
@@ -429,7 +438,11 @@ namespace InjectorInspector
                 AcSpd1.Text = dbSpeed.ToString("F2");
             }
 
-            if (dbIncreaseNozzleZ != 0.0)
+            if (dbIncreaseNozzleZ== 99999.9)
+            {
+
+            }
+            else
             {  //吸嘴Z軸 變更位置
                 // 取得欲變更的的浮點數
                 double fChangeNozzleZ = dbIncreaseNozzleZ;
@@ -485,7 +498,12 @@ namespace InjectorInspector
                 AcSpd0.Text = dbSpeed.ToString("F2");
             }
 
-            if(dbIncreaseDegree != 0.0) {  //吸嘴R軸 變更位置
+            if (dbIncreaseDegree == 99999.9)
+            {
+
+            }
+            else
+            {  //吸嘴R軸 變更位置
                 // 取得欲變更的的浮點數
                 double fChangeDegree = dbIncreaseDegree;
 
@@ -644,16 +662,43 @@ namespace InjectorInspector
             string speed    = "";
 
             //讀取 吸嘴R軸 資訊
-            dbapiNozzleDegree(0.0);
+            dbapiNozzleDegree(99999.9);
 
             //讀取 吸嘴Z軸 資訊
-            dbapiNozzleLength(0.0);
+            dbapiNozzleLength(99999.9);
 
             //讀取 吸嘴X軸 資訊
-            dbapiNozzleX(0.0);
+            dbapiNozzleX(99999.9);
 
             //讀取 吸嘴X軸 資訊
-            dbapiNozzleY(0.0);
+            dbapiNozzleY(99999.9);
+
+            //讀取InputIO
+            byte[] pData28 = null;
+            io.GetInBytes(28, 1, ref pData28);
+            byte[] pData29 = null;
+            io.GetInBytes(29, 1, ref pData29);
+            byte[] pData30 = null;
+            io.GetInBytes(30, 1, ref pData30);
+            byte[] pData31 = null;
+            io.GetInBytes(31, 1, ref pData31);
+            byte[] pData32 = null;
+            io.GetInBytes(32, 1, ref pData32);
+            byte[] pData33 = null;
+            io.GetInBytes(33, 1, ref pData33);
+            byte[] pData34 = null;
+            io.GetInBytes(34, 1, ref pData34);
+            byte[] pData35 = null;
+            io.GetInBytes(35, 1, ref pData35);
+
+            this.Text = pData28.ToHex() + ":" + pData28.ToBinary() + " " + 
+                        pData29.ToHex() + ":" + pData29.ToBinary() + " " + 
+                        pData30.ToHex() + ":" + pData30.ToBinary() + " " + 
+                        pData31.ToHex() + ":" + pData31.ToBinary() + " " + 
+                        pData32.ToHex() + ":" + pData32.ToBinary() + " " + 
+                        pData33.ToHex() + ":" + pData33.ToBinary() + " " + 
+                        pData34.ToHex() + ":" + pData34.ToBinary() + " " + 
+                        pData35.ToHex() + ":" + pData35.ToBinary() + " ";
         }
 
         private void btnNozzleDownPos_Click(object sender, EventArgs e)
@@ -1183,5 +1228,212 @@ namespace InjectorInspector
             txtX2.Text = txtX.Text;
             txtY2.Text = txtY.Text;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            byte[] pData = new byte[1];
+
+            //Buzzer
+            //pData[0] |= 0b10000000;
+            //io.SetOutBytes(7, 1, pData);
+
+            //吸嘴吸真空
+            pData[0] |= 0b00000001;
+            io.SetOutBytes(6, 1, pData);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            byte[] pData = new byte[1];
+
+            //Buzzer
+            //pData[0] &= 0b01111111;
+            //io.SetOutBytes(7, 1, pData);
+
+            //吸嘴吸真空
+            pData[0] &= 0b11111110;
+            io.SetOutBytes(6, 1, pData);
+
+            //吸嘴破真空
+            pData[0] |= 0b00000100;
+            io.SetOutBytes(6, 1, pData);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            byte[] pData = new byte[1];
+
+            //吸嘴破真空
+            pData[0] &= 0b11111011;
+            io.SetOutBytes(6, 1, pData);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            double dbPinX = 120.0;
+            double dbPinY = 30.0;
+
+            //設定Pin位置
+            txtX.Text = dbPinX.ToString("F2");
+            txtY.Text = dbPinY.ToString("F2");
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            double dbPinX = 45.0;
+            double dbPinY = 30.0;
+
+            //設定Pin位置
+            txtX.Text = dbPinX.ToString("F2");
+            txtY.Text = dbPinY.ToString("F2");
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            switch(u8OneCycleFlag)
+            {
+                case 0:
+                    break;
+
+                case 1:
+                    //移至拋料
+                    button7_Click(sender, e);
+
+                    //移動吸嘴
+                    btnChgX_Click(sender, e);
+                    btnChgY_Click(sender, e);
+
+                    u8OneCycleFlag = 2;
+                    break;
+
+                case 2:
+                    //拿取針位置
+                    button2_Click(sender, e);
+
+                    //求得吸嘴中心位置
+                    txtCalXYoriginal(sender, e);
+
+                    //設定取針位置
+                    btnCatchPinXY_Click(sender, e);
+
+                    //移動吸嘴
+                    btnChgX_Click(sender, e);
+                    btnChgY_Click(sender, e);
+                    btnChgNozzleDeg_Click(sender, e);
+
+                    u8OneCycleFlag = 3;
+                    break;
+
+                case 3:
+                    //下降Nozzle
+                    btnChgNozzleZ_Click(sender, e);
+
+                    u8OneCycleFlag = 4;
+                    break;
+
+                case 4:
+                    //吸針
+                    button3_Click(sender, e);
+
+                    //收回Nozzle
+                    txtChgNozzleZ.Text = "0.00";
+                    btnChgNozzleZ_Click(sender, e);
+
+                    u8OneCycleFlag = 5;
+                    break;
+
+                case 5:
+                    //設定至下視覺位
+                    button6_Click(sender, e);
+
+                    //移動吸嘴
+                    btnChgX_Click(sender, e);
+                    btnChgY_Click(sender, e);
+
+                    u8OneCycleFlag = 6;
+                    break;
+
+                case 6:
+                    //移至拋料
+                    button7_Click(sender, e);
+
+                    //移動吸嘴
+                    btnChgX_Click(sender, e);
+                    btnChgY_Click(sender, e);
+
+                    u8OneCycleFlag = 7;
+                    break;
+
+                case 7:
+                    //下降Nozzle
+                    txtChgNozzleZ.Text = "5.00";
+                    btnChgNozzleZ_Click(sender, e);
+
+                    u8OneCycleFlag = 8;
+                    break;
+
+                case 8:
+                    //吐料
+                    //破真空
+                    button4_Click(sender, e);
+
+                    u8OneCycleFlag = 9;
+                    break;
+
+                case 9:
+                    //關真空
+                    button5_Click(sender, e);
+
+                    //收回Nozzle
+                    txtChgNozzleZ.Text = "0.00";
+                    btnChgNozzleZ_Click(sender, e);
+
+                    u8OneCycleFlag = 10;
+                    break;
+
+                case 10:
+
+                    u8OneCycleFlag = 0;
+                    break;
+            }
+
+            button8.Text = u8OneCycleFlag.ToString();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            u8OneCycleFlag = 1;
+        }
     }  // end of public partial class Form1 : Form
+
+
+    public static class ByteArrayExtensions
+    {
+        // 自定義方法來將 byte[] 轉換為二進位字串
+        public static string ToBinary(this byte[] byteArray)
+        {
+            StringBuilder binaryString = new StringBuilder();
+
+            foreach (byte b in byteArray)
+            {
+                binaryString.Append(Convert.ToString(b, 2).PadLeft(8, '0'));  // 將每個 byte 轉換為二進位並補齊到 8 位
+            }
+
+            return binaryString.ToString();
+        }
+
+        // 將 byte[] 轉換為十六進位字符串
+        public static string ToHex(this byte[] byteArray)
+        {
+            StringBuilder hexString = new StringBuilder(byteArray.Length * 2);  // 預估每個字節有 2 個十六進位字符
+
+            foreach (byte b in byteArray)
+            {
+                hexString.AppendFormat("{0:X2}", b);  // 將每個字節轉換為兩位十六進位數字
+            }
+
+            return hexString.ToString();
+        }
+    }
+
 }  // end of namespace InjectorInspector
