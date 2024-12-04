@@ -76,6 +76,8 @@
             this.btn_AlarmRST = new System.Windows.Forms.Button();
             this.btn_Connect = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btnChgNozzleZ = new System.Windows.Forms.Button();
+            this.txtChgNozzleZ = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -124,6 +126,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btnChgNozzleZ);
+            this.tabPage2.Controls.Add(this.txtChgNozzleZ);
             this.tabPage2.Controls.Add(this.btnChgY);
             this.tabPage2.Controls.Add(this.btnChgX);
             this.tabPage2.Controls.Add(this.AcSpd3);
@@ -176,7 +180,7 @@
             // btnChgY
             // 
             this.btnChgY.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnChgY.Location = new System.Drawing.Point(396, 569);
+            this.btnChgY.Location = new System.Drawing.Point(748, 552);
             this.btnChgY.Name = "btnChgY";
             this.btnChgY.Size = new System.Drawing.Size(102, 39);
             this.btnChgY.TabIndex = 42;
@@ -186,7 +190,7 @@
             // btnChgX
             // 
             this.btnChgX.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnChgX.Location = new System.Drawing.Point(262, 569);
+            this.btnChgX.Location = new System.Drawing.Point(614, 552);
             this.btnChgX.Name = "btnChgX";
             this.btnChgX.Size = new System.Drawing.Size(102, 39);
             this.btnChgX.TabIndex = 41;
@@ -276,7 +280,7 @@
             // 
             // txtY
             // 
-            this.txtY.Location = new System.Drawing.Point(396, 622);
+            this.txtY.Location = new System.Drawing.Point(748, 605);
             this.txtY.Name = "txtY";
             this.txtY.Size = new System.Drawing.Size(100, 30);
             this.txtY.TabIndex = 32;
@@ -284,7 +288,7 @@
             // 
             // txtX
             // 
-            this.txtX.Location = new System.Drawing.Point(264, 622);
+            this.txtX.Location = new System.Drawing.Point(616, 605);
             this.txtX.Name = "txtX";
             this.txtX.Size = new System.Drawing.Size(100, 30);
             this.txtX.TabIndex = 31;
@@ -293,7 +297,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(422, 664);
+            this.label7.Location = new System.Drawing.Point(774, 647);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 19);
             this.label7.TabIndex = 30;
@@ -302,7 +306,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(288, 664);
+            this.label6.Location = new System.Drawing.Point(640, 647);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 19);
             this.label6.TabIndex = 29;
@@ -310,7 +314,7 @@
             // 
             // btnNozzleDownPos
             // 
-            this.btnNozzleDownPos.Location = new System.Drawing.Point(303, 515);
+            this.btnNozzleDownPos.Location = new System.Drawing.Point(655, 498);
             this.btnNozzleDownPos.Name = "btnNozzleDownPos";
             this.btnNozzleDownPos.Size = new System.Drawing.Size(165, 39);
             this.btnNozzleDownPos.TabIndex = 28;
@@ -320,9 +324,10 @@
             // 
             // btnChgDeg
             // 
+            this.btnChgDeg.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.btnChgDeg.Location = new System.Drawing.Point(33, 569);
             this.btnChgDeg.Name = "btnChgDeg";
-            this.btnChgDeg.Size = new System.Drawing.Size(165, 39);
+            this.btnChgDeg.Size = new System.Drawing.Size(100, 39);
             this.btnChgDeg.TabIndex = 27;
             this.btnChgDeg.Text = "btnChgDeg";
             this.btnChgDeg.UseVisualStyleBackColor = true;
@@ -508,7 +513,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(664, 633);
+            this.label5.Location = new System.Drawing.Point(677, 377);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 19);
             this.label5.TabIndex = 8;
@@ -517,7 +522,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(664, 605);
+            this.label4.Location = new System.Drawing.Point(677, 349);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 19);
             this.label4.TabIndex = 7;
@@ -526,7 +531,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(664, 577);
+            this.label3.Location = new System.Drawing.Point(677, 321);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 19);
             this.label3.TabIndex = 6;
@@ -535,7 +540,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(664, 547);
+            this.label2.Location = new System.Drawing.Point(677, 291);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 19);
             this.label2.TabIndex = 5;
@@ -543,7 +548,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(642, 481);
+            this.button2.Location = new System.Drawing.Point(655, 225);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(165, 38);
             this.button2.TabIndex = 4;
@@ -575,6 +580,25 @@
             // 
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // btnChgNozzleZ
+            // 
+            this.btnChgNozzleZ.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnChgNozzleZ.Location = new System.Drawing.Point(150, 569);
+            this.btnChgNozzleZ.Name = "btnChgNozzleZ";
+            this.btnChgNozzleZ.Size = new System.Drawing.Size(100, 39);
+            this.btnChgNozzleZ.TabIndex = 44;
+            this.btnChgNozzleZ.Text = "btnChgNozzleZ";
+            this.btnChgNozzleZ.UseVisualStyleBackColor = true;
+            this.btnChgNozzleZ.Click += new System.EventHandler(this.btnChgNozzleZ_Click);
+            // 
+            // txtChgNozzleZ
+            // 
+            this.txtChgNozzleZ.Location = new System.Drawing.Point(150, 622);
+            this.txtChgNozzleZ.Name = "txtChgNozzleZ";
+            this.txtChgNozzleZ.Size = new System.Drawing.Size(100, 30);
+            this.txtChgNozzleZ.TabIndex = 43;
+            this.txtChgNozzleZ.Text = "-0.00";
             // 
             // Form1
             // 
@@ -649,6 +673,8 @@
         private System.Windows.Forms.Button btn_On_吸嘴X軸;
         private System.Windows.Forms.Button btnChgY;
         private System.Windows.Forms.Button btnChgX;
+        private System.Windows.Forms.Button btnChgNozzleZ;
+        private System.Windows.Forms.TextBox txtChgNozzleZ;
     }
 }
 

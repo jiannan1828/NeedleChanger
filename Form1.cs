@@ -420,15 +420,8 @@ namespace InjectorInspector
             //讀取 吸嘴R軸 資訊
             dbapiNozzleDegree(0.0);
 
-            axis = 吸嘴Z軸;
-            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1) {
-                btn_On_吸嘴Z軸.BackColor = Color.Red;
-            } else {
-                btn_On_吸嘴Z軸.BackColor = Color.Green;
-            }
-            AcPos1.Text = position;
-            AcSpd1.Text = speed;
+            //讀取 吸嘴Z軸 資訊
+            dbapiNozzleLength(0.0);
 
             axis = 吸嘴X軸;
             rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
@@ -549,22 +542,70 @@ namespace InjectorInspector
                 // 取得欲變更的的浮點數
                 double fChangeDegree = dbIncreaseDegree;
 
-                //取得當前吸嘴角度
-                double fCurrentDegree = dbRstNozzleDegree;
-
-                //計算補正至90度的數值
-                int iTargetDeg = (int)(fChangeDegree) *100;
+                //計算補正至角度的數值
+                int iTargetDeg = (int)(fChangeDegree *100);
 
                 //執行旋轉吸嘴
                 int axis = 吸嘴R軸;
                 int position = iTargetDeg;
-                int speed = (int)(360.00 * 100 * 10);
-                int accel = (int)(360.00 * 100 * 10);
-                int daccel = (int)(360.00 * 100 * 10);
+                int speed = (int)(360.00 * 100 * 20);
+                int accel = (int)(360.00 * 100 * 20);
+                int daccel = (int)(360.00 * 100 * 20);
                 WMX3_Pivot(axis, position, speed, accel, daccel);
             }
 
             return dbRstNozzleDegree;
+        }
+
+        public double dbapiNozzleLength(double dbIncreaseNozzleZ)
+        {
+            double dbRstNozzleLength = 0.0;
+
+            {  //吸嘴R軸 讀取與顯示
+                int rslt = 0;
+                int axis = 0;
+                string position = "";
+                string speed = "";
+
+                //讀取 吸嘴R軸 資訊
+                axis = 吸嘴Z軸;
+                rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+
+                //變更顏色
+                btn_On_吸嘴Z軸.BackColor = (rslt == 1) ? Color.Red : Color.Green;
+
+                //計算讀取長度
+                dbRstNozzleLength = double.Parse(position) / 1000.0;
+                AcPos1.Text = dbRstNozzleLength.ToString("F2");
+
+                //顯示運動速度
+                AcSpd1.Text = speed;
+            }
+
+            if (dbIncreaseNozzleZ != 0.0)
+            {  //吸嘴R軸 變更位置
+                // 取得欲變更的的浮點數
+                double fChangeNozzleZ = dbIncreaseNozzleZ;
+
+                //伸長量overflow保護
+                if (fChangeNozzleZ >= 40.35)
+                {
+                    fChangeNozzleZ = 40.35;
+                }
+
+                //計算補正至長度的數值
+                int iTargetNozzleZ = (int)(fChangeNozzleZ * 1000);
+
+                //執行旋轉吸嘴
+                int axis = 吸嘴Z軸;
+                int position = iTargetNozzleZ;
+                int speed = (int)(40.00 * 1000 * 20);
+                int accel = (int)(40.00 * 1000 * 20);
+                int daccel = (int)(40.00 * 1000 * 20);
+                WMX3_Pivot(axis, position, speed, accel, daccel);
+            }
+
+            return dbRstNozzleLength;
         }
 
 
@@ -955,9 +996,33 @@ namespace InjectorInspector
                 // 取得txtDeg裡的浮點數
                 double fChangeDegree = double.Parse(txtDeg.Text);
 
+                //格式化數值
+                txtDeg.Text = fChangeDegree.ToString("F2");
+                fChangeDegree = double.Parse(txtDeg.Text);
+
                 //執行旋轉吸嘴
                 dbapiNozzleDegree(fChangeDegree);
             } catch (FormatException) {
+                MessageBox.Show("請輸入有效的浮點數");
+            }
+        }
+
+        private void btnChgNozzleZ_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 取得txtDeg裡的浮點數
+                double fChangeNozzleZ = double.Parse(txtChgNozzleZ.Text);
+
+                //格式化數值
+                txtChgNozzleZ.Text = fChangeNozzleZ.ToString("F2");
+                fChangeNozzleZ = double.Parse(txtChgNozzleZ.Text);
+
+                //執行伸縮吸嘴
+                dbapiNozzleLength(fChangeNozzleZ);
+            }
+            catch (FormatException)
+            {
                 MessageBox.Show("請輸入有效的浮點數");
             }
         }
