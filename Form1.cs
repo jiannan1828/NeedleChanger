@@ -288,8 +288,6 @@ namespace InjectorInspector
                 label5.Text = "吸嘴物料分析失敗";
 
             int cntdebug = inspector1.RecvCount;
-
-
         }
 
 
@@ -323,7 +321,8 @@ namespace InjectorInspector
                 AcPos3.Text = dbRstNozzleX.ToString("F2");
 
                 //顯示運動速度
-                AcSpd3.Text = speed;
+                double dbSpeed = double.Parse(speed);
+                AcSpd3.Text = dbSpeed.ToString("F2");
             }
 
             if (dbIncreaseNozzleX != 0.0)
@@ -374,7 +373,8 @@ namespace InjectorInspector
                 AcPos7.Text = dbRstNozzleY.ToString("F2");
 
                 //顯示運動速度
-                AcSpd7.Text = speed;
+                double dbSpeed = double.Parse(speed);
+                AcSpd7.Text = dbSpeed.ToString("F2");
             }
 
             if (dbIncreaseNozzleY != 0.0)
@@ -425,7 +425,8 @@ namespace InjectorInspector
                 AcPos1.Text = dbRstNozzleLength.ToString("F2");
 
                 //顯示運動速度
-                AcSpd1.Text = speed;
+                double dbSpeed = double.Parse(speed);
+                AcSpd1.Text = dbSpeed.ToString("F2");
             }
 
             if (dbIncreaseNozzleZ != 0.0)
@@ -480,7 +481,8 @@ namespace InjectorInspector
                 AcPos0.Text = dbRstNozzleDegree.ToString("F2");
 
                 //顯示運動速度
-                AcSpd0.Text = speed;
+                double dbSpeed = double.Parse(speed);
+                AcSpd0.Text = dbSpeed.ToString("F2");
             }
 
             if(dbIncreaseDegree != 0.0) {  //吸嘴R軸 變更位置
@@ -652,31 +654,6 @@ namespace InjectorInspector
 
             //讀取 吸嘴X軸 資訊
             dbapiNozzleY(0.0);
-        }
-
-        private void btnPosition01_Click(object sender, EventArgs e)
-        {
-            //單點動
-
-            int axis;
-            int position;
-            int speed;
-            int accel;
-            int daccel;
-
-            axis     = 吸嘴R軸;
-            position = 27500;
-            speed    = 10000;
-            accel    = 10000;
-            daccel   = 10000;
-            WMX3_Pivot(axis, position, speed, accel, daccel);
-
-            axis     = 吸嘴Z軸;
-            position = 41370-1000;
-            speed    = 10000;
-            accel    = 10000;
-            daccel   = 10000;
-            WMX3_Pivot(axis, position, speed, accel, daccel);
         }
 
         private void btnNozzleDownPos_Click(object sender, EventArgs e)
@@ -1165,6 +1142,46 @@ namespace InjectorInspector
             SetVibrationLED(u32SaveLED_Level);
         }
 
+        private void txtCalXYoriginal(object sender, EventArgs e)
+        {
+            double dbAverageXo = (double.Parse(txtX1.Text) + double.Parse(txtX2.Text)) / 2;
+            double dbAverageYo = (double.Parse(txtY1.Text) + double.Parse(txtY2.Text)) / 2;
 
+            lblXo.Text = dbAverageXo.ToString("F2");
+            lblYo.Text = dbAverageYo.ToString("F2");
+        }
+
+        private void btnCatchPinXY_Click(object sender, EventArgs e)
+        {
+            //光源震動盤
+            List<Vector3> pins;
+            bool 料盤有料 = inspector1.xInsp震動盤(out pins);
+            Vector3 temp = (料盤有料) ? pins.First() : new Vector3();
+            label4.Text = string.Format("光源震動盤 震動盤 = {0} X = {1:F2} Y = {2:F2} θ = {3:F2}", 料盤有料, temp.X, temp.Y, temp.θ);
+
+            //取得Pin位置 根據吸嘴中心
+            double dbPinX = double.Parse(lblXo.Text) - temp.X;
+            double dbPinY = double.Parse(lblYo.Text) + temp.Y;
+            double dbPinZ = 26.6;
+            double dbPinR = 23.00 + temp.θ;
+
+            //設定Pin位置
+            txtX.Text = dbPinX.ToString("F2");
+            txtY.Text = dbPinY.ToString("F2");
+            txtChgNozzleZ.Text = dbPinZ.ToString("F2");
+            txtDeg.Text = dbPinR.ToString("F2");
+        }
+
+        private void btnSet1_Click(object sender, EventArgs e)
+        {
+            txtX1.Text = txtX.Text;
+            txtY1.Text = txtY.Text;
+        }
+
+        private void btnSet2_Click(object sender, EventArgs e)
+        {
+            txtX2.Text = txtX.Text;
+            txtY2.Text = txtY.Text;
+        }
     }  // end of public partial class Form1 : Form
 }  // end of namespace InjectorInspector

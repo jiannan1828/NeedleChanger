@@ -927,6 +927,8 @@ namespace Inspector
                     HOperatorSet.DispRegion(RegionMeas, Win.HalconWindow);
                 Win.HalconWindow.SetColor("green");
                 HOperatorSet.DispCross(Win.HalconWindow, rowTray, colTray, 200, 0);
+                if (rowTray.Length > 0)
+                    HOperatorSet.DispCircle(Win.HalconWindow, rowTray.DArr[0], colTray.DArr[0], 120);
                 if (owner.ck_Measure.Checked && (rowDist != null) && (colDist != null))
                     HOperatorSet.DispCross(Win.HalconWindow, rowDist, colDist, 30, 0);
                 if (owner.ck_Measure.Checked && (rowPin != null) && (colPin != null))
