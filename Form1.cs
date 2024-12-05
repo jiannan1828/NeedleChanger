@@ -230,16 +230,22 @@ namespace InjectorInspector
         {
             int rslt = 0;
 
-            //設定為讀取內部home
-            AxisHomeParam.HomeType = Config.HomeType.ZPulse;
+            switch (axis) {
+                case 0:
+                case 1:
+                    motion.Config.GetHomeParam(axis, ref AxisHomeParam);//讀取原點模式
 
-            //尋找內部home
-            rslt = motion.Config.SetHomeParam(axis, AxisHomeParam);
+                    //設定為讀取內部home
+                    AxisHomeParam.HomeType = Config.HomeType.ZPulse;
 
-            if (rslt != 0)
-            {
-                string ers = CoreMotion.ErrorToString(rslt);//如果無法通訊則報錯誤給使用者
-                //   textBox12.Text += "軸" + textBox9.Text + "設置HOME錯誤" + ers + "\r\n";
+                    //尋找內部home
+                    rslt = motion.Config.SetHomeParam(axis, AxisHomeParam);//設置原點參數
+
+                    if (rslt != 0)
+                    {
+                        string ers = CoreMotion.ErrorToString(rslt);//如果無法通訊則報錯誤給使用者
+                    }
+                    break;
             }
 
             //開始回原點
@@ -550,6 +556,13 @@ namespace InjectorInspector
             int iAimToPageIndex = 2;
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
 
+            //設定吸嘴中心座標
+            txtX1.Text = "-35.58";
+            txtY1.Text = "49.94";
+            txtX2.Text = "-64.56";
+            txtY2.Text = "49.95";
+            txtCalXYoriginal(sender, e);
+
             this.Text = "2024/09/04 14:04";
         }
 
@@ -628,19 +641,38 @@ namespace InjectorInspector
 
         private void btnSetHome_Click(object sender, EventArgs e)
         {
-            int axis;
-
-            axis = 吸嘴R軸;
-            WMX3_SetHomePosition(axis);
-
-            axis = 吸嘴Z軸;
-            WMX3_SetHomePosition(axis);
+            int rslt = 0;
+            int axis = 0;
+            string position = "";
+            string speed = "";
 
             axis = 吸嘴X軸;
-            WMX3_SetHomePosition(axis);
+            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if (rslt == 1)
+            {
+                WMX3_SetHomePosition(axis);
+            }
 
             axis = 吸嘴Y軸;
-            WMX3_SetHomePosition(axis);
+            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if (rslt == 1)
+            {
+                WMX3_SetHomePosition(axis);
+            }
+
+            axis = 吸嘴Z軸;
+            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if (rslt == 1)
+            {
+                WMX3_SetHomePosition(axis);
+            }
+
+            axis = 吸嘴R軸;
+            rslt = WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if (rslt == 1)
+            {
+                WMX3_SetHomePosition(axis);
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -711,11 +743,19 @@ namespace InjectorInspector
             int isOn = 0;
             int axis = 0;
 
-            axis = 0;
+            axis = 吸嘴X軸;
             WMX3_ServoOnOff(axis, isOn);
 
-            axis = 1;
+            axis = 吸嘴Y軸;
             WMX3_ServoOnOff(axis, isOn);
+
+            axis = 吸嘴Z軸;
+            WMX3_ServoOnOff(axis, isOn);
+
+            axis = 吸嘴R軸;
+            WMX3_ServoOnOff(axis, isOn);
+
+            u8OneCycleFlag = 0;
         }
 
         private void btn_AlarmRST_Click(object sender, EventArgs e)
@@ -1159,14 +1199,43 @@ namespace InjectorInspector
         public void btnVibrationInit_Click(object sender, EventArgs e) {
             //Vibration
             apiEstablishTCPVibration();
+
+            u32Frequency = 500;
+            u32VibrationSource1_StartPhase =  600; u32VibrationSource1_StopPhase = 1000; u32VibrationSource1_Power = 500;
+            u32VibrationSource2_StartPhase = 1000; u32VibrationSource2_StopPhase =  600; u32VibrationSource2_Power = 500;
+            u32VibrationSource3_StartPhase =  600; u32VibrationSource3_StopPhase = 1000; u32VibrationSource3_Power = 500;
+            u32VibrationSource4_StartPhase = 1000; u32VibrationSource4_StopPhase =  600; u32VibrationSource4_Power = 500;
+            u32BlackDepotSource_StartPhase =  400; u32BlackDepotSource_StopPhase =  600; u32BlackDepotSource_Power = 200;
+            SetVibration(u32Frequency, u32VibrationSource1_StartPhase,
+                                       u32VibrationSource1_StopPhase,
+                                       u32VibrationSource2_StartPhase,
+                                       u32VibrationSource2_StopPhase,
+                                       u32VibrationSource3_StartPhase,
+                                       u32VibrationSource3_StopPhase,
+                                       u32VibrationSource4_StartPhase,
+                                       u32VibrationSource4_StopPhase,
+                                       u32BlackDepotSource_StartPhase,
+                                       u32BlackDepotSource_StopPhase,
+                                       u32VibrationSource1_Power,
+                                       u32VibrationSource2_Power,
+                                       u32VibrationSource3_Power,
+                                       u32VibrationSource4_Power,
+                                       u32BlackDepotSource_Power);
+
+            u32LED_Level = 50;
+            SetVibrationLED(u32LED_Level);
         }
 
         private void btnVibrationStop_Click(object sender, EventArgs e)
         {
-            if (isEstablishTCP == true) {
-                uint flagTestOn = 0;
-                Px1_SendCMD(client, xe_U15_CMD.xeUC_TestMode_FunctionOn, flagTestOn);
-            }
+            //Vibration
+            apiEstablishTCPVibration();
+
+            uint flagTestOn = 0;
+            Px1_SendCMD(client, xe_U15_CMD.xeUC_TestMode_FunctionOn, flagTestOn);
+
+            u32LED_Level = 50;
+            SetVibrationLED(u32LED_Level);
         }
 
         private void btnVibrationLED_Click(object sender, EventArgs e)
@@ -1183,8 +1252,8 @@ namespace InjectorInspector
             //Vibration
             apiEstablishTCPVibration();
 
-            uint u32SaveLED_Level = 0;
-            SetVibrationLED(u32SaveLED_Level);
+            u32LED_Level = 0;
+            SetVibrationLED(u32LED_Level);
         }
 
         private void txtCalXYoriginal(object sender, EventArgs e)
@@ -1270,8 +1339,8 @@ namespace InjectorInspector
 
         private void button6_Click(object sender, EventArgs e)
         {
-            double dbPinX = 120.0;
-            double dbPinY = 30.0;
+            double dbPinX = -162.43;
+            double dbPinY = 29.5;
 
             //設定Pin位置
             txtX.Text = dbPinX.ToString("F2");
@@ -1280,8 +1349,8 @@ namespace InjectorInspector
 
         private void button7_Click(object sender, EventArgs e)
         {
-            double dbPinX = 45.0;
-            double dbPinY = 30.0;
+            double dbPinX = -241.79;
+            double dbPinY = 27.99;
 
             //設定Pin位置
             txtX.Text = dbPinX.ToString("F2");
@@ -1296,6 +1365,12 @@ namespace InjectorInspector
                     break;
 
                 case 1:
+                    //震動開始
+                    btnVibrationInit_Click(sender, e);
+                    u8OneCycleFlag = 2;
+                    break;
+
+                case 2:
                     //移至拋料
                     button7_Click(sender, e);
 
@@ -1303,35 +1378,50 @@ namespace InjectorInspector
                     btnChgX_Click(sender, e);
                     btnChgY_Click(sender, e);
 
-                    u8OneCycleFlag = 2;
-                    break;
-
-                case 2:
-                    //拿取針位置
-                    button2_Click(sender, e);
-
-                    //求得吸嘴中心位置
-                    txtCalXYoriginal(sender, e);
-
-                    //設定取針位置
-                    btnCatchPinXY_Click(sender, e);
-
-                    //移動吸嘴
-                    btnChgX_Click(sender, e);
-                    btnChgY_Click(sender, e);
-                    btnChgNozzleDeg_Click(sender, e);
+                    //震動停止
+                    btnVibrationStop_Click(sender, e);
 
                     u8OneCycleFlag = 3;
                     break;
 
                 case 3:
-                    //下降Nozzle
-                    btnChgNozzleZ_Click(sender, e);
+                    //拿取針位置
+                    button2_Click(sender, e);
 
-                    u8OneCycleFlag = 4;
+                    //光源震動盤
+                    List<Vector3> pins;
+                    bool 料盤有料 = inspector1.xInsp震動盤(out pins);
+                    Vector3 temp = (料盤有料) ? pins.First() : new Vector3();
+                    //label4.Text = string.Format("光源震動盤 震動盤 = {0} X = {1:F2} Y = {2:F2} θ = {3:F2}", 料盤有料, temp.X, temp.Y, temp.θ);
+                    if (料盤有料 == false)
+                    {
+                        u8OneCycleFlag = 7;
+                    }
+                    else
+                    {
+                        //求得吸嘴中心位置
+                        txtCalXYoriginal(sender, e);
+
+                        //設定取針位置
+                        btnCatchPinXY_Click(sender, e);
+
+                        //移動吸嘴
+                        btnChgX_Click(sender, e);
+                        btnChgY_Click(sender, e);
+                        btnChgNozzleDeg_Click(sender, e);
+
+                        u8OneCycleFlag = 4;
+                    }
                     break;
 
                 case 4:
+                    //下降Nozzle
+                    btnChgNozzleZ_Click(sender, e);
+
+                    u8OneCycleFlag = 5;
+                    break;
+
+                case 5:
                     //吸針
                     button3_Click(sender, e);
 
@@ -1339,23 +1429,12 @@ namespace InjectorInspector
                     txtChgNozzleZ.Text = "0.00";
                     btnChgNozzleZ_Click(sender, e);
 
-                    u8OneCycleFlag = 5;
-                    break;
-
-                case 5:
-                    //設定至下視覺位
-                    button6_Click(sender, e);
-
-                    //移動吸嘴
-                    btnChgX_Click(sender, e);
-                    btnChgY_Click(sender, e);
-
                     u8OneCycleFlag = 6;
                     break;
 
                 case 6:
-                    //移至拋料
-                    button7_Click(sender, e);
+                    //設定至下視覺位
+                    button6_Click(sender, e);
 
                     //移動吸嘴
                     btnChgX_Click(sender, e);
@@ -1365,22 +1444,33 @@ namespace InjectorInspector
                     break;
 
                 case 7:
-                    //下降Nozzle
-                    txtChgNozzleZ.Text = "5.00";
-                    btnChgNozzleZ_Click(sender, e);
+                    //移至拋料
+                    button7_Click(sender, e);
+
+                    //移動吸嘴
+                    btnChgX_Click(sender, e);
+                    btnChgY_Click(sender, e);
 
                     u8OneCycleFlag = 8;
                     break;
 
                 case 8:
-                    //吐料
-                    //破真空
-                    button4_Click(sender, e);
+                    //下降Nozzle
+                    txtChgNozzleZ.Text = "5.00";
+                    btnChgNozzleZ_Click(sender, e);
 
                     u8OneCycleFlag = 9;
                     break;
 
                 case 9:
+                    //吐料
+                    //破真空
+                    button4_Click(sender, e);
+
+                    u8OneCycleFlag = 10;
+                    break;
+
+                case 10:
                     //關真空
                     button5_Click(sender, e);
 
@@ -1388,10 +1478,10 @@ namespace InjectorInspector
                     txtChgNozzleZ.Text = "0.00";
                     btnChgNozzleZ_Click(sender, e);
 
-                    u8OneCycleFlag = 10;
+                    u8OneCycleFlag = 11;
                     break;
 
-                case 10:
+                case 11:
 
                     u8OneCycleFlag = 0;
                     break;
@@ -1402,7 +1492,10 @@ namespace InjectorInspector
 
         private void button8_Click(object sender, EventArgs e)
         {
-            u8OneCycleFlag = 1;
+            if (u8OneCycleFlag == 0)
+            {
+                u8OneCycleFlag = 1;
+            }
         }
     }  // end of public partial class Form1 : Form
 
