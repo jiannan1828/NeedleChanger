@@ -82,6 +82,8 @@ namespace InjectorInspector
         public const int 吸嘴R軸 = 0;
 
         public int u8OneCycleFlag = 0;
+
+        public int Multiplier = 4;
         //PCCP Xavier Tsai, added for testing <END>
 
 
@@ -332,9 +334,9 @@ namespace InjectorInspector
                 AcSpd3.Text = dbSpeed.ToString("F2");
             }
 
-            if (dbIncreaseNozzleX == 99999.9)
+            if (dbIncreaseNozzleX == 99999.9 || dbapiNozzleLength(99999.9)>= 0.5 )
             {
-
+                this.Text = "Z軸尚未回到上位";
             }
             else
             {  //吸嘴X軸 變更位置
@@ -353,7 +355,7 @@ namespace InjectorInspector
                 //執行旋轉吸嘴
                 int axis = 吸嘴X軸;
                 int position = iTargetNozzleX;
-                int speed = (int)(50.00 * 100 * 20);
+                int speed = (int)(50.00 * 100 * Multiplier);
                 int accel = speed * 2;
                 int daccel = speed * 2;
                 WMX3_Pivot(axis, position, speed, accel, daccel);
@@ -388,9 +390,9 @@ namespace InjectorInspector
                 AcSpd7.Text = dbSpeed.ToString("F2");
             }
 
-            if (dbIncreaseNozzleY == 99999.9)
+            if (dbIncreaseNozzleY == 99999.9 || dbapiNozzleLength(99999.9) >= 0.5 )
             {
-
+                this.Text = "Z軸尚未回到上位";
             }
             else
             {  //吸嘴X軸 變更位置
@@ -409,7 +411,7 @@ namespace InjectorInspector
                 //執行旋轉吸嘴
                 int axis = 吸嘴Y軸;
                 int position = iTargetNozzleY;
-                int speed = (int)(50.00 * 100 * 20);
+                int speed = (int)(50.00 * 100 * Multiplier);
                 int accel = speed * 2;
                 int daccel = speed * 2;
                 WMX3_Pivot(axis, position, speed, accel, daccel);
@@ -465,7 +467,7 @@ namespace InjectorInspector
                 //執行旋轉吸嘴
                 int axis = 吸嘴Z軸;
                 int position = iTargetNozzleZ;
-                int speed = (int)(40.00 * 1000 * 20);
+                int speed = (int)(40.00 * 1000 * Multiplier);
                 int accel = speed*2;
                 int daccel = speed*2;
                 WMX3_Pivot(axis, position, speed, accel, daccel);
@@ -519,7 +521,7 @@ namespace InjectorInspector
                 //執行旋轉吸嘴
                 int axis = 吸嘴R軸;
                 int position = iTargetDeg;
-                int speed = (int)(360.00 * 100 * 20);
+                int speed = (int)(360.00 * 100 * Multiplier);
                 int accel = speed*2;
                 int daccel = speed*2;
                 WMX3_Pivot(axis, position, speed, accel, daccel);
@@ -557,10 +559,10 @@ namespace InjectorInspector
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
 
             //設定吸嘴中心座標
-            txtX1.Text = "-35.58";
-            txtY1.Text = "49.94";
-            txtX2.Text = "-64.56";
-            txtY2.Text = "49.95";
+            txtX1.Text = "-35.92";
+            txtY1.Text = "50.61";
+            txtX2.Text = "-64.87";
+            txtY2.Text = "49.07";
             txtCalXYoriginal(sender, e);
 
             this.Text = "2024/09/04 14:04";
@@ -1359,6 +1361,8 @@ namespace InjectorInspector
 
         private void timer2_Tick(object sender, EventArgs e)
         {
+            bool bNullPin = false;
+
             switch(u8OneCycleFlag)
             {
                 case 0:
@@ -1371,46 +1375,55 @@ namespace InjectorInspector
                     break;
 
                 case 2:
-                    //移至拋料
-                    button7_Click(sender, e);
-
-                    //移動吸嘴
-                    btnChgX_Click(sender, e);
-                    btnChgY_Click(sender, e);
-
-                    //震動停止
-                    btnVibrationStop_Click(sender, e);
-
-                    u8OneCycleFlag = 3;
-                    break;
-
-                case 3:
-                    //拿取針位置
-                    button2_Click(sender, e);
-
-                    //光源震動盤
-                    List<Vector3> pins;
-                    bool 料盤有料 = inspector1.xInsp震動盤(out pins);
-                    Vector3 temp = (料盤有料) ? pins.First() : new Vector3();
-                    //label4.Text = string.Format("光源震動盤 震動盤 = {0} X = {1:F2} Y = {2:F2} θ = {3:F2}", 料盤有料, temp.X, temp.Y, temp.θ);
-                    if (料盤有料 == false)
+                    if (dbapiNozzleLength(99999.9) <= 0.5)
                     {
-                        u8OneCycleFlag = 7;
-                    }
-                    else
-                    {
-                        //求得吸嘴中心位置
-                        txtCalXYoriginal(sender, e);
-
-                        //設定取針位置
-                        btnCatchPinXY_Click(sender, e);
+                        //設定拋料位置
+                        button7_Click(sender, e);
 
                         //移動吸嘴
                         btnChgX_Click(sender, e);
                         btnChgY_Click(sender, e);
-                        btnChgNozzleDeg_Click(sender, e);
 
-                        u8OneCycleFlag = 4;
+                        //震動停止
+                        btnVibrationStop_Click(sender, e);
+
+                        u8OneCycleFlag = 3;
+                    }
+                    break;
+
+                case 3:
+                    if (dbapiNozzleLength(99999.9) <= 0.5)
+                    {
+                        //從影像拿取針位置
+                        button2_Click(sender, e);
+
+                        //光源震動盤
+                        List<Vector3> pins;
+                        bool 料盤有料 = inspector1.xInsp震動盤(out pins);
+                        Vector3 temp = (料盤有料) ? pins.First() : new Vector3();
+                        //label4.Text = string.Format("光源震動盤 震動盤 = {0} X = {1:F2} Y = {2:F2} θ = {3:F2}", 料盤有料, temp.X, temp.Y, temp.θ);
+                        if (料盤有料 == false)
+                        {
+                            //如果沒看到針
+                            bNullPin = true;
+
+                            u8OneCycleFlag = 7;
+                        }
+                        else
+                        {
+                            //求得吸嘴中心位置
+                            txtCalXYoriginal(sender, e);
+
+                            //設定取針位置
+                            btnCatchPinXY_Click(sender, e);
+
+                            //移動吸嘴
+                            btnChgX_Click(sender, e);
+                            btnChgY_Click(sender, e);
+                            btnChgNozzleDeg_Click(sender, e);
+
+                            u8OneCycleFlag = 4;
+                        }
                     }
                     break;
 
@@ -1429,29 +1442,38 @@ namespace InjectorInspector
                     txtChgNozzleZ.Text = "0.00";
                     btnChgNozzleZ_Click(sender, e);
 
-                    u8OneCycleFlag = 6;
+                    if (dbapiNozzleLength(99999.9) <= 0.5)
+                    {
+                        u8OneCycleFlag = 6;
+                    }
                     break;
 
                 case 6:
-                    //設定至下視覺位
-                    button6_Click(sender, e);
+                    if (dbapiNozzleLength(99999.9) <= 0.5)
+                    {
+                        //設定至下視覺位
+                        button6_Click(sender, e);
 
-                    //移動吸嘴
-                    btnChgX_Click(sender, e);
-                    btnChgY_Click(sender, e);
+                        //移動吸嘴
+                        btnChgX_Click(sender, e);
+                        btnChgY_Click(sender, e);
 
-                    u8OneCycleFlag = 7;
+                        u8OneCycleFlag = 7;
+                    }
                     break;
 
                 case 7:
-                    //移至拋料
-                    button7_Click(sender, e);
+                    if (dbapiNozzleLength(99999.9) <= 0.5)
+                    {
+                        //移至拋料
+                        button7_Click(sender, e);
 
-                    //移動吸嘴
-                    btnChgX_Click(sender, e);
-                    btnChgY_Click(sender, e);
+                        //移動吸嘴
+                        btnChgX_Click(sender, e);
+                        btnChgY_Click(sender, e);
 
-                    u8OneCycleFlag = 8;
+                        u8OneCycleFlag = 8;
+                    }
                     break;
 
                 case 8:
@@ -1478,12 +1500,35 @@ namespace InjectorInspector
                     txtChgNozzleZ.Text = "0.00";
                     btnChgNozzleZ_Click(sender, e);
 
-                    u8OneCycleFlag = 11;
+                    if (dbapiNozzleLength(99999.9) <= 0.5)
+                    {
+                        u8OneCycleFlag = 11;
+                    }
                     break;
 
                 case 11:
+                    if(bNullPin == true)
+                    {
+                        //沒針了
+                        u8OneCycleFlag = 0;
+                    } 
+                    else
+                    {
+                        //還有針
+                        int CycleCNT = int.Parse(txtcyclecnt.Text);
+                        if (CycleCNT >= 1)
+                        {
+                            CycleCNT--;
+                            txtcyclecnt.Text = CycleCNT.ToString();
 
-                    u8OneCycleFlag = 0;
+                            u8OneCycleFlag = 1;
+                        }
+                        else
+                        {
+                            u8OneCycleFlag = 0;
+                        }
+                    }
+
                     break;
             }
 
@@ -1497,6 +1542,20 @@ namespace InjectorInspector
                 u8OneCycleFlag = 1;
             }
         }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            lblTmr.Text = timer2.Interval.ToString();
+            lblSpd.Text = Multiplier.ToString();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            timer2.Interval = int.Parse(txtTmr.Text);
+            Multiplier = int.Parse(txtSpd.Text);
+        }
+
+
     }  // end of public partial class Form1 : Form
 
 

@@ -34,6 +34,14 @@
             this.button1 = new System.Windows.Forms.Button();
             this.inspector1 = new Inspector.Inspector();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.txtSpd = new System.Windows.Forms.TextBox();
+            this.txtTmr = new System.Windows.Forms.TextBox();
+            this.lblSpd = new System.Windows.Forms.Label();
+            this.lblTmr = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -92,6 +100,7 @@
             this.btn_Connect = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.txtcyclecnt = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -140,6 +149,15 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.txtcyclecnt);
+            this.tabPage2.Controls.Add(this.label9);
+            this.tabPage2.Controls.Add(this.label8);
+            this.tabPage2.Controls.Add(this.button10);
+            this.tabPage2.Controls.Add(this.button9);
+            this.tabPage2.Controls.Add(this.txtSpd);
+            this.tabPage2.Controls.Add(this.txtTmr);
+            this.tabPage2.Controls.Add(this.lblSpd);
+            this.tabPage2.Controls.Add(this.lblTmr);
             this.tabPage2.Controls.Add(this.button8);
             this.tabPage2.Controls.Add(this.button7);
             this.tabPage2.Controls.Add(this.button6);
@@ -203,6 +221,78 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(466, 125);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(50, 19);
+            this.label9.TabIndex = 68;
+            this.label9.Text = "speed";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(466, 86);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(47, 19);
+            this.label8.TabIndex = 67;
+            this.label8.Text = "timer";
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(604, 38);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(75, 23);
+            this.button10.TabIndex = 66;
+            this.button10.Text = "設定";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(525, 38);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(75, 23);
+            this.button9.TabIndex = 65;
+            this.button9.Text = "讀取";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // txtSpd
+            // 
+            this.txtSpd.Location = new System.Drawing.Point(606, 114);
+            this.txtSpd.Name = "txtSpd";
+            this.txtSpd.Size = new System.Drawing.Size(100, 30);
+            this.txtSpd.TabIndex = 64;
+            this.txtSpd.Text = "txtSpd";
+            // 
+            // txtTmr
+            // 
+            this.txtTmr.Location = new System.Drawing.Point(606, 75);
+            this.txtTmr.Name = "txtTmr";
+            this.txtTmr.Size = new System.Drawing.Size(100, 30);
+            this.txtTmr.TabIndex = 63;
+            this.txtTmr.Text = "txtTmr";
+            // 
+            // lblSpd
+            // 
+            this.lblSpd.AutoSize = true;
+            this.lblSpd.Location = new System.Drawing.Point(547, 125);
+            this.lblSpd.Name = "lblSpd";
+            this.lblSpd.Size = new System.Drawing.Size(56, 19);
+            this.lblSpd.TabIndex = 62;
+            this.lblSpd.Text = "lblSpd";
+            // 
+            // lblTmr
+            // 
+            this.lblTmr.AutoSize = true;
+            this.lblTmr.Location = new System.Drawing.Point(547, 86);
+            this.lblTmr.Name = "lblTmr";
+            this.lblTmr.Size = new System.Drawing.Size(59, 19);
+            this.lblTmr.TabIndex = 61;
+            this.lblTmr.Text = "lblTmr";
             // 
             // button8
             // 
@@ -760,6 +850,14 @@
             this.timer2.Interval = 2000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
+            // txtcyclecnt
+            // 
+            this.txtcyclecnt.Location = new System.Drawing.Point(987, 588);
+            this.txtcyclecnt.Name = "txtcyclecnt";
+            this.txtcyclecnt.Size = new System.Drawing.Size(100, 30);
+            this.txtcyclecnt.TabIndex = 69;
+            this.txtcyclecnt.Text = "1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -849,6 +947,15 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.TextBox txtSpd;
+        private System.Windows.Forms.TextBox txtTmr;
+        private System.Windows.Forms.Label lblSpd;
+        private System.Windows.Forms.Label lblTmr;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtcyclecnt;
     }
 }
 
