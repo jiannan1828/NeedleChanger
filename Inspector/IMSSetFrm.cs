@@ -395,7 +395,7 @@ namespace Camera
                 var Temp = Buf[0];
                 lock (dLockImage)
                     Buf.RemoveAt(0);
-                if (Temp.Ptr != IntPtr.Zero)
+                if ((Temp != null) && (Temp.Ptr != IntPtr.Zero))
                 {
                     onRecvCount = (onRecvCount + 1) % 1000;
                     if (OnRecv != null)
