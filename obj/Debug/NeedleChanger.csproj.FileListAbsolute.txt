@@ -17,7 +17,6 @@ D:\CodeNeedCnahger\NeedleChanger\obj\Debug\NeedleCh.FD94171B.Up2Date
 D:\CodeNeedCnahger\NeedleChanger\obj\Debug\京元植針機.exe
 D:\CodeNeedCnahger\NeedleChanger\obj\Debug\京元植針機.pdb
 D:\CodeNeedCnahger\NeedleChanger\bin\Debug\IOApi_CLRLib.dll
-D:\CodeNeedCnahger\NeedleChanger\obj\Debug\InjectorInspector.Form1.resources
 D:\NeedleChanger\Code\NeedleChanger\bin\Debug\ic4core.dll
 D:\NeedleChanger\Code\NeedleChanger\bin\Debug\京元植針機.exe.config
 D:\NeedleChanger\Code\NeedleChanger\bin\Debug\京元植針機.exe
@@ -54,3 +53,4 @@ E:\TestCodeViaMKLINK\NeedleChanger\obj\Debug\NeedleChanger.csproj.CoreCompileInp
 E:\TestCodeViaMKLINK\NeedleChanger\obj\Debug\NeedleCh.FD94171B.Up2Date
 E:\TestCodeViaMKLINK\NeedleChanger\obj\Debug\京元植針機.exe
 E:\TestCodeViaMKLINK\NeedleChanger\obj\Debug\京元植針機.pdb
+D:\CodeNeedCnahger\NeedleChanger\obj\Debug\InjectorInspector.Form1.resources

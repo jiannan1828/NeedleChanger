@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 //WMX3
 using WMX3ApiCLR;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -13,18 +15,72 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
+
+
 namespace InjectorInspector
 {
+
+
+
+    //軸的對應號碼
+    public enum WMX3軸定義
+    {  // start of public enum WMX3軸定義
+
+
+
+        吸嘴X軸 = 3,
+        吸嘴Y軸 = 7,
+        吸嘴Z軸 = 1,
+        吸嘴R軸 = 0,
+
+
+
+    }  // end of public enum WMX3軸定義
+
+
+
+    //擴展定義字串轉換
+    public static class ByteArrayExtensions
+    {  // start of public static class ByteArrayExtensions
+
+
+
+        // 自定義方法來將 byte[] 轉換為二進位字串
+        public static string ToBinary(this byte[] byteArray)
+        {
+            StringBuilder binaryString = new StringBuilder();
+
+            foreach (byte b in byteArray)
+            {
+                binaryString.Append(Convert.ToString(b, 2).PadLeft(8, '0'));  // 將每個 byte 轉換為二進位並補齊到 8 位
+            }
+
+            return binaryString.ToString();
+        }
+
+        // 將 byte[] 轉換為十六進位字符串
+        public static string ToHex(this byte[] byteArray)
+        {
+            StringBuilder hexString = new StringBuilder(byteArray.Length * 2);  // 預估每個字節有 2 個十六進位字符
+
+            foreach (byte b in byteArray)
+            {
+                hexString.AppendFormat("{0:X2}", b);  // 將每個字節轉換為兩位十六進位數字
+            }
+
+            return hexString.ToString();
+        }
+
+
+
+    }  //end of public static class ByteArrayExtensions
+
+    //WMX3控制
     internal class ServoControl
-    {
-        //軸的對應號碼
-        public const int 吸嘴X軸 = 3;
-        public const int 吸嘴Y軸 = 7;
-        public const int 吸嘴Z軸 = 1;
-        public const int 吸嘴R軸 = 0;
+    {  // start of internal class ServoControl
 
 
-        //PCCP Xavier Tsai, added for testing <START>
+
         //WMX3
         WMX3Api wmx = new WMX3Api();
         CoreMotion motion = new CoreMotion();
@@ -60,10 +116,10 @@ namespace InjectorInspector
             //axis = 吸嘴Z軸;
             //int B = motion.Config.SetGearRatio(axis, 1048576, 10000);
 
-            axis = 吸嘴X軸;
+            axis = (int)WMX3軸定義.吸嘴X軸;
             int D = motion.Config.SetGearRatio(axis, 1000, 100);
 
-            axis = 吸嘴Y軸;
+            axis = (int)WMX3軸定義.吸嘴Y軸;
             int H = motion.Config.SetGearRatio(axis, 1048576, 2000);
         }  //end of public void WMX3_Initial()
 
@@ -218,5 +274,54 @@ namespace InjectorInspector
             return rslt;
         }  //end of public int WMX3_SetHomePosition(int axis)
 
-    }
+        public int WMX3_GetIO(ref byte[] pData, int addr, int size)
+        {
+            // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
+            if (pData == null || addr == 0 || size == 0 || pData.Length < size)
+            {
+                return 0;  // 錯誤長度
+            }
+
+            // 讀取 InputIO
+            for (int cnt = 0; cnt < size; cnt++)
+            {
+                byte[] pDataGet = null;
+
+                // 從指定地址讀取資料並填充到 pData
+                io.GetInBytes(addr + cnt, 1, ref pDataGet);
+                pData[cnt] = pDataGet[0];
+            }
+
+            return 1;  // 成功返回 1
+        }
+
+        public int WMX3_SetIO(ref byte[] pData, int addr, int size)
+        {
+            // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
+            if (pData == null || addr == 0 || size == 0 || pData.Length < size)
+            {
+                return 0;  // 錯誤長度
+            }
+
+            // 讀取 InputIO
+            for (int cnt = 0; cnt < size; cnt++)
+            {
+                byte[] pDataGet = null;
+
+                // 從指定地址寫入資料
+                pDataGet[0] = pData[cnt];
+                io.SetOutBytes(addr + cnt, 1, pDataGet);
+            }
+
+            return 1;  // 成功返回 1
+        }
+
+        public void WMX3_ClearAlarm()
+        {
+            motion.AxisControl.ClearAmpAlarm((int)NUD_Motor_NO.Value);
+        }
+
+
+
+    }  // end of internal class ServoControl
 }

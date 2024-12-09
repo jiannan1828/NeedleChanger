@@ -38,6 +38,7 @@ using System.Threading;
 using System.Runtime.InteropServices.ComTypes;
 using Inspector;
 using System.Security.Cryptography;
+using HalconDotNet;
 //PCCP Xavier Tsai, added for testing <END>
 
 
@@ -45,6 +46,9 @@ namespace InjectorInspector
 {
     public partial class Form1 : Form
     {
+
+
+
         //WMX3
         ServoControl clsServoControlWMX3 = new ServoControl();
 
@@ -55,11 +59,7 @@ namespace InjectorInspector
         //Create TCP Vibration Connection
         public bool isEstablishTCP = false;
 
-        //軸的對應號碼
-        public const int 吸嘴X軸 = 3;
-        public const int 吸嘴Y軸 = 7;
-        public const int 吸嘴Z軸 = 1;
-        public const int 吸嘴R軸 = 0;
+
 
         public int u8OneCycleFlag = 0;
 
@@ -128,7 +128,7 @@ namespace InjectorInspector
                 string speed = "";
                 
                 //讀取 吸嘴X軸 資訊
-                axis = 吸嘴X軸;
+                axis = (int)WMX3軸定義.吸嘴X軸;
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
 
                 //變更顏色
@@ -162,7 +162,7 @@ namespace InjectorInspector
                 int iTargetNozzleX = (int)(fChangeNozzleX * 100);
 
                 //執行旋轉吸嘴
-                int axis = 吸嘴X軸;
+                int axis = (int)WMX3軸定義.吸嘴X軸;
                 int position = iTargetNozzleX;
                 int speed = (int)(50.00 * 100 * Multiplier);
                 int accel = speed * 2;
@@ -184,7 +184,7 @@ namespace InjectorInspector
                 string speed = "";
 
                 //讀取 吸嘴Y軸 資訊
-                axis = 吸嘴Y軸;
+                axis = (int)WMX3軸定義.吸嘴Y軸;
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
 
                 //變更顏色
@@ -218,7 +218,7 @@ namespace InjectorInspector
                 int iTargetNozzleY = (int)(fChangeNozzleY * 100);
 
                 //執行旋轉吸嘴
-                int axis = 吸嘴Y軸;
+                int axis = (int)WMX3軸定義.吸嘴Y軸;
                 int position = iTargetNozzleY;
                 int speed = (int)(50.00 * 100 * Multiplier);
                 int accel = speed * 2;
@@ -240,7 +240,7 @@ namespace InjectorInspector
                 string speed = "";
 
                 //讀取 吸嘴Z軸 資訊
-                axis = 吸嘴Z軸;
+                axis = (int)WMX3軸定義.吸嘴Z軸;
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
 
                 //變更顏色
@@ -274,7 +274,7 @@ namespace InjectorInspector
                 int iTargetNozzleZ = (int)(fChangeNozzleZ * 1000);
 
                 //執行旋轉吸嘴
-                int axis = 吸嘴Z軸;
+                int axis = (int)WMX3軸定義.吸嘴Z軸;
                 int position = iTargetNozzleZ;
                 int speed = (int)(40.00 * 1000 * Multiplier);
                 int accel = speed*2;
@@ -296,7 +296,7 @@ namespace InjectorInspector
                 string speed = "";
 
                 //讀取 吸嘴R軸 資訊
-                axis = 吸嘴R軸;
+                axis = (int)WMX3軸定義.吸嘴R軸;
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
 
                 //變更顏色
@@ -328,7 +328,7 @@ namespace InjectorInspector
                 int iTargetDeg = (int)(fChangeDegree *100);
 
                 //執行旋轉吸嘴
-                int axis = 吸嘴R軸;
+                int axis = (int)WMX3軸定義.吸嘴R軸;
                 int position = iTargetDeg;
                 int speed = (int)(360.00 * 100 * Multiplier);
                 int accel = speed*2;
@@ -386,49 +386,49 @@ namespace InjectorInspector
 
         private void btn_On_吸嘴R軸_Click(object sender, EventArgs e)
         {
-            int axis = 吸嘴R軸;
+            int axis = (int)WMX3軸定義.吸嘴R軸;
             int isOn = 1;
             clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
         }
         private void btn_Off_吸嘴R軸_Click(object sender, EventArgs e)
         {
-            int axis = 吸嘴R軸;
+            int axis = (int)WMX3軸定義.吸嘴R軸;
             int isOn = 0;
             clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
         }
         private void btn_On_吸嘴Z軸_Click(object sender, EventArgs e)
         {
-            int axis = 吸嘴Z軸;
+            int axis = (int)WMX3軸定義.吸嘴Z軸;
             int isOn = 1;
             clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
         }
         private void btn_Off_吸嘴Z軸_Click(object sender, EventArgs e)
         {
-            int axis = 吸嘴Z軸;
+            int axis = (int)WMX3軸定義.吸嘴Z軸;
             int isOn = 0;
             clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
         }
         private void btn_On_吸嘴Y軸_Click(object sender, EventArgs e)
         {
-            int axis = 吸嘴Y軸;
+            int axis = (int)WMX3軸定義.吸嘴Y軸;
             int isOn = 1;
             clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
         }
         private void btn_Off_吸嘴Y軸_Click(object sender, EventArgs e)
         {
-            int axis = 吸嘴Y軸;
+            int axis = (int)WMX3軸定義.吸嘴Y軸;
             int isOn = 0;
             clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
         }
         private void btn_On_吸嘴X軸_Click(object sender, EventArgs e)
         {
-            int axis = 吸嘴X軸;
+            int axis = (int)WMX3軸定義.吸嘴X軸;
             int isOn = 1;
             clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
         }
         private void btn_Off_吸嘴X軸_Click(object sender, EventArgs e)
         {
-            int axis = 吸嘴X軸;
+            int axis = (int)WMX3軸定義.吸嘴X軸;
             int isOn = 0;
             clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
         }
@@ -449,28 +449,28 @@ namespace InjectorInspector
             string position = "";
             string speed = "";
 
-            axis = 吸嘴X軸;
+            axis = (int)WMX3軸定義.吸嘴X軸;
             rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
             if (rslt == 1)
             {
                 clsServoControlWMX3.WMX3_SetHomePosition(axis);
             }
 
-            axis = 吸嘴Y軸;
+            axis = (int)WMX3軸定義.吸嘴Y軸;
             rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
             if (rslt == 1)
             {
                 clsServoControlWMX3.WMX3_SetHomePosition(axis);
             }
 
-            axis = 吸嘴Z軸;
+            axis = (int)WMX3軸定義.吸嘴Z軸;
             rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
             if (rslt == 1)
             {
                 clsServoControlWMX3.WMX3_SetHomePosition(axis);
             }
 
-            axis = 吸嘴R軸;
+            axis = (int)WMX3軸定義.吸嘴R軸;
             rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
             if (rslt == 1)
             {
@@ -509,24 +509,18 @@ namespace InjectorInspector
             dbapiNozzleY(99999.9);
 
             //讀取InputIO
-            byte[] pData28 = null;
-            io.GetInBytes(28, 1, ref pData28);
-            byte[] pData29 = null;
-            io.GetInBytes(29, 1, ref pData29);
-            byte[] pData30 = null;
-            io.GetInBytes(30, 1, ref pData30);
-            byte[] pData31 = null;
-            io.GetInBytes(31, 1, ref pData31);
-            byte[] pData32 = null;
-            io.GetInBytes(32, 1, ref pData32);
-            byte[] pData33 = null;
-            io.GetInBytes(33, 1, ref pData33);
-            byte[] pData34 = null;
-            io.GetInBytes(34, 1, ref pData34);
-            byte[] pData35 = null;
-            io.GetInBytes(35, 1, ref pData35);
+            byte[] pDataGetIO = new byte[8];
+            clsServoControlWMX3.WMX3_GetIO(ref pDataGetIO, 28, 8);
 
-            this.Text = pData28.ToHex() + ":" + pData28.ToBinary() + " " + 
+            byte[] pData28 = null; pData28[0] = pDataGetIO[0];
+            byte[] pData29 = null; pData29[0] = pDataGetIO[1];
+            byte[] pData30 = null; pData30[0] = pDataGetIO[2];
+            byte[] pData31 = null; pData31[0] = pDataGetIO[3];
+            byte[] pData32 = null; pData32[0] = pDataGetIO[4];
+            byte[] pData33 = null; pData33[0] = pDataGetIO[5];
+            byte[] pData34 = null; pData34[0] = pDataGetIO[6];
+            byte[] pData35 = null; pData35[0] = pDataGetIO[7];
+            this.Text = pData28.ToHex() + ":" + pData28.ToBinary() + " " +
                         pData29.ToHex() + ":" + pData29.ToBinary() + " " + 
                         pData30.ToHex() + ":" + pData30.ToBinary() + " " + 
                         pData31.ToHex() + ":" + pData31.ToBinary() + " " + 
@@ -534,6 +528,7 @@ namespace InjectorInspector
                         pData33.ToHex() + ":" + pData33.ToBinary() + " " + 
                         pData34.ToHex() + ":" + pData34.ToBinary() + " " + 
                         pData35.ToHex() + ":" + pData35.ToBinary() + " ";
+
         }
 
         private void btnNozzleDownPos_Click(object sender, EventArgs e)
@@ -546,16 +541,16 @@ namespace InjectorInspector
             int isOn = 0;
             int axis = 0;
 
-            axis = 吸嘴X軸;
+            axis = (int)WMX3軸定義.吸嘴X軸;
             clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
 
-            axis = 吸嘴Y軸;
+            axis = (int)WMX3軸定義.吸嘴Y軸;
             clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
 
-            axis = 吸嘴Z軸;
+            axis = (int)WMX3軸定義.吸嘴Z軸;
             clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
 
-            axis = 吸嘴R軸;
+            axis = (int)WMX3軸定義.吸嘴R軸;
             clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
 
             u8OneCycleFlag = 0;
@@ -563,7 +558,7 @@ namespace InjectorInspector
 
         private void btn_AlarmRST_Click(object sender, EventArgs e)
         {
-            motion.AxisControl.ClearAmpAlarm((int)NUD_Motor_NO.Value);
+            clsServoControlWMX3.WMX3_ClearAlarm();
         }
 
 
@@ -1111,7 +1106,7 @@ namespace InjectorInspector
 
             //吸嘴吸真空
             pData[0] |= 0b00000001;
-            io.SetOutBytes(6, 1, pData);
+            clsServoControlWMX3.WMX3_SetIO(ref pData, 6, 1);
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -1124,11 +1119,11 @@ namespace InjectorInspector
 
             //吸嘴吸真空
             pData[0] &= 0b11111110;
-            io.SetOutBytes(6, 1, pData);
+            clsServoControlWMX3.WMX3_SetIO(ref pData, 6, 1);
 
             //吸嘴破真空
             pData[0] |= 0b00000100;
-            io.SetOutBytes(6, 1, pData);
+            clsServoControlWMX3.WMX3_SetIO(ref pData, 6, 1);
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -1137,7 +1132,7 @@ namespace InjectorInspector
 
             //吸嘴破真空
             pData[0] &= 0b11111011;
-            io.SetOutBytes(6, 1, pData);
+            clsServoControlWMX3.WMX3_SetIO(ref pData, 6, 1);
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -1358,35 +1353,5 @@ namespace InjectorInspector
 
 
     }  // end of public partial class Form1 : Form
-
-
-    public static class ByteArrayExtensions
-    {
-        // 自定義方法來將 byte[] 轉換為二進位字串
-        public static string ToBinary(this byte[] byteArray)
-        {
-            StringBuilder binaryString = new StringBuilder();
-
-            foreach (byte b in byteArray)
-            {
-                binaryString.Append(Convert.ToString(b, 2).PadLeft(8, '0'));  // 將每個 byte 轉換為二進位並補齊到 8 位
-            }
-
-            return binaryString.ToString();
-        }
-
-        // 將 byte[] 轉換為十六進位字符串
-        public static string ToHex(this byte[] byteArray)
-        {
-            StringBuilder hexString = new StringBuilder(byteArray.Length * 2);  // 預估每個字節有 2 個十六進位字符
-
-            foreach (byte b in byteArray)
-            {
-                hexString.AppendFormat("{0:X2}", b);  // 將每個字節轉換為兩位十六進位數字
-            }
-
-            return hexString.ToString();
-        }
-    }
 
 }  // end of namespace InjectorInspector
