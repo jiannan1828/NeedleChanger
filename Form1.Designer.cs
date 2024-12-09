@@ -34,6 +34,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.inspector1 = new Inspector.Inspector();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.txtcyclecnt = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.button10 = new System.Windows.Forms.Button();
@@ -100,7 +101,7 @@
             this.btn_Connect = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.txtcyclecnt = new System.Windows.Forms.TextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -110,6 +111,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -221,6 +223,14 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // txtcyclecnt
+            // 
+            this.txtcyclecnt.Location = new System.Drawing.Point(987, 588);
+            this.txtcyclecnt.Name = "txtcyclecnt";
+            this.txtcyclecnt.Size = new System.Drawing.Size(100, 30);
+            this.txtcyclecnt.TabIndex = 69;
+            this.txtcyclecnt.Text = "1";
             // 
             // label9
             // 
@@ -850,13 +860,15 @@
             this.timer2.Interval = 2000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
-            // txtcyclecnt
+            // tabPage3
             // 
-            this.txtcyclecnt.Location = new System.Drawing.Point(987, 588);
-            this.txtcyclecnt.Name = "txtcyclecnt";
-            this.txtcyclecnt.Size = new System.Drawing.Size(100, 30);
-            this.txtcyclecnt.TabIndex = 69;
-            this.txtcyclecnt.Text = "1";
+            this.tabPage3.Location = new System.Drawing.Point(4, 29);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(1228, 758);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -956,6 +968,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtcyclecnt;
+        private System.Windows.Forms.TabPage tabPage3;
     }
 }
 

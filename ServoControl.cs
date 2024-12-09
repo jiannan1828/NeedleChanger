@@ -20,11 +20,20 @@ namespace InjectorInspector
     public enum WMX3軸定義
     {  // start of public enum WMX3軸定義
         AXIS_START = -1,
-            吸嘴X軸 = 3,
-            吸嘴Y軸 = 7,
-            吸嘴Z軸 = 1,
-            吸嘴R軸 = 0,
+            吸嘴X軸 = 3,  //小線碼
+            吸嘴Y軸 = 7,  //YASKAWA
+            吸嘴Z軸 = 1,  //VCM伸縮
+            吸嘴R軸 = 0,  //VCM旋轉
+
+            載盤X   = 4,  //YASKAWA
+            載盤Y   = 2,  //大線碼
+
+            植針Z   = 5,  //YASKAWA
+            植針R   = 6,  //YASKAWA
+
+            工作門  = 8,  //工作門
         AXIS_END = 999,
+        YASKAWA  = 1048576,
     }  // end of public enum WMX3軸定義
 
     //擴展定義字串轉換
@@ -205,19 +214,18 @@ namespace InjectorInspector
             //設置齒輪比
             if (wmx != null)
             {
-                int axis;
+                motion.Config.SetGearRatio((int)WMX3軸定義.吸嘴X軸, 1000, 100);  //小線碼
+                motion.Config.SetGearRatio((int)WMX3軸定義.吸嘴Y軸, (int)WMX3軸定義.YASKAWA, 2000); 
+              //motion.Config.SetGearRatio((int)WMX3軸定義.吸嘴Z軸, 1000, 100);  //VCM伸縮
+              //motion.Config.SetGearRatio((int)WMX3軸定義.吸嘴R軸, 1000, 100);  //VCM旋轉
 
-                axis = (int)WMX3軸定義.吸嘴X軸;
-                int D = motion.Config.SetGearRatio(axis, 1000, 100);
+                motion.Config.SetGearRatio((int)WMX3軸定義.載盤X, (int)WMX3軸定義.YASKAWA, 2000);
+              //motion.Config.SetGearRatio((int)WMX3軸定義.載盤Y, 1000, 100);    //大線碼
 
-                axis = (int)WMX3軸定義.吸嘴Y軸;
-                int H = motion.Config.SetGearRatio(axis, 1048576, 2000);
+                motion.Config.SetGearRatio((int)WMX3軸定義.植針Z, (int)WMX3軸定義.YASKAWA, 2000);
+                motion.Config.SetGearRatio((int)WMX3軸定義.植針R, (int)WMX3軸定義.YASKAWA, 2000);
 
-                //axis = 吸嘴Z軸;
-                //int B = motion.Config.SetGearRatio(axis, 1048576, 10000);
-
-                //axis = 吸嘴R軸;
-                //int A = motion.Config.SetGearRatio(axis, 1048576, 10000);  
+                motion.Config.SetGearRatio((int)WMX3軸定義.工作門, 1000, 2000);  //工作門
             }
             else
             {

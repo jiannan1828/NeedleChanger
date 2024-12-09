@@ -356,7 +356,7 @@ namespace InjectorInspector
             inspector1.on下視覺 = apiCallBackTest;
 
             //先跳到第2頁
-            int iAimToPageIndex = 2;
+            int iAimToPageIndex = 3;
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
 
             //設定吸嘴中心座標
