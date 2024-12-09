@@ -84,6 +84,12 @@
             this.btn_AlarmRST = new System.Windows.Forms.Button();
             this.btn_Connect = new System.Windows.Forms.Button();
             this.tabPage_Jog = new System.Windows.Forms.TabPage();
+            this.btn_minus_10 = new System.Windows.Forms.Button();
+            this.btn_minus_1 = new System.Windows.Forms.Button();
+            this.btn_plus_10 = new System.Windows.Forms.Button();
+            this.btn_plus_1 = new System.Windows.Forms.Button();
+            this.btnABSMove = new System.Windows.Forms.Button();
+            this.txtABSpos = new System.Windows.Forms.TextBox();
             this.en_工作門 = new System.Windows.Forms.CheckBox();
             this.en_植針R軸 = new System.Windows.Forms.CheckBox();
             this.en_植針Z軸 = new System.Windows.Forms.CheckBox();
@@ -714,6 +720,12 @@
             // 
             // tabPage_Jog
             // 
+            this.tabPage_Jog.Controls.Add(this.btn_minus_10);
+            this.tabPage_Jog.Controls.Add(this.btn_minus_1);
+            this.tabPage_Jog.Controls.Add(this.btn_plus_10);
+            this.tabPage_Jog.Controls.Add(this.btn_plus_1);
+            this.tabPage_Jog.Controls.Add(this.btnABSMove);
+            this.tabPage_Jog.Controls.Add(this.txtABSpos);
             this.tabPage_Jog.Controls.Add(this.en_工作門);
             this.tabPage_Jog.Controls.Add(this.en_植針R軸);
             this.tabPage_Jog.Controls.Add(this.en_植針Z軸);
@@ -775,6 +787,69 @@
             this.tabPage_Jog.TabIndex = 2;
             this.tabPage_Jog.Text = "Jog";
             this.tabPage_Jog.UseVisualStyleBackColor = true;
+            // 
+            // btn_minus_10
+            // 
+            this.btn_minus_10.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_minus_10.Location = new System.Drawing.Point(415, 339);
+            this.btn_minus_10.Name = "btn_minus_10";
+            this.btn_minus_10.Size = new System.Drawing.Size(75, 23);
+            this.btn_minus_10.TabIndex = 59;
+            this.btn_minus_10.Text = "-10";
+            this.btn_minus_10.UseVisualStyleBackColor = true;
+            this.btn_minus_10.Click += new System.EventHandler(this.btn_adjust_JOG);
+            // 
+            // btn_minus_1
+            // 
+            this.btn_minus_1.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_minus_1.Location = new System.Drawing.Point(415, 310);
+            this.btn_minus_1.Name = "btn_minus_1";
+            this.btn_minus_1.Size = new System.Drawing.Size(75, 23);
+            this.btn_minus_1.TabIndex = 58;
+            this.btn_minus_1.Text = "-1";
+            this.btn_minus_1.UseVisualStyleBackColor = true;
+            this.btn_minus_1.Click += new System.EventHandler(this.btn_adjust_JOG);
+            // 
+            // btn_plus_10
+            // 
+            this.btn_plus_10.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_plus_10.Location = new System.Drawing.Point(321, 339);
+            this.btn_plus_10.Name = "btn_plus_10";
+            this.btn_plus_10.Size = new System.Drawing.Size(75, 23);
+            this.btn_plus_10.TabIndex = 57;
+            this.btn_plus_10.Text = "+10";
+            this.btn_plus_10.UseVisualStyleBackColor = true;
+            this.btn_plus_10.Click += new System.EventHandler(this.btn_adjust_JOG);
+            // 
+            // btn_plus_1
+            // 
+            this.btn_plus_1.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_plus_1.Location = new System.Drawing.Point(321, 310);
+            this.btn_plus_1.Name = "btn_plus_1";
+            this.btn_plus_1.Size = new System.Drawing.Size(75, 23);
+            this.btn_plus_1.TabIndex = 56;
+            this.btn_plus_1.Text = "+1";
+            this.btn_plus_1.UseVisualStyleBackColor = true;
+            this.btn_plus_1.Click += new System.EventHandler(this.btn_adjust_JOG);
+            // 
+            // btnABSMove
+            // 
+            this.btnABSMove.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnABSMove.Location = new System.Drawing.Point(156, 310);
+            this.btnABSMove.Name = "btnABSMove";
+            this.btnABSMove.Size = new System.Drawing.Size(146, 52);
+            this.btnABSMove.TabIndex = 55;
+            this.btnABSMove.Text = "移動至指定位置";
+            this.btnABSMove.UseVisualStyleBackColor = true;
+            this.btnABSMove.Click += new System.EventHandler(this.btn_adjust_JOG);
+            // 
+            // txtABSpos
+            // 
+            this.txtABSpos.Location = new System.Drawing.Point(26, 320);
+            this.txtABSpos.Name = "txtABSpos";
+            this.txtABSpos.Size = new System.Drawing.Size(111, 30);
+            this.txtABSpos.TabIndex = 54;
+            this.txtABSpos.Text = "N/A";
             // 
             // en_工作門
             // 
@@ -879,7 +954,7 @@
             // lbl_acpos_工作門
             // 
             this.lbl_acpos_工作門.AutoSize = true;
-            this.lbl_acpos_工作門.Location = new System.Drawing.Point(451, 265);
+            this.lbl_acpos_工作門.Location = new System.Drawing.Point(445, 265);
             this.lbl_acpos_工作門.Name = "lbl_acpos_工作門";
             this.lbl_acpos_工作門.Size = new System.Drawing.Size(40, 19);
             this.lbl_acpos_工作門.TabIndex = 44;
@@ -888,7 +963,7 @@
             // lbl_acpos_植針R軸
             // 
             this.lbl_acpos_植針R軸.AutoSize = true;
-            this.lbl_acpos_植針R軸.Location = new System.Drawing.Point(451, 235);
+            this.lbl_acpos_植針R軸.Location = new System.Drawing.Point(445, 235);
             this.lbl_acpos_植針R軸.Name = "lbl_acpos_植針R軸";
             this.lbl_acpos_植針R軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_acpos_植針R軸.TabIndex = 43;
@@ -897,7 +972,7 @@
             // lbl_acpos_植針Z軸
             // 
             this.lbl_acpos_植針Z軸.AutoSize = true;
-            this.lbl_acpos_植針Z軸.Location = new System.Drawing.Point(451, 205);
+            this.lbl_acpos_植針Z軸.Location = new System.Drawing.Point(445, 205);
             this.lbl_acpos_植針Z軸.Name = "lbl_acpos_植針Z軸";
             this.lbl_acpos_植針Z軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_acpos_植針Z軸.TabIndex = 42;
@@ -906,7 +981,7 @@
             // lbl_acpos_載盤Y軸
             // 
             this.lbl_acpos_載盤Y軸.AutoSize = true;
-            this.lbl_acpos_載盤Y軸.Location = new System.Drawing.Point(451, 175);
+            this.lbl_acpos_載盤Y軸.Location = new System.Drawing.Point(445, 175);
             this.lbl_acpos_載盤Y軸.Name = "lbl_acpos_載盤Y軸";
             this.lbl_acpos_載盤Y軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_acpos_載盤Y軸.TabIndex = 41;
@@ -915,7 +990,7 @@
             // lbl_acpos_載盤X軸
             // 
             this.lbl_acpos_載盤X軸.AutoSize = true;
-            this.lbl_acpos_載盤X軸.Location = new System.Drawing.Point(451, 145);
+            this.lbl_acpos_載盤X軸.Location = new System.Drawing.Point(445, 145);
             this.lbl_acpos_載盤X軸.Name = "lbl_acpos_載盤X軸";
             this.lbl_acpos_載盤X軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_acpos_載盤X軸.TabIndex = 40;
@@ -924,7 +999,7 @@
             // lbl_acpos_吸嘴R軸
             // 
             this.lbl_acpos_吸嘴R軸.AutoSize = true;
-            this.lbl_acpos_吸嘴R軸.Location = new System.Drawing.Point(451, 115);
+            this.lbl_acpos_吸嘴R軸.Location = new System.Drawing.Point(445, 115);
             this.lbl_acpos_吸嘴R軸.Name = "lbl_acpos_吸嘴R軸";
             this.lbl_acpos_吸嘴R軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_acpos_吸嘴R軸.TabIndex = 39;
@@ -933,7 +1008,7 @@
             // lbl_acpos_吸嘴Z軸
             // 
             this.lbl_acpos_吸嘴Z軸.AutoSize = true;
-            this.lbl_acpos_吸嘴Z軸.Location = new System.Drawing.Point(451, 85);
+            this.lbl_acpos_吸嘴Z軸.Location = new System.Drawing.Point(445, 85);
             this.lbl_acpos_吸嘴Z軸.Name = "lbl_acpos_吸嘴Z軸";
             this.lbl_acpos_吸嘴Z軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_acpos_吸嘴Z軸.TabIndex = 38;
@@ -942,7 +1017,7 @@
             // lbl_acpos_吸嘴Y軸
             // 
             this.lbl_acpos_吸嘴Y軸.AutoSize = true;
-            this.lbl_acpos_吸嘴Y軸.Location = new System.Drawing.Point(451, 55);
+            this.lbl_acpos_吸嘴Y軸.Location = new System.Drawing.Point(445, 55);
             this.lbl_acpos_吸嘴Y軸.Name = "lbl_acpos_吸嘴Y軸";
             this.lbl_acpos_吸嘴Y軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_acpos_吸嘴Y軸.TabIndex = 37;
@@ -951,7 +1026,7 @@
             // lbl_acpos_吸嘴X軸
             // 
             this.lbl_acpos_吸嘴X軸.AutoSize = true;
-            this.lbl_acpos_吸嘴X軸.Location = new System.Drawing.Point(451, 25);
+            this.lbl_acpos_吸嘴X軸.Location = new System.Drawing.Point(445, 25);
             this.lbl_acpos_吸嘴X軸.Name = "lbl_acpos_吸嘴X軸";
             this.lbl_acpos_吸嘴X軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_acpos_吸嘴X軸.TabIndex = 36;
@@ -960,7 +1035,7 @@
             // lbl_acpos_工作門_lbl
             // 
             this.lbl_acpos_工作門_lbl.AutoSize = true;
-            this.lbl_acpos_工作門_lbl.Location = new System.Drawing.Point(391, 265);
+            this.lbl_acpos_工作門_lbl.Location = new System.Drawing.Point(385, 265);
             this.lbl_acpos_工作門_lbl.Name = "lbl_acpos_工作門_lbl";
             this.lbl_acpos_工作門_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_acpos_工作門_lbl.TabIndex = 35;
@@ -969,7 +1044,7 @@
             // lbl_acpos_植針R軸_lbl
             // 
             this.lbl_acpos_植針R軸_lbl.AutoSize = true;
-            this.lbl_acpos_植針R軸_lbl.Location = new System.Drawing.Point(391, 235);
+            this.lbl_acpos_植針R軸_lbl.Location = new System.Drawing.Point(385, 235);
             this.lbl_acpos_植針R軸_lbl.Name = "lbl_acpos_植針R軸_lbl";
             this.lbl_acpos_植針R軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_acpos_植針R軸_lbl.TabIndex = 34;
@@ -978,7 +1053,7 @@
             // lbl_acpos_植針Z軸_lbl
             // 
             this.lbl_acpos_植針Z軸_lbl.AutoSize = true;
-            this.lbl_acpos_植針Z軸_lbl.Location = new System.Drawing.Point(391, 205);
+            this.lbl_acpos_植針Z軸_lbl.Location = new System.Drawing.Point(385, 205);
             this.lbl_acpos_植針Z軸_lbl.Name = "lbl_acpos_植針Z軸_lbl";
             this.lbl_acpos_植針Z軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_acpos_植針Z軸_lbl.TabIndex = 33;
@@ -987,7 +1062,7 @@
             // lbl_acpos_載盤Y軸_lbl
             // 
             this.lbl_acpos_載盤Y軸_lbl.AutoSize = true;
-            this.lbl_acpos_載盤Y軸_lbl.Location = new System.Drawing.Point(391, 175);
+            this.lbl_acpos_載盤Y軸_lbl.Location = new System.Drawing.Point(385, 175);
             this.lbl_acpos_載盤Y軸_lbl.Name = "lbl_acpos_載盤Y軸_lbl";
             this.lbl_acpos_載盤Y軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_acpos_載盤Y軸_lbl.TabIndex = 32;
@@ -996,7 +1071,7 @@
             // lbl_acpos_載盤X軸_lbl
             // 
             this.lbl_acpos_載盤X軸_lbl.AutoSize = true;
-            this.lbl_acpos_載盤X軸_lbl.Location = new System.Drawing.Point(391, 145);
+            this.lbl_acpos_載盤X軸_lbl.Location = new System.Drawing.Point(385, 145);
             this.lbl_acpos_載盤X軸_lbl.Name = "lbl_acpos_載盤X軸_lbl";
             this.lbl_acpos_載盤X軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_acpos_載盤X軸_lbl.TabIndex = 31;
@@ -1005,7 +1080,7 @@
             // lbl_acpos_吸嘴R軸_lbl
             // 
             this.lbl_acpos_吸嘴R軸_lbl.AutoSize = true;
-            this.lbl_acpos_吸嘴R軸_lbl.Location = new System.Drawing.Point(391, 115);
+            this.lbl_acpos_吸嘴R軸_lbl.Location = new System.Drawing.Point(385, 115);
             this.lbl_acpos_吸嘴R軸_lbl.Name = "lbl_acpos_吸嘴R軸_lbl";
             this.lbl_acpos_吸嘴R軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_acpos_吸嘴R軸_lbl.TabIndex = 30;
@@ -1014,7 +1089,7 @@
             // lbl_acpos_吸嘴Z軸_lbl
             // 
             this.lbl_acpos_吸嘴Z軸_lbl.AutoSize = true;
-            this.lbl_acpos_吸嘴Z軸_lbl.Location = new System.Drawing.Point(391, 85);
+            this.lbl_acpos_吸嘴Z軸_lbl.Location = new System.Drawing.Point(385, 85);
             this.lbl_acpos_吸嘴Z軸_lbl.Name = "lbl_acpos_吸嘴Z軸_lbl";
             this.lbl_acpos_吸嘴Z軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_acpos_吸嘴Z軸_lbl.TabIndex = 29;
@@ -1023,7 +1098,7 @@
             // lbl_acpos_吸嘴Y軸_lbl
             // 
             this.lbl_acpos_吸嘴Y軸_lbl.AutoSize = true;
-            this.lbl_acpos_吸嘴Y軸_lbl.Location = new System.Drawing.Point(391, 55);
+            this.lbl_acpos_吸嘴Y軸_lbl.Location = new System.Drawing.Point(385, 55);
             this.lbl_acpos_吸嘴Y軸_lbl.Name = "lbl_acpos_吸嘴Y軸_lbl";
             this.lbl_acpos_吸嘴Y軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_acpos_吸嘴Y軸_lbl.TabIndex = 28;
@@ -1032,7 +1107,7 @@
             // lbl_acpos_吸嘴X軸_lbl
             // 
             this.lbl_acpos_吸嘴X軸_lbl.AutoSize = true;
-            this.lbl_acpos_吸嘴X軸_lbl.Location = new System.Drawing.Point(391, 25);
+            this.lbl_acpos_吸嘴X軸_lbl.Location = new System.Drawing.Point(385, 25);
             this.lbl_acpos_吸嘴X軸_lbl.Name = "lbl_acpos_吸嘴X軸_lbl";
             this.lbl_acpos_吸嘴X軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_acpos_吸嘴X軸_lbl.TabIndex = 27;
@@ -1041,7 +1116,7 @@
             // lbl_spd_工作門
             // 
             this.lbl_spd_工作門.AutoSize = true;
-            this.lbl_spd_工作門.Location = new System.Drawing.Point(291, 265);
+            this.lbl_spd_工作門.Location = new System.Drawing.Point(285, 265);
             this.lbl_spd_工作門.Name = "lbl_spd_工作門";
             this.lbl_spd_工作門.Size = new System.Drawing.Size(40, 19);
             this.lbl_spd_工作門.TabIndex = 26;
@@ -1050,7 +1125,7 @@
             // lbl_spd_植針R軸
             // 
             this.lbl_spd_植針R軸.AutoSize = true;
-            this.lbl_spd_植針R軸.Location = new System.Drawing.Point(291, 235);
+            this.lbl_spd_植針R軸.Location = new System.Drawing.Point(285, 235);
             this.lbl_spd_植針R軸.Name = "lbl_spd_植針R軸";
             this.lbl_spd_植針R軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_spd_植針R軸.TabIndex = 25;
@@ -1059,7 +1134,7 @@
             // lbl_spd_植針Z軸
             // 
             this.lbl_spd_植針Z軸.AutoSize = true;
-            this.lbl_spd_植針Z軸.Location = new System.Drawing.Point(291, 205);
+            this.lbl_spd_植針Z軸.Location = new System.Drawing.Point(285, 205);
             this.lbl_spd_植針Z軸.Name = "lbl_spd_植針Z軸";
             this.lbl_spd_植針Z軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_spd_植針Z軸.TabIndex = 24;
@@ -1068,7 +1143,7 @@
             // lbl_spd_載盤Y軸
             // 
             this.lbl_spd_載盤Y軸.AutoSize = true;
-            this.lbl_spd_載盤Y軸.Location = new System.Drawing.Point(291, 175);
+            this.lbl_spd_載盤Y軸.Location = new System.Drawing.Point(285, 175);
             this.lbl_spd_載盤Y軸.Name = "lbl_spd_載盤Y軸";
             this.lbl_spd_載盤Y軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_spd_載盤Y軸.TabIndex = 23;
@@ -1077,7 +1152,7 @@
             // lbl_spd_載盤X軸
             // 
             this.lbl_spd_載盤X軸.AutoSize = true;
-            this.lbl_spd_載盤X軸.Location = new System.Drawing.Point(291, 145);
+            this.lbl_spd_載盤X軸.Location = new System.Drawing.Point(285, 145);
             this.lbl_spd_載盤X軸.Name = "lbl_spd_載盤X軸";
             this.lbl_spd_載盤X軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_spd_載盤X軸.TabIndex = 22;
@@ -1086,7 +1161,7 @@
             // lbl_spd_吸嘴R軸
             // 
             this.lbl_spd_吸嘴R軸.AutoSize = true;
-            this.lbl_spd_吸嘴R軸.Location = new System.Drawing.Point(291, 115);
+            this.lbl_spd_吸嘴R軸.Location = new System.Drawing.Point(285, 115);
             this.lbl_spd_吸嘴R軸.Name = "lbl_spd_吸嘴R軸";
             this.lbl_spd_吸嘴R軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_spd_吸嘴R軸.TabIndex = 21;
@@ -1095,7 +1170,7 @@
             // lbl_spd_吸嘴Z軸
             // 
             this.lbl_spd_吸嘴Z軸.AutoSize = true;
-            this.lbl_spd_吸嘴Z軸.Location = new System.Drawing.Point(291, 85);
+            this.lbl_spd_吸嘴Z軸.Location = new System.Drawing.Point(285, 85);
             this.lbl_spd_吸嘴Z軸.Name = "lbl_spd_吸嘴Z軸";
             this.lbl_spd_吸嘴Z軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_spd_吸嘴Z軸.TabIndex = 20;
@@ -1104,7 +1179,7 @@
             // lbl_spd_吸嘴Y軸
             // 
             this.lbl_spd_吸嘴Y軸.AutoSize = true;
-            this.lbl_spd_吸嘴Y軸.Location = new System.Drawing.Point(291, 55);
+            this.lbl_spd_吸嘴Y軸.Location = new System.Drawing.Point(285, 55);
             this.lbl_spd_吸嘴Y軸.Name = "lbl_spd_吸嘴Y軸";
             this.lbl_spd_吸嘴Y軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_spd_吸嘴Y軸.TabIndex = 19;
@@ -1113,7 +1188,7 @@
             // lbl_spd_吸嘴X軸
             // 
             this.lbl_spd_吸嘴X軸.AutoSize = true;
-            this.lbl_spd_吸嘴X軸.Location = new System.Drawing.Point(291, 25);
+            this.lbl_spd_吸嘴X軸.Location = new System.Drawing.Point(285, 25);
             this.lbl_spd_吸嘴X軸.Name = "lbl_spd_吸嘴X軸";
             this.lbl_spd_吸嘴X軸.Size = new System.Drawing.Size(40, 19);
             this.lbl_spd_吸嘴X軸.TabIndex = 18;
@@ -1122,7 +1197,7 @@
             // lbl_spd_工作門_lbl
             // 
             this.lbl_spd_工作門_lbl.AutoSize = true;
-            this.lbl_spd_工作門_lbl.Location = new System.Drawing.Point(231, 265);
+            this.lbl_spd_工作門_lbl.Location = new System.Drawing.Point(225, 265);
             this.lbl_spd_工作門_lbl.Name = "lbl_spd_工作門_lbl";
             this.lbl_spd_工作門_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_spd_工作門_lbl.TabIndex = 17;
@@ -1131,7 +1206,7 @@
             // lbl_spd_植針R軸_lbl
             // 
             this.lbl_spd_植針R軸_lbl.AutoSize = true;
-            this.lbl_spd_植針R軸_lbl.Location = new System.Drawing.Point(231, 235);
+            this.lbl_spd_植針R軸_lbl.Location = new System.Drawing.Point(225, 235);
             this.lbl_spd_植針R軸_lbl.Name = "lbl_spd_植針R軸_lbl";
             this.lbl_spd_植針R軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_spd_植針R軸_lbl.TabIndex = 16;
@@ -1140,7 +1215,7 @@
             // lbl_spd_植針Z軸_lbl
             // 
             this.lbl_spd_植針Z軸_lbl.AutoSize = true;
-            this.lbl_spd_植針Z軸_lbl.Location = new System.Drawing.Point(231, 205);
+            this.lbl_spd_植針Z軸_lbl.Location = new System.Drawing.Point(225, 205);
             this.lbl_spd_植針Z軸_lbl.Name = "lbl_spd_植針Z軸_lbl";
             this.lbl_spd_植針Z軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_spd_植針Z軸_lbl.TabIndex = 15;
@@ -1149,7 +1224,7 @@
             // lbl_spd_載盤Y軸_lbl
             // 
             this.lbl_spd_載盤Y軸_lbl.AutoSize = true;
-            this.lbl_spd_載盤Y軸_lbl.Location = new System.Drawing.Point(231, 175);
+            this.lbl_spd_載盤Y軸_lbl.Location = new System.Drawing.Point(225, 175);
             this.lbl_spd_載盤Y軸_lbl.Name = "lbl_spd_載盤Y軸_lbl";
             this.lbl_spd_載盤Y軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_spd_載盤Y軸_lbl.TabIndex = 14;
@@ -1158,7 +1233,7 @@
             // lbl_spd_載盤X軸_lbl
             // 
             this.lbl_spd_載盤X軸_lbl.AutoSize = true;
-            this.lbl_spd_載盤X軸_lbl.Location = new System.Drawing.Point(231, 145);
+            this.lbl_spd_載盤X軸_lbl.Location = new System.Drawing.Point(225, 145);
             this.lbl_spd_載盤X軸_lbl.Name = "lbl_spd_載盤X軸_lbl";
             this.lbl_spd_載盤X軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_spd_載盤X軸_lbl.TabIndex = 13;
@@ -1167,7 +1242,7 @@
             // lbl_spd_吸嘴R軸_lbl
             // 
             this.lbl_spd_吸嘴R軸_lbl.AutoSize = true;
-            this.lbl_spd_吸嘴R軸_lbl.Location = new System.Drawing.Point(231, 115);
+            this.lbl_spd_吸嘴R軸_lbl.Location = new System.Drawing.Point(225, 115);
             this.lbl_spd_吸嘴R軸_lbl.Name = "lbl_spd_吸嘴R軸_lbl";
             this.lbl_spd_吸嘴R軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_spd_吸嘴R軸_lbl.TabIndex = 12;
@@ -1176,7 +1251,7 @@
             // lbl_spd_吸嘴Z軸_lbl
             // 
             this.lbl_spd_吸嘴Z軸_lbl.AutoSize = true;
-            this.lbl_spd_吸嘴Z軸_lbl.Location = new System.Drawing.Point(231, 85);
+            this.lbl_spd_吸嘴Z軸_lbl.Location = new System.Drawing.Point(225, 85);
             this.lbl_spd_吸嘴Z軸_lbl.Name = "lbl_spd_吸嘴Z軸_lbl";
             this.lbl_spd_吸嘴Z軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_spd_吸嘴Z軸_lbl.TabIndex = 11;
@@ -1185,7 +1260,7 @@
             // lbl_spd_吸嘴Y軸_lbl
             // 
             this.lbl_spd_吸嘴Y軸_lbl.AutoSize = true;
-            this.lbl_spd_吸嘴Y軸_lbl.Location = new System.Drawing.Point(231, 55);
+            this.lbl_spd_吸嘴Y軸_lbl.Location = new System.Drawing.Point(225, 55);
             this.lbl_spd_吸嘴Y軸_lbl.Name = "lbl_spd_吸嘴Y軸_lbl";
             this.lbl_spd_吸嘴Y軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_spd_吸嘴Y軸_lbl.TabIndex = 10;
@@ -1194,7 +1269,7 @@
             // lbl_spd_吸嘴X軸_lbl
             // 
             this.lbl_spd_吸嘴X軸_lbl.AutoSize = true;
-            this.lbl_spd_吸嘴X軸_lbl.Location = new System.Drawing.Point(231, 25);
+            this.lbl_spd_吸嘴X軸_lbl.Location = new System.Drawing.Point(225, 25);
             this.lbl_spd_吸嘴X軸_lbl.Name = "lbl_spd_吸嘴X軸_lbl";
             this.lbl_spd_吸嘴X軸_lbl.Size = new System.Drawing.Size(50, 19);
             this.lbl_spd_吸嘴X軸_lbl.TabIndex = 9;
@@ -1203,101 +1278,103 @@
             // select_工作門
             // 
             this.select_工作門.AutoSize = true;
-            this.select_工作門.Location = new System.Drawing.Point(116, 265);
+            this.select_工作門.Location = new System.Drawing.Point(109, 265);
             this.select_工作門.Name = "select_工作門";
             this.select_工作門.Size = new System.Drawing.Size(84, 23);
             this.select_工作門.TabIndex = 8;
-            this.select_工作門.TabStop = true;
             this.select_工作門.Text = "工作門";
             this.select_工作門.UseVisualStyleBackColor = true;
+            this.select_工作門.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
             // select_植針R軸
             // 
             this.select_植針R軸.AutoSize = true;
-            this.select_植針R軸.Location = new System.Drawing.Point(116, 235);
+            this.select_植針R軸.Location = new System.Drawing.Point(109, 235);
             this.select_植針R軸.Name = "select_植針R軸";
             this.select_植針R軸.Size = new System.Drawing.Size(96, 23);
             this.select_植針R軸.TabIndex = 7;
-            this.select_植針R軸.TabStop = true;
             this.select_植針R軸.Text = "植針R軸";
             this.select_植針R軸.UseVisualStyleBackColor = true;
+            this.select_植針R軸.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
             // select_植針Z軸
             // 
             this.select_植針Z軸.AutoSize = true;
-            this.select_植針Z軸.Location = new System.Drawing.Point(116, 205);
+            this.select_植針Z軸.Location = new System.Drawing.Point(109, 205);
             this.select_植針Z軸.Name = "select_植針Z軸";
             this.select_植針Z軸.Size = new System.Drawing.Size(95, 23);
             this.select_植針Z軸.TabIndex = 6;
-            this.select_植針Z軸.TabStop = true;
             this.select_植針Z軸.Text = "植針Z軸";
             this.select_植針Z軸.UseVisualStyleBackColor = true;
+            this.select_植針Z軸.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
             // select_載盤Y軸
             // 
             this.select_載盤Y軸.AutoSize = true;
-            this.select_載盤Y軸.Location = new System.Drawing.Point(116, 175);
+            this.select_載盤Y軸.Location = new System.Drawing.Point(109, 175);
             this.select_載盤Y軸.Name = "select_載盤Y軸";
             this.select_載盤Y軸.Size = new System.Drawing.Size(97, 23);
             this.select_載盤Y軸.TabIndex = 5;
-            this.select_載盤Y軸.TabStop = true;
             this.select_載盤Y軸.Text = "載盤Y軸";
             this.select_載盤Y軸.UseVisualStyleBackColor = true;
+            this.select_載盤Y軸.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
             // select_載盤X軸
             // 
             this.select_載盤X軸.AutoSize = true;
-            this.select_載盤X軸.Location = new System.Drawing.Point(116, 145);
+            this.select_載盤X軸.Location = new System.Drawing.Point(109, 145);
             this.select_載盤X軸.Name = "select_載盤X軸";
             this.select_載盤X軸.Size = new System.Drawing.Size(97, 23);
             this.select_載盤X軸.TabIndex = 4;
-            this.select_載盤X軸.TabStop = true;
             this.select_載盤X軸.Text = "載盤X軸";
             this.select_載盤X軸.UseVisualStyleBackColor = true;
+            this.select_載盤X軸.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
             // select_吸嘴R軸
             // 
             this.select_吸嘴R軸.AutoSize = true;
-            this.select_吸嘴R軸.Location = new System.Drawing.Point(116, 115);
+            this.select_吸嘴R軸.Location = new System.Drawing.Point(109, 115);
             this.select_吸嘴R軸.Name = "select_吸嘴R軸";
             this.select_吸嘴R軸.Size = new System.Drawing.Size(96, 23);
             this.select_吸嘴R軸.TabIndex = 3;
-            this.select_吸嘴R軸.TabStop = true;
             this.select_吸嘴R軸.Text = "吸嘴R軸";
             this.select_吸嘴R軸.UseVisualStyleBackColor = true;
+            this.select_吸嘴R軸.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
             // select_吸嘴Z軸
             // 
             this.select_吸嘴Z軸.AutoSize = true;
-            this.select_吸嘴Z軸.Location = new System.Drawing.Point(116, 85);
+            this.select_吸嘴Z軸.Location = new System.Drawing.Point(109, 85);
             this.select_吸嘴Z軸.Name = "select_吸嘴Z軸";
             this.select_吸嘴Z軸.Size = new System.Drawing.Size(95, 23);
             this.select_吸嘴Z軸.TabIndex = 2;
-            this.select_吸嘴Z軸.TabStop = true;
             this.select_吸嘴Z軸.Text = "吸嘴Z軸";
             this.select_吸嘴Z軸.UseVisualStyleBackColor = true;
+            this.select_吸嘴Z軸.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
             // select_吸嘴Y軸
             // 
             this.select_吸嘴Y軸.AutoSize = true;
-            this.select_吸嘴Y軸.Location = new System.Drawing.Point(116, 55);
+            this.select_吸嘴Y軸.Location = new System.Drawing.Point(109, 55);
             this.select_吸嘴Y軸.Name = "select_吸嘴Y軸";
             this.select_吸嘴Y軸.Size = new System.Drawing.Size(97, 23);
             this.select_吸嘴Y軸.TabIndex = 1;
-            this.select_吸嘴Y軸.TabStop = true;
             this.select_吸嘴Y軸.Text = "吸嘴Y軸";
             this.select_吸嘴Y軸.UseVisualStyleBackColor = true;
+            this.select_吸嘴Y軸.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
             // select_吸嘴X軸
             // 
             this.select_吸嘴X軸.AutoSize = true;
-            this.select_吸嘴X軸.Location = new System.Drawing.Point(116, 25);
+            this.select_吸嘴X軸.Checked = true;
+            this.select_吸嘴X軸.Location = new System.Drawing.Point(109, 25);
             this.select_吸嘴X軸.Name = "select_吸嘴X軸";
             this.select_吸嘴X軸.Size = new System.Drawing.Size(97, 23);
             this.select_吸嘴X軸.TabIndex = 0;
             this.select_吸嘴X軸.TabStop = true;
             this.select_吸嘴X軸.Text = "吸嘴X軸";
             this.select_吸嘴X軸.UseVisualStyleBackColor = true;
+            this.select_吸嘴X軸.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
             // timer1
             // 
@@ -1449,6 +1526,12 @@
         private System.Windows.Forms.CheckBox en_吸嘴Z軸;
         private System.Windows.Forms.CheckBox en_吸嘴Y軸;
         private System.Windows.Forms.CheckBox en_吸嘴X軸;
+        private System.Windows.Forms.Button btnABSMove;
+        private System.Windows.Forms.TextBox txtABSpos;
+        private System.Windows.Forms.Button btn_minus_10;
+        private System.Windows.Forms.Button btn_minus_1;
+        private System.Windows.Forms.Button btn_plus_10;
+        private System.Windows.Forms.Button btn_plus_1;
     }
 }
 

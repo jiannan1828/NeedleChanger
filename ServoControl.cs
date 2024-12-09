@@ -253,6 +253,8 @@ namespace InjectorInspector
                     string str = WMX3Api.ErrorToString(ret);
                     MessageBox.Show(str);
                 }
+
+                rslt = 1;
             }
             else
             {

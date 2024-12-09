@@ -1,4 +1,6 @@
-﻿using System;
+﻿//---------------------------------------------------------------------------------------
+//Default using
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,35 +15,46 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Xml;
 
+//---------------------------------------------------------------------------------------
+//SMB added
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 using System.Reflection.Emit;
 using System.Diagnostics;
 
+//---------------------------------------------------------------------------------------
 //Halcon
 using Inspector;
 using HalconDotNet;
 
+//---------------------------------------------------------------------------------------
 //Vibration
 using static InjectorInspector.Vibration;
 
+//---------------------------------------------------------------------------------------
 //ServoControl
 using static InjectorInspector.ServoControl;
 
+//---------------------------------------------------------------------------------------
 //JSON
 using System.IO;
+using WMX3ApiCLR;
 //using System.Text.Json;
 
+//---------------------------------------------------------------------------------------
 namespace InjectorInspector
 {
     public partial class Form1 : Form
     {
+        //---------------------------------------------------------------------------------------
         //WMX3
         ServoControl clsServoControlWMX3 = new ServoControl();
 
+        //---------------------------------------------------------------------------------------
         //Vibration
         Vibration clsVibration = new Vibration();
 
+        //---------------------------------------------------------------------------------------
         //Debug
         public int ErrorCode = 0;
         public int cntcallback = 0;
@@ -49,8 +62,7 @@ namespace InjectorInspector
         public int Multiplier = 4;
         public int u8OneCycleFlag = 0;
 
-
-
+        //---------------------------------------------------------------------------------------
         /// <summary>
         /// Test function with Vision
         /// </summary>
@@ -89,8 +101,7 @@ namespace InjectorInspector
             int cntdebug = inspector1.RecvCount;
         }
 
-
-
+        //---------------------------------------------------------------------------------------
         /// <summary>
         /// Xavier Call, Control the Servo machine
         /// </summary>
@@ -774,7 +785,7 @@ namespace InjectorInspector
         }  // end of public double dbapiGate(double dbIncreaseGate)  //Gate
 
 
-
+        //---------------------------------------------------------------------------------------
         /// <summary>
         /// Project Code implement
         /// </summary>
@@ -804,7 +815,8 @@ namespace InjectorInspector
             txtY2.Text = "49.11";
             txtCalXYoriginal(sender, e);
 
-            this.Text = "2024/09/04 14:04";
+            this.Text = "2024/12/09 18:32";
+
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -814,9 +826,225 @@ namespace InjectorInspector
             //sw.Close();
         }
 
-     
+        public bool En吸嘴X軸 = false;
+        public bool En吸嘴Y軸 = false;
+        public bool En吸嘴Z軸 = false;
+        public bool En吸嘴R軸 = false;
+
+        public bool En載盤X軸 = false;
+        public bool En載盤Y軸 = false;
+
+        public bool En植針Z軸 = false;
+        public bool En植針R軸 = false;
+
+        public bool En工作門 = false;
+
+        public void en_Group_Click(object sender, EventArgs e)
+        {  // start of public void en_Group_Click(object sender, EventArgs e)
+            if (En吸嘴X軸 != en_吸嘴X軸.Checked)
+            {
+                En吸嘴X軸 = en_吸嘴X軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, En吸嘴X軸);
+            }
+
+            if (En吸嘴Y軸 != en_吸嘴Y軸.Checked)
+            {
+                En吸嘴Y軸 = en_吸嘴Y軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, En吸嘴Y軸);
+            }
+
+            if (En吸嘴Z軸 != en_吸嘴Z軸.Checked)
+            {
+                En吸嘴Z軸 = en_吸嘴Z軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, En吸嘴Z軸);
+            }
+
+            if (En吸嘴R軸 != en_吸嘴R軸.Checked)
+            {
+                En吸嘴R軸 = en_吸嘴R軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, En吸嘴R軸);
+            }
 
 
+            if (En載盤X軸 != en_載盤X軸.Checked)
+            {
+                En載盤X軸 = en_載盤X軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, En載盤X軸);
+            }
+
+            if (En載盤Y軸 != en_載盤Y軸.Checked)
+            {
+                En載盤Y軸 = en_載盤Y軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, En載盤Y軸);
+            }
+
+
+            if (En植針Z軸 != en_植針Z軸.Checked)
+            {
+                En植針Z軸 = en_植針Z軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, En植針Z軸);
+            }
+
+            if (En植針R軸 != en_植針R軸.Checked)
+            {
+                En植針R軸 = en_植針R軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, En植針R軸);
+            }
+
+
+            if (En工作門 != en_工作門.Checked)
+            {
+                En工作門 = en_工作門.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, En工作門);
+            }
+        }  // end of public void en_Group_Click(object sender, EventArgs e)
+
+
+        public WMX3軸定義 wmxId_RadioGroupChanged = WMX3軸定義.AXIS_START;
+        private void RadioGroupChanged(object sender, EventArgs e)
+        {  // start of private void RadioGroupChanged(object sender, EventArgs e)
+            // 將 sender 轉型為 RadioButton
+            System.Windows.Forms.RadioButton selectedRadioButton = sender as System.Windows.Forms.RadioButton;
+
+            //辨識選擇之軸
+            if (selectedRadioButton != null && selectedRadioButton.Checked == true)
+            {
+                if (selectedRadioButton == select_吸嘴X軸)
+                {
+                    wmxId_RadioGroupChanged = WMX3軸定義.吸嘴X軸;
+                }
+                else if (selectedRadioButton == select_吸嘴Y軸)
+                {
+                    wmxId_RadioGroupChanged = WMX3軸定義.吸嘴Y軸;
+                }
+                else if (selectedRadioButton == select_吸嘴Z軸)
+                {
+                    wmxId_RadioGroupChanged = WMX3軸定義.吸嘴Z軸;
+                }
+                else if (selectedRadioButton == select_吸嘴R軸)
+                {
+                    wmxId_RadioGroupChanged = WMX3軸定義.吸嘴R軸;
+                }
+                else if (selectedRadioButton == select_載盤X軸)
+                {
+                    wmxId_RadioGroupChanged = WMX3軸定義.載盤X軸;
+                }
+                else if (selectedRadioButton == select_載盤Y軸)
+                {
+                    wmxId_RadioGroupChanged = WMX3軸定義.載盤Y軸;
+                }
+                else if (selectedRadioButton == select_植針Z軸)
+                {
+                    wmxId_RadioGroupChanged = WMX3軸定義.植針Z軸;
+                }
+                else if (selectedRadioButton == select_植針R軸)
+                {
+                    wmxId_RadioGroupChanged = WMX3軸定義.植針R軸;
+                }
+                else if (selectedRadioButton == select_工作門)
+                {
+                    wmxId_RadioGroupChanged = WMX3軸定義.工作門;
+                }
+            }
+
+            //複製選擇之軸
+            if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴X軸)
+            {
+                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴X軸.Text).ToString("F2"));
+            }
+            else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴Y軸)
+            {
+                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Y軸.Text).ToString("F2"));
+            }
+            else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴Z軸)
+            {
+                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Z軸.Text).ToString("F2"));
+            }
+            else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴R軸)
+            {
+                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴R軸.Text).ToString("F2"));
+            }
+            else if (wmxId_RadioGroupChanged == WMX3軸定義.載盤X軸)
+            {
+                txtABSpos.Text = (double.Parse(lbl_acpos_載盤X軸.Text).ToString("F2"));
+            }
+            else if (wmxId_RadioGroupChanged == WMX3軸定義.載盤Y軸)
+            {
+                txtABSpos.Text = (double.Parse(lbl_acpos_載盤Y軸.Text).ToString("F2"));
+            }
+            else if (wmxId_RadioGroupChanged == WMX3軸定義.植針Z軸)
+            {
+                txtABSpos.Text = (double.Parse(lbl_acpos_植針Z軸.Text).ToString("F2"));
+            }
+            else if (wmxId_RadioGroupChanged == WMX3軸定義.植針R軸)
+            {
+                txtABSpos.Text = (double.Parse(lbl_acpos_植針R軸.Text).ToString("F2"));
+            }
+            else if (wmxId_RadioGroupChanged == WMX3軸定義.工作門)
+            {
+                txtABSpos.Text = (double.Parse(lbl_acpos_工作門.Text).ToString("F2"));
+            }
+            else
+            {
+                txtABSpos.Text = "N/A";
+            }
+
+        }  // end of private void RadioGroupChanged(object sender, EventArgs e)
+
+        public void btn_adjust_JOG(object sender, EventArgs e)
+        {  // start of public void btn_adjust_JOG(object sender, EventArgs e)
+            // 將 sender 轉型為 Button
+            System.Windows.Forms.Button ptrBtn = sender as System.Windows.Forms.Button;
+
+            if (ptrBtn == btnABSMove)
+            {
+                // 先進行計算，再格式化數字
+                double result = double.Parse(lbl_acpos_工作門.Text) + 0.0;
+                txtABSpos.Text = result.ToString("F2");
+            }
+            else
+
+            if (ptrBtn == btn_plus_1)
+            {
+                double result = double.Parse(lbl_acpos_工作門.Text) + 1.0;
+                txtABSpos.Text = result.ToString("F2");
+            }
+            else if (ptrBtn == btn_minus_1)
+            {
+                double result = double.Parse(lbl_acpos_工作門.Text) - 1.0;
+                txtABSpos.Text = result.ToString("F2");
+            }
+            else
+
+            if (ptrBtn == btn_plus_10)
+            {
+                double result = double.Parse(lbl_acpos_工作門.Text) + 10.0;
+                txtABSpos.Text = result.ToString("F2");
+            }
+            else if (ptrBtn == btn_minus_10)
+            {
+                double result = double.Parse(lbl_acpos_工作門.Text) - 10.0;
+                txtABSpos.Text = result.ToString("F2");
+            }
+
+        }  // end of public void btn_adjust_JOG(object sender, EventArgs e)
+
+
+
+
+
+
+
+        //---------------------------------------------------------------------------------------
         private void btn_Connect_Click(object sender, EventArgs e)
         {
             clsServoControlWMX3.WMX3_establish_Commu();
@@ -1400,90 +1628,6 @@ namespace InjectorInspector
 
 
 
-
-
-
-        public bool En吸嘴X軸 = false;
-        public bool En吸嘴Y軸 = false;
-        public bool En吸嘴Z軸 = false;
-        public bool En吸嘴R軸 = false;
-
-        public bool En載盤X軸 = false;
-        public bool En載盤Y軸 = false;
-
-        public bool En植針Z軸 = false;
-        public bool En植針R軸 = false;
-
-        public bool En工作門 = false;
-
-        public void en_Group_Click(object sender, EventArgs e)
-        {
-            if(En吸嘴X軸 != en_吸嘴X軸.Checked)
-            {
-                En吸嘴X軸 = en_吸嘴X軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, En吸嘴X軸);
-            }
-
-            if (En吸嘴Y軸 != en_吸嘴Y軸.Checked)
-            {
-                En吸嘴Y軸 = en_吸嘴Y軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, En吸嘴Y軸);
-            }
-
-            if (En吸嘴Z軸 != en_吸嘴Z軸.Checked)
-            {
-                En吸嘴Z軸 = en_吸嘴Z軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, En吸嘴Z軸);
-            }
-
-            if (En吸嘴R軸 != en_吸嘴R軸.Checked)
-            {
-                En吸嘴R軸 = en_吸嘴R軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, En吸嘴R軸);
-            }
-
-
-            if (En載盤X軸 != en_載盤X軸.Checked)
-            {
-                En載盤X軸 = en_載盤X軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, En載盤X軸);
-            }
-
-            if (En載盤Y軸 != en_載盤Y軸.Checked)
-            {
-                En載盤Y軸 = en_載盤Y軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, En載盤Y軸);
-            }
-
-
-            if (En植針Z軸 != en_植針Z軸.Checked)
-            {
-                En植針Z軸 = en_植針Z軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, En植針Z軸);
-            }
-
-            if (En植針R軸 != en_植針R軸.Checked)
-            {
-                En植針R軸 = en_植針R軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, En植針R軸);
-            }
-
-
-            if (En工作門 != en_工作門.Checked)
-            {
-                En工作門 = en_工作門.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, En工作門);
-            }
-        }
 
     }  // end of public partial class Form1 : Form
 
