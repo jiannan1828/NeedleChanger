@@ -126,7 +126,7 @@ namespace InjectorInspector
                 int axis = 0;
                 string position = "";
                 string speed = "";
-                
+
                 //讀取 吸嘴X軸 資訊
                 axis = (int)WMX3軸定義.吸嘴X軸;
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
@@ -135,11 +135,14 @@ namespace InjectorInspector
                 btn_On_吸嘴X軸.BackColor = (rslt == 1) ? Color.Red : Color.Green;
 
                 //計算讀取長度
-                dbRstNozzleX = double.Parse(position) / 100.0;
+                if (position != "")
+                    dbRstNozzleX = double.Parse(position) / 100.0;
                 AcPos3.Text = dbRstNozzleX.ToString("F2");
 
                 //顯示運動速度
-                double dbSpeed = double.Parse(speed);
+                double dbSpeed = 0.0;
+                if (speed != "")
+                    dbSpeed = double.Parse(speed);
                 AcSpd3.Text = dbSpeed.ToString("F2");
             }
 
@@ -191,11 +194,14 @@ namespace InjectorInspector
                 btn_On_吸嘴Y軸.BackColor = (rslt == 1) ? Color.Red : Color.Green;
 
                 //計算讀取長度
-                dbRstNozzleY = double.Parse(position) / 100.0;
+                if (position != "")
+                    dbRstNozzleY = double.Parse(position) / 100.0;
                 AcPos7.Text = dbRstNozzleY.ToString("F2");
 
                 //顯示運動速度
-                double dbSpeed = double.Parse(speed);
+                double dbSpeed = 0.0;
+                if (speed != "")
+                    dbSpeed = double.Parse(speed);
                 AcSpd7.Text = dbSpeed.ToString("F2");
             }
 
@@ -247,11 +253,14 @@ namespace InjectorInspector
                 btn_On_吸嘴Z軸.BackColor = (rslt == 1) ? Color.Red : Color.Green;
 
                 //計算讀取長度
-                dbRstNozzleLength = double.Parse(position) / 1000.0;
+                if(position != "")
+                    dbRstNozzleLength = double.Parse(position) / 1000.0;
                 AcPos1.Text = dbRstNozzleLength.ToString("F2");
 
                 //顯示運動速度
-                double dbSpeed = double.Parse(speed);
+                double dbSpeed = 0.0;
+                if (speed != "")
+                    dbSpeed = double.Parse(speed);
                 AcSpd1.Text = dbSpeed.ToString("F2");
             }
 
@@ -303,7 +312,8 @@ namespace InjectorInspector
                 btn_On_吸嘴R軸.BackColor = (rslt == 1) ? Color.Red : Color.Green;
 
                 //計算讀取角度
-                dbRstNozzleDegree = double.Parse(position) / 100.0;
+                if(position != "")
+                    dbRstNozzleDegree = double.Parse(position) / 100.0;
                 while (dbRstNozzleDegree >= 360.0)
                 {
                     dbRstNozzleDegree -= 360.0;
@@ -311,7 +321,9 @@ namespace InjectorInspector
                 AcPos0.Text = dbRstNozzleDegree.ToString("F2");
 
                 //顯示運動速度
-                double dbSpeed = double.Parse(speed);
+                double dbSpeed = 0.0;
+                if (speed != "")
+                    dbSpeed = double.Parse(speed);
                 AcSpd0.Text = dbSpeed.ToString("F2");
             }
 
@@ -359,9 +371,6 @@ namespace InjectorInspector
             inspector1.xInit();
             //Add the callback api from snapshot api
             inspector1.on下視覺 = apiCallBackTest;
-
-            //Active WMX3
-            clsServoControlWMX3.WMX3_Initial();
 
             //先跳到第2頁
             int iAimToPageIndex = 2;
@@ -512,22 +521,15 @@ namespace InjectorInspector
             byte[] pDataGetIO = new byte[8];
             clsServoControlWMX3.WMX3_GetIO(ref pDataGetIO, 28, 8);
 
-            byte[] pData28 = null; pData28[0] = pDataGetIO[0];
-            byte[] pData29 = null; pData29[0] = pDataGetIO[1];
-            byte[] pData30 = null; pData30[0] = pDataGetIO[2];
-            byte[] pData31 = null; pData31[0] = pDataGetIO[3];
-            byte[] pData32 = null; pData32[0] = pDataGetIO[4];
-            byte[] pData33 = null; pData33[0] = pDataGetIO[5];
-            byte[] pData34 = null; pData34[0] = pDataGetIO[6];
-            byte[] pData35 = null; pData35[0] = pDataGetIO[7];
-            this.Text = pData28.ToHex() + ":" + pData28.ToBinary() + " " +
-                        pData29.ToHex() + ":" + pData29.ToBinary() + " " + 
-                        pData30.ToHex() + ":" + pData30.ToBinary() + " " + 
-                        pData31.ToHex() + ":" + pData31.ToBinary() + " " + 
-                        pData32.ToHex() + ":" + pData32.ToBinary() + " " + 
-                        pData33.ToHex() + ":" + pData33.ToBinary() + " " + 
-                        pData34.ToHex() + ":" + pData34.ToBinary() + " " + 
-                        pData35.ToHex() + ":" + pData35.ToBinary() + " ";
+            // 使用 StringBuilder 來構建文本，減少字串拼接的開銷
+            var sb = new StringBuilder();
+                for (int i = 0; i < 8; i++)
+                {
+                    byte[] data = new byte[1] { pDataGetIO[i] };
+                    sb.AppendFormat("{0}:{1} ", data.ToHex(), data.ToBinary());
+                }
+            // 設定 Text 屬性
+            this.Text = sb.ToString();
 
         }
 

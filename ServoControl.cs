@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-
 //WMX3
 using WMX3ApiCLR;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -15,35 +13,23 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
-
-
 namespace InjectorInspector
 {
-
-
 
     //軸的對應號碼
     public enum WMX3軸定義
     {  // start of public enum WMX3軸定義
-
-
-
-        吸嘴X軸 = 3,
-        吸嘴Y軸 = 7,
-        吸嘴Z軸 = 1,
-        吸嘴R軸 = 0,
-
-
-
+        AXIS_START = -1,
+            吸嘴X軸 = 3,
+            吸嘴Y軸 = 7,
+            吸嘴Z軸 = 1,
+            吸嘴R軸 = 0,
+        AXIS_END = 999,
     }  // end of public enum WMX3軸定義
-
-
 
     //擴展定義字串轉換
     public static class ByteArrayExtensions
     {  // start of public static class ByteArrayExtensions
-
-
 
         // 自定義方法來將 byte[] 轉換為二進位字串
         public static string ToBinary(this byte[] byteArray)
@@ -71,27 +57,33 @@ namespace InjectorInspector
             return hexString.ToString();
         }
 
-
-
     }  //end of public static class ByteArrayExtensions
 
     //WMX3控制
     internal class ServoControl
     {  // start of internal class ServoControl
 
-
-
         //WMX3
-        WMX3Api wmx = new WMX3Api();
-        CoreMotion motion = new CoreMotion();
-        CoreMotionStatus CmStatus = new CoreMotionStatus();
-        EngineStatus EnStatus = new EngineStatus();
-        Config.HomeParam AxisHomeParam = new Config.HomeParam();
-        Stopwatch stopWatch = new Stopwatch();
-        AdvancedMotion advmon = new AdvancedMotion();
-        Io io = new Io();
+        private WMX3Api wmx;
+        private CoreMotion motion;
+        private CoreMotionStatus CmStatus;
+        private EngineStatus EnStatus;
+        private Config.HomeParam AxisHomeParam;
+        private Stopwatch stopWatch;
+        private AdvancedMotion advmon;
+        private Io io;
         public static CoreMotionAxisStatus[] cmAxis = new CoreMotionAxisStatus[8];
         public System.Windows.Forms.NumericUpDown NUD_Motor_NO;
+
+        public ServoControl()
+        {  // 建構子，初始化物件
+            CreateWMX3Handle();
+        }
+
+        ~ServoControl()
+        {  // 解構子，釋放非托管資源
+            KillWMX3Handle();
+        }
 
 
 
@@ -99,8 +91,111 @@ namespace InjectorInspector
         /// ServoMotor WMX3 Control API
         /// </summary>
         /// 
+
+        public void CreateWMX3Handle()
+        {
+            //清除未知記憶體
+            KillWMX3Handle();
+
+            // 僅在初始化時進行一次賦值，避免重複初始化
+            if (wmx == null)
+            {
+                wmx = new WMX3Api();
+            }
+
+            if (motion == null)
+            {
+                motion = new CoreMotion();
+            }
+
+            if (CmStatus == null)
+            {
+                CmStatus = new CoreMotionStatus();
+            }
+
+            if (EnStatus == null)
+            {
+                EnStatus = new EngineStatus();
+            }
+
+            if (AxisHomeParam == null)
+            {
+                AxisHomeParam = new Config.HomeParam();
+            }
+
+            if (stopWatch == null)
+            {
+                stopWatch = new Stopwatch();
+            }
+
+            if (advmon == null)
+            {
+                advmon = new AdvancedMotion();
+            }
+
+            if (io == null)
+            {
+                io = new Io();
+            }
+        }
+
+        public void KillWMX3Handle()
+        {
+            //清除未知記憶體
+            if (wmx != null)
+            {
+                wmx.Dispose();  // 釋放資源
+                wmx = null;     // 設為 null 以避免錯誤引用
+            }
+
+            if (motion != null)
+            {
+                motion.Dispose();  // 釋放資源
+                motion = null;     // 設為 null 以避免錯誤引用
+            }
+
+            if (CmStatus != null)
+            {
+                //CmStatus.Dispose();  // 釋放資源
+                CmStatus = null;     // 設為 null 以避免錯誤引用
+            }
+
+            if (EnStatus != null)
+            {
+                //EnStatus.Dispose();  // 釋放資源
+                EnStatus = null;     // 設為 null 以避免錯誤引用
+            }
+
+            if (AxisHomeParam != null)
+            {
+                //AxisHomeParam.Dispose();  // 釋放資源
+                AxisHomeParam = null;     // 設為 null 以避免錯誤引用
+            }
+
+            if (stopWatch != null)
+            {
+                //stopWatch.Dispose();  // 釋放資源
+                stopWatch = null;     // 設為 null 以避免錯誤引用
+            }
+
+            if (advmon != null)
+            {
+                advmon.Dispose();  // 釋放資源
+                advmon = null;     // 設為 null 以避免錯誤引用
+            }
+
+            if (io != null)
+            {
+                io.Dispose();  // 釋放資源
+                io = null;     // 設為 null 以避免錯誤引用
+            }
+        }
+
         public void WMX3_Initial()
         {
+            //建立WMX3 Handle
+            CreateWMX3Handle();
+
             //建立裝置
             wmx.CreateDevice("C:\\Program Files\\SoftServo\\WMX3", DeviceType.DeviceTypeNormal, 10000);
 
@@ -108,30 +203,48 @@ namespace InjectorInspector
             wmx.SetDeviceName("DLF");
 
             //設置齒輪比
-            int axis;
+            if (wmx != null)
+            {
+                int axis;
 
-            //axis = 吸嘴R軸;
-            //int A = motion.Config.SetGearRatio(axis, 1048576, 10000);  
+                axis = (int)WMX3軸定義.吸嘴X軸;
+                int D = motion.Config.SetGearRatio(axis, 1000, 100);
 
-            //axis = 吸嘴Z軸;
-            //int B = motion.Config.SetGearRatio(axis, 1048576, 10000);
+                axis = (int)WMX3軸定義.吸嘴Y軸;
+                int H = motion.Config.SetGearRatio(axis, 1048576, 2000);
 
-            axis = (int)WMX3軸定義.吸嘴X軸;
-            int D = motion.Config.SetGearRatio(axis, 1000, 100);
+                //axis = 吸嘴Z軸;
+                //int B = motion.Config.SetGearRatio(axis, 1048576, 10000);
 
-            axis = (int)WMX3軸定義.吸嘴Y軸;
-            int H = motion.Config.SetGearRatio(axis, 1048576, 2000);
+                //axis = 吸嘴R軸;
+                //int A = motion.Config.SetGearRatio(axis, 1048576, 10000);  
+            }
+            else
+            {
+                return;
+            }
+
         }  //end of public void WMX3_Initial()
 
         public int WMX3_establish_Commu()
         {
             int rslt = 0;
 
-            int ret = wmx.StartCommunication();
-            if (ret != 0)
+            //Active WMX3
+            WMX3_Initial();
+
+            if (wmx != null)
             {
-                string str = WMX3Api.ErrorToString(ret);
-                MessageBox.Show(str);
+                int ret = wmx.StartCommunication();
+                if (ret != 0)
+                {
+                    string str = WMX3Api.ErrorToString(ret);
+                    MessageBox.Show(str);
+                }
+            }
+            else
+            {
+                rslt = 0;
             }
 
             return rslt;
@@ -139,19 +252,28 @@ namespace InjectorInspector
 
         public void WMX3_destroy_Commu()
         {
-            if (false)
+
+            if (wmx != null)
             {
-                wmx.StopCommunication();
+                if (false)
+                {
+                    wmx.StopCommunication();
+                }
+                else
+                {
+                    wmx.StopCommunication(10000);
+                }
+
+                //Quit device.
+                wmx.CloseDevice();
+                motion.Dispose();
+                wmx.Dispose();
+                wmx = null;
             }
             else
             {
-                wmx.StopCommunication(10000);
+                return;
             }
-
-            //Quit device.
-            wmx.CloseDevice();
-            motion.Dispose();
-            wmx.Dispose();
 
         }  //end of public void WMX3_destroy_Commu()
 
@@ -159,18 +281,26 @@ namespace InjectorInspector
         {
             int rslt = 0;
 
-            //讀取當前通訊狀態
-            motion.GetStatus(ref CmStatus);
-
-            switch (CmStatus.EngineState)
+            if (wmx != null)
             {
-                case EngineState.Running:
-                    rslt = 0;
-                    break;
+                //讀取當前通訊狀態
+                motion.GetStatus(ref CmStatus);
 
-                case EngineState.Communicating:
-                    rslt = 1;
-                    break;
+                switch (CmStatus.EngineState)
+                {
+                    default:
+                    case EngineState.Running:
+                        rslt = 0;
+                        break;
+
+                    case EngineState.Communicating:
+                        rslt = 1;
+                        break;
+                }
+            }
+            else
+            {
+                rslt = 0;
             }
 
             return rslt;
@@ -180,38 +310,53 @@ namespace InjectorInspector
         {
             int newStatus = bOn;
 
-            //啟動伺服
-            int ret = motion.AxisControl.SetServoOn(axis, newStatus);
-
-            if (ret != 0)
+            if (wmx != null)
             {
-                string ers = CoreMotion.ErrorToString(ret);
-                MessageBox.Show($"{ers}");
+                 //啟動伺服
+                int ret = motion.AxisControl.SetServoOn(axis, newStatus);
+
+                if (ret != 0)
+                {
+                    string ers = CoreMotion.ErrorToString(ret);
+                    MessageBox.Show($"{ers}");
+                }
             }
+            else
+            {
+                return;
+            }
+
         }  //end of public void WMX3_ServoOn(int axis)
 
         public int WMX3_check_ServoOnOff(int axis, ref string position, ref string speed)
         {
             int rslt = 0;
 
-            //讀取SV ON狀態
-            CoreMotionAxisStatus cmAxis = CmStatus.AxesStatus[axis];
-            if (cmAxis.ServoOn == true)
-            {
-                rslt = 1;
-            }
+            if (wmx != null)
+            { 
+                //讀取SV ON狀態
+                CoreMotionAxisStatus cmAxis = CmStatus.AxesStatus[axis];
+                if (cmAxis.ServoOn == true)
+                {
+                    rslt = 1;
+                }
+                else
+                {
+                    rslt = 0;
+                }
+
+                //讀取目前位置
+                string Profile = cmAxis.ActualPos.ToString();
+
+                //strtok info
+                position = Profile.Substring(0, Math.Min(Profile.Length, 6));
+                speed = cmAxis.ActualVelocity.ToString();
+                //AcTqr0.Text = cmAxis.ActualTorque.ToString();
+            } 
             else
             {
                 rslt = 0;
             }
-
-            //讀取目前位置
-            string Profile = cmAxis.ActualPos.ToString();
-
-            //strtok info
-            position = Profile.Substring(0, Math.Min(Profile.Length, 6));
-            speed = cmAxis.ActualVelocity.ToString();
-            //AcTqr0.Text = cmAxis.ActualTorque.ToString();
 
             return rslt;
         }  //end of int WMX3_check_ServoOnOff(int axis)
@@ -220,26 +365,33 @@ namespace InjectorInspector
         {
             int rslt = 0;
 
-            //位置控制設定
-            int ret1 = motion.AxisControl.SetAxisCommandMode(0, AxisCommandMode.Position);
-
-            //POS參數設置
-            Motion.PosCommand pos = new Motion.PosCommand();
-
-            pos.Profile.Type = ProfileType.Trapezoidal;  //運動模式
-            pos.Axis = axis;    //軸
-            pos.Target = pivot;   //指定位置
-            pos.Profile.Velocity = speed;   //速度
-            pos.Profile.Acc = accel;   //加速度
-            pos.Profile.Dec = daccel;  //減速度
-
-            //啟動POS運轉
-            rslt = motion.Motion.StartPos(pos);
-
-            if (rslt != 0)
+            if (wmx != null)
             {
-                string ers = CoreMotion.ErrorToString(rslt);  //如果無法通訊則報錯誤給使用者
-                //   textBox12.Text += "軸" + textBox3.Text + ":" + ers + "\r\n";
+                //位置控制設定
+                int ret1 = motion.AxisControl.SetAxisCommandMode(0, AxisCommandMode.Position);
+
+                //POS參數設置
+                Motion.PosCommand pos = new Motion.PosCommand();
+
+                pos.Profile.Type     = ProfileType.Trapezoidal;  //運動模式
+                pos.Axis             = axis;    //軸
+                pos.Target           = pivot;   //指定位置
+                pos.Profile.Velocity = speed;   //速度
+                pos.Profile.Acc      = accel;   //加速度
+                pos.Profile.Dec      = daccel;  //減速度
+
+                //啟動POS運轉
+                rslt = motion.Motion.StartPos(pos);
+
+                if (rslt != 0)
+                {
+                    string ers = CoreMotion.ErrorToString(rslt);  //如果無法通訊則報錯誤給使用者
+                    //   textBox12.Text += "軸" + textBox3.Text + ":" + ers + "\r\n";
+                }
+            }
+            else
+            { 
+                rslt = 0;
             }
 
             return rslt;
@@ -249,76 +401,108 @@ namespace InjectorInspector
         {
             int rslt = 0;
 
-            switch (axis)
+            if (wmx != null)
             {
-                case 0:
-                case 1:
-                    motion.Config.GetHomeParam(axis, ref AxisHomeParam);//讀取原點模式
+                switch (axis)
+                {
+                    case 0:
+                    case 1:
+                        motion.Config.GetHomeParam(axis, ref AxisHomeParam);//讀取原點模式
 
-                    //設定為讀取內部home
-                    AxisHomeParam.HomeType = Config.HomeType.ZPulse;
+                        //設定為讀取內部home
+                        AxisHomeParam.HomeType = Config.HomeType.ZPulse;
 
-                    //尋找內部home
-                    rslt = motion.Config.SetHomeParam(axis, AxisHomeParam);//設置原點參數
+                        //尋找內部home
+                        rslt = motion.Config.SetHomeParam(axis, AxisHomeParam);//設置原點參數
 
-                    if (rslt != 0)
-                    {
-                        string ers = CoreMotion.ErrorToString(rslt);//如果無法通訊則報錯誤給使用者
-                    }
-                    break;
+                        if (rslt != 0)
+                        {
+                            string ers = CoreMotion.ErrorToString(rslt);//如果無法通訊則報錯誤給使用者
+                        }
+                        break;
+                }
+
+                //開始回原點
+                rslt = motion.Home.StartHome(axis);
             }
-
-            //開始回原點
-            rslt = motion.Home.StartHome(axis);
+            else
+            {
+                rslt = 0;
+            }
 
             return rslt;
         }  //end of public int WMX3_SetHomePosition(int axis)
 
         public int WMX3_GetIO(ref byte[] pData, int addr, int size)
         {
-            // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
-            if (pData == null || addr == 0 || size == 0 || pData.Length < size)
+
+            if (wmx != null)
             {
-                return 0;  // 錯誤長度
+                // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
+                if (pData == null || addr == 0 || size == 0 || pData.Length < size)
+                {
+                    return 0;  // 錯誤長度
+                }
+
+                // 讀取 InputIO
+                for (int cnt = 0; cnt < size; cnt++)
+                {
+                    byte[] pDataGet = new byte[1];
+
+                    // 從指定地址讀取資料並填充到 pData
+                    io.GetInBytes(addr + cnt, 1, ref pDataGet);
+                    pData[cnt] = pDataGet[0];
+                }
+
+                return 1;  // 成功返回 1
+            }
+            else
+            {
+                return 0;
             }
 
-            // 讀取 InputIO
-            for (int cnt = 0; cnt < size; cnt++)
-            {
-                byte[] pDataGet = null;
-
-                // 從指定地址讀取資料並填充到 pData
-                io.GetInBytes(addr + cnt, 1, ref pDataGet);
-                pData[cnt] = pDataGet[0];
-            }
-
-            return 1;  // 成功返回 1
         }
 
         public int WMX3_SetIO(ref byte[] pData, int addr, int size)
         {
-            // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
-            if (pData == null || addr == 0 || size == 0 || pData.Length < size)
+
+            if (wmx != null)
             {
-                return 0;  // 錯誤長度
+                // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
+                if (pData == null || addr == 0 || size == 0 || pData.Length < size)
+                {
+                    return 0;  // 錯誤長度
+                }
+
+                // 讀取 InputIO
+                for (int cnt = 0; cnt < size; cnt++)
+                {
+                    byte[] pDataGet = new byte[1];
+
+                    // 從指定地址寫入資料
+                    pDataGet[0] = pData[cnt];
+                    io.SetOutBytes(addr + cnt, 1, pDataGet);
+                }
+
+                return 1;  // 成功返回 1
+            }
+            else
+            {
+                return 0;
             }
 
-            // 讀取 InputIO
-            for (int cnt = 0; cnt < size; cnt++)
-            {
-                byte[] pDataGet = null;
-
-                // 從指定地址寫入資料
-                pDataGet[0] = pData[cnt];
-                io.SetOutBytes(addr + cnt, 1, pDataGet);
-            }
-
-            return 1;  // 成功返回 1
         }
 
         public void WMX3_ClearAlarm()
         {
-            motion.AxisControl.ClearAmpAlarm((int)NUD_Motor_NO.Value);
+            if (wmx != null)
+            {
+                motion.AxisControl.ClearAmpAlarm((int)NUD_Motor_NO.Value);
+            }
+            else
+            {
+                return;
+            }
         }
 
 
