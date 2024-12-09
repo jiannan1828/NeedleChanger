@@ -122,3 +122,15 @@ D:\CodeNeedCnahger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.CoreCompil
 D:\CodeNeedCnahger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.Up2Date
 D:\CodeNeedCnahger\NeedleChanger\Inspector\obj\Debug\Inspector.dll
 D:\CodeNeedCnahger\NeedleChanger\Inspector\obj\Debug\Inspector.pdb
+E:\TestCodeViaMKLINK\NeedleChanger\Inspector\bin\Debug\ic4core.dll
+E:\TestCodeViaMKLINK\NeedleChanger\Inspector\bin\Debug\Inspector.dll
+E:\TestCodeViaMKLINK\NeedleChanger\Inspector\bin\Debug\Inspector.pdb
+E:\TestCodeViaMKLINK\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.AssemblyReference.cache
+E:\TestCodeViaMKLINK\NeedleChanger\Inspector\obj\Debug\Camera.IMSSetFrm.resources
+E:\TestCodeViaMKLINK\NeedleChanger\Inspector\obj\Debug\Inspector.Inspector.resources
+E:\TestCodeViaMKLINK\NeedleChanger\Inspector\obj\Debug\Camera.SisoSetFrm.resources
+E:\TestCodeViaMKLINK\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.GenerateResource.cache
+E:\TestCodeViaMKLINK\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.CoreCompileInputs.cache
+E:\TestCodeViaMKLINK\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.Up2Date
+E:\TestCodeViaMKLINK\NeedleChanger\Inspector\obj\Debug\Inspector.dll
+E:\TestCodeViaMKLINK\NeedleChanger\Inspector\obj\Debug\Inspector.pdb
