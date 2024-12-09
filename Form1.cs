@@ -51,8 +51,6 @@ namespace InjectorInspector
 
 
 
-
-
         /// <summary>
         /// Test function with Vision
         /// </summary>
@@ -93,9 +91,6 @@ namespace InjectorInspector
 
 
 
-
-
-
         /// <summary>
         /// Xavier Call, Control the Servo machine
         /// </summary>
@@ -106,30 +101,46 @@ namespace InjectorInspector
 
             {  //吸嘴X軸 讀取與顯示
                 int rslt = 0;
-                int axis = 0;
                 string position = "";
                 string speed = "";
 
                 //讀取 吸嘴X軸 資訊
-                axis = (int)WMX3軸定義.吸嘴X軸;
-                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-
-                //變更顏色
-                btn_On_吸嘴X軸.BackColor = (rslt == 1) ? Color.Red : Color.Green;
+                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.吸嘴X軸, ref position, ref speed);
 
                 //計算讀取長度
                 if (position != "")
+                {
                     dbRstNozzleX = double.Parse(position) / 100.0;
-                AcPos3.Text = dbRstNozzleX.ToString("F2");
+                }
 
                 //顯示運動速度
                 double dbSpeed = 0.0;
                 if (speed != "")
+                {
                     dbSpeed = double.Parse(speed);
-                AcSpd3.Text = dbSpeed.ToString("F2");
+                }
+
+                //變更顏色
+                if (rslt == 1)
+                {
+                    select_吸嘴X軸.BackColor = Color.Red;
+                    lbl_acpos_吸嘴X軸.BackColor = Color.White;
+                    lbl_spd_吸嘴X軸.BackColor = Color.White;
+                }
+                else
+                {
+                    select_吸嘴X軸.BackColor = Color.Green;
+                    lbl_acpos_吸嘴X軸.BackColor = Color.Gray;
+                    lbl_spd_吸嘴X軸.BackColor = Color.Gray;
+                }
+
+                //顯示資訊
+                lbl_acpos_吸嘴X軸.Text = dbRstNozzleX.ToString("F2");
+                lbl_spd_吸嘴X軸.Text = dbSpeed.ToString("F2");
+
             }
 
-            if (dbIncreaseNozzleX == 99999.9 || dbapiNozzleLength(99999.9)>= 0.5 )
+            if (dbIncreaseNozzleX == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
             {
                 this.Text = "Z軸尚未回到上位";
             }
@@ -147,7 +158,7 @@ namespace InjectorInspector
                 //計算補正至長度的數值
                 int iTargetNozzleX = (int)(fChangeNozzleX * 100);
 
-                //執行旋轉吸嘴
+                //執行移動吸嘴
                 int axis = (int)WMX3軸定義.吸嘴X軸;
                 int position = iTargetNozzleX;
                 int speed = (int)(50.00 * 100 * Multiplier);
@@ -165,30 +176,46 @@ namespace InjectorInspector
 
             {  //吸嘴Y軸 讀取與顯示
                 int rslt = 0;
-                int axis = 0;
                 string position = "";
                 string speed = "";
 
                 //讀取 吸嘴Y軸 資訊
-                axis = (int)WMX3軸定義.吸嘴Y軸;
-                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-
-                //變更顏色
-                btn_On_吸嘴Y軸.BackColor = (rslt == 1) ? Color.Red : Color.Green;
+                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, ref position, ref speed);
 
                 //計算讀取長度
                 if (position != "")
+                {
                     dbRstNozzleY = double.Parse(position) / 100.0;
-                AcPos7.Text = dbRstNozzleY.ToString("F2");
+                }
 
                 //顯示運動速度
                 double dbSpeed = 0.0;
                 if (speed != "")
+                {
                     dbSpeed = double.Parse(speed);
-                AcSpd7.Text = dbSpeed.ToString("F2");
+                }
+
+                //變更顏色
+                if (rslt == 1)
+                {
+                    select_吸嘴Y軸.BackColor = Color.Red;
+                    lbl_acpos_吸嘴Y軸.BackColor = Color.White;
+                    lbl_spd_吸嘴Y軸.BackColor = Color.White;
+                }
+                else
+                {
+                    select_吸嘴Y軸.BackColor = Color.Green;
+                    lbl_acpos_吸嘴Y軸.BackColor = Color.Gray;
+                    lbl_spd_吸嘴Y軸.BackColor = Color.Gray;
+                }
+
+                //顯示資訊
+                lbl_acpos_吸嘴Y軸.Text = dbRstNozzleY.ToString("F2");
+                lbl_spd_吸嘴Y軸.Text = dbSpeed.ToString("F2");
+
             }
 
-            if (dbIncreaseNozzleY == 99999.9 || dbapiNozzleLength(99999.9) >= 0.5 )
+            if (dbIncreaseNozzleY == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
             {
                 this.Text = "Z軸尚未回到上位";
             }
@@ -198,15 +225,15 @@ namespace InjectorInspector
                 double fChangeNozzleY = dbIncreaseNozzleY;
 
                 //伸長量overflow保護
-                //if (dbIncreaseNozzleY >= 40.35)
+                //if (fChangeNozzleY >= 40.35)
                 //{
-                //    dbIncreaseNozzleY = 40.35;
+                //    fChangeNozzleY = 40.35;
                 //}
 
                 //計算補正至長度的數值
                 int iTargetNozzleY = (int)(fChangeNozzleY * 100);
 
-                //執行旋轉吸嘴
+                //執行移動吸嘴
                 int axis = (int)WMX3軸定義.吸嘴Y軸;
                 int position = iTargetNozzleY;
                 int speed = (int)(50.00 * 100 * Multiplier);
@@ -218,36 +245,52 @@ namespace InjectorInspector
             return dbRstNozzleY;
         }  // end of public double dbapiNozzleY(double dbIncreaseNozzleY)  //NozzleY
 
-        public double dbapiNozzleLength(double dbIncreaseNozzleZ)  //NozzleZ
+        public double dbapiNozzleZ(double dbIncreaseNozzleZ)  //NozzleZ
         {
-            double dbRstNozzleLength = 0.0;
+            double dbRstNozzleZ = 0.0;
 
             {  //吸嘴Z軸 讀取與顯示
                 int rslt = 0;
-                int axis = 0;
                 string position = "";
                 string speed = "";
 
                 //讀取 吸嘴Z軸 資訊
-                axis = (int)WMX3軸定義.吸嘴Z軸;
-                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-
-                //變更顏色
-                btn_On_吸嘴Z軸.BackColor = (rslt == 1) ? Color.Red : Color.Green;
+                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, ref position, ref speed);
 
                 //計算讀取長度
-                if(position != "")
-                    dbRstNozzleLength = double.Parse(position) / 1000.0;
-                AcPos1.Text = dbRstNozzleLength.ToString("F2");
+                if (position != "")
+                {
+                    dbRstNozzleZ = double.Parse(position) / 1000.0;
+                }
 
                 //顯示運動速度
                 double dbSpeed = 0.0;
                 if (speed != "")
+                {
                     dbSpeed = double.Parse(speed);
-                AcSpd1.Text = dbSpeed.ToString("F2");
+                }
+
+                //變更顏色
+                if (rslt == 1)
+                {
+                    select_吸嘴Z軸.BackColor = Color.Red;
+                    lbl_acpos_吸嘴Z軸.BackColor = Color.White;
+                    lbl_spd_吸嘴Z軸.BackColor = Color.White;
+                }
+                else
+                {
+                    select_吸嘴Z軸.BackColor = Color.Green;
+                    lbl_acpos_吸嘴Z軸.BackColor = Color.Gray;
+                    lbl_spd_吸嘴Z軸.BackColor = Color.Gray;
+                }
+
+                //顯示資訊
+                lbl_acpos_吸嘴Z軸.Text = dbRstNozzleZ.ToString("F2");
+                lbl_spd_吸嘴Z軸.Text = dbSpeed.ToString("F2");
+
             }
 
-            if (dbIncreaseNozzleZ== 99999.9)
+            if (dbIncreaseNozzleZ == dbRead)
             {
 
             }
@@ -265,52 +308,70 @@ namespace InjectorInspector
                 //計算補正至長度的數值
                 int iTargetNozzleZ = (int)(fChangeNozzleZ * 1000);
 
-                //執行旋轉吸嘴
+                //執行伸縮吸嘴
                 int axis = (int)WMX3軸定義.吸嘴Z軸;
                 int position = iTargetNozzleZ;
                 int speed = (int)(40.00 * 1000 * Multiplier);
-                int accel = speed*2;
-                int daccel = speed*2;
+                int accel = speed * 2;
+                int daccel = speed * 2;
                 clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
             }
 
-            return dbRstNozzleLength;
-        }  // end of public double dbapiNozzleLength(double dbIncreaseNozzleZ)  //NozzleZ
+            return dbRstNozzleZ;
+        }  // end of public double dbapiNozzleZ(double dbIncreaseNozzleZ)  //NozzleZ
 
-        public double dbapiNozzleDegree(double dbIncreaseDegree)  //NozzleR
+        public double dbapiNozzleR(double dbIncreaseDegree)  //NozzleR
         {
-            double dbRstNozzleDegree = 0.0;
+            double dbRstNozzleR = 0.0;
 
             {  //吸嘴R軸 讀取與顯示
                 int rslt = 0;
-                int axis = 0;
                 string position = "";
                 string speed = "";
 
                 //讀取 吸嘴R軸 資訊
-                axis = (int)WMX3軸定義.吸嘴R軸;
-                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-
-                //變更顏色
-                btn_On_吸嘴R軸.BackColor = (rslt == 1) ? Color.Red : Color.Green;
+                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.吸嘴R軸, ref position, ref speed);
 
                 //計算讀取角度
-                if(position != "")
-                    dbRstNozzleDegree = double.Parse(position) / 100.0;
-                while (dbRstNozzleDegree >= 360.0)
+                if (position != "")
                 {
-                    dbRstNozzleDegree -= 360.0;
+                    dbRstNozzleR = double.Parse(position) / 100.0;
                 }
-                AcPos0.Text = dbRstNozzleDegree.ToString("F2");
+
+                //overflow
+                while (dbRstNozzleR >= 360.0)
+                {
+                    dbRstNozzleR -= 360.0;
+                }
 
                 //顯示運動速度
                 double dbSpeed = 0.0;
                 if (speed != "")
+                {
                     dbSpeed = double.Parse(speed);
-                AcSpd0.Text = dbSpeed.ToString("F2");
+                }
+
+                //變更顏色
+                if (rslt == 1)
+                {
+                    select_吸嘴R軸.BackColor = Color.Red;
+                    lbl_acpos_吸嘴R軸.BackColor = Color.White;
+                    lbl_spd_吸嘴R軸.BackColor = Color.White;
+                }
+                else
+                {
+                    select_吸嘴R軸.BackColor = Color.Green;
+                    lbl_acpos_吸嘴R軸.BackColor = Color.Gray;
+                    lbl_spd_吸嘴R軸.BackColor = Color.Gray;
+                }
+
+                //顯示資訊
+                lbl_acpos_吸嘴R軸.Text = dbRstNozzleR.ToString("F2");
+                lbl_spd_吸嘴R軸.Text = dbSpeed.ToString("F2");
+
             }
 
-            if (dbIncreaseDegree == 99999.9)
+            if (dbIncreaseDegree == dbRead)
             {
 
             }
@@ -320,22 +381,397 @@ namespace InjectorInspector
                 double fChangeDegree = dbIncreaseDegree;
 
                 //計算補正至角度的數值
-                int iTargetDeg = (int)(fChangeDegree *100);
+                int iTargetDeg = (int)(fChangeDegree * 100);
 
                 //執行旋轉吸嘴
                 int axis = (int)WMX3軸定義.吸嘴R軸;
                 int position = iTargetDeg;
                 int speed = (int)(360.00 * 100 * Multiplier);
-                int accel = speed*2;
-                int daccel = speed*2;
+                int accel = speed * 2;
+                int daccel = speed * 2;
                 clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
             }
 
-            return dbRstNozzleDegree;
-        }  // end of public double dbapiNozzleDegree(double dbIncreaseDegree)  //NozzleR
+            return dbRstNozzleR;
+        }  // end of public double dbapiNozzleR(double dbIncreaseDegree)  //NozzleR
 
 
+        public double dbapiCarrierX(double dbIncreaseCarrierX)  //CarrierX
+        {
+            double dbRstCarrierX = 0.0;
 
+            {  //載盤X軸 讀取與顯示
+                int rslt = 0;
+                string position = "";
+                string speed = "";
+
+                //讀取 載盤X軸 資訊
+                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.載盤X軸, ref position, ref speed);
+
+                //計算讀取長度
+                if (position != "")
+                {
+                    dbRstCarrierX = double.Parse(position);
+                }
+
+                //顯示運動速度
+                double dbSpeed = 0.0;
+                if (speed != "")
+                {
+                    dbSpeed = double.Parse(speed);
+                }
+
+                //變更顏色
+                if (rslt == 1)
+                {
+                    select_載盤X軸.BackColor = Color.Red;
+                    lbl_acpos_載盤X軸.BackColor = Color.White;
+                    lbl_spd_載盤X軸.BackColor = Color.White;
+                }
+                else
+                {
+                    select_載盤X軸.BackColor = Color.Green;
+                    lbl_acpos_載盤X軸.BackColor = Color.Gray;
+                    lbl_spd_載盤X軸.BackColor = Color.Gray;
+                }
+
+                //顯示資訊
+                lbl_acpos_載盤X軸.Text = dbRstCarrierX.ToString("F2");
+                lbl_spd_載盤X軸.Text = dbSpeed.ToString("F2");
+
+            }
+
+            if (dbIncreaseCarrierX == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
+            {
+                this.Text = "Z軸尚未回到上位";
+            }
+            else
+            {  //載盤X軸 變更位置
+                // 取得欲變更的的浮點數
+                double fChangeCarrierX = dbIncreaseCarrierX;
+
+                //伸長量overflow保護
+                //if (fChangeCarrierX >= 40.35)
+                //{
+                //    fChangeCarrierX = 40.35;
+                //}
+
+                //計算補正至長度的數值
+                int iTargetCarrierX = (int)(fChangeCarrierX * 100);
+
+                //執行移動載盤
+                int axis = (int)WMX3軸定義.載盤X軸;
+                int position = iTargetCarrierX;
+                int speed = (int)(50.00 * 100 * Multiplier);
+                int accel = speed * 2;
+                int daccel = speed * 2;
+                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+            }
+
+            return dbRstCarrierX;
+        }  // end of public double dbapiCarrierX(double dbIncreaseCarrierX)  //CarrierX
+
+        public double dbapiCarrierY(double dbIncreaseCarrierY)  //CarrierY
+        {
+            double dbRstCarrierY = 0.0;
+
+            {  //載盤Y軸 讀取與顯示
+                int rslt = 0;
+                string position = "";
+                string speed = "";
+
+                //讀取 載盤Y軸 資訊
+                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.載盤Y軸, ref position, ref speed);
+
+                //計算讀取長度
+                if (position != "")
+                {
+                    dbRstCarrierY = double.Parse(position);
+                }
+
+                //顯示運動速度
+                double dbSpeed = 0.0;
+                if (speed != "")
+                {
+                    dbSpeed = double.Parse(speed);
+                }
+
+                //變更顏色
+                if (rslt == 1)
+                {
+                    select_載盤Y軸.BackColor = Color.Red;
+                    lbl_acpos_載盤Y軸.BackColor = Color.White;
+                    lbl_spd_載盤Y軸.BackColor = Color.White;
+                }
+                else
+                {
+                    select_載盤Y軸.BackColor = Color.Green;
+                    lbl_acpos_載盤Y軸.BackColor = Color.Gray;
+                    lbl_spd_載盤Y軸.BackColor = Color.Gray;
+                }
+
+                //顯示資訊
+                lbl_acpos_載盤Y軸.Text = dbRstCarrierY.ToString("F2");
+                lbl_spd_載盤Y軸.Text = dbSpeed.ToString("F2");
+
+            }
+
+            if (dbIncreaseCarrierY == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
+            {
+                this.Text = "Z軸尚未回到上位";
+            }
+            else
+            {  //載盤Y軸 變更位置
+                // 取得欲變更的的浮點數
+                double fChangeCarrierY = dbIncreaseCarrierY;
+
+                //伸長量overflow保護
+                //if (fChangeCarrierY >= 40.35)
+                //{
+                //    fChangeCarrierY = 40.35;
+                //}
+
+                //計算補正至長度的數值
+                int iTargetCarrierY = (int)(fChangeCarrierY * 100);
+
+                //執行移動載盤
+                int axis = (int)WMX3軸定義.載盤Y軸;
+                int position = iTargetCarrierY;
+                int speed = (int)(50.00 * 100 * Multiplier);
+                int accel = speed * 2;
+                int daccel = speed * 2;
+                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+            }
+
+            return dbRstCarrierY;
+        }  // end of public double dbapiCarrierY(double dbIncreaseCarrierY)  //CarrierY
+
+
+        public double dbapiSetZ(double dbIncreaseSetZ)  //SetZ
+        {
+            double dbRstSetZ = 0.0;
+
+            {  //植針Z軸 讀取與顯示
+                int rslt = 0;
+                string position = "";
+                string speed = "";
+
+                //讀取 植針Z軸 資訊
+                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.植針Z軸, ref position, ref speed);
+
+                //計算讀取長度
+                if (position != "")
+                {
+                    dbRstSetZ = double.Parse(position);
+                }
+
+                //顯示運動速度
+                double dbSpeed = 0.0;
+                if (speed != "")
+                {
+                    dbSpeed = double.Parse(speed);
+                }
+
+                //變更顏色
+                if (rslt == 1)
+                {
+                    select_植針Z軸.BackColor = Color.Red;
+                    lbl_acpos_植針Z軸.BackColor = Color.White;
+                    lbl_spd_植針Z軸.BackColor = Color.White;
+                }
+                else
+                {
+                    select_植針Z軸.BackColor = Color.Green;
+                    lbl_acpos_植針Z軸.BackColor = Color.Gray;
+                    lbl_spd_植針Z軸.BackColor = Color.Gray;
+                }
+
+                //顯示資訊
+                lbl_acpos_植針Z軸.Text = dbRstSetZ.ToString("F2");
+                lbl_spd_植針Z軸.Text = dbSpeed.ToString("F2");
+
+            }
+
+            if (dbIncreaseSetZ == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
+            {
+                this.Text = "Z軸尚未回到上位";
+            }
+            else
+            {  //植針Z軸 變更位置
+                // 取得欲變更的的浮點數
+                double fChangeSetZ = dbIncreaseSetZ;
+
+                //伸長量overflow保護
+                //if (fChangeSetZ >= 40.35)
+                //{
+                //    fChangeSetZ = 40.35;
+                //}
+
+                //計算補正至長度的數值
+                int iTargetSetZ = (int)(fChangeSetZ * 100);
+
+                //執行移動植針Z軸
+                int axis = (int)WMX3軸定義.植針Z軸;
+                int position = iTargetSetZ;
+                int speed = (int)(50.00 * 100 * Multiplier);
+                int accel = speed * 2;
+                int daccel = speed * 2;
+                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+            }
+
+            return dbRstSetZ;
+        }  // end of public double dbapiSetZ(double dbIncreaseSetZ)  //SetZ
+
+        public double dbapiSetR(double dbIncreaseSetR)  //SetR
+        {
+            double dbRstSetR = 0.0;
+
+            {  //植針R軸 讀取與顯示
+                int rslt = 0;
+                string position = "";
+                string speed = "";
+
+                //讀取 植針R軸 資訊
+                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.植針R軸, ref position, ref speed);
+
+                //計算讀取長度
+                if (position != "")
+                {
+                    dbRstSetR = double.Parse(position);
+                }
+
+                //顯示運動速度
+                double dbSpeed = 0.0;
+                if (speed != "")
+                {
+                    dbSpeed = double.Parse(speed);
+                }
+
+                //變更顏色
+                if (rslt == 1)
+                {
+                    select_植針R軸.BackColor = Color.Red;
+                    lbl_acpos_植針R軸.BackColor = Color.White;
+                    lbl_spd_植針R軸.BackColor = Color.White;
+                }
+                else
+                {
+                    select_植針R軸.BackColor = Color.Green;
+                    lbl_acpos_植針R軸.BackColor = Color.Gray;
+                    lbl_spd_植針R軸.BackColor = Color.Gray;
+                }
+
+                //顯示資訊
+                lbl_acpos_植針R軸.Text = dbRstSetR.ToString("F2");
+                lbl_spd_植針R軸.Text = dbSpeed.ToString("F2");
+
+            }
+
+            if (dbIncreaseSetR == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
+            {
+                this.Text = "Z軸尚未回到上位";
+            }
+            else
+            {  //植針R軸 變更位置
+                // 取得欲變更的的浮點數
+                double fChangeSetR = dbIncreaseSetR;
+
+                //伸長量overflow保護
+                //if (fChangeSetR >= 40.35)
+                //{
+                //    fChangeSetR = 40.35;
+                //}
+
+                //計算補正至長度的數值
+                int iTargetSetR = (int)(fChangeSetR * 100);
+
+                //執行移動植針R軸
+                int axis = (int)WMX3軸定義.植針R軸;
+                int position = iTargetSetR;
+                int speed = (int)(50.00 * 100 * Multiplier);
+                int accel = speed * 2;
+                int daccel = speed * 2;
+                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+            }
+
+            return dbRstSetR;
+        }  // end of public double dbapiSetR(double dbIncreaseSetR)  //SetR
+
+
+        public double dbapiGate(double dbIncreaseGate)  //Gate
+        {
+            double dbRstGate = 0.0;
+
+            {  //工作門 讀取與顯示
+                int rslt = 0;
+                string position = "";
+                string speed = "";
+
+                //讀取 工作門 資訊
+                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.工作門, ref position, ref speed);
+
+                //計算讀取長度
+                if (position != "")
+                {
+                    dbRstGate = double.Parse(position);
+                }
+
+                //顯示運動速度
+                double dbSpeed = 0.0;
+                if (speed != "")
+                {
+                    dbSpeed = double.Parse(speed);
+                }
+
+                //變更顏色
+                if (rslt == 1)
+                {
+                    select_工作門.BackColor = Color.Red;
+                    lbl_acpos_工作門.BackColor = Color.White;
+                    lbl_spd_工作門.BackColor = Color.White;
+                }
+                else
+                {
+                    select_工作門.BackColor = Color.Green;
+                    lbl_acpos_工作門.BackColor = Color.Gray;
+                    lbl_spd_工作門.BackColor = Color.Gray;
+                }
+
+                //顯示資訊
+                lbl_acpos_工作門.Text = dbRstGate.ToString("F2");
+                lbl_spd_工作門.Text = dbSpeed.ToString("F2");
+
+            }
+
+            if (dbIncreaseGate == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
+            {
+                this.Text = "Z軸尚未回到上位";
+            }
+            else
+            {  //工作門 變更位置
+                // 取得欲變更的的浮點數
+                double fChangeGate = dbIncreaseGate;
+
+                //伸長量overflow保護
+                //if (fChangeGate >= 40.35)
+                //{
+                //    fChangeGate = 40.35;
+                //}
+
+                //計算補正至長度的數值
+                int iTargetGate = (int)(fChangeGate * 100);
+
+                //執行移動工作門
+                int axis = (int)WMX3軸定義.工作門;
+                int position = iTargetGate;
+                int speed = (int)(50.00 * 100 * Multiplier);
+                int accel = speed * 2;
+                int daccel = speed * 2;
+                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+            }
+
+            return dbRstGate;
+        }  // end of public double dbapiGate(double dbIncreaseGate)  //Gate
 
 
 
@@ -358,6 +794,8 @@ namespace InjectorInspector
             //先跳到第2頁
             int iAimToPageIndex = 3;
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
+            tabControl1.TabPages[0].Text = "Image";
+            tabControl1.TabPages[2].Text = "Jog";
 
             //設定吸嘴中心座標
             txtX1.Text = "-35.84";
@@ -376,54 +814,8 @@ namespace InjectorInspector
             //sw.Close();
         }
 
-        private void btn_On_吸嘴R軸_Click(object sender, EventArgs e)
-        {
-            int axis = (int)WMX3軸定義.吸嘴R軸;
-            int isOn = 1;
-            clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
-        }
-        private void btn_Off_吸嘴R軸_Click(object sender, EventArgs e)
-        {
-            int axis = (int)WMX3軸定義.吸嘴R軸;
-            int isOn = 0;
-            clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
-        }
-        private void btn_On_吸嘴Z軸_Click(object sender, EventArgs e)
-        {
-            int axis = (int)WMX3軸定義.吸嘴Z軸;
-            int isOn = 1;
-            clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
-        }
-        private void btn_Off_吸嘴Z軸_Click(object sender, EventArgs e)
-        {
-            int axis = (int)WMX3軸定義.吸嘴Z軸;
-            int isOn = 0;
-            clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
-        }
-        private void btn_On_吸嘴Y軸_Click(object sender, EventArgs e)
-        {
-            int axis = (int)WMX3軸定義.吸嘴Y軸;
-            int isOn = 1;
-            clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
-        }
-        private void btn_Off_吸嘴Y軸_Click(object sender, EventArgs e)
-        {
-            int axis = (int)WMX3軸定義.吸嘴Y軸;
-            int isOn = 0;
-            clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
-        }
-        private void btn_On_吸嘴X軸_Click(object sender, EventArgs e)
-        {
-            int axis = (int)WMX3軸定義.吸嘴X軸;
-            int isOn = 1;
-            clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
-        }
-        private void btn_Off_吸嘴X軸_Click(object sender, EventArgs e)
-        {
-            int axis = (int)WMX3軸定義.吸嘴X軸;
-            int isOn = 0;
-            clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
-        }
+     
+
 
         private void btn_Connect_Click(object sender, EventArgs e)
         {
@@ -482,23 +874,21 @@ namespace InjectorInspector
                 label1.ForeColor = Color.Black;
             }
 
+
             //region 讀取軸狀態
-            int rslt = 0;
-            int axis = 0;
-            string position = "";
-            string speed    = "";
+            dbapiNozzleX(dbRead);
+            dbapiNozzleY(dbRead);
+            dbapiNozzleZ(dbRead);
+            dbapiNozzleR(dbRead);
 
-            //讀取 吸嘴R軸 資訊
-            dbapiNozzleDegree(99999.9);
+            dbapiCarrierX(dbRead);
+            dbapiCarrierY(dbRead);
 
-            //讀取 吸嘴Z軸 資訊
-            dbapiNozzleLength(99999.9);
+            dbapiSetZ(dbRead);
+            dbapiSetR(dbRead);
 
-            //讀取 吸嘴X軸 資訊
-            dbapiNozzleX(99999.9);
+            dbapiGate(dbRead);
 
-            //讀取 吸嘴X軸 資訊
-            dbapiNozzleY(99999.9);
 
             //讀取InputIO
             byte[] pDataGetIO = new byte[8];
@@ -518,25 +908,17 @@ namespace InjectorInspector
 
         private void btnNozzleDownPos_Click(object sender, EventArgs e)
         {
-            dbapiNozzleLength(26.2);
+            dbapiNozzleZ(26.2);
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            int isOn = 0;
-            int axis = 0;
+            bool isOn = false;
 
-            axis = (int)WMX3軸定義.吸嘴X軸;
-            clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
-
-            axis = (int)WMX3軸定義.吸嘴Y軸;
-            clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
-
-            axis = (int)WMX3軸定義.吸嘴Z軸;
-            clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
-
-            axis = (int)WMX3軸定義.吸嘴R軸;
-            clsServoControlWMX3.WMX3_ServoOnOff(axis, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, isOn);
 
             u8OneCycleFlag = 0;
         }
@@ -599,7 +981,7 @@ namespace InjectorInspector
                 fChangeNozzleZ = double.Parse(txtChgNozzleZ.Text);
 
                 //執行伸縮吸嘴
-                dbapiNozzleLength(fChangeNozzleZ);
+                dbapiNozzleZ(fChangeNozzleZ);
             }
             catch (FormatException)
             {
@@ -618,7 +1000,7 @@ namespace InjectorInspector
                 fChangeDegree = double.Parse(txtDeg.Text);
 
                 //執行旋轉吸嘴
-                dbapiNozzleDegree(fChangeDegree);
+                dbapiNozzleR(fChangeDegree);
             } catch (FormatException) {
                 MessageBox.Show("請輸入有效的浮點數");
             }
@@ -835,7 +1217,7 @@ namespace InjectorInspector
                     break;
 
                 case 2:
-                    if (dbapiNozzleLength(99999.9) <= 0.5)
+                    if (dbapiNozzleZ(dbRead) <= 0.5)
                     {
                         //設定拋料位置
                         button7_Click(sender, e);
@@ -852,7 +1234,7 @@ namespace InjectorInspector
                     break;
 
                 case 3:
-                    if (dbapiNozzleLength(99999.9) <= 0.5)
+                    if (dbapiNozzleZ(dbRead) <= 0.5)
                     {
                         //從影像拿取針位置
                         button2_Click(sender, e);
@@ -902,14 +1284,14 @@ namespace InjectorInspector
                     txtChgNozzleZ.Text = "0.00";
                     btnChgNozzleZ_Click(sender, e);
 
-                    if (dbapiNozzleLength(99999.9) <= 0.5)
+                    if (dbapiNozzleZ(dbRead) <= 0.5)
                     {
                         u8OneCycleFlag = 6;
                     }
                     break;
 
                 case 6:
-                    if (dbapiNozzleLength(99999.9) <= 0.5)
+                    if (dbapiNozzleZ(dbRead) <= 0.5)
                     {
                         //設定至下視覺位
                         button6_Click(sender, e);
@@ -923,7 +1305,7 @@ namespace InjectorInspector
                     break;
 
                 case 7:
-                    if (dbapiNozzleLength(99999.9) <= 0.5)
+                    if (dbapiNozzleZ(dbRead) <= 0.5)
                     {
                         //移至拋料
                         button7_Click(sender, e);
@@ -960,7 +1342,7 @@ namespace InjectorInspector
                     txtChgNozzleZ.Text = "0.00";
                     btnChgNozzleZ_Click(sender, e);
 
-                    if (dbapiNozzleLength(99999.9) <= 0.5)
+                    if (dbapiNozzleZ(dbRead) <= 0.5)
                     {
                         u8OneCycleFlag = 11;
                     }
@@ -1015,6 +1397,93 @@ namespace InjectorInspector
             Multiplier = int.Parse(txtSpd.Text);
         }
 
+
+
+
+
+
+
+        public bool En吸嘴X軸 = false;
+        public bool En吸嘴Y軸 = false;
+        public bool En吸嘴Z軸 = false;
+        public bool En吸嘴R軸 = false;
+
+        public bool En載盤X軸 = false;
+        public bool En載盤Y軸 = false;
+
+        public bool En植針Z軸 = false;
+        public bool En植針R軸 = false;
+
+        public bool En工作門 = false;
+
+        public void en_Group_Click(object sender, EventArgs e)
+        {
+            if(En吸嘴X軸 != en_吸嘴X軸.Checked)
+            {
+                En吸嘴X軸 = en_吸嘴X軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, En吸嘴X軸);
+            }
+
+            if (En吸嘴Y軸 != en_吸嘴Y軸.Checked)
+            {
+                En吸嘴Y軸 = en_吸嘴Y軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, En吸嘴Y軸);
+            }
+
+            if (En吸嘴Z軸 != en_吸嘴Z軸.Checked)
+            {
+                En吸嘴Z軸 = en_吸嘴Z軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, En吸嘴Z軸);
+            }
+
+            if (En吸嘴R軸 != en_吸嘴R軸.Checked)
+            {
+                En吸嘴R軸 = en_吸嘴R軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, En吸嘴R軸);
+            }
+
+
+            if (En載盤X軸 != en_載盤X軸.Checked)
+            {
+                En載盤X軸 = en_載盤X軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, En載盤X軸);
+            }
+
+            if (En載盤Y軸 != en_載盤Y軸.Checked)
+            {
+                En載盤Y軸 = en_載盤Y軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, En載盤Y軸);
+            }
+
+
+            if (En植針Z軸 != en_植針Z軸.Checked)
+            {
+                En植針Z軸 = en_植針Z軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, En植針Z軸);
+            }
+
+            if (En植針R軸 != en_植針R軸.Checked)
+            {
+                En植針R軸 = en_植針R軸.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, En植針R軸);
+            }
+
+
+            if (En工作門 != en_工作門.Checked)
+            {
+                En工作門 = en_工作門.Checked;
+
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, En工作門);
+            }
+        }
 
     }  // end of public partial class Form1 : Form
 

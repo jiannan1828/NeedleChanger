@@ -1,0 +1,74 @@
+        public double dbapiNozzleY(double dbIncreaseNozzleY)  //NozzleY
+        {
+            double dbRstNozzleY = 0.0;
+
+            {  //吸嘴Y軸 讀取與顯示
+                int rslt = 0;
+                string position = "";
+                string speed = "";
+
+                //讀取 吸嘴Y軸 資訊
+                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, ref position, ref speed);
+
+                //計算讀取長度
+                if (position != "")
+                {
+                    dbRstNozzleY = double.Parse(position) / 100.0;
+                }
+
+                //顯示運動速度
+                double dbSpeed = 0.0;
+                if (speed != "")
+                {
+                    dbSpeed = double.Parse(speed);
+                }
+
+                //變更顏色
+                if (rslt == 1)
+                {
+                    select_吸嘴Y軸.BackColor = Color.Red;
+                    lbl_acpos_吸嘴Y軸.BackColor = Color.White;
+                    lbl_spd_吸嘴Y軸.BackColor = Color.White;
+                }
+                else
+                {
+                    select_吸嘴Y軸.BackColor = Color.Green;
+                    lbl_acpos_吸嘴Y軸.BackColor = Color.Gray;
+                    lbl_spd_吸嘴Y軸.BackColor = Color.Gray;
+                }
+
+                //顯示資訊
+                lbl_acpos_吸嘴Y軸.Text = dbRstNozzleY.ToString("F2");
+                lbl_spd_吸嘴Y軸.Text = dbSpeed.ToString("F2");
+
+            }
+
+            if (dbIncreaseNozzleY == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
+            {
+                this.Text = "Z軸尚未回到上位";
+            }
+            else
+            {  //吸嘴X軸 變更位置
+                // 取得欲變更的的浮點數
+                double fChangeNozzleY = dbIncreaseNozzleY;
+
+                //伸長量overflow保護
+                //if (fChangeNozzleY >= 40.35)
+                //{
+                //    fChangeNozzleY = 40.35;
+                //}
+
+                //計算補正至長度的數值
+                int iTargetNozzleY = (int)(fChangeNozzleY * 100);
+
+                //執行移動吸嘴
+                int axis = (int)WMX3軸定義.吸嘴Y軸;
+                int position = iTargetNozzleY;
+                int speed = (int)(50.00 * 100 * Multiplier);
+                int accel = speed * 2;
+                int daccel = speed * 2;
+                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+            }
+
+            return dbRstNozzleY;
+        }  // end of public double dbapiNozzleY(double dbIncreaseNozzleY)  //NozzleY

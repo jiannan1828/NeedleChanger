@@ -15,7 +15,6 @@ using System.Windows.Forms;
 
 namespace InjectorInspector
 {
-
     //軸的對應號碼
     public enum WMX3軸定義
     {  // start of public enum WMX3軸定義
@@ -25,15 +24,17 @@ namespace InjectorInspector
             吸嘴Z軸 = 1,  //VCM伸縮
             吸嘴R軸 = 0,  //VCM旋轉
 
-            載盤X   = 4,  //YASKAWA
-            載盤Y   = 2,  //大線碼
+            載盤X軸 = 4,  //YASKAWA
+            載盤Y軸 = 2,  //大線碼
 
-            植針Z   = 5,  //YASKAWA
-            植針R   = 6,  //YASKAWA
+            植針Z軸 = 5,  //YASKAWA
+            植針R軸 = 6,  //YASKAWA
 
             工作門  = 8,  //工作門
         AXIS_END = 999,
         YASKAWA  = 1048576,
+        DELTA_ASDA_B2 = 1280000,
+        DELTA_ASDA_B3 = 16777216,
     }  // end of public enum WMX3軸定義
 
     //擴展定義字串轉換
@@ -71,6 +72,9 @@ namespace InjectorInspector
     //WMX3控制
     internal class ServoControl
     {  // start of internal class ServoControl
+
+        //WMX3軸定義
+        public const double dbRead = 99999.9;
 
         //WMX3
         private WMX3Api wmx;
@@ -219,13 +223,13 @@ namespace InjectorInspector
               //motion.Config.SetGearRatio((int)WMX3軸定義.吸嘴Z軸, 1000, 100);  //VCM伸縮
               //motion.Config.SetGearRatio((int)WMX3軸定義.吸嘴R軸, 1000, 100);  //VCM旋轉
 
-                motion.Config.SetGearRatio((int)WMX3軸定義.載盤X, (int)WMX3軸定義.YASKAWA, 2000);
-              //motion.Config.SetGearRatio((int)WMX3軸定義.載盤Y, 1000, 100);    //大線碼
+                motion.Config.SetGearRatio((int)WMX3軸定義.載盤X軸, (int)WMX3軸定義.YASKAWA, 2000);
+              //motion.Config.SetGearRatio((int)WMX3軸定義.載盤Y軸, 1000, 100);    //大線碼
 
-                motion.Config.SetGearRatio((int)WMX3軸定義.植針Z, (int)WMX3軸定義.YASKAWA, 2000);
-                motion.Config.SetGearRatio((int)WMX3軸定義.植針R, (int)WMX3軸定義.YASKAWA, 2000);
+                motion.Config.SetGearRatio((int)WMX3軸定義.植針Z軸, (int)WMX3軸定義.YASKAWA, 2000);
+                motion.Config.SetGearRatio((int)WMX3軸定義.植針R軸, (int)WMX3軸定義.YASKAWA, 2000);
 
-                motion.Config.SetGearRatio((int)WMX3軸定義.工作門, 1000, 2000);  //工作門
+                motion.Config.SetGearRatio((int)WMX3軸定義.工作門, (int)WMX3軸定義.DELTA_ASDA_B3, 2000);
             }
             else
             {
@@ -314,9 +318,9 @@ namespace InjectorInspector
             return rslt;
         }  //end of public int WMX3_check_Commu()
 
-        public void WMX3_ServoOnOff(int axis, int bOn)
+        public void WMX3_ServoOnOff(int axis, bool bOn)
         {
-            int newStatus = bOn;
+            int newStatus = bOn?1:0;
 
             if (wmx != null)
             {
