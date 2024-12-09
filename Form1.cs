@@ -559,10 +559,10 @@ namespace InjectorInspector
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
 
             //設定吸嘴中心座標
-            txtX1.Text = "-35.92";
-            txtY1.Text = "50.61";
-            txtX2.Text = "-64.87";
-            txtY2.Text = "49.07";
+            txtX1.Text = "-35.84";
+            txtY1.Text = "50.80";
+            txtX2.Text = "-64.77";
+            txtY2.Text = "49.11";
             txtCalXYoriginal(sender, e);
 
             this.Text = "2024/09/04 14:04";
