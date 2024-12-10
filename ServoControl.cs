@@ -39,6 +39,47 @@ namespace InjectorInspector
 
     public enum WMX3IO對照
     {
+                                     //out:
+        pxeIO_Addr4           =  4,  //4
+        pxeIO_擺放座蓋板      = 00,  //0 擺放座蓋板缸
+        pxeIO_吸料真空電磁閥  = 01,  //1 稀料真空閥
+        pxeIO_堵料吹氣缸      = 02,  //2 賭料吹氣感缸
+        pxeIO_接料區氣桿      = 03,  //3 接料區缸
+        pxeIO_植針吹氣        = 04,  //4 職真吹氣電磁閥3(未驗)
+        pxeIO_收料區缸        = 05,  //5 收料區缸
+        pxeIO_堵料吹氣        = 06,  //6 賭料吹氣
+        pxeIO_NA_O_07         = 07,  //7 未接
+
+        pxeIO_Addr5           =  5,  //5
+        pxeIO_載盤真空閥      = 10,  //0 仔盤真空電磁閥
+        pxeIO_Socket真空2     = 11,  //1 socket真空2電磁閥
+        pxeIO_載盤破真空      = 12,  //2 仔盤破電磁閥
+        pxeIO_Socket破真空2   = 13,  //3 socket破真空2電磁閥
+        pxeIO_Socket真空1     = 14,  //4 socket真空1電磁閥
+        pxeIO_擺放座吸真空    = 15,  //5 擺放做溪真空
+        pxeIO_Socket破真空1   = 16,  //6 socket破空1電磁閥
+        pxeIO_擺放座破真空    = 17,  //7 擺放做破真空
+
+        pxeIO_Addr6           =  6,  //6
+        pxeIO_取料吸嘴吸      = 20,  //0 取料吸嘴溪真空
+        pxeIO_NA_O_21         = 21,  //1 未接
+        pxeIO_取料吸嘴破真空  = 22,  //2 取料吸嘴破真空
+        pxeIO_NA_O_23         = 23,  //3 未接
+        pxeIO_NA_O_24         = 24,  //4 未接
+        pxeIO_HEPA            = 25,  //5 hipa
+        pxeIO_NA_O_26         = 26,  //6 未接
+        pxeIO_LIGHT           = 27,  //7 艙內燈
+
+        pxeIO_Addr7           =  7,  //7
+        pxeIO_面板右按鈕綠燈  = 30,  //0 面板按鈕綠燈(右)
+        pxeIO_機台紅燈        = 31,  //1 紅燈
+        pxeIO_面板中按鈕綠燈  = 32,  //2 面板按鈕綠燈(中)
+        pxeIO_機台黃燈        = 33,  //3 黃燈
+        pxeIO_面板左按鈕紅燈  = 34,  //4 面板按鈕紅燈(左)
+        pxeIO_機台綠燈        = 35,  //5 綠燈
+        pxeIO_NA_O_36         = 36,  //6 未接
+        pxeIO_Buzzer          = 37,  //7 Buzzer
+
                                      //In:
         pxeIO_Addr28          = 28,  //28
         pxeIO_載盤Y軸後極限   = 00,  //0 陷馬仔盤Y軸後極限
@@ -530,7 +571,37 @@ namespace InjectorInspector
             return rslt;
         }  //end of public int WMX3_SetHomePosition(int axis)
 
-        public int WMX3_GetIO(ref byte[] pData, int addr, int size)
+        public int WMX3_GetOutIO(ref byte[] pData, int addr, int size)
+        {
+
+            if (wmx != null)
+            {
+                // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
+                if (pData == null || addr == 0 || size == 0 || pData.Length < size)
+                {
+                    return 0;  // 錯誤長度
+                }
+
+                // 讀取 InputIO
+                for (int cnt = 0; cnt < size; cnt++)
+                {
+                    byte[] pDataGet = new byte[1];
+
+                    // 從指定地址讀取資料並填充到 pData
+                    io.GetOutBytes(addr + cnt, 1, ref pDataGet);
+                    pData[cnt] = pDataGet[0];
+                }
+
+                return 1;  // 成功返回 1
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+
+        public int WMX3_GetInIO(ref byte[] pData, int addr, int size)
         {
 
             if (wmx != null)

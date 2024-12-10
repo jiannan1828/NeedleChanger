@@ -84,70 +84,6 @@
             this.btn_AlarmRST = new System.Windows.Forms.Button();
             this.btn_Connect = new System.Windows.Forms.Button();
             this.tabPage_Jog = new System.Windows.Forms.TabPage();
-            this.lbl_NA_24 = new System.Windows.Forms.Label();
-            this.lbl下右左門 = new System.Windows.Forms.Label();
-            this.lbl_NA_23 = new System.Windows.Forms.Label();
-            this.lbl下右右門 = new System.Windows.Forms.Label();
-            this.lbl_NA_22 = new System.Windows.Forms.Label();
-            this.lbl下左左門 = new System.Windows.Forms.Label();
-            this.lbl_NA_21 = new System.Windows.Forms.Label();
-            this.lbl下左右門 = new System.Windows.Forms.Label();
-            this.lbl_NA_20 = new System.Windows.Forms.Label();
-            this.lbl上後左門 = new System.Windows.Forms.Label();
-            this.lbl螢幕小門 = new System.Windows.Forms.Label();
-            this.lbl上後右門 = new System.Windows.Forms.Label();
-            this.lbl上右左門 = new System.Windows.Forms.Label();
-            this.lbl上左左門 = new System.Windows.Forms.Label();
-            this.lbl上右右門 = new System.Windows.Forms.Label();
-            this.lbl上左右門 = new System.Windows.Forms.Label();
-            this.lbl_NA_19 = new System.Windows.Forms.Label();
-            this.lbl_NA_18 = new System.Windows.Forms.Label();
-            this.lbl_NA_17 = new System.Windows.Forms.Label();
-            this.lbl_NA_16 = new System.Windows.Forms.Label();
-            this.lbl_NA_15 = new System.Windows.Forms.Label();
-            this.lbl_NA_14 = new System.Windows.Forms.Label();
-            this.lbl_NA_13 = new System.Windows.Forms.Label();
-            this.lbl_NA_12 = new System.Windows.Forms.Label();
-            this.lbl_NA_11 = new System.Windows.Forms.Label();
-            this.lbl急停鈕 = new System.Windows.Forms.Label();
-            this.lbl_NA_10 = new System.Windows.Forms.Label();
-            this.lbl停止鈕 = new System.Windows.Forms.Label();
-            this.lbl_NA_09 = new System.Windows.Forms.Label();
-            this.lbl啟動鈕 = new System.Windows.Forms.Label();
-            this.lbl_NA_08 = new System.Windows.Forms.Label();
-            this.lbl復歸鈕 = new System.Windows.Forms.Label();
-            this.lbl吸料盒 = new System.Windows.Forms.Label();
-            this.lbl兩點壓2 = new System.Windows.Forms.Label();
-            this.lbl堵料盒 = new System.Windows.Forms.Label();
-            this.lbl兩點壓1 = new System.Windows.Forms.Label();
-            this.lbl取料ng盒 = new System.Windows.Forms.Label();
-            this.lbl吸嘴空2 = new System.Windows.Forms.Label();
-            this.lbl_NA_07 = new System.Windows.Forms.Label();
-            this.lbl吸嘴空1 = new System.Windows.Forms.Label();
-            this.lbl擺放空2 = new System.Windows.Forms.Label();
-            this.lblsk1空2 = new System.Windows.Forms.Label();
-            this.lbl擺放空1 = new System.Windows.Forms.Label();
-            this.lblsk1空1 = new System.Windows.Forms.Label();
-            this.lblsk2空2 = new System.Windows.Forms.Label();
-            this.lbl載盤空2 = new System.Windows.Forms.Label();
-            this.lblsk2空1 = new System.Windows.Forms.Label();
-            this.lbl載盤空1 = new System.Windows.Forms.Label();
-            this.lbl_NA_06 = new System.Windows.Forms.Label();
-            this.lbl載盤X後 = new System.Windows.Forms.Label();
-            this.lbl_NA_05 = new System.Windows.Forms.Label();
-            this.lbl載盤X前 = new System.Windows.Forms.Label();
-            this.lbl_NA_04 = new System.Windows.Forms.Label();
-            this.lbl植針Z前 = new System.Windows.Forms.Label();
-            this.lbl_NA_03 = new System.Windows.Forms.Label();
-            this.lbl植針Z後 = new System.Windows.Forms.Label();
-            this.lbl_NA_02 = new System.Windows.Forms.Label();
-            this.lbl取料X前 = new System.Windows.Forms.Label();
-            this.lbl_NA_01 = new System.Windows.Forms.Label();
-            this.lbl取料X後 = new System.Windows.Forms.Label();
-            this.lbl取料Y前 = new System.Windows.Forms.Label();
-            this.lbl載盤Y前 = new System.Windows.Forms.Label();
-            this.lbl取料Y後 = new System.Windows.Forms.Label();
-            this.lbl載盤Y後 = new System.Windows.Forms.Label();
             this.lbl_工作門_Convert = new System.Windows.Forms.Label();
             this.lbl_植針R軸_Convert = new System.Windows.Forms.Label();
             this.lbl_植針Z軸_Convert = new System.Windows.Forms.Label();
@@ -237,10 +173,110 @@
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lbl_NA_24 = new System.Windows.Forms.Label();
+            this.lbl下右左門 = new System.Windows.Forms.Label();
+            this.lbl_NA_23 = new System.Windows.Forms.Label();
+            this.lbl下右右門 = new System.Windows.Forms.Label();
+            this.lbl_NA_22 = new System.Windows.Forms.Label();
+            this.lbl下左左門 = new System.Windows.Forms.Label();
+            this.lbl_NA_21 = new System.Windows.Forms.Label();
+            this.lbl下左右門 = new System.Windows.Forms.Label();
+            this.lbl_NA_20 = new System.Windows.Forms.Label();
+            this.lbl上後左門 = new System.Windows.Forms.Label();
+            this.lbl螢幕小門 = new System.Windows.Forms.Label();
+            this.lbl上後右門 = new System.Windows.Forms.Label();
+            this.lbl上右左門 = new System.Windows.Forms.Label();
+            this.lbl上左左門 = new System.Windows.Forms.Label();
+            this.lbl上右右門 = new System.Windows.Forms.Label();
+            this.lbl上左右門 = new System.Windows.Forms.Label();
+            this.lbl_NA_19 = new System.Windows.Forms.Label();
+            this.lbl_NA_18 = new System.Windows.Forms.Label();
+            this.lbl_NA_17 = new System.Windows.Forms.Label();
+            this.lbl_NA_16 = new System.Windows.Forms.Label();
+            this.lbl_NA_15 = new System.Windows.Forms.Label();
+            this.lbl_NA_14 = new System.Windows.Forms.Label();
+            this.lbl_NA_13 = new System.Windows.Forms.Label();
+            this.lbl_NA_12 = new System.Windows.Forms.Label();
+            this.lbl_NA_11 = new System.Windows.Forms.Label();
+            this.lbl急停鈕 = new System.Windows.Forms.Label();
+            this.lbl_NA_10 = new System.Windows.Forms.Label();
+            this.lbl停止鈕 = new System.Windows.Forms.Label();
+            this.lbl_NA_09 = new System.Windows.Forms.Label();
+            this.lbl啟動鈕 = new System.Windows.Forms.Label();
+            this.lbl_NA_08 = new System.Windows.Forms.Label();
+            this.lbl復歸鈕 = new System.Windows.Forms.Label();
+            this.lbl吸料盒 = new System.Windows.Forms.Label();
+            this.lbl兩點壓2 = new System.Windows.Forms.Label();
+            this.lbl堵料盒 = new System.Windows.Forms.Label();
+            this.lbl兩點壓1 = new System.Windows.Forms.Label();
+            this.lbl取料ng盒 = new System.Windows.Forms.Label();
+            this.lbl吸嘴空2 = new System.Windows.Forms.Label();
+            this.lbl_NA_07 = new System.Windows.Forms.Label();
+            this.lbl吸嘴空1 = new System.Windows.Forms.Label();
+            this.lbl擺放空2 = new System.Windows.Forms.Label();
+            this.lblsk1空2 = new System.Windows.Forms.Label();
+            this.lbl擺放空1 = new System.Windows.Forms.Label();
+            this.lblsk1空1 = new System.Windows.Forms.Label();
+            this.lblsk2空2 = new System.Windows.Forms.Label();
+            this.lbl載盤空2 = new System.Windows.Forms.Label();
+            this.lblsk2空1 = new System.Windows.Forms.Label();
+            this.lbl載盤空1 = new System.Windows.Forms.Label();
+            this.lbl_NA_06 = new System.Windows.Forms.Label();
+            this.lbl載盤X後 = new System.Windows.Forms.Label();
+            this.lbl_NA_05 = new System.Windows.Forms.Label();
+            this.lbl載盤X前 = new System.Windows.Forms.Label();
+            this.lbl_NA_04 = new System.Windows.Forms.Label();
+            this.lbl植針Z前 = new System.Windows.Forms.Label();
+            this.lbl_NA_03 = new System.Windows.Forms.Label();
+            this.lbl植針Z後 = new System.Windows.Forms.Label();
+            this.lbl_NA_02 = new System.Windows.Forms.Label();
+            this.lbl取料X前 = new System.Windows.Forms.Label();
+            this.lbl_NA_01 = new System.Windows.Forms.Label();
+            this.lbl取料X後 = new System.Windows.Forms.Label();
+            this.lbl取料Y前 = new System.Windows.Forms.Label();
+            this.lbl載盤Y前 = new System.Windows.Forms.Label();
+            this.lbl取料Y後 = new System.Windows.Forms.Label();
+            this.lbl載盤Y後 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblBuzzer = new System.Windows.Forms.Label();
+            this.lbl_NA_31 = new System.Windows.Forms.Label();
+            this.lbl綠燈 = new System.Windows.Forms.Label();
+            this.lbl左按鈕紅燈 = new System.Windows.Forms.Label();
+            this.lbl黃燈 = new System.Windows.Forms.Label();
+            this.lbl中按鈕綠燈 = new System.Windows.Forms.Label();
+            this.lbl紅燈 = new System.Windows.Forms.Label();
+            this.lbl右按鈕綠燈 = new System.Windows.Forms.Label();
+            this.lbl艙內燈 = new System.Windows.Forms.Label();
+            this.lbl_NA_30 = new System.Windows.Forms.Label();
+            this.lblHEPA = new System.Windows.Forms.Label();
+            this.lbl_NA_29 = new System.Windows.Forms.Label();
+            this.lbl_NA_28 = new System.Windows.Forms.Label();
+            this.lbl取料吸嘴破 = new System.Windows.Forms.Label();
+            this.lbl_NA_26 = new System.Windows.Forms.Label();
+            this.lbl取料吸嘴吸 = new System.Windows.Forms.Label();
+            this.lbl擺放破真空 = new System.Windows.Forms.Label();
+            this.lblsk破真空1 = new System.Windows.Forms.Label();
+            this.lbl擺放座真空 = new System.Windows.Forms.Label();
+            this.lblsk真空1 = new System.Windows.Forms.Label();
+            this.lblsk破真空2 = new System.Windows.Forms.Label();
+            this.lbl載盤破真空 = new System.Windows.Forms.Label();
+            this.lblsk真空2 = new System.Windows.Forms.Label();
+            this.lbl載盤真空閥 = new System.Windows.Forms.Label();
+            this.lbl_NA_25 = new System.Windows.Forms.Label();
+            this.lbl堵料吹氣 = new System.Windows.Forms.Label();
+            this.lbl收料區缸 = new System.Windows.Forms.Label();
+            this.lbl植針吹氣 = new System.Windows.Forms.Label();
+            this.lbl接料區缸 = new System.Windows.Forms.Label();
+            this.lbl堵料吹氣缸 = new System.Windows.Forms.Label();
+            this.lbl吸料真空閥 = new System.Windows.Forms.Label();
+            this.lbl擺放蓋板 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage_Jog.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -811,70 +847,8 @@
             // 
             // tabPage_Jog
             // 
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_24);
-            this.tabPage_Jog.Controls.Add(this.lbl下右左門);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_23);
-            this.tabPage_Jog.Controls.Add(this.lbl下右右門);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_22);
-            this.tabPage_Jog.Controls.Add(this.lbl下左左門);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_21);
-            this.tabPage_Jog.Controls.Add(this.lbl下左右門);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_20);
-            this.tabPage_Jog.Controls.Add(this.lbl上後左門);
-            this.tabPage_Jog.Controls.Add(this.lbl螢幕小門);
-            this.tabPage_Jog.Controls.Add(this.lbl上後右門);
-            this.tabPage_Jog.Controls.Add(this.lbl上右左門);
-            this.tabPage_Jog.Controls.Add(this.lbl上左左門);
-            this.tabPage_Jog.Controls.Add(this.lbl上右右門);
-            this.tabPage_Jog.Controls.Add(this.lbl上左右門);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_19);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_18);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_17);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_16);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_15);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_14);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_13);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_12);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_11);
-            this.tabPage_Jog.Controls.Add(this.lbl急停鈕);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_10);
-            this.tabPage_Jog.Controls.Add(this.lbl停止鈕);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_09);
-            this.tabPage_Jog.Controls.Add(this.lbl啟動鈕);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_08);
-            this.tabPage_Jog.Controls.Add(this.lbl復歸鈕);
-            this.tabPage_Jog.Controls.Add(this.lbl吸料盒);
-            this.tabPage_Jog.Controls.Add(this.lbl兩點壓2);
-            this.tabPage_Jog.Controls.Add(this.lbl堵料盒);
-            this.tabPage_Jog.Controls.Add(this.lbl兩點壓1);
-            this.tabPage_Jog.Controls.Add(this.lbl取料ng盒);
-            this.tabPage_Jog.Controls.Add(this.lbl吸嘴空2);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_07);
-            this.tabPage_Jog.Controls.Add(this.lbl吸嘴空1);
-            this.tabPage_Jog.Controls.Add(this.lbl擺放空2);
-            this.tabPage_Jog.Controls.Add(this.lblsk1空2);
-            this.tabPage_Jog.Controls.Add(this.lbl擺放空1);
-            this.tabPage_Jog.Controls.Add(this.lblsk1空1);
-            this.tabPage_Jog.Controls.Add(this.lblsk2空2);
-            this.tabPage_Jog.Controls.Add(this.lbl載盤空2);
-            this.tabPage_Jog.Controls.Add(this.lblsk2空1);
-            this.tabPage_Jog.Controls.Add(this.lbl載盤空1);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_06);
-            this.tabPage_Jog.Controls.Add(this.lbl載盤X後);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_05);
-            this.tabPage_Jog.Controls.Add(this.lbl載盤X前);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_04);
-            this.tabPage_Jog.Controls.Add(this.lbl植針Z前);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_03);
-            this.tabPage_Jog.Controls.Add(this.lbl植針Z後);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_02);
-            this.tabPage_Jog.Controls.Add(this.lbl取料X前);
-            this.tabPage_Jog.Controls.Add(this.lbl_NA_01);
-            this.tabPage_Jog.Controls.Add(this.lbl取料X後);
-            this.tabPage_Jog.Controls.Add(this.lbl取料Y前);
-            this.tabPage_Jog.Controls.Add(this.lbl載盤Y前);
-            this.tabPage_Jog.Controls.Add(this.lbl取料Y後);
-            this.tabPage_Jog.Controls.Add(this.lbl載盤Y後);
+            this.tabPage_Jog.Controls.Add(this.groupBox2);
+            this.tabPage_Jog.Controls.Add(this.groupBox1);
             this.tabPage_Jog.Controls.Add(this.lbl_工作門_Convert);
             this.tabPage_Jog.Controls.Add(this.lbl_植針R軸_Convert);
             this.tabPage_Jog.Controls.Add(this.lbl_植針Z軸_Convert);
@@ -969,646 +943,6 @@
             this.tabPage_Jog.TabIndex = 2;
             this.tabPage_Jog.Text = "Jog";
             this.tabPage_Jog.UseVisualStyleBackColor = true;
-            // 
-            // lbl_NA_24
-            // 
-            this.lbl_NA_24.AutoSize = true;
-            this.lbl_NA_24.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_24.Location = new System.Drawing.Point(580, 720);
-            this.lbl_NA_24.Name = "lbl_NA_24";
-            this.lbl_NA_24.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_24.TabIndex = 159;
-            this.lbl_NA_24.Text = "lbl_NA_24";
-            // 
-            // lbl下右左門
-            // 
-            this.lbl下右左門.AutoSize = true;
-            this.lbl下右左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl下右左門.Location = new System.Drawing.Point(580, 700);
-            this.lbl下右左門.Name = "lbl下右左門";
-            this.lbl下右左門.Size = new System.Drawing.Size(71, 13);
-            this.lbl下右左門.TabIndex = 158;
-            this.lbl下右左門.Text = "lbl下右左門";
-            // 
-            // lbl_NA_23
-            // 
-            this.lbl_NA_23.AutoSize = true;
-            this.lbl_NA_23.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_23.Location = new System.Drawing.Point(580, 680);
-            this.lbl_NA_23.Name = "lbl_NA_23";
-            this.lbl_NA_23.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_23.TabIndex = 157;
-            this.lbl_NA_23.Text = "lbl_NA_23";
-            // 
-            // lbl下右右門
-            // 
-            this.lbl下右右門.AutoSize = true;
-            this.lbl下右右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl下右右門.Location = new System.Drawing.Point(580, 660);
-            this.lbl下右右門.Name = "lbl下右右門";
-            this.lbl下右右門.Size = new System.Drawing.Size(71, 13);
-            this.lbl下右右門.TabIndex = 156;
-            this.lbl下右右門.Text = "lbl下右右門";
-            // 
-            // lbl_NA_22
-            // 
-            this.lbl_NA_22.AutoSize = true;
-            this.lbl_NA_22.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_22.Location = new System.Drawing.Point(580, 640);
-            this.lbl_NA_22.Name = "lbl_NA_22";
-            this.lbl_NA_22.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_22.TabIndex = 155;
-            this.lbl_NA_22.Text = "lbl_NA_22";
-            // 
-            // lbl下左左門
-            // 
-            this.lbl下左左門.AutoSize = true;
-            this.lbl下左左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl下左左門.Location = new System.Drawing.Point(580, 620);
-            this.lbl下左左門.Name = "lbl下左左門";
-            this.lbl下左左門.Size = new System.Drawing.Size(71, 13);
-            this.lbl下左左門.TabIndex = 154;
-            this.lbl下左左門.Text = "lbl下左左門";
-            // 
-            // lbl_NA_21
-            // 
-            this.lbl_NA_21.AutoSize = true;
-            this.lbl_NA_21.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_21.Location = new System.Drawing.Point(580, 600);
-            this.lbl_NA_21.Name = "lbl_NA_21";
-            this.lbl_NA_21.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_21.TabIndex = 153;
-            this.lbl_NA_21.Text = "lbl_NA_21";
-            // 
-            // lbl下左右門
-            // 
-            this.lbl下左右門.AutoSize = true;
-            this.lbl下左右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl下左右門.Location = new System.Drawing.Point(580, 580);
-            this.lbl下左右門.Name = "lbl下左右門";
-            this.lbl下左右門.Size = new System.Drawing.Size(71, 13);
-            this.lbl下左右門.TabIndex = 152;
-            this.lbl下左右門.Text = "lbl下左右門";
-            // 
-            // lbl_NA_20
-            // 
-            this.lbl_NA_20.AutoSize = true;
-            this.lbl_NA_20.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_20.Location = new System.Drawing.Point(500, 720);
-            this.lbl_NA_20.Name = "lbl_NA_20";
-            this.lbl_NA_20.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_20.TabIndex = 151;
-            this.lbl_NA_20.Text = "lbl_NA_20";
-            // 
-            // lbl上後左門
-            // 
-            this.lbl上後左門.AutoSize = true;
-            this.lbl上後左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl上後左門.Location = new System.Drawing.Point(500, 700);
-            this.lbl上後左門.Name = "lbl上後左門";
-            this.lbl上後左門.Size = new System.Drawing.Size(71, 13);
-            this.lbl上後左門.TabIndex = 150;
-            this.lbl上後左門.Text = "lbl上後左門";
-            // 
-            // lbl螢幕小門
-            // 
-            this.lbl螢幕小門.AutoSize = true;
-            this.lbl螢幕小門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl螢幕小門.Location = new System.Drawing.Point(500, 680);
-            this.lbl螢幕小門.Name = "lbl螢幕小門";
-            this.lbl螢幕小門.Size = new System.Drawing.Size(71, 13);
-            this.lbl螢幕小門.TabIndex = 149;
-            this.lbl螢幕小門.Text = "lbl螢幕小門";
-            // 
-            // lbl上後右門
-            // 
-            this.lbl上後右門.AutoSize = true;
-            this.lbl上後右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl上後右門.Location = new System.Drawing.Point(500, 660);
-            this.lbl上後右門.Name = "lbl上後右門";
-            this.lbl上後右門.Size = new System.Drawing.Size(71, 13);
-            this.lbl上後右門.TabIndex = 148;
-            this.lbl上後右門.Text = "lbl上後右門";
-            // 
-            // lbl上右左門
-            // 
-            this.lbl上右左門.AutoSize = true;
-            this.lbl上右左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl上右左門.Location = new System.Drawing.Point(500, 640);
-            this.lbl上右左門.Name = "lbl上右左門";
-            this.lbl上右左門.Size = new System.Drawing.Size(71, 13);
-            this.lbl上右左門.TabIndex = 147;
-            this.lbl上右左門.Text = "lbl上右左門";
-            // 
-            // lbl上左左門
-            // 
-            this.lbl上左左門.AutoSize = true;
-            this.lbl上左左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl上左左門.Location = new System.Drawing.Point(500, 620);
-            this.lbl上左左門.Name = "lbl上左左門";
-            this.lbl上左左門.Size = new System.Drawing.Size(71, 13);
-            this.lbl上左左門.TabIndex = 146;
-            this.lbl上左左門.Text = "lbl上左左門";
-            // 
-            // lbl上右右門
-            // 
-            this.lbl上右右門.AutoSize = true;
-            this.lbl上右右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl上右右門.Location = new System.Drawing.Point(500, 600);
-            this.lbl上右右門.Name = "lbl上右右門";
-            this.lbl上右右門.Size = new System.Drawing.Size(71, 13);
-            this.lbl上右右門.TabIndex = 145;
-            this.lbl上右右門.Text = "lbl上右右門";
-            // 
-            // lbl上左右門
-            // 
-            this.lbl上左右門.AutoSize = true;
-            this.lbl上左右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl上左右門.Location = new System.Drawing.Point(500, 580);
-            this.lbl上左右門.Name = "lbl上左右門";
-            this.lbl上左右門.Size = new System.Drawing.Size(71, 13);
-            this.lbl上左右門.TabIndex = 144;
-            this.lbl上左右門.Text = "lbl上左右門";
-            // 
-            // lbl_NA_19
-            // 
-            this.lbl_NA_19.AutoSize = true;
-            this.lbl_NA_19.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_19.Location = new System.Drawing.Point(420, 720);
-            this.lbl_NA_19.Name = "lbl_NA_19";
-            this.lbl_NA_19.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_19.TabIndex = 143;
-            this.lbl_NA_19.Text = "lbl_NA_19";
-            // 
-            // lbl_NA_18
-            // 
-            this.lbl_NA_18.AutoSize = true;
-            this.lbl_NA_18.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_18.Location = new System.Drawing.Point(420, 700);
-            this.lbl_NA_18.Name = "lbl_NA_18";
-            this.lbl_NA_18.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_18.TabIndex = 142;
-            this.lbl_NA_18.Text = "lbl_NA_18";
-            // 
-            // lbl_NA_17
-            // 
-            this.lbl_NA_17.AutoSize = true;
-            this.lbl_NA_17.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_17.Location = new System.Drawing.Point(420, 680);
-            this.lbl_NA_17.Name = "lbl_NA_17";
-            this.lbl_NA_17.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_17.TabIndex = 141;
-            this.lbl_NA_17.Text = "lbl_NA_17";
-            // 
-            // lbl_NA_16
-            // 
-            this.lbl_NA_16.AutoSize = true;
-            this.lbl_NA_16.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_16.Location = new System.Drawing.Point(420, 660);
-            this.lbl_NA_16.Name = "lbl_NA_16";
-            this.lbl_NA_16.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_16.TabIndex = 140;
-            this.lbl_NA_16.Text = "lbl_NA_16";
-            // 
-            // lbl_NA_15
-            // 
-            this.lbl_NA_15.AutoSize = true;
-            this.lbl_NA_15.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_15.Location = new System.Drawing.Point(420, 640);
-            this.lbl_NA_15.Name = "lbl_NA_15";
-            this.lbl_NA_15.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_15.TabIndex = 139;
-            this.lbl_NA_15.Text = "lbl_NA_15";
-            // 
-            // lbl_NA_14
-            // 
-            this.lbl_NA_14.AutoSize = true;
-            this.lbl_NA_14.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_14.Location = new System.Drawing.Point(420, 620);
-            this.lbl_NA_14.Name = "lbl_NA_14";
-            this.lbl_NA_14.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_14.TabIndex = 138;
-            this.lbl_NA_14.Text = "lbl_NA_14";
-            // 
-            // lbl_NA_13
-            // 
-            this.lbl_NA_13.AutoSize = true;
-            this.lbl_NA_13.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_13.Location = new System.Drawing.Point(420, 600);
-            this.lbl_NA_13.Name = "lbl_NA_13";
-            this.lbl_NA_13.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_13.TabIndex = 137;
-            this.lbl_NA_13.Text = "lbl_NA_13";
-            // 
-            // lbl_NA_12
-            // 
-            this.lbl_NA_12.AutoSize = true;
-            this.lbl_NA_12.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_12.Location = new System.Drawing.Point(420, 580);
-            this.lbl_NA_12.Name = "lbl_NA_12";
-            this.lbl_NA_12.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_12.TabIndex = 136;
-            this.lbl_NA_12.Text = "lbl_NA_12";
-            // 
-            // lbl_NA_11
-            // 
-            this.lbl_NA_11.AutoSize = true;
-            this.lbl_NA_11.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_11.Location = new System.Drawing.Point(340, 720);
-            this.lbl_NA_11.Name = "lbl_NA_11";
-            this.lbl_NA_11.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_11.TabIndex = 135;
-            this.lbl_NA_11.Text = "lbl_NA_11";
-            // 
-            // lbl急停鈕
-            // 
-            this.lbl急停鈕.AutoSize = true;
-            this.lbl急停鈕.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl急停鈕.Location = new System.Drawing.Point(340, 700);
-            this.lbl急停鈕.Name = "lbl急停鈕";
-            this.lbl急停鈕.Size = new System.Drawing.Size(58, 13);
-            this.lbl急停鈕.TabIndex = 134;
-            this.lbl急停鈕.Text = "lbl急停鈕";
-            // 
-            // lbl_NA_10
-            // 
-            this.lbl_NA_10.AutoSize = true;
-            this.lbl_NA_10.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_10.Location = new System.Drawing.Point(340, 680);
-            this.lbl_NA_10.Name = "lbl_NA_10";
-            this.lbl_NA_10.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_10.TabIndex = 133;
-            this.lbl_NA_10.Text = "lbl_NA_10";
-            // 
-            // lbl停止鈕
-            // 
-            this.lbl停止鈕.AutoSize = true;
-            this.lbl停止鈕.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl停止鈕.Location = new System.Drawing.Point(340, 660);
-            this.lbl停止鈕.Name = "lbl停止鈕";
-            this.lbl停止鈕.Size = new System.Drawing.Size(58, 13);
-            this.lbl停止鈕.TabIndex = 132;
-            this.lbl停止鈕.Text = "lbl停止鈕";
-            // 
-            // lbl_NA_09
-            // 
-            this.lbl_NA_09.AutoSize = true;
-            this.lbl_NA_09.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_09.Location = new System.Drawing.Point(340, 640);
-            this.lbl_NA_09.Name = "lbl_NA_09";
-            this.lbl_NA_09.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_09.TabIndex = 131;
-            this.lbl_NA_09.Text = "lbl_NA_09";
-            // 
-            // lbl啟動鈕
-            // 
-            this.lbl啟動鈕.AutoSize = true;
-            this.lbl啟動鈕.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl啟動鈕.Location = new System.Drawing.Point(340, 620);
-            this.lbl啟動鈕.Name = "lbl啟動鈕";
-            this.lbl啟動鈕.Size = new System.Drawing.Size(58, 13);
-            this.lbl啟動鈕.TabIndex = 130;
-            this.lbl啟動鈕.Text = "lbl啟動鈕";
-            // 
-            // lbl_NA_08
-            // 
-            this.lbl_NA_08.AutoSize = true;
-            this.lbl_NA_08.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_08.Location = new System.Drawing.Point(340, 600);
-            this.lbl_NA_08.Name = "lbl_NA_08";
-            this.lbl_NA_08.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_08.TabIndex = 129;
-            this.lbl_NA_08.Text = "lbl_NA_08";
-            // 
-            // lbl復歸鈕
-            // 
-            this.lbl復歸鈕.AutoSize = true;
-            this.lbl復歸鈕.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl復歸鈕.Location = new System.Drawing.Point(340, 580);
-            this.lbl復歸鈕.Name = "lbl復歸鈕";
-            this.lbl復歸鈕.Size = new System.Drawing.Size(58, 13);
-            this.lbl復歸鈕.TabIndex = 128;
-            this.lbl復歸鈕.Text = "lbl復歸鈕";
-            // 
-            // lbl吸料盒
-            // 
-            this.lbl吸料盒.AutoSize = true;
-            this.lbl吸料盒.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl吸料盒.Location = new System.Drawing.Point(260, 720);
-            this.lbl吸料盒.Name = "lbl吸料盒";
-            this.lbl吸料盒.Size = new System.Drawing.Size(58, 13);
-            this.lbl吸料盒.TabIndex = 127;
-            this.lbl吸料盒.Text = "lbl吸料盒";
-            // 
-            // lbl兩點壓2
-            // 
-            this.lbl兩點壓2.AutoSize = true;
-            this.lbl兩點壓2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl兩點壓2.Location = new System.Drawing.Point(260, 700);
-            this.lbl兩點壓2.Name = "lbl兩點壓2";
-            this.lbl兩點壓2.Size = new System.Drawing.Size(64, 13);
-            this.lbl兩點壓2.TabIndex = 126;
-            this.lbl兩點壓2.Text = "lbl兩點壓2";
-            // 
-            // lbl堵料盒
-            // 
-            this.lbl堵料盒.AutoSize = true;
-            this.lbl堵料盒.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl堵料盒.Location = new System.Drawing.Point(260, 680);
-            this.lbl堵料盒.Name = "lbl堵料盒";
-            this.lbl堵料盒.Size = new System.Drawing.Size(58, 13);
-            this.lbl堵料盒.TabIndex = 125;
-            this.lbl堵料盒.Text = "lbl堵料盒";
-            // 
-            // lbl兩點壓1
-            // 
-            this.lbl兩點壓1.AutoSize = true;
-            this.lbl兩點壓1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl兩點壓1.Location = new System.Drawing.Point(260, 660);
-            this.lbl兩點壓1.Name = "lbl兩點壓1";
-            this.lbl兩點壓1.Size = new System.Drawing.Size(64, 13);
-            this.lbl兩點壓1.TabIndex = 124;
-            this.lbl兩點壓1.Text = "lbl兩點壓1";
-            // 
-            // lbl取料ng盒
-            // 
-            this.lbl取料ng盒.AutoSize = true;
-            this.lbl取料ng盒.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl取料ng盒.Location = new System.Drawing.Point(260, 640);
-            this.lbl取料ng盒.Name = "lbl取料ng盒";
-            this.lbl取料ng盒.Size = new System.Drawing.Size(70, 13);
-            this.lbl取料ng盒.TabIndex = 123;
-            this.lbl取料ng盒.Text = "lbl取料ng盒";
-            // 
-            // lbl吸嘴空2
-            // 
-            this.lbl吸嘴空2.AutoSize = true;
-            this.lbl吸嘴空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl吸嘴空2.Location = new System.Drawing.Point(260, 620);
-            this.lbl吸嘴空2.Name = "lbl吸嘴空2";
-            this.lbl吸嘴空2.Size = new System.Drawing.Size(64, 13);
-            this.lbl吸嘴空2.TabIndex = 122;
-            this.lbl吸嘴空2.Text = "lbl吸嘴空2";
-            // 
-            // lbl_NA_07
-            // 
-            this.lbl_NA_07.AutoSize = true;
-            this.lbl_NA_07.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_07.Location = new System.Drawing.Point(260, 600);
-            this.lbl_NA_07.Name = "lbl_NA_07";
-            this.lbl_NA_07.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_07.TabIndex = 121;
-            this.lbl_NA_07.Text = "lbl_NA_07";
-            // 
-            // lbl吸嘴空1
-            // 
-            this.lbl吸嘴空1.AutoSize = true;
-            this.lbl吸嘴空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl吸嘴空1.Location = new System.Drawing.Point(260, 580);
-            this.lbl吸嘴空1.Name = "lbl吸嘴空1";
-            this.lbl吸嘴空1.Size = new System.Drawing.Size(64, 13);
-            this.lbl吸嘴空1.TabIndex = 120;
-            this.lbl吸嘴空1.Text = "lbl吸嘴空1";
-            // 
-            // lbl擺放空2
-            // 
-            this.lbl擺放空2.AutoSize = true;
-            this.lbl擺放空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl擺放空2.Location = new System.Drawing.Point(180, 720);
-            this.lbl擺放空2.Name = "lbl擺放空2";
-            this.lbl擺放空2.Size = new System.Drawing.Size(64, 13);
-            this.lbl擺放空2.TabIndex = 119;
-            this.lbl擺放空2.Text = "lbl擺放空2";
-            // 
-            // lblsk1空2
-            // 
-            this.lblsk1空2.AutoSize = true;
-            this.lblsk1空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblsk1空2.Location = new System.Drawing.Point(180, 700);
-            this.lblsk1空2.Name = "lblsk1空2";
-            this.lblsk1空2.Size = new System.Drawing.Size(55, 13);
-            this.lblsk1空2.TabIndex = 118;
-            this.lblsk1空2.Text = "lblsk1空2";
-            // 
-            // lbl擺放空1
-            // 
-            this.lbl擺放空1.AutoSize = true;
-            this.lbl擺放空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl擺放空1.Location = new System.Drawing.Point(180, 680);
-            this.lbl擺放空1.Name = "lbl擺放空1";
-            this.lbl擺放空1.Size = new System.Drawing.Size(64, 13);
-            this.lbl擺放空1.TabIndex = 117;
-            this.lbl擺放空1.Text = "lbl擺放空1";
-            // 
-            // lblsk1空1
-            // 
-            this.lblsk1空1.AutoSize = true;
-            this.lblsk1空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblsk1空1.Location = new System.Drawing.Point(180, 660);
-            this.lblsk1空1.Name = "lblsk1空1";
-            this.lblsk1空1.Size = new System.Drawing.Size(55, 13);
-            this.lblsk1空1.TabIndex = 116;
-            this.lblsk1空1.Text = "lblsk1空1";
-            // 
-            // lblsk2空2
-            // 
-            this.lblsk2空2.AutoSize = true;
-            this.lblsk2空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblsk2空2.Location = new System.Drawing.Point(180, 640);
-            this.lblsk2空2.Name = "lblsk2空2";
-            this.lblsk2空2.Size = new System.Drawing.Size(55, 13);
-            this.lblsk2空2.TabIndex = 115;
-            this.lblsk2空2.Text = "lblsk2空2";
-            // 
-            // lbl載盤空2
-            // 
-            this.lbl載盤空2.AutoSize = true;
-            this.lbl載盤空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤空2.Location = new System.Drawing.Point(180, 620);
-            this.lbl載盤空2.Name = "lbl載盤空2";
-            this.lbl載盤空2.Size = new System.Drawing.Size(64, 13);
-            this.lbl載盤空2.TabIndex = 114;
-            this.lbl載盤空2.Text = "lbl載盤空2";
-            // 
-            // lblsk2空1
-            // 
-            this.lblsk2空1.AutoSize = true;
-            this.lblsk2空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblsk2空1.Location = new System.Drawing.Point(180, 600);
-            this.lblsk2空1.Name = "lblsk2空1";
-            this.lblsk2空1.Size = new System.Drawing.Size(55, 13);
-            this.lblsk2空1.TabIndex = 113;
-            this.lblsk2空1.Text = "lblsk2空1";
-            // 
-            // lbl載盤空1
-            // 
-            this.lbl載盤空1.AutoSize = true;
-            this.lbl載盤空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤空1.Location = new System.Drawing.Point(180, 580);
-            this.lbl載盤空1.Name = "lbl載盤空1";
-            this.lbl載盤空1.Size = new System.Drawing.Size(64, 13);
-            this.lbl載盤空1.TabIndex = 112;
-            this.lbl載盤空1.Text = "lbl載盤空1";
-            // 
-            // lbl_NA_06
-            // 
-            this.lbl_NA_06.AutoSize = true;
-            this.lbl_NA_06.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_06.Location = new System.Drawing.Point(100, 720);
-            this.lbl_NA_06.Name = "lbl_NA_06";
-            this.lbl_NA_06.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_06.TabIndex = 111;
-            this.lbl_NA_06.Text = "lbl_NA_06";
-            // 
-            // lbl載盤X後
-            // 
-            this.lbl載盤X後.AutoSize = true;
-            this.lbl載盤X後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤X後.Location = new System.Drawing.Point(100, 700);
-            this.lbl載盤X後.Name = "lbl載盤X後";
-            this.lbl載盤X後.Size = new System.Drawing.Size(67, 13);
-            this.lbl載盤X後.TabIndex = 110;
-            this.lbl載盤X後.Text = "lbl載盤X後";
-            // 
-            // lbl_NA_05
-            // 
-            this.lbl_NA_05.AutoSize = true;
-            this.lbl_NA_05.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_05.Location = new System.Drawing.Point(100, 680);
-            this.lbl_NA_05.Name = "lbl_NA_05";
-            this.lbl_NA_05.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_05.TabIndex = 109;
-            this.lbl_NA_05.Text = "lbl_NA_05";
-            // 
-            // lbl載盤X前
-            // 
-            this.lbl載盤X前.AutoSize = true;
-            this.lbl載盤X前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤X前.Location = new System.Drawing.Point(100, 660);
-            this.lbl載盤X前.Name = "lbl載盤X前";
-            this.lbl載盤X前.Size = new System.Drawing.Size(67, 13);
-            this.lbl載盤X前.TabIndex = 108;
-            this.lbl載盤X前.Text = "lbl載盤X前";
-            // 
-            // lbl_NA_04
-            // 
-            this.lbl_NA_04.AutoSize = true;
-            this.lbl_NA_04.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_04.Location = new System.Drawing.Point(100, 640);
-            this.lbl_NA_04.Name = "lbl_NA_04";
-            this.lbl_NA_04.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_04.TabIndex = 107;
-            this.lbl_NA_04.Text = "lbl_NA_04";
-            // 
-            // lbl植針Z前
-            // 
-            this.lbl植針Z前.AutoSize = true;
-            this.lbl植針Z前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl植針Z前.Location = new System.Drawing.Point(100, 620);
-            this.lbl植針Z前.Name = "lbl植針Z前";
-            this.lbl植針Z前.Size = new System.Drawing.Size(65, 13);
-            this.lbl植針Z前.TabIndex = 106;
-            this.lbl植針Z前.Text = "lbl植針Z前";
-            // 
-            // lbl_NA_03
-            // 
-            this.lbl_NA_03.AutoSize = true;
-            this.lbl_NA_03.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_03.Location = new System.Drawing.Point(100, 600);
-            this.lbl_NA_03.Name = "lbl_NA_03";
-            this.lbl_NA_03.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_03.TabIndex = 105;
-            this.lbl_NA_03.Text = "lbl_NA_03";
-            // 
-            // lbl植針Z後
-            // 
-            this.lbl植針Z後.AutoSize = true;
-            this.lbl植針Z後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl植針Z後.Location = new System.Drawing.Point(100, 580);
-            this.lbl植針Z後.Name = "lbl植針Z後";
-            this.lbl植針Z後.Size = new System.Drawing.Size(65, 13);
-            this.lbl植針Z後.TabIndex = 104;
-            this.lbl植針Z後.Text = "lbl植針Z後";
-            // 
-            // lbl_NA_02
-            // 
-            this.lbl_NA_02.AutoSize = true;
-            this.lbl_NA_02.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_02.Location = new System.Drawing.Point(20, 720);
-            this.lbl_NA_02.Name = "lbl_NA_02";
-            this.lbl_NA_02.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_02.TabIndex = 103;
-            this.lbl_NA_02.Text = "lbl_NA_02";
-            // 
-            // lbl取料X前
-            // 
-            this.lbl取料X前.AutoSize = true;
-            this.lbl取料X前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl取料X前.Location = new System.Drawing.Point(20, 700);
-            this.lbl取料X前.Name = "lbl取料X前";
-            this.lbl取料X前.Size = new System.Drawing.Size(67, 13);
-            this.lbl取料X前.TabIndex = 102;
-            this.lbl取料X前.Text = "lbl取料X前";
-            // 
-            // lbl_NA_01
-            // 
-            this.lbl_NA_01.AutoSize = true;
-            this.lbl_NA_01.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_01.Location = new System.Drawing.Point(20, 680);
-            this.lbl_NA_01.Name = "lbl_NA_01";
-            this.lbl_NA_01.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_01.TabIndex = 101;
-            this.lbl_NA_01.Text = "lbl_NA_01";
-            // 
-            // lbl取料X後
-            // 
-            this.lbl取料X後.AutoSize = true;
-            this.lbl取料X後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl取料X後.Location = new System.Drawing.Point(20, 660);
-            this.lbl取料X後.Name = "lbl取料X後";
-            this.lbl取料X後.Size = new System.Drawing.Size(67, 13);
-            this.lbl取料X後.TabIndex = 100;
-            this.lbl取料X後.Text = "lbl取料X後";
-            // 
-            // lbl取料Y前
-            // 
-            this.lbl取料Y前.AutoSize = true;
-            this.lbl取料Y前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl取料Y前.Location = new System.Drawing.Point(20, 640);
-            this.lbl取料Y前.Name = "lbl取料Y前";
-            this.lbl取料Y前.Size = new System.Drawing.Size(67, 13);
-            this.lbl取料Y前.TabIndex = 99;
-            this.lbl取料Y前.Text = "lbl取料Y前";
-            // 
-            // lbl載盤Y前
-            // 
-            this.lbl載盤Y前.AutoSize = true;
-            this.lbl載盤Y前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤Y前.Location = new System.Drawing.Point(20, 620);
-            this.lbl載盤Y前.Name = "lbl載盤Y前";
-            this.lbl載盤Y前.Size = new System.Drawing.Size(67, 13);
-            this.lbl載盤Y前.TabIndex = 98;
-            this.lbl載盤Y前.Text = "lbl載盤Y前";
-            // 
-            // lbl取料Y後
-            // 
-            this.lbl取料Y後.AutoSize = true;
-            this.lbl取料Y後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl取料Y後.Location = new System.Drawing.Point(20, 600);
-            this.lbl取料Y後.Name = "lbl取料Y後";
-            this.lbl取料Y後.Size = new System.Drawing.Size(67, 13);
-            this.lbl取料Y後.TabIndex = 97;
-            this.lbl取料Y後.Text = "lbl取料Y後";
-            // 
-            // lbl載盤Y後
-            // 
-            this.lbl載盤Y後.AutoSize = true;
-            this.lbl載盤Y後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤Y後.Location = new System.Drawing.Point(20, 580);
-            this.lbl載盤Y後.Name = "lbl載盤Y後";
-            this.lbl載盤Y後.Size = new System.Drawing.Size(67, 13);
-            this.lbl載盤Y後.TabIndex = 96;
-            this.lbl載盤Y後.Text = "lbl載盤Y後";
             // 
             // lbl_工作門_Convert
             // 
@@ -2534,6 +1868,1080 @@
             this.timer2.Interval = 2000;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.lbl_NA_24);
+            this.groupBox1.Controls.Add(this.lbl下右左門);
+            this.groupBox1.Controls.Add(this.lbl_NA_23);
+            this.groupBox1.Controls.Add(this.lbl下右右門);
+            this.groupBox1.Controls.Add(this.lbl_NA_22);
+            this.groupBox1.Controls.Add(this.lbl下左左門);
+            this.groupBox1.Controls.Add(this.lbl_NA_21);
+            this.groupBox1.Controls.Add(this.lbl下左右門);
+            this.groupBox1.Controls.Add(this.lbl_NA_20);
+            this.groupBox1.Controls.Add(this.lbl上後左門);
+            this.groupBox1.Controls.Add(this.lbl螢幕小門);
+            this.groupBox1.Controls.Add(this.lbl上後右門);
+            this.groupBox1.Controls.Add(this.lbl上右左門);
+            this.groupBox1.Controls.Add(this.lbl上左左門);
+            this.groupBox1.Controls.Add(this.lbl上右右門);
+            this.groupBox1.Controls.Add(this.lbl上左右門);
+            this.groupBox1.Controls.Add(this.lbl_NA_19);
+            this.groupBox1.Controls.Add(this.lbl_NA_18);
+            this.groupBox1.Controls.Add(this.lbl_NA_17);
+            this.groupBox1.Controls.Add(this.lbl_NA_16);
+            this.groupBox1.Controls.Add(this.lbl_NA_15);
+            this.groupBox1.Controls.Add(this.lbl_NA_14);
+            this.groupBox1.Controls.Add(this.lbl_NA_13);
+            this.groupBox1.Controls.Add(this.lbl_NA_12);
+            this.groupBox1.Controls.Add(this.lbl_NA_11);
+            this.groupBox1.Controls.Add(this.lbl急停鈕);
+            this.groupBox1.Controls.Add(this.lbl_NA_10);
+            this.groupBox1.Controls.Add(this.lbl停止鈕);
+            this.groupBox1.Controls.Add(this.lbl_NA_09);
+            this.groupBox1.Controls.Add(this.lbl啟動鈕);
+            this.groupBox1.Controls.Add(this.lbl_NA_08);
+            this.groupBox1.Controls.Add(this.lbl復歸鈕);
+            this.groupBox1.Controls.Add(this.lbl吸料盒);
+            this.groupBox1.Controls.Add(this.lbl兩點壓2);
+            this.groupBox1.Controls.Add(this.lbl堵料盒);
+            this.groupBox1.Controls.Add(this.lbl兩點壓1);
+            this.groupBox1.Controls.Add(this.lbl取料ng盒);
+            this.groupBox1.Controls.Add(this.lbl吸嘴空2);
+            this.groupBox1.Controls.Add(this.lbl_NA_07);
+            this.groupBox1.Controls.Add(this.lbl吸嘴空1);
+            this.groupBox1.Controls.Add(this.lbl擺放空2);
+            this.groupBox1.Controls.Add(this.lblsk1空2);
+            this.groupBox1.Controls.Add(this.lbl擺放空1);
+            this.groupBox1.Controls.Add(this.lblsk1空1);
+            this.groupBox1.Controls.Add(this.lblsk2空2);
+            this.groupBox1.Controls.Add(this.lbl載盤空2);
+            this.groupBox1.Controls.Add(this.lblsk2空1);
+            this.groupBox1.Controls.Add(this.lbl載盤空1);
+            this.groupBox1.Controls.Add(this.lbl_NA_06);
+            this.groupBox1.Controls.Add(this.lbl載盤X後);
+            this.groupBox1.Controls.Add(this.lbl_NA_05);
+            this.groupBox1.Controls.Add(this.lbl載盤X前);
+            this.groupBox1.Controls.Add(this.lbl_NA_04);
+            this.groupBox1.Controls.Add(this.lbl植針Z前);
+            this.groupBox1.Controls.Add(this.lbl_NA_03);
+            this.groupBox1.Controls.Add(this.lbl植針Z後);
+            this.groupBox1.Controls.Add(this.lbl_NA_02);
+            this.groupBox1.Controls.Add(this.lbl取料X前);
+            this.groupBox1.Controls.Add(this.lbl_NA_01);
+            this.groupBox1.Controls.Add(this.lbl取料X後);
+            this.groupBox1.Controls.Add(this.lbl取料Y前);
+            this.groupBox1.Controls.Add(this.lbl載盤Y前);
+            this.groupBox1.Controls.Add(this.lbl取料Y後);
+            this.groupBox1.Controls.Add(this.lbl載盤Y後);
+            this.groupBox1.Location = new System.Drawing.Point(25, 280);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(670, 210);
+            this.groupBox1.TabIndex = 160;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "ReadIO";
+            // 
+            // lbl_NA_24
+            // 
+            this.lbl_NA_24.AutoSize = true;
+            this.lbl_NA_24.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_24.Location = new System.Drawing.Point(580, 180);
+            this.lbl_NA_24.Name = "lbl_NA_24";
+            this.lbl_NA_24.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_24.TabIndex = 223;
+            this.lbl_NA_24.Text = "lbl_NA_24";
+            // 
+            // lbl下右左門
+            // 
+            this.lbl下右左門.AutoSize = true;
+            this.lbl下右左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl下右左門.Location = new System.Drawing.Point(580, 160);
+            this.lbl下右左門.Name = "lbl下右左門";
+            this.lbl下右左門.Size = new System.Drawing.Size(71, 13);
+            this.lbl下右左門.TabIndex = 222;
+            this.lbl下右左門.Text = "lbl下右左門";
+            // 
+            // lbl_NA_23
+            // 
+            this.lbl_NA_23.AutoSize = true;
+            this.lbl_NA_23.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_23.Location = new System.Drawing.Point(580, 140);
+            this.lbl_NA_23.Name = "lbl_NA_23";
+            this.lbl_NA_23.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_23.TabIndex = 221;
+            this.lbl_NA_23.Text = "lbl_NA_23";
+            // 
+            // lbl下右右門
+            // 
+            this.lbl下右右門.AutoSize = true;
+            this.lbl下右右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl下右右門.Location = new System.Drawing.Point(580, 120);
+            this.lbl下右右門.Name = "lbl下右右門";
+            this.lbl下右右門.Size = new System.Drawing.Size(71, 13);
+            this.lbl下右右門.TabIndex = 220;
+            this.lbl下右右門.Text = "lbl下右右門";
+            // 
+            // lbl_NA_22
+            // 
+            this.lbl_NA_22.AutoSize = true;
+            this.lbl_NA_22.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_22.Location = new System.Drawing.Point(580, 100);
+            this.lbl_NA_22.Name = "lbl_NA_22";
+            this.lbl_NA_22.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_22.TabIndex = 219;
+            this.lbl_NA_22.Text = "lbl_NA_22";
+            // 
+            // lbl下左左門
+            // 
+            this.lbl下左左門.AutoSize = true;
+            this.lbl下左左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl下左左門.Location = new System.Drawing.Point(580, 80);
+            this.lbl下左左門.Name = "lbl下左左門";
+            this.lbl下左左門.Size = new System.Drawing.Size(71, 13);
+            this.lbl下左左門.TabIndex = 218;
+            this.lbl下左左門.Text = "lbl下左左門";
+            // 
+            // lbl_NA_21
+            // 
+            this.lbl_NA_21.AutoSize = true;
+            this.lbl_NA_21.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_21.Location = new System.Drawing.Point(580, 60);
+            this.lbl_NA_21.Name = "lbl_NA_21";
+            this.lbl_NA_21.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_21.TabIndex = 217;
+            this.lbl_NA_21.Text = "lbl_NA_21";
+            // 
+            // lbl下左右門
+            // 
+            this.lbl下左右門.AutoSize = true;
+            this.lbl下左右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl下左右門.Location = new System.Drawing.Point(580, 40);
+            this.lbl下左右門.Name = "lbl下左右門";
+            this.lbl下左右門.Size = new System.Drawing.Size(71, 13);
+            this.lbl下左右門.TabIndex = 216;
+            this.lbl下左右門.Text = "lbl下左右門";
+            // 
+            // lbl_NA_20
+            // 
+            this.lbl_NA_20.AutoSize = true;
+            this.lbl_NA_20.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_20.Location = new System.Drawing.Point(500, 180);
+            this.lbl_NA_20.Name = "lbl_NA_20";
+            this.lbl_NA_20.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_20.TabIndex = 215;
+            this.lbl_NA_20.Text = "lbl_NA_20";
+            // 
+            // lbl上後左門
+            // 
+            this.lbl上後左門.AutoSize = true;
+            this.lbl上後左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl上後左門.Location = new System.Drawing.Point(500, 160);
+            this.lbl上後左門.Name = "lbl上後左門";
+            this.lbl上後左門.Size = new System.Drawing.Size(71, 13);
+            this.lbl上後左門.TabIndex = 214;
+            this.lbl上後左門.Text = "lbl上後左門";
+            // 
+            // lbl螢幕小門
+            // 
+            this.lbl螢幕小門.AutoSize = true;
+            this.lbl螢幕小門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl螢幕小門.Location = new System.Drawing.Point(500, 140);
+            this.lbl螢幕小門.Name = "lbl螢幕小門";
+            this.lbl螢幕小門.Size = new System.Drawing.Size(71, 13);
+            this.lbl螢幕小門.TabIndex = 213;
+            this.lbl螢幕小門.Text = "lbl螢幕小門";
+            // 
+            // lbl上後右門
+            // 
+            this.lbl上後右門.AutoSize = true;
+            this.lbl上後右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl上後右門.Location = new System.Drawing.Point(500, 120);
+            this.lbl上後右門.Name = "lbl上後右門";
+            this.lbl上後右門.Size = new System.Drawing.Size(71, 13);
+            this.lbl上後右門.TabIndex = 212;
+            this.lbl上後右門.Text = "lbl上後右門";
+            // 
+            // lbl上右左門
+            // 
+            this.lbl上右左門.AutoSize = true;
+            this.lbl上右左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl上右左門.Location = new System.Drawing.Point(500, 100);
+            this.lbl上右左門.Name = "lbl上右左門";
+            this.lbl上右左門.Size = new System.Drawing.Size(71, 13);
+            this.lbl上右左門.TabIndex = 211;
+            this.lbl上右左門.Text = "lbl上右左門";
+            // 
+            // lbl上左左門
+            // 
+            this.lbl上左左門.AutoSize = true;
+            this.lbl上左左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl上左左門.Location = new System.Drawing.Point(500, 80);
+            this.lbl上左左門.Name = "lbl上左左門";
+            this.lbl上左左門.Size = new System.Drawing.Size(71, 13);
+            this.lbl上左左門.TabIndex = 210;
+            this.lbl上左左門.Text = "lbl上左左門";
+            // 
+            // lbl上右右門
+            // 
+            this.lbl上右右門.AutoSize = true;
+            this.lbl上右右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl上右右門.Location = new System.Drawing.Point(500, 60);
+            this.lbl上右右門.Name = "lbl上右右門";
+            this.lbl上右右門.Size = new System.Drawing.Size(71, 13);
+            this.lbl上右右門.TabIndex = 209;
+            this.lbl上右右門.Text = "lbl上右右門";
+            // 
+            // lbl上左右門
+            // 
+            this.lbl上左右門.AutoSize = true;
+            this.lbl上左右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl上左右門.Location = new System.Drawing.Point(500, 40);
+            this.lbl上左右門.Name = "lbl上左右門";
+            this.lbl上左右門.Size = new System.Drawing.Size(71, 13);
+            this.lbl上左右門.TabIndex = 208;
+            this.lbl上左右門.Text = "lbl上左右門";
+            // 
+            // lbl_NA_19
+            // 
+            this.lbl_NA_19.AutoSize = true;
+            this.lbl_NA_19.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_19.Location = new System.Drawing.Point(420, 180);
+            this.lbl_NA_19.Name = "lbl_NA_19";
+            this.lbl_NA_19.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_19.TabIndex = 207;
+            this.lbl_NA_19.Text = "lbl_NA_19";
+            // 
+            // lbl_NA_18
+            // 
+            this.lbl_NA_18.AutoSize = true;
+            this.lbl_NA_18.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_18.Location = new System.Drawing.Point(420, 160);
+            this.lbl_NA_18.Name = "lbl_NA_18";
+            this.lbl_NA_18.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_18.TabIndex = 206;
+            this.lbl_NA_18.Text = "lbl_NA_18";
+            // 
+            // lbl_NA_17
+            // 
+            this.lbl_NA_17.AutoSize = true;
+            this.lbl_NA_17.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_17.Location = new System.Drawing.Point(420, 140);
+            this.lbl_NA_17.Name = "lbl_NA_17";
+            this.lbl_NA_17.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_17.TabIndex = 205;
+            this.lbl_NA_17.Text = "lbl_NA_17";
+            // 
+            // lbl_NA_16
+            // 
+            this.lbl_NA_16.AutoSize = true;
+            this.lbl_NA_16.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_16.Location = new System.Drawing.Point(420, 120);
+            this.lbl_NA_16.Name = "lbl_NA_16";
+            this.lbl_NA_16.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_16.TabIndex = 204;
+            this.lbl_NA_16.Text = "lbl_NA_16";
+            // 
+            // lbl_NA_15
+            // 
+            this.lbl_NA_15.AutoSize = true;
+            this.lbl_NA_15.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_15.Location = new System.Drawing.Point(420, 100);
+            this.lbl_NA_15.Name = "lbl_NA_15";
+            this.lbl_NA_15.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_15.TabIndex = 203;
+            this.lbl_NA_15.Text = "lbl_NA_15";
+            // 
+            // lbl_NA_14
+            // 
+            this.lbl_NA_14.AutoSize = true;
+            this.lbl_NA_14.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_14.Location = new System.Drawing.Point(420, 80);
+            this.lbl_NA_14.Name = "lbl_NA_14";
+            this.lbl_NA_14.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_14.TabIndex = 202;
+            this.lbl_NA_14.Text = "lbl_NA_14";
+            // 
+            // lbl_NA_13
+            // 
+            this.lbl_NA_13.AutoSize = true;
+            this.lbl_NA_13.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_13.Location = new System.Drawing.Point(420, 60);
+            this.lbl_NA_13.Name = "lbl_NA_13";
+            this.lbl_NA_13.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_13.TabIndex = 201;
+            this.lbl_NA_13.Text = "lbl_NA_13";
+            // 
+            // lbl_NA_12
+            // 
+            this.lbl_NA_12.AutoSize = true;
+            this.lbl_NA_12.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_12.Location = new System.Drawing.Point(420, 40);
+            this.lbl_NA_12.Name = "lbl_NA_12";
+            this.lbl_NA_12.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_12.TabIndex = 200;
+            this.lbl_NA_12.Text = "lbl_NA_12";
+            // 
+            // lbl_NA_11
+            // 
+            this.lbl_NA_11.AutoSize = true;
+            this.lbl_NA_11.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_11.Location = new System.Drawing.Point(340, 180);
+            this.lbl_NA_11.Name = "lbl_NA_11";
+            this.lbl_NA_11.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_11.TabIndex = 199;
+            this.lbl_NA_11.Text = "lbl_NA_11";
+            // 
+            // lbl急停鈕
+            // 
+            this.lbl急停鈕.AutoSize = true;
+            this.lbl急停鈕.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl急停鈕.Location = new System.Drawing.Point(340, 160);
+            this.lbl急停鈕.Name = "lbl急停鈕";
+            this.lbl急停鈕.Size = new System.Drawing.Size(58, 13);
+            this.lbl急停鈕.TabIndex = 198;
+            this.lbl急停鈕.Text = "lbl急停鈕";
+            // 
+            // lbl_NA_10
+            // 
+            this.lbl_NA_10.AutoSize = true;
+            this.lbl_NA_10.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_10.Location = new System.Drawing.Point(340, 140);
+            this.lbl_NA_10.Name = "lbl_NA_10";
+            this.lbl_NA_10.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_10.TabIndex = 197;
+            this.lbl_NA_10.Text = "lbl_NA_10";
+            // 
+            // lbl停止鈕
+            // 
+            this.lbl停止鈕.AutoSize = true;
+            this.lbl停止鈕.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl停止鈕.Location = new System.Drawing.Point(340, 120);
+            this.lbl停止鈕.Name = "lbl停止鈕";
+            this.lbl停止鈕.Size = new System.Drawing.Size(58, 13);
+            this.lbl停止鈕.TabIndex = 196;
+            this.lbl停止鈕.Text = "lbl停止鈕";
+            // 
+            // lbl_NA_09
+            // 
+            this.lbl_NA_09.AutoSize = true;
+            this.lbl_NA_09.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_09.Location = new System.Drawing.Point(340, 100);
+            this.lbl_NA_09.Name = "lbl_NA_09";
+            this.lbl_NA_09.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_09.TabIndex = 195;
+            this.lbl_NA_09.Text = "lbl_NA_09";
+            // 
+            // lbl啟動鈕
+            // 
+            this.lbl啟動鈕.AutoSize = true;
+            this.lbl啟動鈕.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl啟動鈕.Location = new System.Drawing.Point(340, 80);
+            this.lbl啟動鈕.Name = "lbl啟動鈕";
+            this.lbl啟動鈕.Size = new System.Drawing.Size(58, 13);
+            this.lbl啟動鈕.TabIndex = 194;
+            this.lbl啟動鈕.Text = "lbl啟動鈕";
+            // 
+            // lbl_NA_08
+            // 
+            this.lbl_NA_08.AutoSize = true;
+            this.lbl_NA_08.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_08.Location = new System.Drawing.Point(340, 60);
+            this.lbl_NA_08.Name = "lbl_NA_08";
+            this.lbl_NA_08.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_08.TabIndex = 193;
+            this.lbl_NA_08.Text = "lbl_NA_08";
+            // 
+            // lbl復歸鈕
+            // 
+            this.lbl復歸鈕.AutoSize = true;
+            this.lbl復歸鈕.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl復歸鈕.Location = new System.Drawing.Point(340, 40);
+            this.lbl復歸鈕.Name = "lbl復歸鈕";
+            this.lbl復歸鈕.Size = new System.Drawing.Size(58, 13);
+            this.lbl復歸鈕.TabIndex = 192;
+            this.lbl復歸鈕.Text = "lbl復歸鈕";
+            // 
+            // lbl吸料盒
+            // 
+            this.lbl吸料盒.AutoSize = true;
+            this.lbl吸料盒.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl吸料盒.Location = new System.Drawing.Point(260, 180);
+            this.lbl吸料盒.Name = "lbl吸料盒";
+            this.lbl吸料盒.Size = new System.Drawing.Size(58, 13);
+            this.lbl吸料盒.TabIndex = 191;
+            this.lbl吸料盒.Text = "lbl吸料盒";
+            // 
+            // lbl兩點壓2
+            // 
+            this.lbl兩點壓2.AutoSize = true;
+            this.lbl兩點壓2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl兩點壓2.Location = new System.Drawing.Point(260, 160);
+            this.lbl兩點壓2.Name = "lbl兩點壓2";
+            this.lbl兩點壓2.Size = new System.Drawing.Size(64, 13);
+            this.lbl兩點壓2.TabIndex = 190;
+            this.lbl兩點壓2.Text = "lbl兩點壓2";
+            // 
+            // lbl堵料盒
+            // 
+            this.lbl堵料盒.AutoSize = true;
+            this.lbl堵料盒.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl堵料盒.Location = new System.Drawing.Point(260, 140);
+            this.lbl堵料盒.Name = "lbl堵料盒";
+            this.lbl堵料盒.Size = new System.Drawing.Size(58, 13);
+            this.lbl堵料盒.TabIndex = 189;
+            this.lbl堵料盒.Text = "lbl堵料盒";
+            // 
+            // lbl兩點壓1
+            // 
+            this.lbl兩點壓1.AutoSize = true;
+            this.lbl兩點壓1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl兩點壓1.Location = new System.Drawing.Point(260, 120);
+            this.lbl兩點壓1.Name = "lbl兩點壓1";
+            this.lbl兩點壓1.Size = new System.Drawing.Size(64, 13);
+            this.lbl兩點壓1.TabIndex = 188;
+            this.lbl兩點壓1.Text = "lbl兩點壓1";
+            // 
+            // lbl取料ng盒
+            // 
+            this.lbl取料ng盒.AutoSize = true;
+            this.lbl取料ng盒.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl取料ng盒.Location = new System.Drawing.Point(260, 100);
+            this.lbl取料ng盒.Name = "lbl取料ng盒";
+            this.lbl取料ng盒.Size = new System.Drawing.Size(70, 13);
+            this.lbl取料ng盒.TabIndex = 187;
+            this.lbl取料ng盒.Text = "lbl取料ng盒";
+            // 
+            // lbl吸嘴空2
+            // 
+            this.lbl吸嘴空2.AutoSize = true;
+            this.lbl吸嘴空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl吸嘴空2.Location = new System.Drawing.Point(260, 80);
+            this.lbl吸嘴空2.Name = "lbl吸嘴空2";
+            this.lbl吸嘴空2.Size = new System.Drawing.Size(64, 13);
+            this.lbl吸嘴空2.TabIndex = 186;
+            this.lbl吸嘴空2.Text = "lbl吸嘴空2";
+            // 
+            // lbl_NA_07
+            // 
+            this.lbl_NA_07.AutoSize = true;
+            this.lbl_NA_07.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_07.Location = new System.Drawing.Point(260, 60);
+            this.lbl_NA_07.Name = "lbl_NA_07";
+            this.lbl_NA_07.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_07.TabIndex = 185;
+            this.lbl_NA_07.Text = "lbl_NA_07";
+            // 
+            // lbl吸嘴空1
+            // 
+            this.lbl吸嘴空1.AutoSize = true;
+            this.lbl吸嘴空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl吸嘴空1.Location = new System.Drawing.Point(260, 40);
+            this.lbl吸嘴空1.Name = "lbl吸嘴空1";
+            this.lbl吸嘴空1.Size = new System.Drawing.Size(64, 13);
+            this.lbl吸嘴空1.TabIndex = 184;
+            this.lbl吸嘴空1.Text = "lbl吸嘴空1";
+            // 
+            // lbl擺放空2
+            // 
+            this.lbl擺放空2.AutoSize = true;
+            this.lbl擺放空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl擺放空2.Location = new System.Drawing.Point(180, 180);
+            this.lbl擺放空2.Name = "lbl擺放空2";
+            this.lbl擺放空2.Size = new System.Drawing.Size(64, 13);
+            this.lbl擺放空2.TabIndex = 183;
+            this.lbl擺放空2.Text = "lbl擺放空2";
+            // 
+            // lblsk1空2
+            // 
+            this.lblsk1空2.AutoSize = true;
+            this.lblsk1空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblsk1空2.Location = new System.Drawing.Point(180, 160);
+            this.lblsk1空2.Name = "lblsk1空2";
+            this.lblsk1空2.Size = new System.Drawing.Size(55, 13);
+            this.lblsk1空2.TabIndex = 182;
+            this.lblsk1空2.Text = "lblsk1空2";
+            // 
+            // lbl擺放空1
+            // 
+            this.lbl擺放空1.AutoSize = true;
+            this.lbl擺放空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl擺放空1.Location = new System.Drawing.Point(180, 140);
+            this.lbl擺放空1.Name = "lbl擺放空1";
+            this.lbl擺放空1.Size = new System.Drawing.Size(64, 13);
+            this.lbl擺放空1.TabIndex = 181;
+            this.lbl擺放空1.Text = "lbl擺放空1";
+            // 
+            // lblsk1空1
+            // 
+            this.lblsk1空1.AutoSize = true;
+            this.lblsk1空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblsk1空1.Location = new System.Drawing.Point(180, 120);
+            this.lblsk1空1.Name = "lblsk1空1";
+            this.lblsk1空1.Size = new System.Drawing.Size(55, 13);
+            this.lblsk1空1.TabIndex = 180;
+            this.lblsk1空1.Text = "lblsk1空1";
+            // 
+            // lblsk2空2
+            // 
+            this.lblsk2空2.AutoSize = true;
+            this.lblsk2空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblsk2空2.Location = new System.Drawing.Point(180, 100);
+            this.lblsk2空2.Name = "lblsk2空2";
+            this.lblsk2空2.Size = new System.Drawing.Size(55, 13);
+            this.lblsk2空2.TabIndex = 179;
+            this.lblsk2空2.Text = "lblsk2空2";
+            // 
+            // lbl載盤空2
+            // 
+            this.lbl載盤空2.AutoSize = true;
+            this.lbl載盤空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl載盤空2.Location = new System.Drawing.Point(180, 80);
+            this.lbl載盤空2.Name = "lbl載盤空2";
+            this.lbl載盤空2.Size = new System.Drawing.Size(64, 13);
+            this.lbl載盤空2.TabIndex = 178;
+            this.lbl載盤空2.Text = "lbl載盤空2";
+            // 
+            // lblsk2空1
+            // 
+            this.lblsk2空1.AutoSize = true;
+            this.lblsk2空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblsk2空1.Location = new System.Drawing.Point(180, 60);
+            this.lblsk2空1.Name = "lblsk2空1";
+            this.lblsk2空1.Size = new System.Drawing.Size(55, 13);
+            this.lblsk2空1.TabIndex = 177;
+            this.lblsk2空1.Text = "lblsk2空1";
+            // 
+            // lbl載盤空1
+            // 
+            this.lbl載盤空1.AutoSize = true;
+            this.lbl載盤空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl載盤空1.Location = new System.Drawing.Point(180, 40);
+            this.lbl載盤空1.Name = "lbl載盤空1";
+            this.lbl載盤空1.Size = new System.Drawing.Size(64, 13);
+            this.lbl載盤空1.TabIndex = 176;
+            this.lbl載盤空1.Text = "lbl載盤空1";
+            // 
+            // lbl_NA_06
+            // 
+            this.lbl_NA_06.AutoSize = true;
+            this.lbl_NA_06.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_06.Location = new System.Drawing.Point(100, 180);
+            this.lbl_NA_06.Name = "lbl_NA_06";
+            this.lbl_NA_06.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_06.TabIndex = 175;
+            this.lbl_NA_06.Text = "lbl_NA_06";
+            // 
+            // lbl載盤X後
+            // 
+            this.lbl載盤X後.AutoSize = true;
+            this.lbl載盤X後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl載盤X後.Location = new System.Drawing.Point(100, 160);
+            this.lbl載盤X後.Name = "lbl載盤X後";
+            this.lbl載盤X後.Size = new System.Drawing.Size(67, 13);
+            this.lbl載盤X後.TabIndex = 174;
+            this.lbl載盤X後.Text = "lbl載盤X後";
+            // 
+            // lbl_NA_05
+            // 
+            this.lbl_NA_05.AutoSize = true;
+            this.lbl_NA_05.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_05.Location = new System.Drawing.Point(100, 140);
+            this.lbl_NA_05.Name = "lbl_NA_05";
+            this.lbl_NA_05.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_05.TabIndex = 173;
+            this.lbl_NA_05.Text = "lbl_NA_05";
+            // 
+            // lbl載盤X前
+            // 
+            this.lbl載盤X前.AutoSize = true;
+            this.lbl載盤X前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl載盤X前.Location = new System.Drawing.Point(100, 120);
+            this.lbl載盤X前.Name = "lbl載盤X前";
+            this.lbl載盤X前.Size = new System.Drawing.Size(67, 13);
+            this.lbl載盤X前.TabIndex = 172;
+            this.lbl載盤X前.Text = "lbl載盤X前";
+            // 
+            // lbl_NA_04
+            // 
+            this.lbl_NA_04.AutoSize = true;
+            this.lbl_NA_04.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_04.Location = new System.Drawing.Point(100, 100);
+            this.lbl_NA_04.Name = "lbl_NA_04";
+            this.lbl_NA_04.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_04.TabIndex = 171;
+            this.lbl_NA_04.Text = "lbl_NA_04";
+            // 
+            // lbl植針Z前
+            // 
+            this.lbl植針Z前.AutoSize = true;
+            this.lbl植針Z前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl植針Z前.Location = new System.Drawing.Point(100, 80);
+            this.lbl植針Z前.Name = "lbl植針Z前";
+            this.lbl植針Z前.Size = new System.Drawing.Size(65, 13);
+            this.lbl植針Z前.TabIndex = 170;
+            this.lbl植針Z前.Text = "lbl植針Z前";
+            // 
+            // lbl_NA_03
+            // 
+            this.lbl_NA_03.AutoSize = true;
+            this.lbl_NA_03.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_03.Location = new System.Drawing.Point(100, 60);
+            this.lbl_NA_03.Name = "lbl_NA_03";
+            this.lbl_NA_03.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_03.TabIndex = 169;
+            this.lbl_NA_03.Text = "lbl_NA_03";
+            // 
+            // lbl植針Z後
+            // 
+            this.lbl植針Z後.AutoSize = true;
+            this.lbl植針Z後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl植針Z後.Location = new System.Drawing.Point(100, 40);
+            this.lbl植針Z後.Name = "lbl植針Z後";
+            this.lbl植針Z後.Size = new System.Drawing.Size(65, 13);
+            this.lbl植針Z後.TabIndex = 168;
+            this.lbl植針Z後.Text = "lbl植針Z後";
+            // 
+            // lbl_NA_02
+            // 
+            this.lbl_NA_02.AutoSize = true;
+            this.lbl_NA_02.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_02.Location = new System.Drawing.Point(20, 180);
+            this.lbl_NA_02.Name = "lbl_NA_02";
+            this.lbl_NA_02.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_02.TabIndex = 167;
+            this.lbl_NA_02.Text = "lbl_NA_02";
+            // 
+            // lbl取料X前
+            // 
+            this.lbl取料X前.AutoSize = true;
+            this.lbl取料X前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl取料X前.Location = new System.Drawing.Point(20, 160);
+            this.lbl取料X前.Name = "lbl取料X前";
+            this.lbl取料X前.Size = new System.Drawing.Size(67, 13);
+            this.lbl取料X前.TabIndex = 166;
+            this.lbl取料X前.Text = "lbl取料X前";
+            // 
+            // lbl_NA_01
+            // 
+            this.lbl_NA_01.AutoSize = true;
+            this.lbl_NA_01.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_01.Location = new System.Drawing.Point(20, 140);
+            this.lbl_NA_01.Name = "lbl_NA_01";
+            this.lbl_NA_01.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_01.TabIndex = 165;
+            this.lbl_NA_01.Text = "lbl_NA_01";
+            // 
+            // lbl取料X後
+            // 
+            this.lbl取料X後.AutoSize = true;
+            this.lbl取料X後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl取料X後.Location = new System.Drawing.Point(20, 120);
+            this.lbl取料X後.Name = "lbl取料X後";
+            this.lbl取料X後.Size = new System.Drawing.Size(67, 13);
+            this.lbl取料X後.TabIndex = 164;
+            this.lbl取料X後.Text = "lbl取料X後";
+            // 
+            // lbl取料Y前
+            // 
+            this.lbl取料Y前.AutoSize = true;
+            this.lbl取料Y前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl取料Y前.Location = new System.Drawing.Point(20, 100);
+            this.lbl取料Y前.Name = "lbl取料Y前";
+            this.lbl取料Y前.Size = new System.Drawing.Size(67, 13);
+            this.lbl取料Y前.TabIndex = 163;
+            this.lbl取料Y前.Text = "lbl取料Y前";
+            // 
+            // lbl載盤Y前
+            // 
+            this.lbl載盤Y前.AutoSize = true;
+            this.lbl載盤Y前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl載盤Y前.Location = new System.Drawing.Point(20, 80);
+            this.lbl載盤Y前.Name = "lbl載盤Y前";
+            this.lbl載盤Y前.Size = new System.Drawing.Size(67, 13);
+            this.lbl載盤Y前.TabIndex = 162;
+            this.lbl載盤Y前.Text = "lbl載盤Y前";
+            // 
+            // lbl取料Y後
+            // 
+            this.lbl取料Y後.AutoSize = true;
+            this.lbl取料Y後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl取料Y後.Location = new System.Drawing.Point(20, 60);
+            this.lbl取料Y後.Name = "lbl取料Y後";
+            this.lbl取料Y後.Size = new System.Drawing.Size(67, 13);
+            this.lbl取料Y後.TabIndex = 161;
+            this.lbl取料Y後.Text = "lbl取料Y後";
+            // 
+            // lbl載盤Y後
+            // 
+            this.lbl載盤Y後.AutoSize = true;
+            this.lbl載盤Y後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl載盤Y後.Location = new System.Drawing.Point(20, 40);
+            this.lbl載盤Y後.Name = "lbl載盤Y後";
+            this.lbl載盤Y後.Size = new System.Drawing.Size(67, 13);
+            this.lbl載盤Y後.TabIndex = 160;
+            this.lbl載盤Y後.Text = "lbl載盤Y後";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.lblBuzzer);
+            this.groupBox2.Controls.Add(this.lbl_NA_31);
+            this.groupBox2.Controls.Add(this.lbl綠燈);
+            this.groupBox2.Controls.Add(this.lbl左按鈕紅燈);
+            this.groupBox2.Controls.Add(this.lbl黃燈);
+            this.groupBox2.Controls.Add(this.lbl中按鈕綠燈);
+            this.groupBox2.Controls.Add(this.lbl紅燈);
+            this.groupBox2.Controls.Add(this.lbl右按鈕綠燈);
+            this.groupBox2.Controls.Add(this.lbl艙內燈);
+            this.groupBox2.Controls.Add(this.lbl_NA_30);
+            this.groupBox2.Controls.Add(this.lblHEPA);
+            this.groupBox2.Controls.Add(this.lbl_NA_29);
+            this.groupBox2.Controls.Add(this.lbl_NA_28);
+            this.groupBox2.Controls.Add(this.lbl取料吸嘴破);
+            this.groupBox2.Controls.Add(this.lbl_NA_26);
+            this.groupBox2.Controls.Add(this.lbl取料吸嘴吸);
+            this.groupBox2.Controls.Add(this.lbl擺放破真空);
+            this.groupBox2.Controls.Add(this.lblsk破真空1);
+            this.groupBox2.Controls.Add(this.lbl擺放座真空);
+            this.groupBox2.Controls.Add(this.lblsk真空1);
+            this.groupBox2.Controls.Add(this.lblsk破真空2);
+            this.groupBox2.Controls.Add(this.lbl載盤破真空);
+            this.groupBox2.Controls.Add(this.lblsk真空2);
+            this.groupBox2.Controls.Add(this.lbl載盤真空閥);
+            this.groupBox2.Controls.Add(this.lbl_NA_25);
+            this.groupBox2.Controls.Add(this.lbl堵料吹氣);
+            this.groupBox2.Controls.Add(this.lbl收料區缸);
+            this.groupBox2.Controls.Add(this.lbl植針吹氣);
+            this.groupBox2.Controls.Add(this.lbl接料區缸);
+            this.groupBox2.Controls.Add(this.lbl堵料吹氣缸);
+            this.groupBox2.Controls.Add(this.lbl吸料真空閥);
+            this.groupBox2.Controls.Add(this.lbl擺放蓋板);
+            this.groupBox2.Location = new System.Drawing.Point(719, 280);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(360, 210);
+            this.groupBox2.TabIndex = 161;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "WriteIO";
+            // 
+            // lblBuzzer
+            // 
+            this.lblBuzzer.AutoSize = true;
+            this.lblBuzzer.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblBuzzer.Location = new System.Drawing.Point(260, 180);
+            this.lblBuzzer.Name = "lblBuzzer";
+            this.lblBuzzer.Size = new System.Drawing.Size(52, 13);
+            this.lblBuzzer.TabIndex = 191;
+            this.lblBuzzer.Text = "lblBuzzer";
+            // 
+            // lbl_NA_31
+            // 
+            this.lbl_NA_31.AutoSize = true;
+            this.lbl_NA_31.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_31.Location = new System.Drawing.Point(260, 160);
+            this.lbl_NA_31.Name = "lbl_NA_31";
+            this.lbl_NA_31.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_31.TabIndex = 190;
+            this.lbl_NA_31.Text = "lbl_NA_31";
+            // 
+            // lbl綠燈
+            // 
+            this.lbl綠燈.AutoSize = true;
+            this.lbl綠燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl綠燈.Location = new System.Drawing.Point(260, 140);
+            this.lbl綠燈.Name = "lbl綠燈";
+            this.lbl綠燈.Size = new System.Drawing.Size(45, 13);
+            this.lbl綠燈.TabIndex = 189;
+            this.lbl綠燈.Text = "lbl綠燈";
+            // 
+            // lbl左按鈕紅燈
+            // 
+            this.lbl左按鈕紅燈.AutoSize = true;
+            this.lbl左按鈕紅燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl左按鈕紅燈.Location = new System.Drawing.Point(260, 120);
+            this.lbl左按鈕紅燈.Name = "lbl左按鈕紅燈";
+            this.lbl左按鈕紅燈.Size = new System.Drawing.Size(84, 13);
+            this.lbl左按鈕紅燈.TabIndex = 188;
+            this.lbl左按鈕紅燈.Text = "lbl左按鈕紅燈";
+            // 
+            // lbl黃燈
+            // 
+            this.lbl黃燈.AutoSize = true;
+            this.lbl黃燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl黃燈.Location = new System.Drawing.Point(260, 100);
+            this.lbl黃燈.Name = "lbl黃燈";
+            this.lbl黃燈.Size = new System.Drawing.Size(45, 13);
+            this.lbl黃燈.TabIndex = 187;
+            this.lbl黃燈.Text = "lbl黃燈";
+            // 
+            // lbl中按鈕綠燈
+            // 
+            this.lbl中按鈕綠燈.AutoSize = true;
+            this.lbl中按鈕綠燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl中按鈕綠燈.Location = new System.Drawing.Point(260, 80);
+            this.lbl中按鈕綠燈.Name = "lbl中按鈕綠燈";
+            this.lbl中按鈕綠燈.Size = new System.Drawing.Size(84, 13);
+            this.lbl中按鈕綠燈.TabIndex = 186;
+            this.lbl中按鈕綠燈.Text = "lbl中按鈕綠燈";
+            // 
+            // lbl紅燈
+            // 
+            this.lbl紅燈.AutoSize = true;
+            this.lbl紅燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl紅燈.Location = new System.Drawing.Point(260, 60);
+            this.lbl紅燈.Name = "lbl紅燈";
+            this.lbl紅燈.Size = new System.Drawing.Size(45, 13);
+            this.lbl紅燈.TabIndex = 185;
+            this.lbl紅燈.Text = "lbl紅燈";
+            // 
+            // lbl右按鈕綠燈
+            // 
+            this.lbl右按鈕綠燈.AutoSize = true;
+            this.lbl右按鈕綠燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl右按鈕綠燈.Location = new System.Drawing.Point(260, 40);
+            this.lbl右按鈕綠燈.Name = "lbl右按鈕綠燈";
+            this.lbl右按鈕綠燈.Size = new System.Drawing.Size(84, 13);
+            this.lbl右按鈕綠燈.TabIndex = 184;
+            this.lbl右按鈕綠燈.Text = "lbl右按鈕綠燈";
+            // 
+            // lbl艙內燈
+            // 
+            this.lbl艙內燈.AutoSize = true;
+            this.lbl艙內燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl艙內燈.Location = new System.Drawing.Point(180, 180);
+            this.lbl艙內燈.Name = "lbl艙內燈";
+            this.lbl艙內燈.Size = new System.Drawing.Size(58, 13);
+            this.lbl艙內燈.TabIndex = 183;
+            this.lbl艙內燈.Text = "lbl艙內燈";
+            // 
+            // lbl_NA_30
+            // 
+            this.lbl_NA_30.AutoSize = true;
+            this.lbl_NA_30.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_30.Location = new System.Drawing.Point(180, 160);
+            this.lbl_NA_30.Name = "lbl_NA_30";
+            this.lbl_NA_30.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_30.TabIndex = 182;
+            this.lbl_NA_30.Text = "lbl_NA_30";
+            // 
+            // lblHEPA
+            // 
+            this.lblHEPA.AutoSize = true;
+            this.lblHEPA.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblHEPA.Location = new System.Drawing.Point(180, 140);
+            this.lblHEPA.Name = "lblHEPA";
+            this.lblHEPA.Size = new System.Drawing.Size(51, 13);
+            this.lblHEPA.TabIndex = 181;
+            this.lblHEPA.Text = "lblHEPA";
+            // 
+            // lbl_NA_29
+            // 
+            this.lbl_NA_29.AutoSize = true;
+            this.lbl_NA_29.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_29.Location = new System.Drawing.Point(180, 120);
+            this.lbl_NA_29.Name = "lbl_NA_29";
+            this.lbl_NA_29.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_29.TabIndex = 180;
+            this.lbl_NA_29.Text = "lbl_NA_29";
+            // 
+            // lbl_NA_28
+            // 
+            this.lbl_NA_28.AutoSize = true;
+            this.lbl_NA_28.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_28.Location = new System.Drawing.Point(180, 100);
+            this.lbl_NA_28.Name = "lbl_NA_28";
+            this.lbl_NA_28.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_28.TabIndex = 179;
+            this.lbl_NA_28.Text = "lbl_NA_28";
+            // 
+            // lbl取料吸嘴破
+            // 
+            this.lbl取料吸嘴破.AutoSize = true;
+            this.lbl取料吸嘴破.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl取料吸嘴破.Location = new System.Drawing.Point(180, 80);
+            this.lbl取料吸嘴破.Name = "lbl取料吸嘴破";
+            this.lbl取料吸嘴破.Size = new System.Drawing.Size(84, 13);
+            this.lbl取料吸嘴破.TabIndex = 178;
+            this.lbl取料吸嘴破.Text = "lbl取料吸嘴破";
+            // 
+            // lbl_NA_26
+            // 
+            this.lbl_NA_26.AutoSize = true;
+            this.lbl_NA_26.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_26.Location = new System.Drawing.Point(180, 60);
+            this.lbl_NA_26.Name = "lbl_NA_26";
+            this.lbl_NA_26.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_26.TabIndex = 177;
+            this.lbl_NA_26.Text = "lbl_NA_27";
+            // 
+            // lbl取料吸嘴吸
+            // 
+            this.lbl取料吸嘴吸.AutoSize = true;
+            this.lbl取料吸嘴吸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl取料吸嘴吸.Location = new System.Drawing.Point(180, 40);
+            this.lbl取料吸嘴吸.Name = "lbl取料吸嘴吸";
+            this.lbl取料吸嘴吸.Size = new System.Drawing.Size(84, 13);
+            this.lbl取料吸嘴吸.TabIndex = 176;
+            this.lbl取料吸嘴吸.Text = "lbl取料吸嘴吸";
+            // 
+            // lbl擺放破真空
+            // 
+            this.lbl擺放破真空.AutoSize = true;
+            this.lbl擺放破真空.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl擺放破真空.Location = new System.Drawing.Point(100, 180);
+            this.lbl擺放破真空.Name = "lbl擺放破真空";
+            this.lbl擺放破真空.Size = new System.Drawing.Size(84, 13);
+            this.lbl擺放破真空.TabIndex = 175;
+            this.lbl擺放破真空.Text = "lbl擺放破真空";
+            // 
+            // lblsk破真空1
+            // 
+            this.lblsk破真空1.AutoSize = true;
+            this.lblsk破真空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblsk破真空1.Location = new System.Drawing.Point(100, 160);
+            this.lblsk破真空1.Name = "lblsk破真空1";
+            this.lblsk破真空1.Size = new System.Drawing.Size(75, 13);
+            this.lblsk破真空1.TabIndex = 174;
+            this.lblsk破真空1.Text = "lblsk破真空1";
+            // 
+            // lbl擺放座真空
+            // 
+            this.lbl擺放座真空.AutoSize = true;
+            this.lbl擺放座真空.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl擺放座真空.Location = new System.Drawing.Point(100, 140);
+            this.lbl擺放座真空.Name = "lbl擺放座真空";
+            this.lbl擺放座真空.Size = new System.Drawing.Size(84, 13);
+            this.lbl擺放座真空.TabIndex = 173;
+            this.lbl擺放座真空.Text = "lbl擺放座真空";
+            // 
+            // lblsk真空1
+            // 
+            this.lblsk真空1.AutoSize = true;
+            this.lblsk真空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblsk真空1.Location = new System.Drawing.Point(100, 120);
+            this.lblsk真空1.Name = "lblsk真空1";
+            this.lblsk真空1.Size = new System.Drawing.Size(62, 13);
+            this.lblsk真空1.TabIndex = 172;
+            this.lblsk真空1.Text = "lblsk真空1";
+            // 
+            // lblsk破真空2
+            // 
+            this.lblsk破真空2.AutoSize = true;
+            this.lblsk破真空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblsk破真空2.Location = new System.Drawing.Point(100, 100);
+            this.lblsk破真空2.Name = "lblsk破真空2";
+            this.lblsk破真空2.Size = new System.Drawing.Size(75, 13);
+            this.lblsk破真空2.TabIndex = 171;
+            this.lblsk破真空2.Text = "lblsk破真空2";
+            // 
+            // lbl載盤破真空
+            // 
+            this.lbl載盤破真空.AutoSize = true;
+            this.lbl載盤破真空.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl載盤破真空.Location = new System.Drawing.Point(100, 80);
+            this.lbl載盤破真空.Name = "lbl載盤破真空";
+            this.lbl載盤破真空.Size = new System.Drawing.Size(84, 13);
+            this.lbl載盤破真空.TabIndex = 170;
+            this.lbl載盤破真空.Text = "lbl載盤破真空";
+            // 
+            // lblsk真空2
+            // 
+            this.lblsk真空2.AutoSize = true;
+            this.lblsk真空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblsk真空2.Location = new System.Drawing.Point(100, 60);
+            this.lblsk真空2.Name = "lblsk真空2";
+            this.lblsk真空2.Size = new System.Drawing.Size(62, 13);
+            this.lblsk真空2.TabIndex = 169;
+            this.lblsk真空2.Text = "lblsk真空2";
+            // 
+            // lbl載盤真空閥
+            // 
+            this.lbl載盤真空閥.AutoSize = true;
+            this.lbl載盤真空閥.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl載盤真空閥.Location = new System.Drawing.Point(100, 40);
+            this.lbl載盤真空閥.Name = "lbl載盤真空閥";
+            this.lbl載盤真空閥.Size = new System.Drawing.Size(84, 13);
+            this.lbl載盤真空閥.TabIndex = 168;
+            this.lbl載盤真空閥.Text = "lbl載盤真空閥";
+            // 
+            // lbl_NA_25
+            // 
+            this.lbl_NA_25.AutoSize = true;
+            this.lbl_NA_25.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_NA_25.Location = new System.Drawing.Point(20, 180);
+            this.lbl_NA_25.Name = "lbl_NA_25";
+            this.lbl_NA_25.Size = new System.Drawing.Size(61, 13);
+            this.lbl_NA_25.TabIndex = 167;
+            this.lbl_NA_25.Text = "lbl_NA_25";
+            // 
+            // lbl堵料吹氣
+            // 
+            this.lbl堵料吹氣.AutoSize = true;
+            this.lbl堵料吹氣.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl堵料吹氣.Location = new System.Drawing.Point(20, 160);
+            this.lbl堵料吹氣.Name = "lbl堵料吹氣";
+            this.lbl堵料吹氣.Size = new System.Drawing.Size(71, 13);
+            this.lbl堵料吹氣.TabIndex = 166;
+            this.lbl堵料吹氣.Text = "lbl堵料吹氣";
+            // 
+            // lbl收料區缸
+            // 
+            this.lbl收料區缸.AutoSize = true;
+            this.lbl收料區缸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl收料區缸.Location = new System.Drawing.Point(20, 140);
+            this.lbl收料區缸.Name = "lbl收料區缸";
+            this.lbl收料區缸.Size = new System.Drawing.Size(71, 13);
+            this.lbl收料區缸.TabIndex = 165;
+            this.lbl收料區缸.Text = "lbl收料區缸";
+            // 
+            // lbl植針吹氣
+            // 
+            this.lbl植針吹氣.AutoSize = true;
+            this.lbl植針吹氣.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl植針吹氣.Location = new System.Drawing.Point(20, 120);
+            this.lbl植針吹氣.Name = "lbl植針吹氣";
+            this.lbl植針吹氣.Size = new System.Drawing.Size(71, 13);
+            this.lbl植針吹氣.TabIndex = 164;
+            this.lbl植針吹氣.Text = "lbl植針吹氣";
+            // 
+            // lbl接料區缸
+            // 
+            this.lbl接料區缸.AutoSize = true;
+            this.lbl接料區缸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl接料區缸.Location = new System.Drawing.Point(20, 100);
+            this.lbl接料區缸.Name = "lbl接料區缸";
+            this.lbl接料區缸.Size = new System.Drawing.Size(71, 13);
+            this.lbl接料區缸.TabIndex = 163;
+            this.lbl接料區缸.Text = "lbl接料區缸";
+            // 
+            // lbl堵料吹氣缸
+            // 
+            this.lbl堵料吹氣缸.AutoSize = true;
+            this.lbl堵料吹氣缸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl堵料吹氣缸.Location = new System.Drawing.Point(20, 80);
+            this.lbl堵料吹氣缸.Name = "lbl堵料吹氣缸";
+            this.lbl堵料吹氣缸.Size = new System.Drawing.Size(84, 13);
+            this.lbl堵料吹氣缸.TabIndex = 162;
+            this.lbl堵料吹氣缸.Text = "lbl堵料吹氣缸";
+            // 
+            // lbl吸料真空閥
+            // 
+            this.lbl吸料真空閥.AutoSize = true;
+            this.lbl吸料真空閥.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl吸料真空閥.Location = new System.Drawing.Point(20, 60);
+            this.lbl吸料真空閥.Name = "lbl吸料真空閥";
+            this.lbl吸料真空閥.Size = new System.Drawing.Size(84, 13);
+            this.lbl吸料真空閥.TabIndex = 161;
+            this.lbl吸料真空閥.Text = "lbl吸料真空閥";
+            // 
+            // lbl擺放蓋板
+            // 
+            this.lbl擺放蓋板.AutoSize = true;
+            this.lbl擺放蓋板.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl擺放蓋板.Location = new System.Drawing.Point(20, 40);
+            this.lbl擺放蓋板.Name = "lbl擺放蓋板";
+            this.lbl擺放蓋板.Size = new System.Drawing.Size(71, 13);
+            this.lbl擺放蓋板.TabIndex = 160;
+            this.lbl擺放蓋板.Text = "lbl擺放蓋板";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -2555,6 +2963,10 @@
             this.tabPage2.PerformLayout();
             this.tabPage_Jog.ResumeLayout(false);
             this.tabPage_Jog.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2706,6 +3118,7 @@
         private System.Windows.Forms.Label lbl_吸嘴Y軸_Convert;
         private System.Windows.Forms.Label lbl_吸嘴X軸_Convert;
         private System.Windows.Forms.Label lbl_吸嘴X軸_Back;
+        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lbl_NA_24;
         private System.Windows.Forms.Label lbl下右左門;
         private System.Windows.Forms.Label lbl_NA_23;
@@ -2770,6 +3183,39 @@
         private System.Windows.Forms.Label lbl載盤Y前;
         private System.Windows.Forms.Label lbl取料Y後;
         private System.Windows.Forms.Label lbl載盤Y後;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label lblBuzzer;
+        private System.Windows.Forms.Label lbl_NA_31;
+        private System.Windows.Forms.Label lbl綠燈;
+        private System.Windows.Forms.Label lbl左按鈕紅燈;
+        private System.Windows.Forms.Label lbl黃燈;
+        private System.Windows.Forms.Label lbl中按鈕綠燈;
+        private System.Windows.Forms.Label lbl紅燈;
+        private System.Windows.Forms.Label lbl右按鈕綠燈;
+        private System.Windows.Forms.Label lbl艙內燈;
+        private System.Windows.Forms.Label lbl_NA_30;
+        private System.Windows.Forms.Label lblHEPA;
+        private System.Windows.Forms.Label lbl_NA_29;
+        private System.Windows.Forms.Label lbl_NA_28;
+        private System.Windows.Forms.Label lbl取料吸嘴破;
+        private System.Windows.Forms.Label lbl_NA_26;
+        private System.Windows.Forms.Label lbl取料吸嘴吸;
+        private System.Windows.Forms.Label lbl擺放破真空;
+        private System.Windows.Forms.Label lblsk破真空1;
+        private System.Windows.Forms.Label lbl擺放座真空;
+        private System.Windows.Forms.Label lblsk真空1;
+        private System.Windows.Forms.Label lblsk破真空2;
+        private System.Windows.Forms.Label lbl載盤破真空;
+        private System.Windows.Forms.Label lblsk真空2;
+        private System.Windows.Forms.Label lbl載盤真空閥;
+        private System.Windows.Forms.Label lbl_NA_25;
+        private System.Windows.Forms.Label lbl堵料吹氣;
+        private System.Windows.Forms.Label lbl收料區缸;
+        private System.Windows.Forms.Label lbl植針吹氣;
+        private System.Windows.Forms.Label lbl接料區缸;
+        private System.Windows.Forms.Label lbl堵料吹氣缸;
+        private System.Windows.Forms.Label lbl吸料真空閥;
+        private System.Windows.Forms.Label lbl擺放蓋板;
     }
 }
 
