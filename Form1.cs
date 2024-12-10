@@ -1,4 +1,5 @@
-﻿//---------------------------------------------------------------------------------------
+﻿
+//---------------------------------------------------------------------------------------
 //Default using
 using System;
 using System.Collections.Generic;
@@ -47,6 +48,10 @@ namespace InjectorInspector
     public partial class Form1 : Form
     {
         //---------------------------------------------------------------------------------------
+        //Debug config
+        bool bshow_debug_RAW_Conver_Back_Value = true;
+        
+        //---------------------------------------------------------------------------------------
         //WMX3
         ServoControl clsServoControlWMX3 = new ServoControl();
 
@@ -55,24 +60,23 @@ namespace InjectorInspector
         Vibration clsVibration = new Vibration();
 
         //---------------------------------------------------------------------------------------
-        //Debug
+        //Debug for implementation
         public int ErrorCode = 0;
         public int cntcallback = 0;
 
         public int Multiplier = 4;
         public int u8OneCycleFlag = 0;
 
+
         //---------------------------------------------------------------------------------------
-        /// <summary>
-        /// Test function with Vision
-        /// </summary>
-        /// 
+        //------------------------------ Test function with Vision ------------------------------
+        //---------------------------------------------------------------------------------------
         public void apiCallBackTest()
         {
             cntcallback++;
             this.Text = cntcallback.ToString();
         }
-
+        //---------------------------------------------------------------------------------------
         private void button2_Click(object sender, EventArgs e)
         {
             //吸料盤校正用
@@ -100,12 +104,14 @@ namespace InjectorInspector
 
             int cntdebug = inspector1.RecvCount;
         }
+        //---------------------------------------------------------------------------------------
+        //------------------------------ Test function with Vision ------------------------------
+        //---------------------------------------------------------------------------------------
+
 
         //---------------------------------------------------------------------------------------
-        /// <summary>
-        /// Xavier Call, Control the Servo machine
-        /// </summary>
-        /// 
+        //------------------------ Xavier Call, Control the Servo machine -----------------------
+        //---------------------------------------------------------------------------------------
         public double dbapiNozzleX(double dbIncreaseNozzleX)  //NozzleX
         {
             double dbRstNozzleX = 0.0;
@@ -146,9 +152,30 @@ namespace InjectorInspector
                 }
 
                 //顯示資訊
-                lbl_acpos_吸嘴X軸.Text = dbRstNozzleX.ToString("F2");
-                lbl_spd_吸嘴X軸.Text = dbSpeed.ToString("F2");
+                lbl_acpos_吸嘴X軸.Text = dbRstNozzleX.ToString("F3");
+                lbl_spd_吸嘴X軸.Text = dbSpeed.ToString("F3");
 
+                //bshow_debug_RAW_Conver_Back_Value
+                lbl_吸嘴X軸_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_吸嘴X軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_吸嘴X軸_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if (bshow_debug_RAW_Conver_Back_Value == true)
+                    if (position != "")
+                    {
+                        int MaxRAW = -4;
+                        int MinRAW = 51073;
+                        double Maxdb = 0.0;
+                        double Mindb = 500.0;
+                        Normal calculate = new Normal();
+                        int Convert = (int)(double.Parse(position));
+                        double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+                    
+                        lbl_吸嘴X軸_RAW.Text = Convert.ToString();
+                        lbl_吸嘴X軸_Convert.Text = dbGet.ToString("F3");
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        lbl_吸嘴X軸_Back.Text = cnback.ToString();
+                    }
+                
             }
 
             if (dbIncreaseNozzleX == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
@@ -180,7 +207,7 @@ namespace InjectorInspector
 
             return dbRstNozzleX;
         }  // end of public double dbapiNozzleX(double dbIncreaseNozzleX)  //NozzleX
-
+        //---------------------------------------------------------------------------------------
         public double dbapiNozzleY(double dbIncreaseNozzleY)  //NozzleY
         {
             double dbRstNozzleY = 0.0;
@@ -221,8 +248,29 @@ namespace InjectorInspector
                 }
 
                 //顯示資訊
-                lbl_acpos_吸嘴Y軸.Text = dbRstNozzleY.ToString("F2");
-                lbl_spd_吸嘴Y軸.Text = dbSpeed.ToString("F2");
+                lbl_acpos_吸嘴Y軸.Text = dbRstNozzleY.ToString("F3");
+                lbl_spd_吸嘴Y軸.Text = dbSpeed.ToString("F3");
+
+                //bshow_debug_RAW_Conver_Back_Value
+                lbl_吸嘴Y軸_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_吸嘴Y軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_吸嘴Y軸_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if (bshow_debug_RAW_Conver_Back_Value == true)
+                    if (position != "")
+                    {
+                        int MaxRAW = -1005;
+                        int MinRAW = 10875;
+                        double Maxdb = 0.0;
+                        double Mindb = 100.0;
+                        Normal calculate = new Normal();
+                        int Convert = (int)(double.Parse(position));
+                        double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+
+                        lbl_吸嘴Y軸_RAW.Text = Convert.ToString();
+                        lbl_吸嘴Y軸_Convert.Text = dbGet.ToString("F3");
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        lbl_吸嘴Y軸_Back.Text = cnback.ToString();
+                    }
 
             }
 
@@ -255,7 +303,7 @@ namespace InjectorInspector
 
             return dbRstNozzleY;
         }  // end of public double dbapiNozzleY(double dbIncreaseNozzleY)  //NozzleY
-
+        //---------------------------------------------------------------------------------------
         public double dbapiNozzleZ(double dbIncreaseNozzleZ)  //NozzleZ
         {
             double dbRstNozzleZ = 0.0;
@@ -296,8 +344,29 @@ namespace InjectorInspector
                 }
 
                 //顯示資訊
-                lbl_acpos_吸嘴Z軸.Text = dbRstNozzleZ.ToString("F2");
-                lbl_spd_吸嘴Z軸.Text = dbSpeed.ToString("F2");
+                lbl_acpos_吸嘴Z軸.Text = dbRstNozzleZ.ToString("F3");
+                lbl_spd_吸嘴Z軸.Text = dbSpeed.ToString("F3");
+
+                //bshow_debug_RAW_Conver_Back_Value
+                lbl_吸嘴Z軸_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_吸嘴Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_吸嘴Z軸_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if (bshow_debug_RAW_Conver_Back_Value == true)
+                    if (position != "")
+                    {
+                        int MaxRAW = -93;
+                        int MinRAW = 41496;
+                        double Maxdb = 0.0;
+                        double Mindb = 40.0;
+                        Normal calculate = new Normal();
+                        int Convert = (int)(double.Parse(position));
+                        double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+
+                        lbl_吸嘴Z軸_RAW.Text = Convert.ToString();
+                        lbl_吸嘴Z軸_Convert.Text = dbGet.ToString("F3");
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        lbl_吸嘴Z軸_Back.Text = cnback.ToString();
+                    }
 
             }
 
@@ -330,7 +399,7 @@ namespace InjectorInspector
 
             return dbRstNozzleZ;
         }  // end of public double dbapiNozzleZ(double dbIncreaseNozzleZ)  //NozzleZ
-
+        //---------------------------------------------------------------------------------------
         public double dbapiNozzleR(double dbIncreaseDegree)  //NozzleR
         {
             double dbRstNozzleR = 0.0;
@@ -377,8 +446,29 @@ namespace InjectorInspector
                 }
 
                 //顯示資訊
-                lbl_acpos_吸嘴R軸.Text = dbRstNozzleR.ToString("F2");
-                lbl_spd_吸嘴R軸.Text = dbSpeed.ToString("F2");
+                lbl_acpos_吸嘴R軸.Text = dbRstNozzleR.ToString("F3");
+                lbl_spd_吸嘴R軸.Text = dbSpeed.ToString("F3");
+
+                //bshow_debug_RAW_Conver_Back_Value
+                lbl_吸嘴R軸_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_吸嘴R軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_吸嘴R軸_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if (bshow_debug_RAW_Conver_Back_Value == true)
+                    if (position != "")
+                    {
+                        int MaxRAW = -11880;
+                        int MinRAW = 24320;
+                        double Maxdb = 0.0;
+                        double Mindb = 360.0;
+                        Normal calculate = new Normal();
+                        int Convert = (int)(double.Parse(position));
+                        double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+
+                        lbl_吸嘴R軸_RAW.Text = Convert.ToString();
+                        lbl_吸嘴R軸_Convert.Text = dbGet.ToString("F3");
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        lbl_吸嘴R軸_Back.Text = cnback.ToString();
+                    }
 
             }
 
@@ -405,8 +495,7 @@ namespace InjectorInspector
 
             return dbRstNozzleR;
         }  // end of public double dbapiNozzleR(double dbIncreaseDegree)  //NozzleR
-
-
+        //---------------------------------------------------------------------------------------
         public double dbapiCarrierX(double dbIncreaseCarrierX)  //CarrierX
         {
             double dbRstCarrierX = 0.0;
@@ -447,8 +536,29 @@ namespace InjectorInspector
                 }
 
                 //顯示資訊
-                lbl_acpos_載盤X軸.Text = dbRstCarrierX.ToString("F2");
-                lbl_spd_載盤X軸.Text = dbSpeed.ToString("F2");
+                lbl_acpos_載盤X軸.Text = dbRstCarrierX.ToString("F3");
+                lbl_spd_載盤X軸.Text = dbSpeed.ToString("F3");
+
+                //bshow_debug_RAW_Conver_Back_Value
+                lbl_載盤X軸_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_載盤X軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_載盤X軸_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if (bshow_debug_RAW_Conver_Back_Value == true)
+                    if (position != "")
+                    {
+                        int MaxRAW = -39198;
+                        int MinRAW = 1;
+                        double Maxdb = 0.0;
+                        double Mindb = 190.0;
+                        Normal calculate = new Normal();
+                        int Convert = (int)(double.Parse(position));
+                        double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+
+                        lbl_載盤X軸_RAW.Text = Convert.ToString();
+                        lbl_載盤X軸_Convert.Text = dbGet.ToString("F3");
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        lbl_載盤X軸_Back.Text = cnback.ToString();
+                    }
 
             }
 
@@ -481,7 +591,7 @@ namespace InjectorInspector
 
             return dbRstCarrierX;
         }  // end of public double dbapiCarrierX(double dbIncreaseCarrierX)  //CarrierX
-
+        //---------------------------------------------------------------------------------------
         public double dbapiCarrierY(double dbIncreaseCarrierY)  //CarrierY
         {
             double dbRstCarrierY = 0.0;
@@ -522,8 +632,29 @@ namespace InjectorInspector
                 }
 
                 //顯示資訊
-                lbl_acpos_載盤Y軸.Text = dbRstCarrierY.ToString("F2");
-                lbl_spd_載盤Y軸.Text = dbSpeed.ToString("F2");
+                lbl_acpos_載盤Y軸.Text = dbRstCarrierY.ToString("F3");
+                lbl_spd_載盤Y軸.Text = dbSpeed.ToString("F3");
+
+                //bshow_debug_RAW_Conver_Back_Value
+                lbl_載盤Y軸_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_載盤Y軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_載盤Y軸_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if (bshow_debug_RAW_Conver_Back_Value == true)
+                    if (position != "")
+                    {
+                        int MaxRAW = -809888;
+                        int MinRAW = -50;
+                        double Maxdb = 0.0;
+                        double Mindb = 800.0;
+                        Normal calculate = new Normal();
+                        int Convert = (int)(double.Parse(position));
+                        double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+
+                        lbl_載盤Y軸_RAW.Text = Convert.ToString();
+                        lbl_載盤Y軸_Convert.Text = dbGet.ToString("F3");
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        lbl_載盤Y軸_Back.Text = cnback.ToString();
+                    }
 
             }
 
@@ -556,8 +687,7 @@ namespace InjectorInspector
 
             return dbRstCarrierY;
         }  // end of public double dbapiCarrierY(double dbIncreaseCarrierY)  //CarrierY
-
-
+        //---------------------------------------------------------------------------------------
         public double dbapiSetZ(double dbIncreaseSetZ)  //SetZ
         {
             double dbRstSetZ = 0.0;
@@ -598,8 +728,29 @@ namespace InjectorInspector
                 }
 
                 //顯示資訊
-                lbl_acpos_植針Z軸.Text = dbRstSetZ.ToString("F2");
-                lbl_spd_植針Z軸.Text = dbSpeed.ToString("F2");
+                lbl_acpos_植針Z軸.Text = dbRstSetZ.ToString("F3");
+                lbl_spd_植針Z軸.Text = dbSpeed.ToString("F3");
+
+                //bshow_debug_RAW_Conver_Back_Value
+                lbl_植針Z軸_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_植針Z軸_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if (bshow_debug_RAW_Conver_Back_Value == true)
+                    if (position != "")
+                    {
+                        int MaxRAW = -7045;
+                        int MinRAW = 13;
+                        double Maxdb = 0.0;
+                        double Mindb = 30.0;
+                        Normal calculate = new Normal();
+                        int Convert = (int)(double.Parse(position));
+                        double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+
+                        lbl_植針Z軸_RAW.Text = Convert.ToString();
+                        lbl_植針Z軸_Convert.Text = dbGet.ToString("F3");
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        lbl_植針Z軸_Back.Text = cnback.ToString();
+                    }
 
             }
 
@@ -632,7 +783,7 @@ namespace InjectorInspector
 
             return dbRstSetZ;
         }  // end of public double dbapiSetZ(double dbIncreaseSetZ)  //SetZ
-
+        //---------------------------------------------------------------------------------------
         public double dbapiSetR(double dbIncreaseSetR)  //SetR
         {
             double dbRstSetR = 0.0;
@@ -673,8 +824,29 @@ namespace InjectorInspector
                 }
 
                 //顯示資訊
-                lbl_acpos_植針R軸.Text = dbRstSetR.ToString("F2");
-                lbl_spd_植針R軸.Text = dbSpeed.ToString("F2");
+                lbl_acpos_植針R軸.Text = dbRstSetR.ToString("F3");
+                lbl_spd_植針R軸.Text = dbSpeed.ToString("F3");
+
+                //bshow_debug_RAW_Conver_Back_Value
+                lbl_植針R軸_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_植針R軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_植針R軸_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if (bshow_debug_RAW_Conver_Back_Value == true)
+                    if (position != "")
+                    {
+                        int MaxRAW = -1250646;
+                        int MinRAW = -1255481;
+                        double Maxdb = 90.0;
+                        double Mindb = 180.0;
+                        Normal calculate = new Normal();
+                        int Convert = (int)(double.Parse(position));
+                        double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+
+                        lbl_植針R軸_RAW.Text = Convert.ToString();
+                        lbl_植針R軸_Convert.Text = dbGet.ToString("F3");
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        lbl_植針R軸_Back.Text = cnback.ToString();
+                    }
 
             }
 
@@ -707,8 +879,7 @@ namespace InjectorInspector
 
             return dbRstSetR;
         }  // end of public double dbapiSetR(double dbIncreaseSetR)  //SetR
-
-
+        //---------------------------------------------------------------------------------------
         public double dbapiGate(double dbIncreaseGate)  //Gate
         {
             double dbRstGate = 0.0;
@@ -749,8 +920,29 @@ namespace InjectorInspector
                 }
 
                 //顯示資訊
-                lbl_acpos_工作門.Text = dbRstGate.ToString("F2");
-                lbl_spd_工作門.Text = dbSpeed.ToString("F2");
+                lbl_acpos_工作門.Text = dbRstGate.ToString("F3");
+                lbl_spd_工作門.Text = dbSpeed.ToString("F3");
+
+                //bshow_debug_RAW_Conver_Back_Value
+                lbl_工作門_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_工作門_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_工作門_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if (bshow_debug_RAW_Conver_Back_Value == true)
+                    if (position != "")
+                    {
+                        int MaxRAW = 56580;
+                        int MinRAW = -1271;
+                        double Maxdb = 575.0;
+                        double Mindb = 0.0;
+                        Normal calculate = new Normal();
+                        int Convert = (int)(double.Parse(position));
+                        double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+
+                        lbl_工作門_RAW.Text = Convert.ToString();
+                        lbl_工作門_Convert.Text = dbGet.ToString("F3");
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        lbl_工作門_Back.Text = cnback.ToString();
+                    }
 
             }
 
@@ -783,18 +975,19 @@ namespace InjectorInspector
 
             return dbRstGate;
         }  // end of public double dbapiGate(double dbIncreaseGate)  //Gate
+        //---------------------------------------------------------------------------------------
+        //------------------------ Xavier Call, Control the Servo machine -----------------------
+        //---------------------------------------------------------------------------------------
 
 
         //---------------------------------------------------------------------------------------
-        /// <summary>
-        /// Project Code implement
-        /// </summary>
-        /// 
+        //-------------------------------- Project Code implement -------------------------------
+        //---------------------------------------------------------------------------------------
         public Form1()
         {
             InitializeComponent();
         }
-
+        //---------------------------------------------------------------------------------------
         private void Form1_Load(object sender, EventArgs e)
         {
             //init vision
@@ -818,97 +1011,70 @@ namespace InjectorInspector
             this.Text = "2024/12/09 18:32";
 
         }
-
+        //---------------------------------------------------------------------------------------
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             clsServoControlWMX3.WMX3_destroy_Commu();
             
             //sw.Close();
         }
+        //---------------------------------------------------------------------------------------
+        public bool enGC_吸嘴X軸 = false;
+        public bool enGC_吸嘴Y軸 = false;
+        public bool enGC_吸嘴Z軸 = false;
+        public bool enGC_吸嘴R軸 = false;
 
-        public bool En吸嘴X軸 = false;
-        public bool En吸嘴Y軸 = false;
-        public bool En吸嘴Z軸 = false;
-        public bool En吸嘴R軸 = false;
+        public bool enGC_載盤X軸 = false;
+        public bool enGC_載盤Y軸 = false;
 
-        public bool En載盤X軸 = false;
-        public bool En載盤Y軸 = false;
+        public bool enGC_植針Z軸 = false;
+        public bool enGC_植針R軸 = false;
 
-        public bool En植針Z軸 = false;
-        public bool En植針R軸 = false;
-
-        public bool En工作門 = false;
+        public bool enGC_工作門 = false;
 
         public void en_Group_Click(object sender, EventArgs e)
         {  // start of public void en_Group_Click(object sender, EventArgs e)
-            if (En吸嘴X軸 != en_吸嘴X軸.Checked)
-            {
-                En吸嘴X軸 = en_吸嘴X軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, En吸嘴X軸);
+            if (enGC_吸嘴X軸 != en_吸嘴X軸.Checked) {
+                enGC_吸嘴X軸 = en_吸嘴X軸.Checked;
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, enGC_吸嘴X軸);
+            }
+            if (enGC_吸嘴Y軸 != en_吸嘴Y軸.Checked) {
+                enGC_吸嘴Y軸 = en_吸嘴Y軸.Checked;
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, enGC_吸嘴Y軸);
+            }
+            if (enGC_吸嘴Z軸 != en_吸嘴Z軸.Checked) {
+                enGC_吸嘴Z軸 = en_吸嘴Z軸.Checked;
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, enGC_吸嘴Z軸);
+            }
+            if (enGC_吸嘴R軸 != en_吸嘴R軸.Checked) {
+                enGC_吸嘴R軸 = en_吸嘴R軸.Checked;
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, enGC_吸嘴R軸);
             }
 
-            if (En吸嘴Y軸 != en_吸嘴Y軸.Checked)
-            {
-                En吸嘴Y軸 = en_吸嘴Y軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, En吸嘴Y軸);
+            if (enGC_載盤X軸 != en_載盤X軸.Checked) {
+                enGC_載盤X軸 = en_載盤X軸.Checked;
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, enGC_載盤X軸);
+            }
+            if (enGC_載盤Y軸 != en_載盤Y軸.Checked) {
+                enGC_載盤Y軸 = en_載盤Y軸.Checked;
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, enGC_載盤Y軸);
             }
 
-            if (En吸嘴Z軸 != en_吸嘴Z軸.Checked)
-            {
-                En吸嘴Z軸 = en_吸嘴Z軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, En吸嘴Z軸);
+            if (enGC_植針Z軸 != en_植針Z軸.Checked) {
+                enGC_植針Z軸 = en_植針Z軸.Checked;
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, enGC_植針Z軸);
+            }
+            if (enGC_植針R軸 != en_植針R軸.Checked) {
+                enGC_植針R軸 = en_植針R軸.Checked;
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, enGC_植針R軸);
             }
 
-            if (En吸嘴R軸 != en_吸嘴R軸.Checked)
-            {
-                En吸嘴R軸 = en_吸嘴R軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, En吸嘴R軸);
-            }
-
-
-            if (En載盤X軸 != en_載盤X軸.Checked)
-            {
-                En載盤X軸 = en_載盤X軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, En載盤X軸);
-            }
-
-            if (En載盤Y軸 != en_載盤Y軸.Checked)
-            {
-                En載盤Y軸 = en_載盤Y軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, En載盤Y軸);
-            }
-
-
-            if (En植針Z軸 != en_植針Z軸.Checked)
-            {
-                En植針Z軸 = en_植針Z軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, En植針Z軸);
-            }
-
-            if (En植針R軸 != en_植針R軸.Checked)
-            {
-                En植針R軸 = en_植針R軸.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, En植針R軸);
-            }
-
-
-            if (En工作門 != en_工作門.Checked)
-            {
-                En工作門 = en_工作門.Checked;
-
-                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, En工作門);
+            if (enGC_工作門 != en_工作門.Checked){
+                enGC_工作門 = en_工作門.Checked;
+                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, enGC_工作門);
             }
         }  // end of public void en_Group_Click(object sender, EventArgs e)
-
-
+        //---------------------------------------------------------------------------------------
         public WMX3軸定義 wmxId_RadioGroupChanged = WMX3軸定義.AXIS_START;
         private void RadioGroupChanged(object sender, EventArgs e)
         {  // start of private void RadioGroupChanged(object sender, EventArgs e)
@@ -916,128 +1082,83 @@ namespace InjectorInspector
             System.Windows.Forms.RadioButton selectedRadioButton = sender as System.Windows.Forms.RadioButton;
 
             //辨識選擇之軸
-            if (selectedRadioButton != null && selectedRadioButton.Checked == true)
-            {
-                if (selectedRadioButton == select_吸嘴X軸)
-                {
+            if (selectedRadioButton != null && selectedRadioButton.Checked == true) {
+                if (selectedRadioButton == select_吸嘴X軸) {
                     wmxId_RadioGroupChanged = WMX3軸定義.吸嘴X軸;
-                }
-                else if (selectedRadioButton == select_吸嘴Y軸)
-                {
+                } else if (selectedRadioButton == select_吸嘴Y軸) {
                     wmxId_RadioGroupChanged = WMX3軸定義.吸嘴Y軸;
-                }
-                else if (selectedRadioButton == select_吸嘴Z軸)
-                {
+                } else if (selectedRadioButton == select_吸嘴Z軸) {
                     wmxId_RadioGroupChanged = WMX3軸定義.吸嘴Z軸;
-                }
-                else if (selectedRadioButton == select_吸嘴R軸)
-                {
+                } else if (selectedRadioButton == select_吸嘴R軸) {
                     wmxId_RadioGroupChanged = WMX3軸定義.吸嘴R軸;
-                }
-                else if (selectedRadioButton == select_載盤X軸)
-                {
+                } else if (selectedRadioButton == select_載盤X軸) {
                     wmxId_RadioGroupChanged = WMX3軸定義.載盤X軸;
-                }
-                else if (selectedRadioButton == select_載盤Y軸)
-                {
+                } else if (selectedRadioButton == select_載盤Y軸) {
                     wmxId_RadioGroupChanged = WMX3軸定義.載盤Y軸;
-                }
-                else if (selectedRadioButton == select_植針Z軸)
-                {
+                } else if (selectedRadioButton == select_植針Z軸) {
                     wmxId_RadioGroupChanged = WMX3軸定義.植針Z軸;
-                }
-                else if (selectedRadioButton == select_植針R軸)
-                {
+                } else if (selectedRadioButton == select_植針R軸) {
                     wmxId_RadioGroupChanged = WMX3軸定義.植針R軸;
-                }
-                else if (selectedRadioButton == select_工作門)
-                {
+                } else if (selectedRadioButton == select_工作門) {
                     wmxId_RadioGroupChanged = WMX3軸定義.工作門;
                 }
             }
 
             //複製選擇之軸
-            if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴X軸)
-            {
-                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴X軸.Text).ToString("F2"));
-            }
-            else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴Y軸)
-            {
-                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Y軸.Text).ToString("F2"));
-            }
-            else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴Z軸)
-            {
-                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Z軸.Text).ToString("F2"));
-            }
-            else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴R軸)
-            {
-                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴R軸.Text).ToString("F2"));
-            }
-            else if (wmxId_RadioGroupChanged == WMX3軸定義.載盤X軸)
-            {
-                txtABSpos.Text = (double.Parse(lbl_acpos_載盤X軸.Text).ToString("F2"));
-            }
-            else if (wmxId_RadioGroupChanged == WMX3軸定義.載盤Y軸)
-            {
-                txtABSpos.Text = (double.Parse(lbl_acpos_載盤Y軸.Text).ToString("F2"));
-            }
-            else if (wmxId_RadioGroupChanged == WMX3軸定義.植針Z軸)
-            {
-                txtABSpos.Text = (double.Parse(lbl_acpos_植針Z軸.Text).ToString("F2"));
-            }
-            else if (wmxId_RadioGroupChanged == WMX3軸定義.植針R軸)
-            {
-                txtABSpos.Text = (double.Parse(lbl_acpos_植針R軸.Text).ToString("F2"));
-            }
-            else if (wmxId_RadioGroupChanged == WMX3軸定義.工作門)
-            {
-                txtABSpos.Text = (double.Parse(lbl_acpos_工作門.Text).ToString("F2"));
-            }
-            else
-            {
+            if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴X軸) {
+                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴X軸.Text).ToString("F3"));
+            } else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴Y軸) {
+                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Y軸.Text).ToString("F3"));
+            } else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴Z軸) {
+                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Z軸.Text).ToString("F3"));
+            } else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴R軸) {
+                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴R軸.Text).ToString("F3"));
+            } else if (wmxId_RadioGroupChanged == WMX3軸定義.載盤X軸) {
+                txtABSpos.Text = (double.Parse(lbl_acpos_載盤X軸.Text).ToString("F3"));
+            } else if (wmxId_RadioGroupChanged == WMX3軸定義.載盤Y軸) {
+                txtABSpos.Text = (double.Parse(lbl_acpos_載盤Y軸.Text).ToString("F3"));
+            } else if (wmxId_RadioGroupChanged == WMX3軸定義.植針Z軸) {
+                txtABSpos.Text = (double.Parse(lbl_acpos_植針Z軸.Text).ToString("F3"));
+            } else if (wmxId_RadioGroupChanged == WMX3軸定義.植針R軸) {
+                txtABSpos.Text = (double.Parse(lbl_acpos_植針R軸.Text).ToString("F3"));
+            } else if (wmxId_RadioGroupChanged == WMX3軸定義.工作門) {
+                txtABSpos.Text = (double.Parse(lbl_acpos_工作門.Text).ToString("F3"));
+            } else {
                 txtABSpos.Text = "N/A";
             }
 
         }  // end of private void RadioGroupChanged(object sender, EventArgs e)
-
+        //---------------------------------------------------------------------------------------
         public void btn_adjust_JOG(object sender, EventArgs e)
         {  // start of public void btn_adjust_JOG(object sender, EventArgs e)
             // 將 sender 轉型為 Button
             System.Windows.Forms.Button ptrBtn = sender as System.Windows.Forms.Button;
 
-            if (ptrBtn == btnABSMove)
-            {
-                // 先進行計算，再格式化數字
+            if (ptrBtn == btnABSMove) {
                 double result = double.Parse(lbl_acpos_工作門.Text) + 0.0;
-                txtABSpos.Text = result.ToString("F2");
-            }
-            else
+                txtABSpos.Text = result.ToString("F3");
+            } else
 
-            if (ptrBtn == btn_plus_1)
-            {
+            if (ptrBtn == btn_plus_1) {
                 double result = double.Parse(lbl_acpos_工作門.Text) + 1.0;
-                txtABSpos.Text = result.ToString("F2");
-            }
-            else if (ptrBtn == btn_minus_1)
-            {
+                txtABSpos.Text = result.ToString("F3");
+            } else if (ptrBtn == btn_minus_1) {
                 double result = double.Parse(lbl_acpos_工作門.Text) - 1.0;
-                txtABSpos.Text = result.ToString("F2");
-            }
-            else
+                txtABSpos.Text = result.ToString("F3");
+            } else
 
-            if (ptrBtn == btn_plus_10)
-            {
+            if (ptrBtn == btn_plus_10) {
                 double result = double.Parse(lbl_acpos_工作門.Text) + 10.0;
-                txtABSpos.Text = result.ToString("F2");
-            }
-            else if (ptrBtn == btn_minus_10)
-            {
+                txtABSpos.Text = result.ToString("F3");
+            } else if (ptrBtn == btn_minus_10) {
                 double result = double.Parse(lbl_acpos_工作門.Text) - 10.0;
-                txtABSpos.Text = result.ToString("F2");
+                txtABSpos.Text = result.ToString("F3");
             }
 
         }  // end of public void btn_adjust_JOG(object sender, EventArgs e)
-
+        //---------------------------------------------------------------------------------------
+        //-------------------------------- Project Code implement -------------------------------
+        //---------------------------------------------------------------------------------------
 
 
 
@@ -1129,9 +1250,59 @@ namespace InjectorInspector
                     byte[] data = new byte[1] { pDataGetIO[i] };
                     sb.AppendFormat("{0}:{1} ", data.ToHex(), data.ToBinary());
                 }
-            // 設定 Text 屬性
-            this.Text = sb.ToString();
 
+            // 設定 Text 屬性, for debug
+            if (false) {
+                this.Text = sb.ToString();
+            }
+
+            //讀取 In IO
+            lbl載盤Y後.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_載盤Y軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤Y軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
+            lbl取料Y後.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_取料Y軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料Y軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
+            lbl載盤Y前.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_載盤Y軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤Y軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
+            lbl取料Y前.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_取料Y軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料Y軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
+            lbl取料X後.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_取料X軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料X軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
+            lbl取料X前.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_取料X軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料X軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
+
+            lbl植針Z後.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_植針Z軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_植針Z軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
+            lbl植針Z前.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_植針Z軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_植針Z軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
+            lbl載盤X前.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_載盤X軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤X軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
+            lbl載盤X後.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_載盤X軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤X軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
+
+            lbl載盤空1.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_載盤真空檢1)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤真空檢1)     % 10)) != 0) ? Color.Green : Color.Red;
+            lblsk2空1.BackColor   = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_Socket2真空檢1)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket2真空檢1)  % 10)) != 0) ? Color.Green : Color.Red;
+            lbl載盤空2.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_載盤真空檢2)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤真空檢2)     % 10)) != 0) ? Color.Green : Color.Red;
+            lblsk2空2.BackColor   = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_Socket2真空檢2)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket2真空檢2)  % 10)) != 0) ? Color.Green : Color.Red;
+            lblsk1空1.BackColor   = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_Socket1真空檢1)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket1真空檢1)  % 10)) != 0) ? Color.Green : Color.Red;
+            lbl擺放空1.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_擺放座真空檢1)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座真空檢1)   % 10)) != 0) ? Color.Green : Color.Red;
+            lblsk1空2.BackColor   = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_Socket1真空檢2)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket1真空檢2)  % 10)) != 0) ? Color.Green : Color.Red;
+            lbl擺放空2.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_擺放座真空檢2)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座真空檢2)   % 10)) != 0) ? Color.Green : Color.Red;
+
+            lbl吸嘴空1.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_吸嘴真空檢1)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸嘴真空檢1)     % 10)) != 0) ? Color.Green : Color.Red;
+            lbl吸嘴空2.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_吸嘴真空檢2)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸嘴真空檢2)     % 10)) != 0) ? Color.Green : Color.Red;
+            lbl取料ng盒.BackColor = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_取料NG收料盒)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料NG收料盒)    % 10)) != 0) ? Color.Green : Color.Red;
+            lbl兩點壓1.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_兩點組合壓力檢1) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_兩點組合壓力檢1) % 10)) != 0) ? Color.Green : Color.Red;
+            lbl堵料盒.BackColor   = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_堵料收料盒)      / 10)] & (1 << (int)(WMX3IO對照.pxeIO_堵料收料盒)      % 10)) != 0) ? Color.Green : Color.Red;
+            lbl兩點壓2.BackColor  = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_兩點組合壓力檢2) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_兩點組合壓力檢2) % 10)) != 0) ? Color.Green : Color.Red;
+            lbl吸料盒.BackColor   = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_吸料收料盒)      / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸料收料盒)      % 10)) != 0) ? Color.Green : Color.Red;
+
+            lbl復歸鈕.BackColor   = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_復歸按鈕)        / 10)] & (1 << (int)(WMX3IO對照.pxeIO_復歸按鈕)        % 10)) != 0) ? Color.Green : Color.Red;
+            lbl啟動鈕.BackColor   = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_啟動按鈕)        / 10)] & (1 << (int)(WMX3IO對照.pxeIO_啟動按鈕)        % 10)) != 0) ? Color.Green : Color.Red;
+            lbl停止鈕.BackColor   = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_停止按鈕)        / 10)] & (1 << (int)(WMX3IO對照.pxeIO_停止按鈕)        % 10)) != 0) ? Color.Green : Color.Red;
+            lbl急停鈕.BackColor   = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_緊急停止按鈕 )   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_緊急停止按鈕 )   % 10)) != 0) ? Color.Green : Color.Red;
+
+            lbl上左右門.BackColor = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_上罩左側右門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩左側右門)    % 10)) != 0) ? Color.Green : Color.Red;
+            lbl上右右門.BackColor = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_上罩右側右門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩右側右門)    % 10)) != 0) ? Color.Green : Color.Red;
+            lbl上左左門.BackColor = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_上罩左側左門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩左側左門)    % 10)) != 0) ? Color.Green : Color.Red;
+            lbl上右左門.BackColor = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_上罩右側左門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩右側左門)    % 10)) != 0) ? Color.Green : Color.Red;
+            lbl上後右門.BackColor = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_上罩後側右門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩後側右門)    % 10)) != 0) ? Color.Green : Color.Red;
+            lbl螢幕小門.BackColor = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_螢幕旁小門)      / 10)] & (1 << (int)(WMX3IO對照.pxeIO_螢幕旁小門)      % 10)) != 0) ? Color.Green : Color.Red;
+            lbl上後左門.BackColor = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_上罩後側左門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩後側左門)    % 10)) != 0) ? Color.Green : Color.Red;
+
+            lbl下左右門.BackColor = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_下支架左側右門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架左側右門)  % 10)) != 0) ? Color.Green : Color.Red;
+            lbl下左左門.BackColor = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_下支架左側左門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架左側左門)  % 10)) != 0) ? Color.Green : Color.Red;
+            lbl下右右門.BackColor = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_下支架右側右門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架右側右門)  % 10)) != 0) ? Color.Green : Color.Red;
+            lbl下右左門.BackColor = ((pDataGetIO[((int)(WMX3IO對照.pxeIO_下支架右側左門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架右側左門)  % 10)) != 0) ? Color.Green : Color.Red;
         }
 
         private void btnNozzleDownPos_Click(object sender, EventArgs e)
@@ -1165,7 +1336,7 @@ namespace InjectorInspector
                 double fChangeNozzleX = double.Parse(txtX.Text);
 
                 //格式化數值
-                txtX.Text = fChangeNozzleX.ToString("F2");
+                txtX.Text = fChangeNozzleX.ToString("F3");
                 fChangeNozzleX = double.Parse(txtX.Text);
 
                 //執行伸縮吸嘴
@@ -1185,7 +1356,7 @@ namespace InjectorInspector
                 double fChangeNozzleY = double.Parse(txtY.Text);
 
                 //格式化數值
-                txtY.Text = fChangeNozzleY.ToString("F2");
+                txtY.Text = fChangeNozzleY.ToString("F3");
                 fChangeNozzleY = double.Parse(txtY.Text);
 
                 //執行伸縮吸嘴
@@ -1205,7 +1376,7 @@ namespace InjectorInspector
                 double fChangeNozzleZ = double.Parse(txtChgNozzleZ.Text);
 
                 //格式化數值
-                txtChgNozzleZ.Text = fChangeNozzleZ.ToString("F2");
+                txtChgNozzleZ.Text = fChangeNozzleZ.ToString("F3");
                 fChangeNozzleZ = double.Parse(txtChgNozzleZ.Text);
 
                 //執行伸縮吸嘴
@@ -1224,7 +1395,7 @@ namespace InjectorInspector
                 double fChangeDegree = double.Parse(txtDeg.Text);
 
                 //格式化數值
-                txtDeg.Text = fChangeDegree.ToString("F2");
+                txtDeg.Text = fChangeDegree.ToString("F3");
                 fChangeDegree = double.Parse(txtDeg.Text);
 
                 //執行旋轉吸嘴
@@ -1333,8 +1504,8 @@ namespace InjectorInspector
             double dbAverageXo = (double.Parse(txtX1.Text) + double.Parse(txtX2.Text)) / 2;
             double dbAverageYo = (double.Parse(txtY1.Text) + double.Parse(txtY2.Text)) / 2;
 
-            lblXo.Text = dbAverageXo.ToString("F2");
-            lblYo.Text = dbAverageYo.ToString("F2");
+            lblXo.Text = dbAverageXo.ToString("F3");
+            lblYo.Text = dbAverageYo.ToString("F3");
         }
 
         private void btnCatchPinXY_Click(object sender, EventArgs e)
@@ -1352,10 +1523,10 @@ namespace InjectorInspector
             double dbPinR = 23.00 + temp.θ;
 
             //設定Pin位置
-            txtX.Text = dbPinX.ToString("F2");
-            txtY.Text = dbPinY.ToString("F2");
-            txtChgNozzleZ.Text = dbPinZ.ToString("F2");
-            txtDeg.Text = dbPinR.ToString("F2");
+            txtX.Text = dbPinX.ToString("F3");
+            txtY.Text = dbPinY.ToString("F3");
+            txtChgNozzleZ.Text = dbPinZ.ToString("F3");
+            txtDeg.Text = dbPinR.ToString("F3");
         }
 
         private void btnSet1_Click(object sender, EventArgs e)
@@ -1415,8 +1586,8 @@ namespace InjectorInspector
             double dbPinY = 29.5;
 
             //設定Pin位置
-            txtX.Text = dbPinX.ToString("F2");
-            txtY.Text = dbPinY.ToString("F2");
+            txtX.Text = dbPinX.ToString("F3");
+            txtY.Text = dbPinY.ToString("F3");
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -1425,8 +1596,8 @@ namespace InjectorInspector
             double dbPinY = 27.99;
 
             //設定Pin位置
-            txtX.Text = dbPinX.ToString("F2");
-            txtY.Text = dbPinY.ToString("F2");
+            txtX.Text = dbPinX.ToString("F3");
+            txtY.Text = dbPinY.ToString("F3");
         }
 
         private void timer2_Tick(object sender, EventArgs e)
@@ -1624,10 +1795,6 @@ namespace InjectorInspector
             timer2.Interval = int.Parse(txtTmr.Text);
             Multiplier = int.Parse(txtSpd.Text);
         }
-
-
-
-
 
     }  // end of public partial class Form1 : Form
 

@@ -37,6 +37,89 @@ namespace InjectorInspector
         DELTA_ASDA_B3 = 16777216,
     }  // end of public enum WMX3軸定義
 
+    public enum WMX3IO對照
+    {
+                                     //In:
+        pxeIO_Addr28          = 28,  //28
+        pxeIO_載盤Y軸後極限   = 00,  //0 陷馬仔盤Y軸後極限
+        pxeIO_取料Y軸後極限   = 01,  //1 安川取料Y軸後極限
+        pxeIO_載盤Y軸前極限   = 02,  //2 陷馬仔盤Y軸前極限
+        pxeIO_取料Y軸前極限   = 03,  //3 安川取料Y軸前極限
+        pxeIO_取料X軸後極限   = 04,  //4 陷馬取料X後極限
+        pxeIO_NA05            = 05,  //5 未接
+        pxeIO_取料X軸前極限   = 06,  //6 陷馬取料X前極限
+        pxeIO_NA07            = 07,  //7 未接
+
+        pxeIO_Addr29          = 29,  //29
+        pxeIO_植針Z軸後極限   = 10,  //0 安川直真z軸後極限
+        pxeIO_NA11            = 11,  //1 未接
+        pxeIO_植針Z軸前極限   = 12,  //2 安川直真z軸前極限
+        pxeIO_NA13            = 13,  //3 未接
+        pxeIO_載盤X軸前極限   = 14,  //4 安川仔盤x軸前極限
+        pxeIO_NA15            = 15,  //5 未接
+        pxeIO_載盤X軸後極限   = 16,  //6 安川仔盤x軸後極限
+        pxeIO_NA17            = 17,  //7 未接
+
+        pxeIO_Addr30          = 30,  //30 
+        pxeIO_載盤真空檢1     = 20,  //0 在盤真空檢1
+        pxeIO_Socket2真空檢1  = 21,  //1 SOCKET2真空檢之1
+        pxeIO_載盤真空檢2     = 22,  //2 在盤真空檢2(有問題)
+        pxeIO_Socket2真空檢2  = 23,  //3 SOCKET2真空檢之2
+        pxeIO_Socket1真空檢1  = 24,  //4 SOCKET1真空檢之1
+        pxeIO_擺放座真空檢1   = 25,  //5 擺放做真空檢1
+        pxeIO_Socket1真空檢2  = 26,  //6 SOCKET1真空檢之2
+        pxeIO_擺放座真空檢2   = 27,  //7 擺放做真空檢2
+
+        pxeIO_Addr31          = 31,  //31
+        pxeIO_吸嘴真空檢1     = 30,  //0 吸嘴真空檢之1
+        pxeIO_NA31            = 31,  //1 未接
+        pxeIO_吸嘴真空檢2     = 32,  //2 吸嘴真空檢之2 
+        pxeIO_取料NG收料盒    = 33,  //3 取料ng收料和
+        pxeIO_兩點組合壓力檢1 = 34,  //4 兩點組合壓力剪之1
+        pxeIO_堵料收料盒      = 35,  //5 賭料收料額
+        pxeIO_兩點組合壓力檢2 = 36,  //6 兩點組合壓力剪之2
+        pxeIO_吸料收料盒      = 37,  //7 西料收料和
+
+        pxeIO_Addr32          = 32,  //32
+        pxeIO_復歸按鈕        = 40,  //0 賦歸
+        pxeIO_NA41            = 41,  //1 未接
+        pxeIO_啟動按鈕        = 42,  //2 啟動
+        pxeIO_NA43            = 43,  //3 未接
+        pxeIO_停止按鈕        = 44,  //4 停止
+        pxeIO_NA45            = 45,  //5 未接
+        pxeIO_緊急停止按鈕    = 46,  //6 緊急停止
+        pxeIO_NA47            = 47,  //7 未接
+
+        pxeIO_Addr33          = 33,  //33
+        pxeIO_NA50            = 50,  //0 位階
+        pxeIO_NA51            = 51,  //1 位階
+        pxeIO_NA52            = 52,  //2 位階
+        pxeIO_NA53            = 53,  //3 位階
+        pxeIO_NA54            = 54,  //4 位階
+        pxeIO_NA55            = 55,  //5 位階
+        pxeIO_NA56            = 56,  //6 位階
+        pxeIO_NA57            = 57,  //7 位階
+
+        pxeIO_Addr34          = 34,  //34
+        pxeIO_上罩左側右門    = 60,  //0 上兆左側右們
+        pxeIO_上罩右側右門    = 61,  //1 上兆右側右們
+        pxeIO_上罩左側左門    = 62,  //2 上兆左側左門
+        pxeIO_上罩右側左門    = 63,  //pxeIO_3 上兆右側左門
+        pxeIO_上罩後側右門    = 64,  //pxeIO_4 上兆後側右們
+        pxeIO_螢幕旁小門      = 65,  //5 螢幕旁小門
+        pxeIO_上罩後側左門    = 66,  //6 上兆後側左門
+        pxeIO_NA67            = 67,  //7 未接
+
+        pxeIO_Addr35          = 35,  //35
+        pxeIO_下支架左側右門  = 70,  //0 下支架左側右門
+        pxeIO_NA71            = 71,  //1 未知
+        pxeIO_下支架左側左門  = 72,  //2 下支架左側左門
+        pxeIO_NA73            = 73,  //3 未知
+        pxeIO_下支架右側右門  = 74,  //4 下支架右側右門
+        pxeIO_NA75            = 75,  //5 未知
+        pxeIO_下支架右側左門  = 76,  //6 下支架右側左門
+    }
+
     //擴展定義字串轉換
     public static class ByteArrayExtensions
     {  // start of public static class ByteArrayExtensions
@@ -229,7 +312,7 @@ namespace InjectorInspector
                 motion.Config.SetGearRatio((int)WMX3軸定義.植針Z軸, (int)WMX3軸定義.YASKAWA, 2000);
                 motion.Config.SetGearRatio((int)WMX3軸定義.植針R軸, (int)WMX3軸定義.YASKAWA, 2000);
 
-                motion.Config.SetGearRatio((int)WMX3軸定義.工作門, (int)WMX3軸定義.DELTA_ASDA_B3, 2000);
+                motion.Config.SetGearRatio((int)WMX3軸定義.工作門, (int)WMX3軸定義.DELTA_ASDA_B3, 20);
             }
             else
             {
@@ -363,7 +446,7 @@ namespace InjectorInspector
                 string Profile = cmAxis.ActualPos.ToString();
 
                 //strtok info
-                position = Profile.Substring(0, Math.Min(Profile.Length, 6));
+                position = Profile.Substring(0, Math.Min(Profile.Length, 12));
                 speed = cmAxis.ActualVelocity.ToString();
                 //AcTqr0.Text = cmAxis.ActualTorque.ToString();
             } 
