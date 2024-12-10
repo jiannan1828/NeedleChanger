@@ -12,6 +12,7 @@ using static WMX3ApiCLR.AdvMotion;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using System.Data;
 
 namespace InjectorInspector
 {
@@ -582,7 +583,7 @@ namespace InjectorInspector
                     return 0;  // 錯誤長度
                 }
 
-                // 讀取 InputIO
+                // 讀取 OutputIO
                 for (int cnt = 0; cnt < size; cnt++)
                 {
                     byte[] pDataGet = new byte[1];
@@ -651,6 +652,26 @@ namespace InjectorInspector
                     pDataGet[0] = pData[cnt];
                     io.SetOutBytes(addr + cnt, 1, pDataGet);
                 }
+
+                return 1;  // 成功返回 1
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public int WMX3_SetIOBit(int addrByte, int addrBit, byte bData)
+        {
+
+            if (wmx != null)
+            {
+                if (addrByte == 0)
+                {
+                    return 0;  // 錯誤位置
+                }
+
+                io.SetOutBit(addrByte, addrBit, bData);
 
                 return 1;  // 成功返回 1
             }

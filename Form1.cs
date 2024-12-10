@@ -180,7 +180,7 @@ namespace InjectorInspector
 
             if (dbIncreaseNozzleX == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
             {
-                this.Text = "Z軸尚未回到上位";
+                //this.Text = "Z軸尚未回到上位";
             }
             else
             {  //吸嘴X軸 變更位置
@@ -276,7 +276,7 @@ namespace InjectorInspector
 
             if (dbIncreaseNozzleY == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
             {
-                this.Text = "Z軸尚未回到上位";
+                //this.Text = "Z軸尚未回到上位";
             }
             else
             {  //吸嘴X軸 變更位置
@@ -564,7 +564,7 @@ namespace InjectorInspector
 
             if (dbIncreaseCarrierX == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
             {
-                this.Text = "Z軸尚未回到上位";
+                //this.Text = "Z軸尚未回到上位";
             }
             else
             {  //載盤X軸 變更位置
@@ -660,7 +660,7 @@ namespace InjectorInspector
 
             if (dbIncreaseCarrierY == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
             {
-                this.Text = "Z軸尚未回到上位";
+                //this.Text = "Z軸尚未回到上位";
             }
             else
             {  //載盤Y軸 變更位置
@@ -756,7 +756,7 @@ namespace InjectorInspector
 
             if (dbIncreaseSetZ == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
             {
-                this.Text = "Z軸尚未回到上位";
+                //this.Text = "Z軸尚未回到上位";
             }
             else
             {  //植針Z軸 變更位置
@@ -852,7 +852,7 @@ namespace InjectorInspector
 
             if (dbIncreaseSetR == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
             {
-                this.Text = "Z軸尚未回到上位";
+                //this.Text = "Z軸尚未回到上位";
             }
             else
             {  //植針R軸 變更位置
@@ -948,7 +948,7 @@ namespace InjectorInspector
 
             if (dbIncreaseGate == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
             {
-                this.Text = "Z軸尚未回到上位";
+                //this.Text = "Z軸尚未回到上位";
             }
             else
             {  //工作門 變更位置
@@ -1129,6 +1129,45 @@ namespace InjectorInspector
 
         }  // end of private void RadioGroupChanged(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
+        private void lbl_SetIO_Click(object sender, EventArgs e)
+        {  // start of private void lbl_SetIO_Click(object sender, EventArgs e)
+            // 將 sender 轉型為 Label
+            System.Windows.Forms.Label SelectLabel = sender as System.Windows.Forms.Label;
+
+            //辨識選擇之Label
+            if (SelectLabel != null) {
+                       if (SelectLabel == lbl擺放蓋板   ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_擺放座蓋板)     / 10, (int)(WMX3IO對照.pxeIO_擺放座蓋板)     % 10, (lbl擺放蓋板.BackColor   == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl吸料真空閥 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_吸料真空電磁閥) / 10, (int)(WMX3IO對照.pxeIO_吸料真空電磁閥) % 10, (lbl吸料真空閥.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl堵料吹氣缸 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_堵料吹氣缸)     / 10, (int)(WMX3IO對照.pxeIO_堵料吹氣缸)     % 10, (lbl堵料吹氣缸.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl接料區缸   ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_接料區氣桿)     / 10, (int)(WMX3IO對照.pxeIO_接料區氣桿)     % 10, (lbl接料區缸.BackColor   == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl植針吹氣   ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_植針吹氣)       / 10, (int)(WMX3IO對照.pxeIO_植針吹氣)       % 10, (lbl植針吹氣.BackColor   == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl收料區缸   ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_收料區缸)       / 10, (int)(WMX3IO對照.pxeIO_收料區缸)       % 10, (lbl收料區缸.BackColor   == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl堵料吹氣   ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_堵料吹氣)       / 10, (int)(WMX3IO對照.pxeIO_堵料吹氣)       % 10, (lbl堵料吹氣.BackColor   == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl載盤真空閥 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_載盤真空閥)     / 10, (int)(WMX3IO對照.pxeIO_載盤真空閥)     % 10, (lbl載盤真空閥.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lblsk真空2    ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Socket真空2)    / 10, (int)(WMX3IO對照.pxeIO_Socket真空2)    % 10, (lblsk真空2.BackColor    == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl載盤破真空 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_載盤破真空)     / 10, (int)(WMX3IO對照.pxeIO_載盤破真空)     % 10, (lbl載盤破真空.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lblsk破真空2  ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Socket破真空2)  / 10, (int)(WMX3IO對照.pxeIO_Socket破真空2)  % 10, (lblsk破真空2.BackColor  == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lblsk真空1    ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Socket真空1)    / 10, (int)(WMX3IO對照.pxeIO_Socket真空1)    % 10, (lblsk真空1.BackColor    == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl擺放座真空 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_擺放座吸真空)   / 10, (int)(WMX3IO對照.pxeIO_擺放座吸真空)   % 10, (lbl擺放座真空.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lblsk破真空1  ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Socket破真空1)  / 10, (int)(WMX3IO對照.pxeIO_Socket破真空1)  % 10, (lblsk破真空1.BackColor  == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl擺放破真空 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_擺放座破真空)   / 10, (int)(WMX3IO對照.pxeIO_擺放座破真空)   % 10, (lbl擺放破真空.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl取料吸嘴吸 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴吸)     / 10, (int)(WMX3IO對照.pxeIO_取料吸嘴吸)     % 10, (lbl取料吸嘴吸.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl取料吸嘴破 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴破真空) / 10, (int)(WMX3IO對照.pxeIO_取料吸嘴破真空) % 10, (lbl取料吸嘴破.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lblHEPA       ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_HEPA)           / 10, (int)(WMX3IO對照.pxeIO_HEPA)           % 10, (lblHEPA.BackColor       == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl艙內燈     ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_LIGHT)          / 10, (int)(WMX3IO對照.pxeIO_LIGHT)          % 10, (lbl艙內燈.BackColor     == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl右按鈕綠燈 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_面板右按鈕綠燈) / 10, (int)(WMX3IO對照.pxeIO_面板右按鈕綠燈) % 10, (lbl右按鈕綠燈.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl紅燈       ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台紅燈)       / 10, (int)(WMX3IO對照.pxeIO_機台紅燈)       % 10, (lbl紅燈.BackColor       == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl中按鈕綠燈 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_面板中按鈕綠燈) / 10, (int)(WMX3IO對照.pxeIO_面板中按鈕綠燈) % 10, (lbl中按鈕綠燈.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl黃燈       ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台黃燈)       / 10, (int)(WMX3IO對照.pxeIO_機台黃燈)       % 10, (lbl黃燈.BackColor       == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl左按鈕紅燈 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_面板左按鈕紅燈) / 10, (int)(WMX3IO對照.pxeIO_面板左按鈕紅燈) % 10, (lbl左按鈕紅燈.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl綠燈       ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台綠燈)       / 10, (int)(WMX3IO對照.pxeIO_機台綠燈)       % 10, (lbl綠燈.BackColor       == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lblBuzzer     ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Buzzer)         / 10, (int)(WMX3IO對照.pxeIO_Buzzer)         % 10, (lblBuzzer.BackColor     == Color.Red) ? (byte)1 : (byte)0);
+                }
+
+
+            }
+        }  // end of private void lbl_SetIO_Click(object sender, EventArgs e)
+        //---------------------------------------------------------------------------------------
         public void btn_adjust_JOG(object sender, EventArgs e)
         {  // start of public void btn_adjust_JOG(object sender, EventArgs e)
             // 將 sender 轉型為 Button
@@ -1211,6 +1250,13 @@ namespace InjectorInspector
             }
         }
 
+
+        //讀取OutputIO
+        public byte[] pDataGetOutIO = new byte[4];
+
+        //讀取InputIO
+        public byte[] pDataGetInIO = new byte[8];
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             //WMX3通訊狀態
@@ -1240,15 +1286,13 @@ namespace InjectorInspector
 
 
             //讀取OutputIO
-            byte[] pDataGetOutIO = new byte[4];
             clsServoControlWMX3.WMX3_GetOutIO(ref pDataGetOutIO, (int)WMX3IO對照.pxeIO_Addr4, 4);
 
             //讀取InputIO
-            byte[] pDataGetInIO = new byte[8];
             clsServoControlWMX3.WMX3_GetInIO(ref pDataGetInIO, (int)WMX3IO對照.pxeIO_Addr28, 8);
 
             //for debug
-            if (true) {
+            if (false) {
                 // 使用 StringBuilder 來構建文本，減少字串拼接的開銷
                 var sb = new StringBuilder();
                 for (int i = 0; i < 4; i++)
@@ -1831,6 +1875,19 @@ namespace InjectorInspector
             timer2.Interval = int.Parse(txtTmr.Text);
             Multiplier = int.Parse(txtSpd.Text);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }  // end of public partial class Form1 : Form
 
