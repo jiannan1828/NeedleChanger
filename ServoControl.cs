@@ -13,153 +13,240 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Data;
+using System.Threading;
 
 namespace InjectorInspector
 {
     //軸的對應號碼
     public enum WMX3軸定義
     {  // start of public enum WMX3軸定義
-        AXIS_START = -1,
-            吸嘴X軸 = 3,  //小線碼
-            吸嘴Y軸 = 7,  //YASKAWA
-            吸嘴Z軸 = 1,  //VCM伸縮
-            吸嘴R軸 = 0,  //VCM旋轉
+        AXIS_START    = -1,
+            吸嘴X軸   = 3,  //小線碼
+            吸嘴Y軸   = 7,  //YASKAWA
+            吸嘴Z軸   = 1,  //VCM伸縮
+            吸嘴R軸   = 0,  //VCM旋轉
 
-            載盤X軸 = 4,  //YASKAWA
-            載盤Y軸 = 2,  //大線碼
+            載盤X軸   = 4,  //YASKAWA
+            載盤Y軸   = 2,  //大線碼
 
-            植針Z軸 = 5,  //YASKAWA
-            植針R軸 = 6,  //YASKAWA
+            植針Z軸   = 5,  //YASKAWA
+            植針R軸   = 6,  //YASKAWA
 
-            工作門  = 8,  //工作門
-        AXIS_END = 999,
-        YASKAWA  = 1048576,
+            工作門    = 8,  //工作門
+        AXIS_END,
+        YASKAWA       = 1048576,
         DELTA_ASDA_B2 = 1280000,
         DELTA_ASDA_B3 = 16777216,
+        IAI,
     }  // end of public enum WMX3軸定義
 
     public enum WMX3IO對照
     {
-                                     //out:
-        pxeIO_Addr4           =  4,  //4
-        pxeIO_擺放座蓋板      = 00,  //0 擺放座蓋板缸
-        pxeIO_吸料真空電磁閥  = 01,  //1 稀料真空閥
-        pxeIO_堵料吹氣缸      = 02,  //2 賭料吹氣感缸
-        pxeIO_接料區氣桿      = 03,  //3 接料區缸
-        pxeIO_植針吹氣        = 04,  //4 職真吹氣電磁閥3(未驗)
-        pxeIO_收料區缸        = 05,  //5 收料區缸
-        pxeIO_堵料吹氣        = 06,  //6 賭料吹氣
-        pxeIO_NA_O_07         = 07,  //7 未接
+        //out:
+        pxeIO_Addr_Out_START      =  4,
+            pxeIO_Addr4           =  4,  //4
+            pxeIO_擺放座蓋板      = 00,  //0 擺放座蓋板缸
+            pxeIO_吸料真空電磁閥  = 01,  //1 稀料真空閥
+            pxeIO_堵料吹氣缸      = 02,  //2 賭料吹氣感缸
+            pxeIO_接料區氣桿      = 03,  //3 接料區缸
+            pxeIO_植針吹氣        = 04,  //4 職真吹氣電磁閥3(未驗)
+            pxeIO_收料區缸        = 05,  //5 收料區缸
+            pxeIO_堵料吹氣        = 06,  //6 賭料吹氣
+            pxeIO_NA_O_07         = 07,  //7 未接
 
-        pxeIO_Addr5           =  5,  //5
-        pxeIO_載盤真空閥      = 10,  //0 仔盤真空電磁閥
-        pxeIO_Socket真空2     = 11,  //1 socket真空2電磁閥
-        pxeIO_載盤破真空      = 12,  //2 仔盤破電磁閥
-        pxeIO_Socket破真空2   = 13,  //3 socket破真空2電磁閥
-        pxeIO_Socket真空1     = 14,  //4 socket真空1電磁閥
-        pxeIO_擺放座吸真空    = 15,  //5 擺放做溪真空
-        pxeIO_Socket破真空1   = 16,  //6 socket破空1電磁閥
-        pxeIO_擺放座破真空    = 17,  //7 擺放做破真空
+            pxeIO_Addr5           =  5,  //5
+            pxeIO_載盤真空閥      = 10,  //0 仔盤真空電磁閥
+            pxeIO_Socket真空2     = 11,  //1 socket真空2電磁閥
+            pxeIO_載盤破真空      = 12,  //2 仔盤破電磁閥
+            pxeIO_Socket破真空2   = 13,  //3 socket破真空2電磁閥
+            pxeIO_Socket真空1     = 14,  //4 socket真空1電磁閥
+            pxeIO_擺放座吸真空    = 15,  //5 擺放做溪真空
+            pxeIO_Socket破真空1   = 16,  //6 socket破空1電磁閥
+            pxeIO_擺放座破真空    = 17,  //7 擺放做破真空
 
-        pxeIO_Addr6           =  6,  //6
-        pxeIO_取料吸嘴吸      = 20,  //0 取料吸嘴溪真空
-        pxeIO_NA_O_21         = 21,  //1 未接
-        pxeIO_取料吸嘴破真空  = 22,  //2 取料吸嘴破真空
-        pxeIO_NA_O_23         = 23,  //3 未接
-        pxeIO_NA_O_24         = 24,  //4 未接
-        pxeIO_HEPA            = 25,  //5 hipa
-        pxeIO_NA_O_26         = 26,  //6 未接
-        pxeIO_LIGHT           = 27,  //7 艙內燈
+            pxeIO_Addr6           =  6,  //6
+            pxeIO_取料吸嘴吸      = 20,  //0 取料吸嘴溪真空
+            pxeIO_NA_O_21         = 21,  //1 未接
+            pxeIO_取料吸嘴破真空  = 22,  //2 取料吸嘴破真空
+            pxeIO_NA_O_23         = 23,  //3 未接
+            pxeIO_NA_O_24         = 24,  //4 未接
+            pxeIO_HEPA            = 25,  //5 hipa
+            pxeIO_NA_O_26         = 26,  //6 未接
+            pxeIO_LIGHT           = 27,  //7 艙內燈
 
-        pxeIO_Addr7           =  7,  //7
-        pxeIO_面板右按鈕綠燈  = 30,  //0 面板按鈕綠燈(右)
-        pxeIO_機台紅燈        = 31,  //1 紅燈
-        pxeIO_面板中按鈕綠燈  = 32,  //2 面板按鈕綠燈(中)
-        pxeIO_機台黃燈        = 33,  //3 黃燈
-        pxeIO_面板左按鈕紅燈  = 34,  //4 面板按鈕紅燈(左)
-        pxeIO_機台綠燈        = 35,  //5 綠燈
-        pxeIO_NA_O_36         = 36,  //6 未接
-        pxeIO_Buzzer          = 37,  //7 Buzzer
+            pxeIO_Addr7           =  7,  //7
+            pxeIO_面板右按鈕綠燈  = 30,  //0 面板按鈕綠燈(右)
+            pxeIO_機台紅燈        = 31,  //1 紅燈
+            pxeIO_面板中按鈕綠燈  = 32,  //2 面板按鈕綠燈(中)
+            pxeIO_機台黃燈        = 33,  //3 黃燈
+            pxeIO_面板左按鈕紅燈  = 34,  //4 面板按鈕紅燈(左)
+            pxeIO_機台綠燈        = 35,  //5 綠燈
+            pxeIO_NA_O_36         = 36,  //6 未接
+            pxeIO_Buzzer          = 37,  //7 Buzzer
+        pxeIO_Addr_Out_END,
 
-                                     //In:
-        pxeIO_Addr28          = 28,  //28
-        pxeIO_載盤Y軸後極限   = 00,  //0 陷馬仔盤Y軸後極限
-        pxeIO_取料Y軸後極限   = 01,  //1 安川取料Y軸後極限
-        pxeIO_載盤Y軸前極限   = 02,  //2 陷馬仔盤Y軸前極限
-        pxeIO_取料Y軸前極限   = 03,  //3 安川取料Y軸前極限
-        pxeIO_取料X軸後極限   = 04,  //4 陷馬取料X後極限
-        pxeIO_NA05            = 05,  //5 未接
-        pxeIO_取料X軸前極限   = 06,  //6 陷馬取料X前極限
-        pxeIO_NA07            = 07,  //7 未接
+        //In:
+        pxeIO_Addr_In_START       = 28,
+            pxeIO_Addr28          = 28,  //28
+            pxeIO_載盤Y軸後極限   = 00,  //0 陷馬仔盤Y軸後極限
+            pxeIO_取料Y軸後極限   = 01,  //1 安川取料Y軸後極限
+            pxeIO_載盤Y軸前極限   = 02,  //2 陷馬仔盤Y軸前極限
+            pxeIO_取料Y軸前極限   = 03,  //3 安川取料Y軸前極限
+            pxeIO_取料X軸後極限   = 04,  //4 陷馬取料X後極限
+            pxeIO_NA05            = 05,  //5 未接
+            pxeIO_取料X軸前極限   = 06,  //6 陷馬取料X前極限
+            pxeIO_NA07            = 07,  //7 未接
 
-        pxeIO_Addr29          = 29,  //29
-        pxeIO_植針Z軸後極限   = 10,  //0 安川直真z軸後極限
-        pxeIO_NA11            = 11,  //1 未接
-        pxeIO_植針Z軸前極限   = 12,  //2 安川直真z軸前極限
-        pxeIO_NA13            = 13,  //3 未接
-        pxeIO_載盤X軸前極限   = 14,  //4 安川仔盤x軸前極限
-        pxeIO_NA15            = 15,  //5 未接
-        pxeIO_載盤X軸後極限   = 16,  //6 安川仔盤x軸後極限
-        pxeIO_NA17            = 17,  //7 未接
+            pxeIO_Addr29          = 29,  //29
+            pxeIO_植針Z軸後極限   = 10,  //0 安川直真z軸後極限
+            pxeIO_NA11            = 11,  //1 未接
+            pxeIO_植針Z軸前極限   = 12,  //2 安川直真z軸前極限
+            pxeIO_NA13            = 13,  //3 未接
+            pxeIO_載盤X軸前極限   = 14,  //4 安川仔盤x軸前極限
+            pxeIO_NA15            = 15,  //5 未接
+            pxeIO_載盤X軸後極限   = 16,  //6 安川仔盤x軸後極限
+            pxeIO_NA17            = 17,  //7 未接
 
-        pxeIO_Addr30          = 30,  //30 
-        pxeIO_載盤真空檢1     = 20,  //0 在盤真空檢1
-        pxeIO_Socket2真空檢1  = 21,  //1 SOCKET2真空檢之1
-        pxeIO_載盤真空檢2     = 22,  //2 在盤真空檢2(有問題)
-        pxeIO_Socket2真空檢2  = 23,  //3 SOCKET2真空檢之2
-        pxeIO_Socket1真空檢1  = 24,  //4 SOCKET1真空檢之1
-        pxeIO_擺放座真空檢1   = 25,  //5 擺放做真空檢1
-        pxeIO_Socket1真空檢2  = 26,  //6 SOCKET1真空檢之2
-        pxeIO_擺放座真空檢2   = 27,  //7 擺放做真空檢2
+            pxeIO_Addr30          = 30,  //30 
+            pxeIO_載盤真空檢1     = 20,  //0 在盤真空檢1
+            pxeIO_Socket2真空檢1  = 21,  //1 SOCKET2真空檢之1
+            pxeIO_載盤真空檢2     = 22,  //2 在盤真空檢2(有問題)
+            pxeIO_Socket2真空檢2  = 23,  //3 SOCKET2真空檢之2
+            pxeIO_Socket1真空檢1  = 24,  //4 SOCKET1真空檢之1
+            pxeIO_擺放座真空檢1   = 25,  //5 擺放做真空檢1
+            pxeIO_Socket1真空檢2  = 26,  //6 SOCKET1真空檢之2
+            pxeIO_擺放座真空檢2   = 27,  //7 擺放做真空檢2
 
-        pxeIO_Addr31          = 31,  //31
-        pxeIO_吸嘴真空檢1     = 30,  //0 吸嘴真空檢之1
-        pxeIO_NA31            = 31,  //1 未接
-        pxeIO_吸嘴真空檢2     = 32,  //2 吸嘴真空檢之2 
-        pxeIO_取料NG收料盒    = 33,  //3 取料ng收料和
-        pxeIO_兩點組合壓力檢1 = 34,  //4 兩點組合壓力剪之1
-        pxeIO_堵料收料盒      = 35,  //5 賭料收料額
-        pxeIO_兩點組合壓力檢2 = 36,  //6 兩點組合壓力剪之2
-        pxeIO_吸料收料盒      = 37,  //7 西料收料和
+            pxeIO_Addr31          = 31,  //31
+            pxeIO_吸嘴真空檢1     = 30,  //0 吸嘴真空檢之1
+            pxeIO_NA31            = 31,  //1 未接
+            pxeIO_吸嘴真空檢2     = 32,  //2 吸嘴真空檢之2 
+            pxeIO_取料NG收料盒    = 33,  //3 取料ng收料和
+            pxeIO_兩點組合壓力檢1 = 34,  //4 兩點組合壓力剪之1
+            pxeIO_堵料收料盒      = 35,  //5 賭料收料額
+            pxeIO_兩點組合壓力檢2 = 36,  //6 兩點組合壓力剪之2
+            pxeIO_吸料收料盒      = 37,  //7 西料收料和
 
-        pxeIO_Addr32          = 32,  //32
-        pxeIO_復歸按鈕        = 40,  //0 賦歸
-        pxeIO_NA41            = 41,  //1 未接
-        pxeIO_啟動按鈕        = 42,  //2 啟動
-        pxeIO_NA43            = 43,  //3 未接
-        pxeIO_停止按鈕        = 44,  //4 停止
-        pxeIO_NA45            = 45,  //5 未接
-        pxeIO_緊急停止按鈕    = 46,  //6 緊急停止
-        pxeIO_NA47            = 47,  //7 未接
+            pxeIO_Addr32          = 32,  //32
+            pxeIO_復歸按鈕        = 40,  //0 賦歸
+            pxeIO_NA41            = 41,  //1 未接
+            pxeIO_啟動按鈕        = 42,  //2 啟動
+            pxeIO_NA43            = 43,  //3 未接
+            pxeIO_停止按鈕        = 44,  //4 停止
+            pxeIO_NA45            = 45,  //5 未接
+            pxeIO_緊急停止按鈕    = 46,  //6 緊急停止
+            pxeIO_NA47            = 47,  //7 未接
 
-        pxeIO_Addr33          = 33,  //33
-        pxeIO_NA50            = 50,  //0 位階
-        pxeIO_NA51            = 51,  //1 位階
-        pxeIO_NA52            = 52,  //2 位階
-        pxeIO_NA53            = 53,  //3 位階
-        pxeIO_NA54            = 54,  //4 位階
-        pxeIO_NA55            = 55,  //5 位階
-        pxeIO_NA56            = 56,  //6 位階
-        pxeIO_NA57            = 57,  //7 位階
+            pxeIO_Addr33          = 33,  //33
+            pxeIO_NA50            = 50,  //0 位階
+            pxeIO_NA51            = 51,  //1 位階
+            pxeIO_NA52            = 52,  //2 位階
+            pxeIO_NA53            = 53,  //3 位階
+            pxeIO_NA54            = 54,  //4 位階
+            pxeIO_NA55            = 55,  //5 位階
+            pxeIO_NA56            = 56,  //6 位階
+            pxeIO_NA57            = 57,  //7 位階
 
-        pxeIO_Addr34          = 34,  //34
-        pxeIO_上罩左側右門    = 60,  //0 上兆左側右們
-        pxeIO_上罩右側右門    = 61,  //1 上兆右側右們
-        pxeIO_上罩左側左門    = 62,  //2 上兆左側左門
-        pxeIO_上罩右側左門    = 63,  //pxeIO_3 上兆右側左門
-        pxeIO_上罩後側右門    = 64,  //pxeIO_4 上兆後側右們
-        pxeIO_螢幕旁小門      = 65,  //5 螢幕旁小門
-        pxeIO_上罩後側左門    = 66,  //6 上兆後側左門
-        pxeIO_NA67            = 67,  //7 未接
+            pxeIO_Addr34          = 34,  //34
+            pxeIO_上罩左側右門    = 60,  //0 上兆左側右們
+            pxeIO_上罩右側右門    = 61,  //1 上兆右側右們
+            pxeIO_上罩左側左門    = 62,  //2 上兆左側左門
+            pxeIO_上罩右側左門    = 63,  //pxeIO_3 上兆右側左門
+            pxeIO_上罩後側右門    = 64,  //pxeIO_4 上兆後側右們
+            pxeIO_螢幕旁小門      = 65,  //5 螢幕旁小門
+            pxeIO_上罩後側左門    = 66,  //6 上兆後側左門
+            pxeIO_NA67            = 67,  //7 未接
 
-        pxeIO_Addr35          = 35,  //35
-        pxeIO_下支架左側右門  = 70,  //0 下支架左側右門
-        pxeIO_NA71            = 71,  //1 未知
-        pxeIO_下支架左側左門  = 72,  //2 下支架左側左門
-        pxeIO_NA73            = 73,  //3 未知
-        pxeIO_下支架右側右門  = 74,  //4 下支架右側右門
-        pxeIO_NA75            = 75,  //5 未知
-        pxeIO_下支架右側左門  = 76,  //6 下支架右側左門
+            pxeIO_Addr35          = 35,  //35
+            pxeIO_下支架左側右門  = 70,  //0 下支架左側右門
+            pxeIO_NA71            = 71,  //1 未知
+            pxeIO_下支架左側左門  = 72,  //2 下支架左側左門
+            pxeIO_NA73            = 73,  //3 未知
+            pxeIO_下支架右側右門  = 74,  //4 下支架右側右門
+            pxeIO_NA75            = 75,  //5 未知
+            pxeIO_下支架右側左門  = 76,  //6 下支架右側左門
+        pxeIO_Addr_In_END,
+    }
+
+    public enum addr_IAI{
+        //IAI Set IO addr
+        pxeaI_SetAddrSTART                      = 2320,
+            pxeaI_SetTargetPosition4Bytes       = 2320,
+            pxeaI_SetPositionBand4Bytes         = 2360,
+            pxeaI_SetSpeed4Bytes                = 2400,
+            pxeaI_SetZoneBoundaryPlus4Bytes     = 2440,
+            pxeaI_SetZoneBoundaryMinus4Bytes    = 2480,
+            pxeaI_SetAcceleration2Bytes         = 2520,
+            pxeaI_SetDeceleration2Bytes         = 2540,
+            pxeaI_SetPushCurrentLimit2Bytes     = 2560,
+            pxeaI_SetLoadCurrentThreshole2Bytes = 2580,
+            pxeaI_SetControlSignal1_2Bytes      = 2600,
+                pxeaI_SetReserveByte1Bit0       = 2600,
+                pxeaI_SetPUSH                   = 2601,
+                pxeaI_SetDIR                    = 2602,
+                pxeaI_SetIncrease               = 2603,
+                pxeaI_Set_ServoGain_GSL0        = 2604,
+                pxeaI_Set_ServoGain_GSL1        = 2605,
+                pxeaI_SetMOD0                   = 2606,
+                pxeaI_SetMOD1                   = 2607,
+                pxeaI_SetASO0                   = 2610,
+                pxeaI_SetASO1                   = 2611,
+                pxeaI_SetSMOD                   = 2612,
+                pxeaI_SetNTC0                   = 2613,
+                pxeaI_SetNTC1                   = 2614,
+                pxeaI_SetReserveByte2Bit5       = 2615,
+                pxeaI_SetReserveByte2Bit6       = 2616,
+                pxeaI_SetReserveByte2Bit7       = 2617,
+            pxeaI_SetControlSignal2_2Bytes      = 2620,
+                pxeaI_SetDSTR_Start             = 2620,
+                pxeaI_SetHOME                   = 2621,
+                pxeaI_SetSTP_Pause              = 2622,
+                pxeaI_SetResetAlarm             = 2623,
+                pxeaI_SetMotorON                = 2624,
+                pxeaI_SetJISL                   = 2625,
+                pxeaI_SetJVEL                   = 2626,
+                pxeaI_SetJOGminus               = 2627,
+                pxeaI_SetJOGplus                = 2630,
+                pxeaI_SetReserveByte4Bit1       = 2631,
+                pxeaI_SetReserveByte4Bit2       = 2632,
+                pxeaI_SetReserveByte4Bit3       = 2633,
+                pxeaI_SetReserveByte4Bit4       = 2634,
+                pxeaI_SetReserveByte4Bit5       = 2635,
+                pxeaI_SetRMOD                   = 2636,
+                pxeaI_SetDisableBrake           = 2637,
+        pxeaI_SetAddrEND,
+
+        //IAI Get IO addr
+        pxeaI_GetAddrSTART                      = 0980,
+            pxeaI_GetCurrentPosition4Bytes      = 0980,
+            pxeaI_GetCommandCurrent4Bytes       = 1020,
+            pxeaI_GetCurrentSpeed4Bytes         = 1060,
+            pxeaI_GetAlarmCode2Bytes            = 1100,
+            pxeaI_GetStatusSignal1_2Bytes       = 1260,
+            pxeaI_GetStatusSignal2_2Bytes       = 1280,
+                pxeaI_GetPEND_PositionEnd       = 1280,
+                pxeaI_GetHEND_HomeEnd           = 1281,
+                pxeaI_GetMOVEState              = 1282,
+                pxeaI_GetAlarmState             = 1283,
+                pxeaI_GetServoONState           = 1284,
+                pxeaI_GetPSFL                   = 1285,
+                pxeaI_GetPUSH                   = 1286,
+                pxeaI_GetGHMS_SearchHomeState   = 1287,
+                pxeaI_GetRMODS                  = 1290,
+                pxeaI_GetTRQS_forPCON           = 1291,
+                pxeaI_GetLOAD_forPCON           = 1292,
+                pxeaI_GetPZONE                  = 1293,
+                pxeaI_GetZONE1                  = 1294,
+                pxeaI_GetZONE2                  = 1295,
+                pxeaI_GetPWR_MotorReadyState    = 1296,
+                pxeaI_GetEMGS_EmergencyStop     = 1297,
+        pxeaI_GetAddrEND,
+
+        pxeaI_BrakeOff,
+        pxeaI_MotorOn,
+        pxeaI_SetHome,
+        pxeaI_GoToPosition,
+        pxeaI_GetPosition,
     }
 
     //擴展定義字串轉換
@@ -202,14 +289,14 @@ namespace InjectorInspector
         public const double dbRead = 99999.9;
 
         //WMX3
-        private WMX3Api wmx;
-        private CoreMotion motion;
+        private WMX3Api          wmx;
+        private CoreMotion       motion;
         private CoreMotionStatus CmStatus;
-        private EngineStatus EnStatus;
+        private EngineStatus     EnStatus;
         private Config.HomeParam AxisHomeParam;
-        private Stopwatch stopWatch;
-        private AdvancedMotion advmon;
-        private Io io;
+        private Stopwatch        stopWatch;
+        private AdvancedMotion   advmon;
+        private Io               io;
         public static CoreMotionAxisStatus[] cmAxis = new CoreMotionAxisStatus[8];
         public System.Windows.Forms.NumericUpDown NUD_Motor_NO;
 
@@ -236,97 +323,27 @@ namespace InjectorInspector
             KillWMX3Handle();
 
             // 僅在初始化時進行一次賦值，避免重複初始化
-            if (wmx == null)
-            {
-                wmx = new WMX3Api();
-            }
-
-            if (motion == null)
-            {
-                motion = new CoreMotion();
-            }
-
-            if (CmStatus == null)
-            {
-                CmStatus = new CoreMotionStatus();
-            }
-
-            if (EnStatus == null)
-            {
-                EnStatus = new EngineStatus();
-            }
-
-            if (AxisHomeParam == null)
-            {
-                AxisHomeParam = new Config.HomeParam();
-            }
-
-            if (stopWatch == null)
-            {
-                stopWatch = new Stopwatch();
-            }
-
-            if (advmon == null)
-            {
-                advmon = new AdvancedMotion();
-            }
-
-            if (io == null)
-            {
-                io = new Io();
-            }
+            if (wmx == null)                      wmx = new WMX3Api();
+            if (motion == null)                motion = new CoreMotion();
+            if (CmStatus == null)            CmStatus = new CoreMotionStatus();
+            if (EnStatus == null)            EnStatus = new EngineStatus();
+            if (AxisHomeParam == null)  AxisHomeParam = new Config.HomeParam();
+            if (stopWatch == null)          stopWatch = new Stopwatch();
+            if (advmon == null)                advmon = new AdvancedMotion();
+            if (io == null)                        io = new Io();
         }
 
         public void KillWMX3Handle()
         {
             //清除未知記憶體
-            if (wmx != null)
-            {
-                wmx.Dispose();  // 釋放資源
-                wmx = null;     // 設為 null 以避免錯誤引用
-            }
-
-            if (motion != null)
-            {
-                motion.Dispose();  // 釋放資源
-                motion = null;     // 設為 null 以避免錯誤引用
-            }
-
-            if (CmStatus != null)
-            {
-                //CmStatus.Dispose();  // 釋放資源
-                CmStatus = null;     // 設為 null 以避免錯誤引用
-            }
-
-            if (EnStatus != null)
-            {
-                //EnStatus.Dispose();  // 釋放資源
-                EnStatus = null;     // 設為 null 以避免錯誤引用
-            }
-
-            if (AxisHomeParam != null)
-            {
-                //AxisHomeParam.Dispose();  // 釋放資源
-                AxisHomeParam = null;     // 設為 null 以避免錯誤引用
-            }
-
-            if (stopWatch != null)
-            {
-                //stopWatch.Dispose();  // 釋放資源
-                stopWatch = null;     // 設為 null 以避免錯誤引用
-            }
-
-            if (advmon != null)
-            {
-                advmon.Dispose();  // 釋放資源
-                advmon = null;     // 設為 null 以避免錯誤引用
-            }
-
-            if (io != null)
-            {
-                io.Dispose();  // 釋放資源
-                io = null;     // 設為 null 以避免錯誤引用
-            }
+            if (wmx != null)           { wmx.Dispose();              wmx = null; }
+            if (motion != null)        { motion.Dispose();        motion = null; }
+            if (CmStatus != null)      {                        CmStatus = null; }
+            if (EnStatus != null)      {                        EnStatus = null; }
+            if (AxisHomeParam != null) {                   AxisHomeParam = null; }
+            if (stopWatch != null)     {                       stopWatch = null; }
+            if (advmon != null)        { advmon.Dispose();        advmon = null; }
+            if (io != null)            { io.Dispose();                io = null; }
         }
 
         public void WMX3_Initial()
@@ -694,7 +711,113 @@ namespace InjectorInspector
             }
         }
 
+        public int WMX3_IAI(addr_IAI aIJob, double dbInData)
+        {  // start of public void WMX3_IAI(ref addr_IAI aIJob, ref double dbInData)
+            int rslt = 0;
 
+            /*
+            Byte 0 + 30 Bit4 SON(馬達ON):1    { 看Bit4: SV馬達ON訊號}
+            Byte 0 + 30 Bit1 HOME
+            Byte 0 1 / 2     目標位置
+            Byte 0 4 / 6     定位訊號寬度
+            Byte 0 8 / 10    運轉速度
+            Byte 0 + 20      運轉加速
+            Byte 0 + 22      運轉減速
+            Byte 0 + 30 Bit0 DSTR(啟動) { 開始跑時，Bit0 PEND定位訊號為0；完成時，此位為1}
+            如果 Bit 0 + 30 Bit3 ALM(故障訊號為1)  就要清除Bit 3 RES(故障復歸填1)
+            */
+
+            //故障復歸
+            //讀取 工作門 資訊
+            byte[] aGetIAIalarm = new byte[2];
+            int rstAlarm = 0;
+            WMX3_GetInIO(ref aGetIAIalarm, (int)(addr_IAI.pxeaI_GetStatusSignal2_2Bytes) / 10, 2);
+            rstAlarm = ((aGetIAIalarm[(int)(addr_IAI.pxeaI_GetAlarmState - addr_IAI.pxeaI_GetStatusSignal2_2Bytes) / 10] & (1 << (int)(addr_IAI.pxeaI_GetAlarmState) % 10)) != 0) ? 1 : 0;
+            if(rstAlarm == 1) {
+                Thread.Sleep(1);
+                WMX3_SetIOBit((int)(addr_IAI.pxeaI_SetResetAlarm) / 10, (int)(addr_IAI.pxeaI_SetResetAlarm) % 10, (byte)1);
+
+                Thread.Sleep(1);
+                WMX3_SetIOBit((int)(addr_IAI.pxeaI_SetResetAlarm) / 10, (int)(addr_IAI.pxeaI_SetResetAlarm) % 10, (byte)0);
+            }
+
+            //定位訊號寬度
+            int iIAIPositionBand = 1;
+            byte[] aIAIPositionBand = new byte[4];
+            aIAIPositionBand = BitConverter.GetBytes(iIAIPositionBand);
+            WMX3_SetIO(ref aIAIPositionBand, (int)(addr_IAI.pxeaI_SetPositionBand4Bytes) / 10, 4);
+
+            //運轉速度
+            int iIAISpeed = 3000;
+            iIAISpeed = (iIAISpeed >= 4000) ? 4000 : iIAISpeed;
+            byte[] aIAISpeed = new byte[4];
+            aIAISpeed = BitConverter.GetBytes(iIAISpeed);
+            WMX3_SetIO(ref aIAISpeed, (int)(addr_IAI.pxeaI_SetSpeed4Bytes) / 10, 4);
+
+            //運轉加減速
+            int iIAIAcceleration = 20;
+            iIAIAcceleration = (iIAIAcceleration >= 20) ? 20 : iIAIAcceleration;
+            byte[] aIAIAcceleration = new byte[2];
+            aIAIAcceleration = BitConverter.GetBytes(iIAIAcceleration);
+            WMX3_SetIO(ref aIAIAcceleration, (int)(addr_IAI.pxeaI_SetAcceleration2Bytes) / 10, 2);  //運轉加速
+            WMX3_SetIO(ref aIAIAcceleration, (int)(addr_IAI.pxeaI_SetDeceleration2Bytes) / 10, 2);  //運轉減速
+
+            switch (aIJob)
+            {
+                case addr_IAI.pxeaI_BrakeOff:
+                    WMX3_SetIOBit((int)(addr_IAI.pxeaI_SetDisableBrake) / 10, (int)(addr_IAI.pxeaI_SetDisableBrake) % 10, (dbInData>0)? (byte)1: (byte)0 );
+                    break;
+
+                case addr_IAI.pxeaI_MotorOn:
+                    WMX3_SetIOBit((int)(addr_IAI.pxeaI_SetMotorON) / 10, (int)(addr_IAI.pxeaI_SetMotorON) % 10, (dbInData > 0) ? (byte)1 : (byte)0);
+                    break;
+
+                case addr_IAI.pxeaI_SetHome:  lbl_Home:
+                    Thread.Sleep(1);
+                    WMX3_SetIOBit((int)(addr_IAI.pxeaI_SetHOME) / 10, (int)(addr_IAI.pxeaI_SetHOME) % 10, (byte)1);
+
+                    Thread.Sleep(1);
+                    WMX3_SetIOBit((int)(addr_IAI.pxeaI_SetHOME) / 10, (int)(addr_IAI.pxeaI_SetHOME) % 10, (byte)0);
+                    break;
+
+                case addr_IAI.pxeaI_GoToPosition:
+                    //目標位置
+                    int iIAITargetPosition = (int)(dbInData * 100);
+                    iIAITargetPosition = (iIAITargetPosition >= 3010) ? 3010 : (iIAITargetPosition <= -10) ? -10 : iIAITargetPosition;
+                    byte[] aIAITargetPosition = new byte[4];
+                    aIAITargetPosition = BitConverter.GetBytes(iIAITargetPosition);
+                    WMX3_SetIO(ref aIAITargetPosition, (int)(addr_IAI.pxeaI_SetTargetPosition4Bytes) / 10, 4);
+
+                    //如果設定位置為0
+                    if (dbInData<=0) {
+                        goto lbl_Home;
+                    } else { 
+                        Thread.Sleep(1);
+                        WMX3_SetIOBit((int)(addr_IAI.pxeaI_SetDSTR_Start) / 10, (int)(addr_IAI.pxeaI_SetDSTR_Start) % 10, (byte)1);
+
+                        Thread.Sleep(1);
+                        WMX3_SetIOBit((int)(addr_IAI.pxeaI_SetDSTR_Start) / 10, (int)(addr_IAI.pxeaI_SetDSTR_Start) % 10, (byte)0);
+                    }
+                    break;
+
+                case addr_IAI.pxeaI_GetPosition:
+                    byte[] IAIpos = new byte[4];
+                    WMX3_GetInIO(ref IAIpos, ((int)(addr_IAI.pxeaI_GetCurrentPosition4Bytes) / 10), 4);
+                    rslt = BitConverter.ToInt32(IAIpos, 0);
+                    break;
+
+                case addr_IAI.pxeaI_GetCurrentSpeed4Bytes:
+                    byte[] IAIspd = new byte[4];
+                    WMX3_GetInIO(ref IAIspd, ((int)(addr_IAI.pxeaI_GetCurrentSpeed4Bytes) / 10), 4);
+                    rslt = BitConverter.ToInt32(IAIspd, 0);
+                    break;
+
+                default:
+                    break;
+            }
+
+            return rslt;
+        }  // end of public void WMX3_IAI(ref addr_IAI aIJob, ref double dbInData)
 
     }  // end of internal class ServoControl
 }

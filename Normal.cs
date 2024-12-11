@@ -23,5 +23,33 @@ namespace InjectorInspector
             // 計算映射
             return (double)(Input - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
         }
+
+        // 轉換方法
+        public string ParseToBinaryString(ref byte[] BInput, int isize)
+        {
+            var sb = new StringBuilder();
+
+            for (int i = isize - 1; i >= 0; i--)
+            {
+                byte[] data = new byte[1] { BInput[i] };
+                sb.AppendFormat("{0} ", data.ToBinary());
+            }
+
+            return sb.ToString();
+        }
+
+        public string ParseToHexBinaryString(ref byte[] BInput, int isize)
+        {
+            var sb = new StringBuilder();
+
+            for (int i = isize - 1; i >= 0; i--)
+            {
+                byte[] data = new byte[1] { BInput[i] };
+                sb.AppendFormat("{0}:{1} ", data.ToHex(), data.ToBinary());
+            }
+
+            return sb.ToString();
+        }
+
     }
 }

@@ -1,74 +1,88 @@
-        public double dbapiNozzleY(double dbIncreaseNozzleY)  //NozzleY
+        public double dbapiIAI(double dbIncreaseGate)  //IAI
         {
-            double dbRstNozzleY = 0.0;
+            double dbRstIAI = 0.0;
 
-            {  //吸嘴Y軸 讀取與顯示
+            {  //工作門 讀取與顯示
                 int rslt = 0;
-                string position = "";
-                string speed = "";
 
-                //讀取 吸嘴Y軸 資訊
-                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, ref position, ref speed);
+                //讀取 工作門 資訊
+                byte[] aGetGetIAI = new byte[2];
+                clsServoControlWMX3.WMX3_GetInIO(ref aGetGetIAI, (int)(addr_IAI.pxeaI_GetStatusSignal2_2Bytes) / 10, 2);
+                rslt += ((aGetGetIAI[(int)(addr_IAI.pxeaI_GetServoONState - addr_IAI.pxeaI_GetStatusSignal2_2Bytes) / 10] & (1 << (int)(addr_IAI.pxeaI_GetServoONState) % 10)) != 0) ? 1 : 0;
+
+                byte[] aGetSetIAI = new byte[2];
+                clsServoControlWMX3.WMX3_GetOutIO(ref aGetSetIAI, (int)(addr_IAI.pxeaI_SetControlSignal2_2Bytes) / 10, 2);
+                rslt += ((aGetSetIAI[(int)(addr_IAI.pxeaI_SetDisableBrake - addr_IAI.pxeaI_SetControlSignal2_2Bytes) / 10] & (1 << (int)(addr_IAI.pxeaI_SetDisableBrake) % 10)) != 0) ? 1 : 0;
 
                 //計算讀取長度
-                if (position != "")
+                int iIAIpos = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetPosition, 0);
+                double dbIAIpos = 0.0;
+                if (rslt == 2)
                 {
-                    dbRstNozzleY = double.Parse(position) / 100.0;
+                    dbIAIpos = iIAIpos / 100;
+                    dbRstIAI = dbIAIpos;
                 }
 
                 //顯示運動速度
-                double dbSpeed = 0.0;
-                if (speed != "")
+                int iIAIspd = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetCurrentSpeed4Bytes, 0);
+                double dbIAIspd = 0.0;
+                if (rslt == 2)
                 {
-                    dbSpeed = double.Parse(speed);
+                    dbIAIspd = iIAIspd / 100;
                 }
 
                 //變更顏色
-                if (rslt == 1)
+                if (rslt == 2)
                 {
-                    select_吸嘴Y軸.BackColor = Color.Red;
-                    lbl_acpos_吸嘴Y軸.BackColor = Color.White;
-                    lbl_spd_吸嘴Y軸.BackColor = Color.White;
+                    select_IAI.BackColor = Color.Red;
+                    lbl_acpos_IAI.BackColor = Color.White;
+                    lbl_spd_IAI.BackColor = Color.White;
                 }
                 else
                 {
-                    select_吸嘴Y軸.BackColor = Color.Green;
-                    lbl_acpos_吸嘴Y軸.BackColor = Color.Gray;
-                    lbl_spd_吸嘴Y軸.BackColor = Color.Gray;
+                    select_IAI.BackColor = Color.Green;
+                    lbl_acpos_IAI.BackColor = Color.Gray;
+                    lbl_spd_IAI.BackColor = Color.Gray;
                 }
 
                 //顯示資訊
-                lbl_acpos_吸嘴Y軸.Text = dbRstNozzleY.ToString("F2");
-                lbl_spd_吸嘴Y軸.Text = dbSpeed.ToString("F2");
+                lbl_acpos_IAI.Text = dbIAIpos.ToString("F3");
+                lbl_spd_IAI.Text = dbIAIspd.ToString("F3");
+
+                //bshow_debug_RAW_Conver_Back_Value
+                lbl_IAI_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_IAI_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_IAI_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if (bshow_debug_RAW_Conver_Back_Value == true)
+                {
+                    lbl_IAI_RAW.Text = iIAIpos.ToString();
+                    lbl_IAI_Convert.Text = dbIAIpos.ToString("F3");
+                    lbl_IAI_Back.Text = ((int)(dbIAIpos * 100)).ToString();
+                }
 
             }
 
-            if (dbIncreaseNozzleY == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
+            if (dbIncreaseGate == dbRead)
             {
-                this.Text = "Z軸尚未回到上位";
+                //this.Text = "Z軸尚未回到上位";
             }
             else
-            {  //吸嘴X軸 變更位置
+            {  //IAI 變更位置
                 // 取得欲變更的的浮點數
-                double fChangeNozzleY = dbIncreaseNozzleY;
+                double fChangeGate = dbIncreaseGate;
 
                 //伸長量overflow保護
-                //if (fChangeNozzleY >= 40.35)
+                //if (fChangeGate >= 40.35)
                 //{
-                //    fChangeNozzleY = 40.35;
+                //    fChangeGate = 40.35;
                 //}
 
-                //計算補正至長度的數值
-                int iTargetNozzleY = (int)(fChangeNozzleY * 100);
+                clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 1);
 
-                //執行移動吸嘴
-                int axis = (int)WMX3軸定義.吸嘴Y軸;
-                int position = iTargetNozzleY;
-                int speed = (int)(50.00 * 100 * Multiplier);
-                int accel = speed * 2;
-                int daccel = speed * 2;
-                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                //執行移動工作門
+                clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn, 1);
+                clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GoToPosition, fChangeGate);
             }
 
-            return dbRstNozzleY;
-        }  // end of public double dbapiNozzleY(double dbIncreaseNozzleY)  //NozzleY
+            return dbRstIAI;
+        }  // end of public double dbapiGate(double dbIncreaseGate)  //IAI
