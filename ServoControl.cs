@@ -41,7 +41,7 @@ namespace InjectorInspector
     }  // end of public enum WMX3軸定義
 
     public enum WMX3IO對照
-    {
+    {  // start of public enum WMX3IO對照
         //out:
         pxeIO_Addr_Out_START      =  4,
             pxeIO_Addr4           =  4,  //4
@@ -166,9 +166,10 @@ namespace InjectorInspector
             pxeIO_NA75            = 75,  //5 未知
             pxeIO_下支架右側左門  = 76,  //6 下支架右側左門
         pxeIO_Addr_In_END,
-    }
+    }  // end of public enum WMX3IO對照
 
-    public enum addr_IAI{
+    public enum addr_IAI
+    {  // start of public enum addr_IAI
         //IAI Set IO addr
         pxeaI_SetAddrSTART                      = 2320,
             pxeaI_SetTargetPosition4Bytes       = 2320,
@@ -247,7 +248,73 @@ namespace InjectorInspector
         pxeaI_SetHome,
         pxeaI_GoToPosition,
         pxeaI_GetPosition,
-    }
+    }  // end of public enum addr_IAI
+
+    public enum addr_JODELL
+    {  // start of public enum addr_JODELL
+        pxeaJ_DeviceSTART,
+            pxeaJ_Device01_Output =  160,
+            pxeaJ_Device01_Input  =  440,
+
+            pxeaJ_Device02_Output =  880,
+            pxeaJ_Device02_Input  =  620,
+
+            pxeaJ_Device03_Output = 1600,
+            pxeaJ_Device31_Input  =  800,
+        pxeaJ_DeviceEND,
+
+        pxeaJ_SetAddr_START                          = 00,
+            pxeaJ_SetAddr_Restart2Bytes              = 000,
+            pxeaJ_SetAddr_RecipeSave2Bytes           = 020,
+            pxeaJ_SetAddr_Default2Bytes              = 040,
+            pxeaJ_SetAddr_CmdSource2Bytes            = 060,
+            pxeaJ_SetAddr_ControlMode2Bytes          = 080,
+            pxeaJ_SetAddr_EnableCmd2Bytes            = 100,
+            pxeaJ_SetAddr_FaultClearCmd              = 120,
+            pxeaJ_SetAddr_ActCmd2Bytes               = 140,
+            pxeaJ_SetAddr_RelActCmd                  = 160,
+            pxeaJ_SetAddr_P0_Position2Bytes          = 180,
+            pxeaJ_SetAddr_P0_Speed2Bytes             = 200,
+            pxeaJ_SetAddr_P0_Torque2Bytes            = 220,
+            pxeaJ_SetAddr_P1_Position2Bytes          = 240,
+            pxeaJ_SetAddr_P1_Speed2Bytes             = 260,
+            pxeaJ_SetAddr_P1_Torque2Bytes            = 280,
+            pxeaJ_SetAddr_P2_Position2Bytes          = 300,
+            pxeaJ_SetAddr_P2_Speed2Bytes             = 320,
+            pxeaJ_SetAddr_P2_Torque2Bytes            = 340,
+            pxeaJ_SetAddr_P3_Position2Bytes          = 460,
+            pxeaJ_SetAddr_P3_Speed2Bytes             = 380,
+            pxeaJ_SetAddr_P3_Torque2Bytes            = 400,
+            pxeaJ_SetAddr_P4_Position2Bytes          = 420,
+            pxeaJ_SetAddr_P4_Speed2Bytes             = 440,
+            pxeaJ_SetAddr_P4_Torque2Bytes            = 460,
+            pxeaJ_SetAddr_REL_Position2Bytes         = 480,
+            pxeaJ_SetAddr_OnePointMovePosition2Bytes = 500,
+            pxeaJ_SetAddr_SlowPos_Precent2Bytes      = 520,
+            pxeaJ_SetAddr_SlowSpd_Percent2Bytes      = 540,
+            pxeaJ_SetAddr_SlowDir2Bytes              = 560,
+            pxeaJ_SetAddr_OutputForce2Bytes          = 580,
+            pxeaJ_SetAddr_BrakeForce2Bytes           = 600,
+            pxeaJ_SetAddr_IOInOut2Bytes              = 620,
+            pxeaJ_SetAddr_Reserve01_2Bytes           = 640,
+            pxeaJ_SetAddr_Reserve02_2Bytes           = 660,
+            pxeaJ_SetAddr_Reserve03_2Bytes           = 680,
+            pxeaJ_SetAddr_Reserve04_2Bytes           = 700,
+        pxeaJ_SetAddr_END,
+
+        pxeaJ_GetAddr_START                          = 000,
+            pxeaJ_GetAddr_RunStatus2Bytes            = 000,
+            pxeaJ_GetAddr_ActStatus2Bytes            = 020,
+            pxeaJ_GetAddr_Position2Bytes             = 040,
+            pxeaJ_GetAddr_Speed2Bytes                = 060,
+            pxeaJ_GetAddr_Torque                     = 080,
+            pxeaJ_GetAddr_DeviceErrorCode2Bytes      = 100,
+            pxeaJ_GetAddr_MotorErrorCode2Bytes       = 120,
+            pxeaJ_GetAddr_InputsMonitor2Bytes        = 140,
+            pxeaJ_GetAddr_OutputMonitor2Bytes        = 160,
+        pxeaJ_GetAddr_END,
+
+    }  // end of public enum addr_JODELL
 
     //擴展定義字串轉換
     public static class ByteArrayExtensions
