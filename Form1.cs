@@ -1520,7 +1520,7 @@ namespace InjectorInspector
             }
 
             label14.Text = "Pos=" + varJODELL_RX[(int)(addr_JODELL.pxeaJ_GetAddr_Position2Bytes) /10 /2].ToString();
-            label15.Text  = "Spd=" + varJODELL_RX[(int)(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes) / 10 / 2].ToString();
+            label15.Text = "Spd=" + varJODELL_RX[(int)(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes) / 10 / 2].ToString();
 
 
 

@@ -260,10 +260,10 @@ namespace InjectorInspector
             pxeaJ_Device02_Input  =  620,
 
             pxeaJ_Device03_Output = 1600,
-            pxeaJ_Device03_Input   =  800,
+            pxeaJ_Device03_Input  =  800,
         pxeaJ_DeviceEND,
 
-        pxeaJ_SetAddr_START                          = 00,
+        pxeaJ_SetAddr_START                          = 000,
             pxeaJ_SetAddr_Restart2Bytes              = 000,
             pxeaJ_SetAddr_RecipeSave2Bytes           = 020,
             pxeaJ_SetAddr_Default2Bytes              = 040,
@@ -307,7 +307,7 @@ namespace InjectorInspector
             pxeaJ_GetAddr_ActStatus2Bytes            = 020,
             pxeaJ_GetAddr_Position2Bytes             = 040,
             pxeaJ_GetAddr_Speed2Bytes                = 060,
-            pxeaJ_GetAddr_Torque                     = 080,
+            pxeaJ_GetAddr_Torque2Bytes               = 080,
             pxeaJ_GetAddr_DeviceErrorCode2Bytes      = 100,
             pxeaJ_GetAddr_MotorErrorCode2Bytes       = 120,
             pxeaJ_GetAddr_InputsMonitor2Bytes        = 140,
