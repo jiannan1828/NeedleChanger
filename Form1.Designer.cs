@@ -32,6 +32,8 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.tabTestIAI = new System.Windows.Forms.TabPage();
+            this.button15 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -288,8 +290,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.button15 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.tabTestIAI.SuspendLayout();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -312,6 +313,7 @@
             // 
             // tabTestIAI
             // 
+            this.tabTestIAI.Controls.Add(this.label15);
             this.tabTestIAI.Controls.Add(this.button15);
             this.tabTestIAI.Controls.Add(this.textBox1);
             this.tabTestIAI.Controls.Add(this.label14);
@@ -329,10 +331,30 @@
             this.tabTestIAI.Text = "tabTestIAI";
             this.tabTestIAI.UseVisualStyleBackColor = true;
             // 
+            // button15
+            // 
+            this.button15.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button15.Location = new System.Drawing.Point(494, 165);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(111, 23);
+            this.button15.TabIndex = 61;
+            this.button15.Text = "移動至指定位置";
+            this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.textBox1.Location = new System.Drawing.Point(494, 135);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(111, 23);
+            this.textBox1.TabIndex = 60;
+            this.textBox1.Text = "0";
+            // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(299, 55);
+            this.label14.Location = new System.Drawing.Point(442, 39);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(62, 19);
             this.label14.TabIndex = 6;
@@ -3184,25 +3206,14 @@
             this.tabControl1.Size = new System.Drawing.Size(1236, 791);
             this.tabControl1.TabIndex = 2;
             // 
-            // button15
+            // label15
             // 
-            this.button15.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.button15.Location = new System.Drawing.Point(494, 165);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(111, 23);
-            this.button15.TabIndex = 61;
-            this.button15.Text = "移動至指定位置";
-            this.button15.UseVisualStyleBackColor = true;
-            this.button15.Click += new System.EventHandler(this.button15_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.textBox1.Location = new System.Drawing.Point(494, 135);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(111, 23);
-            this.textBox1.TabIndex = 60;
-            this.textBox1.Text = "0";
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(555, 39);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(64, 19);
+            this.label15.TabIndex = 62;
+            this.label15.Text = "CurSpd";
             // 
             // Form1
             // 
@@ -3497,6 +3508,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label15;
     }
 }
 

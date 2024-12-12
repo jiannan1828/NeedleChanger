@@ -76,7 +76,7 @@ namespace InjectorInspector
         public void apiCallBackTest()
         {
             cntcallback++;
-            this.Text = cntcallback.ToString();
+            this.Text = cntcallback.ToString() + "  " + inspector1.InspNozzle.CCD.GrabCount.ToString();
         }
         //---------------------------------------------------------------------------------------
         private void button2_Click(object sender, EventArgs e)
@@ -1520,7 +1520,7 @@ namespace InjectorInspector
             }
 
             label14.Text = "Pos=" + varJODELL_RX[(int)(addr_JODELL.pxeaJ_GetAddr_Position2Bytes) /10 /2].ToString();
-            label6.Text  = "Spd=" + varJODELL_RX[(int)(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes) / 10 / 2].ToString();
+            label15.Text  = "Spd=" + varJODELL_RX[(int)(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes) / 10 / 2].ToString();
 
 
 
@@ -2031,20 +2031,7 @@ namespace InjectorInspector
         {
             System.Windows.Forms.Label SelectLabel = sender as System.Windows.Forms.Label;
 
-            {
-                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
-                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_ActCmd2Bytes) / 10;
-
-                int varJODELL_TX_P0_ActCmd = 0;
-                byte[] JODELL_TX_P0_ActCmd = new byte[2];
-
-                JODELL_TX_P0_ActCmd[0] = (byte)(varJODELL_TX_P0_ActCmd & 0xFF);
-                JODELL_TX_P0_ActCmd[1] = (byte)(varJODELL_TX_P0_ActCmd >> 8);
-
-                //Write TX
-                clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_ActCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
-            }
-
+            //Set Speed
             {
                 int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
                 int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Speed2Bytes) / 10;
@@ -2059,6 +2046,7 @@ namespace InjectorInspector
                 clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Speed, addr_TargetSetDevice + addr_TargetSetFunction, 2);
             }
 
+            //Set Torque
             {
                 int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
                 int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Torque2Bytes) / 10;
@@ -2073,6 +2061,66 @@ namespace InjectorInspector
                 clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Torque, addr_TargetSetDevice + addr_TargetSetFunction, 2);
             }
 
+            //Set Position 00
+            {
+                { //Device 01
+                    int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device01_Output) / 10;
+                    int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
+
+                    int varJODELL_TX_P0_Position = 3000;
+                    byte[] JODELL_TX_P0_Position = new byte[2];
+
+                    JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);
+                    JODELL_TX_P0_Position[1] = (byte)(varJODELL_TX_P0_Position >> 8);
+
+                    //Write TX
+                    clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+                }
+
+                { //Device 02
+                    int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device02_Output) / 10;
+                    int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
+
+                    int varJODELL_TX_P0_Position = 3000;
+                    byte[] JODELL_TX_P0_Position = new byte[2];
+
+                    JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);
+                    JODELL_TX_P0_Position[1] = (byte)(varJODELL_TX_P0_Position >> 8);
+
+                    //Write TX
+                    clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+                }
+
+                { //Device 03
+                    int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
+                    int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
+
+                    int varJODELL_TX_P0_Position = 3000;
+                    byte[] JODELL_TX_P0_Position = new byte[2];
+
+                    JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);
+                    JODELL_TX_P0_Position[1] = (byte)(varJODELL_TX_P0_Position >> 8);
+
+                    //Write TX
+                    clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+                }
+            }
+
+            //Aim to Device 00
+            {
+                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
+                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_ActCmd2Bytes) / 10;
+
+                int varJODELL_TX_P0_ActCmd = 0;
+                byte[] JODELL_TX_P0_ActCmd = new byte[2];
+
+                JODELL_TX_P0_ActCmd[0] = (byte)(varJODELL_TX_P0_ActCmd & 0xFF);
+                JODELL_TX_P0_ActCmd[1] = (byte)(varJODELL_TX_P0_ActCmd >> 8);
+
+                //Write TX
+                clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_ActCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+            }
+
             int iEnBit = 0;
             if (SelectLabel == label6)
             {
@@ -2083,18 +2131,52 @@ namespace InjectorInspector
                 iEnBit = 0;
             }
 
+            //Send iEnBit
             {
-                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
-                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
+                //Set Device 01
+                {
+                    int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device01_Output) / 10;
+                    int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
 
-                int varJODELL_TX_P0_EnableCmd = iEnBit;
-                byte[] JODELL_TX_P0_EnableCmd = new byte[2];
+                    int varJODELL_TX_P0_EnableCmd = iEnBit;
+                    byte[] JODELL_TX_P0_EnableCmd = new byte[2];
 
-                JODELL_TX_P0_EnableCmd[0] = (byte)(varJODELL_TX_P0_EnableCmd & 0xFF);
-                JODELL_TX_P0_EnableCmd[1] = (byte)(varJODELL_TX_P0_EnableCmd >> 8);
+                    JODELL_TX_P0_EnableCmd[0] = (byte)(varJODELL_TX_P0_EnableCmd & 0xFF);
+                    JODELL_TX_P0_EnableCmd[1] = (byte)(varJODELL_TX_P0_EnableCmd >> 8);
 
-                //Write TX
-                clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_EnableCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+                    //Write TX
+                    clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_EnableCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+                }
+
+                //Set Device 02
+                {
+                    int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device02_Output) / 10;
+                    int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
+
+                    int varJODELL_TX_P0_EnableCmd = iEnBit;
+                    byte[] JODELL_TX_P0_EnableCmd = new byte[2];
+
+                    JODELL_TX_P0_EnableCmd[0] = (byte)(varJODELL_TX_P0_EnableCmd & 0xFF);
+                    JODELL_TX_P0_EnableCmd[1] = (byte)(varJODELL_TX_P0_EnableCmd >> 8);
+
+                    //Write TX
+                    clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_EnableCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+                }
+
+                //Set Device 03
+                {
+                    int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
+                    int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
+
+                    int varJODELL_TX_P0_EnableCmd = iEnBit;
+                    byte[] JODELL_TX_P0_EnableCmd = new byte[2];
+
+                    JODELL_TX_P0_EnableCmd[0] = (byte)(varJODELL_TX_P0_EnableCmd & 0xFF);
+                    JODELL_TX_P0_EnableCmd[1] = (byte)(varJODELL_TX_P0_EnableCmd >> 8);
+
+                    //Write TX
+                    clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_EnableCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+                }
             }
         }
 
@@ -2164,10 +2246,6 @@ namespace InjectorInspector
             }
         }
 
-        private void button14_Click(object sender, EventArgs e)
-        {
-
-        }
 
     }  // end of public partial class Form1 : Form
 
