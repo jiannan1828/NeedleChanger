@@ -260,7 +260,7 @@ namespace InjectorInspector
             pxeaJ_Device02_Input  =  620,
 
             pxeaJ_Device03_Output = 1600,
-            pxeaJ_Device31_Input  =  800,
+            pxeaJ_Device03_Input   =  800,
         pxeaJ_DeviceEND,
 
         pxeaJ_SetAddr_START                          = 00,

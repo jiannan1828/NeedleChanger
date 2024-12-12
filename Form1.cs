@@ -1496,31 +1496,31 @@ namespace InjectorInspector
             }
 
             //Read TX
-            int addr_TargetSetDevice   = (int)(addr_JODELL.pxeaJ_Device01_Output)/10;
+            int addr_TargetSetDevice   = (int)(addr_JODELL.pxeaJ_Device03_Output) /10;
             int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_START)/10;
 
-            byte[] JODELL_Device01_TX = new byte[72];
-            clsServoControlWMX3.WMX3_GetInIO(ref JODELL_Device01_TX, addr_TargetSetDevice+addr_TargetSetFunction, JODELL_Device01_TX.Length);
+            byte[] JODELL_TX = new byte[72];
+            clsServoControlWMX3.WMX3_GetInIO(ref JODELL_TX, addr_TargetSetDevice+addr_TargetSetFunction, JODELL_TX.Length);
 
-            int[] varJODELL_Device01_TX = new int[JODELL_Device01_TX.Length/2];
-            for (int i = 0; i < varJODELL_Device01_TX.Length; i++) {
-                varJODELL_Device01_TX[i] = BitConverter.ToInt16(JODELL_Device01_TX, i * 2);
+            int[] varJODELL_TX = new int[JODELL_TX.Length/2];
+            for (int i = 0; i < varJODELL_TX.Length; i++) {
+                varJODELL_TX[i] = BitConverter.ToInt16(JODELL_TX, i * 2);
             }
 
-            //Read TX
-            int addr_TargetGetDevice   = (int)(addr_JODELL.pxeaJ_Device01_Input)/10;
+            //Read RX
+            int addr_TargetGetDevice   = (int)(addr_JODELL.pxeaJ_Device03_Input) /10;
             int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START)/10;
 
-            byte[] JODELL_Device01_RX = new byte[18];
-            clsServoControlWMX3.WMX3_GetInIO(ref JODELL_Device01_RX, addr_TargetGetDevice+addr_TargetGetFunction, JODELL_Device01_RX.Length);
+            byte[] JODELL_RX = new byte[18];
+            clsServoControlWMX3.WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice+addr_TargetGetFunction, JODELL_RX.Length);
 
-            int[] varJODELL_Device01_RX = new int[JODELL_Device01_RX.Length/2];
-            for (int i = 0; i < varJODELL_Device01_RX.Length; i++) {
-                varJODELL_Device01_RX[i] = BitConverter.ToInt16(JODELL_Device01_RX, i*2);
+            int[] varJODELL_RX = new int[JODELL_RX.Length/2];
+            for (int i = 0; i < varJODELL_RX.Length; i++) {
+                varJODELL_RX[i] = BitConverter.ToInt16(JODELL_RX, i*2);
             }
 
-            label14.Text = varJODELL_Device01_RX[(int)(addr_JODELL.pxeaJ_GetAddr_RunStatus2Bytes) / 2].ToString();
-
+            label14.Text = "Pos=" + varJODELL_RX[(int)(addr_JODELL.pxeaJ_GetAddr_Position2Bytes) /10 /2].ToString();
+            label6.Text  = "Spd=" + varJODELL_RX[(int)(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes) / 10 / 2].ToString();
 
 
 
@@ -2029,95 +2029,145 @@ namespace InjectorInspector
 
         private void label6_Click(object sender, EventArgs e)
         {
-            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device01_Output) / 10;
-            int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
+            System.Windows.Forms.Label SelectLabel = sender as System.Windows.Forms.Label;
 
-            int varJODELL_Device01_TX_P0_EnableCmd = 1;
-            byte[] JODELL_Device01_TX_P0_EnableCmd = new byte[2];
+            {
+                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
+                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_ActCmd2Bytes) / 10;
 
-            JODELL_Device01_TX_P0_EnableCmd[0] = (byte)(varJODELL_Device01_TX_P0_EnableCmd & 0xFF);
-            JODELL_Device01_TX_P0_EnableCmd[1] = (byte)(varJODELL_Device01_TX_P0_EnableCmd >> 8);
+                int varJODELL_TX_P0_ActCmd = 0;
+                byte[] JODELL_TX_P0_ActCmd = new byte[2];
 
-            //Write TX
-            clsServoControlWMX3.WMX3_SetIO(ref JODELL_Device01_TX_P0_EnableCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+                JODELL_TX_P0_ActCmd[0] = (byte)(varJODELL_TX_P0_ActCmd & 0xFF);
+                JODELL_TX_P0_ActCmd[1] = (byte)(varJODELL_TX_P0_ActCmd >> 8);
+
+                //Write TX
+                clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_ActCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+            }
+
+            {
+                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
+                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Speed2Bytes) / 10;
+
+                int varJODELL_TX_P0_Speed = 3000;
+                byte[] JODELL_TX_P0_Speed = new byte[2];
+
+                JODELL_TX_P0_Speed[0] = (byte)(varJODELL_TX_P0_Speed & 0xFF);
+                JODELL_TX_P0_Speed[1] = (byte)(varJODELL_TX_P0_Speed >> 8);
+
+                //Write TX
+                clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Speed, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+            }
+
+            {
+                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
+                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Torque2Bytes) / 10;
+
+                int varJODELL_TX_P0_Torque = 25;
+                byte[] JODELL_TX_P0_Torque = new byte[2];
+
+                JODELL_TX_P0_Torque[0] = (byte)(varJODELL_TX_P0_Torque & 0xFF);
+                JODELL_TX_P0_Torque[1] = (byte)(varJODELL_TX_P0_Torque >> 8);
+
+                //Write TX
+                clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Torque, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+            }
+
+            int iEnBit = 0;
+            if (SelectLabel == label6)
+            {
+                iEnBit = 1;
+            }
+            else if (SelectLabel == label7)
+            {
+                iEnBit = 0;
+            }
+
+            {
+                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
+                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
+
+                int varJODELL_TX_P0_EnableCmd = iEnBit;
+                byte[] JODELL_TX_P0_EnableCmd = new byte[2];
+
+                JODELL_TX_P0_EnableCmd[0] = (byte)(varJODELL_TX_P0_EnableCmd & 0xFF);
+                JODELL_TX_P0_EnableCmd[1] = (byte)(varJODELL_TX_P0_EnableCmd >> 8);
+
+                //Write TX
+                clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_EnableCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+            }
         }
 
-        private void label7_Click(object sender, EventArgs e)
-        {
-            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device01_Output) / 10;
-            int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
 
-            int varJODELL_Device01_TX_P0_EnableCmd = 0;
-            byte[] JODELL_Device01_TX_P0_EnableCmd = new byte[2];
 
-            JODELL_Device01_TX_P0_EnableCmd[0] = (byte)(varJODELL_Device01_TX_P0_EnableCmd & 0xFF);
-            JODELL_Device01_TX_P0_EnableCmd[1] = (byte)(varJODELL_Device01_TX_P0_EnableCmd >> 8);
-
-            //Write TX
-            clsServoControlWMX3.WMX3_SetIO(ref JODELL_Device01_TX_P0_EnableCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
-        }
-
+        //1 scanner
+        //2 抽料
+        //3 攝影機
         private void label11_Click(object sender, EventArgs e)
         {
-            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device01_Output) / 10;
+            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
             int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
 
-            int varJODELL_Device01_TX_P0_Position = 5;
-            byte[] JODELL_Device01_TX_P0_Position = new byte[2];
+            int varJODELL_TX_P0_Position = 50;
+            byte[] JODELL_TX_P0_Position = new byte[2];
 
-            JODELL_Device01_TX_P0_Position[0] = (byte)(varJODELL_Device01_TX_P0_Position & 0xFF);
-            JODELL_Device01_TX_P0_Position[1] = (byte)(varJODELL_Device01_TX_P0_Position >> 8);
+            JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);
+            JODELL_TX_P0_Position[1] = (byte)(varJODELL_TX_P0_Position >> 8);
 
             //Write TX
-            clsServoControlWMX3.WMX3_SetIO(ref JODELL_Device01_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+            clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
         }
 
         private void label10_Click(object sender, EventArgs e)
         {
-            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device01_Output) / 10;
+            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
             int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
 
-            int varJODELL_Device01_TX_P0_Position = 40;
-            byte[] JODELL_Device01_TX_P0_Position = new byte[2];
+            int varJODELL_TX_P0_Position = 3000;
+            byte[] JODELL_TX_P0_Position = new byte[2];
 
-            JODELL_Device01_TX_P0_Position[0] = (byte)(varJODELL_Device01_TX_P0_Position & 0xFF);
-            JODELL_Device01_TX_P0_Position[1] = (byte)(varJODELL_Device01_TX_P0_Position >> 8);
+            JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);
+            JODELL_TX_P0_Position[1] = (byte)(varJODELL_TX_P0_Position >> 8);
 
             //Write TX
-            clsServoControlWMX3.WMX3_SetIO(ref JODELL_Device01_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+            clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
         }
 
-        private void label12_Click(object sender, EventArgs e)
+        private void button15_Click(object sender, EventArgs e)
         {
-            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device01_Output) / 10;
-            int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Speed2Bytes) / 10;
+            int iPos = int.Parse(textBox1.Text);
 
-            int varJODELL_Device01_TX_P0_Speed = 10;
-            byte[] JODELL_Device01_TX_P0_Speed = new byte[2];
+            if(iPos >= 3000)
+            {
+                iPos = 3000;
+            }
 
-            JODELL_Device01_TX_P0_Speed[0] = (byte)(varJODELL_Device01_TX_P0_Speed & 0xFF);
-            JODELL_Device01_TX_P0_Speed[1] = (byte)(varJODELL_Device01_TX_P0_Speed >> 8);
+            if(iPos <= 0)
+            {
+                iPos = 0;
+            }
 
-            //Write TX
-            clsServoControlWMX3.WMX3_SetIO(ref JODELL_Device01_TX_P0_Speed, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+            textBox1.Text = iPos.ToString();
+
+            {
+                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
+                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
+
+                int varJODELL_TX_P0_Position = iPos;
+                byte[] JODELL_TX_P0_Position = new byte[2];
+
+                JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);
+                JODELL_TX_P0_Position[1] = (byte)(varJODELL_TX_P0_Position >> 8);
+
+                //Write TX
+                clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+            }
         }
 
-        private void label13_Click(object sender, EventArgs e)
+        private void button14_Click(object sender, EventArgs e)
         {
-            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device01_Output) / 10;
-            int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Torque2Bytes) / 10;
 
-            int varJODELL_Device01_TX_P0_Torque = 10;
-            byte[] JODELL_Device01_TX_P0_Torque = new byte[2];
-
-            JODELL_Device01_TX_P0_Torque[0] = (byte)(varJODELL_Device01_TX_P0_Torque & 0xFF);
-            JODELL_Device01_TX_P0_Torque[1] = (byte)(varJODELL_Device01_TX_P0_Torque >> 8);
-
-            //Write TX
-            clsServoControlWMX3.WMX3_SetIO(ref JODELL_Device01_TX_P0_Torque, addr_TargetSetDevice + addr_TargetSetFunction, 2);
         }
-
-
 
     }  // end of public partial class Form1 : Form
 
