@@ -47,6 +47,7 @@ using System.Xml.Linq;
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
 {
+    //---------------------------------------------------------------------------------------
     public partial class Form1 : Form
     {
         //---------------------------------------------------------------------------------------
@@ -1050,6 +1051,170 @@ namespace InjectorInspector
             return dbRstIAI;
         }  // end of public double dbapiGate(double dbIncreaseGate)  //IAI
         //---------------------------------------------------------------------------------------
+        public double dbapJoDell3D掃描(double dbIncreaseGate)  //JoDell3D掃描
+        {
+            double dbRstJoDell3D掃描 = 0.0;
+
+            {  //JoDell植針嘴 讀取與顯示
+                int rslt = 0;
+
+                //讀取 JoDell3D掃描 資訊
+                byte[] JODELL_RX = new byte[18];
+                int addr_TargetGetDevice = (int)(addr_JODELL.pxeaJ_3D掃描_Input) / 10;
+                int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START) / 10;
+                clsServoControlWMX3.WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice + addr_TargetGetFunction, JODELL_RX.Length);
+
+                int[] varJODELL_RX = new int[JODELL_RX.Length / 2];
+                for (int i = 0; i < varJODELL_RX.Length; i++) {
+                    varJODELL_RX[i] = BitConverter.ToInt16(JODELL_RX, i * 2);
+                }
+                rslt = varJODELL_RX[0];
+
+                //計算讀取長度
+                int iJoDell3D掃描pos = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GetPosition, 0);
+                double dbJoDell3D掃描pos = (double)iJoDell3D掃描pos / 100.0;
+                dbRstJoDell3D掃描 = dbJoDell3D掃描pos;
+
+                //顯示運動速度
+                int iJoDell3D掃描spd = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
+                double dbJoDell3D掃描spd = (double)iJoDell3D掃描spd / 100;
+
+                //變更顏色
+                if (rslt == 4)
+                {
+                    select_JoDell3D掃描.BackColor = Color.Red;
+                    lbl_acpos_JoDell3D掃描.BackColor = Color.White;
+                    lbl_spd_JoDell3D掃描.BackColor = Color.White;
+                }
+                else
+                {
+                    select_JoDell3D掃描.BackColor = Color.Green;
+                    lbl_acpos_JoDell3D掃描.BackColor = Color.Gray;
+                    lbl_spd_JoDell3D掃描.BackColor = Color.Gray;
+                }
+
+                //顯示資訊
+                lbl_acpos_JoDell3D掃描.Text = dbJoDell3D掃描pos.ToString("F3");
+                lbl_spd_JoDell3D掃描.Text = dbJoDell3D掃描spd.ToString("F3");
+
+                //bshow_debug_RAW_Conver_Back_Value
+                lbl_JoDell3D掃描_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_JoDell3D掃描_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_JoDell3D掃描_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if (bshow_debug_RAW_Conver_Back_Value == true)
+                {
+                    lbl_JoDell3D掃描_RAW.Text = iJoDell3D掃描pos.ToString();
+                    lbl_JoDell3D掃描_Convert.Text = dbJoDell3D掃描pos.ToString("F3");
+                    lbl_JoDell3D掃描_Back.Text = ((int)(dbJoDell3D掃描pos * 100)).ToString();
+                }
+
+            }
+
+            if (dbIncreaseGate == dbRead)
+            {
+                //this.Text = "Z軸尚未回到上位";
+            }
+            else
+            {  //IAI 變更位置
+                // 取得欲變更的的浮點數
+                double fChangeGate = dbIncreaseGate;
+
+                //伸長量overflow保護
+                if (fChangeGate >= 30.0) {
+                    fChangeGate = 30.0;
+                }
+
+
+                //執行移動JoDell3D掃描
+                clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 1);
+                clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
+            }
+
+            return dbRstJoDell3D掃描;
+        }  // end of public double dbapJoDell3D掃描(double dbIncreaseGate)  //JoDell3D掃描
+        //---------------------------------------------------------------------------------------
+        public double dbapJoDell吸針嘴(double dbIncreaseGate)  //JoDell吸針嘴
+        {
+            double dbRstJoDell吸針嘴 = 0.0;
+
+            {  //JoDell吸針嘴 讀取與顯示
+                int rslt = 0;
+
+                //讀取 JoDell吸針嘴 資訊
+                byte[] JODELL_RX = new byte[18];
+                int addr_TargetGetDevice = (int)(addr_JODELL.pxeaJ_吸針嘴_Input) / 10;
+                int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START) / 10;
+                clsServoControlWMX3.WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice + addr_TargetGetFunction, JODELL_RX.Length);
+
+                int[] varJODELL_RX = new int[JODELL_RX.Length / 2];
+                for (int i = 0; i < varJODELL_RX.Length; i++) {
+                    varJODELL_RX[i] = BitConverter.ToInt16(JODELL_RX, i * 2);
+                }
+                rslt = varJODELL_RX[0];
+
+                //計算讀取長度
+                int iJoDell吸針嘴pos = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GetPosition, 0);
+                double dbJoDell吸針嘴pos = (double)iJoDell吸針嘴pos / 100.0;
+                dbRstJoDell吸針嘴 = dbJoDell吸針嘴pos;
+
+                //顯示運動速度
+                int iJoDell吸針嘴spd = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
+                double dbJoDell吸針嘴spd = (double)iJoDell吸針嘴spd / 100;
+
+                //變更顏色
+                if (rslt == 4)
+                {
+                    select_JoDell吸針嘴.BackColor = Color.Red;
+                    lbl_acpos_JoDell吸針嘴.BackColor = Color.White;
+                    lbl_spd_JoDell吸針嘴.BackColor = Color.White;
+                }
+                else
+                {
+                    select_JoDell吸針嘴.BackColor = Color.Green;
+                    lbl_acpos_JoDell吸針嘴.BackColor = Color.Gray;
+                    lbl_spd_JoDell吸針嘴.BackColor = Color.Gray;
+                }
+
+                //顯示資訊
+                lbl_acpos_JoDell吸針嘴.Text = dbJoDell吸針嘴pos.ToString("F3");
+                lbl_spd_JoDell吸針嘴.Text = dbJoDell吸針嘴spd.ToString("F3");
+
+                //bshow_debug_RAW_Conver_Back_Value
+                lbl_JoDell吸針嘴_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_JoDell吸針嘴_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_JoDell吸針嘴_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if (bshow_debug_RAW_Conver_Back_Value == true)
+                {
+                    lbl_JoDell吸針嘴_RAW.Text = iJoDell吸針嘴pos.ToString();
+                    lbl_JoDell吸針嘴_Convert.Text = dbJoDell吸針嘴pos.ToString("F3");
+                    lbl_JoDell吸針嘴_Back.Text = ((int)(dbJoDell吸針嘴pos * 100)).ToString();
+                }
+
+            }
+
+            if (dbIncreaseGate == dbRead)
+            {
+                //this.Text = "Z軸尚未回到上位";
+            }
+            else
+            {  //IAI 變更位置
+                // 取得欲變更的的浮點數
+                double fChangeGate = dbIncreaseGate;
+
+                //伸長量overflow保護
+                if (fChangeGate >= 30.0) {
+                    fChangeGate = 30.0;
+                }
+
+
+                //執行移動JoDell吸針嘴
+                clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 1);
+                clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
+            }
+
+            return dbRstJoDell吸針嘴;
+        }  // end of public double dbapJoDell吸針嘴(double dbIncreaseGate)  //JoDell吸針嘴
+        //---------------------------------------------------------------------------------------
         public double dbapJoDell植針嘴(double dbIncreaseGate)  //JoDell植針嘴
         {
             double dbRstJoDell植針嘴 = 0.0;
@@ -1132,10 +1297,6 @@ namespace InjectorInspector
             return dbRstJoDell植針嘴;
         }  // end of public double dbapJoDell植針嘴(double dbIncreaseGate)  //JoDell植針嘴
         //---------------------------------------------------------------------------------------
-
-        //---------------------------------------------------------------------------------------
-
-        //---------------------------------------------------------------------------------------
         //------------------------ Xavier Call, Control the Servo machine -----------------------
         //---------------------------------------------------------------------------------------
 
@@ -1193,7 +1354,10 @@ namespace InjectorInspector
         public bool enGC_工作門       = false;
 
         public bool enGC_IAI          = false;
+
         public bool enGC_JoDell植針嘴 = false;
+        public bool enGC_JoDell3D掃描 = false;
+        public bool enGC_JoDell吸針嘴 = false;
 
         public void en_Group_Click(object sender, EventArgs e)
         {  // start of public void en_Group_Click(object sender, EventArgs e)
@@ -1244,12 +1408,25 @@ namespace InjectorInspector
                 clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  (enGC_IAI)? 1.0:0.0);
             }
 
+            if (enGC_JoDell3D掃描 != en_JoDell3D掃描.Checked){
+                enGC_JoDell3D掃描  = en_JoDell3D掃描.Checked;
+
+                clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, (enGC_JoDell3D掃描) ? 1.0 : 0.0);
+            }
+
+            if (enGC_JoDell吸針嘴 != en_JoDell吸針嘴.Checked){
+                enGC_JoDell吸針嘴  = en_JoDell吸針嘴.Checked;
+
+                clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, (enGC_JoDell吸針嘴) ? 1.0 : 0.0);
+            }
+
             if (enGC_JoDell植針嘴 != en_JoDell植針嘴.Checked){
                 enGC_JoDell植針嘴  = en_JoDell植針嘴.Checked;
 
                 clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, (enGC_JoDell植針嘴) ? 1.0 : 0.0);
             }
-        }  // end of public void en_Group_Click(object sender, EventArgs e)
+
+    }  // end of public void en_Group_Click(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
         public WMX3軸定義 wmxId_RadioGroupChanged = WMX3軸定義.AXIS_START;
         private void RadioGroupChanged(object sender, EventArgs e)
@@ -1279,6 +1456,10 @@ namespace InjectorInspector
                     wmxId_RadioGroupChanged = WMX3軸定義.工作門;
                 } else if (selectedRadioButton == select_IAI) {
                     wmxId_RadioGroupChanged = WMX3軸定義.IAI;
+                } else if (selectedRadioButton == select_JoDell3D掃描) {
+                    wmxId_RadioGroupChanged = WMX3軸定義.JoDell3D掃描;
+                } else if (selectedRadioButton == select_JoDell吸針嘴) {
+                    wmxId_RadioGroupChanged = WMX3軸定義.JoDell吸針嘴;
                 } else if (selectedRadioButton == select_JoDell植針嘴) {
                     wmxId_RadioGroupChanged = WMX3軸定義.JoDell植針嘴;
                 }
@@ -1305,6 +1486,10 @@ namespace InjectorInspector
                 txtABSpos.Text = (double.Parse(lbl_acpos_工作門.Text).ToString("F3"));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.IAI) {
                 txtABSpos.Text = (double.Parse(lbl_acpos_IAI.Text).ToString("F3"));
+            } else if (wmxId_RadioGroupChanged == WMX3軸定義.JoDell3D掃描) {
+                txtABSpos.Text = (double.Parse(lbl_acpos_JoDell3D掃描.Text).ToString("F3"));
+            } else if (wmxId_RadioGroupChanged == WMX3軸定義.JoDell吸針嘴) {
+                txtABSpos.Text = (double.Parse(lbl_acpos_JoDell吸針嘴.Text).ToString("F3"));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.JoDell植針嘴) {
                 txtABSpos.Text = (double.Parse(lbl_acpos_JoDell植針嘴.Text).ToString("F3"));
             } else {
@@ -1400,6 +1585,12 @@ namespace InjectorInspector
                     case WMX3軸定義.IAI:
                         dbapiIAI(result);
                         break;
+                    case WMX3軸定義.JoDell3D掃描:
+                        dbapJoDell3D掃描(result);
+                        break;
+                    case WMX3軸定義.JoDell吸針嘴:
+                        dbapJoDell吸針嘴(result);
+                        break;
                     case WMX3軸定義.JoDell植針嘴:
                         dbapJoDell植針嘴(result);
                         break;
@@ -1446,6 +1637,9 @@ namespace InjectorInspector
                 dbapiGate(dbState);
 
                 dbapiIAI(dbState);
+
+                dbapJoDell3D掃描(dbState);
+                dbapJoDell吸針嘴(dbState);
                 dbapJoDell植針嘴(dbState);
             }
 
@@ -2111,10 +2305,10 @@ namespace InjectorInspector
 
         private void label11_Click(object sender, EventArgs e)
         {
-            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
+            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_吸針嘴_Output) / 10;
             int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
 
-            int varJODELL_TX_P0_Position = 50;
+            int varJODELL_TX_P0_Position = 800;
             byte[] JODELL_TX_P0_Position = new byte[2];
 
             JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);
@@ -2126,10 +2320,10 @@ namespace InjectorInspector
 
         private void label10_Click(object sender, EventArgs e)
         {
-            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
+            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_吸針嘴_Output) / 10;
             int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
 
-            int varJODELL_TX_P0_Position = 3000;
+            int varJODELL_TX_P0_Position = 2200;
             byte[] JODELL_TX_P0_Position = new byte[2];
 
             JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);

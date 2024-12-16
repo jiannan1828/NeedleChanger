@@ -71,13 +71,10 @@
                     fChangeGate = 50.0;
                 }
 
-                //璸衡干タ计
-                int iTargetGate = (int)(fChangeGate * 100);
 
                 //磅︽簿笆JoDell从皐糒
                 clsServoControlWMX3.WMX3_JoDell从皐糒(addr_JODELL.pxeaI_MotorOn, 1);
-                clsServoControlWMX3.WMX3_JoDell从皐糒(addr_JODELL.pxeaI_GoToPosition, iTargetGate);
-
+                clsServoControlWMX3.WMX3_JoDell从皐糒(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
             }
 
             return dbRstJoDell从皐糒;
