@@ -1,95 +1,79 @@
-        public double dbapiGate(double dbIncreaseGate)  //Gate
+        public double dbapiIAI(double dbIncreaseGate)  //IAI
         {
-            double dbRstGate = 0.0;
+            double dbRstIAI = 0.0;
 
-            {  //工作門 讀取與顯示
+            {  //Socket定位攝影機軸 讀取與顯示
                 int rslt = 0;
-                string position = "";
-                string speed = "";
 
-                //讀取 工作門 資訊
-                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.工作門, ref position, ref speed);
+                //讀取 Socket定位攝影機軸 資訊
+                byte[] aGetGetIAI = new byte[2];
+                clsServoControlWMX3.WMX3_GetInIO(ref aGetGetIAI, (int)(addr_IAI.pxeaI_GetStatusSignal2_2Bytes) / 10, 2);
+                rslt += ((aGetGetIAI[(int)(addr_IAI.pxeaI_GetServoONState - addr_IAI.pxeaI_GetStatusSignal2_2Bytes) / 10] & (1 << (int)(addr_IAI.pxeaI_GetServoONState) % 10)) != 0) ? 1 : 0;
+
+                byte[] aGetSetIAI = new byte[2];
+                clsServoControlWMX3.WMX3_GetOutIO(ref aGetSetIAI, (int)(addr_IAI.pxeaI_SetControlSignal2_2Bytes) / 10, 2);
+                rslt += ((aGetSetIAI[(int)(addr_IAI.pxeaI_SetDisableBrake - addr_IAI.pxeaI_SetControlSignal2_2Bytes) / 10] & (1 << (int)(addr_IAI.pxeaI_SetDisableBrake) % 10)) != 0) ? 1 : 0;
 
                 //計算讀取長度
-                if (position != "")
-                {
-                    dbRstGate = double.Parse(position);
-                }
+                int iIAIpos = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetPosition, 0);
+                double dbIAIpos = (double)iIAIpos / 100.0;
+                dbRstIAI = dbIAIpos;
 
                 //顯示運動速度
-                double dbSpeed = 0.0;
-                if (speed != "")
-                {
-                    dbSpeed = double.Parse(speed);
-                }
+                int iIAIspd = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetCurrentSpeed4Bytes, 0);
+                double dbIAIspd = (double)iIAIspd / 100.0;
 
                 //變更顏色
-                if (rslt == 1)
+                if (rslt == 2)
                 {
-                    select_工作門.BackColor = Color.Red;
-                    lbl_acpos_工作門.BackColor = Color.White;
-                    lbl_spd_工作門.BackColor = Color.White;
+                    select_IAI.BackColor = Color.Red;
+                    lbl_acpos_IAI.BackColor = Color.White;
+                    lbl_spd_IAI.BackColor = Color.White;
                 }
                 else
                 {
-                    select_工作門.BackColor = Color.Green;
-                    lbl_acpos_工作門.BackColor = Color.Gray;
-                    lbl_spd_工作門.BackColor = Color.Gray;
+                    select_IAI.BackColor = Color.Green;
+                    lbl_acpos_IAI.BackColor = Color.Gray;
+                    lbl_spd_IAI.BackColor = Color.Gray;
                 }
 
                 //顯示資訊
-                lbl_acpos_工作門.Text = dbRstGate.ToString("F3");
-                lbl_spd_工作門.Text = dbSpeed.ToString("F3");
+                lbl_acpos_IAI.Text = dbIAIpos.ToString("F3");
+                lbl_spd_IAI.Text = dbIAIspd.ToString("F3");
 
                 //bshow_debug_RAW_Conver_Back_Value
-                lbl_工作門_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
-                lbl_工作門_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                lbl_工作門_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_IAI_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_IAI_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_IAI_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
                 if (bshow_debug_RAW_Conver_Back_Value == true)
-                    if (position != "")
-                    {
-                        int MaxRAW = 56580;
-                        int MinRAW = -1271;
-                        double Maxdb = 575.0;
-                        double Mindb = 0.0;
-                        Normal calculate = new Normal();
-                        int Convert = (int)(double.Parse(position));
-                        double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
-
-                        lbl_工作門_RAW.Text = Convert.ToString();
-                        lbl_工作門_Convert.Text = dbGet.ToString("F3");
-                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
-                        lbl_工作門_Back.Text = cnback.ToString();
-                    }
+                {
+                    lbl_IAI_RAW.Text = iIAIpos.ToString();
+                    lbl_IAI_Convert.Text = dbIAIpos.ToString("F3");
+                    lbl_IAI_Back.Text = ((int)(dbIAIpos * 100)).ToString();
+                }
 
             }
 
-            if (dbIncreaseGate == dbRead || dbapiNozzleZ(dbRead) >= 0.5)
+            if (dbIncreaseGate == dbRead)
             {
                 //this.Text = "Z軸尚未回到上位";
             }
             else
-            {  //工作門 變更位置
+            {  //IAI 變更位置
                 // 取得欲變更的的浮點數
                 double fChangeGate = dbIncreaseGate;
 
                 //伸長量overflow保護
-                //if (fChangeGate >= 40.35)
-                //{
-                //    fChangeGate = 40.35;
-                //}
+                if (fChangeGate >= 30.1) {
+                    fChangeGate = 30.1;
+                }
 
-                //計算補正至長度的數值
-                int iTargetGate = (int)(fChangeGate * 100);
+                clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 1);
 
                 //執行移動工作門
-                int axis = (int)WMX3軸定義.工作門;
-                int position = iTargetGate;
-                int speed = (int)(50.00 * 100 * Multiplier);
-                int accel = speed * 2;
-                int daccel = speed * 2;
-                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn, 1);
+                clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GoToPosition, fChangeGate);
             }
 
-            return dbRstGate;
-        }  // end of public double dbapiGate(double dbIncreaseGate)  //Gate
+            return dbRstIAI;
+        }  // end of public double dbapiGate(double dbIncreaseGate)  //IAI

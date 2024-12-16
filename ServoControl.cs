@@ -38,6 +38,7 @@ namespace InjectorInspector
         DELTA_ASDA_B2 = 1280000,
         DELTA_ASDA_B3 = 16777216,
         IAI,
+        JoDell植針嘴,
     }  // end of public enum WMX3軸定義
 
     public enum WMX3IO對照
@@ -66,9 +67,9 @@ namespace InjectorInspector
 
             pxeIO_Addr6           =  6,  //6
             pxeIO_取料吸嘴吸      = 20,  //0 取料吸嘴溪真空
-            pxeIO_NA_O_21         = 21,  //1 未接
+            pxeIO_下後左門鎖      = 21,  //1 下後左門鎖
             pxeIO_取料吸嘴破真空  = 22,  //2 取料吸嘴破真空
-            pxeIO_NA_O_23         = 23,  //3 未接
+            pxeIO_下後右門鎖      = 23,  //3 下後右門鎖
             pxeIO_NA_O_24         = 24,  //4 未接
             pxeIO_HEPA            = 25,  //5 hipa
             pxeIO_NA_O_26         = 26,  //6 未接
@@ -151,17 +152,17 @@ namespace InjectorInspector
             pxeIO_上罩左側右門    = 60,  //0 上兆左側右們
             pxeIO_上罩右側右門    = 61,  //1 上兆右側右們
             pxeIO_上罩左側左門    = 62,  //2 上兆左側左門
-            pxeIO_上罩右側左門    = 63,  //pxeIO_3 上兆右側左門
-            pxeIO_上罩後側右門    = 64,  //pxeIO_4 上兆後側右們
+            pxeIO_上罩右側左門    = 63,  //3 上兆右側左門
+            pxeIO_上罩後側右門    = 64,  //4 上兆後側右們
             pxeIO_螢幕旁小門      = 65,  //5 螢幕旁小門
             pxeIO_上罩後側左門    = 66,  //6 上兆後側左門
             pxeIO_NA67            = 67,  //7 未接
 
             pxeIO_Addr35          = 35,  //35
             pxeIO_下支架左側右門  = 70,  //0 下支架左側右門
-            pxeIO_NA71            = 71,  //1 未知
+            pxeIO_下支架後側左門  = 71,  //1 下支架後側左門
             pxeIO_下支架左側左門  = 72,  //2 下支架左側左門
-            pxeIO_NA73            = 73,  //3 未知
+            pxeIO_下支架後側右門  = 73,  //3 下支架後側右門
             pxeIO_下支架右側右門  = 74,  //4 下支架右側右門
             pxeIO_NA75            = 75,  //5 未知
             pxeIO_下支架右側左門  = 76,  //6 下支架右側左門
@@ -170,6 +171,7 @@ namespace InjectorInspector
 
     public enum addr_IAI
     {  // start of public enum addr_IAI
+        //Socket定位
         //IAI Set IO addr
         pxeaI_SetAddrSTART                      = 2320,
             pxeaI_SetTargetPosition4Bytes       = 2320,
@@ -253,14 +255,20 @@ namespace InjectorInspector
     public enum addr_JODELL
     {  // start of public enum addr_JODELL
         pxeaJ_DeviceSTART,
-            pxeaJ_Device01_Output =  160,
-            pxeaJ_Device01_Input  =  440,
+            pxeaJ_Device01_Output =  160,  //3D掃描
+            pxeaJ_Device01_Input  =  440,  //3D掃描
+            pxeaJ_3D掃描_Output   =  160,
+            pxeaJ_3D掃描_Input    =  440, 
 
-            pxeaJ_Device02_Output =  880,
-            pxeaJ_Device02_Input  =  620,
+            pxeaJ_Device02_Output =  880,  //吸針嘴
+            pxeaJ_Device02_Input  =  620,  //吸針嘴
+            pxeaJ_吸針嘴_Output   =  880, 
+            pxeaJ_吸針嘴_Input    =  620, 
 
-            pxeaJ_Device03_Output = 1600,
-            pxeaJ_Device03_Input  =  800,
+            pxeaJ_Device03_Output = 1600,  //植針嘴
+            pxeaJ_Device03_Input  =  800,  //植針嘴
+            pxeaJ_植針嘴_Output   = 1600,  
+            pxeaJ_植針嘴_Input    =  800,  
         pxeaJ_DeviceEND,
 
         pxeaJ_SetAddr_START                          = 000,
@@ -314,6 +322,10 @@ namespace InjectorInspector
             pxeaJ_GetAddr_OutputMonitor2Bytes        = 160,
         pxeaJ_GetAddr_END,
 
+        pxeaI_MotorOn,
+        pxeaI_SetHome,
+        pxeaI_GoToPosition,
+        pxeaI_GetPosition,
     }  // end of public enum addr_JODELL
 
     //擴展定義字串轉換
@@ -354,6 +366,7 @@ namespace InjectorInspector
 
         //WMX3軸定義
         public const double dbRead = 99999.9;
+        public const double dbAxisRGearRatio = 36000;
 
         //WMX3
         private WMX3Api          wmx;
@@ -436,7 +449,7 @@ namespace InjectorInspector
               //motion.Config.SetGearRatio((int)WMX3軸定義.載盤Y軸, 1000, 100);    //大線碼
 
                 motion.Config.SetGearRatio((int)WMX3軸定義.植針Z軸, (int)WMX3軸定義.YASKAWA, 2000);
-                motion.Config.SetGearRatio((int)WMX3軸定義.植針R軸, (int)WMX3軸定義.YASKAWA, 2000);
+                motion.Config.SetGearRatio((int)WMX3軸定義.植針R軸, (int)WMX3軸定義.YASKAWA, dbAxisRGearRatio);
 
                 motion.Config.SetGearRatio((int)WMX3軸定義.工作門, (int)WMX3軸定義.DELTA_ASDA_B3, 20);
             }
@@ -795,7 +808,7 @@ namespace InjectorInspector
             */
 
             //故障復歸
-            //讀取 工作門 資訊
+            //讀取 IAI 資訊
             byte[] aGetIAIalarm = new byte[2];
             int rstAlarm = 0;
             WMX3_GetInIO(ref aGetIAIalarm, (int)(addr_IAI.pxeaI_GetStatusSignal2_2Bytes) / 10, 2);
@@ -856,7 +869,7 @@ namespace InjectorInspector
                     WMX3_SetIO(ref aIAITargetPosition, (int)(addr_IAI.pxeaI_SetTargetPosition4Bytes) / 10, 4);
 
                     //如果設定位置為0
-                    if (dbInData<=0) {
+                    if (dbInData <= 0) {
                         goto lbl_Home;
                     } else { 
                         Thread.Sleep(1);
@@ -885,6 +898,165 @@ namespace InjectorInspector
 
             return rslt;
         }  // end of public void WMX3_IAI(ref addr_IAI aIJob, ref double dbInData)
+
+
+
+        public int WMX3_JoDell植針嘴(addr_JODELL aIJob, double dbInData)
+        {  // start of public int WMX3_JoDell植針嘴(addr_JODELL aIJob, double dbInData)
+            int rslt = 0;
+
+            //故障復歸
+            //讀取 JoDell植針嘴 資訊
+            //byte[] aGetIAIalarm = new byte[2];
+            //int rstAlarm = 0;
+            //WMX3_GetInIO(ref aGetIAIalarm, (int)(addr_JODELL.pxeaI_GetStatusSignal2_2Bytes) / 10, 2);
+            //rstAlarm = ((aGetIAIalarm[(int)(addr_JODELL.pxeaI_GetAlarmState - addr_JODELL.pxeaI_GetStatusSignal2_2Bytes) / 10] & (1 << (int)(addr_JODELL.pxeaI_GetAlarmState) % 10)) != 0) ? 1 : 0;
+            //if(rstAlarm == 1) {
+            //    Thread.Sleep(1);
+            //    WMX3_SetIOBit((int)(addr_JODELL.pxeaI_SetResetAlarm) / 10, (int)(addr_JODELL.pxeaI_SetResetAlarm) % 10, (byte)1);
+            //
+            //    Thread.Sleep(1);
+            //    WMX3_SetIOBit((int)(addr_JODELL.pxeaI_SetResetAlarm) / 10, (int)(addr_JODELL.pxeaI_SetResetAlarm) % 10, (byte)0);
+            //}
+
+            //運轉速度
+            {
+                int iJoDell植針嘴Speed     = 3000;
+                iJoDell植針嘴Speed         = (iJoDell植針嘴Speed >= 4000) ? 4000 : iJoDell植針嘴Speed;
+
+                byte[] aJoDell植針嘴Speed  = new byte[2];
+                aJoDell植針嘴Speed         = BitConverter.GetBytes(iJoDell植針嘴Speed);
+
+                int addr_TargetSetDevice   = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
+                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Speed2Bytes) / 10;
+                WMX3_SetIO(ref aJoDell植針嘴Speed, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+            }
+
+            //運轉扭力
+            {
+                int iJoDell植針嘴Torque    = 25;
+                iJoDell植針嘴Torque        = (iJoDell植針嘴Torque >= 25) ? 25 : iJoDell植針嘴Torque;
+
+                byte[] aJoDell植針嘴Torque = new byte[2];
+                aJoDell植針嘴Torque        = BitConverter.GetBytes(iJoDell植針嘴Torque);
+
+                int addr_TargetSetDevice   = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
+                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Torque2Bytes) / 10;
+                WMX3_SetIO(ref aJoDell植針嘴Torque, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+            }
+
+            switch (aIJob)
+            {
+                case addr_JODELL.pxeaI_MotorOn: {
+                    int iJoDell植針嘴Enable    = (dbInData > 0) ? (byte)1 : (byte)0;
+
+                    byte[] aJoDell植針嘴Enable = new byte[2];
+                    aJoDell植針嘴Enable        = BitConverter.GetBytes(iJoDell植針嘴Enable);
+
+                    int addr_TargetSetDevice   = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
+                    int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
+                    WMX3_SetIO(ref aJoDell植針嘴Enable, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+                } break;
+
+                case addr_JODELL.pxeaI_SetHome:  lbl_Home:
+                    Thread.Sleep(1);
+                    dbInData = 0;
+                    {
+                        int iJoDell植針嘴Enable = (dbInData > 0) ? (byte)1 : (byte)0;
+
+                        byte[] aJoDell植針嘴Enable = new byte[2];
+                        aJoDell植針嘴Enable = BitConverter.GetBytes(iJoDell植針嘴Enable);
+
+                        int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
+                        int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
+                        WMX3_SetIO(ref aJoDell植針嘴Enable, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+                    }
+
+                    Thread.Sleep(1);
+                    dbInData = 1;
+                    {
+                        int iJoDell植針嘴Enable = (dbInData > 0) ? (byte)1 : (byte)0;
+
+                        byte[] aJoDell植針嘴Enable = new byte[2];
+                        aJoDell植針嘴Enable = BitConverter.GetBytes(iJoDell植針嘴Enable);
+
+                        int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
+                        int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
+                        WMX3_SetIO(ref aJoDell植針嘴Enable, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+                    }
+                    break;
+
+                case addr_JODELL.pxeaI_GoToPosition: {
+                    //執行移動JoDell植針嘴
+                    {
+                        int iJoDell植針嘴TargetActCmd      = 0;
+
+                        byte[] aJoDell植針嘴TargetActCmd   = new byte[2];
+                               aJoDell植針嘴TargetActCmd   = BitConverter.GetBytes(iJoDell植針嘴TargetActCmd);
+
+                        int addr_TargetSetDevice           = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
+                        int addr_TargetSetFunction         = (int)(addr_JODELL.pxeaJ_SetAddr_ActCmd2Bytes) / 10;
+                        WMX3_SetIO(ref aJoDell植針嘴TargetActCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+                    }
+
+                    //目標位置
+                    {
+                        int iJoDell植針嘴TargetPosition0    = (int)(dbInData * 100);
+                            iJoDell植針嘴TargetPosition0    = (iJoDell植針嘴TargetPosition0 >= 5000) ? 5000 : (iJoDell植針嘴TargetPosition0 <= 0) ? 0 : iJoDell植針嘴TargetPosition0;
+
+                        byte[] aJoDell植針嘴TargetPosition0 = new byte[2];
+                               aJoDell植針嘴TargetPosition0 = BitConverter.GetBytes(iJoDell植針嘴TargetPosition0);
+
+                        //如果設定位置為0
+                        if (dbInData >= 50.0) {
+                            goto lbl_Home;
+                        } else { 
+                            int addr_TargetSetDevice            = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
+                            int addr_TargetSetFunction          = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
+                            WMX3_SetIO(ref aJoDell植針嘴TargetPosition0, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+                        }
+                    }
+                } break;
+
+                case addr_JODELL.pxeaI_GetPosition: {
+                    byte[] JODELL_RX           = new byte[18];
+
+                    int addr_TargetGetDevice   = (int)(addr_JODELL.pxeaJ_植針嘴_Input) / 10;
+                    int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START) / 10;
+                    WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice + addr_TargetGetFunction, JODELL_RX.Length);
+
+                    int[] varJODELL_RX         = new int[JODELL_RX.Length / 2];
+                    for (int i = 0; i < varJODELL_RX.Length; i++) {
+                        varJODELL_RX[i] = BitConverter.ToInt16(JODELL_RX, i * 2);
+                    }
+
+                    rslt = varJODELL_RX[(int)(addr_JODELL.pxeaJ_GetAddr_Position2Bytes) / 10 / 2];
+                } break;
+
+                case addr_JODELL.pxeaJ_GetAddr_Speed2Bytes: {
+                    byte[] JODELL_RX           = new byte[18];
+
+                    int addr_TargetGetDevice   = (int)(addr_JODELL.pxeaJ_植針嘴_Input) / 10;
+                    int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START) / 10;
+                    WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice + addr_TargetGetFunction, JODELL_RX.Length);
+
+                    int[] varJODELL_RX         = new int[JODELL_RX.Length / 2];
+                    for (int i = 0; i < varJODELL_RX.Length; i++) {
+                        varJODELL_RX[i] = BitConverter.ToInt16(JODELL_RX, i * 2);
+                    }
+
+                    rslt = varJODELL_RX[(int)(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes) / 10 / 2];
+                } break;
+
+                default:
+                    break;
+            }
+
+            return rslt;
+        }  // end of public int WMX3_JoDell植針嘴(addr_JODELL aIJob, double dbInData)
+
+
+
 
     }  // end of internal class ServoControl
 }

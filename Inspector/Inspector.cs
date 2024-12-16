@@ -29,7 +29,7 @@ namespace Inspector
         public InspParameter parameter = new InspParameter();
         Insp入料區 Insp入料;
         InspTray區 InspTray;
-        Insp吸嘴區 InspNozzle;
+        public Insp吸嘴區 InspNozzle;
         InspSocket區 InspSocket;
         InspCCD5區 InspCCD5;
         InspCCD6區 InspCCD6;
@@ -964,7 +964,7 @@ namespace Inspector
         HWindowHelper helper;
         HObject RegionNozzle;
         ContextMenuStrip menu;
-        internal SisoFGArea CCD;
+        public SisoFGArea CCD;
         Inspector owner;
         bool first = true, InspOK = false;
         HTuple P1x, P1y, P2x, P2y;
@@ -980,7 +980,7 @@ namespace Inspector
         public Insp吸嘴區(Inspector sender, HWindowControl win)
         {
             owner = sender;
-            CCD = new SisoFGArea("CCDNozzle", "FRONT_GPI_0", "./", 2, onRecvImage, IntPtr.Zero);
+            CCD = new SisoFGArea("CCDNozzle", "FRONT_GPI_0", "./", 9, onRecvImage, IntPtr.Zero);
             helper = new HWindowHelper(win) { ShowResult = ShowResult };
             SetMenu();
         }

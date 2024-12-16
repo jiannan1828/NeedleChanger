@@ -190,8 +190,7 @@ namespace InjectorInspector
                 double fChangeNozzleX = dbIncreaseNozzleX;
 
                 //伸長量overflow保護
-                //if (fChangeNozzleX >= 40.35)
-                //{
+                //if (fChangeNozzleX >= 40.35) {
                 //    fChangeNozzleX = 40.35;
                 //}
 
@@ -286,8 +285,7 @@ namespace InjectorInspector
                 double fChangeNozzleY = dbIncreaseNozzleY;
 
                 //伸長量overflow保護
-                //if (fChangeNozzleY >= 40.35)
-                //{
+                //if (fChangeNozzleY >= 40.35) {
                 //    fChangeNozzleY = 40.35;
                 //}
 
@@ -382,8 +380,7 @@ namespace InjectorInspector
                 double fChangeNozzleZ = dbIncreaseNozzleZ;
 
                 //伸長量overflow保護
-                if (fChangeNozzleZ >= 40.35)
-                {
+                if (fChangeNozzleZ >= 40.35) {
                     fChangeNozzleZ = 40.35;
                 }
 
@@ -574,8 +571,7 @@ namespace InjectorInspector
                 double fChangeCarrierX = dbIncreaseCarrierX;
 
                 //伸長量overflow保護
-                //if (fChangeCarrierX >= 40.35)
-                //{
+                //if (fChangeCarrierX >= 40.35) {
                 //    fChangeCarrierX = 40.35;
                 //}
 
@@ -670,8 +666,7 @@ namespace InjectorInspector
                 double fChangeCarrierY = dbIncreaseCarrierY;
 
                 //伸長量overflow保護
-                //if (fChangeCarrierY >= 40.35)
-                //{
+                //if (fChangeCarrierY >= 40.35) {
                 //    fChangeCarrierY = 40.35;
                 //}
 
@@ -766,8 +761,7 @@ namespace InjectorInspector
                 double fChangeSetZ = dbIncreaseSetZ;
 
                 //伸長量overflow保護
-                //if (fChangeSetZ >= 40.35)
-                //{
+                //if (fChangeSetZ >= 40.35) {
                 //    fChangeSetZ = 40.35;
                 //}
 
@@ -801,14 +795,14 @@ namespace InjectorInspector
                 //計算讀取長度
                 if (position != "")
                 {
-                    dbRstSetR = double.Parse(position);
+                    dbRstSetR = double.Parse(position)/100.0;
                 }
 
                 //顯示運動速度
                 double dbSpeed = 0.0;
                 if (speed != "")
                 {
-                    dbSpeed = double.Parse(speed);
+                    dbSpeed = double.Parse(speed)/100.0;
                 }
 
                 //變更顏色
@@ -836,10 +830,10 @@ namespace InjectorInspector
                 if (bshow_debug_RAW_Conver_Back_Value == true)
                     if (position != "")
                     {
-                        int MaxRAW = -1250646;
-                        int MinRAW = -1255481;
-                        double Maxdb = 90.0;
-                        double Mindb = 180.0;
+                        int MaxRAW = 1000;
+                        int MinRAW = 0;
+                        double Maxdb = 1000.0;
+                        double Mindb = 0.0;
                         Normal calculate = new Normal();
                         int Convert = (int)(double.Parse(position));
                         double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
@@ -862,8 +856,7 @@ namespace InjectorInspector
                 double fChangeSetR = dbIncreaseSetR;
 
                 //伸長量overflow保護
-                //if (fChangeSetR >= 40.35)
-                //{
+                //if (fChangeSetR >= 40.35) {
                 //    fChangeSetR = 40.35;
                 //}
 
@@ -873,7 +866,7 @@ namespace InjectorInspector
                 //執行移動植針R軸
                 int axis = (int)WMX3軸定義.植針R軸;
                 int position = iTargetSetR;
-                int speed = (int)(50.00 * 100 * Multiplier);
+                int speed = (int)(dbAxisRGearRatio * Multiplier);
                 int accel = speed * 2;
                 int daccel = speed * 2;
                 clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
@@ -958,8 +951,7 @@ namespace InjectorInspector
                 double fChangeGate = dbIncreaseGate;
 
                 //伸長量overflow保護
-                //if (fChangeGate >= 40.35)
-                //{
+                //if (fChangeGate >= 40.35) {
                 //    fChangeGate = 40.35;
                 //}
 
@@ -982,10 +974,10 @@ namespace InjectorInspector
         {
             double dbRstIAI = 0.0;
 
-            {  //工作門 讀取與顯示
+            {  //Socket定位攝影機軸 讀取與顯示
                 int rslt = 0;
 
-                //讀取 工作門 資訊
+                //讀取 Socket定位攝影機軸 資訊
                 byte[] aGetGetIAI = new byte[2];
                 clsServoControlWMX3.WMX3_GetInIO(ref aGetGetIAI, (int)(addr_IAI.pxeaI_GetStatusSignal2_2Bytes) / 10, 2);
                 rslt += ((aGetGetIAI[(int)(addr_IAI.pxeaI_GetServoONState - addr_IAI.pxeaI_GetStatusSignal2_2Bytes) / 10] & (1 << (int)(addr_IAI.pxeaI_GetServoONState) % 10)) != 0) ? 1 : 0;
@@ -1001,7 +993,7 @@ namespace InjectorInspector
 
                 //顯示運動速度
                 int iIAIspd = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetCurrentSpeed4Bytes, 0);
-                double dbIAIspd = iIAIspd / 100;
+                double dbIAIspd = (double)iIAIspd / 100.0;
 
                 //變更顏色
                 if (rslt == 2)
@@ -1044,10 +1036,9 @@ namespace InjectorInspector
                 double fChangeGate = dbIncreaseGate;
 
                 //伸長量overflow保護
-                //if (fChangeGate >= 40.35)
-                //{
-                //    fChangeGate = 40.35;
-                //}
+                if (fChangeGate >= 30.1) {
+                    fChangeGate = 30.1;
+                }
 
                 clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 1);
 
@@ -1058,6 +1049,92 @@ namespace InjectorInspector
 
             return dbRstIAI;
         }  // end of public double dbapiGate(double dbIncreaseGate)  //IAI
+        //---------------------------------------------------------------------------------------
+        public double dbapJoDell植針嘴(double dbIncreaseGate)  //JoDell植針嘴
+        {
+            double dbRstJoDell植針嘴 = 0.0;
+
+            {  //JoDell植針嘴 讀取與顯示
+                int rslt = 0;
+
+                //讀取 JoDell植針嘴 資訊
+                byte[] JODELL_RX = new byte[18];
+                int addr_TargetGetDevice = (int)(addr_JODELL.pxeaJ_植針嘴_Input) / 10;
+                int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START) / 10;
+                clsServoControlWMX3.WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice + addr_TargetGetFunction, JODELL_RX.Length);
+
+                int[] varJODELL_RX = new int[JODELL_RX.Length / 2];
+                for (int i = 0; i < varJODELL_RX.Length; i++) {
+                    varJODELL_RX[i] = BitConverter.ToInt16(JODELL_RX, i * 2);
+                }
+                rslt = varJODELL_RX[0];
+
+                //計算讀取長度
+                int iJoDell植針嘴pos = clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_GetPosition, 0);
+                double dbJoDell植針嘴pos = (double)iJoDell植針嘴pos / 100.0;
+                dbRstJoDell植針嘴 = dbJoDell植針嘴pos;
+
+                //顯示運動速度
+                int iJoDell植針嘴spd = clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
+                double dbJoDell植針嘴spd = (double)iJoDell植針嘴spd / 100;
+
+                //變更顏色
+                if (rslt == 4)
+                {
+                    select_JoDell植針嘴.BackColor = Color.Red;
+                    lbl_acpos_JoDell植針嘴.BackColor = Color.White;
+                    lbl_spd_JoDell植針嘴.BackColor = Color.White;
+                }
+                else
+                {
+                    select_JoDell植針嘴.BackColor = Color.Green;
+                    lbl_acpos_JoDell植針嘴.BackColor = Color.Gray;
+                    lbl_spd_JoDell植針嘴.BackColor = Color.Gray;
+                }
+
+                //顯示資訊
+                lbl_acpos_JoDell植針嘴.Text = dbJoDell植針嘴pos.ToString("F3");
+                lbl_spd_JoDell植針嘴.Text = dbJoDell植針嘴spd.ToString("F3");
+
+                //bshow_debug_RAW_Conver_Back_Value
+                lbl_JoDell植針嘴_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_JoDell植針嘴_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                lbl_JoDell植針嘴_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if (bshow_debug_RAW_Conver_Back_Value == true)
+                {
+                    lbl_JoDell植針嘴_RAW.Text = iJoDell植針嘴pos.ToString();
+                    lbl_JoDell植針嘴_Convert.Text = dbJoDell植針嘴pos.ToString("F3");
+                    lbl_JoDell植針嘴_Back.Text = ((int)(dbJoDell植針嘴pos * 100)).ToString();
+                }
+
+            }
+
+            if (dbIncreaseGate == dbRead)
+            {
+                //this.Text = "Z軸尚未回到上位";
+            }
+            else
+            {  //IAI 變更位置
+                // 取得欲變更的的浮點數
+                double fChangeGate = dbIncreaseGate;
+
+                //伸長量overflow保護
+                if (fChangeGate >= 50.0) {
+                    fChangeGate = 50.0;
+                }
+
+
+                //執行移動JoDell植針嘴
+                clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, 1);
+                clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
+            }
+
+            return dbRstJoDell植針嘴;
+        }  // end of public double dbapJoDell植針嘴(double dbIncreaseGate)  //JoDell植針嘴
+        //---------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------
+
         //---------------------------------------------------------------------------------------
         //------------------------ Xavier Call, Control the Servo machine -----------------------
         //---------------------------------------------------------------------------------------
@@ -1102,68 +1179,75 @@ namespace InjectorInspector
             //sw.Close();
         }
         //---------------------------------------------------------------------------------------
-        public bool enGC_吸嘴X軸 = false;
-        public bool enGC_吸嘴Y軸 = false;
-        public bool enGC_吸嘴Z軸 = false;
-        public bool enGC_吸嘴R軸 = false;
+        public bool enGC_吸嘴X軸      = false;
+        public bool enGC_吸嘴Y軸      = false;
+        public bool enGC_吸嘴Z軸      = false;
+        public bool enGC_吸嘴R軸      = false;
 
-        public bool enGC_載盤X軸 = false;
-        public bool enGC_載盤Y軸 = false;
+        public bool enGC_載盤X軸      = false;
+        public bool enGC_載盤Y軸      = false;
 
-        public bool enGC_植針Z軸 = false;
-        public bool enGC_植針R軸 = false;
+        public bool enGC_植針Z軸      = false;
+        public bool enGC_植針R軸      = false;
 
-        public bool enGC_工作門  = false;
+        public bool enGC_工作門       = false;
 
-        public bool enGC_IAI     = false;
+        public bool enGC_IAI          = false;
+        public bool enGC_JoDell植針嘴 = false;
 
         public void en_Group_Click(object sender, EventArgs e)
         {  // start of public void en_Group_Click(object sender, EventArgs e)
             if (enGC_吸嘴X軸 != en_吸嘴X軸.Checked) {
-                enGC_吸嘴X軸 = en_吸嘴X軸.Checked;
+                enGC_吸嘴X軸  = en_吸嘴X軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, enGC_吸嘴X軸);
             }
             if (enGC_吸嘴Y軸 != en_吸嘴Y軸.Checked) {
-                enGC_吸嘴Y軸 = en_吸嘴Y軸.Checked;
+                enGC_吸嘴Y軸  = en_吸嘴Y軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, enGC_吸嘴Y軸);
             }
             if (enGC_吸嘴Z軸 != en_吸嘴Z軸.Checked) {
-                enGC_吸嘴Z軸 = en_吸嘴Z軸.Checked;
+                enGC_吸嘴Z軸  = en_吸嘴Z軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, enGC_吸嘴Z軸);
             }
             if (enGC_吸嘴R軸 != en_吸嘴R軸.Checked) {
-                enGC_吸嘴R軸 = en_吸嘴R軸.Checked;
+                enGC_吸嘴R軸  = en_吸嘴R軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, enGC_吸嘴R軸);
             }
 
             if (enGC_載盤X軸 != en_載盤X軸.Checked) {
-                enGC_載盤X軸 = en_載盤X軸.Checked;
+                enGC_載盤X軸  = en_載盤X軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, enGC_載盤X軸);
             }
             if (enGC_載盤Y軸 != en_載盤Y軸.Checked) {
-                enGC_載盤Y軸 = en_載盤Y軸.Checked;
+                enGC_載盤Y軸  = en_載盤Y軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, enGC_載盤Y軸);
             }
 
             if (enGC_植針Z軸 != en_植針Z軸.Checked) {
-                enGC_植針Z軸 = en_植針Z軸.Checked;
+                enGC_植針Z軸  = en_植針Z軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, enGC_植針Z軸);
             }
             if (enGC_植針R軸 != en_植針R軸.Checked) {
-                enGC_植針R軸 = en_植針R軸.Checked;
+                enGC_植針R軸  = en_植針R軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, enGC_植針R軸);
             }
 
             if (enGC_工作門 != en_工作門.Checked){
-                enGC_工作門 = en_工作門.Checked;
+                enGC_工作門  = en_工作門.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, enGC_工作門);
             }
 
             if (enGC_IAI != en_IAI.Checked){
-                enGC_IAI = en_IAI.Checked;
+                enGC_IAI  = en_IAI.Checked;
 
                 clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, (enGC_IAI)? 1.0:0.0);
                 clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  (enGC_IAI)? 1.0:0.0);
+            }
+
+            if (enGC_JoDell植針嘴 != en_JoDell植針嘴.Checked){
+                enGC_JoDell植針嘴  = en_JoDell植針嘴.Checked;
+
+                clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, (enGC_JoDell植針嘴) ? 1.0 : 0.0);
             }
         }  // end of public void en_Group_Click(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
@@ -1195,6 +1279,8 @@ namespace InjectorInspector
                     wmxId_RadioGroupChanged = WMX3軸定義.工作門;
                 } else if (selectedRadioButton == select_IAI) {
                     wmxId_RadioGroupChanged = WMX3軸定義.IAI;
+                } else if (selectedRadioButton == select_JoDell植針嘴) {
+                    wmxId_RadioGroupChanged = WMX3軸定義.JoDell植針嘴;
                 }
             }
 
@@ -1219,6 +1305,8 @@ namespace InjectorInspector
                 txtABSpos.Text = (double.Parse(lbl_acpos_工作門.Text).ToString("F3"));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.IAI) {
                 txtABSpos.Text = (double.Parse(lbl_acpos_IAI.Text).ToString("F3"));
+            } else if (wmxId_RadioGroupChanged == WMX3軸定義.JoDell植針嘴) {
+                txtABSpos.Text = (double.Parse(lbl_acpos_JoDell植針嘴.Text).ToString("F3"));
             } else {
                 txtABSpos.Text = "N/A";
             }
@@ -1248,7 +1336,9 @@ namespace InjectorInspector
                 } else if (SelectLabel == lblsk破真空1  ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Socket破真空1)  / 10, (int)(WMX3IO對照.pxeIO_Socket破真空1)  % 10, (lblsk破真空1.BackColor  == Color.Red) ? (byte)1 : (byte)0);
                 } else if (SelectLabel == lbl擺放破真空 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_擺放座破真空)   / 10, (int)(WMX3IO對照.pxeIO_擺放座破真空)   % 10, (lbl擺放破真空.BackColor == Color.Red) ? (byte)1 : (byte)0);
                 } else if (SelectLabel == lbl取料吸嘴吸 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴吸)     / 10, (int)(WMX3IO對照.pxeIO_取料吸嘴吸)     % 10, (lbl取料吸嘴吸.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl下後左門鎖 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_下後左門鎖)     / 10, (int)(WMX3IO對照.pxeIO_下後左門鎖)     % 10, (lbl下後左門鎖.BackColor == Color.Red) ? (byte)1 : (byte)0);
                 } else if (SelectLabel == lbl取料吸嘴破 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴破真空) / 10, (int)(WMX3IO對照.pxeIO_取料吸嘴破真空) % 10, (lbl取料吸嘴破.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl下後右門鎖 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_下後右門鎖)     / 10, (int)(WMX3IO對照.pxeIO_下後右門鎖)     % 10, (lbl下後右門鎖.BackColor == Color.Red) ? (byte)1 : (byte)0);
                 } else if (SelectLabel == lblHEPA       ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_HEPA)           / 10, (int)(WMX3IO對照.pxeIO_HEPA)           % 10, (lblHEPA.BackColor       == Color.Red) ? (byte)1 : (byte)0);
                 } else if (SelectLabel == lbl艙內燈     ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_LIGHT)          / 10, (int)(WMX3IO對照.pxeIO_LIGHT)          % 10, (lbl艙內燈.BackColor     == Color.Red) ? (byte)1 : (byte)0);
                 } else if (SelectLabel == lbl右按鈕綠燈 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_面板右按鈕綠燈) / 10, (int)(WMX3IO對照.pxeIO_面板右按鈕綠燈) % 10, (lbl右按鈕綠燈.BackColor == Color.Red) ? (byte)1 : (byte)0);
@@ -1303,18 +1393,154 @@ namespace InjectorInspector
                     case WMX3軸定義.植針Z軸:
                         break;
                     case WMX3軸定義.植針R軸:
+                        dbapiSetR(result);
                         break;
                     case WMX3軸定義.工作門:
                         break;
                     case WMX3軸定義.IAI:
-                        result = (result >= 30.10) ? 30.10 : (result <= -0.10) ? -0.10 : result;
                         dbapiIAI(result);
+                        break;
+                    case WMX3軸定義.JoDell植針嘴:
+                        dbapJoDell植針嘴(result);
                         break;
                 }
             }
 
             txtABSpos.Text = result.ToString("F3");
         }  // end of public void btn_adjust_JOG(object sender, EventArgs e)
+        //---------------------------------------------------------------------------------------
+        //讀取OutputIO
+        public byte[] pDataGetOutIO = new byte[4];
+
+        //讀取InputIO
+        public byte[] pDataGetInIO = new byte[8];
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {  // start of private void timer1_Tick(object sender, EventArgs e)
+            //WMX3通訊狀態
+            int getCommuStatus = clsServoControlWMX3.WMX3_check_Commu();
+            if (getCommuStatus == 1) {
+                label1.Text = "連線中";
+                label1.ForeColor = Color.Red;
+            } else {
+                label1.Text = "尚未連線";
+                label1.ForeColor = Color.Black;
+            }
+
+
+            //region 讀取軸狀態
+            double dbState = dbRead;
+            {
+                //軸控保護需要分別保護封裝
+                dbapiNozzleX(dbState);
+                dbapiNozzleY(dbState);
+                dbapiNozzleZ(dbState);
+                dbapiNozzleR(dbState);
+
+                dbapiCarrierX(dbState);
+                dbapiCarrierY(dbState);
+
+                dbapiSetZ(dbState);
+                dbapiSetR(dbState);
+
+                dbapiGate(dbState);
+
+                dbapiIAI(dbState);
+                dbapJoDell植針嘴(dbState);
+            }
+
+            //讀取 Yaskawa OutputIO
+            clsServoControlWMX3.WMX3_GetOutIO(ref pDataGetOutIO, (int)WMX3IO對照.pxeIO_Addr4, 4);
+            {
+                lbl擺放蓋板.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_擺放座蓋板)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座蓋板)      % 10)) != 0) ? Color.Green : Color.Red;
+                lbl吸料真空閥.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_吸料真空電磁閥) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸料真空電磁閥)  % 10)) != 0) ? Color.Green : Color.Red;
+                lbl堵料吹氣缸.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_堵料吹氣缸)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_堵料吹氣缸)      % 10)) != 0) ? Color.Green : Color.Red;
+                lbl接料區缸.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_接料區氣桿)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_接料區氣桿)      % 10)) != 0) ? Color.Green : Color.Red;
+                lbl植針吹氣.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_植針吹氣)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_植針吹氣)        % 10)) != 0) ? Color.Green : Color.Red;
+                lbl收料區缸.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_收料區缸)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_收料區缸)        % 10)) != 0) ? Color.Green : Color.Red;
+                lbl堵料吹氣.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_堵料吹氣)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_堵料吹氣)        % 10)) != 0) ? Color.Green : Color.Red;
+
+                lbl載盤真空閥.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_載盤真空閥)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤真空閥)      % 10)) != 0) ? Color.Green : Color.Red;
+                lblsk真空2.BackColor    = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_Socket真空2)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket真空2)     % 10)) != 0) ? Color.Green : Color.Red;
+                lbl載盤破真空.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_載盤破真空)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤破真空)      % 10)) != 0) ? Color.Green : Color.Red;
+                lblsk破真空2.BackColor  = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_Socket破真空2)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket破真空2)   % 10)) != 0) ? Color.Green : Color.Red;
+                lblsk真空1.BackColor    = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_Socket真空1)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket真空1)     % 10)) != 0) ? Color.Green : Color.Red;
+                lbl擺放座真空.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_擺放座吸真空)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座吸真空)    % 10)) != 0) ? Color.Green : Color.Red;
+                lblsk破真空1.BackColor  = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_Socket破真空1)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket破真空1)   % 10)) != 0) ? Color.Green : Color.Red;
+                lbl擺放破真空.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_擺放座破真空)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座破真空)    % 10)) != 0) ? Color.Green : Color.Red;
+
+                lbl取料吸嘴吸.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_取料吸嘴吸)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料吸嘴吸)      % 10)) != 0) ? Color.Green : Color.Red;
+                lbl下後左門鎖.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_下後左門鎖)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下後左門鎖)      % 10)) != 0) ? Color.Green : Color.Red;
+                lbl取料吸嘴破.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_取料吸嘴破真空) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料吸嘴破真空)  % 10)) != 0) ? Color.Green : Color.Red;
+                lbl下後右門鎖.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_下後右門鎖)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下後右門鎖)      % 10)) != 0) ? Color.Green : Color.Red;
+                lblHEPA.BackColor       = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_HEPA)           / 10)] & (1 << (int)(WMX3IO對照.pxeIO_HEPA)            % 10)) != 0) ? Color.Green : Color.Red;
+                lbl艙內燈.BackColor     = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_LIGHT)          / 10)] & (1 << (int)(WMX3IO對照.pxeIO_LIGHT)           % 10)) != 0) ? Color.Green : Color.Red;
+
+                lbl右按鈕綠燈.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_面板右按鈕綠燈) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_面板右按鈕綠燈)  % 10)) != 0) ? Color.Green : Color.Red;
+                lbl紅燈.BackColor       = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_機台紅燈)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_機台紅燈)        % 10)) != 0) ? Color.Green : Color.Red;
+                lbl中按鈕綠燈.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_面板中按鈕綠燈) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_面板中按鈕綠燈)  % 10)) != 0) ? Color.Green : Color.Red;
+                lbl黃燈.BackColor       = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_機台黃燈)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_機台黃燈)        % 10)) != 0) ? Color.Green : Color.Red;
+                lbl左按鈕紅燈.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_面板左按鈕紅燈) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_面板左按鈕紅燈)  % 10)) != 0) ? Color.Green : Color.Red;
+                lbl綠燈.BackColor       = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_機台綠燈)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_機台綠燈)        % 10)) != 0) ? Color.Green : Color.Red;
+                lblBuzzer.BackColor     = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_Buzzer)         / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Buzzer)          % 10)) != 0) ? Color.Green : Color.Red;
+            }
+
+            //讀取 Yaskawa InputIO
+            clsServoControlWMX3.WMX3_GetInIO(ref pDataGetInIO, (int)WMX3IO對照.pxeIO_Addr28, 8);
+            {
+                lbl載盤Y後.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤Y軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤Y軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
+                lbl取料Y後.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_取料Y軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料Y軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
+                lbl載盤Y前.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤Y軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤Y軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
+                lbl取料Y前.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_取料Y軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料Y軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
+                lbl取料X後.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_取料X軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料X軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
+                lbl取料X前.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_取料X軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料X軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
+
+                lbl植針Z後.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_植針Z軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_植針Z軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
+                lbl植針Z前.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_植針Z軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_植針Z軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
+                lbl載盤X前.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤X軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤X軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
+                lbl載盤X後.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤X軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤X軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
+
+                lbl載盤空1.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤真空檢1)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤真空檢1)     % 10)) != 0) ? Color.Green : Color.Red;
+                lblsk2空1.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_Socket2真空檢1)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket2真空檢1)  % 10)) != 0) ? Color.Green : Color.Red;
+                lbl載盤空2.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤真空檢2)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤真空檢2)     % 10)) != 0) ? Color.Green : Color.Red;
+                lblsk2空2.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_Socket2真空檢2)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket2真空檢2)  % 10)) != 0) ? Color.Green : Color.Red;
+                lblsk1空1.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_Socket1真空檢1)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket1真空檢1)  % 10)) != 0) ? Color.Green : Color.Red;
+                lbl擺放空1.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_擺放座真空檢1)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座真空檢1)   % 10)) != 0) ? Color.Green : Color.Red;
+                lblsk1空2.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_Socket1真空檢2)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket1真空檢2)  % 10)) != 0) ? Color.Green : Color.Red;
+                lbl擺放空2.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_擺放座真空檢2)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座真空檢2)   % 10)) != 0) ? Color.Green : Color.Red;
+
+                lbl吸嘴空1.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_吸嘴真空檢1)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸嘴真空檢1)     % 10)) != 0) ? Color.Green : Color.Red;
+                lbl吸嘴空2.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_吸嘴真空檢2)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸嘴真空檢2)     % 10)) != 0) ? Color.Green : Color.Red;
+                lbl取料ng盒.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_取料NG收料盒)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料NG收料盒)    % 10)) != 0) ? Color.Green : Color.Red;
+                lbl兩點壓1.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_兩點組合壓力檢1) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_兩點組合壓力檢1) % 10)) != 0) ? Color.Green : Color.Red;
+                lbl堵料盒.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_堵料收料盒)      / 10)] & (1 << (int)(WMX3IO對照.pxeIO_堵料收料盒)      % 10)) != 0) ? Color.Green : Color.Red;
+                lbl兩點壓2.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_兩點組合壓力檢2) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_兩點組合壓力檢2) % 10)) != 0) ? Color.Green : Color.Red;
+                lbl吸料盒.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_吸料收料盒)      / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸料收料盒)      % 10)) != 0) ? Color.Green : Color.Red;
+
+                lbl復歸鈕.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_復歸按鈕)        / 10)] & (1 << (int)(WMX3IO對照.pxeIO_復歸按鈕)        % 10)) != 0) ? Color.Green : Color.Red;
+                lbl啟動鈕.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_啟動按鈕)        / 10)] & (1 << (int)(WMX3IO對照.pxeIO_啟動按鈕)        % 10)) != 0) ? Color.Green : Color.Red;
+                lbl停止鈕.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_停止按鈕)        / 10)] & (1 << (int)(WMX3IO對照.pxeIO_停止按鈕)        % 10)) != 0) ? Color.Green : Color.Red;
+                lbl急停鈕.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_緊急停止按鈕)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_緊急停止按鈕)    % 10)) != 0) ? Color.Green : Color.Red;
+
+                lbl上左右門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_上罩左側右門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩左側右門)    % 10)) != 0) ? Color.Green : Color.Red;
+                lbl上右右門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_上罩右側右門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩右側右門)    % 10)) != 0) ? Color.Green : Color.Red;
+                lbl上左左門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_上罩左側左門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩左側左門)    % 10)) != 0) ? Color.Green : Color.Red;
+                lbl上右左門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_上罩右側左門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩右側左門)    % 10)) != 0) ? Color.Green : Color.Red;
+                lbl上後右門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_上罩後側右門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩後側右門)    % 10)) != 0) ? Color.Green : Color.Red;
+                lbl螢幕小門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_螢幕旁小門)      / 10)] & (1 << (int)(WMX3IO對照.pxeIO_螢幕旁小門)      % 10)) != 0) ? Color.Green : Color.Red;
+                lbl上後左門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_上罩後側左門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩後側左門)    % 10)) != 0) ? Color.Green : Color.Red;
+
+                lbl下左右門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架左側右門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架左側右門)  % 10)) != 0) ? Color.Green : Color.Red;
+                lbl下後左門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架後側左門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架後側左門)  % 10)) != 0) ? Color.Green : Color.Red;
+                lbl下左左門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架左側左門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架左側左門)  % 10)) != 0) ? Color.Green : Color.Red;
+                lbl下後右門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架後側右門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架後側右門)  % 10)) != 0) ? Color.Green : Color.Red;
+                lbl下右右門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架右側右門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架右側右門)  % 10)) != 0) ? Color.Green : Color.Red;
+                lbl下右左門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架右側左門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架右側左門)  % 10)) != 0) ? Color.Green : Color.Red;
+            }
+
+
+
+        }  // end of private void timer1_Tick(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
         //-------------------------------- Project Code implement -------------------------------
         //---------------------------------------------------------------------------------------
@@ -1371,161 +1597,7 @@ namespace InjectorInspector
         }
 
 
-        //讀取OutputIO
-        public byte[] pDataGetOutIO = new byte[4];
 
-        //讀取InputIO
-        public byte[] pDataGetInIO = new byte[8];
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            //WMX3通訊狀態
-            int getCommuStatus = clsServoControlWMX3.WMX3_check_Commu();
-            if (getCommuStatus == 1) {
-                label1.Text = "連線中";
-                label1.ForeColor = Color.Red;
-            } else {
-                label1.Text = "尚未連線";
-                label1.ForeColor = Color.Black;
-            }
-
-
-            //region 讀取軸狀態
-            double dbState = dbRead;
-            {   
-                //軸控保護需要分別保護封裝
-                dbapiNozzleX(dbState);
-                dbapiNozzleY(dbState);
-                dbapiNozzleZ(dbState);
-                dbapiNozzleR(dbState);
-
-                dbapiCarrierX(dbState);
-                dbapiCarrierY(dbState);
-
-                dbapiSetZ(dbState);
-                dbapiSetR(dbState);
-
-                dbapiGate(dbState);
-
-                dbapiIAI(dbState);
-            }
-
-            //讀取 Yaskawa OutputIO
-            clsServoControlWMX3.WMX3_GetOutIO(ref pDataGetOutIO, (int)WMX3IO對照.pxeIO_Addr4, 4);
-            { 
-                lbl擺放蓋板.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_擺放座蓋板)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座蓋板)      % 10)) != 0) ? Color.Green : Color.Red;
-                lbl吸料真空閥.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_吸料真空電磁閥) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸料真空電磁閥)  % 10)) != 0) ? Color.Green : Color.Red;
-                lbl堵料吹氣缸.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_堵料吹氣缸)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_堵料吹氣缸)      % 10)) != 0) ? Color.Green : Color.Red;
-                lbl接料區缸.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_接料區氣桿)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_接料區氣桿)      % 10)) != 0) ? Color.Green : Color.Red;
-                lbl植針吹氣.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_植針吹氣)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_植針吹氣)        % 10)) != 0) ? Color.Green : Color.Red;
-                lbl收料區缸.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_收料區缸)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_收料區缸)        % 10)) != 0) ? Color.Green : Color.Red;
-                lbl堵料吹氣.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_堵料吹氣)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_堵料吹氣)        % 10)) != 0) ? Color.Green : Color.Red;
-
-                lbl載盤真空閥.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_載盤真空閥)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤真空閥)      % 10)) != 0) ? Color.Green : Color.Red;
-                lblsk真空2.BackColor    = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_Socket真空2)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket真空2)     % 10)) != 0) ? Color.Green : Color.Red;
-                lbl載盤破真空.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_載盤破真空)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤破真空)      % 10)) != 0) ? Color.Green : Color.Red;
-                lblsk破真空2.BackColor  = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_Socket破真空2)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket破真空2)   % 10)) != 0) ? Color.Green : Color.Red;
-                lblsk真空1.BackColor    = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_Socket真空1)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket真空1)     % 10)) != 0) ? Color.Green : Color.Red;
-                lbl擺放座真空.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_擺放座吸真空)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座吸真空)    % 10)) != 0) ? Color.Green : Color.Red;
-                lblsk破真空1.BackColor  = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_Socket破真空1)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket破真空1)   % 10)) != 0) ? Color.Green : Color.Red;
-                lbl擺放破真空.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_擺放座破真空)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座破真空)    % 10)) != 0) ? Color.Green : Color.Red;
-
-                lbl取料吸嘴吸.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_取料吸嘴吸)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料吸嘴吸)      % 10)) != 0) ? Color.Green : Color.Red;
-                lbl取料吸嘴破.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_取料吸嘴破真空) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料吸嘴破真空)  % 10)) != 0) ? Color.Green : Color.Red;
-                lblHEPA.BackColor       = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_HEPA)           / 10)] & (1 << (int)(WMX3IO對照.pxeIO_HEPA)            % 10)) != 0) ? Color.Green : Color.Red;
-                lbl艙內燈.BackColor     = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_LIGHT)          / 10)] & (1 << (int)(WMX3IO對照.pxeIO_LIGHT)           % 10)) != 0) ? Color.Green : Color.Red;
-
-                lbl右按鈕綠燈.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_面板右按鈕綠燈) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_面板右按鈕綠燈)  % 10)) != 0) ? Color.Green : Color.Red;
-                lbl紅燈.BackColor       = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_機台紅燈)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_機台紅燈)        % 10)) != 0) ? Color.Green : Color.Red;
-                lbl中按鈕綠燈.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_面板中按鈕綠燈) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_面板中按鈕綠燈)  % 10)) != 0) ? Color.Green : Color.Red;
-                lbl黃燈.BackColor       = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_機台黃燈)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_機台黃燈)        % 10)) != 0) ? Color.Green : Color.Red;
-                lbl左按鈕紅燈.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_面板左按鈕紅燈) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_面板左按鈕紅燈)  % 10)) != 0) ? Color.Green : Color.Red;
-                lbl綠燈.BackColor       = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_機台綠燈)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_機台綠燈)        % 10)) != 0) ? Color.Green : Color.Red;
-                lblBuzzer.BackColor     = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_Buzzer)         / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Buzzer)          % 10)) != 0) ? Color.Green : Color.Red;
-            }
-
-            //讀取 Yaskawa InputIO
-            clsServoControlWMX3.WMX3_GetInIO(ref pDataGetInIO, (int)WMX3IO對照.pxeIO_Addr28, 8);
-            { 
-                lbl載盤Y後.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤Y軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤Y軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
-                lbl取料Y後.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_取料Y軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料Y軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
-                lbl載盤Y前.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤Y軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤Y軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
-                lbl取料Y前.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_取料Y軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料Y軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
-                lbl取料X後.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_取料X軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料X軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
-                lbl取料X前.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_取料X軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料X軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
-
-                lbl植針Z後.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_植針Z軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_植針Z軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
-                lbl植針Z前.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_植針Z軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_植針Z軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
-                lbl載盤X前.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤X軸前極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤X軸前極限)   % 10)) != 0) ? Color.Green : Color.Red;
-                lbl載盤X後.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤X軸後極限)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤X軸後極限)   % 10)) != 0) ? Color.Green : Color.Red;
-
-                lbl載盤空1.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤真空檢1)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤真空檢1)     % 10)) != 0) ? Color.Green : Color.Red;
-                lblsk2空1.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_Socket2真空檢1)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket2真空檢1)  % 10)) != 0) ? Color.Green : Color.Red;
-                lbl載盤空2.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤真空檢2)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤真空檢2)     % 10)) != 0) ? Color.Green : Color.Red;
-                lblsk2空2.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_Socket2真空檢2)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket2真空檢2)  % 10)) != 0) ? Color.Green : Color.Red;
-                lblsk1空1.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_Socket1真空檢1)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket1真空檢1)  % 10)) != 0) ? Color.Green : Color.Red;
-                lbl擺放空1.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_擺放座真空檢1)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座真空檢1)   % 10)) != 0) ? Color.Green : Color.Red;
-                lblsk1空2.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_Socket1真空檢2)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket1真空檢2)  % 10)) != 0) ? Color.Green : Color.Red;
-                lbl擺放空2.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_擺放座真空檢2)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座真空檢2)   % 10)) != 0) ? Color.Green : Color.Red;
-
-                lbl吸嘴空1.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_吸嘴真空檢1)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸嘴真空檢1)     % 10)) != 0) ? Color.Green : Color.Red;
-                lbl吸嘴空2.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_吸嘴真空檢2)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸嘴真空檢2)     % 10)) != 0) ? Color.Green : Color.Red;
-                lbl取料ng盒.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_取料NG收料盒)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料NG收料盒)    % 10)) != 0) ? Color.Green : Color.Red;
-                lbl兩點壓1.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_兩點組合壓力檢1) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_兩點組合壓力檢1) % 10)) != 0) ? Color.Green : Color.Red;
-                lbl堵料盒.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_堵料收料盒)      / 10)] & (1 << (int)(WMX3IO對照.pxeIO_堵料收料盒)      % 10)) != 0) ? Color.Green : Color.Red;
-                lbl兩點壓2.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_兩點組合壓力檢2) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_兩點組合壓力檢2) % 10)) != 0) ? Color.Green : Color.Red;
-                lbl吸料盒.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_吸料收料盒)      / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸料收料盒)      % 10)) != 0) ? Color.Green : Color.Red;
-
-                lbl復歸鈕.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_復歸按鈕)        / 10)] & (1 << (int)(WMX3IO對照.pxeIO_復歸按鈕)        % 10)) != 0) ? Color.Green : Color.Red;
-                lbl啟動鈕.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_啟動按鈕)        / 10)] & (1 << (int)(WMX3IO對照.pxeIO_啟動按鈕)        % 10)) != 0) ? Color.Green : Color.Red;
-                lbl停止鈕.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_停止按鈕)        / 10)] & (1 << (int)(WMX3IO對照.pxeIO_停止按鈕)        % 10)) != 0) ? Color.Green : Color.Red;
-                lbl急停鈕.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_緊急停止按鈕 )   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_緊急停止按鈕 )   % 10)) != 0) ? Color.Green : Color.Red;
-
-                lbl上左右門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_上罩左側右門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩左側右門)    % 10)) != 0) ? Color.Green : Color.Red;
-                lbl上右右門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_上罩右側右門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩右側右門)    % 10)) != 0) ? Color.Green : Color.Red;
-                lbl上左左門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_上罩左側左門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩左側左門)    % 10)) != 0) ? Color.Green : Color.Red;
-                lbl上右左門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_上罩右側左門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩右側左門)    % 10)) != 0) ? Color.Green : Color.Red;
-                lbl上後右門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_上罩後側右門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩後側右門)    % 10)) != 0) ? Color.Green : Color.Red;
-                lbl螢幕小門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_螢幕旁小門)      / 10)] & (1 << (int)(WMX3IO對照.pxeIO_螢幕旁小門)      % 10)) != 0) ? Color.Green : Color.Red;
-                lbl上後左門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_上罩後側左門)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_上罩後側左門)    % 10)) != 0) ? Color.Green : Color.Red;
-
-                lbl下左右門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架左側右門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架左側右門)  % 10)) != 0) ? Color.Green : Color.Red;
-                lbl下左左門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架左側左門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架左側左門)  % 10)) != 0) ? Color.Green : Color.Red;
-                lbl下右右門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架右側右門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架右側右門)  % 10)) != 0) ? Color.Green : Color.Red;
-                lbl下右左門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架右側左門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架右側左門)  % 10)) != 0) ? Color.Green : Color.Red;
-            }
-
-            //Read TX
-            int addr_TargetSetDevice   = (int)(addr_JODELL.pxeaJ_Device03_Output) /10;
-            int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_START)/10;
-
-            byte[] JODELL_TX = new byte[72];
-            clsServoControlWMX3.WMX3_GetInIO(ref JODELL_TX, addr_TargetSetDevice+addr_TargetSetFunction, JODELL_TX.Length);
-
-            int[] varJODELL_TX = new int[JODELL_TX.Length/2];
-            for (int i = 0; i < varJODELL_TX.Length; i++) {
-                varJODELL_TX[i] = BitConverter.ToInt16(JODELL_TX, i * 2);
-            }
-
-            //Read RX
-            int addr_TargetGetDevice   = (int)(addr_JODELL.pxeaJ_Device03_Input) /10;
-            int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START)/10;
-
-            byte[] JODELL_RX = new byte[18];
-            clsServoControlWMX3.WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice+addr_TargetGetFunction, JODELL_RX.Length);
-
-            int[] varJODELL_RX = new int[JODELL_RX.Length/2];
-            for (int i = 0; i < varJODELL_RX.Length; i++) {
-                varJODELL_RX[i] = BitConverter.ToInt16(JODELL_RX, i*2);
-            }
-
-            label14.Text = "Pos=" + varJODELL_RX[(int)(addr_JODELL.pxeaJ_GetAddr_Position2Bytes) /10 /2].ToString();
-            label15.Text = "Spd=" + varJODELL_RX[(int)(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes) / 10 / 2].ToString();
-
-
-
-
-        }
 
         private void btnNozzleDownPos_Click(object sender, EventArgs e)
         {
@@ -2031,163 +2103,15 @@ namespace InjectorInspector
         {
             System.Windows.Forms.Label SelectLabel = sender as System.Windows.Forms.Label;
 
-            //Set Speed
-            {
-                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
-                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Speed2Bytes) / 10;
 
-                int varJODELL_TX_P0_Speed = 3000;
-                byte[] JODELL_TX_P0_Speed = new byte[2];
 
-                JODELL_TX_P0_Speed[0] = (byte)(varJODELL_TX_P0_Speed & 0xFF);
-                JODELL_TX_P0_Speed[1] = (byte)(varJODELL_TX_P0_Speed >> 8);
-
-                //Write TX
-                clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Speed, addr_TargetSetDevice + addr_TargetSetFunction, 2);
-            }
-
-            //Set Torque
-            {
-                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
-                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Torque2Bytes) / 10;
-
-                int varJODELL_TX_P0_Torque = 25;
-                byte[] JODELL_TX_P0_Torque = new byte[2];
-
-                JODELL_TX_P0_Torque[0] = (byte)(varJODELL_TX_P0_Torque & 0xFF);
-                JODELL_TX_P0_Torque[1] = (byte)(varJODELL_TX_P0_Torque >> 8);
-
-                //Write TX
-                clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Torque, addr_TargetSetDevice + addr_TargetSetFunction, 2);
-            }
-
-            //Set Position 00
-            {
-                { //Device 01
-                    int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device01_Output) / 10;
-                    int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
-
-                    int varJODELL_TX_P0_Position = 3000;
-                    byte[] JODELL_TX_P0_Position = new byte[2];
-
-                    JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);
-                    JODELL_TX_P0_Position[1] = (byte)(varJODELL_TX_P0_Position >> 8);
-
-                    //Write TX
-                    clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
-                }
-
-                { //Device 02
-                    int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device02_Output) / 10;
-                    int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
-
-                    int varJODELL_TX_P0_Position = 3000;
-                    byte[] JODELL_TX_P0_Position = new byte[2];
-
-                    JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);
-                    JODELL_TX_P0_Position[1] = (byte)(varJODELL_TX_P0_Position >> 8);
-
-                    //Write TX
-                    clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
-                }
-
-                { //Device 03
-                    int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
-                    int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
-
-                    int varJODELL_TX_P0_Position = 3000;
-                    byte[] JODELL_TX_P0_Position = new byte[2];
-
-                    JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);
-                    JODELL_TX_P0_Position[1] = (byte)(varJODELL_TX_P0_Position >> 8);
-
-                    //Write TX
-                    clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
-                }
-            }
-
-            //Aim to Device 00
-            {
-                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
-                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_ActCmd2Bytes) / 10;
-
-                int varJODELL_TX_P0_ActCmd = 0;
-                byte[] JODELL_TX_P0_ActCmd = new byte[2];
-
-                JODELL_TX_P0_ActCmd[0] = (byte)(varJODELL_TX_P0_ActCmd & 0xFF);
-                JODELL_TX_P0_ActCmd[1] = (byte)(varJODELL_TX_P0_ActCmd >> 8);
-
-                //Write TX
-                clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_ActCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
-            }
-
-            int iEnBit = 0;
-            if (SelectLabel == label6)
-            {
-                iEnBit = 1;
-            }
-            else if (SelectLabel == label7)
-            {
-                iEnBit = 0;
-            }
-
-            //Send iEnBit
-            {
-                //Set Device 01
-                {
-                    int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device01_Output) / 10;
-                    int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
-
-                    int varJODELL_TX_P0_EnableCmd = iEnBit;
-                    byte[] JODELL_TX_P0_EnableCmd = new byte[2];
-
-                    JODELL_TX_P0_EnableCmd[0] = (byte)(varJODELL_TX_P0_EnableCmd & 0xFF);
-                    JODELL_TX_P0_EnableCmd[1] = (byte)(varJODELL_TX_P0_EnableCmd >> 8);
-
-                    //Write TX
-                    clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_EnableCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
-                }
-
-                //Set Device 02
-                {
-                    int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device02_Output) / 10;
-                    int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
-
-                    int varJODELL_TX_P0_EnableCmd = iEnBit;
-                    byte[] JODELL_TX_P0_EnableCmd = new byte[2];
-
-                    JODELL_TX_P0_EnableCmd[0] = (byte)(varJODELL_TX_P0_EnableCmd & 0xFF);
-                    JODELL_TX_P0_EnableCmd[1] = (byte)(varJODELL_TX_P0_EnableCmd >> 8);
-
-                    //Write TX
-                    clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_EnableCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
-                }
-
-                //Set Device 03
-                {
-                    int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
-                    int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
-
-                    int varJODELL_TX_P0_EnableCmd = iEnBit;
-                    byte[] JODELL_TX_P0_EnableCmd = new byte[2];
-
-                    JODELL_TX_P0_EnableCmd[0] = (byte)(varJODELL_TX_P0_EnableCmd & 0xFF);
-                    JODELL_TX_P0_EnableCmd[1] = (byte)(varJODELL_TX_P0_EnableCmd >> 8);
-
-                    //Write TX
-                    clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_EnableCmd, addr_TargetSetDevice + addr_TargetSetFunction, 2);
-                }
-            }
         }
 
 
 
-        //1 scanner
-        //2 抽料
-        //3 攝影機
         private void label11_Click(object sender, EventArgs e)
         {
-            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
+            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
             int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
 
             int varJODELL_TX_P0_Position = 50;
@@ -2202,7 +2126,7 @@ namespace InjectorInspector
 
         private void label10_Click(object sender, EventArgs e)
         {
-            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
+            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
             int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
 
             int varJODELL_TX_P0_Position = 3000;
@@ -2219,9 +2143,9 @@ namespace InjectorInspector
         {
             int iPos = int.Parse(textBox1.Text);
 
-            if(iPos >= 3000)
+            if(iPos >= 5000)
             {
-                iPos = 3000;
+                iPos = 5000;
             }
 
             if(iPos <= 0)
@@ -2232,7 +2156,7 @@ namespace InjectorInspector
             textBox1.Text = iPos.ToString();
 
             {
-                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_Device03_Output) / 10;
+                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
                 int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
 
                 int varJODELL_TX_P0_Position = iPos;
