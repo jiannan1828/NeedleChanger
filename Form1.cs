@@ -1044,7 +1044,6 @@ namespace InjectorInspector
                 clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 1);
 
                 //執行移動工作門
-                clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn, 1);
                 clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GoToPosition, fChangeGate);
             }
 
@@ -1124,9 +1123,7 @@ namespace InjectorInspector
                     fChangeGate = 30.0;
                 }
 
-
                 //執行移動JoDell3D掃描
-                clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 1);
                 clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
             }
 
@@ -1206,9 +1203,7 @@ namespace InjectorInspector
                     fChangeGate = 30.0;
                 }
 
-
                 //執行移動JoDell吸針嘴
-                clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 1);
                 clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
             }
 
@@ -1288,9 +1283,7 @@ namespace InjectorInspector
                     fChangeGate = 50.0;
                 }
 
-
                 //執行移動JoDell植針嘴
-                clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, 1);
                 clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
             }
 
@@ -2293,45 +2286,31 @@ namespace InjectorInspector
 
 
 
-        private void label6_Click(object sender, EventArgs e)
-        {
-            System.Windows.Forms.Label SelectLabel = sender as System.Windows.Forms.Label;
 
-
-
-        }
 
 
 
         private void label11_Click(object sender, EventArgs e)
         {
-            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_吸針嘴_Output) / 10;
-            int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
-
-            int varJODELL_TX_P0_Position = 800;
-            byte[] JODELL_TX_P0_Position = new byte[2];
-
-            JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);
-            JODELL_TX_P0_Position[1] = (byte)(varJODELL_TX_P0_Position >> 8);
-
-            //Write TX
-            clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+            dbapJoDell植針嘴(10);
         }
 
         private void label10_Click(object sender, EventArgs e)
         {
-            int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_吸針嘴_Output) / 10;
-            int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
-
-            int varJODELL_TX_P0_Position = 2200;
-            byte[] JODELL_TX_P0_Position = new byte[2];
-
-            JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);
-            JODELL_TX_P0_Position[1] = (byte)(varJODELL_TX_P0_Position >> 8);
-
-            //Write TX
-            clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+            dbapJoDell植針嘴(40);
         }
+        private void label6_Click(object sender, EventArgs e)
+        {
+            clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, 1);
+        }
+        private void label7_Click(object sender, EventArgs e)
+        {
+            clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, 0);
+        }
+
+
+
+
 
         private void button15_Click(object sender, EventArgs e)
         {
@@ -2363,6 +2342,12 @@ namespace InjectorInspector
                 clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
             }
         }
+
+
+
+
+
+
 
 
     }  // end of public partial class Form1 : Form

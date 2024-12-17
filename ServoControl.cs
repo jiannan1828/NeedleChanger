@@ -978,12 +978,12 @@ namespace InjectorInspector
                     Thread.Sleep(1);
                     dbInData = 0;
                     {
-                        int iJoDell3D掃描Enable = (dbInData > 0) ? (byte)1 : (byte)0;
+                        int iJoDell3D掃描Enable    = (dbInData > 0) ? (byte)1 : (byte)0;
 
                         byte[] aJoDell3D掃描Enable = new byte[2];
                         aJoDell3D掃描Enable = BitConverter.GetBytes(iJoDell3D掃描Enable);
 
-                        int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_3D掃描_Output) / 10;
+                        int addr_TargetSetDevice   = (int)(addr_JODELL.pxeaJ_3D掃描_Output) / 10;
                         int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
                         WMX3_SetIO(ref aJoDell3D掃描Enable, addr_TargetSetDevice + addr_TargetSetFunction, 2);
                     }
@@ -991,12 +991,12 @@ namespace InjectorInspector
                     Thread.Sleep(1);
                     dbInData = 1;
                     {
-                        int iJoDell3D掃描Enable = (dbInData > 0) ? (byte)1 : (byte)0;
+                        int iJoDell3D掃描Enable    = (dbInData > 0) ? (byte)1 : (byte)0;
 
                         byte[] aJoDell3D掃描Enable = new byte[2];
-                        aJoDell3D掃描Enable = BitConverter.GetBytes(iJoDell3D掃描Enable);
+                        aJoDell3D掃描Enable        = BitConverter.GetBytes(iJoDell3D掃描Enable);
 
-                        int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_3D掃描_Output) / 10;
+                        int addr_TargetSetDevice   = (int)(addr_JODELL.pxeaJ_3D掃描_Output) / 10;
                         int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
                         WMX3_SetIO(ref aJoDell3D掃描Enable, addr_TargetSetDevice + addr_TargetSetFunction, 2);
                     }
@@ -1023,13 +1023,13 @@ namespace InjectorInspector
                         byte[] aJoDell3D掃描TargetPosition0 = new byte[2];
                                aJoDell3D掃描TargetPosition0 = BitConverter.GetBytes(iJoDell3D掃描TargetPosition0);
 
+                        int addr_TargetSetDevice            = (int)(addr_JODELL.pxeaJ_3D掃描_Output) / 10;
+                        int addr_TargetSetFunction          = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
+                        WMX3_SetIO(ref aJoDell3D掃描TargetPosition0, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+
                         //如果設定位置為0
-                        if (dbInData >= 50.0) {
+                        if (dbInData >= 30.0) {
                             goto lbl_Home;
-                        } else { 
-                            int addr_TargetSetDevice        = (int)(addr_JODELL.pxeaJ_3D掃描_Output) / 10;
-                            int addr_TargetSetFunction      = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
-                            WMX3_SetIO(ref aJoDell3D掃描TargetPosition0, addr_TargetSetDevice + addr_TargetSetFunction, 2);
                         }
                     }
                 } break;
@@ -1132,12 +1132,12 @@ namespace InjectorInspector
                     Thread.Sleep(1);
                     dbInData = 0;
                     {
-                        int iJoDell吸針嘴Enable = (dbInData > 0) ? (byte)1 : (byte)0;
+                        int iJoDell吸針嘴Enable    = (dbInData > 0) ? (byte)1 : (byte)0;
 
                         byte[] aJoDell吸針嘴Enable = new byte[2];
-                        aJoDell吸針嘴Enable = BitConverter.GetBytes(iJoDell吸針嘴Enable);
+                        aJoDell吸針嘴Enable        = BitConverter.GetBytes(iJoDell吸針嘴Enable);
 
-                        int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_吸針嘴_Output) / 10;
+                        int addr_TargetSetDevice   = (int)(addr_JODELL.pxeaJ_吸針嘴_Output) / 10;
                         int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
                         WMX3_SetIO(ref aJoDell吸針嘴Enable, addr_TargetSetDevice + addr_TargetSetFunction, 2);
                     }
@@ -1145,12 +1145,12 @@ namespace InjectorInspector
                     Thread.Sleep(1);
                     dbInData = 1;
                     {
-                        int iJoDell吸針嘴Enable = (dbInData > 0) ? (byte)1 : (byte)0;
+                        int iJoDell吸針嘴Enable    = (dbInData > 0) ? (byte)1 : (byte)0;
 
                         byte[] aJoDell吸針嘴Enable = new byte[2];
                         aJoDell吸針嘴Enable = BitConverter.GetBytes(iJoDell吸針嘴Enable);
 
-                        int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_吸針嘴_Output) / 10;
+                        int addr_TargetSetDevice   = (int)(addr_JODELL.pxeaJ_吸針嘴_Output) / 10;
                         int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
                         WMX3_SetIO(ref aJoDell吸針嘴Enable, addr_TargetSetDevice + addr_TargetSetFunction, 2);
                     }
@@ -1177,13 +1177,13 @@ namespace InjectorInspector
                         byte[] aJoDell吸針嘴TargetPosition0 = new byte[2];
                                aJoDell吸針嘴TargetPosition0 = BitConverter.GetBytes(iJoDell吸針嘴TargetPosition0);
 
+                        int addr_TargetSetDevice            = (int)(addr_JODELL.pxeaJ_吸針嘴_Output) / 10;
+                        int addr_TargetSetFunction          = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
+                        WMX3_SetIO(ref aJoDell吸針嘴TargetPosition0, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+
                         //如果設定位置為0
-                        if (dbInData >= 50.0) {
+                        if (dbInData >= 30.0) {
                             goto lbl_Home;
-                        } else { 
-                            int addr_TargetSetDevice        = (int)(addr_JODELL.pxeaJ_吸針嘴_Output) / 10;
-                            int addr_TargetSetFunction      = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
-                            WMX3_SetIO(ref aJoDell吸針嘴TargetPosition0, addr_TargetSetDevice + addr_TargetSetFunction, 2);
                         }
                     }
                 } break;
@@ -1286,12 +1286,12 @@ namespace InjectorInspector
                     Thread.Sleep(1);
                     dbInData = 0;
                     {
-                        int iJoDell植針嘴Enable = (dbInData > 0) ? (byte)1 : (byte)0;
+                        int iJoDell植針嘴Enable    = (dbInData > 0) ? (byte)1 : (byte)0;
 
                         byte[] aJoDell植針嘴Enable = new byte[2];
-                        aJoDell植針嘴Enable = BitConverter.GetBytes(iJoDell植針嘴Enable);
+                        aJoDell植針嘴Enable        = BitConverter.GetBytes(iJoDell植針嘴Enable);
 
-                        int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
+                        int addr_TargetSetDevice   = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
                         int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
                         WMX3_SetIO(ref aJoDell植針嘴Enable, addr_TargetSetDevice + addr_TargetSetFunction, 2);
                     }
@@ -1299,12 +1299,12 @@ namespace InjectorInspector
                     Thread.Sleep(1);
                     dbInData = 1;
                     {
-                        int iJoDell植針嘴Enable = (dbInData > 0) ? (byte)1 : (byte)0;
+                        int iJoDell植針嘴Enable    = (dbInData > 0) ? (byte)1 : (byte)0;
 
                         byte[] aJoDell植針嘴Enable = new byte[2];
                         aJoDell植針嘴Enable = BitConverter.GetBytes(iJoDell植針嘴Enable);
 
-                        int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
+                        int addr_TargetSetDevice   = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
                         int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_EnableCmd2Bytes) / 10;
                         WMX3_SetIO(ref aJoDell植針嘴Enable, addr_TargetSetDevice + addr_TargetSetFunction, 2);
                     }
@@ -1331,13 +1331,13 @@ namespace InjectorInspector
                         byte[] aJoDell植針嘴TargetPosition0 = new byte[2];
                                aJoDell植針嘴TargetPosition0 = BitConverter.GetBytes(iJoDell植針嘴TargetPosition0);
 
+                        int addr_TargetSetDevice            = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
+                        int addr_TargetSetFunction          = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
+                        WMX3_SetIO(ref aJoDell植針嘴TargetPosition0, addr_TargetSetDevice + addr_TargetSetFunction, 2);
+
                         //如果設定位置為0
                         if (dbInData >= 50.0) {
                             goto lbl_Home;
-                        } else { 
-                            int addr_TargetSetDevice        = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
-                            int addr_TargetSetFunction      = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
-                            WMX3_SetIO(ref aJoDell植針嘴TargetPosition0, addr_TargetSetDevice + addr_TargetSetFunction, 2);
                         }
                     }
                 } break;
