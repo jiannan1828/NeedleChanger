@@ -26,27 +26,29 @@ namespace InjectorInspector
     //軸的對應號碼
     public enum WMX3軸定義
     {  // start of public enum WMX3軸定義
-        AXIS_START    = -1,
-            吸嘴X軸   = 3,  //小線碼
-            吸嘴Y軸   = 7,  //YASKAWA
-            吸嘴Z軸   = 1,  //VCM伸縮
-            吸嘴R軸   = 0,  //VCM旋轉
+        AXIS_START        =   -1,
+            吸嘴X軸       =    3,  //小線碼
+            吸嘴Y軸       =    7,  //YASKAWA
+            吸嘴Z軸       =    1,  //VCM伸縮
+            吸嘴R軸       =    0,  //VCM旋轉
 
-            載盤X軸   = 4,  //YASKAWA
-            載盤Y軸   = 2,  //大線碼
+            載盤X軸       =    4,  //YASKAWA
+            載盤Y軸       =    2,  //大線碼
 
-            植針Z軸   = 5,  //YASKAWA
-            植針R軸   = 6,  //YASKAWA
+            植針Z軸       =    5,  //YASKAWA
+            植針R軸       =    6,  //YASKAWA
 
-            工作門    = 8,  //工作門
+            工作門        =    8,  //工作門
+
+            IAI           = 1000,  //Socket孔
+            JoDell3D掃描  = 1001,
+            JoDell吸針嘴  = 1002,
+            JoDell植針嘴  = 1003,
         AXIS_END,
-        YASKAWA       = 1048576,
-        DELTA_ASDA_B2 = 1280000,
-        DELTA_ASDA_B3 = 16777216,
-        IAI,                //Socket孔
-        JoDell3D掃描,
-        JoDell吸針嘴,
-        JoDell植針嘴,
+
+        YASKAWA           = 1048576,
+        DELTA_ASDA_B2     = 1280000,
+        DELTA_ASDA_B3     = 16777216,
     }  // end of public enum WMX3軸定義
 
     //---------------------------------------------------------------------------------------
