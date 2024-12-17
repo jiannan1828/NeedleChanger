@@ -20,8 +20,18 @@ namespace InjectorInspector
         // 映射函數
         public double Map(int Input, int in_min, int in_max, double out_min, double out_max)
         {
-            // 計算映射
+            // 計算映射 並強制轉型為 double
             return (double)(Input - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+        }
+        public double Map(double Input, double in_min, double in_max, double out_min, double out_max)
+        {
+            // 計算映射 並強制轉型為 double
+            return (double)(Input - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+        }
+        public int Map(double Input, double in_min, double in_max, int out_min, int out_max)
+        {
+            // 計算映射 並強制轉型為 int
+            return (int)((Input - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
         }
 
         // 轉換方法
