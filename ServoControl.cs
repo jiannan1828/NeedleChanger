@@ -43,7 +43,7 @@ namespace InjectorInspector
         YASKAWA       = 1048576,
         DELTA_ASDA_B2 = 1280000,
         DELTA_ASDA_B3 = 16777216,
-        IAI,
+        IAI,                //Socket孔
         JoDell3D掃描,
         JoDell吸針嘴,
         JoDell植針嘴,
