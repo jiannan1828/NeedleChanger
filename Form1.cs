@@ -999,13 +999,13 @@ namespace InjectorInspector
                 //變更顏色
                 if (rslt == 2)
                 {
-                    select_IAI.BackColor = Color.Red;
+                    select_Socket檢測.BackColor = Color.Red;
                     lbl_acpos_IAI.BackColor = Color.White;
                     lbl_spd_IAI.BackColor = Color.White;
                 }
                 else
                 {
-                    select_IAI.BackColor = Color.Green;
+                    select_Socket檢測.BackColor = Color.Green;
                     lbl_acpos_IAI.BackColor = Color.Gray;
                     lbl_spd_IAI.BackColor = Color.Gray;
                 }
@@ -1454,7 +1454,7 @@ namespace InjectorInspector
                     wmxId_RadioGroupChanged = WMX3軸定義.植針R軸;
                 } else if (selectedRadioButton == select_工作門) {
                     wmxId_RadioGroupChanged = WMX3軸定義.工作門;
-                } else if (selectedRadioButton == select_IAI) {
+                } else if (selectedRadioButton == select_Socket檢測) {
                     wmxId_RadioGroupChanged = WMX3軸定義.IAI;
                 } else if (selectedRadioButton == select_JoDell3D掃描) {
                     wmxId_RadioGroupChanged = WMX3軸定義.JoDell3D掃描;

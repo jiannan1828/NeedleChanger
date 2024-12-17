@@ -49,7 +49,7 @@
             this.lbl_acpos_IAI_lbl = new System.Windows.Forms.Label();
             this.lbl_spd_IAI = new System.Windows.Forms.Label();
             this.lbl_spd_IAI_lbl = new System.Windows.Forms.Label();
-            this.select_IAI = new System.Windows.Forms.RadioButton();
+            this.select_Socket檢測 = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblBuzzer = new System.Windows.Forms.Label();
             this.lbl_NA_31 = new System.Windows.Forms.Label();
@@ -469,7 +469,7 @@
             this.tabJob.Controls.Add(this.lbl_acpos_IAI_lbl);
             this.tabJob.Controls.Add(this.lbl_spd_IAI);
             this.tabJob.Controls.Add(this.lbl_spd_IAI_lbl);
-            this.tabJob.Controls.Add(this.select_IAI);
+            this.tabJob.Controls.Add(this.select_Socket檢測);
             this.tabJob.Controls.Add(this.groupBox2);
             this.tabJob.Controls.Add(this.groupBox1);
             this.tabJob.Controls.Add(this.lbl_工作門_Convert);
@@ -567,6 +567,288 @@
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
             // 
+            // lbl_JoDell吸針嘴_Convert
+            // 
+            this.lbl_JoDell吸針嘴_Convert.AutoSize = true;
+            this.lbl_JoDell吸針嘴_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_JoDell吸針嘴_Convert.Location = new System.Drawing.Point(590, 245);
+            this.lbl_JoDell吸針嘴_Convert.Name = "lbl_JoDell吸針嘴_Convert";
+            this.lbl_JoDell吸針嘴_Convert.Size = new System.Drawing.Size(139, 13);
+            this.lbl_JoDell吸針嘴_Convert.TabIndex = 197;
+            this.lbl_JoDell吸針嘴_Convert.Text = "lbl_JoDell吸針嘴_Convert";
+            // 
+            // lbl_JoDell吸針嘴_Back
+            // 
+            this.lbl_JoDell吸針嘴_Back.AutoSize = true;
+            this.lbl_JoDell吸針嘴_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_JoDell吸針嘴_Back.Location = new System.Drawing.Point(770, 245);
+            this.lbl_JoDell吸針嘴_Back.Name = "lbl_JoDell吸針嘴_Back";
+            this.lbl_JoDell吸針嘴_Back.Size = new System.Drawing.Size(125, 13);
+            this.lbl_JoDell吸針嘴_Back.TabIndex = 196;
+            this.lbl_JoDell吸針嘴_Back.Text = "lbl_JoDell吸針嘴_Back";
+            // 
+            // lbl_JoDell吸針嘴_RAW
+            // 
+            this.lbl_JoDell吸針嘴_RAW.AutoSize = true;
+            this.lbl_JoDell吸針嘴_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_JoDell吸針嘴_RAW.Location = new System.Drawing.Point(420, 245);
+            this.lbl_JoDell吸針嘴_RAW.Name = "lbl_JoDell吸針嘴_RAW";
+            this.lbl_JoDell吸針嘴_RAW.Size = new System.Drawing.Size(130, 13);
+            this.lbl_JoDell吸針嘴_RAW.TabIndex = 195;
+            this.lbl_JoDell吸針嘴_RAW.Text = "lbl_JoDell吸針嘴_RAW";
+            // 
+            // en_JoDell吸針嘴
+            // 
+            this.en_JoDell吸針嘴.AutoSize = true;
+            this.en_JoDell吸針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.en_JoDell吸針嘴.Location = new System.Drawing.Point(25, 245);
+            this.en_JoDell吸針嘴.Name = "en_JoDell吸針嘴";
+            this.en_JoDell吸針嘴.Size = new System.Drawing.Size(58, 17);
+            this.en_JoDell吸針嘴.TabIndex = 194;
+            this.en_JoDell吸針嘴.Text = "Enable";
+            this.en_JoDell吸針嘴.UseVisualStyleBackColor = true;
+            this.en_JoDell吸針嘴.CheckedChanged += new System.EventHandler(this.en_Group_Click);
+            // 
+            // lbl_acpos_JoDell吸針嘴
+            // 
+            this.lbl_acpos_JoDell吸針嘴.AutoSize = true;
+            this.lbl_acpos_JoDell吸針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_acpos_JoDell吸針嘴.Location = new System.Drawing.Point(340, 245);
+            this.lbl_acpos_JoDell吸針嘴.Name = "lbl_acpos_JoDell吸針嘴";
+            this.lbl_acpos_JoDell吸針嘴.Size = new System.Drawing.Size(28, 13);
+            this.lbl_acpos_JoDell吸針嘴.TabIndex = 193;
+            this.lbl_acpos_JoDell吸針嘴.Text = "0.00";
+            // 
+            // lbl_acpos_JoDell吸針嘴_lbl
+            // 
+            this.lbl_acpos_JoDell吸針嘴_lbl.AutoSize = true;
+            this.lbl_acpos_JoDell吸針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_acpos_JoDell吸針嘴_lbl.Location = new System.Drawing.Point(290, 245);
+            this.lbl_acpos_JoDell吸針嘴_lbl.Name = "lbl_acpos_JoDell吸針嘴_lbl";
+            this.lbl_acpos_JoDell吸針嘴_lbl.Size = new System.Drawing.Size(34, 13);
+            this.lbl_acpos_JoDell吸針嘴_lbl.TabIndex = 192;
+            this.lbl_acpos_JoDell吸針嘴_lbl.Text = "acpos";
+            // 
+            // lbl_spd_JoDell吸針嘴
+            // 
+            this.lbl_spd_JoDell吸針嘴.AutoSize = true;
+            this.lbl_spd_JoDell吸針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_spd_JoDell吸針嘴.Location = new System.Drawing.Point(230, 245);
+            this.lbl_spd_JoDell吸針嘴.Name = "lbl_spd_JoDell吸針嘴";
+            this.lbl_spd_JoDell吸針嘴.Size = new System.Drawing.Size(28, 13);
+            this.lbl_spd_JoDell吸針嘴.TabIndex = 191;
+            this.lbl_spd_JoDell吸針嘴.Text = "0.00";
+            // 
+            // lbl_spd_JoDell吸針嘴_lbl
+            // 
+            this.lbl_spd_JoDell吸針嘴_lbl.AutoSize = true;
+            this.lbl_spd_JoDell吸針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_spd_JoDell吸針嘴_lbl.Location = new System.Drawing.Point(180, 245);
+            this.lbl_spd_JoDell吸針嘴_lbl.Name = "lbl_spd_JoDell吸針嘴_lbl";
+            this.lbl_spd_JoDell吸針嘴_lbl.Size = new System.Drawing.Size(34, 13);
+            this.lbl_spd_JoDell吸針嘴_lbl.TabIndex = 190;
+            this.lbl_spd_JoDell吸針嘴_lbl.Text = "speed";
+            // 
+            // select_JoDell吸針嘴
+            // 
+            this.select_JoDell吸針嘴.AutoSize = true;
+            this.select_JoDell吸針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.select_JoDell吸針嘴.Location = new System.Drawing.Point(95, 245);
+            this.select_JoDell吸針嘴.Name = "select_JoDell吸針嘴";
+            this.select_JoDell吸針嘴.Size = new System.Drawing.Size(90, 17);
+            this.select_JoDell吸針嘴.TabIndex = 189;
+            this.select_JoDell吸針嘴.Text = "吸針嘴相機";
+            this.select_JoDell吸針嘴.UseVisualStyleBackColor = true;
+            this.select_JoDell吸針嘴.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
+            // 
+            // lbl_JoDell3D掃描_Convert
+            // 
+            this.lbl_JoDell3D掃描_Convert.AutoSize = true;
+            this.lbl_JoDell3D掃描_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_JoDell3D掃描_Convert.Location = new System.Drawing.Point(590, 225);
+            this.lbl_JoDell3D掃描_Convert.Name = "lbl_JoDell3D掃描_Convert";
+            this.lbl_JoDell3D掃描_Convert.Size = new System.Drawing.Size(141, 13);
+            this.lbl_JoDell3D掃描_Convert.TabIndex = 188;
+            this.lbl_JoDell3D掃描_Convert.Text = "lbl_JoDell3D掃描_Convert";
+            // 
+            // lbl_JoDell3D掃描_Back
+            // 
+            this.lbl_JoDell3D掃描_Back.AutoSize = true;
+            this.lbl_JoDell3D掃描_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_JoDell3D掃描_Back.Location = new System.Drawing.Point(770, 225);
+            this.lbl_JoDell3D掃描_Back.Name = "lbl_JoDell3D掃描_Back";
+            this.lbl_JoDell3D掃描_Back.Size = new System.Drawing.Size(127, 13);
+            this.lbl_JoDell3D掃描_Back.TabIndex = 187;
+            this.lbl_JoDell3D掃描_Back.Text = "lbl_JoDell3D掃描_Back";
+            // 
+            // lbl_JoDell3D掃描_RAW
+            // 
+            this.lbl_JoDell3D掃描_RAW.AutoSize = true;
+            this.lbl_JoDell3D掃描_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_JoDell3D掃描_RAW.Location = new System.Drawing.Point(420, 225);
+            this.lbl_JoDell3D掃描_RAW.Name = "lbl_JoDell3D掃描_RAW";
+            this.lbl_JoDell3D掃描_RAW.Size = new System.Drawing.Size(132, 13);
+            this.lbl_JoDell3D掃描_RAW.TabIndex = 186;
+            this.lbl_JoDell3D掃描_RAW.Text = "lbl_JoDell3D掃描_RAW";
+            // 
+            // en_JoDell3D掃描
+            // 
+            this.en_JoDell3D掃描.AutoSize = true;
+            this.en_JoDell3D掃描.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.en_JoDell3D掃描.Location = new System.Drawing.Point(25, 225);
+            this.en_JoDell3D掃描.Name = "en_JoDell3D掃描";
+            this.en_JoDell3D掃描.Size = new System.Drawing.Size(58, 17);
+            this.en_JoDell3D掃描.TabIndex = 185;
+            this.en_JoDell3D掃描.Text = "Enable";
+            this.en_JoDell3D掃描.UseVisualStyleBackColor = true;
+            this.en_JoDell3D掃描.CheckedChanged += new System.EventHandler(this.en_Group_Click);
+            // 
+            // lbl_acpos_JoDell3D掃描
+            // 
+            this.lbl_acpos_JoDell3D掃描.AutoSize = true;
+            this.lbl_acpos_JoDell3D掃描.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_acpos_JoDell3D掃描.Location = new System.Drawing.Point(340, 225);
+            this.lbl_acpos_JoDell3D掃描.Name = "lbl_acpos_JoDell3D掃描";
+            this.lbl_acpos_JoDell3D掃描.Size = new System.Drawing.Size(28, 13);
+            this.lbl_acpos_JoDell3D掃描.TabIndex = 184;
+            this.lbl_acpos_JoDell3D掃描.Text = "0.00";
+            // 
+            // lbl_acpos_JoDell3D掃描_lbl
+            // 
+            this.lbl_acpos_JoDell3D掃描_lbl.AutoSize = true;
+            this.lbl_acpos_JoDell3D掃描_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_acpos_JoDell3D掃描_lbl.Location = new System.Drawing.Point(290, 225);
+            this.lbl_acpos_JoDell3D掃描_lbl.Name = "lbl_acpos_JoDell3D掃描_lbl";
+            this.lbl_acpos_JoDell3D掃描_lbl.Size = new System.Drawing.Size(34, 13);
+            this.lbl_acpos_JoDell3D掃描_lbl.TabIndex = 183;
+            this.lbl_acpos_JoDell3D掃描_lbl.Text = "acpos";
+            // 
+            // lbl_spd_JoDell3D掃描
+            // 
+            this.lbl_spd_JoDell3D掃描.AutoSize = true;
+            this.lbl_spd_JoDell3D掃描.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_spd_JoDell3D掃描.Location = new System.Drawing.Point(230, 225);
+            this.lbl_spd_JoDell3D掃描.Name = "lbl_spd_JoDell3D掃描";
+            this.lbl_spd_JoDell3D掃描.Size = new System.Drawing.Size(28, 13);
+            this.lbl_spd_JoDell3D掃描.TabIndex = 182;
+            this.lbl_spd_JoDell3D掃描.Text = "0.00";
+            // 
+            // lbl_spd_JoDell3D掃描_lbl
+            // 
+            this.lbl_spd_JoDell3D掃描_lbl.AutoSize = true;
+            this.lbl_spd_JoDell3D掃描_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_spd_JoDell3D掃描_lbl.Location = new System.Drawing.Point(180, 225);
+            this.lbl_spd_JoDell3D掃描_lbl.Name = "lbl_spd_JoDell3D掃描_lbl";
+            this.lbl_spd_JoDell3D掃描_lbl.Size = new System.Drawing.Size(34, 13);
+            this.lbl_spd_JoDell3D掃描_lbl.TabIndex = 181;
+            this.lbl_spd_JoDell3D掃描_lbl.Text = "speed";
+            // 
+            // select_JoDell3D掃描
+            // 
+            this.select_JoDell3D掃描.AutoSize = true;
+            this.select_JoDell3D掃描.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.select_JoDell3D掃描.Location = new System.Drawing.Point(95, 225);
+            this.select_JoDell3D掃描.Name = "select_JoDell3D掃描";
+            this.select_JoDell3D掃描.Size = new System.Drawing.Size(66, 17);
+            this.select_JoDell3D掃描.TabIndex = 180;
+            this.select_JoDell3D掃描.Text = "3D掃描";
+            this.select_JoDell3D掃描.UseVisualStyleBackColor = true;
+            this.select_JoDell3D掃描.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
+            // 
+            // lbl_JoDell植針嘴_Convert
+            // 
+            this.lbl_JoDell植針嘴_Convert.AutoSize = true;
+            this.lbl_JoDell植針嘴_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_JoDell植針嘴_Convert.Location = new System.Drawing.Point(590, 265);
+            this.lbl_JoDell植針嘴_Convert.Name = "lbl_JoDell植針嘴_Convert";
+            this.lbl_JoDell植針嘴_Convert.Size = new System.Drawing.Size(139, 13);
+            this.lbl_JoDell植針嘴_Convert.TabIndex = 179;
+            this.lbl_JoDell植針嘴_Convert.Text = "lbl_JoDell植針嘴_Convert";
+            // 
+            // lbl_JoDell植針嘴_Back
+            // 
+            this.lbl_JoDell植針嘴_Back.AutoSize = true;
+            this.lbl_JoDell植針嘴_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_JoDell植針嘴_Back.Location = new System.Drawing.Point(770, 265);
+            this.lbl_JoDell植針嘴_Back.Name = "lbl_JoDell植針嘴_Back";
+            this.lbl_JoDell植針嘴_Back.Size = new System.Drawing.Size(125, 13);
+            this.lbl_JoDell植針嘴_Back.TabIndex = 178;
+            this.lbl_JoDell植針嘴_Back.Text = "lbl_JoDell植針嘴_Back";
+            // 
+            // lbl_JoDell植針嘴_RAW
+            // 
+            this.lbl_JoDell植針嘴_RAW.AutoSize = true;
+            this.lbl_JoDell植針嘴_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_JoDell植針嘴_RAW.Location = new System.Drawing.Point(420, 265);
+            this.lbl_JoDell植針嘴_RAW.Name = "lbl_JoDell植針嘴_RAW";
+            this.lbl_JoDell植針嘴_RAW.Size = new System.Drawing.Size(130, 13);
+            this.lbl_JoDell植針嘴_RAW.TabIndex = 177;
+            this.lbl_JoDell植針嘴_RAW.Text = "lbl_JoDell植針嘴_RAW";
+            // 
+            // en_JoDell植針嘴
+            // 
+            this.en_JoDell植針嘴.AutoSize = true;
+            this.en_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.en_JoDell植針嘴.Location = new System.Drawing.Point(25, 265);
+            this.en_JoDell植針嘴.Name = "en_JoDell植針嘴";
+            this.en_JoDell植針嘴.Size = new System.Drawing.Size(58, 17);
+            this.en_JoDell植針嘴.TabIndex = 176;
+            this.en_JoDell植針嘴.Text = "Enable";
+            this.en_JoDell植針嘴.UseVisualStyleBackColor = true;
+            this.en_JoDell植針嘴.CheckedChanged += new System.EventHandler(this.en_Group_Click);
+            // 
+            // lbl_acpos_JoDell植針嘴
+            // 
+            this.lbl_acpos_JoDell植針嘴.AutoSize = true;
+            this.lbl_acpos_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_acpos_JoDell植針嘴.Location = new System.Drawing.Point(340, 265);
+            this.lbl_acpos_JoDell植針嘴.Name = "lbl_acpos_JoDell植針嘴";
+            this.lbl_acpos_JoDell植針嘴.Size = new System.Drawing.Size(28, 13);
+            this.lbl_acpos_JoDell植針嘴.TabIndex = 175;
+            this.lbl_acpos_JoDell植針嘴.Text = "0.00";
+            // 
+            // lbl_acpos_JoDell植針嘴_lbl
+            // 
+            this.lbl_acpos_JoDell植針嘴_lbl.AutoSize = true;
+            this.lbl_acpos_JoDell植針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_acpos_JoDell植針嘴_lbl.Location = new System.Drawing.Point(290, 265);
+            this.lbl_acpos_JoDell植針嘴_lbl.Name = "lbl_acpos_JoDell植針嘴_lbl";
+            this.lbl_acpos_JoDell植針嘴_lbl.Size = new System.Drawing.Size(34, 13);
+            this.lbl_acpos_JoDell植針嘴_lbl.TabIndex = 174;
+            this.lbl_acpos_JoDell植針嘴_lbl.Text = "acpos";
+            // 
+            // lbl_spd_JoDell植針嘴
+            // 
+            this.lbl_spd_JoDell植針嘴.AutoSize = true;
+            this.lbl_spd_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_spd_JoDell植針嘴.Location = new System.Drawing.Point(230, 265);
+            this.lbl_spd_JoDell植針嘴.Name = "lbl_spd_JoDell植針嘴";
+            this.lbl_spd_JoDell植針嘴.Size = new System.Drawing.Size(28, 13);
+            this.lbl_spd_JoDell植針嘴.TabIndex = 173;
+            this.lbl_spd_JoDell植針嘴.Text = "0.00";
+            // 
+            // lbl_spd_JoDell植針嘴_lbl
+            // 
+            this.lbl_spd_JoDell植針嘴_lbl.AutoSize = true;
+            this.lbl_spd_JoDell植針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_spd_JoDell植針嘴_lbl.Location = new System.Drawing.Point(180, 265);
+            this.lbl_spd_JoDell植針嘴_lbl.Name = "lbl_spd_JoDell植針嘴_lbl";
+            this.lbl_spd_JoDell植針嘴_lbl.Size = new System.Drawing.Size(34, 13);
+            this.lbl_spd_JoDell植針嘴_lbl.TabIndex = 172;
+            this.lbl_spd_JoDell植針嘴_lbl.Text = "speed";
+            // 
+            // select_JoDell植針嘴
+            // 
+            this.select_JoDell植針嘴.AutoSize = true;
+            this.select_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.select_JoDell植針嘴.Location = new System.Drawing.Point(95, 265);
+            this.select_JoDell植針嘴.Name = "select_JoDell植針嘴";
+            this.select_JoDell植針嘴.Size = new System.Drawing.Size(90, 17);
+            this.select_JoDell植針嘴.TabIndex = 171;
+            this.select_JoDell植針嘴.Text = "植針嘴相機";
+            this.select_JoDell植針嘴.UseVisualStyleBackColor = true;
+            this.select_JoDell植針嘴.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
+            // 
             // lbl_IAI_Convert
             // 
             this.lbl_IAI_Convert.AutoSize = true;
@@ -649,17 +931,17 @@
             this.lbl_spd_IAI_lbl.TabIndex = 163;
             this.lbl_spd_IAI_lbl.Text = "speed";
             // 
-            // select_IAI
+            // select_Socket檢測
             // 
-            this.select_IAI.AutoSize = true;
-            this.select_IAI.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_IAI.Location = new System.Drawing.Point(95, 205);
-            this.select_IAI.Name = "select_IAI";
-            this.select_IAI.Size = new System.Drawing.Size(42, 17);
-            this.select_IAI.TabIndex = 162;
-            this.select_IAI.Text = "IAI";
-            this.select_IAI.UseVisualStyleBackColor = true;
-            this.select_IAI.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
+            this.select_Socket檢測.AutoSize = true;
+            this.select_Socket檢測.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.select_Socket檢測.Location = new System.Drawing.Point(95, 205);
+            this.select_Socket檢測.Name = "select_Socket檢測";
+            this.select_Socket檢測.Size = new System.Drawing.Size(83, 17);
+            this.select_Socket檢測.TabIndex = 162;
+            this.select_Socket檢測.Text = "Socket檢測";
+            this.select_Socket檢測.UseVisualStyleBackColor = true;
+            this.select_Socket檢測.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
             // groupBox2
             // 
@@ -3247,288 +3529,6 @@
             this.tabControl1.Size = new System.Drawing.Size(1236, 791);
             this.tabControl1.TabIndex = 2;
             // 
-            // lbl_JoDell3D掃描_Convert
-            // 
-            this.lbl_JoDell3D掃描_Convert.AutoSize = true;
-            this.lbl_JoDell3D掃描_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell3D掃描_Convert.Location = new System.Drawing.Point(590, 225);
-            this.lbl_JoDell3D掃描_Convert.Name = "lbl_JoDell3D掃描_Convert";
-            this.lbl_JoDell3D掃描_Convert.Size = new System.Drawing.Size(141, 13);
-            this.lbl_JoDell3D掃描_Convert.TabIndex = 188;
-            this.lbl_JoDell3D掃描_Convert.Text = "lbl_JoDell3D掃描_Convert";
-            // 
-            // lbl_JoDell3D掃描_Back
-            // 
-            this.lbl_JoDell3D掃描_Back.AutoSize = true;
-            this.lbl_JoDell3D掃描_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell3D掃描_Back.Location = new System.Drawing.Point(770, 225);
-            this.lbl_JoDell3D掃描_Back.Name = "lbl_JoDell3D掃描_Back";
-            this.lbl_JoDell3D掃描_Back.Size = new System.Drawing.Size(127, 13);
-            this.lbl_JoDell3D掃描_Back.TabIndex = 187;
-            this.lbl_JoDell3D掃描_Back.Text = "lbl_JoDell3D掃描_Back";
-            // 
-            // lbl_JoDell3D掃描_RAW
-            // 
-            this.lbl_JoDell3D掃描_RAW.AutoSize = true;
-            this.lbl_JoDell3D掃描_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell3D掃描_RAW.Location = new System.Drawing.Point(420, 225);
-            this.lbl_JoDell3D掃描_RAW.Name = "lbl_JoDell3D掃描_RAW";
-            this.lbl_JoDell3D掃描_RAW.Size = new System.Drawing.Size(132, 13);
-            this.lbl_JoDell3D掃描_RAW.TabIndex = 186;
-            this.lbl_JoDell3D掃描_RAW.Text = "lbl_JoDell3D掃描_RAW";
-            // 
-            // en_JoDell3D掃描
-            // 
-            this.en_JoDell3D掃描.AutoSize = true;
-            this.en_JoDell3D掃描.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_JoDell3D掃描.Location = new System.Drawing.Point(25, 225);
-            this.en_JoDell3D掃描.Name = "en_JoDell3D掃描";
-            this.en_JoDell3D掃描.Size = new System.Drawing.Size(58, 17);
-            this.en_JoDell3D掃描.TabIndex = 185;
-            this.en_JoDell3D掃描.Text = "Enable";
-            this.en_JoDell3D掃描.UseVisualStyleBackColor = true;
-            this.en_JoDell3D掃描.CheckedChanged += new System.EventHandler(this.en_Group_Click);
-            // 
-            // lbl_acpos_JoDell3D掃描
-            // 
-            this.lbl_acpos_JoDell3D掃描.AutoSize = true;
-            this.lbl_acpos_JoDell3D掃描.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell3D掃描.Location = new System.Drawing.Point(340, 225);
-            this.lbl_acpos_JoDell3D掃描.Name = "lbl_acpos_JoDell3D掃描";
-            this.lbl_acpos_JoDell3D掃描.Size = new System.Drawing.Size(28, 13);
-            this.lbl_acpos_JoDell3D掃描.TabIndex = 184;
-            this.lbl_acpos_JoDell3D掃描.Text = "0.00";
-            // 
-            // lbl_acpos_JoDell3D掃描_lbl
-            // 
-            this.lbl_acpos_JoDell3D掃描_lbl.AutoSize = true;
-            this.lbl_acpos_JoDell3D掃描_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell3D掃描_lbl.Location = new System.Drawing.Point(290, 225);
-            this.lbl_acpos_JoDell3D掃描_lbl.Name = "lbl_acpos_JoDell3D掃描_lbl";
-            this.lbl_acpos_JoDell3D掃描_lbl.Size = new System.Drawing.Size(34, 13);
-            this.lbl_acpos_JoDell3D掃描_lbl.TabIndex = 183;
-            this.lbl_acpos_JoDell3D掃描_lbl.Text = "acpos";
-            // 
-            // lbl_spd_JoDell3D掃描
-            // 
-            this.lbl_spd_JoDell3D掃描.AutoSize = true;
-            this.lbl_spd_JoDell3D掃描.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell3D掃描.Location = new System.Drawing.Point(230, 225);
-            this.lbl_spd_JoDell3D掃描.Name = "lbl_spd_JoDell3D掃描";
-            this.lbl_spd_JoDell3D掃描.Size = new System.Drawing.Size(28, 13);
-            this.lbl_spd_JoDell3D掃描.TabIndex = 182;
-            this.lbl_spd_JoDell3D掃描.Text = "0.00";
-            // 
-            // lbl_spd_JoDell3D掃描_lbl
-            // 
-            this.lbl_spd_JoDell3D掃描_lbl.AutoSize = true;
-            this.lbl_spd_JoDell3D掃描_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell3D掃描_lbl.Location = new System.Drawing.Point(180, 225);
-            this.lbl_spd_JoDell3D掃描_lbl.Name = "lbl_spd_JoDell3D掃描_lbl";
-            this.lbl_spd_JoDell3D掃描_lbl.Size = new System.Drawing.Size(34, 13);
-            this.lbl_spd_JoDell3D掃描_lbl.TabIndex = 181;
-            this.lbl_spd_JoDell3D掃描_lbl.Text = "speed";
-            // 
-            // select_JoDell3D掃描
-            // 
-            this.select_JoDell3D掃描.AutoSize = true;
-            this.select_JoDell3D掃描.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_JoDell3D掃描.Location = new System.Drawing.Point(95, 225);
-            this.select_JoDell3D掃描.Name = "select_JoDell3D掃描";
-            this.select_JoDell3D掃描.Size = new System.Drawing.Size(66, 17);
-            this.select_JoDell3D掃描.TabIndex = 180;
-            this.select_JoDell3D掃描.Text = "3D掃描";
-            this.select_JoDell3D掃描.UseVisualStyleBackColor = true;
-            this.select_JoDell3D掃描.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
-            // 
-            // lbl_JoDell吸針嘴_Convert
-            // 
-            this.lbl_JoDell吸針嘴_Convert.AutoSize = true;
-            this.lbl_JoDell吸針嘴_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell吸針嘴_Convert.Location = new System.Drawing.Point(590, 245);
-            this.lbl_JoDell吸針嘴_Convert.Name = "lbl_JoDell吸針嘴_Convert";
-            this.lbl_JoDell吸針嘴_Convert.Size = new System.Drawing.Size(139, 13);
-            this.lbl_JoDell吸針嘴_Convert.TabIndex = 197;
-            this.lbl_JoDell吸針嘴_Convert.Text = "lbl_JoDell吸針嘴_Convert";
-            // 
-            // lbl_JoDell吸針嘴_Back
-            // 
-            this.lbl_JoDell吸針嘴_Back.AutoSize = true;
-            this.lbl_JoDell吸針嘴_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell吸針嘴_Back.Location = new System.Drawing.Point(770, 245);
-            this.lbl_JoDell吸針嘴_Back.Name = "lbl_JoDell吸針嘴_Back";
-            this.lbl_JoDell吸針嘴_Back.Size = new System.Drawing.Size(125, 13);
-            this.lbl_JoDell吸針嘴_Back.TabIndex = 196;
-            this.lbl_JoDell吸針嘴_Back.Text = "lbl_JoDell吸針嘴_Back";
-            // 
-            // lbl_JoDell吸針嘴_RAW
-            // 
-            this.lbl_JoDell吸針嘴_RAW.AutoSize = true;
-            this.lbl_JoDell吸針嘴_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell吸針嘴_RAW.Location = new System.Drawing.Point(420, 245);
-            this.lbl_JoDell吸針嘴_RAW.Name = "lbl_JoDell吸針嘴_RAW";
-            this.lbl_JoDell吸針嘴_RAW.Size = new System.Drawing.Size(130, 13);
-            this.lbl_JoDell吸針嘴_RAW.TabIndex = 195;
-            this.lbl_JoDell吸針嘴_RAW.Text = "lbl_JoDell吸針嘴_RAW";
-            // 
-            // en_JoDell吸針嘴
-            // 
-            this.en_JoDell吸針嘴.AutoSize = true;
-            this.en_JoDell吸針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_JoDell吸針嘴.Location = new System.Drawing.Point(25, 245);
-            this.en_JoDell吸針嘴.Name = "en_JoDell吸針嘴";
-            this.en_JoDell吸針嘴.Size = new System.Drawing.Size(58, 17);
-            this.en_JoDell吸針嘴.TabIndex = 194;
-            this.en_JoDell吸針嘴.Text = "Enable";
-            this.en_JoDell吸針嘴.UseVisualStyleBackColor = true;
-            this.en_JoDell吸針嘴.CheckedChanged += new System.EventHandler(this.en_Group_Click);
-            // 
-            // lbl_acpos_JoDell吸針嘴
-            // 
-            this.lbl_acpos_JoDell吸針嘴.AutoSize = true;
-            this.lbl_acpos_JoDell吸針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell吸針嘴.Location = new System.Drawing.Point(340, 245);
-            this.lbl_acpos_JoDell吸針嘴.Name = "lbl_acpos_JoDell吸針嘴";
-            this.lbl_acpos_JoDell吸針嘴.Size = new System.Drawing.Size(28, 13);
-            this.lbl_acpos_JoDell吸針嘴.TabIndex = 193;
-            this.lbl_acpos_JoDell吸針嘴.Text = "0.00";
-            // 
-            // lbl_acpos_JoDell吸針嘴_lbl
-            // 
-            this.lbl_acpos_JoDell吸針嘴_lbl.AutoSize = true;
-            this.lbl_acpos_JoDell吸針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell吸針嘴_lbl.Location = new System.Drawing.Point(290, 245);
-            this.lbl_acpos_JoDell吸針嘴_lbl.Name = "lbl_acpos_JoDell吸針嘴_lbl";
-            this.lbl_acpos_JoDell吸針嘴_lbl.Size = new System.Drawing.Size(34, 13);
-            this.lbl_acpos_JoDell吸針嘴_lbl.TabIndex = 192;
-            this.lbl_acpos_JoDell吸針嘴_lbl.Text = "acpos";
-            // 
-            // lbl_spd_JoDell吸針嘴
-            // 
-            this.lbl_spd_JoDell吸針嘴.AutoSize = true;
-            this.lbl_spd_JoDell吸針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell吸針嘴.Location = new System.Drawing.Point(230, 245);
-            this.lbl_spd_JoDell吸針嘴.Name = "lbl_spd_JoDell吸針嘴";
-            this.lbl_spd_JoDell吸針嘴.Size = new System.Drawing.Size(28, 13);
-            this.lbl_spd_JoDell吸針嘴.TabIndex = 191;
-            this.lbl_spd_JoDell吸針嘴.Text = "0.00";
-            // 
-            // lbl_spd_JoDell吸針嘴_lbl
-            // 
-            this.lbl_spd_JoDell吸針嘴_lbl.AutoSize = true;
-            this.lbl_spd_JoDell吸針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell吸針嘴_lbl.Location = new System.Drawing.Point(180, 245);
-            this.lbl_spd_JoDell吸針嘴_lbl.Name = "lbl_spd_JoDell吸針嘴_lbl";
-            this.lbl_spd_JoDell吸針嘴_lbl.Size = new System.Drawing.Size(34, 13);
-            this.lbl_spd_JoDell吸針嘴_lbl.TabIndex = 190;
-            this.lbl_spd_JoDell吸針嘴_lbl.Text = "speed";
-            // 
-            // select_JoDell吸針嘴
-            // 
-            this.select_JoDell吸針嘴.AutoSize = true;
-            this.select_JoDell吸針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_JoDell吸針嘴.Location = new System.Drawing.Point(95, 245);
-            this.select_JoDell吸針嘴.Name = "select_JoDell吸針嘴";
-            this.select_JoDell吸針嘴.Size = new System.Drawing.Size(90, 17);
-            this.select_JoDell吸針嘴.TabIndex = 189;
-            this.select_JoDell吸針嘴.Text = "吸針嘴相機";
-            this.select_JoDell吸針嘴.UseVisualStyleBackColor = true;
-            this.select_JoDell吸針嘴.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
-            // 
-            // select_JoDell植針嘴
-            // 
-            this.select_JoDell植針嘴.AutoSize = true;
-            this.select_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_JoDell植針嘴.Location = new System.Drawing.Point(95, 265);
-            this.select_JoDell植針嘴.Name = "select_JoDell植針嘴";
-            this.select_JoDell植針嘴.Size = new System.Drawing.Size(90, 17);
-            this.select_JoDell植針嘴.TabIndex = 171;
-            this.select_JoDell植針嘴.Text = "植針嘴相機";
-            this.select_JoDell植針嘴.UseVisualStyleBackColor = true;
-            this.select_JoDell植針嘴.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
-            // 
-            // lbl_spd_JoDell植針嘴_lbl
-            // 
-            this.lbl_spd_JoDell植針嘴_lbl.AutoSize = true;
-            this.lbl_spd_JoDell植針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell植針嘴_lbl.Location = new System.Drawing.Point(180, 265);
-            this.lbl_spd_JoDell植針嘴_lbl.Name = "lbl_spd_JoDell植針嘴_lbl";
-            this.lbl_spd_JoDell植針嘴_lbl.Size = new System.Drawing.Size(34, 13);
-            this.lbl_spd_JoDell植針嘴_lbl.TabIndex = 172;
-            this.lbl_spd_JoDell植針嘴_lbl.Text = "speed";
-            // 
-            // lbl_spd_JoDell植針嘴
-            // 
-            this.lbl_spd_JoDell植針嘴.AutoSize = true;
-            this.lbl_spd_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell植針嘴.Location = new System.Drawing.Point(230, 265);
-            this.lbl_spd_JoDell植針嘴.Name = "lbl_spd_JoDell植針嘴";
-            this.lbl_spd_JoDell植針嘴.Size = new System.Drawing.Size(28, 13);
-            this.lbl_spd_JoDell植針嘴.TabIndex = 173;
-            this.lbl_spd_JoDell植針嘴.Text = "0.00";
-            // 
-            // lbl_acpos_JoDell植針嘴_lbl
-            // 
-            this.lbl_acpos_JoDell植針嘴_lbl.AutoSize = true;
-            this.lbl_acpos_JoDell植針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell植針嘴_lbl.Location = new System.Drawing.Point(290, 265);
-            this.lbl_acpos_JoDell植針嘴_lbl.Name = "lbl_acpos_JoDell植針嘴_lbl";
-            this.lbl_acpos_JoDell植針嘴_lbl.Size = new System.Drawing.Size(34, 13);
-            this.lbl_acpos_JoDell植針嘴_lbl.TabIndex = 174;
-            this.lbl_acpos_JoDell植針嘴_lbl.Text = "acpos";
-            // 
-            // lbl_acpos_JoDell植針嘴
-            // 
-            this.lbl_acpos_JoDell植針嘴.AutoSize = true;
-            this.lbl_acpos_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell植針嘴.Location = new System.Drawing.Point(340, 265);
-            this.lbl_acpos_JoDell植針嘴.Name = "lbl_acpos_JoDell植針嘴";
-            this.lbl_acpos_JoDell植針嘴.Size = new System.Drawing.Size(28, 13);
-            this.lbl_acpos_JoDell植針嘴.TabIndex = 175;
-            this.lbl_acpos_JoDell植針嘴.Text = "0.00";
-            // 
-            // en_JoDell植針嘴
-            // 
-            this.en_JoDell植針嘴.AutoSize = true;
-            this.en_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_JoDell植針嘴.Location = new System.Drawing.Point(25, 265);
-            this.en_JoDell植針嘴.Name = "en_JoDell植針嘴";
-            this.en_JoDell植針嘴.Size = new System.Drawing.Size(58, 17);
-            this.en_JoDell植針嘴.TabIndex = 176;
-            this.en_JoDell植針嘴.Text = "Enable";
-            this.en_JoDell植針嘴.UseVisualStyleBackColor = true;
-            this.en_JoDell植針嘴.CheckedChanged += new System.EventHandler(this.en_Group_Click);
-            // 
-            // lbl_JoDell植針嘴_RAW
-            // 
-            this.lbl_JoDell植針嘴_RAW.AutoSize = true;
-            this.lbl_JoDell植針嘴_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell植針嘴_RAW.Location = new System.Drawing.Point(420, 265);
-            this.lbl_JoDell植針嘴_RAW.Name = "lbl_JoDell植針嘴_RAW";
-            this.lbl_JoDell植針嘴_RAW.Size = new System.Drawing.Size(130, 13);
-            this.lbl_JoDell植針嘴_RAW.TabIndex = 177;
-            this.lbl_JoDell植針嘴_RAW.Text = "lbl_JoDell植針嘴_RAW";
-            // 
-            // lbl_JoDell植針嘴_Back
-            // 
-            this.lbl_JoDell植針嘴_Back.AutoSize = true;
-            this.lbl_JoDell植針嘴_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell植針嘴_Back.Location = new System.Drawing.Point(770, 265);
-            this.lbl_JoDell植針嘴_Back.Name = "lbl_JoDell植針嘴_Back";
-            this.lbl_JoDell植針嘴_Back.Size = new System.Drawing.Size(125, 13);
-            this.lbl_JoDell植針嘴_Back.TabIndex = 178;
-            this.lbl_JoDell植針嘴_Back.Text = "lbl_JoDell植針嘴_Back";
-            // 
-            // lbl_JoDell植針嘴_Convert
-            // 
-            this.lbl_JoDell植針嘴_Convert.AutoSize = true;
-            this.lbl_JoDell植針嘴_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell植針嘴_Convert.Location = new System.Drawing.Point(590, 265);
-            this.lbl_JoDell植針嘴_Convert.Name = "lbl_JoDell植針嘴_Convert";
-            this.lbl_JoDell植針嘴_Convert.Size = new System.Drawing.Size(139, 13);
-            this.lbl_JoDell植針嘴_Convert.TabIndex = 179;
-            this.lbl_JoDell植針嘴_Convert.Text = "lbl_JoDell植針嘴_Convert";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -3812,7 +3812,7 @@
         private System.Windows.Forms.Label lbl_acpos_IAI_lbl;
         private System.Windows.Forms.Label lbl_spd_IAI;
         private System.Windows.Forms.Label lbl_spd_IAI_lbl;
-        private System.Windows.Forms.RadioButton select_IAI;
+        private System.Windows.Forms.RadioButton select_Socket檢測;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
