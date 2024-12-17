@@ -175,7 +175,7 @@ namespace InjectorInspector
                     
                         lbl_吸嘴X軸_RAW.Text = Convert.ToString();
                         lbl_吸嘴X軸_Convert.Text = dbGet.ToString("F3");
-                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
                         lbl_吸嘴X軸_Back.Text = cnback.ToString();
                     }
                 
@@ -270,7 +270,7 @@ namespace InjectorInspector
 
                         lbl_吸嘴Y軸_RAW.Text = Convert.ToString();
                         lbl_吸嘴Y軸_Convert.Text = dbGet.ToString("F3");
-                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
                         lbl_吸嘴Y軸_Back.Text = cnback.ToString();
                     }
 
@@ -365,7 +365,7 @@ namespace InjectorInspector
 
                         lbl_吸嘴Z軸_RAW.Text = Convert.ToString();
                         lbl_吸嘴Z軸_Convert.Text = dbGet.ToString("F3");
-                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
                         lbl_吸嘴Z軸_Back.Text = cnback.ToString();
                     }
 
@@ -466,7 +466,7 @@ namespace InjectorInspector
 
                         lbl_吸嘴R軸_RAW.Text = Convert.ToString();
                         lbl_吸嘴R軸_Convert.Text = dbGet.ToString("F3");
-                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
                         lbl_吸嘴R軸_Back.Text = cnback.ToString();
                     }
 
@@ -556,7 +556,7 @@ namespace InjectorInspector
 
                         lbl_載盤X軸_RAW.Text = Convert.ToString();
                         lbl_載盤X軸_Convert.Text = dbGet.ToString("F3");
-                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
                         lbl_載盤X軸_Back.Text = cnback.ToString();
                     }
 
@@ -651,7 +651,7 @@ namespace InjectorInspector
 
                         lbl_載盤Y軸_RAW.Text = Convert.ToString();
                         lbl_載盤Y軸_Convert.Text = dbGet.ToString("F3");
-                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
                         lbl_載盤Y軸_Back.Text = cnback.ToString();
                     }
 
@@ -746,7 +746,7 @@ namespace InjectorInspector
 
                         lbl_植針Z軸_RAW.Text = Convert.ToString();
                         lbl_植針Z軸_Convert.Text = dbGet.ToString("F3");
-                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
                         lbl_植針Z軸_Back.Text = cnback.ToString();
                     }
 
@@ -841,7 +841,7 @@ namespace InjectorInspector
 
                         lbl_植針R軸_RAW.Text = Convert.ToString();
                         lbl_植針R軸_Convert.Text = dbGet.ToString("F3");
-                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
                         lbl_植針R軸_Back.Text = cnback.ToString();
                     }
 
@@ -936,7 +936,7 @@ namespace InjectorInspector
 
                         lbl_工作門_RAW.Text = Convert.ToString();
                         lbl_工作門_Convert.Text = dbGet.ToString("F3");
-                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, MaxRAW, MinRAW);
+                        int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
                         lbl_工作門_Back.Text = cnback.ToString();
                     }
 
