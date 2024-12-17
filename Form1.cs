@@ -1448,7 +1448,7 @@ namespace InjectorInspector
                 } else if (selectedRadioButton == select_工作門) {
                     wmxId_RadioGroupChanged = WMX3軸定義.工作門;
                 } else if (selectedRadioButton == select_Socket檢測) {
-                    wmxId_RadioGroupChanged = WMX3軸定義.IAI;
+                    wmxId_RadioGroupChanged = WMX3軸定義.IAISocket孔檢測;
                 } else if (selectedRadioButton == select_JoDell3D掃描) {
                     wmxId_RadioGroupChanged = WMX3軸定義.JoDell3D掃描;
                 } else if (selectedRadioButton == select_JoDell吸針嘴) {
@@ -1477,7 +1477,7 @@ namespace InjectorInspector
                 txtABSpos.Text = (double.Parse(lbl_acpos_植針R軸.Text).ToString("F3"));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.工作門) {
                 txtABSpos.Text = (double.Parse(lbl_acpos_工作門.Text).ToString("F3"));
-            } else if (wmxId_RadioGroupChanged == WMX3軸定義.IAI) {
+            } else if (wmxId_RadioGroupChanged == WMX3軸定義.IAISocket孔檢測) {
                 txtABSpos.Text = (double.Parse(lbl_acpos_IAI.Text).ToString("F3"));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.JoDell3D掃描) {
                 txtABSpos.Text = (double.Parse(lbl_acpos_JoDell3D掃描.Text).ToString("F3"));
@@ -1557,35 +1557,69 @@ namespace InjectorInspector
                 //辨識選擇之軸
                 switch(wmxId_RadioGroupChanged) {
                     case WMX3軸定義.吸嘴X軸:
+                        if(enGC_吸嘴X軸 == true) {
+                            dbapiNozzleX(result);
+                        }
                         break;
                     case WMX3軸定義.吸嘴Y軸:
+                        if(enGC_吸嘴Y軸 == true) {
+                            dbapiNozzleY(result);
+                        }
                         break;
                     case WMX3軸定義.吸嘴Z軸:
+                        if(enGC_吸嘴Z軸 == true) {
+                            dbapiNozzleZ(result);
+                        }
                         break;
                     case WMX3軸定義.吸嘴R軸:
+                        if(enGC_吸嘴R軸 == true) {
+                            dbapiNozzleR(result);
+                        }
                         break;
                     case WMX3軸定義.載盤X軸:
+                        if(enGC_載盤X軸 == true) {
+                            dbapiCarrierX(result);
+                        }
                         break;
                     case WMX3軸定義.載盤Y軸:
+                        if(enGC_載盤Y軸 == true) {
+                            dbapiCarrierY(result);
+                        }
                         break;
                     case WMX3軸定義.植針Z軸:
+                        if(enGC_植針Z軸 == true) {
+                            dbapiSetZ(result);
+                        }
                         break;
                     case WMX3軸定義.植針R軸:
-                        dbapiSetR(result);
+                        if(enGC_植針R軸 == true) {
+                            dbapiSetR(result);
+                        }
                         break;
                     case WMX3軸定義.工作門:
+                        if(enGC_工作門 == true) {
+                            dbapiGate(result);
+                        }
                         break;
-                    case WMX3軸定義.IAI:
-                        dbapiIAI(result);
+                    case WMX3軸定義.IAISocket孔檢測:
+                        if(enGC_IAI == true) {
+                            dbapiIAI(result);
+                        }
                         break;
                     case WMX3軸定義.JoDell3D掃描:
-                        dbapJoDell3D掃描(result);
+                        if(enGC_JoDell3D掃描 == true) {
+                            dbapJoDell3D掃描(result);
+                        }
                         break;
                     case WMX3軸定義.JoDell吸針嘴:
-                        dbapJoDell吸針嘴(result);
+                        if(enGC_JoDell吸針嘴 == true) {
+                            dbapJoDell吸針嘴(result);
+                        }
                         break;
                     case WMX3軸定義.JoDell植針嘴:
-                        dbapJoDell植針嘴(result);
+                        if(enGC_JoDell植針嘴 == true) {
+                            dbapJoDell植針嘴(result);
+                        }
                         break;
                 }
             }
@@ -2290,66 +2324,13 @@ namespace InjectorInspector
 
 
 
-        private void label11_Click(object sender, EventArgs e)
-        {
-            dbapJoDell植針嘴(10);
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-            dbapJoDell植針嘴(40);
-        }
-        private void label6_Click(object sender, EventArgs e)
-        {
-            clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, 1);
-        }
-        private void label7_Click(object sender, EventArgs e)
-        {
-            clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, 0);
-        }
-
-
-
-
-
-        private void button15_Click(object sender, EventArgs e)
-        {
-            int iPos = int.Parse(textBox1.Text);
-
-            if(iPos >= 5000)
-            {
-                iPos = 5000;
-            }
-
-            if(iPos <= 0)
-            {
-                iPos = 0;
-            }
-
-            textBox1.Text = iPos.ToString();
-
-            {
-                int addr_TargetSetDevice = (int)(addr_JODELL.pxeaJ_植針嘴_Output) / 10;
-                int addr_TargetSetFunction = (int)(addr_JODELL.pxeaJ_SetAddr_P0_Position2Bytes) / 10;
-
-                int varJODELL_TX_P0_Position = iPos;
-                byte[] JODELL_TX_P0_Position = new byte[2];
-
-                JODELL_TX_P0_Position[0] = (byte)(varJODELL_TX_P0_Position & 0xFF);
-                JODELL_TX_P0_Position[1] = (byte)(varJODELL_TX_P0_Position >> 8);
-
-                //Write TX
-                clsServoControlWMX3.WMX3_SetIO(ref JODELL_TX_P0_Position, addr_TargetSetDevice + addr_TargetSetFunction, 2);
-            }
-        }
 
 
 
 
 
 
-
-
+ 
     }  // end of public partial class Form1 : Form
 
 }  // end of namespace InjectorInspector
