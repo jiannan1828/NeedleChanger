@@ -81,7 +81,7 @@
             this.lbl艙內燈 = new System.Windows.Forms.Label();
             this.lbl_NA_30 = new System.Windows.Forms.Label();
             this.lblHEPA = new System.Windows.Forms.Label();
-            this.lbl_NA_29 = new System.Windows.Forms.Label();
+            this.lbl植針Z煞車 = new System.Windows.Forms.Label();
             this.lbl下後右門鎖 = new System.Windows.Forms.Label();
             this.lbl取料吸嘴破 = new System.Windows.Forms.Label();
             this.lbl下後左門鎖 = new System.Windows.Forms.Label();
@@ -861,7 +861,7 @@
             this.groupBox2.Controls.Add(this.lbl艙內燈);
             this.groupBox2.Controls.Add(this.lbl_NA_30);
             this.groupBox2.Controls.Add(this.lblHEPA);
-            this.groupBox2.Controls.Add(this.lbl_NA_29);
+            this.groupBox2.Controls.Add(this.lbl植針Z煞車);
             this.groupBox2.Controls.Add(this.lbl下後右門鎖);
             this.groupBox2.Controls.Add(this.lbl取料吸嘴破);
             this.groupBox2.Controls.Add(this.lbl下後左門鎖);
@@ -1010,16 +1010,16 @@
             this.lblHEPA.Text = "lblHEPA";
             this.lblHEPA.Click += new System.EventHandler(this.lbl_SetIO_Click);
             // 
-            // lbl_NA_29
+            // lbl植針Z煞車
             // 
-            this.lbl_NA_29.AutoSize = true;
-            this.lbl_NA_29.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_29.Location = new System.Drawing.Point(220, 120);
-            this.lbl_NA_29.Name = "lbl_NA_29";
-            this.lbl_NA_29.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_29.TabIndex = 180;
-            this.lbl_NA_29.Text = "lbl_NA_29";
-            this.lbl_NA_29.Click += new System.EventHandler(this.lbl_SetIO_Click);
+            this.lbl植針Z煞車.AutoSize = true;
+            this.lbl植針Z煞車.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl植針Z煞車.Location = new System.Drawing.Point(220, 120);
+            this.lbl植針Z煞車.Name = "lbl植針Z煞車";
+            this.lbl植針Z煞車.Size = new System.Drawing.Size(78, 13);
+            this.lbl植針Z煞車.TabIndex = 180;
+            this.lbl植針Z煞車.Text = "lbl植針Z煞車";
+            this.lbl植針Z煞車.Click += new System.EventHandler(this.lbl_SetIO_Click);
             // 
             // lbl下後右門鎖
             // 
@@ -3480,7 +3480,7 @@
         private System.Windows.Forms.Label lbl艙內燈;
         private System.Windows.Forms.Label lbl_NA_30;
         private System.Windows.Forms.Label lblHEPA;
-        private System.Windows.Forms.Label lbl_NA_29;
+        private System.Windows.Forms.Label lbl植針Z煞車;
         private System.Windows.Forms.Label lbl下後右門鎖;
         private System.Windows.Forms.Label lbl取料吸嘴破;
         private System.Windows.Forms.Label lbl下後左門鎖;

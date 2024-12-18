@@ -165,10 +165,10 @@ namespace InjectorInspector
                 if (bshow_debug_RAW_Conver_Back_Value == true)
                     if (position != "")
                     {
-                        int MaxRAW = -4;
-                        int MinRAW = 51073;
-                        double Maxdb = 0.0;
-                        double Mindb = 500.0;
+                        int MaxRAW = 22204;
+                        int MinRAW = -27796;
+                        double Maxdb = 500.0;
+                        double Mindb = 0.0;
                         Normal calculate = new Normal();
                         int Convert = (int)(double.Parse(position));
                         double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
@@ -260,10 +260,10 @@ namespace InjectorInspector
                 if (bshow_debug_RAW_Conver_Back_Value == true)
                     if (position != "")
                     {
-                        int MaxRAW = -1005;
-                        int MinRAW = 10875;
-                        double Maxdb = 0.0;
-                        double Mindb = 100.0;
+                        int MaxRAW = 9364;
+                        int MinRAW = -636;
+                        double Maxdb = 100.0;
+                        double Mindb = 0.0;
                         Normal calculate = new Normal();
                         int Convert = (int)(double.Parse(position));
                         double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
@@ -546,10 +546,10 @@ namespace InjectorInspector
                 if (bshow_debug_RAW_Conver_Back_Value == true)
                     if (position != "")
                     {
-                        int MaxRAW = -39198;
-                        int MinRAW = 1;
-                        double Maxdb = 0.0;
-                        double Mindb = 190.0;
+                        int MaxRAW = -3137;
+                        int MinRAW = 14863;
+                        double Maxdb = 180.0;
+                        double Mindb = 0.0;
                         Normal calculate = new Normal();
                         int Convert = (int)(double.Parse(position));
                         double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
@@ -641,10 +641,10 @@ namespace InjectorInspector
                 if (bshow_debug_RAW_Conver_Back_Value == true)
                     if (position != "")
                     {
-                        int MaxRAW = -809888;
-                        int MinRAW = -50;
-                        double Maxdb = 0.0;
-                        double Mindb = 800.0;
+                        int MaxRAW = 650295;
+                        int MinRAW = -149705;
+                        double Maxdb = 800.0;
+                        double Mindb = 0.0;
                         Normal calculate = new Normal();
                         int Convert = (int)(double.Parse(position));
                         double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
@@ -736,10 +736,10 @@ namespace InjectorInspector
                 if (bshow_debug_RAW_Conver_Back_Value == true)
                     if (position != "")
                     {
-                        int MaxRAW = -7045;
-                        int MinRAW = 13;
-                        double Maxdb = 0.0;
-                        double Mindb = 30.0;
+                        int MaxRAW = -4275;
+                        int MinRAW = -7775;
+                        double Maxdb = 30.0;
+                        double Mindb = 0.0;
                         Normal calculate = new Normal();
                         int Convert = (int)(double.Parse(position));
                         double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
@@ -926,9 +926,9 @@ namespace InjectorInspector
                 if (bshow_debug_RAW_Conver_Back_Value == true)
                     if (position != "")
                     {
-                        int MaxRAW = 56580;
-                        int MinRAW = -1271;
-                        double Maxdb = 575.0;
+                        int MaxRAW = -344;
+                        int MinRAW = 57763;
+                        double Maxdb = 580.0;
                         double Mindb = 0.0;
                         Normal calculate = new Normal();
                         int Convert = (int)(double.Parse(position));
@@ -1517,6 +1517,7 @@ namespace InjectorInspector
                 } else if (SelectLabel == lbl下後左門鎖 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_下後左門鎖)     / 10, (int)(WMX3IO對照.pxeIO_下後左門鎖)     % 10, (lbl下後左門鎖.BackColor == Color.Red) ? (byte)1 : (byte)0);
                 } else if (SelectLabel == lbl取料吸嘴破 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴破真空) / 10, (int)(WMX3IO對照.pxeIO_取料吸嘴破真空) % 10, (lbl取料吸嘴破.BackColor == Color.Red) ? (byte)1 : (byte)0);
                 } else if (SelectLabel == lbl下後右門鎖 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_下後右門鎖)     / 10, (int)(WMX3IO對照.pxeIO_下後右門鎖)     % 10, (lbl下後右門鎖.BackColor == Color.Red) ? (byte)1 : (byte)0);
+                } else if (SelectLabel == lbl植針Z煞車  ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_植針Z煞車)      / 10, (int)(WMX3IO對照.pxeIO_植針Z煞車)      % 10, (lbl植針Z煞車.BackColor  == Color.Red) ? (byte)1 : (byte)0);
                 } else if (SelectLabel == lblHEPA       ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_HEPA)           / 10, (int)(WMX3IO對照.pxeIO_HEPA)           % 10, (lblHEPA.BackColor       == Color.Red) ? (byte)1 : (byte)0);
                 } else if (SelectLabel == lbl艙內燈     ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_LIGHT)          / 10, (int)(WMX3IO對照.pxeIO_LIGHT)          % 10, (lbl艙內燈.BackColor     == Color.Red) ? (byte)1 : (byte)0);
                 } else if (SelectLabel == lbl右按鈕綠燈 ) { clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_面板右按鈕綠燈) / 10, (int)(WMX3IO對照.pxeIO_面板右按鈕綠燈) % 10, (lbl右按鈕綠燈.BackColor == Color.Red) ? (byte)1 : (byte)0);
@@ -1694,6 +1695,7 @@ namespace InjectorInspector
                 lbl下後左門鎖.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_下後左門鎖)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下後左門鎖)      % 10)) != 0) ? Color.Green : Color.Red;
                 lbl取料吸嘴破.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_取料吸嘴破真空) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料吸嘴破真空)  % 10)) != 0) ? Color.Green : Color.Red;
                 lbl下後右門鎖.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_下後右門鎖)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下後右門鎖)      % 10)) != 0) ? Color.Green : Color.Red;
+                lbl植針Z煞車.BackColor  = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_植針Z煞車)      / 10)] & (1 << (int)(WMX3IO對照.pxeIO_植針Z煞車)       % 10)) != 0) ? Color.Green : Color.Red;
                 lblHEPA.BackColor       = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_HEPA)           / 10)] & (1 << (int)(WMX3IO對照.pxeIO_HEPA)            % 10)) != 0) ? Color.Green : Color.Red;
                 lbl艙內燈.BackColor     = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_LIGHT)          / 10)] & (1 << (int)(WMX3IO對照.pxeIO_LIGHT)           % 10)) != 0) ? Color.Green : Color.Red;
 
