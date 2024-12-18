@@ -325,7 +325,6 @@
             // 
             this.timer2.Enabled = true;
             this.timer2.Interval = 2000;
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // tabTestIAI
             // 
@@ -3040,7 +3039,6 @@
             this.button10.TabIndex = 66;
             this.button10.Text = "設定";
             this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button9
             // 
@@ -3050,7 +3048,6 @@
             this.button9.TabIndex = 65;
             this.button9.Text = "讀取";
             this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // lblSpd
             // 
@@ -3078,7 +3075,6 @@
             this.button8.TabIndex = 60;
             this.button8.Text = "OneCycle";
             this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button7
             // 

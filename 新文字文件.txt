@@ -1,81 +1,90 @@
-        public double dbapJoDell从皐糒(double dbIncreaseGate)  //JoDell从皐糒
+        public double dbapiGate(double dbIncreaseGate)  //Gate
         {
-            double dbRstJoDell从皐糒 = 0.0;
+            Normal calculate = new Normal();
+                const int    MaxRAW =   -237;  //-344
+                const int    MinRAW =  57763;
+                const double Maxdb  =  580.0;
+                const double Mindb  =    0.0;
+                const double Sum    =  58000;
+                const double dbSpdF =  Sum / Maxdb;
 
-            {  //JoDell从皐糒 弄籔陪ボ
-                int rslt = 0;
+            double dbRstGate = 0.0;
 
-                //弄 JoDell从皐糒 戈癟
-                byte[] JODELL_RX = new byte[18];
-                int addr_TargetGetDevice = (int)(addr_JODELL.pxeaJ_从皐糒_Input) / 10;
-                int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START) / 10;
-                clsServoControlWMX3.WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice + addr_TargetGetFunction, JODELL_RX.Length);
+            {  // start of  弄籔陪ボ
+                int rslt        = 0;
+                string position = "";
+                string speed    = "";
 
-                int[] varJODELL_RX = new int[JODELL_RX.Length / 2];
-                for (int i = 0; i < varJODELL_RX.Length; i++) {
-                    varJODELL_RX[i] = BitConverter.ToInt16(JODELL_RX, i * 2);
+                //弄  戈癟
+                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3禸﹚竡., ref position, ref speed);
+
+                //讽计Τ
+                if( (position != "") && (speed != "") ) { 
+                    lbl__RAW.Visible      = bshow_debug_RAW_Conver_Back_Value;
+                    lbl__Convert.Visible  = bshow_debug_RAW_Conver_Back_Value;
+                    lbl__Back.Visible     = bshow_debug_RAW_Conver_Back_Value;
+
+
+                    //眔﹍计
+                    int Convert              = (int)(double.Parse(position));
+                    int Speed                = (int)double.Parse(speed);
+                    lbl__RAW.Text      = Convert.ToString();
+
+                    //眔锣传计
+                    double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+                    double dbSpeed           = Speed / dbSpdF;
+                    lbl__Convert.Text  = dbGet.ToString("F3");
+
+                    //锣﹍计
+                    int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
+                    lbl__Back.Text     = cnback.ToString();
+
+
+                    //陪ボ弄
+                    dbRstGate                = dbGet;
+                    lbl_acpos_.Text    = dbRstGate.ToString("F3");
+
+                    //陪ボ笲笆硉
+                    lbl_spd_.Text      = dbSpeed.ToString("F3");
                 }
-                rslt = varJODELL_RX[0];
-
-                //璸衡弄
-                int iJoDell从皐糒pos = clsServoControlWMX3.WMX3_JoDell从皐糒(addr_JODELL.pxeaI_GetPosition, 0);
-                double dbJoDell从皐糒pos = (double)iJoDell从皐糒pos / 100.0;
-                dbRstJoDell从皐糒 = dbJoDell从皐糒pos;
-
-                //陪ボ笲笆硉
-                int iJoDell从皐糒spd = clsServoControlWMX3.WMX3_JoDell从皐糒(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
-                double dbJoDell从皐糒spd = (double)iJoDell从皐糒spd / 100;
 
                 //跑肅︹
-                if (rslt == 4)
-                {
-                    select_JoDell从皐糒.BackColor = Color.Red;
-                    lbl_acpos_JoDell从皐糒.BackColor = Color.White;
-                    lbl_spd_JoDell从皐糒.BackColor = Color.White;
-                }
-                else
-                {
-                    select_JoDell从皐糒.BackColor = Color.Green;
-                    lbl_acpos_JoDell从皐糒.BackColor = Color.Gray;
-                    lbl_spd_JoDell从皐糒.BackColor = Color.Gray;
+                if (rslt == 1) {
+                    select_.BackColor     = Color.Red;
+                    lbl_acpos_.BackColor  = Color.White;
+                    lbl_spd_.BackColor    = Color.White;
+                } else {
+                    select_.BackColor     = Color.Green;
+                    lbl_acpos_.BackColor  = Color.Gray;
+                    lbl_spd_.BackColor    = Color.Gray;
                 }
 
-                //陪ボ戈癟
-                lbl_acpos_JoDell从皐糒.Text = dbJoDell从皐糒pos.ToString("F3");
-                lbl_spd_JoDell从皐糒.Text = dbJoDell从皐糒spd.ToString("F3");
+            }  // end of  弄籔陪ボ
 
-                //bshow_debug_RAW_Conver_Back_Value
-                lbl_JoDell从皐糒_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
-                lbl_JoDell从皐糒_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                lbl_JoDell从皐糒_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
-                if (bshow_debug_RAW_Conver_Back_Value == true)
-                {
-                    lbl_JoDell从皐糒_RAW.Text = iJoDell从皐糒pos.ToString();
-                    lbl_JoDell从皐糒_Convert.Text = dbJoDell从皐糒pos.ToString("F3");
-                    lbl_JoDell从皐糒_Back.Text = ((int)(dbJoDell从皐糒pos * 100)).ToString();
-                }
+            if (dbIncreaseGate == dbRead) {
 
-            }
-
-            if (dbIncreaseGate == dbRead)
-            {
-                //this.Text = "Z禸﹟ゼ";
-            }
-            else
-            {  //IAI 跑竚
-                // 眔饼跑疊翴计
-                double fChangeGate = dbIncreaseGate;
-
+            } else {  // 跑竚
                 //秖overflow玂臔
-                if (fChangeGate >= 50.0) {
-                    fChangeGate = 50.0;
+                if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
+
+                } else if( dbIncreaseGate<=Mindb ) {
+                    dbIncreaseGate = (int)Mindb;
+                } else if( Maxdb<=dbIncreaseGate ) {
+                    dbIncreaseGate = (int)Maxdb;
                 }
 
+                // 眔饼跑疊翴计
+                int fChangeGate = calculate.Map(dbIncreaseGate, Maxdb, Mindb, MaxRAW, MinRAW);
 
-                //磅︽簿笆JoDell从皐糒
-                clsServoControlWMX3.WMX3_JoDell从皐糒(addr_JODELL.pxeaI_MotorOn, 1);
-                clsServoControlWMX3.WMX3_JoDell从皐糒(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
-            }
+                //磅︽簿笆
+                int axis     = (int)WMX3禸﹚竡.;
+                int position = fChangeGate;
+                int speed    = (int)((Maxdb/10) *dbSpdF);
+                int accel    = speed * 2;
+                int daccel   = speed * 2;
+                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
 
-            return dbRstJoDell从皐糒;
-        }  // end of public double dbapJoDell从皐糒(double dbIncreaseGate)  //JoDell从皐糒
+            }  // end of if (dbIncreaseGate == dbRead) {
+
+            return dbRstGate;
+        }  // end of public double dbapiGate(double dbIncreaseGate)  //Gate
