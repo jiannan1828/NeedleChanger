@@ -468,7 +468,7 @@
 			<AxisPolarity>1</AxisPolarity>
 			<MaxMotorSpeed>3000.000000</MaxMotorSpeed>
 			<AbsoluteEncoderMode>1</AbsoluteEncoderMode>
-			<AbsoluteEncoderHomeOffset>-115854.000000</AbsoluteEncoderHomeOffset>
+			<AbsoluteEncoderHomeOffset>-110922.000000</AbsoluteEncoderHomeOffset>
 			<EncoderRangeMode>0</EncoderRangeMode>
 			<EncoderRangeLow>0</EncoderRangeLow>
 			<EncoderRangeHigh>0</EncoderRangeHigh>
@@ -616,10 +616,10 @@
 			<PositiveTrqLimit>300.000000</PositiveTrqLimit>
 			<AxisUnit>0.000000</AxisUnit>
 			<VelocityFeedforwardGain>0.000000</VelocityFeedforwardGain>
-			<AxisPolarity>1</AxisPolarity>
+			<AxisPolarity>-1</AxisPolarity>
 			<MaxMotorSpeed>3000.000000</MaxMotorSpeed>
 			<AbsoluteEncoderMode>1</AbsoluteEncoderMode>
-			<AbsoluteEncoderHomeOffset>-283390.000000</AbsoluteEncoderHomeOffset>
+			<AbsoluteEncoderHomeOffset>222028.000000</AbsoluteEncoderHomeOffset>
 			<EncoderRangeMode>0</EncoderRangeMode>
 			<EncoderRangeLow>0</EncoderRangeLow>
 			<EncoderRangeHigh>0</EncoderRangeHigh>
@@ -770,7 +770,7 @@
 			<AxisPolarity>1</AxisPolarity>
 			<MaxMotorSpeed>3000.000000</MaxMotorSpeed>
 			<AbsoluteEncoderMode>1</AbsoluteEncoderMode>
-			<AbsoluteEncoderHomeOffset>-2060360.000000</AbsoluteEncoderHomeOffset>
+			<AbsoluteEncoderHomeOffset>-1745788.000000</AbsoluteEncoderHomeOffset>
 			<EncoderRangeMode>0</EncoderRangeMode>
 			<EncoderRangeLow>0</EncoderRangeLow>
 			<EncoderRangeHigh>0</EncoderRangeHigh>
@@ -921,7 +921,7 @@
 			<AxisPolarity>1</AxisPolarity>
 			<MaxMotorSpeed>3000.000000</MaxMotorSpeed>
 			<AbsoluteEncoderMode>1</AbsoluteEncoderMode>
-			<AbsoluteEncoderHomeOffset>-1929634.000000</AbsoluteEncoderHomeOffset>
+			<AbsoluteEncoderHomeOffset>-1813242.000000</AbsoluteEncoderHomeOffset>
 			<EncoderRangeMode>0</EncoderRangeMode>
 			<EncoderRangeLow>0</EncoderRangeLow>
 			<EncoderRangeHigh>0</EncoderRangeHigh>
@@ -1072,7 +1072,7 @@
 			<AxisPolarity>1</AxisPolarity>
 			<MaxMotorSpeed>3000.000000</MaxMotorSpeed>
 			<AbsoluteEncoderMode>1</AbsoluteEncoderMode>
-			<AbsoluteEncoderHomeOffset>5469141.000000</AbsoluteEncoderHomeOffset>
+			<AbsoluteEncoderHomeOffset>5468790.000000</AbsoluteEncoderHomeOffset>
 			<EncoderRangeMode>0</EncoderRangeMode>
 			<EncoderRangeLow>0</EncoderRangeLow>
 			<EncoderRangeHigh>0</EncoderRangeHigh>
@@ -1223,7 +1223,7 @@
 			<AxisPolarity>1</AxisPolarity>
 			<MaxMotorSpeed>3000.000000</MaxMotorSpeed>
 			<AbsoluteEncoderMode>1</AbsoluteEncoderMode>
-			<AbsoluteEncoderHomeOffset>-826238.000000</AbsoluteEncoderHomeOffset>
+			<AbsoluteEncoderHomeOffset>-333407.000000</AbsoluteEncoderHomeOffset>
 			<EncoderRangeMode>0</EncoderRangeMode>
 			<EncoderRangeLow>0</EncoderRangeLow>
 			<EncoderRangeHigh>0</EncoderRangeHigh>
