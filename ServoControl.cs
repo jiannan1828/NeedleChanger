@@ -465,10 +465,10 @@ namespace InjectorInspector
                 motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.吸嘴Y軸, true);
 
               //motion.Config.SetGearRatio(           (int)WMX3軸定義.吸嘴Z軸, 1000, 100);  //VCM伸縮                       //ok    = 40
-                motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.吸嘴Z軸, true);
+                motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.吸嘴Z軸, false);
 
               //motion.Config.SetGearRatio(           (int)WMX3軸定義.吸嘴R軸, 1000, 100);  //VCM旋轉                       //ok
-                motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.吸嘴R軸, true);
+                motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.吸嘴R軸, false);
 
                 motion.Config.SetGearRatio(           (int)WMX3軸定義.載盤X軸, (int)WMX3軸定義.YASKAWA, 1000);              //ok     14863    -3137    = 18000
                 motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.載盤X軸, true);
@@ -476,7 +476,7 @@ namespace InjectorInspector
               //motion.Config.SetGearRatio(           (int)WMX3軸定義.載盤Y軸, 1000, 100);    //大線碼                      //ok   -149705   650295    = 800000
                 motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.載盤Y軸, true);
 
-                motion.Config.SetGearRatio(           (int)WMX3軸定義.植針Z軸, (int)WMX3軸定義.YASKAWA, 1000);              //ok     -7775    -4275    = 3500
+                motion.Config.SetGearRatio(           (int)WMX3軸定義.植針Z軸, (int)WMX3軸定義.YASKAWA, 1000);              //ok     -5500    -2500    = 3000
                 motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.植針Z軸, true);
 
                 motion.Config.SetGearRatio(           (int)WMX3軸定義.植針R軸, (int)WMX3軸定義.YASKAWA, dbAxisRGearRatio);  //ok

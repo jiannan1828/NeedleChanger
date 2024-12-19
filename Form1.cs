@@ -664,11 +664,11 @@ namespace InjectorInspector
         public double dbapiSetZ(double dbIncreaseSetZ)  //SetZ
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =  -4275;
-                const int    MinRAW =  -7775;
+                const int    MaxRAW =  -2500;
+                const int    MinRAW =  -5500;
                 const double Maxdb  =   30.0;
                 const double Mindb  =    0.0;
-                const double Sum    =   3500;
+                const double Sum    =   3000;
                 const double dbSpdF =  Sum / Maxdb;
 
             double dbRstSetZ = 0.0;
