@@ -114,11 +114,11 @@ namespace InjectorInspector
         public double dbapiNozzleX(double dbIncreaseNozzleX)  //NozzleX
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =  22204;
-                const int    MinRAW = -27796;
+                const int    MaxRAW = 500000;
+                const int    MinRAW =      0;
                 const double Maxdb  =  500.0;
                 const double Mindb  =    0.0;
-                const double Sum    =  50000;
+                const double Sum    = 500000;
                 const double dbSpdF =  Sum / Maxdb;
 
             double dbRstNozzleX = 0.0;
@@ -205,8 +205,8 @@ namespace InjectorInspector
         public double dbapiNozzleY(double dbIncreaseNozzleY)  //NozzleY
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =   9364;
-                const int    MinRAW =   -636;
+                const int    MaxRAW =  10000;
+                const int    MinRAW =      0;
                 const double Maxdb  =  100.0;
                 const double Mindb  =    0.0;
                 const double Sum    =  10000;
@@ -482,11 +482,11 @@ namespace InjectorInspector
         public double dbapiCarrierX(double dbIncreaseCarrierX)  //CarrierX
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =  -3137;
-                const int    MinRAW =  14863;
-                const double Maxdb  =  180.0;
+                const int    MaxRAW =  19000;
+                const int    MinRAW =      0;
+                const double Maxdb  =  190.0;
                 const double Mindb  =    0.0;
-                const double Sum    =  18000;
+                const double Sum    =  19000;
                 const double dbSpdF =  Sum / Maxdb;
 
             double dbRstCarrierX = 0.0;
@@ -573,8 +573,8 @@ namespace InjectorInspector
         public double dbapiCarrierY(double dbIncreaseCarrierY)  //CarrierY
         {
             Normal calculate = new Normal();
-                const int    MaxRAW = 650295;
-                const int    MinRAW = -149705;
+                const int    MaxRAW = 800000;
+                const int    MinRAW =      0;
                 const double Maxdb  =  800.0;
                 const double Mindb  =    0.0;
                 const double Sum    = 800000;
@@ -664,11 +664,11 @@ namespace InjectorInspector
         public double dbapiSetZ(double dbIncreaseSetZ)  //SetZ
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =  -2500;
-                const int    MinRAW =  -5500;
-                const double Maxdb  =   30.0;
+                const int    MaxRAW =   3300;
+                const int    MinRAW =      0;
+                const double Maxdb  =     33;
                 const double Mindb  =    0.0;
-                const double Sum    =   3000;
+                const double Sum    =   3300;
                 const double dbSpdF =  Sum / Maxdb;
 
             double dbRstSetZ = 0.0;
@@ -755,11 +755,11 @@ namespace InjectorInspector
         public double dbapiSetR(double dbIncreaseSetR)  //SetR
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =   1000;
+                const int    MaxRAW = 360000;
                 const int    MinRAW =      0;
-                const double Maxdb  = 1000.0;
+                const double Maxdb  =  360.0;
                 const double Mindb  =    0.0;
-                const double Sum    =   1000;
+                const double Sum    = 360000;
                 const double dbSpdF =  Sum / Maxdb;
 
             double dbRstSetR = 0.0;
@@ -846,8 +846,8 @@ namespace InjectorInspector
         public double dbapiGate(double dbIncreaseGate)  //Gate
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =   -237;  //-344
-                const int    MinRAW =  57763;
+                const int    MaxRAW =  58000;
+                const int    MinRAW =      0;
                 const double Maxdb  =  580.0;
                 const double Mindb  =    0.0;
                 const double Sum    =  58000;
@@ -936,10 +936,20 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public double dbapiIAI(double dbIncreaseGate)  //IAI
         {
+            Normal calculate = new Normal();
+                const int    MaxRAW =   3000;
+                const int    MinRAW =      0;
+                const double Maxdb  =   30.0;
+                const double Mindb  =    0.0;
+                const double Sum    =   3000;
+                const double dbSpdF =  Sum / Maxdb;
+
             double dbRstIAI = 0.0;
 
-            {  //Socket定位攝影機軸 讀取與顯示
-                int rslt = 0;
+            {  // start of Socket定位攝影機軸 讀取與顯示
+                int    rslt     = 0;
+                string position = "";
+                string speed    = "";
 
                 //讀取 Socket定位攝影機軸 資訊
                 byte[] aGetGetIAI = new byte[2];
@@ -950,59 +960,63 @@ namespace InjectorInspector
                 clsServoControlWMX3.WMX3_GetOutIO(ref aGetSetIAI, (int)(addr_IAI.pxeaI_SetControlSignal2_2Bytes) / 10, 2);
                 rslt += ((aGetSetIAI[(int)(addr_IAI.pxeaI_SetDisableBrake - addr_IAI.pxeaI_SetControlSignal2_2Bytes) / 10] & (1 << (int)(addr_IAI.pxeaI_SetDisableBrake) % 10)) != 0) ? 1 : 0;
 
-                //計算讀取長度
-                int iIAIpos = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetPosition, 0);
-                double dbIAIpos = (double)iIAIpos / 100.0;
-                dbRstIAI = dbIAIpos;
+                //當數值有效
+                if(true) { 
+                    lbl_IAI_RAW.Visible               = bshow_debug_RAW_Conver_Back_Value;
+                    lbl_IAI_Convert.Visible           = bshow_debug_RAW_Conver_Back_Value;
+                    lbl_IAI_Back.Visible              = bshow_debug_RAW_Conver_Back_Value;
 
-                //顯示運動速度
-                int iIAIspd = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetCurrentSpeed4Bytes, 0);
-                double dbIAIspd = (double)iIAIspd / 100.0;
+
+                    //得到原始數值
+                    int Convert                   = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetPosition, 0);
+                    int Speed                     = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetCurrentSpeed4Bytes, 0);
+                    lbl_IAI_RAW.Text              = Convert.ToString();
+
+                    //得到轉換數值
+                    double dbGet                  = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+                    double dbSpeed                = Speed / dbSpdF;
+                    lbl_IAI_Convert.Text          = dbGet.ToString("F3");
+
+                    //轉回原始數值
+                    int cnback                    = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
+                    lbl_IAI_Back.Text             = cnback.ToString();
+
+
+                    //顯示讀取長度
+                    dbRstIAI                      = dbGet;
+                    lbl_acpos_IAI.Text            = dbRstIAI.ToString("F3");
+
+                    //顯示運動速度
+                    lbl_spd_IAI.Text              = dbSpeed.ToString("F3");
+                }
 
                 //變更顏色
-                if (rslt == 2)
-                {
-                    select_Socket檢測.BackColor = Color.Red;
-                    lbl_acpos_IAI.BackColor = Color.White;
-                    lbl_spd_IAI.BackColor = Color.White;
-                }
-                else
-                {
-                    select_Socket檢測.BackColor = Color.Green;
-                    lbl_acpos_IAI.BackColor = Color.Gray;
-                    lbl_spd_IAI.BackColor = Color.Gray;
+                if (rslt == 2) {
+                    select_Socket檢測.BackColor      = Color.Red;
+                    lbl_acpos_IAI.BackColor          = Color.White;
+                    lbl_spd_IAI.BackColor            = Color.White;
+                } else {
+                    select_Socket檢測.BackColor      = Color.Green;
+                    lbl_acpos_IAI.BackColor          = Color.Gray;
+                    lbl_spd_IAI.BackColor            = Color.Gray;
                 }
 
-                //顯示資訊
-                lbl_acpos_IAI.Text = dbIAIpos.ToString("F3");
-                lbl_spd_IAI.Text = dbIAIspd.ToString("F3");
+            }  // end of Socket定位攝影機軸 讀取與顯示
 
-                //bshow_debug_RAW_Conver_Back_Value
-                lbl_IAI_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
-                lbl_IAI_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                lbl_IAI_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
-                if (bshow_debug_RAW_Conver_Back_Value == true)
-                {
-                    lbl_IAI_RAW.Text = iIAIpos.ToString();
-                    lbl_IAI_Convert.Text = dbIAIpos.ToString("F3");
-                    lbl_IAI_Back.Text = ((int)(dbIAIpos * 100)).ToString();
-                }
+            if (dbIncreaseGate == dbRead) {
 
-            }
-
-            if (dbIncreaseGate == dbRead)
-            {
-                //this.Text = "Z軸尚未回到上位";
-            }
-            else
-            {  //IAI 變更位置
-                // 取得欲變更的的浮點數
-                double fChangeGate = dbIncreaseGate;
-
+            } else {  //IAI 變更位置
                 //伸長量overflow保護
-                if (fChangeGate >= 30.1) {
-                    fChangeGate = 30.1;
+                if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
+
+                } else if( dbIncreaseGate<= Mindb) {
+                    dbIncreaseGate = (int)Mindb;
+                } else if( Maxdb<=dbIncreaseGate ) {
+                    dbIncreaseGate = (int)Maxdb;
                 }
+
+                // 取得欲變更的的浮點數
+                double fChangeGate = calculate.Map(dbIncreaseGate, (double)Maxdb, (double)Mindb, (double)Maxdb, (double)Mindb);
 
                 clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 1);
 
@@ -1015,14 +1029,24 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public double dbapJoDell3D掃描(double dbIncreaseGate)  //JoDell3D掃描
         {
+            Normal calculate = new Normal();
+                const int    MaxRAW =   3000;
+                const int    MinRAW =      0;
+                const double Maxdb  =   30.0;
+                const double Mindb  =    0.0;
+                const double Sum    =   3000;
+                const double dbSpdF =  Sum / Maxdb;
+
             double dbRstJoDell3D掃描 = 0.0;
 
-            {  //JoDell植針嘴 讀取與顯示
-                int rslt = 0;
+            {  // start of JoDell3D掃描 讀取與顯示
+                int    rslt     = 0;
+                string position = "";
+                string speed    = "";
 
                 //讀取 JoDell3D掃描 資訊
                 byte[] JODELL_RX = new byte[18];
-                int addr_TargetGetDevice = (int)(addr_JODELL.pxeaJ_3D掃描_Input) / 10;
+                int addr_TargetGetDevice   = (int)(addr_JODELL.pxeaJ_3D掃描_Input) / 10;
                 int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START) / 10;
                 clsServoControlWMX3.WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice + addr_TargetGetFunction, JODELL_RX.Length);
 
@@ -1032,59 +1056,63 @@ namespace InjectorInspector
                 }
                 rslt = varJODELL_RX[0];
 
-                //計算讀取長度
-                int iJoDell3D掃描pos = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GetPosition, 0);
-                double dbJoDell3D掃描pos = (double)iJoDell3D掃描pos / 100.0;
-                dbRstJoDell3D掃描 = dbJoDell3D掃描pos;
+                //當數值有效
+                if(true) { 
+                    lbl_JoDell3D掃描_RAW.Visible      = bshow_debug_RAW_Conver_Back_Value;
+                    lbl_JoDell3D掃描_Convert.Visible  = bshow_debug_RAW_Conver_Back_Value;
+                    lbl_JoDell3D掃描_Back.Visible     = bshow_debug_RAW_Conver_Back_Value;
 
-                //顯示運動速度
-                int iJoDell3D掃描spd = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
-                double dbJoDell3D掃描spd = (double)iJoDell3D掃描spd / 100;
+
+                    //得到原始數值
+                    int Convert                   = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GetPosition, 0);
+                    int Speed                     = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
+                    lbl_JoDell3D掃描_RAW.Text     = Convert.ToString();
+
+                    //得到轉換數值
+                    double dbGet                  = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
+                    double dbSpeed                = Speed / dbSpdF;
+                    lbl_JoDell3D掃描_Convert.Text = dbGet.ToString("F3");
+
+                    //轉回原始數值
+                    int cnback                    = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
+                    lbl_JoDell3D掃描_Back.Text    = cnback.ToString();
+
+
+                    //顯示讀取長度
+                    dbRstJoDell3D掃描             = dbGet;
+                    lbl_acpos_JoDell3D掃描.Text   = dbRstJoDell3D掃描.ToString("F3");
+
+                    //顯示運動速度
+                    lbl_spd_JoDell3D掃描.Text     = dbSpeed.ToString("F3");
+                }
 
                 //變更顏色
-                if (rslt == 4)
-                {
-                    select_JoDell3D掃描.BackColor = Color.Red;
+                if (rslt == 4) {
+                    select_JoDell3D掃描.BackColor    = Color.Red;
                     lbl_acpos_JoDell3D掃描.BackColor = Color.White;
-                    lbl_spd_JoDell3D掃描.BackColor = Color.White;
-                }
-                else
-                {
-                    select_JoDell3D掃描.BackColor = Color.Green;
+                    lbl_spd_JoDell3D掃描.BackColor   = Color.White;
+                } else {
+                    select_JoDell3D掃描.BackColor    = Color.Green;
                     lbl_acpos_JoDell3D掃描.BackColor = Color.Gray;
-                    lbl_spd_JoDell3D掃描.BackColor = Color.Gray;
+                    lbl_spd_JoDell3D掃描.BackColor   = Color.Gray;
                 }
 
-                //顯示資訊
-                lbl_acpos_JoDell3D掃描.Text = dbJoDell3D掃描pos.ToString("F3");
-                lbl_spd_JoDell3D掃描.Text = dbJoDell3D掃描spd.ToString("F3");
+            }  // end of JoDell3D掃描 讀取與顯示
 
-                //bshow_debug_RAW_Conver_Back_Value
-                lbl_JoDell3D掃描_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
-                lbl_JoDell3D掃描_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                lbl_JoDell3D掃描_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
-                if (bshow_debug_RAW_Conver_Back_Value == true)
-                {
-                    lbl_JoDell3D掃描_RAW.Text = iJoDell3D掃描pos.ToString();
-                    lbl_JoDell3D掃描_Convert.Text = dbJoDell3D掃描pos.ToString("F3");
-                    lbl_JoDell3D掃描_Back.Text = ((int)(dbJoDell3D掃描pos * 100)).ToString();
-                }
+            if (dbIncreaseGate == dbRead) {
 
-            }
-
-            if (dbIncreaseGate == dbRead)
-            {
-                //this.Text = "Z軸尚未回到上位";
-            }
-            else
-            {  //IAI 變更位置
-                // 取得欲變更的的浮點數
-                double fChangeGate = dbIncreaseGate;
-
+            } else {  //3D掃描 變更位置
                 //伸長量overflow保護
-                if (fChangeGate >= 30.0) {
-                    fChangeGate = 30.0;
+                if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
+
+                } else if( dbIncreaseGate<= Mindb) {
+                    dbIncreaseGate = (int)Mindb;
+                } else if( Maxdb<=dbIncreaseGate ) {
+                    dbIncreaseGate = (int)Maxdb;
                 }
+
+                // 取得欲變更的的浮點數
+                double fChangeGate = calculate.Map(dbIncreaseGate, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
 
                 //執行移動JoDell3D掃描
                 clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
@@ -1095,10 +1123,20 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public double dbapJoDell吸針嘴(double dbIncreaseGate)  //JoDell吸針嘴
         {
+            Normal calculate = new Normal();
+            const int MaxRAW = 3000;
+            const int MinRAW = 0;
+            const double Maxdb = 30.0;
+            const double Mindb = 0.0;
+            const double Sum = 3000;
+            const double dbSpdF = Sum / Maxdb;
+
             double dbRstJoDell吸針嘴 = 0.0;
 
-            {  //JoDell吸針嘴 讀取與顯示
+            {  // start of JoDell吸針嘴 讀取與顯示
                 int rslt = 0;
+                string position = "";
+                string speed = "";
 
                 //讀取 JoDell吸針嘴 資訊
                 byte[] JODELL_RX = new byte[18];
@@ -1107,19 +1145,42 @@ namespace InjectorInspector
                 clsServoControlWMX3.WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice + addr_TargetGetFunction, JODELL_RX.Length);
 
                 int[] varJODELL_RX = new int[JODELL_RX.Length / 2];
-                for (int i = 0; i < varJODELL_RX.Length; i++) {
+                for (int i = 0; i < varJODELL_RX.Length; i++)
+                {
                     varJODELL_RX[i] = BitConverter.ToInt16(JODELL_RX, i * 2);
                 }
                 rslt = varJODELL_RX[0];
 
-                //計算讀取長度
-                int iJoDell吸針嘴pos = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GetPosition, 0);
-                double dbJoDell吸針嘴pos = (double)iJoDell吸針嘴pos / 100.0;
-                dbRstJoDell吸針嘴 = dbJoDell吸針嘴pos;
+                //當數值有效
+                if (true)
+                {
+                    lbl_JoDell吸針嘴_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
+                    lbl_JoDell吸針嘴_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
+                    lbl_JoDell吸針嘴_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
 
-                //顯示運動速度
-                int iJoDell吸針嘴spd = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
-                double dbJoDell吸針嘴spd = (double)iJoDell吸針嘴spd / 100;
+
+                    //得到原始數值
+                    int Convert = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GetPosition, 0);
+                    int Speed = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
+                    lbl_JoDell吸針嘴_RAW.Text = Convert.ToString();
+
+                    //得到轉換數值
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
+                    double dbSpeed = Speed / dbSpdF;
+                    lbl_JoDell吸針嘴_Convert.Text = dbGet.ToString("F3");
+
+                    //轉回原始數值
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
+                    lbl_JoDell吸針嘴_Back.Text = cnback.ToString();
+
+
+                    //顯示讀取長度
+                    dbRstJoDell吸針嘴 = dbGet;
+                    lbl_acpos_JoDell吸針嘴.Text = dbRstJoDell吸針嘴.ToString("F3");
+
+                    //顯示運動速度
+                    lbl_spd_JoDell吸針嘴.Text = dbSpeed.ToString("F3");
+                }
 
                 //變更顏色
                 if (rslt == 4)
@@ -1135,36 +1196,30 @@ namespace InjectorInspector
                     lbl_spd_JoDell吸針嘴.BackColor = Color.Gray;
                 }
 
-                //顯示資訊
-                lbl_acpos_JoDell吸針嘴.Text = dbJoDell吸針嘴pos.ToString("F3");
-                lbl_spd_JoDell吸針嘴.Text = dbJoDell吸針嘴spd.ToString("F3");
-
-                //bshow_debug_RAW_Conver_Back_Value
-                lbl_JoDell吸針嘴_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
-                lbl_JoDell吸針嘴_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                lbl_JoDell吸針嘴_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
-                if (bshow_debug_RAW_Conver_Back_Value == true)
-                {
-                    lbl_JoDell吸針嘴_RAW.Text = iJoDell吸針嘴pos.ToString();
-                    lbl_JoDell吸針嘴_Convert.Text = dbJoDell吸針嘴pos.ToString("F3");
-                    lbl_JoDell吸針嘴_Back.Text = ((int)(dbJoDell吸針嘴pos * 100)).ToString();
-                }
-
-            }
+            }  // end of JoDell吸針嘴 讀取與顯示
 
             if (dbIncreaseGate == dbRead)
             {
-                //this.Text = "Z軸尚未回到上位";
+
             }
             else
-            {  //IAI 變更位置
-                // 取得欲變更的的浮點數
-                double fChangeGate = dbIncreaseGate;
-
+            {  //吸針嘴 變更位置
                 //伸長量overflow保護
-                if (fChangeGate >= 30.0) {
-                    fChangeGate = 30.0;
+                if (Mindb <= dbIncreaseGate && dbIncreaseGate <= Maxdb)
+                {
+
                 }
+                else if (dbIncreaseGate <= Mindb)
+                {
+                    dbIncreaseGate = (int)Mindb;
+                }
+                else if (Maxdb <= dbIncreaseGate)
+                {
+                    dbIncreaseGate = (int)Maxdb;
+                }
+
+                // 取得欲變更的的浮點數
+                double fChangeGate = calculate.Map(dbIncreaseGate, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
 
                 //執行移動JoDell吸針嘴
                 clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
@@ -1175,14 +1230,24 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public double dbapJoDell植針嘴(double dbIncreaseGate)  //JoDell植針嘴
         {
+            Normal calculate = new Normal();
+                const int    MaxRAW =   5000;
+                const int    MinRAW =      0;
+                const double Maxdb  =   50.0;
+                const double Mindb  =    0.0;
+                const double Sum    =   5000;
+                const double dbSpdF =  Sum / Maxdb;
+
             double dbRstJoDell植針嘴 = 0.0;
 
-            {  //JoDell植針嘴 讀取與顯示
-                int rslt = 0;
+            {  // start of JoDell植針嘴 讀取與顯示
+                int    rslt     = 0;
+                string position = "";
+                string speed    = "";
 
                 //讀取 JoDell植針嘴 資訊
                 byte[] JODELL_RX = new byte[18];
-                int addr_TargetGetDevice = (int)(addr_JODELL.pxeaJ_植針嘴_Input) / 10;
+                int addr_TargetGetDevice   = (int)(addr_JODELL.pxeaJ_植針嘴_Input) / 10;
                 int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START) / 10;
                 clsServoControlWMX3.WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice + addr_TargetGetFunction, JODELL_RX.Length);
 
@@ -1192,59 +1257,63 @@ namespace InjectorInspector
                 }
                 rslt = varJODELL_RX[0];
 
-                //計算讀取長度
-                int iJoDell植針嘴pos = clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_GetPosition, 0);
-                double dbJoDell植針嘴pos = (double)iJoDell植針嘴pos / 100.0;
-                dbRstJoDell植針嘴 = dbJoDell植針嘴pos;
+                //當數值有效
+                if(true) { 
+                    lbl_JoDell植針嘴_RAW.Visible      = bshow_debug_RAW_Conver_Back_Value;
+                    lbl_JoDell植針嘴_Convert.Visible  = bshow_debug_RAW_Conver_Back_Value;
+                    lbl_JoDell植針嘴_Back.Visible     = bshow_debug_RAW_Conver_Back_Value;
 
-                //顯示運動速度
-                int iJoDell植針嘴spd = clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
-                double dbJoDell植針嘴spd = (double)iJoDell植針嘴spd / 100;
+
+                    //得到原始數值
+                    int Convert                   = clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_GetPosition, 0);
+                    int Speed                     = clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
+                    lbl_JoDell植針嘴_RAW.Text     = Convert.ToString();
+
+                    //得到轉換數值
+                    double dbGet                  = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
+                    double dbSpeed                = Speed / dbSpdF;
+                    lbl_JoDell植針嘴_Convert.Text = dbGet.ToString("F3");
+
+                    //轉回原始數值
+                    int cnback                    = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
+                    lbl_JoDell植針嘴_Back.Text    = cnback.ToString();
+
+
+                    //顯示讀取長度
+                    dbRstJoDell植針嘴             = dbGet;
+                    lbl_acpos_JoDell植針嘴.Text   = dbRstJoDell植針嘴.ToString("F3");
+
+                    //顯示運動速度
+                    lbl_spd_JoDell植針嘴.Text     = dbSpeed.ToString("F3");
+                }
 
                 //變更顏色
-                if (rslt == 4)
-                {
-                    select_JoDell植針嘴.BackColor = Color.Red;
+                if (rslt == 4) {
+                    select_JoDell植針嘴.BackColor    = Color.Red;
                     lbl_acpos_JoDell植針嘴.BackColor = Color.White;
-                    lbl_spd_JoDell植針嘴.BackColor = Color.White;
-                }
-                else
-                {
-                    select_JoDell植針嘴.BackColor = Color.Green;
+                    lbl_spd_JoDell植針嘴.BackColor   = Color.White;
+                } else {
+                    select_JoDell植針嘴.BackColor    = Color.Green;
                     lbl_acpos_JoDell植針嘴.BackColor = Color.Gray;
-                    lbl_spd_JoDell植針嘴.BackColor = Color.Gray;
+                    lbl_spd_JoDell植針嘴.BackColor   = Color.Gray;
                 }
 
-                //顯示資訊
-                lbl_acpos_JoDell植針嘴.Text = dbJoDell植針嘴pos.ToString("F3");
-                lbl_spd_JoDell植針嘴.Text = dbJoDell植針嘴spd.ToString("F3");
+            }  // end of JoDell植針嘴 讀取與顯示
 
-                //bshow_debug_RAW_Conver_Back_Value
-                lbl_JoDell植針嘴_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
-                lbl_JoDell植針嘴_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                lbl_JoDell植針嘴_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
-                if (bshow_debug_RAW_Conver_Back_Value == true)
-                {
-                    lbl_JoDell植針嘴_RAW.Text = iJoDell植針嘴pos.ToString();
-                    lbl_JoDell植針嘴_Convert.Text = dbJoDell植針嘴pos.ToString("F3");
-                    lbl_JoDell植針嘴_Back.Text = ((int)(dbJoDell植針嘴pos * 100)).ToString();
-                }
+            if (dbIncreaseGate == dbRead) {
 
-            }
-
-            if (dbIncreaseGate == dbRead)
-            {
-                //this.Text = "Z軸尚未回到上位";
-            }
-            else
-            {  //IAI 變更位置
-                // 取得欲變更的的浮點數
-                double fChangeGate = dbIncreaseGate;
-
+            } else {  //植針嘴 變更位置
                 //伸長量overflow保護
-                if (fChangeGate >= 50.0) {
-                    fChangeGate = 50.0;
+                if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
+
+                } else if( dbIncreaseGate<= Mindb) {
+                    dbIncreaseGate = (int)Mindb;
+                } else if( Maxdb<=dbIncreaseGate ) {
+                    dbIncreaseGate = (int)Maxdb;
                 }
+
+                // 取得欲變更的的浮點數
+                double fChangeGate = calculate.Map(dbIncreaseGate, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
 
                 //執行移動JoDell植針嘴
                 clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
@@ -2079,19 +2148,6 @@ namespace InjectorInspector
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
- 
     }  // end of public partial class Form1 : Form
 
 }  // end of namespace InjectorInspector

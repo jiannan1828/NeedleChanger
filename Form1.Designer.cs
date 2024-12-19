@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.tabTestIAI = new System.Windows.Forms.TabPage();
             this.tabJob = new System.Windows.Forms.TabPage();
             this.lbl_JoDell吸針嘴_Convert = new System.Windows.Forms.Label();
@@ -320,11 +319,6 @@
             // 
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // timer2
-            // 
-            this.timer2.Enabled = true;
-            this.timer2.Interval = 2000;
             // 
             // tabTestIAI
             // 
@@ -3461,7 +3455,6 @@
 
         #endregion
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.TabPage tabTestIAI;
         private System.Windows.Forms.TabPage tabJob;
         private System.Windows.Forms.GroupBox groupBox2;
