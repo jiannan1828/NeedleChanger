@@ -459,10 +459,10 @@ namespace InjectorInspector
             //設置齒輪比
             if (wmx != null)
             {
-              //motion.Config.SetGearRatio(           (int)WMX3軸定義.吸嘴X軸, 1000, 100);  //小線碼                        //ok    -27796    22204    = 50000
+              //motion.Config.SetGearRatio(           (int)WMX3軸定義.吸嘴X軸, 1000, 100);  //小線碼, 500,000
                 motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.吸嘴X軸, true);
 
-                motion.Config.SetGearRatio(           (int)WMX3軸定義.吸嘴Y軸, (int)WMX3軸定義.YASKAWA, 2000);              //ok      -636     9364    = 10000
+                motion.Config.SetGearRatio(           (int)WMX3軸定義.吸嘴Y軸, (int)WMX3軸定義.YASKAWA, 2000);  //10,000
                 motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.吸嘴Y軸, true);
 
               //motion.Config.SetGearRatio(           (int)WMX3軸定義.吸嘴Z軸, 1000, 100);  //VCM伸縮                       //ok    = 40
@@ -471,19 +471,19 @@ namespace InjectorInspector
               //motion.Config.SetGearRatio(           (int)WMX3軸定義.吸嘴R軸, 1000, 100);  //VCM旋轉                       //ok
                 motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.吸嘴R軸, false);
 
-                motion.Config.SetGearRatio(           (int)WMX3軸定義.載盤X軸, (int)WMX3軸定義.YASKAWA, 1000);              //ok     14863    -3137    = 18000
+                motion.Config.SetGearRatio(           (int)WMX3軸定義.載盤X軸, (int)WMX3軸定義.YASKAWA, 1000);  //19,000
                 motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.載盤X軸, true);
 
-              //motion.Config.SetGearRatio(           (int)WMX3軸定義.載盤Y軸, 1000, 100);    //大線碼                      //ok   -149705   650295    = 800000
+              //motion.Config.SetGearRatio(           (int)WMX3軸定義.載盤Y軸, 1000, 100);    //大線碼, 800,000
                 motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.載盤Y軸, true);
 
-                motion.Config.SetGearRatio(           (int)WMX3軸定義.植針Z軸, (int)WMX3軸定義.YASKAWA, 1000);              //ok     -5500    -2500    = 3000, total avalible length=3300
+                motion.Config.SetGearRatio(           (int)WMX3軸定義.植針Z軸, (int)WMX3軸定義.YASKAWA, 1000);  //3,300
                 motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.植針Z軸, true);
 
                 motion.Config.SetGearRatio(           (int)WMX3軸定義.植針R軸, (int)WMX3軸定義.YASKAWA, dbAxisRGearRatio);  //ok
                 motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.植針R軸, true);
 
-                motion.Config.SetGearRatio(           (int)WMX3軸定義.工作門, (int)WMX3軸定義.DELTA_ASDA_B3, 2000);         //ok      -344    57763    = 58107
+                motion.Config.SetGearRatio(           (int)WMX3軸定義.工作門, (int)WMX3軸定義.DELTA_ASDA_B3, 2000);  //580,00
                 motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.工作門, true);
 
                 SystemParam spErr = new SystemParam();
