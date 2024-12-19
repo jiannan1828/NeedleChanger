@@ -17,6 +17,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Data;
 using System.Threading;
+using static WMX3ApiCLR.Config;
 
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
@@ -484,6 +485,10 @@ namespace InjectorInspector
 
                 motion.Config.SetGearRatio(           (int)WMX3軸定義.工作門, (int)WMX3軸定義.DELTA_ASDA_B3, 2000);         //ok      -344    57763    = 58107
                 motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.工作門, true);
+
+                SystemParam spErr = new SystemParam();
+                AxisParam apErr = new AxisParam();
+                motion.Config.ImportAndSetAll("D:\\CodeNeedleChanger\\NeedleChanger\\bin\\Debug", ref spErr, ref apErr);
             }
             else
             {
