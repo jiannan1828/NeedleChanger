@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeedleChanger", "NeedleChan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspector", "Inspector\Inspector.csproj", "{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeedleViewer", "NeedleViewer\NeedleViewer.csproj", "{D2FE91D5-D3E8-45B2-8ABB-6839710FE664}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2FE91D5-D3E8-45B2-8ABB-6839710FE664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2FE91D5-D3E8-45B2-8ABB-6839710FE664}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2FE91D5-D3E8-45B2-8ABB-6839710FE664}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2FE91D5-D3E8-45B2-8ABB-6839710FE664}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

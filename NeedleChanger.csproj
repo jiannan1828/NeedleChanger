@@ -110,6 +110,10 @@
       <Project>{0cc9e3b9-d31b-45f0-b75b-787cf027aeca}</Project>
       <Name>Inspector</Name>
     </ProjectReference>
+    <ProjectReference Include="NeedleViewer\NeedleViewer.csproj">
+      <Project>{d2fe91d5-d3e8-45b2-8abb-6839710fe664}</Project>
+      <Name>NeedleViewer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

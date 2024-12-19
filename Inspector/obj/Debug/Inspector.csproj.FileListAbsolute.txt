@@ -134,3 +134,15 @@ E:\TestCodeViaMKLINK\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.CoreComp
 E:\TestCodeViaMKLINK\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.Up2Date
 E:\TestCodeViaMKLINK\NeedleChanger\Inspector\obj\Debug\Inspector.dll
 E:\TestCodeViaMKLINK\NeedleChanger\Inspector\obj\Debug\Inspector.pdb
+C:\Users\ren_hong\Desktop\NeedleChanger\NeedleChanger\Inspector\bin\Debug\ic4core.dll
+C:\Users\ren_hong\Desktop\NeedleChanger\NeedleChanger\Inspector\bin\Debug\Inspector.dll
+C:\Users\ren_hong\Desktop\NeedleChanger\NeedleChanger\Inspector\bin\Debug\Inspector.pdb
+C:\Users\ren_hong\Desktop\NeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.AssemblyReference.cache
+C:\Users\ren_hong\Desktop\NeedleChanger\NeedleChanger\Inspector\obj\Debug\Camera.IMSSetFrm.resources
+C:\Users\ren_hong\Desktop\NeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.Inspector.resources
+C:\Users\ren_hong\Desktop\NeedleChanger\NeedleChanger\Inspector\obj\Debug\Camera.SisoSetFrm.resources
+C:\Users\ren_hong\Desktop\NeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.GenerateResource.cache
+C:\Users\ren_hong\Desktop\NeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.CoreCompileInputs.cache
+C:\Users\ren_hong\Desktop\NeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.Up2Date
+C:\Users\ren_hong\Desktop\NeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.dll
+C:\Users\ren_hong\Desktop\NeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.pdb
