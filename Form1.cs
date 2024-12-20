@@ -1562,7 +1562,25 @@ namespace InjectorInspector
 
             double result = double.Parse(txtABSpos.Text) + 0.0;
 
-            if (ptrBtn == btn_plus_1) {
+            if (ptrBtn == btn_plus_d001) {
+                result += 0.001;
+                ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_minus_d001) {
+                result -= 0.001;
+                ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_plus_d01) {
+                result += 0.01;
+                ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_minus_d01) {
+                result -= 0.01;
+                ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_plus_d1) {
+                result += 0.1;
+                ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_minus_d1) {
+                result -= 0.1;
+                ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_plus_1) {
                 result += 1.0;
                 ptrBtn = btnABSMove;
             } else if (ptrBtn == btn_minus_1) {

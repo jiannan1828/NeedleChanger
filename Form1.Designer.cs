@@ -32,6 +32,8 @@
             this.tmr_ReadWMX3 = new System.Windows.Forms.Timer(this.components);
             this.tabTestIAI = new System.Windows.Forms.TabPage();
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.btn_minus_d1 = new System.Windows.Forms.Button();
+            this.btn_plus_d1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.btnVibrationLEDOff = new System.Windows.Forms.Button();
@@ -275,6 +277,10 @@
             this.button1 = new System.Windows.Forms.Button();
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.btn_minus_d01 = new System.Windows.Forms.Button();
+            this.btn_plus_d01 = new System.Windows.Forms.Button();
+            this.btn_minus_d001 = new System.Windows.Forms.Button();
+            this.btn_plus_d001 = new System.Windows.Forms.Button();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -301,6 +307,12 @@
             // 
             // tabJob
             // 
+            this.tabJob.Controls.Add(this.btn_minus_d001);
+            this.tabJob.Controls.Add(this.btn_plus_d001);
+            this.tabJob.Controls.Add(this.btn_minus_d01);
+            this.tabJob.Controls.Add(this.btn_plus_d01);
+            this.tabJob.Controls.Add(this.btn_minus_d1);
+            this.tabJob.Controls.Add(this.btn_plus_d1);
             this.tabJob.Controls.Add(this.textBox1);
             this.tabJob.Controls.Add(this.vScrollBar1);
             this.tabJob.Controls.Add(this.btnVibrationLEDOff);
@@ -439,6 +451,28 @@
             this.tabJob.TabIndex = 2;
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
+            // 
+            // btn_minus_d1
+            // 
+            this.btn_minus_d1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_minus_d1.Location = new System.Drawing.Point(250, 357);
+            this.btn_minus_d1.Name = "btn_minus_d1";
+            this.btn_minus_d1.Size = new System.Drawing.Size(75, 23);
+            this.btn_minus_d1.TabIndex = 205;
+            this.btn_minus_d1.Text = "-0.1";
+            this.btn_minus_d1.UseVisualStyleBackColor = true;
+            this.btn_minus_d1.Click += new System.EventHandler(this.btn_adjust_JOG);
+            // 
+            // btn_plus_d1
+            // 
+            this.btn_plus_d1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_plus_d1.Location = new System.Drawing.Point(155, 357);
+            this.btn_plus_d1.Name = "btn_plus_d1";
+            this.btn_plus_d1.Size = new System.Drawing.Size(75, 23);
+            this.btn_plus_d1.TabIndex = 204;
+            this.btn_plus_d1.Text = "+0.1";
+            this.btn_plus_d1.UseVisualStyleBackColor = true;
+            this.btn_plus_d1.Click += new System.EventHandler(this.btn_adjust_JOG);
             // 
             // textBox1
             // 
@@ -912,7 +946,7 @@
             this.groupBox2.Controls.Add(this.lbl堵料吹氣缸);
             this.groupBox2.Controls.Add(this.lbl吸料真空閥);
             this.groupBox2.Controls.Add(this.lbl擺放蓋板);
-            this.groupBox2.Location = new System.Drawing.Point(719, 372);
+            this.groupBox2.Location = new System.Drawing.Point(719, 456);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(420, 210);
             this.groupBox2.TabIndex = 161;
@@ -1337,7 +1371,7 @@
             this.groupBox1.Controls.Add(this.lbl載盤Y前);
             this.groupBox1.Controls.Add(this.lbl取料Y後);
             this.groupBox1.Controls.Add(this.lbl載盤Y後);
-            this.groupBox1.Location = new System.Drawing.Point(25, 372);
+            this.groupBox1.Location = new System.Drawing.Point(25, 456);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(670, 210);
             this.groupBox1.TabIndex = 160;
@@ -2257,7 +2291,7 @@
             // btn_minus_10
             // 
             this.btn_minus_10.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_minus_10.Location = new System.Drawing.Point(250, 332);
+            this.btn_minus_10.Location = new System.Drawing.Point(250, 419);
             this.btn_minus_10.Name = "btn_minus_10";
             this.btn_minus_10.Size = new System.Drawing.Size(75, 23);
             this.btn_minus_10.TabIndex = 59;
@@ -2268,7 +2302,7 @@
             // btn_minus_1
             // 
             this.btn_minus_1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_minus_1.Location = new System.Drawing.Point(250, 302);
+            this.btn_minus_1.Location = new System.Drawing.Point(250, 389);
             this.btn_minus_1.Name = "btn_minus_1";
             this.btn_minus_1.Size = new System.Drawing.Size(75, 23);
             this.btn_minus_1.TabIndex = 58;
@@ -2279,7 +2313,7 @@
             // btn_plus_10
             // 
             this.btn_plus_10.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plus_10.Location = new System.Drawing.Point(155, 332);
+            this.btn_plus_10.Location = new System.Drawing.Point(155, 419);
             this.btn_plus_10.Name = "btn_plus_10";
             this.btn_plus_10.Size = new System.Drawing.Size(75, 23);
             this.btn_plus_10.TabIndex = 57;
@@ -2290,7 +2324,7 @@
             // btn_plus_1
             // 
             this.btn_plus_1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plus_1.Location = new System.Drawing.Point(155, 302);
+            this.btn_plus_1.Location = new System.Drawing.Point(155, 389);
             this.btn_plus_1.Name = "btn_plus_1";
             this.btn_plus_1.Size = new System.Drawing.Size(75, 23);
             this.btn_plus_1.TabIndex = 56;
@@ -3066,6 +3100,50 @@
             this.tabControl1.Size = new System.Drawing.Size(1236, 791);
             this.tabControl1.TabIndex = 2;
             // 
+            // btn_minus_d01
+            // 
+            this.btn_minus_d01.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_minus_d01.Location = new System.Drawing.Point(250, 328);
+            this.btn_minus_d01.Name = "btn_minus_d01";
+            this.btn_minus_d01.Size = new System.Drawing.Size(75, 23);
+            this.btn_minus_d01.TabIndex = 207;
+            this.btn_minus_d01.Text = "-0.01";
+            this.btn_minus_d01.UseVisualStyleBackColor = true;
+            this.btn_minus_d01.Click += new System.EventHandler(this.btn_adjust_JOG);
+            // 
+            // btn_plus_d01
+            // 
+            this.btn_plus_d01.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_plus_d01.Location = new System.Drawing.Point(155, 328);
+            this.btn_plus_d01.Name = "btn_plus_d01";
+            this.btn_plus_d01.Size = new System.Drawing.Size(75, 23);
+            this.btn_plus_d01.TabIndex = 206;
+            this.btn_plus_d01.Text = "+0.01";
+            this.btn_plus_d01.UseVisualStyleBackColor = true;
+            this.btn_plus_d01.Click += new System.EventHandler(this.btn_adjust_JOG);
+            // 
+            // btn_minus_d001
+            // 
+            this.btn_minus_d001.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_minus_d001.Location = new System.Drawing.Point(250, 299);
+            this.btn_minus_d001.Name = "btn_minus_d001";
+            this.btn_minus_d001.Size = new System.Drawing.Size(75, 23);
+            this.btn_minus_d001.TabIndex = 209;
+            this.btn_minus_d001.Text = "-0.001";
+            this.btn_minus_d001.UseVisualStyleBackColor = true;
+            this.btn_minus_d001.Click += new System.EventHandler(this.btn_adjust_JOG);
+            // 
+            // btn_plus_d001
+            // 
+            this.btn_plus_d001.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_plus_d001.Location = new System.Drawing.Point(155, 299);
+            this.btn_plus_d001.Name = "btn_plus_d001";
+            this.btn_plus_d001.Size = new System.Drawing.Size(75, 23);
+            this.btn_plus_d001.TabIndex = 208;
+            this.btn_plus_d001.Text = "+0.001";
+            this.btn_plus_d001.UseVisualStyleBackColor = true;
+            this.btn_plus_d001.Click += new System.EventHandler(this.btn_adjust_JOG);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -3342,6 +3420,12 @@
         private System.Windows.Forms.Button btnVibrationInit;
         private System.Windows.Forms.VScrollBar vScrollBar1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btn_minus_d1;
+        private System.Windows.Forms.Button btn_plus_d1;
+        private System.Windows.Forms.Button btn_minus_d001;
+        private System.Windows.Forms.Button btn_plus_d001;
+        private System.Windows.Forms.Button btn_minus_d01;
+        private System.Windows.Forms.Button btn_plus_d01;
     }
 }
 

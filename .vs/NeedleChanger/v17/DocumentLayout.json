@@ -7,7 +7,7 @@
       "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|d:\\needlechanger\\code\\needlechanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
@@ -37,7 +37,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 397,
+          "DockedHeight": 545,
           "SelectedChildIndex": 2,
           "Children": [
             {
@@ -63,8 +63,7 @@
               "RelativeToolTip": "Inspector\\Inspector.cs",
               "ViewState": "AgIAADwBAAAAAAAAAAAowHMFAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T03:38:17.316Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-12T03:38:17.316Z"
             },
             {
               "$type": "Document",
@@ -74,7 +73,7 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAAMAHAAAAAAAAAAAgwNsHAABFAAAAAAAAAA==",
+              "ViewState": "AgIAAAMGAAAAAAAAAAAtwCYGAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-20T01:45:47.192Z",
               "EditorCaption": ""
@@ -101,8 +100,7 @@
               "RelativeToolTip": "ServoControl.cs",
               "ViewState": "AgIAADEAAAAAAAAAAAAIwEQAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T05:29:56.19Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-09T05:29:56.19Z"
             },
             {
               "$type": "Document",
@@ -114,8 +112,7 @@
               "RelativeToolTip": "Vibration.cs",
               "ViewState": "AgIAALcAAAAAAAAAAAAnwMkAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T06:05:44.893Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-09T06:05:44.893Z"
             },
             {
               "$type": "Document",
@@ -127,22 +124,17 @@
               "RelativeToolTip": "Normal.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAACEAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T03:08:12.604Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-10T03:08:12.604Z"
             }
           ]
         },
         {
-          "DockedHeight": 203,
+          "DockedHeight": 55,
           "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
             }
           ]
         }
