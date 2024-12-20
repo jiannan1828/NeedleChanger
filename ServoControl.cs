@@ -55,6 +55,20 @@ namespace InjectorInspector
     //---------------------------------------------------------------------------------------
     public enum WMX3IO對照
     {  // start of public enum WMX3IO對照
+        //Analog Out
+        pxeIO_Addr_AnalogOut_START = 0,
+            pxeIO_Addr_AnalogOut_0 = 0,
+            pxeIO_Addr_AnalogOut_1 = 2,
+        pxeIO_Addr_AnalogOut_END,
+
+        //Analog In
+        pxeIO_Addr_AnalogIn_START = 0,
+        pxeIO_Addr_AnalogIn_0 = 18,
+        pxeIO_Addr_AnalogIn_1 = 20,
+        pxeIO_Addr_AnalogIn_2 = 22,
+        pxeIO_Addr_AnalogIn_3 = 24,
+        pxeIO_Addr_AnalogIn_END,
+
         //out:
         pxeIO_Addr_Out_START      =  4,
             pxeIO_Addr4           =  4,  //4
@@ -506,8 +520,10 @@ namespace InjectorInspector
             //Active WMX3
             WMX3_Initial();
 
+            Thread.Sleep(2000);
             if (wmx != null)
             {
+                Thread.Sleep(2000);
                 int ret = wmx.StartCommunication();
                 if (ret != 0)
                 {

@@ -193,8 +193,14 @@ namespace InjectorInspector
 
         public void Px1_SendCMD(xe_U15_CMD Px1_CMD, uint u32Px1)
         {
-            switch (Px1_CMD)
-            {
+            if(Px1_CMD == xe_U15_CMD.xeUC_TestMode_LightLevel) { 
+                //LED Maximum
+                if(u32Px1>=60) {
+                    u32Px1 = 60;
+                }
+            }
+            
+            switch (Px1_CMD) {
                 case xe_U15_CMD.xeUC_TestMode_FunctionOn:
                 case xe_U15_CMD.xeUC_RunRecipeNo:
                 case xe_U15_CMD.xeUC_ReadParametersOfRecipeNo:

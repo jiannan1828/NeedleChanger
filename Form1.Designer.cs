@@ -29,9 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.tmr_ReadWMX3 = new System.Windows.Forms.Timer(this.components);
             this.tabTestIAI = new System.Windows.Forms.TabPage();
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.btnVibrationLEDOff = new System.Windows.Forms.Button();
+            this.btnVibrationLED = new System.Windows.Forms.Button();
+            this.btnVibrationStop = new System.Windows.Forms.Button();
+            this.btnVibrationInit = new System.Windows.Forms.Button();
             this.lbl_JoDell吸針嘴_Convert = new System.Windows.Forms.Label();
             this.lbl_JoDell吸針嘴_Back = new System.Windows.Forms.Label();
             this.lbl_JoDell吸針嘴_RAW = new System.Windows.Forms.Label();
@@ -254,44 +260,6 @@
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.txtcyclecnt = new System.Windows.Forms.TextBox();
-            this.txtSpd = new System.Windows.Forms.TextBox();
-            this.txtTmr = new System.Windows.Forms.TextBox();
-            this.txtY2 = new System.Windows.Forms.TextBox();
-            this.txtY1 = new System.Windows.Forms.TextBox();
-            this.txtX2 = new System.Windows.Forms.TextBox();
-            this.txtX1 = new System.Windows.Forms.TextBox();
-            this.txtChgNozzleZ = new System.Windows.Forms.TextBox();
-            this.txtY = new System.Windows.Forms.TextBox();
-            this.txtX = new System.Windows.Forms.TextBox();
-            this.txtDeg = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.lblSpd = new System.Windows.Forms.Label();
-            this.lblTmr = new System.Windows.Forms.Label();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.btnSet2 = new System.Windows.Forms.Button();
-            this.btnSet1 = new System.Windows.Forms.Button();
-            this.btnCatchPinXY = new System.Windows.Forms.Button();
-            this.btnCalculate = new System.Windows.Forms.Button();
-            this.lblYo = new System.Windows.Forms.Label();
-            this.lblXo = new System.Windows.Forms.Label();
-            this.btnChgNozzleZ = new System.Windows.Forms.Button();
-            this.btnChgY = new System.Windows.Forms.Button();
-            this.btnChgX = new System.Windows.Forms.Button();
-            this.btnNozzleDownPos = new System.Windows.Forms.Button();
-            this.btnChgDeg = new System.Windows.Forms.Button();
-            this.btnVibrationLEDOff = new System.Windows.Forms.Button();
-            this.btnVibrationLED = new System.Windows.Forms.Button();
-            this.btnVibrationStop = new System.Windows.Forms.Button();
-            this.btnVibrationInit = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnSetHome = new System.Windows.Forms.Button();
@@ -315,10 +283,11 @@
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // timer1
+            // tmr_ReadWMX3
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.tmr_ReadWMX3.Enabled = true;
+            this.tmr_ReadWMX3.Interval = 125;
+            this.tmr_ReadWMX3.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // tabTestIAI
             // 
@@ -332,6 +301,12 @@
             // 
             // tabJob
             // 
+            this.tabJob.Controls.Add(this.textBox1);
+            this.tabJob.Controls.Add(this.vScrollBar1);
+            this.tabJob.Controls.Add(this.btnVibrationLEDOff);
+            this.tabJob.Controls.Add(this.btnVibrationLED);
+            this.tabJob.Controls.Add(this.btnVibrationStop);
+            this.tabJob.Controls.Add(this.btnVibrationInit);
             this.tabJob.Controls.Add(this.lbl_JoDell吸針嘴_Convert);
             this.tabJob.Controls.Add(this.lbl_JoDell吸針嘴_Back);
             this.tabJob.Controls.Add(this.lbl_JoDell吸針嘴_RAW);
@@ -464,6 +439,68 @@
             this.tabJob.TabIndex = 2;
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(1079, 168);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(100, 30);
+            this.textBox1.TabIndex = 203;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // vScrollBar1
+            // 
+            this.vScrollBar1.Location = new System.Drawing.Point(1016, 85);
+            this.vScrollBar1.Maximum = 110;
+            this.vScrollBar1.Minimum = -10;
+            this.vScrollBar1.Name = "vScrollBar1";
+            this.vScrollBar1.Size = new System.Drawing.Size(38, 212);
+            this.vScrollBar1.TabIndex = 202;
+            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
+            // 
+            // btnVibrationLEDOff
+            // 
+            this.btnVibrationLEDOff.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnVibrationLEDOff.Location = new System.Drawing.Point(490, 332);
+            this.btnVibrationLEDOff.Name = "btnVibrationLEDOff";
+            this.btnVibrationLEDOff.Size = new System.Drawing.Size(123, 23);
+            this.btnVibrationLEDOff.TabIndex = 201;
+            this.btnVibrationLEDOff.Text = "btnVibrationLEDOff";
+            this.btnVibrationLEDOff.UseVisualStyleBackColor = true;
+            this.btnVibrationLEDOff.Click += new System.EventHandler(this.btnVibrationLEDOff_Click);
+            // 
+            // btnVibrationLED
+            // 
+            this.btnVibrationLED.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnVibrationLED.Location = new System.Drawing.Point(368, 332);
+            this.btnVibrationLED.Name = "btnVibrationLED";
+            this.btnVibrationLED.Size = new System.Drawing.Size(116, 23);
+            this.btnVibrationLED.TabIndex = 200;
+            this.btnVibrationLED.Text = "btnVibrationLED";
+            this.btnVibrationLED.UseVisualStyleBackColor = true;
+            this.btnVibrationLED.Click += new System.EventHandler(this.btnVibrationLED_Click);
+            // 
+            // btnVibrationStop
+            // 
+            this.btnVibrationStop.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnVibrationStop.Location = new System.Drawing.Point(490, 302);
+            this.btnVibrationStop.Name = "btnVibrationStop";
+            this.btnVibrationStop.Size = new System.Drawing.Size(116, 23);
+            this.btnVibrationStop.TabIndex = 199;
+            this.btnVibrationStop.Text = "btnVibrationStop";
+            this.btnVibrationStop.UseVisualStyleBackColor = true;
+            this.btnVibrationStop.Click += new System.EventHandler(this.btnVibrationStop_Click);
+            // 
+            // btnVibrationInit
+            // 
+            this.btnVibrationInit.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btnVibrationInit.Location = new System.Drawing.Point(368, 302);
+            this.btnVibrationInit.Name = "btnVibrationInit";
+            this.btnVibrationInit.Size = new System.Drawing.Size(116, 23);
+            this.btnVibrationInit.TabIndex = 198;
+            this.btnVibrationInit.Text = "btnVibrationInit";
+            this.btnVibrationInit.UseVisualStyleBackColor = true;
+            this.btnVibrationInit.Click += new System.EventHandler(this.btnVibrationInit_Click);
             // 
             // lbl_JoDell吸針嘴_Convert
             // 
@@ -2862,44 +2899,6 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.txtcyclecnt);
-            this.tabPage2.Controls.Add(this.txtSpd);
-            this.tabPage2.Controls.Add(this.txtTmr);
-            this.tabPage2.Controls.Add(this.txtY2);
-            this.tabPage2.Controls.Add(this.txtY1);
-            this.tabPage2.Controls.Add(this.txtX2);
-            this.tabPage2.Controls.Add(this.txtX1);
-            this.tabPage2.Controls.Add(this.txtChgNozzleZ);
-            this.tabPage2.Controls.Add(this.txtY);
-            this.tabPage2.Controls.Add(this.txtX);
-            this.tabPage2.Controls.Add(this.txtDeg);
-            this.tabPage2.Controls.Add(this.label9);
-            this.tabPage2.Controls.Add(this.label8);
-            this.tabPage2.Controls.Add(this.button10);
-            this.tabPage2.Controls.Add(this.button9);
-            this.tabPage2.Controls.Add(this.lblSpd);
-            this.tabPage2.Controls.Add(this.lblTmr);
-            this.tabPage2.Controls.Add(this.button8);
-            this.tabPage2.Controls.Add(this.button7);
-            this.tabPage2.Controls.Add(this.button6);
-            this.tabPage2.Controls.Add(this.button5);
-            this.tabPage2.Controls.Add(this.button4);
-            this.tabPage2.Controls.Add(this.button3);
-            this.tabPage2.Controls.Add(this.btnSet2);
-            this.tabPage2.Controls.Add(this.btnSet1);
-            this.tabPage2.Controls.Add(this.btnCatchPinXY);
-            this.tabPage2.Controls.Add(this.btnCalculate);
-            this.tabPage2.Controls.Add(this.lblYo);
-            this.tabPage2.Controls.Add(this.lblXo);
-            this.tabPage2.Controls.Add(this.btnChgNozzleZ);
-            this.tabPage2.Controls.Add(this.btnChgY);
-            this.tabPage2.Controls.Add(this.btnChgX);
-            this.tabPage2.Controls.Add(this.btnNozzleDownPos);
-            this.tabPage2.Controls.Add(this.btnChgDeg);
-            this.tabPage2.Controls.Add(this.btnVibrationLEDOff);
-            this.tabPage2.Controls.Add(this.btnVibrationLED);
-            this.tabPage2.Controls.Add(this.btnVibrationStop);
-            this.tabPage2.Controls.Add(this.btnVibrationInit);
             this.tabPage2.Controls.Add(this.btnStop);
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.btnSetHome);
@@ -2918,363 +2917,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // txtcyclecnt
-            // 
-            this.txtcyclecnt.Location = new System.Drawing.Point(987, 588);
-            this.txtcyclecnt.Name = "txtcyclecnt";
-            this.txtcyclecnt.Size = new System.Drawing.Size(100, 30);
-            this.txtcyclecnt.TabIndex = 69;
-            this.txtcyclecnt.Text = "1";
-            // 
-            // txtSpd
-            // 
-            this.txtSpd.Location = new System.Drawing.Point(606, 114);
-            this.txtSpd.Name = "txtSpd";
-            this.txtSpd.Size = new System.Drawing.Size(100, 30);
-            this.txtSpd.TabIndex = 64;
-            this.txtSpd.Text = "txtSpd";
-            // 
-            // txtTmr
-            // 
-            this.txtTmr.Location = new System.Drawing.Point(606, 75);
-            this.txtTmr.Name = "txtTmr";
-            this.txtTmr.Size = new System.Drawing.Size(100, 30);
-            this.txtTmr.TabIndex = 63;
-            this.txtTmr.Text = "txtTmr";
-            // 
-            // txtY2
-            // 
-            this.txtY2.Location = new System.Drawing.Point(768, 567);
-            this.txtY2.Name = "txtY2";
-            this.txtY2.Size = new System.Drawing.Size(100, 30);
-            this.txtY2.TabIndex = 48;
-            this.txtY2.Text = "-0.00";
-            // 
-            // txtY1
-            // 
-            this.txtY1.Location = new System.Drawing.Point(768, 531);
-            this.txtY1.Name = "txtY1";
-            this.txtY1.Size = new System.Drawing.Size(100, 30);
-            this.txtY1.TabIndex = 47;
-            this.txtY1.Text = "-0.00";
-            // 
-            // txtX2
-            // 
-            this.txtX2.Location = new System.Drawing.Point(652, 567);
-            this.txtX2.Name = "txtX2";
-            this.txtX2.Size = new System.Drawing.Size(100, 30);
-            this.txtX2.TabIndex = 46;
-            this.txtX2.Text = "-0.00";
-            // 
-            // txtX1
-            // 
-            this.txtX1.Location = new System.Drawing.Point(652, 531);
-            this.txtX1.Name = "txtX1";
-            this.txtX1.Size = new System.Drawing.Size(100, 30);
-            this.txtX1.TabIndex = 45;
-            this.txtX1.Text = "-0.00";
-            // 
-            // txtChgNozzleZ
-            // 
-            this.txtChgNozzleZ.Location = new System.Drawing.Point(150, 622);
-            this.txtChgNozzleZ.Name = "txtChgNozzleZ";
-            this.txtChgNozzleZ.Size = new System.Drawing.Size(100, 30);
-            this.txtChgNozzleZ.TabIndex = 43;
-            this.txtChgNozzleZ.Text = "-0.00";
-            // 
-            // txtY
-            // 
-            this.txtY.Location = new System.Drawing.Point(390, 622);
-            this.txtY.Name = "txtY";
-            this.txtY.Size = new System.Drawing.Size(100, 30);
-            this.txtY.TabIndex = 32;
-            this.txtY.Text = "-0.00";
-            // 
-            // txtX
-            // 
-            this.txtX.Location = new System.Drawing.Point(270, 622);
-            this.txtX.Name = "txtX";
-            this.txtX.Size = new System.Drawing.Size(100, 30);
-            this.txtX.TabIndex = 31;
-            this.txtX.Text = "-0.00";
-            // 
-            // txtDeg
-            // 
-            this.txtDeg.Location = new System.Drawing.Point(33, 622);
-            this.txtDeg.Name = "txtDeg";
-            this.txtDeg.Size = new System.Drawing.Size(100, 30);
-            this.txtDeg.TabIndex = 26;
-            this.txtDeg.Text = "-0.00";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(466, 125);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(50, 19);
-            this.label9.TabIndex = 68;
-            this.label9.Text = "speed";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(466, 86);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(47, 19);
-            this.label8.TabIndex = 67;
-            this.label8.Text = "timer";
-            // 
-            // button10
-            // 
-            this.button10.Location = new System.Drawing.Point(604, 38);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(75, 23);
-            this.button10.TabIndex = 66;
-            this.button10.Text = "設定";
-            this.button10.UseVisualStyleBackColor = true;
-            // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(525, 38);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 23);
-            this.button9.TabIndex = 65;
-            this.button9.Text = "讀取";
-            this.button9.UseVisualStyleBackColor = true;
-            // 
-            // lblSpd
-            // 
-            this.lblSpd.AutoSize = true;
-            this.lblSpd.Location = new System.Drawing.Point(547, 125);
-            this.lblSpd.Name = "lblSpd";
-            this.lblSpd.Size = new System.Drawing.Size(56, 19);
-            this.lblSpd.TabIndex = 62;
-            this.lblSpd.Text = "lblSpd";
-            // 
-            // lblTmr
-            // 
-            this.lblTmr.AutoSize = true;
-            this.lblTmr.Location = new System.Drawing.Point(547, 86);
-            this.lblTmr.Name = "lblTmr";
-            this.lblTmr.Size = new System.Drawing.Size(59, 19);
-            this.lblTmr.TabIndex = 61;
-            this.lblTmr.Text = "lblTmr";
-            // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(977, 644);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(125, 43);
-            this.button8.TabIndex = 60;
-            this.button8.Text = "OneCycle";
-            this.button8.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(381, 517);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 59;
-            this.button7.Text = "拋料";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(300, 517);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 58;
-            this.button6.Text = "下視覺";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(1093, 475);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 57;
-            this.button5.Text = "關";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(1093, 446);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 56;
-            this.button4.Text = "破真空";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(1093, 417);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 55;
-            this.button3.Text = "吸真空";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // btnSet2
-            // 
-            this.btnSet2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnSet2.Location = new System.Drawing.Point(568, 567);
-            this.btnSet2.Name = "btnSet2";
-            this.btnSet2.Size = new System.Drawing.Size(78, 30);
-            this.btnSet2.TabIndex = 54;
-            this.btnSet2.Text = "btnSet2";
-            this.btnSet2.UseVisualStyleBackColor = true;
-            this.btnSet2.Click += new System.EventHandler(this.btnSet2_Click);
-            // 
-            // btnSet1
-            // 
-            this.btnSet1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnSet1.Location = new System.Drawing.Point(568, 531);
-            this.btnSet1.Name = "btnSet1";
-            this.btnSet1.Size = new System.Drawing.Size(78, 30);
-            this.btnSet1.TabIndex = 53;
-            this.btnSet1.Text = "btnSet1";
-            this.btnSet1.UseVisualStyleBackColor = true;
-            this.btnSet1.Click += new System.EventHandler(this.btnSet1_Click);
-            // 
-            // btnCatchPinXY
-            // 
-            this.btnCatchPinXY.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnCatchPinXY.Location = new System.Drawing.Point(581, 642);
-            this.btnCatchPinXY.Name = "btnCatchPinXY";
-            this.btnCatchPinXY.Size = new System.Drawing.Size(103, 30);
-            this.btnCatchPinXY.TabIndex = 52;
-            this.btnCatchPinXY.Text = "btnCatchPinXY";
-            this.btnCatchPinXY.UseVisualStyleBackColor = true;
-            this.btnCatchPinXY.Click += new System.EventHandler(this.btnCatchPinXY_Click);
-            // 
-            // btnCalculate
-            // 
-            this.btnCalculate.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnCalculate.Location = new System.Drawing.Point(581, 606);
-            this.btnCalculate.Name = "btnCalculate";
-            this.btnCalculate.Size = new System.Drawing.Size(78, 30);
-            this.btnCalculate.TabIndex = 51;
-            this.btnCalculate.Text = "btnCalculate";
-            this.btnCalculate.UseVisualStyleBackColor = true;
-            this.btnCalculate.Click += new System.EventHandler(this.txtCalXYoriginal);
-            // 
-            // lblYo
-            // 
-            this.lblYo.AutoSize = true;
-            this.lblYo.Location = new System.Drawing.Point(792, 610);
-            this.lblYo.Name = "lblYo";
-            this.lblYo.Size = new System.Drawing.Size(50, 19);
-            this.lblYo.TabIndex = 50;
-            this.lblYo.Text = "lblYo";
-            // 
-            // lblXo
-            // 
-            this.lblXo.AutoSize = true;
-            this.lblXo.Location = new System.Drawing.Point(676, 610);
-            this.lblXo.Name = "lblXo";
-            this.lblXo.Size = new System.Drawing.Size(50, 19);
-            this.lblXo.TabIndex = 49;
-            this.lblXo.Text = "lblXo";
-            // 
-            // btnChgNozzleZ
-            // 
-            this.btnChgNozzleZ.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnChgNozzleZ.Location = new System.Drawing.Point(150, 569);
-            this.btnChgNozzleZ.Name = "btnChgNozzleZ";
-            this.btnChgNozzleZ.Size = new System.Drawing.Size(100, 39);
-            this.btnChgNozzleZ.TabIndex = 44;
-            this.btnChgNozzleZ.Text = "btnChgNozzleZ";
-            this.btnChgNozzleZ.UseVisualStyleBackColor = true;
-            this.btnChgNozzleZ.Click += new System.EventHandler(this.btnChgNozzleZ_Click);
-            // 
-            // btnChgY
-            // 
-            this.btnChgY.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnChgY.Location = new System.Drawing.Point(390, 569);
-            this.btnChgY.Name = "btnChgY";
-            this.btnChgY.Size = new System.Drawing.Size(102, 39);
-            this.btnChgY.TabIndex = 42;
-            this.btnChgY.Text = "btnChgY";
-            this.btnChgY.UseVisualStyleBackColor = true;
-            this.btnChgY.Click += new System.EventHandler(this.btnChgY_Click);
-            // 
-            // btnChgX
-            // 
-            this.btnChgX.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnChgX.Location = new System.Drawing.Point(270, 569);
-            this.btnChgX.Name = "btnChgX";
-            this.btnChgX.Size = new System.Drawing.Size(102, 39);
-            this.btnChgX.TabIndex = 41;
-            this.btnChgX.Text = "btnChgX";
-            this.btnChgX.UseVisualStyleBackColor = true;
-            this.btnChgX.Click += new System.EventHandler(this.btnChgX_Click);
-            // 
-            // btnNozzleDownPos
-            // 
-            this.btnNozzleDownPos.Location = new System.Drawing.Point(99, 501);
-            this.btnNozzleDownPos.Name = "btnNozzleDownPos";
-            this.btnNozzleDownPos.Size = new System.Drawing.Size(165, 39);
-            this.btnNozzleDownPos.TabIndex = 28;
-            this.btnNozzleDownPos.Text = "btnNozzleDownPos";
-            this.btnNozzleDownPos.UseVisualStyleBackColor = true;
-            this.btnNozzleDownPos.Click += new System.EventHandler(this.btnNozzleDownPos_Click);
-            // 
-            // btnChgDeg
-            // 
-            this.btnChgDeg.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnChgDeg.Location = new System.Drawing.Point(33, 569);
-            this.btnChgDeg.Name = "btnChgDeg";
-            this.btnChgDeg.Size = new System.Drawing.Size(100, 39);
-            this.btnChgDeg.TabIndex = 27;
-            this.btnChgDeg.Text = "btnChgDeg";
-            this.btnChgDeg.UseVisualStyleBackColor = true;
-            this.btnChgDeg.Click += new System.EventHandler(this.btnChgNozzleDeg_Click);
-            // 
-            // btnVibrationLEDOff
-            // 
-            this.btnVibrationLEDOff.Location = new System.Drawing.Point(1003, 118);
-            this.btnVibrationLEDOff.Name = "btnVibrationLEDOff";
-            this.btnVibrationLEDOff.Size = new System.Drawing.Size(172, 39);
-            this.btnVibrationLEDOff.TabIndex = 25;
-            this.btnVibrationLEDOff.Text = "btnVibrationLEDOff";
-            this.btnVibrationLEDOff.UseVisualStyleBackColor = true;
-            this.btnVibrationLEDOff.Click += new System.EventHandler(this.btnVibrationLEDOff_Click);
-            // 
-            // btnVibrationLED
-            // 
-            this.btnVibrationLED.Location = new System.Drawing.Point(807, 118);
-            this.btnVibrationLED.Name = "btnVibrationLED";
-            this.btnVibrationLED.Size = new System.Drawing.Size(165, 39);
-            this.btnVibrationLED.TabIndex = 24;
-            this.btnVibrationLED.Text = "btnVibrationLED";
-            this.btnVibrationLED.UseVisualStyleBackColor = true;
-            this.btnVibrationLED.Click += new System.EventHandler(this.btnVibrationLED_Click);
-            // 
-            // btnVibrationStop
-            // 
-            this.btnVibrationStop.Location = new System.Drawing.Point(1003, 54);
-            this.btnVibrationStop.Name = "btnVibrationStop";
-            this.btnVibrationStop.Size = new System.Drawing.Size(165, 39);
-            this.btnVibrationStop.TabIndex = 23;
-            this.btnVibrationStop.Text = "btnVibrationStop";
-            this.btnVibrationStop.UseVisualStyleBackColor = true;
-            this.btnVibrationStop.Click += new System.EventHandler(this.btnVibrationStop_Click);
-            // 
-            // btnVibrationInit
-            // 
-            this.btnVibrationInit.Location = new System.Drawing.Point(807, 54);
-            this.btnVibrationInit.Name = "btnVibrationInit";
-            this.btnVibrationInit.Size = new System.Drawing.Size(165, 39);
-            this.btnVibrationInit.TabIndex = 22;
-            this.btnVibrationInit.Text = "btnVibrationInit";
-            this.btnVibrationInit.UseVisualStyleBackColor = true;
-            this.btnVibrationInit.Click += new System.EventHandler(this.btnVibrationInit_Click);
             // 
             // btnStop
             // 
@@ -3454,7 +3096,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer tmr_ReadWMX3;
         private System.Windows.Forms.TabPage tabTestIAI;
         private System.Windows.Forms.TabPage tabJob;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -3643,44 +3285,6 @@
         private System.Windows.Forms.RadioButton select_吸嘴Y軸;
         private System.Windows.Forms.RadioButton select_吸嘴X軸;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TextBox txtcyclecnt;
-        private System.Windows.Forms.TextBox txtSpd;
-        private System.Windows.Forms.TextBox txtTmr;
-        private System.Windows.Forms.TextBox txtY2;
-        private System.Windows.Forms.TextBox txtY1;
-        private System.Windows.Forms.TextBox txtX2;
-        private System.Windows.Forms.TextBox txtX1;
-        private System.Windows.Forms.TextBox txtChgNozzleZ;
-        private System.Windows.Forms.TextBox txtY;
-        private System.Windows.Forms.TextBox txtX;
-        private System.Windows.Forms.TextBox txtDeg;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Label lblSpd;
-        private System.Windows.Forms.Label lblTmr;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button btnSet2;
-        private System.Windows.Forms.Button btnSet1;
-        private System.Windows.Forms.Button btnCatchPinXY;
-        private System.Windows.Forms.Button btnCalculate;
-        private System.Windows.Forms.Label lblYo;
-        private System.Windows.Forms.Label lblXo;
-        private System.Windows.Forms.Button btnChgNozzleZ;
-        private System.Windows.Forms.Button btnChgY;
-        private System.Windows.Forms.Button btnChgX;
-        private System.Windows.Forms.Button btnNozzleDownPos;
-        private System.Windows.Forms.Button btnChgDeg;
-        private System.Windows.Forms.Button btnVibrationLEDOff;
-        private System.Windows.Forms.Button btnVibrationLED;
-        private System.Windows.Forms.Button btnVibrationStop;
-        private System.Windows.Forms.Button btnVibrationInit;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSetHome;
@@ -3732,6 +3336,12 @@
         private System.Windows.Forms.Label lbl_spd_JoDell植針嘴;
         private System.Windows.Forms.Label lbl_spd_JoDell植針嘴_lbl;
         private System.Windows.Forms.RadioButton select_JoDell植針嘴;
+        private System.Windows.Forms.Button btnVibrationLEDOff;
+        private System.Windows.Forms.Button btnVibrationLED;
+        private System.Windows.Forms.Button btnVibrationStop;
+        private System.Windows.Forms.Button btnVibrationInit;
+        private System.Windows.Forms.VScrollBar vScrollBar1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

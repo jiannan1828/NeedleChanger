@@ -33,6 +33,11 @@ namespace InjectorInspector
             // 計算映射 並強制轉型為 int
             return (int)((Input - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
         }
+        public int Map(int Input, int in_min, int in_max, int out_min, int out_max)
+        {
+            // 計算映射 並強制轉型為 int
+            return (int)((Input - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
+        }
 
         // 轉換方法
         public string ParseToBinaryString(ref byte[] BInput, int isize)

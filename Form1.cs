@@ -1346,16 +1346,6 @@ namespace InjectorInspector
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
             tabControl1.TabPages[0].Text = "Image";
             tabControl1.TabPages[2].Text = "Jog";
-
-            //設定吸嘴中心座標
-            txtX1.Text = "-35.84";
-            txtY1.Text = "50.80";
-            txtX2.Text = "-64.77";
-            txtY2.Text = "49.11";
-            txtCalXYoriginal(sender, e);
-
-            this.Text = "2024/12/09 18:32";
-
         }
         //---------------------------------------------------------------------------------------
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -1701,7 +1691,7 @@ namespace InjectorInspector
                 dbapJoDell3D掃描(dbState);
                 dbapJoDell吸針嘴(dbState);
                 dbapJoDell植針嘴(dbState);
-            }
+            }  // end of double dbState = dbRead;
 
             //讀取 Yaskawa OutputIO
             clsServoControlWMX3.WMX3_GetOutIO(ref pDataGetOutIO, (int)WMX3IO對照.pxeIO_Addr4, 4);
@@ -1738,7 +1728,7 @@ namespace InjectorInspector
                 lbl左按鈕紅燈.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_面板左按鈕紅燈) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_面板左按鈕紅燈)  % 10)) != 0) ? Color.Green : Color.Red;
                 lbl綠燈.BackColor       = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_機台綠燈)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_機台綠燈)        % 10)) != 0) ? Color.Green : Color.Red;
                 lblBuzzer.BackColor     = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_Buzzer)         / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Buzzer)          % 10)) != 0) ? Color.Green : Color.Red;
-            }
+            }  // end of clsServoControlWMX3.WMX3_GetOutIO(ref pDataGetOutIO, (int)WMX3IO對照.pxeIO_Addr4, 4);
 
             //讀取 Yaskawa InputIO
             clsServoControlWMX3.WMX3_GetInIO(ref pDataGetInIO, (int)WMX3IO對照.pxeIO_Addr28, 8);
@@ -1791,9 +1781,7 @@ namespace InjectorInspector
                 lbl下後右門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架後側右門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架後側右門)  % 10)) != 0) ? Color.Green : Color.Red;
                 lbl下右右門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架右側右門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架右側右門)  % 10)) != 0) ? Color.Green : Color.Red;
                 lbl下右左門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架右側左門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架右側左門)  % 10)) != 0) ? Color.Green : Color.Red;
-            }
-
-
+            }  // end of clsServoControlWMX3.WMX3_GetInIO(ref pDataGetInIO, (int)WMX3IO對照.pxeIO_Addr28, 8);
 
         }  // end of private void timer1_Tick(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
@@ -1814,7 +1802,30 @@ namespace InjectorInspector
         {
             clsServoControlWMX3.WMX3_destroy_Commu();
         }
+        private void btn_AlarmRST_Click(object sender, EventArgs e)
+        {
+            clsServoControlWMX3.WMX3_ClearAlarm();
+        }
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            bool isOn = false;
 
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門,  isOn);
+
+            clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff,            isOn?1.0:0.0);
+            clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,             isOn?1.0:0.0);
+            clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, isOn?1.0:0.0);
+            clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, isOn?1.0:0.0);
+            clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, isOn?1.0:0.0);
+        }
         private void btnSetHome_Click(object sender, EventArgs e)
         {
             int rslt = 0;
@@ -1854,103 +1865,12 @@ namespace InjectorInspector
 
 
 
-        private void btnNozzleDownPos_Click(object sender, EventArgs e)
-        {
-            dbapiNozzleZ(26.2);
-        }
-
-        private void btnStop_Click(object sender, EventArgs e)
-        {
-            bool isOn = false;
-
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, isOn);
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, isOn);
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, isOn);
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, isOn);
-        }
-
-        private void btn_AlarmRST_Click(object sender, EventArgs e)
-        {
-            clsServoControlWMX3.WMX3_ClearAlarm();
-        }
 
 
-        private void btnChgX_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 取得txtX裡的浮點數
-                double fChangeNozzleX = double.Parse(txtX.Text);
 
-                //格式化數值
-                txtX.Text = fChangeNozzleX.ToString("F3");
-                fChangeNozzleX = double.Parse(txtX.Text);
 
-                //執行伸縮吸嘴
-                dbapiNozzleX(fChangeNozzleX);
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("請輸入有效的浮點數");
-            }
-        }
 
-        private void btnChgY_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 取得txtX裡的浮點數
-                double fChangeNozzleY = double.Parse(txtY.Text);
 
-                //格式化數值
-                txtY.Text = fChangeNozzleY.ToString("F3");
-                fChangeNozzleY = double.Parse(txtY.Text);
-
-                //執行伸縮吸嘴
-                dbapiNozzleY(fChangeNozzleY);
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("請輸入有效的浮點數");
-            }
-        }
-
-        private void btnChgNozzleZ_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 取得txtChgNozzleZ裡的浮點數
-                double fChangeNozzleZ = double.Parse(txtChgNozzleZ.Text);
-
-                //格式化數值
-                txtChgNozzleZ.Text = fChangeNozzleZ.ToString("F3");
-                fChangeNozzleZ = double.Parse(txtChgNozzleZ.Text);
-
-                //執行伸縮吸嘴
-                dbapiNozzleZ(fChangeNozzleZ);
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("請輸入有效的浮點數");
-            }
-        }
-
-        private void btnChgNozzleDeg_Click(object sender, EventArgs e)
-        {
-            try {
-                // 取得txtDeg裡的浮點數
-                double fChangeDegree = double.Parse(txtDeg.Text);
-
-                //格式化數值
-                txtDeg.Text = fChangeDegree.ToString("F3");
-                fChangeDegree = double.Parse(txtDeg.Text);
-
-                //執行旋轉吸嘴
-                dbapiNozzleR(fChangeDegree);
-            } catch (FormatException) {
-                MessageBox.Show("請輸入有效的浮點數");
-            }
-        }
 
 
 
@@ -2001,9 +1921,6 @@ namespace InjectorInspector
                                           clsVibration.u32VibrationSource3_Power,
                                           clsVibration.u32VibrationSource4_Power,
                                           clsVibration.u32BlackDepotSource_Power);
-
-                clsVibration.u32LED_Level = 50;
-                clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
             }
         }
 
@@ -2014,15 +1931,12 @@ namespace InjectorInspector
             {
                 uint bRunning = 0;
                 clsVibration.Px1_SendCMD(xe_U15_CMD.xeUC_TestMode_FunctionOn, bRunning);
-
-                clsVibration.u32LED_Level = 50;
-                clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
             }
         }
 
         private void btnVibrationLED_Click(object sender, EventArgs e)
         {
-            //Vibration
+            //Vibration LED
             clsVibration.apiEstablishTCPVibration();
             {
                 clsVibration.u32LED_Level = 50;
@@ -2032,7 +1946,7 @@ namespace InjectorInspector
 
         private void btnVibrationLEDOff_Click(object sender, EventArgs e)
         {
-            //Vibration
+            //Vibration LED
             clsVibration.apiEstablishTCPVibration();
             {
                 clsVibration.u32LED_Level = 0;
@@ -2040,114 +1954,79 @@ namespace InjectorInspector
             }
         }
 
-
-
-
-
-
-
-        private void txtCalXYoriginal(object sender, EventArgs e)
+        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-            double dbAverageXo = (double.Parse(txtX1.Text) + double.Parse(txtX2.Text)) / 2;
-            double dbAverageYo = (double.Parse(txtY1.Text) + double.Parse(txtY2.Text)) / 2;
 
-            lblXo.Text = dbAverageXo.ToString("F3");
-            lblYo.Text = dbAverageYo.ToString("F3");
+            /*
+                y=0.000454x−2.5071
+                x=(y+2.5071)/0.000454
+            */
+
+            
+            if (100.0<=vScrollBar1.Value) {
+                vScrollBar1.Value = 100;
+            }
+            if(vScrollBar1.Value <= 0.0) {
+                vScrollBar1.Value = 0;
+            }
+
+            double y = (double)( (double)(vScrollBar1.Value) / (double)(10.0) );
+            double x = (y + 2.5071) / 0.000454;
+
+            int iGetValue = (int)x;
+            textBox1.Text = iGetValue.ToString();
+            byte[] aGetValue = BitConverter.GetBytes(iGetValue);
+            //clsServoControlWMX3.WMX3_SetIO(ref aGetValue, (int)WMX3IO對照.pxeIO_Addr_AnalogOut_0, 2);
+            clsServoControlWMX3.WMX3_SetIO(ref aGetValue, (int)WMX3IO對照.pxeIO_Addr_AnalogOut_1, 2);
+
+            int iGetIn0Value = 0;
+            byte[] aGetIn0Value = new byte[2];
+            clsServoControlWMX3.WMX3_GetInIO(ref aGetIn0Value, (int)WMX3IO對照.pxeIO_Addr_AnalogIn_0, 2);
+            iGetIn0Value = BitConverter.ToInt16(aGetIn0Value, 0);
+
+            int iGetIn1Value = 0;
+            byte[] aGetIn1Value = new byte[2];
+            clsServoControlWMX3.WMX3_GetInIO(ref aGetIn1Value, (int)WMX3IO對照.pxeIO_Addr_AnalogIn_1, 2);
+            iGetIn1Value = BitConverter.ToInt16(aGetIn1Value, 0);
+
+            int iGetIn2Value = 0;
+            byte[] aGetIn2Value = new byte[2];
+            clsServoControlWMX3.WMX3_GetInIO(ref aGetIn2Value, (int)WMX3IO對照.pxeIO_Addr_AnalogIn_2, 2);
+            iGetIn2Value = BitConverter.ToInt16(aGetIn2Value, 0);
+
+            int iGetIn3Value = 0;
+            byte[] aGetIn3Value = new byte[2];
+            clsServoControlWMX3.WMX3_GetInIO(ref aGetIn3Value, (int)WMX3IO對照.pxeIO_Addr_AnalogIn_3, 2);
+            iGetIn3Value = BitConverter.ToInt16(aGetIn3Value, 0);
+
+            this.Text = "In:"                   + " " +
+                        iGetIn0Value.ToString() + " " + 
+                        iGetIn1Value.ToString() + " " + 
+                        iGetIn2Value.ToString() + " " + 
+                        iGetIn3Value.ToString() + " " +
+                        "Out:"                  + " " +
+                        iGetValue.ToString()    + " " +
+                        "y:" + y.ToString();
         }
 
-        private void btnCatchPinXY_Click(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            //光源震動盤
-            List<Vector3> pins;
-            bool 料盤有料 = inspector1.xInsp震動盤(out pins);
-            Vector3 temp = (料盤有料) ? pins.First() : new Vector3();
-            label4.Text = string.Format("光源震動盤 震動盤 = {0} X = {1:F2} Y = {2:F2} θ = {3:F2}", 料盤有料, temp.X, temp.Y, temp.θ);
+            /*
+            if (int.TryParse(textBox1.Text, out int iGetValue))
+            {
+                // 設定 vScrollBar1 的值
+                vScrollBar1.Value = iGetValue;
 
-            //取得Pin位置 根據吸嘴中心
-            double dbPinX = double.Parse(lblXo.Text) - temp.X;
-            double dbPinY = double.Parse(lblYo.Text) + temp.Y;
-            double dbPinZ = 26.6;
-            double dbPinR = 23.00 + temp.θ;
-
-            //設定Pin位置
-            txtX.Text = dbPinX.ToString("F3");
-            txtY.Text = dbPinY.ToString("F3");
-            txtChgNozzleZ.Text = dbPinZ.ToString("F3");
-            txtDeg.Text = dbPinR.ToString("F3");
+                // 手動觸發 Scroll 事件處理器
+                ScrollEventArgs scrollEventArgs = new ScrollEventArgs(
+                    ScrollEventType.EndScroll,  // 假設您是結束滾動
+                    vScrollBar1.Value,          // 設置的值
+                    vScrollBar1.Value           // 現在的值
+                );
+                vScrollBar1_Scroll(sender, scrollEventArgs);
+            }
+            */
         }
-
-        private void btnSet1_Click(object sender, EventArgs e)
-        {
-            txtX1.Text = txtX.Text;
-            txtY1.Text = txtY.Text;
-        }
-
-        private void btnSet2_Click(object sender, EventArgs e)
-        {
-            txtX2.Text = txtX.Text;
-            txtY2.Text = txtY.Text;
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            byte[] pData = new byte[1];
-
-            //Buzzer
-            //pData[0] |= 0b10000000;
-            //io.SetOutBytes(7, 1, pData);
-
-            //吸嘴吸真空
-            pData[0] |= 0b00000001;
-            clsServoControlWMX3.WMX3_SetIO(ref pData, 6, 1);
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            byte[] pData = new byte[1];
-
-            //Buzzer
-            //pData[0] &= 0b01111111;
-            //io.SetOutBytes(7, 1, pData);
-
-            //吸嘴吸真空
-            pData[0] &= 0b11111110;
-            clsServoControlWMX3.WMX3_SetIO(ref pData, 6, 1);
-
-            //吸嘴破真空
-            pData[0] |= 0b00000100;
-            clsServoControlWMX3.WMX3_SetIO(ref pData, 6, 1);
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            byte[] pData = new byte[1];
-
-            //吸嘴破真空
-            pData[0] &= 0b11111011;
-            clsServoControlWMX3.WMX3_SetIO(ref pData, 6, 1);
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            double dbPinX = -162.43;
-            double dbPinY = 29.5;
-
-            //設定Pin位置
-            txtX.Text = dbPinX.ToString("F3");
-            txtY.Text = dbPinY.ToString("F3");
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            double dbPinX = -241.79;
-            double dbPinY = 27.99;
-
-            //設定Pin位置
-            txtX.Text = dbPinX.ToString("F3");
-            txtY.Text = dbPinY.ToString("F3");
-        }
-
-
     }  // end of public partial class Form1 : Form
 
 }  // end of namespace InjectorInspector
