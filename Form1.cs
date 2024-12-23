@@ -124,7 +124,7 @@ namespace InjectorInspector
             double dbRstNozzleX = 0.0;
 
             {  // start of 吸嘴X軸 讀取與顯示
-                int rslt        = 0;
+                int    rslt     = 0;
                 string position = "";
                 string speed    = "";
 
@@ -215,7 +215,7 @@ namespace InjectorInspector
             double dbRstNozzleY = 0.0;
 
             {  // start of 吸嘴Y軸 讀取與顯示
-                int rslt        = 0;
+                int    rslt     = 0;
                 string position = "";
                 string speed    = "";
 
@@ -306,7 +306,7 @@ namespace InjectorInspector
             double dbRstNozzleZ = 0.0;
 
             {  // start of 吸嘴Z軸 讀取與顯示
-                int rslt        = 0;
+                int    rslt     = 0;
                 string position = "";
                 string speed    = "";
 
@@ -397,7 +397,7 @@ namespace InjectorInspector
             double dbRstNozzleR = 0.0;
 
             {  // start of 吸嘴R軸 讀取與顯示
-                int rslt        = 0;
+                int    rslt     = 0;
                 string position = "";
                 string speed    = "";
 
@@ -492,7 +492,7 @@ namespace InjectorInspector
             double dbRstCarrierX = 0.0;
 
             {  // start of 載盤X軸 讀取與顯示
-                int rslt        = 0;
+                int    rslt     = 0;
                 string position = "";
                 string speed    = "";
 
@@ -583,7 +583,7 @@ namespace InjectorInspector
             double dbRstCarrierY = 0.0;
 
             {  // start of 載盤Y軸 讀取與顯示
-                int rslt        = 0;
+                int    rslt     = 0;
                 string position = "";
                 string speed    = "";
 
@@ -674,7 +674,7 @@ namespace InjectorInspector
             double dbRstSetZ = 0.0;
 
             {  // start of 植針Z軸 讀取與顯示
-                int rslt        = 0;
+                int    rslt     = 0;
                 string position = "";
                 string speed    = "";
 
@@ -765,7 +765,7 @@ namespace InjectorInspector
             double dbRstSetR = 0.0;
 
             {  // start of 植針R軸 讀取與顯示
-                int rslt        = 0;
+                int    rslt     = 0;
                 string position = "";
                 string speed    = "";
 
@@ -856,7 +856,7 @@ namespace InjectorInspector
             double dbRstGate = 0.0;
 
             {  // start of 工作門 讀取與顯示
-                int rslt        = 0;
+                int    rslt     = 0;
                 string position = "";
                 string speed    = "";
 
@@ -1009,7 +1009,7 @@ namespace InjectorInspector
                 //伸長量overflow保護
                 if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
 
-                } else if( dbIncreaseGate<= Mindb) {
+                } else if( dbIncreaseGate<=Mindb ) {
                     dbIncreaseGate = (int)Mindb;
                 } else if( Maxdb<=dbIncreaseGate ) {
                     dbIncreaseGate = (int)Maxdb;
@@ -1105,7 +1105,7 @@ namespace InjectorInspector
                 //伸長量overflow保護
                 if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
 
-                } else if( dbIncreaseGate<= Mindb) {
+                } else if( dbIncreaseGate<=Mindb ) {
                     dbIncreaseGate = (int)Mindb;
                 } else if( Maxdb<=dbIncreaseGate ) {
                     dbIncreaseGate = (int)Maxdb;
@@ -1124,97 +1124,84 @@ namespace InjectorInspector
         public double dbapJoDell吸針嘴(double dbIncreaseGate)  //JoDell吸針嘴
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 3000;
-            const int MinRAW = 0;
-            const double Maxdb = 30.0;
-            const double Mindb = 0.0;
-            const double Sum = 3000;
-            const double dbSpdF = Sum / Maxdb;
+                const int    MaxRAW =   3000;
+                const int    MinRAW =      0;
+                const double Maxdb  =   30.0;
+                const double Mindb  =    0.0;
+                const double Sum    =   3000;
+                const double dbSpdF =  Sum / Maxdb;
 
             double dbRstJoDell吸針嘴 = 0.0;
 
             {  // start of JoDell吸針嘴 讀取與顯示
-                int rslt = 0;
+                int    rslt     = 0;
                 string position = "";
-                string speed = "";
+                string speed    = "";
 
                 //讀取 JoDell吸針嘴 資訊
                 byte[] JODELL_RX = new byte[18];
-                int addr_TargetGetDevice = (int)(addr_JODELL.pxeaJ_吸針嘴_Input) / 10;
+                int addr_TargetGetDevice   = (int)(addr_JODELL.pxeaJ_吸針嘴_Input) / 10;
                 int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START) / 10;
                 clsServoControlWMX3.WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice + addr_TargetGetFunction, JODELL_RX.Length);
 
                 int[] varJODELL_RX = new int[JODELL_RX.Length / 2];
-                for (int i = 0; i < varJODELL_RX.Length; i++)
-                {
+                for (int i = 0; i < varJODELL_RX.Length; i++) {
                     varJODELL_RX[i] = BitConverter.ToInt16(JODELL_RX, i * 2);
                 }
                 rslt = varJODELL_RX[0];
 
                 //當數值有效
-                if (true)
-                {
-                    lbl_JoDell吸針嘴_RAW.Visible = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_JoDell吸針嘴_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_JoDell吸針嘴_Back.Visible = bshow_debug_RAW_Conver_Back_Value;
+                if(true) { 
+                    lbl_JoDell吸針嘴_RAW.Visible      = bshow_debug_RAW_Conver_Back_Value;
+                    lbl_JoDell吸針嘴_Convert.Visible  = bshow_debug_RAW_Conver_Back_Value;
+                    lbl_JoDell吸針嘴_Back.Visible     = bshow_debug_RAW_Conver_Back_Value;
 
 
                     //得到原始數值
-                    int Convert = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GetPosition, 0);
-                    int Speed = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
-                    lbl_JoDell吸針嘴_RAW.Text = Convert.ToString();
+                    int Convert                   = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GetPosition, 0);
+                    int Speed                     = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
+                    lbl_JoDell吸針嘴_RAW.Text     = Convert.ToString();
 
                     //得到轉換數值
-                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
-                    double dbSpeed = Speed / dbSpdF;
+                    double dbGet                  = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
+                    double dbSpeed                = Speed / dbSpdF;
                     lbl_JoDell吸針嘴_Convert.Text = dbGet.ToString("F3");
 
                     //轉回原始數值
-                    int cnback = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
-                    lbl_JoDell吸針嘴_Back.Text = cnback.ToString();
+                    int cnback                    = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
+                    lbl_JoDell吸針嘴_Back.Text    = cnback.ToString();
 
 
                     //顯示讀取長度
-                    dbRstJoDell吸針嘴 = dbGet;
-                    lbl_acpos_JoDell吸針嘴.Text = dbRstJoDell吸針嘴.ToString("F3");
+                    dbRstJoDell吸針嘴             = dbGet;
+                    lbl_acpos_JoDell吸針嘴.Text   = dbRstJoDell吸針嘴.ToString("F3");
 
                     //顯示運動速度
-                    lbl_spd_JoDell吸針嘴.Text = dbSpeed.ToString("F3");
+                    lbl_spd_JoDell吸針嘴.Text     = dbSpeed.ToString("F3");
                 }
 
                 //變更顏色
-                if (rslt == 4)
-                {
-                    select_JoDell吸針嘴.BackColor = Color.Red;
+                if (rslt == 4) {
+                    select_JoDell吸針嘴.BackColor    = Color.Red;
                     lbl_acpos_JoDell吸針嘴.BackColor = Color.White;
-                    lbl_spd_JoDell吸針嘴.BackColor = Color.White;
-                }
-                else
-                {
-                    select_JoDell吸針嘴.BackColor = Color.Green;
+                    lbl_spd_JoDell吸針嘴.BackColor   = Color.White;
+                } else {
+                    select_JoDell吸針嘴.BackColor    = Color.Green;
                     lbl_acpos_JoDell吸針嘴.BackColor = Color.Gray;
-                    lbl_spd_JoDell吸針嘴.BackColor = Color.Gray;
+                    lbl_spd_JoDell吸針嘴.BackColor   = Color.Gray;
                 }
 
             }  // end of JoDell吸針嘴 讀取與顯示
 
-            if (dbIncreaseGate == dbRead)
-            {
+            if (dbIncreaseGate == dbRead) {
 
-            }
-            else
-            {  //吸針嘴 變更位置
+            } else {  //吸針嘴 變更位置
                 //伸長量overflow保護
-                if (Mindb <= dbIncreaseGate && dbIncreaseGate <= Maxdb)
-                {
+                if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
 
-                }
-                else if (dbIncreaseGate <= Mindb)
-                {
+                } else if( dbIncreaseGate<=Mindb ) {
                     dbIncreaseGate = (int)Mindb;
-                }
-                else if (Maxdb <= dbIncreaseGate)
-                {
+                } else if( Maxdb<=dbIncreaseGate ) {
                     dbIncreaseGate = (int)Maxdb;
                 }
 
@@ -1306,7 +1293,7 @@ namespace InjectorInspector
                 //伸長量overflow保護
                 if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
 
-                } else if( dbIncreaseGate<= Mindb) {
+                } else if( dbIncreaseGate<=Mindb ) {
                     dbIncreaseGate = (int)Mindb;
                 } else if( Maxdb<=dbIncreaseGate ) {
                     dbIncreaseGate = (int)Maxdb;
