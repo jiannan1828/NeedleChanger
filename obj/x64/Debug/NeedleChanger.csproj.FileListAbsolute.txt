@@ -1,0 +1,5 @@
+D:\Resilio\CodeViaTestMklink\NeedleChanger\obj\x64\Debug\NeedleChanger.csproj.AssemblyReference.cache
+D:\Resilio\CodeViaTestMklink\NeedleChanger\obj\x64\Debug\InjectorInspector.Form1.resources
+D:\Resilio\CodeViaTestMklink\NeedleChanger\obj\x64\Debug\InjectorInspector.Properties.Resources.resources
+D:\Resilio\CodeViaTestMklink\NeedleChanger\obj\x64\Debug\NeedleChanger.csproj.GenerateResource.cache
+D:\Resilio\CodeViaTestMklink\NeedleChanger\obj\x64\Debug\NeedleChanger.csproj.CoreCompileInputs.cache

@@ -16,6 +16,8 @@ using xNet;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using System.Net.NetworkInformation;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.MonthCalendar;
 
 #pragma warning disable CS0168
 #pragma warning disable CS0169
@@ -31,9 +33,9 @@ namespace Inspector
         InspTray區 InspTray;
         public Insp吸嘴區 InspNozzle;
         InspSocket區 InspSocket;
-        InspCCD5區 InspCCD5;
-        InspCCD6區 InspCCD6;
-        OPTControlerRS OPT;
+        InspCCD5區 Insp夾爪CCD;
+        InspCCD6區 Insp吸針孔;
+        Exlite OPT;
         bool ExitP = false;
         ushort[] DT = new ushort[30000];
         List<Vector3> TrayItem;
@@ -47,6 +49,10 @@ namespace Inspector
         /// <summary> 吸嘴分析結果成功 </summary>
         public bool InspectOK = false;
         public Action on下視覺;
+
+        public int lights = 120;
+
+        public double nozzleX, nozzleY;
 
         int GetDWord(int Index)
         {
@@ -125,13 +131,14 @@ namespace Inspector
             Insp入料 = new Insp入料區(this, Win3);
             InspTray = new InspTray區(this, Win2);
             InspNozzle = new Insp吸嘴區(this, Win1);
-            //InspSocket = new InspSocket區(this, Win1);
-            //InspCCD5 = new InspCCD5區(this, Win4);
-            //InspCCD6 = new InspCCD6區(this, Win5);
-            OPT = new OPTControlerRS(4);
-            OPT.Open("COM3");
+            InspSocket = new InspSocket區(this, Win4);
+            Insp夾爪CCD = new InspCCD5區(this, Win5);
+            Insp吸針孔 = new InspCCD6區(this, Win6);
+            OPT = new Exlite(2);
+            OPT.Open("COM1", 1);
+            OPT.Lights[0] = 120;
             Task.Factory.StartNew(Scan);
-            Application.ApplicationExit += onExit;
+            System.Windows.Forms.Application.ApplicationExit += onExit;
             timer1.Tick += onTick1;
         }
 
@@ -156,6 +163,10 @@ namespace Inspector
             Insp入料.Show();
             InspTray.Show();
             InspNozzle.Show();
+            InspSocket.Show();
+            Insp夾爪CCD.Show();
+            Insp吸針孔.Show();
+            OPT.Lights[0] = lights;
         }
 
         public void LoadRecipe(int Num)
@@ -250,15 +261,15 @@ namespace Inspector
         /// <summary>吸嘴校正，依序傳入 0度X1Y1 / 90度X1Y1 / 90度X2Y1 / 90度X2Y2</summary>
         public void xCarb吸嘴(List<Vector3> ImageLoc, List<Vector3> axisLoc) { InspNozzle.Carb(ImageLoc, axisLoc); }
         /// <summary>分析Socket盤，，傳入目前Socket軸位置(X / Y)，回覆針孔位置</summary>
-        public List<Vector3> xInspSocket(Vector3 Loc) { return InspSocket.Insp(Loc); }
+        public bool xInspSocket(out Vector3 Loc) { return InspSocket.Insp(out Loc); }
         /// <summary>Socket盤校正初始化，會將分析資料輸出為像素位置</summary>
         public void xCarbInitSocket() { InspSocket.CarbInit(); }
         /// <summary>吸嘴校正，依序傳入Socket分析後第一筆資料 X1Y1 / X2Y1 / X2Y2</summary>
         public void xCarbSocket(List<Vector3> ImageLoc, List<Vector3> axisLoc) { InspSocket.Carb(ImageLoc, axisLoc); }
         /// <summary>未知作用</summary>
-        public void xInspCCD5() { }
+        public bool xInsp夾爪(out Vector3 pos) { return Insp夾爪CCD.Insp(out pos); }
         /// <summary>未知作用</summary>
-        public void xInspCCD6() { }
+        public bool xInsp吸針孔(out Vector3 pos) { return Insp吸針孔.Insp(out pos); }
 
         internal void DisposeObj(params HObject[] arg)
         {
@@ -370,7 +381,7 @@ namespace Inspector
             get { return dImage; }
             set
             {
-                if (dImage == null)
+                if (dImage != null)
                     dImage.Dispose();
                 dImage = value;
             }
@@ -539,7 +550,7 @@ namespace Inspector
         public double TrayPin寬Min = 1;
         public double TrayPin寬Max = 80;
         public double TrayPin長Min = 1;
-        public double TrayPin長Max = 700;
+        public double TrayPin長Max = 70;
         public double Pin相鄰距離 = 40;
     }
     #endregion
@@ -581,6 +592,7 @@ namespace Inspector
             helper.hWin.ContextMenuStrip = menu;
             menu.Items.Add("LoadImage", null, (sender, e) => { helper.LoadImage(); });
             menu.Items.Add("分析入料盤", null, (sender, e) => { Insp(); });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "入料"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
             menu.Opening += onMenu1Opening;
@@ -597,12 +609,12 @@ namespace Inspector
 
         HObject GetPinArea(HObject image)
         {
-            HObject binArea, connArea, SelArea, TrArea, sortArea;
+            HObject binArea, connArea, SelArea;
             HTuple usedThr, row1, col1, row2, col2, cnt;
             HOperatorSet.BinaryThreshold(image, out binArea, "max_separability", "light", out usedThr);
             HOperatorSet.Connection(binArea, out connArea);
             HOperatorSet.SelectShape(connArea, out SelArea, "width", "and", 2500, 999999);
-            HOperatorSet.SortRegion(SelArea, out sortArea, "first_point", "true", "row");
+            //HOperatorSet.SortRegion(SelArea, out sortArea, "first_point", "true", "row");
             HOperatorSet.SmallestRectangle1(SelArea, out row1, out col1, out row2, out col2);
             HObject area;
             HOperatorSet.GenEmptyRegion(out area);
@@ -614,6 +626,7 @@ namespace Inspector
             }
             HOperatorSet.SelectShape(area, out area, "area", "and", 100, 9999999);
             HOperatorSet.CountObj(area, out cnt);
+            owner.DisposeObj(binArea, connArea, SelArea);
             return area;
         }
 
@@ -631,6 +644,7 @@ namespace Inspector
             //HOperatorSet.Connection(rgnDiff, out connregion);
             //HOperatorSet.SelectShape(connregion, out SelectedRegions, "area", "and", 30, 999999);
             //owner.DisposeObj(rgn1, rgnFill, rgnFull, rgnDiff, connregion);
+            owner.DisposeObj(rgnFull, redImage);
             return rgn1;
         }
 
@@ -654,6 +668,7 @@ namespace Inspector
                 ItemSuccess = result;
                 if ((!manualInsp) && result)
                     owner.WriteImage(temp, "入料");
+                owner.DisposeObj(temp, Region入料);
             }
             owner.BeginInvoke(new Action(helper.AdjustView));
             return result;
@@ -696,6 +711,8 @@ namespace Inspector
         Inspector owner;
         int AddL1 = 15;
         PointF CarbPos, CarbH;
+        PointF 校正點一 = new PointF(), 校正點二 = new PointF();
+        HTuple CarbDeg = 0.0;
 
         public InspTray區(Inspector sender, HWindowControl win)
         {
@@ -708,9 +725,10 @@ namespace Inspector
         void onRecvImage(object sender, string ImageType, int width, int height, IntPtr buffer)
         {
             HImage temp = new HImage("byte", width, height, buffer);
-            temp = temp.RotateImage(90.0, "constant");
-            helper.Image = temp;
-            helper.SetImageSize(temp);
+            HImage temp1 = temp.RotateImage(90.0, "constant");
+            owner.DisposeObj(temp);
+            helper.Image = temp1;
+            helper.SetImageSize(temp1);
             if (first)
             {
                 first = false;
@@ -728,11 +746,23 @@ namespace Inspector
                 List<Vector3> target;
                 Insp(out target);
             });
-            menu.Items.Add("分析校正", null, (sender, e) =>
+            menu.Items.Add("分析校正一", null, (sender, e) =>
             {
-                PointF target;
-                Carb(out target);
+                Carb(out 校正點一);
+                校正點一.X = (float)owner.nozzleX - 校正點一.X;
+                校正點一.Y = (float)owner.nozzleY - 校正點一.Y;
+                HOperatorSet.AngleLx(校正點一.Y, 校正點一.X, 校正點二.Y, 校正點二.X, out CarbDeg);
+                CarbDeg = CarbDeg.TupleDeg();
             });
+            menu.Items.Add("分析校正一", null, (sender, e) =>
+            {
+                Carb(out 校正點二);
+                校正點二.X = (float)owner.nozzleX - 校正點二.X;
+                校正點二.Y = (float)owner.nozzleY - 校正點二.Y;
+                HOperatorSet.AngleLx(校正點一.Y, 校正點一.X, 校正點二.Y, 校正點二.X, out CarbDeg);
+                CarbDeg = CarbDeg.TupleDeg();
+            });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "Tray"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
             menu.Opening += onMenu1Opening;
@@ -917,6 +947,7 @@ namespace Inspector
         {
             if (image == null)
                 return;
+            HOperatorSet.ClearWindow(Win.HalconWindow);
             HOperatorSet.DispImage(image, Win.HalconWindow);
             if (RegionTray != null)
             {
@@ -942,7 +973,7 @@ namespace Inspector
                 Win.HalconWindow.SetColor("orange");
                 HOperatorSet.DispCross(Win.HalconWindow, CarbH.Y, CarbH.X, 60, 0);
                 Win.HalconWindow.SetTposition(60, 250);
-                string Msg = string.Format("X={0:F1} Y= {1:F1}", CarbPos.X, CarbPos.Y);
+                string Msg = string.Format("X={0:F3} Y= {1:F3}, Deg= {2:F2}", CarbPos.X, CarbPos.Y, CarbDeg.D);
                 Win.HalconWindow.WriteString(Msg);
                 Win.HalconWindow.SetColor("green");
                 Win.HalconWindow.DispLine(0, helper.ImgWidth / 2.0, helper.ImgHeight - 1, helper.ImgWidth / 2.0);
@@ -988,7 +1019,6 @@ namespace Inspector
         void onRecvImage(object sender, string ImageType, int width, int height, IntPtr buffer)
         {
             HImage temp = new HImage("byte", width, height, buffer);
-            temp = temp.RotateImage(0.0, "constant");
             helper.Image = temp;
             helper.SetImageSize(temp);
             if (first)
@@ -1016,6 +1046,7 @@ namespace Inspector
                 double target;
                 Insp(out target);
             });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "吸嘴"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
             menu.Opening += onMenu1Opening;
@@ -1151,6 +1182,7 @@ namespace Inspector
 
         void ShowResult(HWindowControl Win, HObject image)
         {
+            HOperatorSet.ClearWindow(Win.HalconWindow);
             HOperatorSet.DispImage(image, Win.HalconWindow);
             Win.HalconWindow.SetLineWidth(2);
             Win.HalconWindow.SetColor("orange");
@@ -1190,6 +1222,9 @@ namespace Inspector
         internal ImageSource CCD;
         Inspector owner;
         bool first = true;
+        HTuple pX, pY;
+        int targetIndex = -1;
+        Vector3 hole;
 
         public InspSocket區(Inspector sender, HWindowControl win)
         {
@@ -1202,9 +1237,10 @@ namespace Inspector
         void onRecvImage(object sender, string ImageType, int width, int height, IntPtr buffer)
         {
             HImage temp = new HImage("byte", width, height, buffer);
-            temp = temp.RotateImage(0.0, "constant");
-            helper.Image = temp;
-            helper.SetImageSize(temp);
+            HImage temp1 = temp.RotateImage(-90.0, "constant");
+            owner.DisposeObj(temp);
+            helper.Image = temp1;
+            helper.SetImageSize(temp1);
             if (first)
             {
                 first = false;
@@ -1217,36 +1253,64 @@ namespace Inspector
             menu = new ContextMenuStrip();
             helper.hWin.ContextMenuStrip = menu;
             menu.Items.Add("LoadImage", null, (sender, e) => { helper.LoadImage(); });
-            //menu.Items.Add("分析震動盤", null, (sender, e) =>
-            //{
-            //    List<Vector3> target;
-            //    Insp(out target);
-            //});
+            menu.Items.Add("分析Socket", null, (sender, e) =>
+            {
+                Vector3 n;
+                var sel = Insp(out n);
+            });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "Socket"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
-            //menu.Opening += onMenu1Opening;
+            menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
+            menu.Opening += onMenu1Opening;
         }
 
         void onMenu1Opening(object sender, CancelEventArgs e)
         {
             var items = (sender as ContextMenuStrip).Items.OfType<ToolStripItem>();
             items.First(x => x.Text == "LoadImage").Visible = owner.DebugMode;
-            items.First(x => x.Text == "分析震動盤").Visible = owner.DebugMode;
+            //items.First(x => x.Text == "分析震動盤").Visible = owner.DebugMode;
             items.First(x => x.Text == "Set CCD Parameter").Visible = owner.xEngineer;
         }
         /// <summary>分析Socket盤，，傳入目前Socket軸位置(X / Y)，回覆針孔位置</summary>
-        public List<Vector3> Insp(Vector3 Loc)
+        public bool Insp(out Vector3 Loc)
         {
-            var result = new List<Vector3>();
+            var result = new Vector3();
             helper.inShow = true;
+            targetIndex = -1;
             if (helper.ContainImage)
             {
-                HObject temp;
-                HTuple W, H;
+                HObject temp, binArea, connArea, SelArea, OutArea, MaxArea, CirArea;
+                HTuple W, H, usedThr, row, col, Radius, Dist;
                 HOperatorSet.CopyImage(helper.Image, out temp);
                 owner.WriteImage(temp, "Socket");
+                HOperatorSet.GetImageSize(temp, out W, out H);
+                HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
+                HOperatorSet.Connection(binArea, out connArea);
+                HOperatorSet.SelectShape(connArea, out SelArea, "circularity", "and", 0.9, 1);
+                HOperatorSet.SelectShape(SelArea, out OutArea, "outer_radius", "and", 20, 200);
+                HOperatorSet.SelectShapeStd(OutArea, out MaxArea, "max_area", 70);
+                HOperatorSet.SmallestCircle(MaxArea, out row, out col, out Radius);
+                HOperatorSet.SelectShape(OutArea, out CirArea, "outer_radius", "and", Radius.D - 2, Radius.D + 2);
+                HOperatorSet.SmallestCircle(CirArea, out row, out col, out Radius);
+                double smallDist = 999999;
+                
+                for(int i = 0; i < row.Length; i++)
+                {
+                    HOperatorSet.DistancePp(row[i], col[i], H.D / 2.0, W.D / 2.0, out Dist);
+                    if (Dist.D < smallDist)
+                    {
+                        smallDist = Dist.D;
+                        result.X = pX = col[i].D;
+                        result.Y = pY = row[i].D;
+                        targetIndex = i;
+                    }
+                }
+                if (targetIndex >= 0)
+                    hole = result = CCD.GetReal(result.X, result.Y, W, H);
             }
+            Loc = result;
             owner.BeginInvoke(new Action(helper.AdjustView));
-            return result;
+            return targetIndex >= 0;
         }
         /// <summary>Socket盤校正初始化，會將分析資料輸出為像素位置</summary>
         public void CarbInit()
@@ -1261,16 +1325,25 @@ namespace Inspector
 
         void ShowResult(HWindowControl Win, HObject image)
         {
+            HOperatorSet.ClearWindow(Win.HalconWindow);
             HOperatorSet.DispImage(image, Win.HalconWindow);
             Win.HalconWindow.SetColor("orange");
-            Win.HalconWindow.SetDraw("margin");
+            if ((targetIndex >= 0) && (pX != null) && (pY != null))
+            {
+                Win.HalconWindow.DispCross(pY, pX, 300, 0);
+                Win.HalconWindow.SetTposition((int)(pY.D + 300), 300);
+                Win.HalconWindow.WriteString(string.Format("X = {0:F3} , Y = {1:F3}", hole.X, hole.Y));
+            }
         }
-
+        public void Show()
+        {
+            helper.doResult();
+        }
     }
 
     #endregion
 
-    #region CCD5
+    #region 夾爪CCD
     public class InspCCD5區
     {
         HWindowHelper helper;
@@ -1279,11 +1352,14 @@ namespace Inspector
         internal ImageSource CCD;
         Inspector owner;
         bool first = true;
+        HTuple pX, pY;
+        int targetIndex = -1;
+        Vector3 hole;
 
         public InspCCD5區(Inspector sender, HWindowControl win)
         {
             owner = sender;
-            CCD = new ImageSource("CCD5", "FreeRun", "./", 5, onRecvImage, IntPtr.Zero);
+            CCD = new ImageSource("CCD5", "FreeRun", "./", 8, onRecvImage, IntPtr.Zero);
             helper = new HWindowHelper(win) { ShowResult = ShowResult };
             SetMenu();
         }
@@ -1291,9 +1367,10 @@ namespace Inspector
         void onRecvImage(object sender, string ImageType, int width, int height, IntPtr buffer)
         {
             HImage temp = new HImage("byte", width, height, buffer);
-            temp = temp.RotateImage(0.0, "constant");
-            helper.Image = temp;
-            helper.SetImageSize(temp);
+            HImage temp1 = temp.RotateImage(-90.0, "constant");
+            owner.DisposeObj(temp);
+            helper.Image = temp1;
+            helper.SetImageSize(temp1);
             if (first)
             {
                 first = false;
@@ -1303,35 +1380,86 @@ namespace Inspector
 
         void SetMenu()
         {
-            //menu = new ContextMenuStrip();
-            //helper.hWin.ContextMenuStrip = menu;
-            //menu.Items.Add("LoadImage", null, (sender, e) => { helper.LoadImage(); });
-            //menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
-            //menu.Opening += onMenu1Opening;
+            menu = new ContextMenuStrip();
+            helper.hWin.ContextMenuStrip = menu;
+            menu.Items.Add("LoadImage", null, (sender, e) => { helper.LoadImage(); });
+            menu.Items.Add("分析夾爪針孔校正", null, (sender, e) =>
+            {
+                Vector3 n;
+                var sel = Insp(out n);
+            });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "夾爪"); });
+            menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
+            menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
+            menu.Opening += onMenu1Opening;
         }
 
         void onMenu1Opening(object sender, CancelEventArgs e)
         {
-            //var items = (sender as ContextMenuStrip).Items.OfType<ToolStripItem>();
-            //items.First(x => x.Text == "LoadImage").Visible = owner.DebugMode;
+            var items = (sender as ContextMenuStrip).Items.OfType<ToolStripItem>();
+            items.First(x => x.Text == "LoadImage").Visible = owner.DebugMode;
             //items.First(x => x.Text == "分析震動盤").Visible = owner.DebugMode;
-            //items.First(x => x.Text == "Set CCD Parameter").Visible = owner.xEngineer;
+            items.First(x => x.Text == "Set CCD Parameter").Visible = owner.xEngineer;
         }
 
-        public void Insp() { }
+        public bool Insp(out Vector3 Loc)
+        {
+            var result = new Vector3();
+            helper.inShow = true;
+            targetIndex = -1;
+            if (helper.ContainImage)
+            {
+                HObject temp, binArea, connArea, SelArea, OutArea, MaxArea, CirArea;
+                HTuple W, H, usedThr, row, col, Radius, Dist, area1, area2;
+                HOperatorSet.CopyImage(helper.Image, out temp);
+                owner.WriteImage(temp, "針孔校正");
+                HOperatorSet.GetImageSize(temp, out W, out H);
+                HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
+                HOperatorSet.Connection(binArea, out connArea);
+                HOperatorSet.SelectShape(connArea, out SelArea, "circularity", "and", 0.6, 1);
+                HOperatorSet.SelectShape(SelArea, out OutArea, "outer_radius", "and", 20, 200);
+                if (OutArea.CountObj() == 1)
+                {
+                    HOperatorSet.ShapeTrans(OutArea, out CirArea, "outer_circle");
+                    HOperatorSet.AreaCenter(OutArea, out area1, out row, out col);
+                    HOperatorSet.AreaCenter(CirArea, out area2, out row, out col);
+                    double percent = area1.D / area2.D;
+                    if (percent > 0.75)
+                    {
+                        result.X = pX = col.D;
+                        result.Y = pY = row.D;
+                        hole = result = CCD.GetReal(result.X, result.Y, W, H);
+                        targetIndex = 0;
+                    }
+                }
+            }
+            Loc = result;
+            owner.BeginInvoke(new Action(helper.AdjustView));
+            return targetIndex >= 0;
+        }
 
         void ShowResult(HWindowControl Win, HObject image)
         {
+            HOperatorSet.ClearWindow(Win.HalconWindow);
             HOperatorSet.DispImage(image, Win.HalconWindow);
             Win.HalconWindow.SetColor("orange");
             Win.HalconWindow.SetDraw("margin");
+            if ((targetIndex >= 0) && (pX != null) && (pY != null))
+            {
+                Win.HalconWindow.DispCross(pY, pX, 300, 0);
+                Win.HalconWindow.SetTposition((int)(pY.D + 300), 300);
+                Win.HalconWindow.WriteString(string.Format("X = {0:F3} , Y = {1:F3}", hole.X, hole.Y));
+            }
         }
-
+        public void Show()
+        {
+            helper.doResult();
+        }
     }
 
     #endregion
 
-    #region CCD6
+    #region 吸針孔校正
     public class InspCCD6區
     {
         HWindowHelper helper;
@@ -1340,6 +1468,9 @@ namespace Inspector
         internal ImageSource CCD;
         Inspector owner;
         bool first = true;
+        HTuple pX, pY;
+        int targetIndex = -1;
+        Vector3 hole;
 
         public InspCCD6區(Inspector sender, HWindowControl win)
         {
@@ -1352,9 +1483,10 @@ namespace Inspector
         void onRecvImage(object sender, string ImageType, int width, int height, IntPtr buffer)
         {
             HImage temp = new HImage("byte", width, height, buffer);
-            temp = temp.RotateImage(0.0, "constant");
-            helper.Image = temp;
-            helper.SetImageSize(temp);
+            HImage temp1 = temp.RotateImage(-90.0, "constant");
+            owner.DisposeObj(temp);
+            helper.Image = temp1;
+            helper.SetImageSize(temp1);
             if (first)
             {
                 first = false;
@@ -1364,30 +1496,75 @@ namespace Inspector
 
         void SetMenu()
         {
-            //menu = new ContextMenuStrip();
-            //helper.hWin.ContextMenuStrip = menu;
-            //menu.Items.Add("LoadImage", null, (sender, e) => { helper.LoadImage(); });
-            //menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
-            //menu.Opening += onMenu1Opening;
+            menu = new ContextMenuStrip();
+            helper.hWin.ContextMenuStrip = menu;
+            menu.Items.Add("LoadImage", null, (sender, e) => { helper.LoadImage(); });
+            menu.Items.Add("分析針孔校正", null, (sender, e) =>
+            {
+                Vector3 n;
+                var sel = Insp(out n);
+            });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "針孔校正"); });
+            menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
+            menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
+            menu.Opening += onMenu1Opening;
         }
 
         void onMenu1Opening(object sender, CancelEventArgs e)
         {
-            //var items = (sender as ContextMenuStrip).Items.OfType<ToolStripItem>();
-            //items.First(x => x.Text == "LoadImage").Visible = owner.DebugMode;
+            var items = (sender as ContextMenuStrip).Items.OfType<ToolStripItem>();
+            items.First(x => x.Text == "LoadImage").Visible = owner.DebugMode;
             //items.First(x => x.Text == "分析震動盤").Visible = owner.DebugMode;
-            //items.First(x => x.Text == "Set CCD Parameter").Visible = owner.xEngineer;
+            items.First(x => x.Text == "Set CCD Parameter").Visible = owner.xEngineer;
         }
 
-        public void Insp() { }
+        public bool Insp(out Vector3 Loc) 
+        {
+            var result = new Vector3();
+            helper.inShow = true;
+            targetIndex = -1;
+            if (helper.ContainImage)
+            {
+                HObject temp, binArea, connArea, SelArea, OutArea, MaxArea, CirArea;
+                HTuple W, H, usedThr, row, col, Radius, Dist;
+                HOperatorSet.CopyImage(helper.Image, out temp);
+                owner.WriteImage(temp, "針孔校正");
+                HOperatorSet.GetImageSize(temp, out W, out H);
+                HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
+                HOperatorSet.Connection(binArea, out connArea);
+                HOperatorSet.SelectShape(connArea, out SelArea, "circularity", "and", 0.8, 1);
+                HOperatorSet.SelectShape(SelArea, out OutArea, "outer_radius", "and", 35, 85);
+                if (OutArea.CountObj() == 1)
+                {
+                    HOperatorSet.SmallestCircle(OutArea, out row, out col, out Radius);
+                    result.X = pX = col.D;
+                    result.Y = pY = row.D;
+                    hole = result = CCD.GetReal(result.X, result.Y, W, H);
+                    targetIndex = 0;
+                }
+            }
+            Loc = result;
+            owner.BeginInvoke(new Action(helper.AdjustView));
+            return targetIndex >= 0;
+        }
 
         void ShowResult(HWindowControl Win, HObject image)
         {
+            HOperatorSet.ClearWindow(Win.HalconWindow);
             HOperatorSet.DispImage(image, Win.HalconWindow);
             Win.HalconWindow.SetColor("orange");
             Win.HalconWindow.SetDraw("margin");
+            if ((targetIndex >= 0) && (pX != null) && (pY != null))
+            {
+                Win.HalconWindow.DispCross(pY, pX, 300, 0);
+                Win.HalconWindow.SetTposition((int)(pY.D + 300), 300);
+                Win.HalconWindow.WriteString(string.Format("X = {0:F3} , Y = {1:F3}", hole.X, hole.Y));
+            }
         }
-
+        public void Show()
+        {
+            helper.doResult();
+        }
     }
 
     #endregion

@@ -30,8 +30,11 @@
         {
             this.components = new System.ComponentModel.Container();
             this.tmr_ReadWMX3 = new System.Windows.Forms.Timer(this.components);
-            this.tabTestIAI = new System.Windows.Forms.TabPage();
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.btn_minus_d001 = new System.Windows.Forms.Button();
+            this.btn_plus_d001 = new System.Windows.Forms.Button();
+            this.btn_minus_d01 = new System.Windows.Forms.Button();
+            this.btn_plus_d01 = new System.Windows.Forms.Button();
             this.btn_minus_d1 = new System.Windows.Forms.Button();
             this.btn_plus_d1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -277,16 +280,16 @@
             this.button1 = new System.Windows.Forms.Button();
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.btn_minus_d01 = new System.Windows.Forms.Button();
-            this.btn_plus_d01 = new System.Windows.Forms.Button();
-            this.btn_minus_d001 = new System.Windows.Forms.Button();
-            this.btn_plus_d001 = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btn_home = new System.Windows.Forms.Button();
+            this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tmr_ReadWMX3
@@ -294,16 +297,6 @@
             this.tmr_ReadWMX3.Enabled = true;
             this.tmr_ReadWMX3.Interval = 125;
             this.tmr_ReadWMX3.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // tabTestIAI
-            // 
-            this.tabTestIAI.Location = new System.Drawing.Point(4, 29);
-            this.tabTestIAI.Name = "tabTestIAI";
-            this.tabTestIAI.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTestIAI.Size = new System.Drawing.Size(1228, 758);
-            this.tabTestIAI.TabIndex = 4;
-            this.tabTestIAI.Text = "tabTestIAI";
-            this.tabTestIAI.UseVisualStyleBackColor = true;
             // 
             // tabJob
             // 
@@ -451,6 +444,50 @@
             this.tabJob.TabIndex = 2;
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
+            // 
+            // btn_minus_d001
+            // 
+            this.btn_minus_d001.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_minus_d001.Location = new System.Drawing.Point(250, 299);
+            this.btn_minus_d001.Name = "btn_minus_d001";
+            this.btn_minus_d001.Size = new System.Drawing.Size(75, 23);
+            this.btn_minus_d001.TabIndex = 209;
+            this.btn_minus_d001.Text = "-0.001";
+            this.btn_minus_d001.UseVisualStyleBackColor = true;
+            this.btn_minus_d001.Click += new System.EventHandler(this.btn_adjust_JOG);
+            // 
+            // btn_plus_d001
+            // 
+            this.btn_plus_d001.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_plus_d001.Location = new System.Drawing.Point(155, 299);
+            this.btn_plus_d001.Name = "btn_plus_d001";
+            this.btn_plus_d001.Size = new System.Drawing.Size(75, 23);
+            this.btn_plus_d001.TabIndex = 208;
+            this.btn_plus_d001.Text = "+0.001";
+            this.btn_plus_d001.UseVisualStyleBackColor = true;
+            this.btn_plus_d001.Click += new System.EventHandler(this.btn_adjust_JOG);
+            // 
+            // btn_minus_d01
+            // 
+            this.btn_minus_d01.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_minus_d01.Location = new System.Drawing.Point(250, 328);
+            this.btn_minus_d01.Name = "btn_minus_d01";
+            this.btn_minus_d01.Size = new System.Drawing.Size(75, 23);
+            this.btn_minus_d01.TabIndex = 207;
+            this.btn_minus_d01.Text = "-0.01";
+            this.btn_minus_d01.UseVisualStyleBackColor = true;
+            this.btn_minus_d01.Click += new System.EventHandler(this.btn_adjust_JOG);
+            // 
+            // btn_plus_d01
+            // 
+            this.btn_plus_d01.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_plus_d01.Location = new System.Drawing.Point(155, 328);
+            this.btn_plus_d01.Name = "btn_plus_d01";
+            this.btn_plus_d01.Size = new System.Drawing.Size(75, 23);
+            this.btn_plus_d01.TabIndex = 206;
+            this.btn_plus_d01.Text = "+0.01";
+            this.btn_plus_d01.UseVisualStyleBackColor = true;
+            this.btn_plus_d01.Click += new System.EventHandler(this.btn_adjust_JOG);
             // 
             // btn_minus_d1
             // 
@@ -3092,57 +3129,38 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabTestIAI);
             this.tabControl1.Controls.Add(this.tabJob);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1236, 791);
             this.tabControl1.TabIndex = 2;
             // 
-            // btn_minus_d01
+            // tabPage3
             // 
-            this.btn_minus_d01.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_minus_d01.Location = new System.Drawing.Point(250, 328);
-            this.btn_minus_d01.Name = "btn_minus_d01";
-            this.btn_minus_d01.Size = new System.Drawing.Size(75, 23);
-            this.btn_minus_d01.TabIndex = 207;
-            this.btn_minus_d01.Text = "-0.01";
-            this.btn_minus_d01.UseVisualStyleBackColor = true;
-            this.btn_minus_d01.Click += new System.EventHandler(this.btn_adjust_JOG);
+            this.tabPage3.Controls.Add(this.btn_home);
+            this.tabPage3.Location = new System.Drawing.Point(4, 29);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(1228, 758);
+            this.tabPage3.TabIndex = 3;
+            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // btn_plus_d01
+            // btn_home
             // 
-            this.btn_plus_d01.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plus_d01.Location = new System.Drawing.Point(155, 328);
-            this.btn_plus_d01.Name = "btn_plus_d01";
-            this.btn_plus_d01.Size = new System.Drawing.Size(75, 23);
-            this.btn_plus_d01.TabIndex = 206;
-            this.btn_plus_d01.Text = "+0.01";
-            this.btn_plus_d01.UseVisualStyleBackColor = true;
-            this.btn_plus_d01.Click += new System.EventHandler(this.btn_adjust_JOG);
+            this.btn_home.Location = new System.Drawing.Point(33, 29);
+            this.btn_home.Name = "btn_home";
+            this.btn_home.Size = new System.Drawing.Size(150, 40);
+            this.btn_home.TabIndex = 0;
+            this.btn_home.Text = "home";
+            this.btn_home.UseVisualStyleBackColor = true;
+            this.btn_home.Click += new System.EventHandler(this.btn_home_Click);
             // 
-            // btn_minus_d001
+            // tmr_Sequense
             // 
-            this.btn_minus_d001.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_minus_d001.Location = new System.Drawing.Point(250, 299);
-            this.btn_minus_d001.Name = "btn_minus_d001";
-            this.btn_minus_d001.Size = new System.Drawing.Size(75, 23);
-            this.btn_minus_d001.TabIndex = 209;
-            this.btn_minus_d001.Text = "-0.001";
-            this.btn_minus_d001.UseVisualStyleBackColor = true;
-            this.btn_minus_d001.Click += new System.EventHandler(this.btn_adjust_JOG);
-            // 
-            // btn_plus_d001
-            // 
-            this.btn_plus_d001.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plus_d001.Location = new System.Drawing.Point(155, 299);
-            this.btn_plus_d001.Name = "btn_plus_d001";
-            this.btn_plus_d001.Size = new System.Drawing.Size(75, 23);
-            this.btn_plus_d001.TabIndex = 208;
-            this.btn_plus_d001.Text = "+0.001";
-            this.btn_plus_d001.UseVisualStyleBackColor = true;
-            this.btn_plus_d001.Click += new System.EventHandler(this.btn_adjust_JOG);
+            this.tmr_Sequense.Enabled = true;
+            this.tmr_Sequense.Tick += new System.EventHandler(this.tmr_Sequense_Tick);
             // 
             // Form1
             // 
@@ -3169,13 +3187,13 @@
             this.tabPage2.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.Timer tmr_ReadWMX3;
-        private System.Windows.Forms.TabPage tabTestIAI;
         private System.Windows.Forms.TabPage tabJob;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label lblBuzzer;
@@ -3426,6 +3444,9 @@
         private System.Windows.Forms.Button btn_plus_d001;
         private System.Windows.Forms.Button btn_minus_d01;
         private System.Windows.Forms.Button btn_plus_d01;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.Timer tmr_Sequense;
+        private System.Windows.Forms.Button btn_home;
     }
 }
 

@@ -42,6 +42,7 @@ using System.IO;
 using WMX3ApiCLR;
 using static System.Windows.Forms.AxHost;
 using System.Xml.Linq;
+using static InjectorInspector.Form1;
 //using System.Text.Json;
 
 //---------------------------------------------------------------------------------------
@@ -455,13 +456,14 @@ namespace InjectorInspector
 
             } else {  //吸嘴R軸 變更位置
                 //伸長量overflow保護
-                if( Mindb<=dbIncreaseNozzleR && dbIncreaseNozzleR<=Maxdb ) {
 
-                } else if( dbIncreaseNozzleR<=Mindb ) {
-                    dbIncreaseNozzleR = (int)Mindb;
-                } else if( Maxdb<= dbIncreaseNozzleR) {
-                    dbIncreaseNozzleR = (int)Maxdb;
-                }
+                //if( Mindb<=dbIncreaseNozzleR && dbIncreaseNozzleR<=Maxdb ) {
+                //
+                //} else if( dbIncreaseNozzleR<=Mindb ) {
+                //    dbIncreaseNozzleR = (int)Mindb;
+                //} else if( Maxdb<= dbIncreaseNozzleR) {
+                //    dbIncreaseNozzleR = (int)Maxdb;
+                //}
 
                 // 取得欲變更的的浮點數
                 int fChangeNozzleR = calculate.Map(dbIncreaseNozzleR, Maxdb, Mindb, MaxRAW, MinRAW);
@@ -1331,8 +1333,6 @@ namespace InjectorInspector
             //先跳到第2頁
             int iAimToPageIndex = 4;
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
-            tabControl1.TabPages[0].Text = "Image";
-            tabControl1.TabPages[2].Text = "Jog";
         }
         //---------------------------------------------------------------------------------------
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -1405,8 +1405,9 @@ namespace InjectorInspector
 
             if (enGC_IAI != en_IAI.Checked){
                 enGC_IAI  = en_IAI.Checked;
-
+                Thread.Sleep(10);
                 clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, (enGC_IAI)? 1.0:0.0);
+                Thread.Sleep(10);
                 clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  (enGC_IAI)? 1.0:0.0);
             }
 
@@ -1678,8 +1679,8 @@ namespace InjectorInspector
             double dbState = dbRead;
             {
                 //軸控保護需要分別保護封裝
-                dbapiNozzleX(dbState);
-                dbapiNozzleY(dbState);
+                inspector1.nozzleX = dbapiNozzleX(dbState);
+                inspector1.nozzleY = dbapiNozzleY(dbState);
                 dbapiNozzleZ(dbState);
                 dbapiNozzleR(dbState);
 
@@ -2031,6 +2032,345 @@ namespace InjectorInspector
                 vScrollBar1_Scroll(sender, scrollEventArgs);
             }
             */
+        }
+
+
+
+
+        public enum xe_tmr_sequense {
+            xets_empty,
+            xets_idle,
+                xets_home_start,
+                xets_home_StartGate01,
+                xets_home_StartGate02,
+                xets_home_CheckGate,
+                xets_home_EndGate, 
+                xets_home_StartZR電動缸Home_step0, 
+                xets_home_StartZR電動缸Home_step1, 
+                xets_home_CheckZR電動缸Home, 
+                xets_home_EndZR電動缸Home, 
+                xets_home_StartXYHome01, 
+                xets_home_StartXYHome02, 
+                xets_home_CheckXYHome, 
+                xets_home_EndXYHome, 
+                xets_home_StartSetZR01,
+                xets_home_StartSetZR02,
+                xets_home_CheckSetZR,
+                xets_home_EndSetZR01,
+                xets_home_StartCarrierXHome_01,
+                xets_home_StartCarrierXHome_02,
+                xets_home_CheckCarrierXHome,
+                xets_home_EndCarrierXHome,
+                xets_home_StartCarrierYHome_01,
+                xets_home_StartCarrierYHome_02,
+                xets_home_CheckCarrierYHome,
+                xets_home_EndCarrierYHome,
+            xets_home_end,
+            xets_end,
+        };
+        public xe_tmr_sequense xeTmrSequense = xe_tmr_sequense.xets_empty;
+
+        public int ihomeFinishedCNT = 0;
+        public bool bhome = false;
+        private void btn_home_Click(object sender, EventArgs e)
+        {
+            bhome = true;
+        }
+
+        private void tmr_Sequense_Tick(object sender, EventArgs e)
+        {
+            btn_home.Text = xeTmrSequense.ToString();
+            switch (xeTmrSequense) {
+                case xe_tmr_sequense.xets_home_start:
+                    //Disable All
+                    en_吸嘴X軸.Checked      = false;
+                    en_吸嘴Y軸.Checked      = false;
+                    en_吸嘴Z軸.Checked      = false;
+                    en_吸嘴R軸.Checked      = false;
+
+                    en_載盤X軸.Checked      = false;
+                    en_載盤Y軸.Checked      = false;
+
+                    en_植針Z軸.Checked      = false;
+                    en_植針R軸.Checked      = false;
+
+                    en_工作門.Checked       = false;
+
+                    en_IAI.Checked          = false;
+                    en_JoDell3D掃描.Checked = false;
+                    en_JoDell吸針嘴.Checked = false;
+                    en_JoDell植針嘴.Checked = false;
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, false);  Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, false);  Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, false);  Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, false);  Thread.Sleep(10);
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, false);  Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, false);  Thread.Sleep(10);
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, false);  Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, false);  Thread.Sleep(10);
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門,  false);  Thread.Sleep(10);
+
+                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 0);             Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  0);             Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 0);  Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 0);  Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, 0);  Thread.Sleep(10);
+
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartGate01; 
+                    break;
+
+                case xe_tmr_sequense.xets_home_StartGate01:
+                    en_工作門.Checked = true;
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, true);  Thread.Sleep(10);
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartGate02;
+                    break;
+
+                case xe_tmr_sequense.xets_home_StartGate02:
+                    dbapiGate(580);  Thread.Sleep(10);
+                    xeTmrSequense = xe_tmr_sequense.xets_home_CheckGate;
+                    break;
+
+                case xe_tmr_sequense.xets_home_CheckGate:
+                    if (true) {
+                        int rslt01 = 0;
+                        int axis01 = 0;
+
+                        axis01 = (int)WMX3軸定義.工作門;
+                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
+
+                        if (rslt01==1) { 
+                            xeTmrSequense = xe_tmr_sequense.xets_home_EndGate;
+                        }
+                    }
+                    break;
+
+                case xe_tmr_sequense.xets_home_EndGate:
+                case xe_tmr_sequense.xets_home_StartZR電動缸Home_step0:
+                    en_吸嘴Z軸.Checked = true;
+                    en_吸嘴R軸.Checked = true;
+
+                    en_IAI.Checked          = true;
+                    en_JoDell3D掃描.Checked = true;
+                    en_JoDell吸針嘴.Checked = true;
+                    en_JoDell植針嘴.Checked = true;
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, true);   Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, true);   Thread.Sleep(10);
+
+                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 1);             Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  1);             Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 1);  Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 1);  Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, 1);  Thread.Sleep(10);
+
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartZR電動缸Home_step1;
+                    break;
+
+                case xe_tmr_sequense.xets_home_StartZR電動缸Home_step1:
+                    if(true) { 
+                        int rslt = 0;
+                        int axis = 0;
+                        string position = "";
+                        string speed    = "";
+
+                        axis = (int)WMX3軸定義.吸嘴Z軸;
+                        rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);  Thread.Sleep(10);
+                        if (rslt == 1) {
+                            clsServoControlWMX3.WMX3_SetHomePosition(axis);                               Thread.Sleep(10);
+                        }
+
+                        axis = (int)WMX3軸定義.吸嘴R軸;
+                        rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);  Thread.Sleep(10);
+                        if (rslt == 1) {
+                            clsServoControlWMX3.WMX3_SetHomePosition(axis);                               Thread.Sleep(10);
+                        }
+
+                        dbapiIAI(0);  Thread.Sleep(10);
+
+                        xeTmrSequense = xe_tmr_sequense.xets_home_CheckZR電動缸Home;
+                    }
+                    break;
+
+                case xe_tmr_sequense.xets_home_CheckZR電動缸Home:
+                    if(true) {
+                        int rslt01 = 0, rslt02 = 0;
+                        int axis01 = 0, axis02 = 0;
+
+                        axis01 = (int)WMX3軸定義.吸嘴Z軸;
+                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
+
+                        axis02 = (int)WMX3軸定義.吸嘴R軸;
+                        rslt02 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis02);  Thread.Sleep(10);
+
+                        if (rslt01==1 && rslt02==1) {
+                            if (dbapiNozzleZ(dbRead) <= 1.0) {
+                                xeTmrSequense = xe_tmr_sequense.xets_home_EndZR電動缸Home;
+                            }
+                        }
+                    }
+                    break;
+
+                case xe_tmr_sequense.xets_home_EndZR電動缸Home:
+                    dbapiIAI(10);          Thread.Sleep(10);
+
+                    dbapJoDell3D掃描(10);  Thread.Sleep(10);
+                    dbapJoDell吸針嘴(10);  Thread.Sleep(10);
+                    dbapJoDell植針嘴(10);  Thread.Sleep(10);
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartXYHome01;
+                    break;
+
+                case xe_tmr_sequense.xets_home_StartXYHome01:
+                    en_吸嘴X軸.Checked = true;
+                    en_吸嘴Y軸.Checked = true;
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, true);  Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, true);  Thread.Sleep(10);
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartXYHome02;
+                    break;
+
+                case xe_tmr_sequense.xets_home_StartXYHome02:
+                    if (dbapiNozzleZ(dbRead) <= 1.0) {
+                        dbapiNozzleX(242);  Thread.Sleep(10);
+                        dbapiNozzleY(28);   Thread.Sleep(10);
+                        xeTmrSequense = xe_tmr_sequense.xets_home_CheckXYHome;
+                    }
+                    break;
+
+                case xe_tmr_sequense.xets_home_CheckXYHome:
+                    if (dbapiNozzleZ(dbRead) <= 1.0) { 
+                        int rslt01 = 0, rslt02 = 0;
+                        int axis01 = 0, axis02 = 0;
+
+                        axis01 = (int)WMX3軸定義.吸嘴X軸;
+                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
+
+                        axis02 = (int)WMX3軸定義.吸嘴Y軸;
+                        rslt02 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis02);  Thread.Sleep(10);
+
+                        if (rslt01 == 1 && rslt02 == 1) {
+                            xeTmrSequense = xe_tmr_sequense.xets_home_EndXYHome;
+                        }
+                    }
+                    break;
+
+                case xe_tmr_sequense.xets_home_EndXYHome:
+                case xe_tmr_sequense.xets_home_StartSetZR01:
+                    en_植針Z軸.Checked = true;
+                    en_植針R軸.Checked = true;
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, true);  Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, true);  Thread.Sleep(10);
+
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartSetZR02;
+                    break;
+
+                case xe_tmr_sequense.xets_home_StartSetZR02:
+                    dbapiSetZ(15);      Thread.Sleep(10);
+                    dbapiSetR(268.08);  Thread.Sleep(10);
+                    xeTmrSequense = xe_tmr_sequense.xets_home_CheckSetZR;
+                    break;
+
+                case xe_tmr_sequense.xets_home_CheckSetZR:
+                    if (true) {
+                        int rslt01 = 0, rslt02 = 0;
+                        int axis01 = 0, axis02 = 0;
+
+                        axis01 = (int)WMX3軸定義.植針Z軸;
+                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
+
+                        axis02 = (int)WMX3軸定義.植針R軸;
+                        rslt02 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis02);  Thread.Sleep(10);
+
+                        if (rslt01 == 1 && rslt02 == 1) {
+                            if (dbapiSetZ(dbRead) <= 16) {
+                                xeTmrSequense = xe_tmr_sequense.xets_home_EndSetZR01;
+                            }
+                        }
+                    }
+                    break;
+
+                case xe_tmr_sequense.xets_home_EndSetZR01:
+                case xe_tmr_sequense.xets_home_StartCarrierXHome_01:
+                    en_載盤X軸.Checked = true;
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, true);  Thread.Sleep(10);
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartCarrierXHome_02;
+                    break;
+
+                case xe_tmr_sequense.xets_home_StartCarrierXHome_02:
+                    if (dbapiSetZ(dbRead) <= 16) {
+                        dbapiCarrierX(95);
+                        xeTmrSequense = xe_tmr_sequense.xets_home_CheckCarrierXHome;
+                    }
+                    break;
+
+                case xe_tmr_sequense.xets_home_CheckCarrierXHome:
+                    if (true) {
+                        int rslt01 = 0;
+                        int axis01 = 0;
+
+                        axis01 = (int)WMX3軸定義.載盤X軸;
+                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
+
+                        if (rslt01 == 1) {
+                            if (dbapiSetZ(dbRead) <= 16) {
+                                xeTmrSequense = xe_tmr_sequense.xets_home_EndCarrierXHome;
+                            }
+                        }
+                    }
+                    break;
+
+                case xe_tmr_sequense.xets_home_EndCarrierXHome:
+                case xe_tmr_sequense.xets_home_StartCarrierYHome_01:
+                    en_載盤Y軸.Checked = true;
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, true);  Thread.Sleep(10);
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartCarrierYHome_02;
+                    break;
+
+                case xe_tmr_sequense.xets_home_StartCarrierYHome_02:
+                    if (dbapiSetZ(dbRead) <= 16) {
+                        dbapiCarrierY(10);
+                        xeTmrSequense = xe_tmr_sequense.xets_home_CheckCarrierYHome;
+                    }
+                    break;
+
+                case xe_tmr_sequense.xets_home_CheckCarrierYHome:
+                    if (true) {
+                        int rslt01 = 0;
+                        int axis01 = 0;
+
+                        axis01 = (int)WMX3軸定義.載盤Y軸;
+                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
+
+                        if (rslt01 == 1) {
+                            if (dbapiSetZ(dbRead) <= 16) {
+                                xeTmrSequense = xe_tmr_sequense.xets_home_EndCarrierYHome;
+                            }
+                        }
+                    }
+                    break;
+
+                case xe_tmr_sequense.xets_home_EndCarrierYHome:
+                case xe_tmr_sequense.xets_home_end:
+                    dbapiGate(0);  Thread.Sleep(10);
+                    xeTmrSequense = xe_tmr_sequense.xets_end;
+                    break;
+
+                default:
+                case xe_tmr_sequense.xets_empty:
+                case xe_tmr_sequense.xets_idle:
+                case xe_tmr_sequense.xets_end:
+                    if(bhome == true) {
+                        xeTmrSequense = xe_tmr_sequense.xets_home_start;
+                        bhome = false;
+                    }
+                    break;
+            }
         }
     }  // end of public partial class Form1 : Form
 

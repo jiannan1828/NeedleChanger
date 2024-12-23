@@ -397,7 +397,7 @@ namespace InjectorInspector
 
         //---------------------------------------------------------------------------------------
         //WMX3軸定義
-        public const double dbRead = 99999.9;
+        public const double dbRead = 9916777216.99;
         public const double dbAxisRGearRatio = 36000;
 
         //---------------------------------------------------------------------------------------
@@ -652,6 +652,35 @@ namespace InjectorInspector
             return rslt;
         }  //end of int WMX3_check_ServoOnOff(int axis)
         //---------------------------------------------------------------------------------------
+        public int WMX3_check_ServoMovingState(int axis)
+        {
+            int rslt = 0;
+
+            if (wmx != null) { 
+                //讀取SV ON狀態
+                CoreMotionAxisStatus cmAxis = CmStatus.AxesStatus[axis];
+
+                switch(cmAxis.OpState) {
+                    case OperationState.Idle:
+                    case OperationState.Stop:
+                        rslt = 1;
+                        break;
+
+                    case OperationState.Pos:
+                    case OperationState.Jog:
+                    case OperationState.Home:
+                    case OperationState.Sync:
+                        rslt = 2;
+                        break;
+                }
+
+            }  else {
+                rslt = 0;
+            }
+
+            return rslt;
+        }  //end of int WMX3_check_ServoOnOff(int axis)
+        //---------------------------------------------------------------------------------------
         public int WMX3_Pivot(int axis, int pivot, int speed, int accel, int daccel)
         {
             int rslt = 0;
@@ -694,8 +723,7 @@ namespace InjectorInspector
 
             if (wmx != null)
             {
-                switch (axis)
-                {
+                switch (axis) {
                     case 0:
                     case 1:
                         motion.Config.GetHomeParam(axis, ref AxisHomeParam);//讀取原點模式
@@ -710,11 +738,17 @@ namespace InjectorInspector
                         {
                             string ers = CoreMotion.ErrorToString(rslt);//如果無法通訊則報錯誤給使用者
                         }
+
+                        //開始回原點
+                        rslt = motion.Home.StartHome(axis);
+                        break;
+
+                    case 100 + 0:
+                    case 100 + 1:
+                        //開始回原點
+                        rslt = motion.Home.StartHome(axis);
                         break;
                 }
-
-                //開始回原點
-                rslt = motion.Home.StartHome(axis);
             }
             else
             {

@@ -222,10 +222,10 @@
             this.num_Throshold.TabIndex = 41;
             this.num_Throshold.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.num_Throshold.Value = new decimal(new int[] {
-            1,
+            120,
             0,
             0,
-            65536});
+            0});
             this.num_Throshold.ValueChanged += new System.EventHandler(this.num_Pin長Min_ValueChanged);
             // 
             // label10
@@ -290,10 +290,10 @@
             this.num_Pin寬Max.TabIndex = 34;
             this.num_Pin寬Max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.num_Pin寬Max.Value = new decimal(new int[] {
-            100,
+            70,
             0,
             0,
-            65536});
+            0});
             this.num_Pin寬Max.ValueChanged += new System.EventHandler(this.num_Pin長Min_ValueChanged);
             // 
             // label7
@@ -363,10 +363,10 @@
             this.num_Pin長Max.TabIndex = 30;
             this.num_Pin長Max.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.num_Pin長Max.Value = new decimal(new int[] {
-            100,
+            80,
             0,
             0,
-            65536});
+            0});
             this.num_Pin長Max.ValueChanged += new System.EventHandler(this.num_Pin長Min_ValueChanged);
             // 
             // label6
