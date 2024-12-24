@@ -400,7 +400,7 @@ namespace InjectorInspector
             return dbRstNozzleZ;
         }  // end of public double dbapiNozzleZ(double dbIncreaseNozzleZ)  //NozzleZ
         //---------------------------------------------------------------------------------------
-        public double dbapiNozzleR(double dbIncreaseNozzleR)  //NozzleR
+        public double dbapiNozzleR(double dbIncreaseNozzleR, double dbTargetSpeed)  //NozzleR
         {
             Normal calculate = new Normal();
                 const int    MaxRAW =  24120;
@@ -486,7 +486,7 @@ namespace InjectorInspector
                 //執行旋轉吸嘴
                 int axis     = (int)WMX3軸定義.吸嘴R軸;
                 int position = fChangeNozzleR;
-                int speed    = (int)((Maxdb/10) *dbSpdF);
+                int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
                 int accel    = speed * 2;
                 int daccel   = speed * 2;
                 clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
@@ -1607,7 +1607,7 @@ namespace InjectorInspector
                         break;
                     case WMX3軸定義.吸嘴Y軸:
                         if(enGC_吸嘴Y軸 == true) {
-                            dbapiNozzleY(result, 50);
+                            dbapiNozzleY(result, 100);
                         }
                         break;
                     case WMX3軸定義.吸嘴Z軸:
@@ -1617,7 +1617,7 @@ namespace InjectorInspector
                         break;
                     case WMX3軸定義.吸嘴R軸:
                         if(enGC_吸嘴R軸 == true) {
-                            dbapiNozzleR(result);
+                            dbapiNozzleR(result, 70);
                         }
                         break;
                     case WMX3軸定義.載盤X軸:
@@ -1697,7 +1697,7 @@ namespace InjectorInspector
                 inspector1.nozzleX = dbapiNozzleX(dbState, 0);
                 inspector1.nozzleY = dbapiNozzleY(dbState, 0);
                 dbapiNozzleZ(dbState, 0);
-                dbapiNozzleR(dbState);
+                dbapiNozzleR(dbState, 0);
 
                 inspector1.移載X = dbapiCarrierX(dbState);
                 inspector1.移載Y = dbapiCarrierY(dbState);
@@ -2391,7 +2391,7 @@ namespace InjectorInspector
 
                 case xe_tmr_sequense.xets_home_EndCarrierYHome:
                 case xe_tmr_sequense.xets_home_end:
-                    dbapiNozzleR(dbNozzle安全原點R);  Thread.Sleep(10);
+                    dbapiNozzleR(dbNozzle安全原點R, 36);  Thread.Sleep(10);
                     dbapiGate(0);                     Thread.Sleep(10);
                     xeTmrSequense = xe_tmr_sequense.xets_end;
                     break;
@@ -2591,13 +2591,13 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_移動NozzleXYR吸料位: 
                                     dbapiNozzleX(db取料Nozzle中心點X + dbPinX_tmrTakePinTick, 100);
                                     dbapiNozzleY(db取料Nozzle中心點Y + dbPinY_tmrTakePinTick, 20);    
-                                    dbapiNozzleR(db取料Nozzle中心點R + dbPinR_tmrTakePinTick);
+                                    dbapiNozzleR(db取料Nozzle中心點R + dbPinR_tmrTakePinTick, 70);
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢測NozzleXYR吸料位;
                                     break;
                                 case xe_tmr_takepin.xett_檢測NozzleXYR吸料位: {
                                     double dbX = dbapiNozzleX(dbRead, 0);
                                     double dbY = dbapiNozzleY(dbRead, 0);
-                                    double dbR = dbapiNozzleR(dbRead);
+                                    double dbR = dbapiNozzleR(dbRead, 0);
 
                                     double dbTargetX = db取料Nozzle中心點X + dbPinX_tmrTakePinTick;
                                     double dbTargetY = db取料Nozzle中心點Y + dbPinY_tmrTakePinTick;
@@ -2649,14 +2649,14 @@ namespace InjectorInspector
                                     dbapiNozzleX(db下視覺取像X_Start, 100);
                                     dbapiNozzleY(db下視覺取像Y, 20);
                                     dbapiNozzleZ(db下視覺取像Z, 40);
-                                    dbapiNozzleR(db取料Nozzle中心點R+90);
+                                    dbapiNozzleR(db取料Nozzle中心點R+90, 360);
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢測是否在飛拍起始位置;
                                     break;
                                 case xe_tmr_takepin.xett_檢測是否在飛拍起始位置: {
                                     double dbX = dbapiNozzleX(dbRead, 0);
                                     double dbY = dbapiNozzleY(dbRead, 0);
                                     double dbZ = dbapiNozzleZ(dbRead, 0);
-                                    double dbR = dbapiNozzleR(dbRead);
+                                    double dbR = dbapiNozzleR(dbRead, 0);
 
                                     double dbTargetX = db下視覺取像X_Start;
                                     double dbTargetY = db下視覺取像Y;
@@ -2763,14 +2763,14 @@ namespace InjectorInspector
                                 dbapiNozzleX(dbNozzle安全原點X, 50);  
                                 dbapiNozzleY(dbNozzle安全原點Y, 10);      
                                 dbapiNozzleZ(0, 40);  
-                                dbapiNozzleR(dbNozzle安全原點R);      
+                                dbapiNozzleR(dbNozzle安全原點R, 36);      
                                 xeTmrTakePin = xe_tmr_takepin.xett_檢查NozzleXYR是否移至安全位置;
                                 break;
                             case xe_tmr_takepin.xett_檢查NozzleXYR是否移至安全位置: {
                                     double dbX = dbapiNozzleX(dbRead, 0);
                                     double dbY = dbapiNozzleY(dbRead, 0);
                                     double dbZ = dbapiNozzleZ(dbRead, 0);
-                                    double dbR = dbapiNozzleR(dbRead);
+                                    double dbR = dbapiNozzleR(dbRead, 0);
 
                                     double dbTargetX = dbNozzle安全原點X;
                                     double dbTargetY = dbNozzle安全原點Y;
