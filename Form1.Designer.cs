@@ -31,14 +31,15 @@
             this.components = new System.ComponentModel.Container();
             this.tmr_ReadWMX3 = new System.Windows.Forms.Timer(this.components);
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.lbl_debug = new System.Windows.Forms.Label();
+            this.lbl_植針吹氣流量閥 = new System.Windows.Forms.Label();
             this.btn_minus_d001 = new System.Windows.Forms.Button();
             this.btn_plus_d001 = new System.Windows.Forms.Button();
             this.btn_minus_d01 = new System.Windows.Forms.Button();
             this.btn_plus_d01 = new System.Windows.Forms.Button();
             this.btn_minus_d1 = new System.Windows.Forms.Button();
             this.btn_plus_d1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.vcb_植針吹氣流量閥 = new System.Windows.Forms.VScrollBar();
             this.btnVibrationLEDOff = new System.Windows.Forms.Button();
             this.btnVibrationLED = new System.Windows.Forms.Button();
             this.btnVibrationStop = new System.Windows.Forms.Button();
@@ -265,6 +266,12 @@
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btn_TakePin = new System.Windows.Forms.Button();
+            this.btn_home = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
@@ -276,7 +283,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btn_取得PinInfo = new System.Windows.Forms.Button();
             this.btn_AlarmRST = new System.Windows.Forms.Button();
             this.btn_Connect = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -284,19 +291,15 @@
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.btn_home = new System.Windows.Forms.Button();
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
+            this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
+            this.txt_取料循環 = new System.Windows.Forms.TextBox();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tmr_ReadWMX3
@@ -307,14 +310,15 @@
             // 
             // tabJob
             // 
+            this.tabJob.Controls.Add(this.lbl_debug);
+            this.tabJob.Controls.Add(this.lbl_植針吹氣流量閥);
             this.tabJob.Controls.Add(this.btn_minus_d001);
             this.tabJob.Controls.Add(this.btn_plus_d001);
             this.tabJob.Controls.Add(this.btn_minus_d01);
             this.tabJob.Controls.Add(this.btn_plus_d01);
             this.tabJob.Controls.Add(this.btn_minus_d1);
             this.tabJob.Controls.Add(this.btn_plus_d1);
-            this.tabJob.Controls.Add(this.textBox1);
-            this.tabJob.Controls.Add(this.vScrollBar1);
+            this.tabJob.Controls.Add(this.vcb_植針吹氣流量閥);
             this.tabJob.Controls.Add(this.btnVibrationLEDOff);
             this.tabJob.Controls.Add(this.btnVibrationLED);
             this.tabJob.Controls.Add(this.btnVibrationStop);
@@ -452,6 +456,25 @@
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
             // 
+            // lbl_debug
+            // 
+            this.lbl_debug.AutoSize = true;
+            this.lbl_debug.Location = new System.Drawing.Point(792, 357);
+            this.lbl_debug.Name = "lbl_debug";
+            this.lbl_debug.Size = new System.Drawing.Size(81, 19);
+            this.lbl_debug.TabIndex = 211;
+            this.lbl_debug.Text = "lbl_debug";
+            // 
+            // lbl_植針吹氣流量閥
+            // 
+            this.lbl_植針吹氣流量閥.AutoSize = true;
+            this.lbl_植針吹氣流量閥.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_植針吹氣流量閥.Location = new System.Drawing.Point(1170, 25);
+            this.lbl_植針吹氣流量閥.Name = "lbl_植針吹氣流量閥";
+            this.lbl_植針吹氣流量閥.Size = new System.Drawing.Size(116, 13);
+            this.lbl_植針吹氣流量閥.TabIndex = 210;
+            this.lbl_植針吹氣流量閥.Text = "lbl_植針吹氣流量閥";
+            // 
             // btn_minus_d001
             // 
             this.btn_minus_d001.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
@@ -518,23 +541,16 @@
             this.btn_plus_d1.UseVisualStyleBackColor = true;
             this.btn_plus_d1.Click += new System.EventHandler(this.btn_adjust_JOG);
             // 
-            // textBox1
+            // vcb_植針吹氣流量閥
             // 
-            this.textBox1.Location = new System.Drawing.Point(1079, 168);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 30);
-            this.textBox1.TabIndex = 203;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // vScrollBar1
-            // 
-            this.vScrollBar1.Location = new System.Drawing.Point(1016, 85);
-            this.vScrollBar1.Maximum = 110;
-            this.vScrollBar1.Minimum = -10;
-            this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(38, 212);
-            this.vScrollBar1.TabIndex = 202;
-            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
+            this.vcb_植針吹氣流量閥.Location = new System.Drawing.Point(1175, 50);
+            this.vcb_植針吹氣流量閥.Maximum = 110;
+            this.vcb_植針吹氣流量閥.Minimum = -10;
+            this.vcb_植針吹氣流量閥.Name = "vcb_植針吹氣流量閥";
+            this.vcb_植針吹氣流量閥.Size = new System.Drawing.Size(20, 200);
+            this.vcb_植針吹氣流量閥.TabIndex = 202;
+            this.vcb_植針吹氣流量閥.Value = 110;
+            this.vcb_植針吹氣流量閥.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
             // 
             // btnVibrationLEDOff
             // 
@@ -2977,6 +2993,9 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.txt_取料循環);
+            this.tabPage2.Controls.Add(this.btn_TakePin);
+            this.tabPage2.Controls.Add(this.btn_home);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.label9);
             this.tabPage2.Controls.Add(this.label10);
@@ -2992,7 +3011,7 @@
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.button2);
+            this.tabPage2.Controls.Add(this.btn_取得PinInfo);
             this.tabPage2.Controls.Add(this.btn_AlarmRST);
             this.tabPage2.Controls.Add(this.btn_Connect);
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
@@ -3003,10 +3022,66 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btn_TakePin
+            // 
+            this.btn_TakePin.Location = new System.Drawing.Point(200, 210);
+            this.btn_TakePin.Name = "btn_TakePin";
+            this.btn_TakePin.Size = new System.Drawing.Size(165, 40);
+            this.btn_TakePin.TabIndex = 30;
+            this.btn_TakePin.Text = "取針丟棄";
+            this.btn_TakePin.UseVisualStyleBackColor = true;
+            this.btn_TakePin.Click += new System.EventHandler(this.btn_TakePin_Click);
+            // 
+            // btn_home
+            // 
+            this.btn_home.Location = new System.Drawing.Point(25, 160);
+            this.btn_home.Name = "btn_home";
+            this.btn_home.Size = new System.Drawing.Size(165, 40);
+            this.btn_home.TabIndex = 29;
+            this.btn_home.Text = "home";
+            this.btn_home.UseVisualStyleBackColor = true;
+            this.btn_home.Click += new System.EventHandler(this.btn_home_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(625, 506);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(53, 19);
+            this.label8.TabIndex = 28;
+            this.label8.Text = "label8";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(625, 478);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(53, 19);
+            this.label9.TabIndex = 27;
+            this.label9.Text = "label9";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(625, 448);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(62, 19);
+            this.label10.TabIndex = 26;
+            this.label10.Text = "label10";
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(629, 387);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(105, 38);
+            this.button4.TabIndex = 25;
+            this.button4.Text = "下視覺";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(499, 299);
+            this.label7.Location = new System.Drawing.Point(625, 335);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 19);
             this.label7.TabIndex = 24;
@@ -3015,7 +3090,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(499, 266);
+            this.label6.Location = new System.Drawing.Point(625, 302);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 19);
             this.label6.TabIndex = 23;
@@ -3023,7 +3098,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(503, 212);
+            this.button3.Location = new System.Drawing.Point(629, 248);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(105, 41);
             this.button3.TabIndex = 22;
@@ -3033,9 +3108,9 @@
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(232, 121);
+            this.btnStop.Location = new System.Drawing.Point(200, 50);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(165, 39);
+            this.btnStop.Size = new System.Drawing.Size(165, 40);
             this.btnStop.TabIndex = 21;
             this.btnStop.Text = "btnStop";
             this.btnStop.UseVisualStyleBackColor = true;
@@ -3044,7 +3119,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 16);
+            this.label1.Location = new System.Drawing.Point(25, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 19);
             this.label1.TabIndex = 15;
@@ -3052,9 +3127,9 @@
             // 
             // btnSetHome
             // 
-            this.btnSetHome.Location = new System.Drawing.Point(77, 225);
+            this.btnSetHome.Location = new System.Drawing.Point(380, 50);
             this.btnSetHome.Name = "btnSetHome";
-            this.btnSetHome.Size = new System.Drawing.Size(165, 39);
+            this.btnSetHome.Size = new System.Drawing.Size(165, 40);
             this.btnSetHome.TabIndex = 14;
             this.btnSetHome.Text = "btnSetHome";
             this.btnSetHome.UseVisualStyleBackColor = true;
@@ -3062,9 +3137,9 @@
             // 
             // btn_Disconnect
             // 
-            this.btn_Disconnect.Location = new System.Drawing.Point(33, 121);
+            this.btn_Disconnect.Location = new System.Drawing.Point(25, 100);
             this.btn_Disconnect.Name = "btn_Disconnect";
-            this.btn_Disconnect.Size = new System.Drawing.Size(165, 39);
+            this.btn_Disconnect.Size = new System.Drawing.Size(165, 40);
             this.btn_Disconnect.TabIndex = 9;
             this.btn_Disconnect.Text = "btn_Disconnect";
             this.btn_Disconnect.UseVisualStyleBackColor = true;
@@ -3073,7 +3148,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(499, 153);
+            this.label5.Location = new System.Drawing.Point(625, 189);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 19);
             this.label5.TabIndex = 8;
@@ -3082,7 +3157,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(499, 125);
+            this.label4.Location = new System.Drawing.Point(625, 161);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 19);
             this.label4.TabIndex = 7;
@@ -3091,7 +3166,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(499, 97);
+            this.label3.Location = new System.Drawing.Point(625, 133);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 19);
             this.label3.TabIndex = 6;
@@ -3100,27 +3175,27 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(499, 67);
+            this.label2.Location = new System.Drawing.Point(625, 103);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 19);
             this.label2.TabIndex = 5;
             this.label2.Text = "label2";
             // 
-            // button2
+            // btn_取得PinInfo
             // 
-            this.button2.Location = new System.Drawing.Point(503, 16);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(105, 38);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "取料";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btn_取得PinInfo.Location = new System.Drawing.Point(629, 52);
+            this.btn_取得PinInfo.Name = "btn_取得PinInfo";
+            this.btn_取得PinInfo.Size = new System.Drawing.Size(155, 40);
+            this.btn_取得PinInfo.TabIndex = 4;
+            this.btn_取得PinInfo.Text = "btn_取得PinInfo";
+            this.btn_取得PinInfo.UseVisualStyleBackColor = true;
+            this.btn_取得PinInfo.Click += new System.EventHandler(this.btn_取得PinInfo_Click);
             // 
             // btn_AlarmRST
             // 
-            this.btn_AlarmRST.Location = new System.Drawing.Point(232, 54);
+            this.btn_AlarmRST.Location = new System.Drawing.Point(200, 100);
             this.btn_AlarmRST.Name = "btn_AlarmRST";
-            this.btn_AlarmRST.Size = new System.Drawing.Size(165, 39);
+            this.btn_AlarmRST.Size = new System.Drawing.Size(165, 40);
             this.btn_AlarmRST.TabIndex = 3;
             this.btn_AlarmRST.Text = "btn_AlarmRST";
             this.btn_AlarmRST.UseVisualStyleBackColor = true;
@@ -3128,9 +3203,9 @@
             // 
             // btn_Connect
             // 
-            this.btn_Connect.Location = new System.Drawing.Point(33, 54);
+            this.btn_Connect.Location = new System.Drawing.Point(25, 50);
             this.btn_Connect.Name = "btn_Connect";
-            this.btn_Connect.Size = new System.Drawing.Size(165, 39);
+            this.btn_Connect.Size = new System.Drawing.Size(165, 40);
             this.btn_Connect.TabIndex = 1;
             this.btn_Connect.Text = "btn_Connect";
             this.btn_Connect.UseVisualStyleBackColor = true;
@@ -3181,7 +3256,6 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.btn_home);
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(1228, 758);
@@ -3189,57 +3263,23 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // btn_home
-            // 
-            this.btn_home.Location = new System.Drawing.Point(33, 29);
-            this.btn_home.Name = "btn_home";
-            this.btn_home.Size = new System.Drawing.Size(150, 40);
-            this.btn_home.TabIndex = 0;
-            this.btn_home.Text = "home";
-            this.btn_home.UseVisualStyleBackColor = true;
-            this.btn_home.Click += new System.EventHandler(this.btn_home_Click);
-            // 
             // tmr_Sequense
             // 
             this.tmr_Sequense.Enabled = true;
             this.tmr_Sequense.Tick += new System.EventHandler(this.tmr_Sequense_Tick);
             // 
-            // label8
+            // tmr_TakePin
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(499, 470);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(53, 19);
-            this.label8.TabIndex = 28;
-            this.label8.Text = "label8";
+            this.tmr_TakePin.Enabled = true;
+            this.tmr_TakePin.Tick += new System.EventHandler(this.tmr_TakePin_Tick);
             // 
-            // label9
+            // txt_取料循環
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(499, 442);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(53, 19);
-            this.label9.TabIndex = 27;
-            this.label9.Text = "label9";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(499, 412);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(62, 19);
-            this.label10.TabIndex = 26;
-            this.label10.Text = "label10";
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(503, 351);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(105, 38);
-            this.button4.TabIndex = 25;
-            this.button4.Text = "下視覺";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.txt_取料循環.Location = new System.Drawing.Point(90, 218);
+            this.txt_取料循環.Name = "txt_取料循環";
+            this.txt_取料循環.Size = new System.Drawing.Size(100, 30);
+            this.txt_取料循環.TabIndex = 31;
+            this.txt_取料循環.Text = "1";
             // 
             // Form1
             // 
@@ -3266,7 +3306,6 @@
             this.tabPage2.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -3468,7 +3507,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn_取得PinInfo;
         private System.Windows.Forms.Button btn_AlarmRST;
         private System.Windows.Forms.Button btn_Connect;
         private System.Windows.Forms.TabPage tabPage1;
@@ -3515,8 +3554,7 @@
         private System.Windows.Forms.Button btnVibrationLED;
         private System.Windows.Forms.Button btnVibrationStop;
         private System.Windows.Forms.Button btnVibrationInit;
-        private System.Windows.Forms.VScrollBar vScrollBar1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.VScrollBar vcb_植針吹氣流量閥;
         private System.Windows.Forms.Button btn_minus_d1;
         private System.Windows.Forms.Button btn_plus_d1;
         private System.Windows.Forms.Button btn_minus_d001;
@@ -3525,7 +3563,6 @@
         private System.Windows.Forms.Button btn_plus_d01;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Timer tmr_Sequense;
-        private System.Windows.Forms.Button btn_home;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
@@ -3533,6 +3570,12 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label lbl_植針吹氣流量閥;
+        private System.Windows.Forms.Label lbl_debug;
+        private System.Windows.Forms.Button btn_home;
+        private System.Windows.Forms.Timer tmr_TakePin;
+        private System.Windows.Forms.Button btn_TakePin;
+        private System.Windows.Forms.TextBox txt_取料循環;
     }
 }
 

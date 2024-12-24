@@ -613,6 +613,7 @@ namespace Inspector
         HObject GetPinArea(HObject image)
         {
             HObject binArea, connArea, SelArea;
+      
             HTuple usedThr, row1, col1, row2, col2, cnt;
             HOperatorSet.BinaryThreshold(image, out binArea, "max_separability", "light", out usedThr);
             HOperatorSet.Connection(binArea, out connArea);
@@ -621,12 +622,16 @@ namespace Inspector
             HOperatorSet.SmallestRectangle1(SelArea, out row1, out col1, out row2, out col2);
             HObject area;
             HOperatorSet.GenEmptyRegion(out area);
-            if (row1.Length == 2)
+            try
             {
-                double dMin = col1.TupleMin().D;
-                double dMax = col2.TupleMax().D;
-                HOperatorSet.GenRectangle1(out area, row2.LArr[0] + 10, dMin + 20, row1.LArr[1] - 10, dMax - 500);
+                if (row1.Length == 2)
+                {
+                    double dMin = col1.TupleMin().D;
+                    double dMax = col2.TupleMax().D;
+                    HOperatorSet.GenRectangle1(out area, row2.LArr[0] + 10, dMin + 20, row1.LArr[1] - 10, dMax - 500);
+                }
             }
+            catch { }
             HOperatorSet.SelectShape(area, out area, "area", "and", 100, 9999999);
             HOperatorSet.CountObj(area, out cnt);
             owner.DisposeObj(binArea, connArea, SelArea);

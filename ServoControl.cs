@@ -18,6 +18,7 @@ using System.Windows.Forms;
 using System.Data;
 using System.Threading;
 using static WMX3ApiCLR.Config;
+using System.Net.NetworkInformation;
 
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
@@ -651,6 +652,40 @@ namespace InjectorInspector
 
             return rslt;
         }  //end of int WMX3_check_ServoOnOff(int axis)
+           //---------------------------------------------------------------------------------------
+        public string WMX3_check_ServoOpState(int axis, ref int iOpState)
+        {
+            if (wmx != null) {
+                //讀取SV ON狀態
+                CoreMotionAxisStatus cmAxis = CmStatus.AxesStatus[axis];
+                iOpState = (int)cmAxis.OpState;
+            } else {
+                iOpState = -1;
+            }
+
+            switch (iOpState) {
+                default:
+                case -1: return "Fail";
+                case  0: return "Idle";  
+                case  1: return "Pos";  
+                case  2: return "Jog";  
+                case  3: return "Home";  
+                case  4: return "Sync";  
+                case  5: return "GantryHome";  
+                case  6: return "Stop";  
+                case  7: return "Intpl";  
+                case  8: return "Velocity"; 
+                case  9: return "ConstLinearVelocity";  
+                case 10: return "Trq";                  
+                case 11: return "DirectControl";     
+                case 12: return "PVT";           
+                case 13: return "ECAM";           
+                case 14: return "SyncCatchUp";    
+                case 15: return "DancerControl";  
+            }
+
+            return "null";
+        }  //end of int WMX3_check_ServoOnOff(int axis)
         //---------------------------------------------------------------------------------------
         public int WMX3_check_ServoMovingState(int axis)
         {
@@ -659,9 +694,6 @@ namespace InjectorInspector
             if (wmx != null) { 
                 //讀取SV ON狀態
                 CoreMotionAxisStatus cmAxis = CmStatus.AxesStatus[axis];
-
-                return (int)cmAxis.OpState;
-
                 switch (cmAxis.OpState) {
                     case OperationState.Idle:
                     case OperationState.Stop:
@@ -675,7 +707,6 @@ namespace InjectorInspector
                         rslt = 2;
                         break;
                 }
-
             }  else {
                 rslt = 0;
             }

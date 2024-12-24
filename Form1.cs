@@ -84,7 +84,12 @@ namespace InjectorInspector
 
         }
         //---------------------------------------------------------------------------------------
-        private void button2_Click(object sender, EventArgs e)
+        bool   b黑色料倉有料_tmrTakePinTick = false;
+        bool   b柔震盤有料_tmrTakePinTick   = false;
+        double dbPinX_tmrTakePinTick        = 0.0,
+               dbPinY_tmrTakePinTick        = 0.0,
+               dbPinR_tmrTakePinTick        = 0.0;
+        private void btn_取得PinInfo_Click(object sender, EventArgs e)
         {
             //吸料盤校正用
             PointF pos;
@@ -94,19 +99,22 @@ namespace InjectorInspector
             //黑色料倉
             bool 料倉有料 = inspector1.xInsp入料();
             label3.Text = string.Format("黑色料倉 料倉有料 = {0}", 料倉有料);
+            b黑色料倉有料_tmrTakePinTick = 料倉有料;
 
             //光源震動盤
             List<Vector3> pins;
             bool 料盤有料 = inspector1.xInsp震動盤(out pins);
             Vector3 temp = (料盤有料) ? pins.First() : new Vector3();
             label4.Text = string.Format("光源震動盤 震動盤 = {0} X = {1:F2} Y = {2:F2} θ = {3:F2}", 料盤有料, temp.X, temp.Y, temp.θ);
+            b柔震盤有料_tmrTakePinTick = 料盤有料;
+            dbPinX_tmrTakePinTick = temp.X;
+            dbPinY_tmrTakePinTick = temp.Y;
+            dbPinR_tmrTakePinTick = temp.θ;
 
-            if (inspector1.Inspected && inspector1.InspectOK)
-            {
+            if (inspector1.Inspected && inspector1.InspectOK) {
                 double deg = inspector1.PinDeg;
                 label5.Text = string.Format("吸嘴物料分析  θ = {0:F2}", deg);
-            }
-            else
+            } else
                 label5.Text = "吸嘴物料分析失敗";
 
             int cntdebug = inspector1.RecvCount;
@@ -119,7 +127,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //------------------------ Xavier Call, Control the Servo machine -----------------------
         //---------------------------------------------------------------------------------------
-        public double dbapiNozzleX(double dbIncreaseNozzleX)  //NozzleX
+        public double dbapiNozzleX(double dbIncreaseNozzleX, double dbTargetSpeed)  //NozzleX
         {
             Normal calculate = new Normal();
                 const int    MaxRAW = 500000;
@@ -200,7 +208,7 @@ namespace InjectorInspector
                 //執行移動吸嘴
                 int axis     = (int)WMX3軸定義.吸嘴X軸;
                 int position = fChangeNozzleX;
-                int speed    = (int)((Maxdb/10) *dbSpdF);
+                int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
                 int accel    = speed * 2;
                 int daccel   = speed * 2;
                 clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
@@ -210,7 +218,7 @@ namespace InjectorInspector
             return dbRstNozzleX;
         }  // end of public double dbapiNozzleX(double dbIncreaseNozzleX)  //NozzleX
         //---------------------------------------------------------------------------------------
-        public double dbapiNozzleY(double dbIncreaseNozzleY)  //NozzleY
+        public double dbapiNozzleY(double dbIncreaseNozzleY, double dbTargetSpeed)  //NozzleY
         {
             Normal calculate = new Normal();
                 const int    MaxRAW =  10000;
@@ -291,7 +299,7 @@ namespace InjectorInspector
                 //執行移動吸嘴
                 int axis     = (int)WMX3軸定義.吸嘴Y軸;
                 int position = fChangeNozzleY;
-                int speed    = (int)((Maxdb/10) *dbSpdF);
+                int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
                 int accel    = speed * 2;
                 int daccel   = speed * 2;
                 clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
@@ -301,7 +309,7 @@ namespace InjectorInspector
             return dbRstNozzleY;
         }  // end of public double dbapiNozzleY(double dbIncreaseNozzleY)  //NozzleY
         //---------------------------------------------------------------------------------------
-        public double dbapiNozzleZ(double dbIncreaseNozzleZ)  //NozzleZ
+        public double dbapiNozzleZ(double dbIncreaseNozzleZ, double dbTargetSpeed)  //NozzleZ
         {
             Normal calculate = new Normal();
                 const int    MaxRAW =  41496;
@@ -382,7 +390,7 @@ namespace InjectorInspector
                 //執行伸縮吸嘴
                 int axis     = (int)WMX3軸定義.吸嘴Z軸;
                 int position = fChangeNozzleZ;
-                int speed    = (int)((Maxdb/10) *dbSpdF);
+                int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
                 int accel    = speed * 2;
                 int daccel   = speed * 2;
                 clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
@@ -1338,7 +1346,7 @@ namespace InjectorInspector
             inspector1.on下視覺 = apiCallBackTest;
 
             //先跳到第2頁
-            int iAimToPageIndex = 4;
+            int iAimToPageIndex = 4-1;
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
         }
         //---------------------------------------------------------------------------------------
@@ -1594,17 +1602,17 @@ namespace InjectorInspector
                 switch(wmxId_RadioGroupChanged) {
                     case WMX3軸定義.吸嘴X軸:
                         if(enGC_吸嘴X軸 == true) {
-                            dbapiNozzleX(result);
+                            dbapiNozzleX(result, 250);
                         }
                         break;
                     case WMX3軸定義.吸嘴Y軸:
                         if(enGC_吸嘴Y軸 == true) {
-                            dbapiNozzleY(result);
+                            dbapiNozzleY(result, 50);
                         }
                         break;
                     case WMX3軸定義.吸嘴Z軸:
                         if(enGC_吸嘴Z軸 == true) {
-                            dbapiNozzleZ(result);
+                            dbapiNozzleZ(result, 20);
                         }
                         break;
                     case WMX3軸定義.吸嘴R軸:
@@ -1686,9 +1694,9 @@ namespace InjectorInspector
             double dbState = dbRead;
             {
                 //軸控保護需要分別保護封裝
-                inspector1.nozzleX = dbapiNozzleX(dbState);
-                inspector1.nozzleY = dbapiNozzleY(dbState);
-                dbapiNozzleZ(dbState);
+                inspector1.nozzleX = dbapiNozzleX(dbState, 0);
+                inspector1.nozzleY = dbapiNozzleY(dbState, 0);
+                dbapiNozzleZ(dbState, 0);
                 dbapiNozzleR(dbState);
 
                 inspector1.移載X = dbapiCarrierX(dbState);
@@ -1969,27 +1977,28 @@ namespace InjectorInspector
 
         private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-
             /*
                 y=0.000454x−2.5071
                 x=(y+2.5071)/0.000454
             */
 
-            
-            if (100.0<=vScrollBar1.Value) {
-                vScrollBar1.Value = 100;
+            Normal calculate = new Normal();       
+            double dbGet = calculate.Map(vcb_植針吹氣流量閥.Value, 110, -10, -10, 110);
+
+            if (100.0 <= dbGet) {
+                dbGet = 100;
             }
-            if(vScrollBar1.Value <= 0.0) {
-                vScrollBar1.Value = 0;
+            if(dbGet <= 0.0) {
+                dbGet = 0;
             }
 
-            double y = (double)( (double)(vScrollBar1.Value) / (double)(10.0) );
+            double y = (double)( dbGet/10.0 );
             double x = (y + 2.5071) / 0.000454;
 
             int iGetValue = (int)x;
-            textBox1.Text = iGetValue.ToString();
+          //lbl_植針吹氣流量閥.Text = iGetValue.ToString();
             byte[] aGetValue = BitConverter.GetBytes(iGetValue);
-            //clsServoControlWMX3.WMX3_SetIO(ref aGetValue, (int)WMX3IO對照.pxeIO_Addr_AnalogOut_0, 2);
+          //clsServoControlWMX3.WMX3_SetIO(ref aGetValue, (int)WMX3IO對照.pxeIO_Addr_AnalogOut_0, 2);
             clsServoControlWMX3.WMX3_SetIO(ref aGetValue, (int)WMX3IO對照.pxeIO_Addr_AnalogOut_1, 2);
 
             int iGetIn0Value = 0;
@@ -2012,14 +2021,15 @@ namespace InjectorInspector
             clsServoControlWMX3.WMX3_GetInIO(ref aGetIn3Value, (int)WMX3IO對照.pxeIO_Addr_AnalogIn_3, 2);
             iGetIn3Value = BitConverter.ToInt16(aGetIn3Value, 0);
 
-            this.Text = "In:"                   + " " +
-                        iGetIn0Value.ToString() + " " + 
-                        iGetIn1Value.ToString() + " " + 
-                        iGetIn2Value.ToString() + " " + 
-                        iGetIn3Value.ToString() + " " +
-                        "Out:"                  + " " +
-                        iGetValue.ToString()    + " " +
-                        "y:" + y.ToString();
+            //this.Text = "In:"                   + " " +
+            //            iGetIn0Value.ToString() + " " + 
+            //            iGetIn1Value.ToString() + " " + 
+            //            iGetIn2Value.ToString() + " " + 
+            //            iGetIn3Value.ToString() + " " +
+            //            "Out:"                  + " " +
+            //            iGetValue.ToString()    + " " +
+            //            "y:" + y.ToString();
+            lbl_植針吹氣流量閥.Text = string.Format("{0:F1}", y);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -2047,27 +2057,32 @@ namespace InjectorInspector
         public enum xe_tmr_sequense {
             xets_empty,
             xets_idle,
-                xets_home_start,
-                xets_home_StartGate01,
-                xets_home_StartGate02,
+            xets_home_start,
+                xets_home_StartGate_01,
+                xets_home_StartGate_02,
                 xets_home_CheckGate,
                 xets_home_EndGate, 
-                xets_home_StartZR電動缸Home_step0, 
-                xets_home_StartZR電動缸Home_step1, 
+
+                xets_home_StartZR電動缸Home_01, 
+                xets_home_StartZR電動缸Home_02, 
                 xets_home_CheckZR電動缸Home, 
                 xets_home_EndZR電動缸Home, 
-                xets_home_StartXYHome01, 
-                xets_home_StartXYHome02, 
+
+                xets_home_StartXYHome_01, 
+                xets_home_StartXYHome_02, 
                 xets_home_CheckXYHome, 
                 xets_home_EndXYHome, 
-                xets_home_StartSetZR01,
-                xets_home_StartSetZR02,
+
+                xets_home_StartSetZR_01,
+                xets_home_StartSetZR_02,
                 xets_home_CheckSetZR,
                 xets_home_EndSetZR01,
+
                 xets_home_StartCarrierXHome_01,
                 xets_home_StartCarrierXHome_02,
                 xets_home_CheckCarrierXHome,
                 xets_home_EndCarrierXHome,
+
                 xets_home_StartCarrierYHome_01,
                 xets_home_StartCarrierYHome_02,
                 xets_home_CheckCarrierYHome,
@@ -2079,6 +2094,12 @@ namespace InjectorInspector
 
         public int ihomeFinishedCNT = 0;
         public bool bhome = false;
+
+        public const double dbNozzle安全原點X = 242;
+        public const double dbNozzle安全原點Y = 28;
+        public const double dbNozzle安全原點Z = 0;
+        public const double dbNozzle安全原點R = 1.350;
+
         private void btn_home_Click(object sender, EventArgs e)
         {
             bhome = true;
@@ -2086,10 +2107,13 @@ namespace InjectorInspector
 
         private void tmr_Sequense_Tick(object sender, EventArgs e)
         {
-            btn_home.Text = clsServoControlWMX3.WMX3_check_ServoMovingState((int)WMX3軸定義.吸嘴Z軸).ToString(); // xeTmrSequense.ToString();
+            int getrslt = 0;
+            lbl_debug.Text = clsServoControlWMX3.WMX3_check_ServoOpState((int)WMX3軸定義.工作門, ref getrslt);
 
             switch (xeTmrSequense) {
                 case xe_tmr_sequense.xets_home_start:
+                    btn_home.Text = "Start Home";
+
                     //Disable All
                     en_吸嘴X軸.Checked      = false;
                     en_吸嘴Y軸.Checked      = false;
@@ -2128,16 +2152,16 @@ namespace InjectorInspector
                     clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 0);  Thread.Sleep(10);
                     clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, 0);  Thread.Sleep(10);
 
-                    xeTmrSequense = xe_tmr_sequense.xets_home_StartGate01; 
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartGate_01; 
                     break;
 
-                case xe_tmr_sequense.xets_home_StartGate01:
+                case xe_tmr_sequense.xets_home_StartGate_01:
                     en_工作門.Checked = true;
                     clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, true);  Thread.Sleep(10);
-                    xeTmrSequense = xe_tmr_sequense.xets_home_StartGate02;
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartGate_02;
                     break;
 
-                case xe_tmr_sequense.xets_home_StartGate02:
+                case xe_tmr_sequense.xets_home_StartGate_02:
                     dbapiGate(580);  Thread.Sleep(10);
                     xeTmrSequense = xe_tmr_sequense.xets_home_CheckGate;
                     break;
@@ -2150,14 +2174,16 @@ namespace InjectorInspector
                         axis01 = (int)WMX3軸定義.工作門;
                         rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
 
-                        if (rslt01==1) { 
+                        double iGetPos = dbapiGate(dbRead); ;
+
+                        if (rslt01==1 && 580.0*0.99 <= iGetPos) { 
                             xeTmrSequense = xe_tmr_sequense.xets_home_EndGate;
                         }
                     }
                     break;
 
                 case xe_tmr_sequense.xets_home_EndGate:
-                case xe_tmr_sequense.xets_home_StartZR電動缸Home_step0:
+                case xe_tmr_sequense.xets_home_StartZR電動缸Home_01:
                     en_吸嘴Z軸.Checked = true;
                     en_吸嘴R軸.Checked = true;
 
@@ -2175,10 +2201,10 @@ namespace InjectorInspector
                     clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 1);  Thread.Sleep(10);
                     clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, 1);  Thread.Sleep(10);
 
-                    xeTmrSequense = xe_tmr_sequense.xets_home_StartZR電動缸Home_step1;
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartZR電動缸Home_02;
                     break;
 
-                case xe_tmr_sequense.xets_home_StartZR電動缸Home_step1:
+                case xe_tmr_sequense.xets_home_StartZR電動缸Home_02:
                     if(true) { 
                         int rslt = 0;
                         int axis = 0;
@@ -2215,7 +2241,7 @@ namespace InjectorInspector
                         rslt02 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis02);  Thread.Sleep(10);
 
                         if (rslt01==1 && rslt02==1) {
-                            if (dbapiNozzleZ(dbRead) <= 1.0) {
+                            if (dbapiNozzleZ(dbRead, 0) <= 1.0) {
                                 xeTmrSequense = xe_tmr_sequense.xets_home_EndZR電動缸Home;
                             }
                         }
@@ -2228,28 +2254,28 @@ namespace InjectorInspector
                     dbapJoDell3D掃描(10);  Thread.Sleep(10);
                     dbapJoDell吸針嘴(10);  Thread.Sleep(10);
                     dbapJoDell植針嘴(10);  Thread.Sleep(10);
-                    xeTmrSequense = xe_tmr_sequense.xets_home_StartXYHome01;
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartXYHome_01;
                     break;
 
-                case xe_tmr_sequense.xets_home_StartXYHome01:
+                case xe_tmr_sequense.xets_home_StartXYHome_01:
                     en_吸嘴X軸.Checked = true;
                     en_吸嘴Y軸.Checked = true;
 
                     clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, true);  Thread.Sleep(10);
                     clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, true);  Thread.Sleep(10);
-                    xeTmrSequense = xe_tmr_sequense.xets_home_StartXYHome02;
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartXYHome_02;
                     break;
 
-                case xe_tmr_sequense.xets_home_StartXYHome02:
-                    if (dbapiNozzleZ(dbRead) <= 1.0) {
-                        dbapiNozzleX(242);  Thread.Sleep(10);
-                        dbapiNozzleY(28);   Thread.Sleep(10);
+                case xe_tmr_sequense.xets_home_StartXYHome_02:
+                    if (dbapiNozzleZ(dbRead, 0) <= 1.0) {
+                        dbapiNozzleX(dbNozzle安全原點X, 50);   Thread.Sleep(10);
+                        dbapiNozzleY(dbNozzle安全原點Y, 10);   Thread.Sleep(10);
                         xeTmrSequense = xe_tmr_sequense.xets_home_CheckXYHome;
                     }
                     break;
 
                 case xe_tmr_sequense.xets_home_CheckXYHome:
-                    if (dbapiNozzleZ(dbRead) <= 1.0) { 
+                    if (dbapiNozzleZ(dbRead, 0) <= 1.0) { 
                         int rslt01 = 0, rslt02 = 0;
                         int axis01 = 0, axis02 = 0;
 
@@ -2266,17 +2292,17 @@ namespace InjectorInspector
                     break;
 
                 case xe_tmr_sequense.xets_home_EndXYHome:
-                case xe_tmr_sequense.xets_home_StartSetZR01:
+                case xe_tmr_sequense.xets_home_StartSetZR_01:
                     en_植針Z軸.Checked = true;
                     en_植針R軸.Checked = true;
 
                     clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, true);  Thread.Sleep(10);
                     clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, true);  Thread.Sleep(10);
 
-                    xeTmrSequense = xe_tmr_sequense.xets_home_StartSetZR02;
+                    xeTmrSequense = xe_tmr_sequense.xets_home_StartSetZR_02;
                     break;
 
-                case xe_tmr_sequense.xets_home_StartSetZR02:
+                case xe_tmr_sequense.xets_home_StartSetZR_02:
                     dbapiSetZ(15);      Thread.Sleep(10);
                     dbapiSetR(268.08);  Thread.Sleep(10);
                     xeTmrSequense = xe_tmr_sequense.xets_home_CheckSetZR;
@@ -2365,7 +2391,8 @@ namespace InjectorInspector
 
                 case xe_tmr_sequense.xets_home_EndCarrierYHome:
                 case xe_tmr_sequense.xets_home_end:
-                    dbapiGate(0);  Thread.Sleep(10);
+                    dbapiNozzleR(dbNozzle安全原點R);  Thread.Sleep(10);
+                    dbapiGate(0);                     Thread.Sleep(10);
                     xeTmrSequense = xe_tmr_sequense.xets_end;
                     break;
 
@@ -2373,6 +2400,8 @@ namespace InjectorInspector
                 case xe_tmr_sequense.xets_empty:
                 case xe_tmr_sequense.xets_idle:
                 case xe_tmr_sequense.xets_end:
+                    btn_home.Text = "Home";
+
                     if(bhome == true) {
                         xeTmrSequense = xe_tmr_sequense.xets_home_start;
                         bhome = false;
@@ -2390,10 +2419,389 @@ namespace InjectorInspector
             label7.Text = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
 
+
+
+
+
+
+
+
+
+
+
+
+
+        public enum xe_tmr_takepin
+        {
+            xett_Empty,
+                xett_確定執行要取針,
+                    xett_取得柔震盤針資訊,
+                        xett_柔震盤無針,
+                            xett_柔震盤震動3秒,
+                            xett_檢查柔震盤針資訊,
+                            xett_柔震盤無針retry,
+
+                        xett_得到針資訊,
+                            xett_縮回Nozzle0到0,
+                            xett_檢測NozzleZ到0,
+                            xett_判斷NozzleZ到0安全位置,
+
+                            xett_移動NozzleXYR吸料位,
+                            xett_檢測NozzleXYR吸料位,
+                            xett_判斷NozzleXYR吸料位為安全位置,
+
+                            xett_下降NozzleZ,
+                            xett_檢測NozzleZ吸料位,
+                            xett_判斷NozzleZ吸料位安全位置,
+
+                            xett_Nozzle吸料開始,
+                            xett_Nozzle吸料等待,
+                            xett_Nozzle吸料完成,
+
+                            xett_NozzleZ縮回0,
+                            xett_NozzleZ檢查是否縮回0,
+                            xett_NozzleZ縮為0完成,
+
+                            xett_移至飛拍起始位置,
+                            xett_檢測是否在飛拍起始位置,
+                            xett_確認在飛拍起始位置,
+
+                            xett_NozzleX以速度250移動來觸發飛拍,
+                            xett_檢測是否飛拍移動完成,
+                            xett_確定飛拍移動完成,
+
+                            xett_移至吐料位,
+                            xett_檢測是否在吐料位,
+                            xett_確認在吐料位,
+
+                            xett_NozzleZ下降至吐料高度,
+                            xett_檢查NozzleZ是否在吐料高度,
+                            xett_確認NozzleZ在吐料高度,
+
+                            xett_Nozzle吸料停止,
+                            xett_Nozzle吐料開始,
+                            xett_Nozzle吐料等待,
+                            xett_Nozzle吐料完成,
+
+                            xett_NozzleZ退回安全高度0,
+                            xett_檢查NozzleZ是否退回安全高度0,
+                            xett_確定NozzleZ已退回安全高度0,
+
+                xett_檢測是否還需要取針,
+                    xett_還需要取針,
+                        xett_重覆一開始的狀態,
+
+                    xett_不需要取針,
+                        xett_NozzleXYR移置安全位置,
+                        xett_檢查NozzleXYR是否移至安全位置,
+                        xett_確認NozzleXYR在安全位置,
+
+                xett_取針結束,
+            xett_End,
+        };
+        public xe_tmr_takepin xeTmrTakePin = xe_tmr_takepin.xett_Empty;
+
+        public int iTakePinFinishedCNT1 = 0;
+        public int iTakePinFinishedCNT2 = 0;
+        public bool bTakePin = false;
+
+        public const double db取料Nozzle中心點X = 49.94;
+        public const double db取料Nozzle中心點Y = 49.875;
+        public const double db取料Nozzle中心點Z = 26;
+        public const double db取料Nozzle中心點R = 1.350;
+
+        public const double db下視覺取像X_Start = 105;
+        public const double db下視覺取像X_END   = 243.000;
+        public const double db下視覺取像Y       = 27.05;
+        public const double db下視覺取像Z       = 0;
+
+        public const double db吐料位X           = 243.000;
+        public const double db吐料位下降Z高度   = 8.000;
+
+        private void btn_TakePin_Click(object sender, EventArgs e)
+        {
+            bTakePin = true;
         }
+
+        private void tmr_TakePin_Tick(object sender, EventArgs e)
+        {  // start of private void tmr_TakePin_Tick(object sender, EventArgs e)
+
+            btn_TakePin.Text = xeTmrTakePin.ToString();
+
+            switch (xeTmrTakePin) {
+                case xe_tmr_takepin.xett_Empty:  
+                    if(bTakePin==true) {
+                        int 求出取料循環次數 = int.Parse(txt_取料循環.Text);
+                        if(求出取料循環次數>=1) { 
+                            xeTmrTakePin = xe_tmr_takepin.xett_確定執行要取針;  
+                        } else {
+                            xeTmrTakePin = xe_tmr_takepin.xett_取針結束;
+                        }
+                    }
+                    break;
+
+                    case xe_tmr_takepin.xett_確定執行要取針:                               xeTmrTakePin = xe_tmr_takepin.xett_取得柔震盤針資訊;  break;
+                        case xe_tmr_takepin.xett_取得柔震盤針資訊:     
+                            btn_取得PinInfo_Click(sender, e); 
+                            if(b柔震盤有料_tmrTakePinTick == true) { 
+                                //柔震有料
+                                xeTmrTakePin = xe_tmr_takepin.xett_得到針資訊;
+                            } else { 
+                                //柔震無料
+                                xeTmrTakePin = xe_tmr_takepin.xett_柔震盤無針;
+                            }
+                            break;
+                            case xe_tmr_takepin.xett_柔震盤無針:                           xeTmrTakePin = xe_tmr_takepin.xett_柔震盤震動3秒;  break;
+                                case xe_tmr_takepin.xett_柔震盤震動3秒: 
+                                    if(true) {
+                                        iTakePinFinishedCNT1++;
+                                        if(iTakePinFinishedCNT1>=30) { 
+                                            iTakePinFinishedCNT1 = 0;
+                                            xeTmrTakePin = xe_tmr_takepin.xett_檢查柔震盤針資訊;
+                                        }
+                                    }
+                                    break;
+                                case xe_tmr_takepin.xett_檢查柔震盤針資訊: 
+                                    if(b柔震盤有料_tmrTakePinTick == true) { 
+                                        //柔震有料
+                                        xeTmrTakePin = xe_tmr_takepin.xett_得到針資訊;
+                                    } else { 
+                                        //柔震無料
+                                        xeTmrTakePin = xe_tmr_takepin.xett_柔震盤無針retry;
+                                    }
+                                    break;
+                                case xe_tmr_takepin.xett_柔震盤無針retry: 
+                                    xeTmrTakePin = xe_tmr_takepin.xett_柔震盤震動3秒;
+                                    break;
+
+                            case xe_tmr_takepin.xett_得到針資訊:                           xeTmrTakePin = xe_tmr_takepin.xett_縮回Nozzle0到0;  break;
+                                case xe_tmr_takepin.xett_縮回Nozzle0到0: 
+                                    dbapiNozzleZ(0, 40);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_檢測NozzleZ到0;
+                                    break;
+                                case xe_tmr_takepin.xett_檢測NozzleZ到0: {
+                                    double dbGetZ_1 = dbapiNozzleZ(dbRead, 40);
+                                    if(dbGetZ_1 <= 0.1) { 
+                                        xeTmrTakePin = xe_tmr_takepin.xett_判斷NozzleZ到0安全位置;
+                                    }
+                                } break;
+                                case xe_tmr_takepin.xett_判斷NozzleZ到0安全位置:           xeTmrTakePin = xe_tmr_takepin.xett_移動NozzleXYR吸料位;  break;
+
+                                case xe_tmr_takepin.xett_移動NozzleXYR吸料位: 
+                                    dbapiNozzleX(db取料Nozzle中心點X + dbPinX_tmrTakePinTick, 100);
+                                    dbapiNozzleY(db取料Nozzle中心點Y + dbPinY_tmrTakePinTick, 20);    
+                                    dbapiNozzleR(db取料Nozzle中心點R + dbPinR_tmrTakePinTick);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_檢測NozzleXYR吸料位;
+                                    break;
+                                case xe_tmr_takepin.xett_檢測NozzleXYR吸料位: {
+                                    double dbX = dbapiNozzleX(dbRead, 0);
+                                    double dbY = dbapiNozzleY(dbRead, 0);
+                                    double dbR = dbapiNozzleR(dbRead);
+
+                                    double dbTargetX = db取料Nozzle中心點X + dbPinX_tmrTakePinTick;
+                                    double dbTargetY = db取料Nozzle中心點Y + dbPinY_tmrTakePinTick;
+                                    double dbTargetR = db取料Nozzle中心點R + dbPinR_tmrTakePinTick;
+                                    if( (dbTargetX*0.99<= dbX && dbX <= dbTargetX*1.01) &&
+                                        (dbTargetY*0.99<= dbY && dbY <= dbTargetY*1.01) &&
+                                        ( (dbTargetR*0.99<=dbR && dbR<=dbTargetR*1.01) || (dbTargetR*1.01<=dbR && dbR<=dbTargetR*0.99) ) 
+                                      ) { 
+                                        xeTmrTakePin = xe_tmr_takepin.xett_判斷NozzleXYR吸料位為安全位置;
+                                    }
+                                } break;
+                                case xe_tmr_takepin.xett_判斷NozzleXYR吸料位為安全位置:    xeTmrTakePin = xe_tmr_takepin.xett_下降NozzleZ;  break;
+
+                                case xe_tmr_takepin.xett_下降NozzleZ: 
+                                    dbapiNozzleZ(db取料Nozzle中心點Z, 20);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_檢測NozzleZ吸料位;
+                                    break;
+                                case xe_tmr_takepin.xett_檢測NozzleZ吸料位: {
+                                    double dbZ = dbapiNozzleZ(dbRead, 0);
+                                    double dbTargetZ = db取料Nozzle中心點Z;
+                                    if( (dbTargetZ*0.99<= dbZ && dbZ <= dbTargetZ*1.01) ) { 
+                                        xeTmrTakePin = xe_tmr_takepin.xett_判斷NozzleZ吸料位安全位置;
+                                    }
+                                } break;
+                                case xe_tmr_takepin.xett_判斷NozzleZ吸料位安全位置: 
+                                    xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸料開始;
+                                    break;
+
+                                case xe_tmr_takepin.xett_Nozzle吸料開始: 
+                                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴吸)/10, (int)(WMX3IO對照.pxeIO_取料吸嘴吸)%10, 1);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸料等待;
+                                    break;
+                                case xe_tmr_takepin.xett_Nozzle吸料等待:                   xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸料完成;  break;
+                                case xe_tmr_takepin.xett_Nozzle吸料完成:                   xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ縮回0;    break;
+
+                                case xe_tmr_takepin.xett_NozzleZ縮回0: 
+                                    dbapiNozzleZ(0, 40);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ檢查是否縮回0;
+                                    break;
+                                case xe_tmr_takepin.xett_NozzleZ檢查是否縮回0: 
+                                    double dbGetZ = dbapiNozzleZ(dbRead, 0);
+                                    if(dbGetZ<=0.1) { 
+                                        xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ縮為0完成;
+                                    }
+                                    break;
+                                case xe_tmr_takepin.xett_NozzleZ縮為0完成:                 xeTmrTakePin = xe_tmr_takepin.xett_移至飛拍起始位置;  break;
+
+                                case xe_tmr_takepin.xett_移至飛拍起始位置:
+                                    dbapiNozzleX(db下視覺取像X_Start, 100);
+                                    dbapiNozzleY(db下視覺取像Y, 20);
+                                    dbapiNozzleZ(db下視覺取像Z, 40);
+                                    dbapiNozzleR(db取料Nozzle中心點R+90);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_檢測是否在飛拍起始位置;
+                                    break;
+                                case xe_tmr_takepin.xett_檢測是否在飛拍起始位置: {
+                                    double dbX = dbapiNozzleX(dbRead, 0);
+                                    double dbY = dbapiNozzleY(dbRead, 0);
+                                    double dbZ = dbapiNozzleZ(dbRead, 0);
+                                    double dbR = dbapiNozzleR(dbRead);
+
+                                    double dbTargetX = db下視覺取像X_Start;
+                                    double dbTargetY = db下視覺取像Y;
+                                    double dbTargetZ = db下視覺取像Z;
+                                    double dbTargetR = db取料Nozzle中心點R + 90;
+                                    if( (dbTargetX*0.99<= dbX && dbX <= dbTargetX*1.01) &&
+                                        (dbTargetY*0.99<= dbY && dbY <= dbTargetY*1.01) &&
+                                        (                        dbZ <= 0.1           ) &&
+                                        ( (dbTargetR*0.99<= dbR && dbR <= dbTargetR*1.01) || (dbTargetR*1.01<=dbR && dbR<=dbTargetR*0.99) ) 
+                                      ) { 
+                                        xeTmrTakePin = xe_tmr_takepin.xett_確認在飛拍起始位置;
+                                    }
+                                } break;
+                                case xe_tmr_takepin.xett_確認在飛拍起始位置:                        xeTmrTakePin = xe_tmr_takepin.xett_NozzleX以速度250移動來觸發飛拍;  break;
+
+                                case xe_tmr_takepin.xett_NozzleX以速度250移動來觸發飛拍: 
+                                    dbapiNozzleX(db下視覺取像X_END, 250);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_檢測是否飛拍移動完成;
+                                    break;
+                                case xe_tmr_takepin.xett_檢測是否飛拍移動完成: {
+                                    double dbX = dbapiNozzleX(dbRead, 0);
+                                    double dbTargetX = db下視覺取像X_END;
+                                    if( (dbTargetX*0.99<= dbX && dbX <= dbTargetX*1.01) ) { 
+                                        xeTmrTakePin = xe_tmr_takepin.xett_確定飛拍移動完成;
+                                    }
+                                } break;
+                                case xe_tmr_takepin.xett_確定飛拍移動完成:                 xeTmrTakePin = xe_tmr_takepin.xett_移至吐料位;  break;
+
+                                case xe_tmr_takepin.xett_移至吐料位: 
+                                    dbapiNozzleX(db吐料位X, 250);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_檢測是否在吐料位;
+                                    break;
+                                case xe_tmr_takepin.xett_檢測是否在吐料位: {
+                                    double dbX = dbapiNozzleX(dbRead, 0);
+                                    double dbTargetX = db吐料位X;
+                                    if( (dbTargetX*0.99<= dbX && dbX <= dbTargetX*1.01) ) { 
+                                        xeTmrTakePin = xe_tmr_takepin.xett_確認在吐料位;
+                                    }
+                                } break;
+                                case xe_tmr_takepin.xett_確認在吐料位:                           xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ下降至吐料高度;  break;
+
+                                case xe_tmr_takepin.xett_NozzleZ下降至吐料高度:
+                                    dbapiNozzleZ(db吐料位下降Z高度, 20);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_檢查NozzleZ是否在吐料高度;
+                                    break;
+                                case xe_tmr_takepin.xett_檢查NozzleZ是否在吐料高度: {
+                                    double dbGetZ_2 = dbapiNozzleZ(dbRead, 0);
+                                    double dbTargetZ = db吐料位下降Z高度;
+                                    if( (dbTargetZ*0.99<= dbGetZ_2 && dbGetZ_2 <= dbTargetZ*1.01) ) { 
+                                        xeTmrTakePin = xe_tmr_takepin.xett_確認NozzleZ在吐料高度;
+                                    }
+                                } break;
+                                case xe_tmr_takepin.xett_確認NozzleZ在吐料高度:            xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸料停止;  break;
+
+                                case xe_tmr_takepin.xett_Nozzle吸料停止:
+                                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴吸)/10,     (int)(WMX3IO對照.pxeIO_取料吸嘴吸)%10,     0);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吐料開始;
+                                    break;
+
+                                case xe_tmr_takepin.xett_Nozzle吐料開始: 
+                                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴破真空)/10, (int)(WMX3IO對照.pxeIO_取料吸嘴破真空)%10, 1);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吐料等待;
+                                    break;
+                                case xe_tmr_takepin.xett_Nozzle吐料等待:            
+                                    iTakePinFinishedCNT2++;
+                                    if(iTakePinFinishedCNT2>=6) { 
+                                        iTakePinFinishedCNT2 = 0;
+                                        xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吐料完成; 
+                                    }
+                                    break;
+                                case xe_tmr_takepin.xett_Nozzle吐料完成:              
+                                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴破真空)/10, (int)(WMX3IO對照.pxeIO_取料吸嘴破真空)%10, 0);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ退回安全高度0;  
+                                    break;
+
+                                case xe_tmr_takepin.xett_NozzleZ退回安全高度0: 
+                                    dbapiNozzleZ(0, 40);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_檢查NozzleZ是否退回安全高度0;
+                                    break;
+                                case xe_tmr_takepin.xett_檢查NozzleZ是否退回安全高度0: {
+                                    double dbGetZ_3 = dbapiNozzleZ(dbRead, 0);
+                                    if(dbGetZ_3 <= 0.1) { 
+                                        xeTmrTakePin = xe_tmr_takepin.xett_確定NozzleZ已退回安全高度0;
+                                    }
+                                } break;
+                                case xe_tmr_takepin.xett_確定NozzleZ已退回安全高度0:                xeTmrTakePin = xe_tmr_takepin.xett_檢測是否還需要取針;  break;
+
+                    case xe_tmr_takepin.xett_檢測是否還需要取針: {    
+                        int 求出取料循環次數 = int.Parse(txt_取料循環.Text);
+                        求出取料循環次數--;
+                        txt_取料循環.Text = 求出取料循環次數.ToString();
+                        if(求出取料循環次數>=1) { 
+                            xeTmrTakePin = xe_tmr_takepin.xett_還需要取針;  
+                        } else {
+                            xeTmrTakePin = xe_tmr_takepin.xett_不需要取針;
+                        }
+                    } break;
+                        case xe_tmr_takepin.xett_還需要取針:                               xeTmrTakePin = xe_tmr_takepin.xett_重覆一開始的狀態;  break;
+
+                            case xe_tmr_takepin.xett_重覆一開始的狀態:                     xeTmrTakePin = xe_tmr_takepin.xett_確定執行要取針;  break;
+
+                        case xe_tmr_takepin.xett_不需要取針:                               xeTmrTakePin = xe_tmr_takepin.xett_NozzleXYR移置安全位置;  break;
+                            case xe_tmr_takepin.xett_NozzleXYR移置安全位置: 
+                                dbapiNozzleX(dbNozzle安全原點X, 50);  
+                                dbapiNozzleY(dbNozzle安全原點Y, 10);      
+                                dbapiNozzleZ(0, 40);  
+                                dbapiNozzleR(dbNozzle安全原點R);      
+                                xeTmrTakePin = xe_tmr_takepin.xett_檢查NozzleXYR是否移至安全位置;
+                                break;
+                            case xe_tmr_takepin.xett_檢查NozzleXYR是否移至安全位置: {
+                                    double dbX = dbapiNozzleX(dbRead, 0);
+                                    double dbY = dbapiNozzleY(dbRead, 0);
+                                    double dbZ = dbapiNozzleZ(dbRead, 0);
+                                    double dbR = dbapiNozzleR(dbRead);
+
+                                    double dbTargetX = dbNozzle安全原點X;
+                                    double dbTargetY = dbNozzle安全原點Y;
+                                    double dbTargetZ = 0;
+                                    double dbTargetR = dbNozzle安全原點R;
+                                    if( (dbTargetX*0.99<= dbX && dbX <= dbTargetX*1.01) &&
+                                        (dbTargetY*0.99<= dbY && dbY <= dbTargetY*1.01) &&
+                                        (                        dbZ <= 0.1           ) &&
+                                        ( (dbTargetR*0.99<= dbR && dbR <= dbTargetR*1.01) || (dbTargetR*1.01<=dbR && dbR<=dbTargetR*0.99) ) 
+                                      ) { 
+                                        xeTmrTakePin = xe_tmr_takepin.xett_確認NozzleXYR在安全位置;
+                                    }
+                            } break;
+                            case xe_tmr_takepin.xett_確認NozzleXYR在安全位置:              xeTmrTakePin = xe_tmr_takepin.xett_取針結束;  break;
+
+                    case xe_tmr_takepin.xett_取針結束:
+                        bTakePin = false; 
+                        xeTmrTakePin = xe_tmr_takepin.xett_Empty;  
+                        break;
+                case xe_tmr_takepin.xett_End:           
+                    xeTmrTakePin = xe_tmr_takepin.xett_Empty;  
+                    break;
+            }
+        }  // end of private void tmr_TakePin_Tick(object sender, EventArgs e)
+
+
+
+
+
+
+
 
     }  // end of public partial class Form1 : Form
 
