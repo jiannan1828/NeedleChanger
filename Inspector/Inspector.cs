@@ -53,6 +53,7 @@ namespace Inspector
         public int lights = 120;
 
         public double nozzleX, nozzleY;
+        public double 移載X, 移載Y;
 
         int GetDWord(int Index)
         {
@@ -131,9 +132,9 @@ namespace Inspector
             Insp入料 = new Insp入料區(this, Win3);
             InspTray = new InspTray區(this, Win2);
             InspNozzle = new Insp吸嘴區(this, Win1);
-            InspSocket = new InspSocket區(this, Win4);
-            Insp夾爪CCD = new InspCCD5區(this, Win5);
-            Insp吸針孔 = new InspCCD6區(this, Win6);
+            InspSocket = new InspSocket區(this, Win5);
+            Insp夾爪CCD = new InspCCD5區(this, Win6);
+            Insp吸針孔 = new InspCCD6區(this, Win4);
             OPT = new Exlite(2);
             OPT.Open("COM1", 1);
             OPT.Lights[0] = 120;
@@ -262,6 +263,8 @@ namespace Inspector
         public void xCarb吸嘴(List<Vector3> ImageLoc, List<Vector3> axisLoc) { InspNozzle.Carb(ImageLoc, axisLoc); }
         /// <summary>分析Socket盤，，傳入目前Socket軸位置(X / Y)，回覆針孔位置</summary>
         public bool xInspSocket(out Vector3 Loc) { return InspSocket.Insp(out Loc); }
+
+        public bool xInspSocket植針後檢查() { return InspSocket.植針後Check(); }
         /// <summary>Socket盤校正初始化，會將分析資料輸出為像素位置</summary>
         public void xCarbInitSocket() { InspSocket.CarbInit(); }
         /// <summary>吸嘴校正，依序傳入Socket分析後第一筆資料 X1Y1 / X2Y1 / X2Y2</summary>
@@ -546,7 +549,7 @@ namespace Inspector
     #region InspParameter
     public class InspParameter
     {
-        public int TrayThreshold = 120;
+        public int TrayThreshold = 180;
         public double TrayPin寬Min = 1;
         public double TrayPin寬Max = 80;
         public double TrayPin長Min = 1;
@@ -1237,7 +1240,7 @@ namespace Inspector
         void onRecvImage(object sender, string ImageType, int width, int height, IntPtr buffer)
         {
             HImage temp = new HImage("byte", width, height, buffer);
-            HImage temp1 = temp.RotateImage(-90.0, "constant");
+            HImage temp1 = temp.RotateImage(-90.5, "bilinear");
             owner.DisposeObj(temp);
             helper.Image = temp1;
             helper.SetImageSize(temp1);
@@ -1288,8 +1291,10 @@ namespace Inspector
                 HOperatorSet.Connection(binArea, out connArea);
                 HOperatorSet.SelectShape(connArea, out SelArea, "circularity", "and", 0.9, 1);
                 HOperatorSet.SelectShape(SelArea, out OutArea, "outer_radius", "and", 20, 200);
-                HOperatorSet.SelectShapeStd(OutArea, out MaxArea, "max_area", 70);
-                HOperatorSet.SmallestCircle(MaxArea, out row, out col, out Radius);
+                //HOperatorSet.SelectShapeStd(OutArea, out MaxArea, "max_area", 70);
+                HOperatorSet.SmallestCircle(OutArea, out row, out col, out Radius);
+                if (row.Length > 0)
+                {
                 HOperatorSet.SelectShape(OutArea, out CirArea, "outer_radius", "and", Radius.D - 2, Radius.D + 2);
                 HOperatorSet.SmallestCircle(CirArea, out row, out col, out Radius);
                 double smallDist = 999999;
@@ -1306,11 +1311,26 @@ namespace Inspector
                     }
                 }
                 if (targetIndex >= 0)
-                    hole = result = CCD.GetReal(result.X, result.Y, W, H);
+                {
+                    result = CCD.GetReal(result.X, result.Y, W, H);
+                    result.X = -result.X;
+                    hole = result;
+                }
+                }
             }
             Loc = result;
             owner.BeginInvoke(new Action(helper.AdjustView));
             return targetIndex >= 0;
+        }
+
+        public bool 植針後Check()
+        {
+            Vector3 pos;
+            var success = !Insp(out pos);
+            if (success)   //已植針，找不到孔
+                return true;
+            success = (Math.Abs(pos.X) > 0.1) || (Math.Abs(pos.Y) > 0.1);
+            return success;
         }
         /// <summary>Socket盤校正初始化，會將分析資料輸出為像素位置</summary>
         public void CarbInit()
@@ -1428,7 +1448,9 @@ namespace Inspector
                     {
                         result.X = pX = col.D;
                         result.Y = pY = row.D;
-                        hole = result = CCD.GetReal(result.X, result.Y, W, H);
+                        result = CCD.GetReal(result.X, result.Y, W, H);
+                        result.X = -result.X;
+                        hole = result;
                         targetIndex = 0;
                     }
                 }
@@ -1483,7 +1505,7 @@ namespace Inspector
         void onRecvImage(object sender, string ImageType, int width, int height, IntPtr buffer)
         {
             HImage temp = new HImage("byte", width, height, buffer);
-            HImage temp1 = temp.RotateImage(-90.0, "constant");
+            HImage temp1 = temp.RotateImage(-90.4, "bilinear");
             owner.DisposeObj(temp);
             helper.Image = temp1;
             helper.SetImageSize(temp1);
@@ -1539,7 +1561,9 @@ namespace Inspector
                     HOperatorSet.SmallestCircle(OutArea, out row, out col, out Radius);
                     result.X = pX = col.D;
                     result.Y = pY = row.D;
-                    hole = result = CCD.GetReal(result.X, result.Y, W, H);
+                    result = CCD.GetReal(result.X, result.Y, W, H);
+                    result.X = -result.X;
+                    hole = result;
                     targetIndex = 0;
                 }
             }

@@ -759,7 +759,7 @@
 		<AxisParam>
 			<AxisCommandMode>0</AxisCommandMode>
 			<AxisGearRatioNumerator>1048576.000000</AxisGearRatioNumerator>
-			<AxisGearRatioDenominator>1000.000000</AxisGearRatioDenominator>
+			<AxisGearRatioDenominator>10000.000000</AxisGearRatioDenominator>
 			<SingleTurnMode>0</SingleTurnMode>
 			<SingleTurnEncoderCount>65536</SingleTurnEncoderCount>
 			<MaxTrqLimit>300.000000</MaxTrqLimit>
@@ -767,10 +767,10 @@
 			<PositiveTrqLimit>300.000000</PositiveTrqLimit>
 			<AxisUnit>0.000000</AxisUnit>
 			<VelocityFeedforwardGain>0.000000</VelocityFeedforwardGain>
-			<AxisPolarity>1</AxisPolarity>
+			<AxisPolarity>-1</AxisPolarity>
 			<MaxMotorSpeed>3000.000000</MaxMotorSpeed>
 			<AbsoluteEncoderMode>1</AbsoluteEncoderMode>
-			<AbsoluteEncoderHomeOffset>-1745788.000000</AbsoluteEncoderHomeOffset>
+			<AbsoluteEncoderHomeOffset>18176149.000000</AbsoluteEncoderHomeOffset>
 			<EncoderRangeMode>0</EncoderRangeMode>
 			<EncoderRangeLow>0</EncoderRangeLow>
 			<EncoderRangeHigh>0</EncoderRangeHigh>

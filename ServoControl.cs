@@ -660,7 +660,9 @@ namespace InjectorInspector
                 //讀取SV ON狀態
                 CoreMotionAxisStatus cmAxis = CmStatus.AxesStatus[axis];
 
-                switch(cmAxis.OpState) {
+                return (int)cmAxis.OpState;
+
+                switch (cmAxis.OpState) {
                     case OperationState.Idle:
                     case OperationState.Stop:
                         rslt = 1;

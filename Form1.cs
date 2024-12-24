@@ -75,6 +75,13 @@ namespace InjectorInspector
         {
             cntcallback++;
             this.Text = cntcallback.ToString() + "  " + inspector1.InspNozzle.CCD.GrabCount.ToString();
+
+
+            if (inspector1.InspectOK == true && inspector1.Inspected == true) {
+                label10.Text = inspector1.PinDeg.ToString();
+                inspector1.InspectOK = false;
+            }
+
         }
         //---------------------------------------------------------------------------------------
         private void button2_Click(object sender, EventArgs e)
@@ -484,11 +491,11 @@ namespace InjectorInspector
         public double dbapiCarrierX(double dbIncreaseCarrierX)  //CarrierX
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =  19000;
+                const int    MaxRAW =  190000;
                 const int    MinRAW =      0;
                 const double Maxdb  =  190.0;
                 const double Mindb  =    0.0;
-                const double Sum    =  19000;
+                const double Sum    =  190000;
                 const double dbSpdF =  Sum / Maxdb;
 
             double dbRstCarrierX = 0.0;
@@ -1684,8 +1691,8 @@ namespace InjectorInspector
                 dbapiNozzleZ(dbState);
                 dbapiNozzleR(dbState);
 
-                dbapiCarrierX(dbState);
-                dbapiCarrierY(dbState);
+                inspector1.移載X = dbapiCarrierX(dbState);
+                inspector1.移載Y = dbapiCarrierY(dbState);
 
                 dbapiSetZ(dbState);
                 dbapiSetR(dbState);
@@ -2079,7 +2086,8 @@ namespace InjectorInspector
 
         private void tmr_Sequense_Tick(object sender, EventArgs e)
         {
-            btn_home.Text = xeTmrSequense.ToString();
+            btn_home.Text = clsServoControlWMX3.WMX3_check_ServoMovingState((int)WMX3軸定義.吸嘴Z軸).ToString(); // xeTmrSequense.ToString();
+
             switch (xeTmrSequense) {
                 case xe_tmr_sequense.xets_home_start:
                     //Disable All
@@ -2372,6 +2380,21 @@ namespace InjectorInspector
                     break;
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Vector3 pos;
+            bool success = inspector1.xInspSocket(out pos);
+            label6.Text = string.Format("Socket 偵測 {0} 中心偏移 = {1:F3} , {2:F3}", success, pos.X, pos.Y);
+            success = inspector1.xInspSocket植針後檢查();
+            label7.Text = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }  // end of public partial class Form1 : Form
 
 }  // end of namespace InjectorInspector

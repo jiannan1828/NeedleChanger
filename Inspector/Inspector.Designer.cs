@@ -222,7 +222,7 @@
             this.num_Throshold.TabIndex = 41;
             this.num_Throshold.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.num_Throshold.Value = new decimal(new int[] {
-            120,
+            180,
             0,
             0,
             0});
