@@ -266,6 +266,7 @@
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.txt_取料循環 = new System.Windows.Forms.TextBox();
             this.btn_TakePin = new System.Windows.Forms.Button();
             this.btn_home = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
@@ -293,7 +294,6 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
-            this.txt_取料循環 = new System.Windows.Forms.TextBox();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3022,6 +3022,14 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // txt_取料循環
+            // 
+            this.txt_取料循環.Location = new System.Drawing.Point(90, 218);
+            this.txt_取料循環.Name = "txt_取料循環";
+            this.txt_取料循環.Size = new System.Drawing.Size(100, 30);
+            this.txt_取料循環.TabIndex = 31;
+            this.txt_取料循環.Text = "1";
+            // 
             // btn_TakePin
             // 
             this.btn_TakePin.Location = new System.Drawing.Point(200, 210);
@@ -3271,15 +3279,8 @@
             // tmr_TakePin
             // 
             this.tmr_TakePin.Enabled = true;
+            this.tmr_TakePin.Interval = 5;
             this.tmr_TakePin.Tick += new System.EventHandler(this.tmr_TakePin_Tick);
-            // 
-            // txt_取料循環
-            // 
-            this.txt_取料循環.Location = new System.Drawing.Point(90, 218);
-            this.txt_取料循環.Name = "txt_取料循環";
-            this.txt_取料循環.Size = new System.Drawing.Size(100, 30);
-            this.txt_取料循環.TabIndex = 31;
-            this.txt_取料循環.Text = "1";
             // 
             // Form1
             // 
