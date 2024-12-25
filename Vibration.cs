@@ -195,8 +195,8 @@ namespace InjectorInspector
         {
             if(Px1_CMD == xe_U15_CMD.xeUC_TestMode_LightLevel) { 
                 //LED Maximum
-                if(u32Px1>=60) {
-                    u32Px1 = 60;
+                if(u32Px1>=50) {
+                    u32Px1 = 50;
                 }
             }
             

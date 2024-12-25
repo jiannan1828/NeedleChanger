@@ -53,7 +53,7 @@ namespace InjectorInspector
     {
         //---------------------------------------------------------------------------------------
         //Debug config
-        bool bshow_debug_RAW_Conver_Back_Value = true;
+        bool bshow_debug_RAW_Conver_Back_Value = false;
         
         //---------------------------------------------------------------------------------------
         //WMX3
@@ -1915,17 +1915,34 @@ namespace InjectorInspector
         
 
 
+        enum 柔震 { 震散     = 0,
+                    上下至中 = 1,
+                    左右至中 = 2,
+                    料倉     = 3,
+        }; 柔震 e柔震 = 柔震.震散;
+        uint[] 頻率  = { 0188, 0180, 0169, 0220 },
+               相1始 = { 0000, 0297, 0202, 0000 }, 相1終 = { 0500, 0231, 0500, 0000 }, 相1力 = { 0500, 1000, 1000, 0000 },
+               相2始 = { 0000, 0056, 0004, 0000 }, 相2終 = { 0500, 0050, 0500, 0000 }, 相2力 = { 0500, 1000, 1000, 0000 },
+               相3始 = { 0000, 0485, 0000, 0000 }, 相3終 = { 0500, 0100, 0490, 0000 }, 相3力 = { 0500, 1000, 1000, 0000 },
+               相4始 = { 0000, 0160, 0051, 0000 }, 相4終 = { 0500, 0100, 0377, 0000 }, 相4力 = { 0500, 1000, 1000, 0000 },
+               倉始  = { 0000, 0000, 0000, 0010 }, 倉終  = { 0000, 0000, 0000, 0100 }, 倉力  = { 0000, 0000, 0000, 0440 };
 
         public void btnVibrationInit_Click(object sender, EventArgs e) {
+                       if (lbl震散.BackColor   == Color.Red) { e柔震 = 柔震.震散;
+                } else if (lbl上下收.BackColor == Color.Red) { e柔震 = 柔震.上下至中;
+                } else if (lbl左右收.BackColor == Color.Red) { e柔震 = 柔震.左右至中;
+                } else if (lbl料倉.BackColor   == Color.Red) { e柔震 = 柔震.料倉;
+                }
+
             //Vibration
             clsVibration.apiEstablishTCPVibration();
             {
-                clsVibration.u32Frequency = 500;
-                clsVibration.u32VibrationSource1_StartPhase =  600; clsVibration.u32VibrationSource1_StopPhase = 1000; clsVibration.u32VibrationSource1_Power = 500;
-                clsVibration.u32VibrationSource2_StartPhase = 1000; clsVibration.u32VibrationSource2_StopPhase =  600; clsVibration.u32VibrationSource2_Power = 500;
-                clsVibration.u32VibrationSource3_StartPhase =  600; clsVibration.u32VibrationSource3_StopPhase = 1000; clsVibration.u32VibrationSource3_Power = 500;
-                clsVibration.u32VibrationSource4_StartPhase = 1000; clsVibration.u32VibrationSource4_StopPhase =  600; clsVibration.u32VibrationSource4_Power = 500;
-                clsVibration.u32BlackDepotSource_StartPhase =  400; clsVibration.u32BlackDepotSource_StopPhase =  600; clsVibration.u32BlackDepotSource_Power = 200;
+                clsVibration.u32Frequency                   = 頻率[(int)e柔震];
+                clsVibration.u32VibrationSource1_StartPhase = 相1始[(int)e柔震]; clsVibration.u32VibrationSource1_StopPhase = 相1終[(int)e柔震]; clsVibration.u32VibrationSource1_Power = 相1力[(int)e柔震];
+                clsVibration.u32VibrationSource2_StartPhase = 相2始[(int)e柔震]; clsVibration.u32VibrationSource2_StopPhase = 相2終[(int)e柔震]; clsVibration.u32VibrationSource2_Power = 相2力[(int)e柔震];
+                clsVibration.u32VibrationSource3_StartPhase = 相3始[(int)e柔震]; clsVibration.u32VibrationSource3_StopPhase = 相3終[(int)e柔震]; clsVibration.u32VibrationSource3_Power = 相3力[(int)e柔震];
+                clsVibration.u32VibrationSource4_StartPhase = 相4始[(int)e柔震]; clsVibration.u32VibrationSource4_StopPhase = 相4終[(int)e柔震]; clsVibration.u32VibrationSource4_Power = 相4力[(int)e柔震];
+                clsVibration.u32BlackDepotSource_StartPhase = 倉始[(int)e柔震];  clsVibration.u32BlackDepotSource_StopPhase = 倉終[(int)e柔震];  clsVibration.u32BlackDepotSource_Power = 倉力[(int)e柔震];
                 clsVibration.SetVibration(clsVibration.u32Frequency,
                                           clsVibration.u32VibrationSource1_StartPhase,
                                           clsVibration.u32VibrationSource1_StopPhase,
@@ -1943,7 +1960,7 @@ namespace InjectorInspector
                                           clsVibration.u32VibrationSource4_Power,
                                           clsVibration.u32BlackDepotSource_Power);
 
-                clsVibration.u32LED_Level = 50;
+                clsVibration.u32LED_Level = (uint)SB_VBLED.Value;
                 clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
             }
         }
@@ -1958,25 +1975,7 @@ namespace InjectorInspector
             }
         }
 
-        private void btnVibrationLED_Click(object sender, EventArgs e)
-        {
-            //Vibration LED
-            clsVibration.apiEstablishTCPVibration();
-            {
-                clsVibration.u32LED_Level = 50;
-                clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
-            }
-        }
 
-        private void btnVibrationLEDOff_Click(object sender, EventArgs e)
-        {
-            //Vibration LED
-            clsVibration.apiEstablishTCPVibration();
-            {
-                clsVibration.u32LED_Level = 0;
-                clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
-            }
-        }
 
         private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
@@ -2395,7 +2394,7 @@ namespace InjectorInspector
                 case xe_tmr_sequense.xets_home_EndCarrierYHome:
                 case xe_tmr_sequense.xets_home_end:
                     dbapiNozzleR(dbNozzle安全原點R, 36);  Thread.Sleep(10);
-                    dbapiGate(0);                     Thread.Sleep(10);
+                    dbapiGate(0);                         Thread.Sleep(10);
                     xeTmrSequense = xe_tmr_sequense.xets_end;
                     break;
 
@@ -2411,6 +2410,7 @@ namespace InjectorInspector
                     }
                     break;
             }
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -2441,7 +2441,14 @@ namespace InjectorInspector
                 xett_確定執行要取針,
                     xett_取得柔震盤針資訊,
                         xett_柔震盤無針,
-                            xett_柔震盤震動3秒,
+                            xett_柔震盤料倉震動,
+                                xett_等待柔震盤料倉震動2秒,
+                            xett_柔震盤上下震動,
+                                xett_等待柔震盤上下震動2秒,
+                            xett_柔震盤左右震動,
+                                xett_等待柔震盤左右震動2秒,
+                            xett_柔震盤散震震動,
+                                xett_等待柔震盤散震震動2秒,
                             xett_檢查柔震盤針資訊,
                             xett_柔震盤無針retry,
 
@@ -2503,6 +2510,120 @@ namespace InjectorInspector
                 xett_取針結束,
             xett_End,
         };
+
+
+
+        private void lbl柔震index(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Label SelectLabel = sender as System.Windows.Forms.Label;
+            if (SelectLabel != null) {
+                       if (SelectLabel == lbl震散   ) { lbl震散.BackColor = Color.Red;   lbl上下收.BackColor = Color.Green; lbl左右收.BackColor = Color.Green; lbl料倉.BackColor = Color.Green;
+                } else if (SelectLabel == lbl上下收 ) { lbl震散.BackColor = Color.Green; lbl上下收.BackColor = Color.Red;   lbl左右收.BackColor = Color.Green; lbl料倉.BackColor = Color.Green;
+                } else if (SelectLabel == lbl左右收 ) { lbl震散.BackColor = Color.Green; lbl上下收.BackColor = Color.Green; lbl左右收.BackColor = Color.Red;   lbl料倉.BackColor = Color.Green;
+                } else if (SelectLabel == lbl料倉   ) { lbl震散.BackColor = Color.Green; lbl上下收.BackColor = Color.Green; lbl左右收.BackColor = Color.Green; lbl料倉.BackColor = Color.Red;
+                } 
+            }
+        }
+
+        private void SB_VBLED_Scroll(object sender, ScrollEventArgs e)
+        {
+            //Vibration LED
+            clsVibration.apiEstablishTCPVibration(); {
+                clsVibration.u32LED_Level = (uint)SB_VBLED.Value;
+                clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
+            }
+        }
+
+
+        enum eWarningSpeed {
+            xeeWS_Disable,
+
+            xeeWS_RedLowSpeed,
+            xeeWS_RedHighSpeed,
+
+            xeeWS_YellowLowSpeed,
+            xeeWS_YellowHighSpeed,
+
+            xeeWS_GreenLowSpeed,
+            xeeWS_GreenHighSpeed,
+        }; 
+        eWarningSpeed eWIndicatorSpeed = eWarningSpeed.xeeWS_Disable;
+
+        int iWarningLEDCnt        = 0;
+        bool bBuzzerWarningRed    = false,
+             bBuzzerWarningYellow = false,
+             bBuzzerWarningGreen  = false;
+
+        private void tmr_Buzzer_Tick(object sender, EventArgs e)
+        {  // start of private void tmr_Buzzer_Tick(object sender, EventArgs e)
+            int iWarningLEDSpeed = 0;
+
+            switch (eWIndicatorSpeed) {
+                case eWarningSpeed.xeeWS_Disable:
+                    iWarningLEDCnt = 0;
+                    break;
+
+                case eWarningSpeed.xeeWS_RedLowSpeed:   iWarningLEDSpeed = 5;  goto lbl_WarningRED;
+                case eWarningSpeed.xeeWS_RedHighSpeed:  iWarningLEDSpeed = 2;  goto lbl_WarningRED;
+                    lbl_WarningRED: {
+                        iWarningLEDCnt++;
+                        if(iWarningLEDCnt>=iWarningLEDSpeed) {
+                            iWarningLEDCnt = 0;
+
+                            bBuzzerWarningRed = !bBuzzerWarningRed;
+                        }
+
+                        if (bBuzzerWarningRed == false) {
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台紅燈)/10, (int)(WMX3IO對照.pxeIO_機台紅燈)%10, 0);
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台黃燈)/10, (int)(WMX3IO對照.pxeIO_機台黃燈)%10, 0);
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台綠燈)/10, (int)(WMX3IO對照.pxeIO_機台綠燈)%10, 0);
+                        } else {
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台紅燈)/10, (int)(WMX3IO對照.pxeIO_機台紅燈)%10, 1);
+                        }
+                    } break;
+
+                case eWarningSpeed.xeeWS_YellowLowSpeed:   iWarningLEDSpeed = 5;  goto lbl_WarningYellow;
+                case eWarningSpeed.xeeWS_YellowHighSpeed:  iWarningLEDSpeed = 2;  goto lbl_WarningYellow; 
+                    lbl_WarningYellow: {
+                        iWarningLEDCnt++;
+                        if(iWarningLEDCnt>=iWarningLEDSpeed) {
+                            iWarningLEDCnt = 0;
+
+                            bBuzzerWarningYellow = !bBuzzerWarningYellow;
+                        }
+
+                        if (bBuzzerWarningYellow == false) {
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台紅燈)/10, (int)(WMX3IO對照.pxeIO_機台紅燈)%10, 0);
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台黃燈)/10, (int)(WMX3IO對照.pxeIO_機台黃燈)%10, 0);
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台綠燈)/10, (int)(WMX3IO對照.pxeIO_機台綠燈)%10, 0);
+                        } else {
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台黃燈)/10, (int)(WMX3IO對照.pxeIO_機台黃燈)%10, 1);
+                        }
+                    } break;
+
+                case eWarningSpeed.xeeWS_GreenLowSpeed:   iWarningLEDSpeed = 5;  goto lbl_WarningGreen;
+                case eWarningSpeed.xeeWS_GreenHighSpeed:  iWarningLEDSpeed = 2;  goto lbl_WarningGreen; 
+                    lbl_WarningGreen: {
+                        iWarningLEDCnt++;
+                        if(iWarningLEDCnt>=iWarningLEDSpeed) {
+                            iWarningLEDCnt = 0;
+
+                            bBuzzerWarningGreen = !bBuzzerWarningGreen;
+                        }
+
+                        if (bBuzzerWarningGreen == false) {
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台紅燈)/10, (int)(WMX3IO對照.pxeIO_機台紅燈)%10, 0);
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台黃燈)/10, (int)(WMX3IO對照.pxeIO_機台黃燈)%10, 0);
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台綠燈)/10, (int)(WMX3IO對照.pxeIO_機台綠燈)%10, 0);
+                        } else {
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台綠燈)/10, (int)(WMX3IO對照.pxeIO_機台綠燈)%10, 1);
+                        }
+                    } break;
+            }  // end of switch (eWIndicatorSpeed) {
+        }  // end of private void tmr_Buzzer_Tick(object sender, EventArgs e)
+
+
+
         public xe_tmr_takepin xeTmrTakePin = xe_tmr_takepin.xett_Empty;
 
         public int iTakePinFinishedCNT1 = 0;
@@ -2522,6 +2643,8 @@ namespace InjectorInspector
         public const double db吐料位X           = 243.000;
         public const double db吐料位下降Z高度   = 8.000;
 
+
+
         private void btn_TakePin_Click(object sender, EventArgs e)
         {
             bTakePin = true;
@@ -2530,8 +2653,7 @@ namespace InjectorInspector
         private void tmr_TakePin_Tick(object sender, EventArgs e)
         {  // start of private void tmr_TakePin_Tick(object sender, EventArgs e)
 
-            btn_TakePin.Text = xeTmrTakePin.ToString();
-
+            lblLog.Text = xeTmrTakePin.ToString() + ", 柔震重試:" + iTakePinFinishedCNT2;
             switch (xeTmrTakePin) {
                 case xe_tmr_takepin.xett_Empty:  
                     if(bTakePin==true) {
@@ -2553,21 +2675,79 @@ namespace InjectorInspector
                             } else { 
                                 //柔震無料
                                 xeTmrTakePin = xe_tmr_takepin.xett_柔震盤無針;
+
+                                //設定retry次數
+                                iTakePinFinishedCNT2 = 3;
                             }
                             break;
-                            case xe_tmr_takepin.xett_柔震盤無針:                           xeTmrTakePin = xe_tmr_takepin.xett_柔震盤震動3秒;  break;
-                                case xe_tmr_takepin.xett_柔震盤震動3秒: 
-                                    if(true) {
-                                        btnVibrationInit_Click(sender, e);
+                            case xe_tmr_takepin.xett_柔震盤無針:            
+                                xeTmrTakePin = xe_tmr_takepin.xett_柔震盤料倉震動;  
+                                break;
+                                case xe_tmr_takepin.xett_柔震盤料倉震動:
+                                    lbl震散.BackColor   = Color.Green; 
+                                    lbl上下收.BackColor = Color.Green;   
+                                    lbl左右收.BackColor = Color.Green; 
+                                    lbl料倉.BackColor   = Color.Red;
+                                    btnVibrationInit_Click(sender, e);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_等待柔震盤料倉震動2秒;
+                                    break;
+                                    case xe_tmr_takepin.xett_等待柔震盤料倉震動2秒: 
                                         iTakePinFinishedCNT1++;
-                                        if(iTakePinFinishedCNT1>=600) { 
+                                        if(iTakePinFinishedCNT1>=100) { 
+                                            iTakePinFinishedCNT1 = 0;
+                                            btnVibrationStop_Click(sender, e);
+                                            xeTmrTakePin = xe_tmr_takepin.xett_柔震盤上下震動;
+                                        }
+                                        break;
+                                case xe_tmr_takepin.xett_柔震盤上下震動: 
+                                    lbl震散.BackColor   = Color.Green; 
+                                    lbl上下收.BackColor = Color.Red;   
+                                    lbl左右收.BackColor = Color.Green; 
+                                    lbl料倉.BackColor   = Color.Green;
+                                    btnVibrationInit_Click(sender, e);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_等待柔震盤上下震動2秒;
+                                    break;
+                                    case xe_tmr_takepin.xett_等待柔震盤上下震動2秒: 
+                                        iTakePinFinishedCNT1++;
+                                        if(iTakePinFinishedCNT1>=100) { 
+                                            iTakePinFinishedCNT1 = 0;
+                                            btnVibrationStop_Click(sender, e);
+                                            xeTmrTakePin = xe_tmr_takepin.xett_柔震盤左右震動;
+                                        }
+                                        break;
+                                case xe_tmr_takepin.xett_柔震盤左右震動:
+                                    lbl震散.BackColor   = Color.Green; 
+                                    lbl上下收.BackColor = Color.Green;   
+                                    lbl左右收.BackColor = Color.Red; 
+                                    lbl料倉.BackColor   = Color.Green;
+                                    btnVibrationInit_Click(sender, e);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_等待柔震盤左右震動2秒;
+                                    break;
+                                    case xe_tmr_takepin.xett_等待柔震盤左右震動2秒:
+                                        iTakePinFinishedCNT1++;
+                                        if(iTakePinFinishedCNT1>=100) { 
+                                            iTakePinFinishedCNT1 = 0;
+                                            btnVibrationStop_Click(sender, e);
+                                            xeTmrTakePin = xe_tmr_takepin.xett_柔震盤散震震動;
+                                        }
+                                        break;
+                                case xe_tmr_takepin.xett_柔震盤散震震動:
+                                    lbl震散.BackColor   = Color.Red; 
+                                    lbl上下收.BackColor = Color.Green;   
+                                    lbl左右收.BackColor = Color.Green; 
+                                    lbl料倉.BackColor   = Color.Green;
+                                    btnVibrationInit_Click(sender, e);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_等待柔震盤散震震動2秒;
+                                    break;
+                                    case xe_tmr_takepin.xett_等待柔震盤散震震動2秒:
+                                        iTakePinFinishedCNT1++;
+                                        if(iTakePinFinishedCNT1>=100) { 
                                             iTakePinFinishedCNT1 = 0;
                                             btnVibrationStop_Click(sender, e);
                                             xeTmrTakePin = xe_tmr_takepin.xett_檢查柔震盤針資訊;
                                         }
-                                    }
-                                    break;
-                                case xe_tmr_takepin.xett_檢查柔震盤針資訊: 
+                                        break;
+                                case xe_tmr_takepin.xett_檢查柔震盤針資訊:
                                     if(b柔震盤有料_tmrTakePinTick == true) { 
                                         //柔震有料
                                         xeTmrTakePin = xe_tmr_takepin.xett_得到針資訊;
@@ -2577,11 +2757,11 @@ namespace InjectorInspector
                                     }
                                     break;
                                 case xe_tmr_takepin.xett_柔震盤無針retry: 
-                                    iTakePinFinishedCNT2++;
-                                    if(iTakePinFinishedCNT2>=3) { 
+                                    iTakePinFinishedCNT2--;
+                                    if(iTakePinFinishedCNT2==0) { 
                                         xeTmrTakePin = xe_tmr_takepin.xett_取針結束;
                                     } else { 
-                                        xeTmrTakePin = xe_tmr_takepin.xett_柔震盤震動3秒;
+                                        xeTmrTakePin = xe_tmr_takepin.xett_柔震盤無針;
                                     }
                                     break;
 
@@ -2811,6 +2991,20 @@ namespace InjectorInspector
 
 
 
+
+
+
+
+
+
+
+
+
+
+        private void inspector1_Load(object sender, EventArgs e)
+        {
+
+        }
 
 
 

@@ -284,10 +284,11 @@ namespace Inspector
         internal HObject RemoveBorder(HObject regn, HTuple W, HTuple H)
         {
             HObject right, left, top, outRegion;
-            HOperatorSet.SelectShape(regn, out right, "column2", "and", 5, W - 5);
-            HOperatorSet.SelectShape(right, out left, "column1", "and", 5, W - 5);
-            HOperatorSet.SelectShape(left, out top, "row1", "and", 5, H - 5);
-            HOperatorSet.SelectShape(top, out outRegion, "row2", "and", 5, H - 5);
+            HOperatorSet.SelectShape(regn, out right, "column2", "and", 5, W - 100);    //右
+            HOperatorSet.SelectShape(right, out left, "column1", "and", 100, W - 5);    //左
+
+            HOperatorSet.SelectShape(left, out top, "row1", "and", 100, H - 5);         //上
+            HOperatorSet.SelectShape(top, out outRegion, "row2", "and", 5, H - 200);    //下
             DisposeObj(right, left, top);
             return outRegion;
         }

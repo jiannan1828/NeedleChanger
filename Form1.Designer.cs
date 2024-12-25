@@ -31,6 +31,12 @@
             this.components = new System.ComponentModel.Container();
             this.tmr_ReadWMX3 = new System.Windows.Forms.Timer(this.components);
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.lblVBLED = new System.Windows.Forms.Label();
+            this.SB_VBLED = new System.Windows.Forms.HScrollBar();
+            this.lbl料倉 = new System.Windows.Forms.Label();
+            this.lbl上下收 = new System.Windows.Forms.Label();
+            this.lbl震散 = new System.Windows.Forms.Label();
+            this.lbl左右收 = new System.Windows.Forms.Label();
             this.lbl_debug = new System.Windows.Forms.Label();
             this.lbl_植針吹氣流量閥 = new System.Windows.Forms.Label();
             this.btn_minus_d001 = new System.Windows.Forms.Button();
@@ -40,8 +46,6 @@
             this.btn_minus_d1 = new System.Windows.Forms.Button();
             this.btn_plus_d1 = new System.Windows.Forms.Button();
             this.vcb_植針吹氣流量閥 = new System.Windows.Forms.VScrollBar();
-            this.btnVibrationLEDOff = new System.Windows.Forms.Button();
-            this.btnVibrationLED = new System.Windows.Forms.Button();
             this.btnVibrationStop = new System.Windows.Forms.Button();
             this.btnVibrationInit = new System.Windows.Forms.Button();
             this.lbl_JoDell吸針嘴_Convert = new System.Windows.Forms.Label();
@@ -266,6 +270,7 @@
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lblLog = new System.Windows.Forms.Label();
             this.txt_取料循環 = new System.Windows.Forms.TextBox();
             this.btn_TakePin = new System.Windows.Forms.Button();
             this.btn_home = new System.Windows.Forms.Button();
@@ -294,6 +299,7 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
+            this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -310,6 +316,12 @@
             // 
             // tabJob
             // 
+            this.tabJob.Controls.Add(this.lblVBLED);
+            this.tabJob.Controls.Add(this.SB_VBLED);
+            this.tabJob.Controls.Add(this.lbl料倉);
+            this.tabJob.Controls.Add(this.lbl上下收);
+            this.tabJob.Controls.Add(this.lbl震散);
+            this.tabJob.Controls.Add(this.lbl左右收);
             this.tabJob.Controls.Add(this.lbl_debug);
             this.tabJob.Controls.Add(this.lbl_植針吹氣流量閥);
             this.tabJob.Controls.Add(this.btn_minus_d001);
@@ -319,8 +331,6 @@
             this.tabJob.Controls.Add(this.btn_minus_d1);
             this.tabJob.Controls.Add(this.btn_plus_d1);
             this.tabJob.Controls.Add(this.vcb_植針吹氣流量閥);
-            this.tabJob.Controls.Add(this.btnVibrationLEDOff);
-            this.tabJob.Controls.Add(this.btnVibrationLED);
             this.tabJob.Controls.Add(this.btnVibrationStop);
             this.tabJob.Controls.Add(this.btnVibrationInit);
             this.tabJob.Controls.Add(this.lbl_JoDell吸針嘴_Convert);
@@ -456,6 +466,75 @@
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
             // 
+            // lblVBLED
+            // 
+            this.lblVBLED.AutoSize = true;
+            this.lblVBLED.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lblVBLED.Location = new System.Drawing.Point(368, 363);
+            this.lblVBLED.Name = "lblVBLED";
+            this.lblVBLED.Size = new System.Drawing.Size(59, 13);
+            this.lblVBLED.TabIndex = 217;
+            this.lblVBLED.Text = "lblVBLED";
+            // 
+            // SB_VBLED
+            // 
+            this.SB_VBLED.Location = new System.Drawing.Point(430, 359);
+            this.SB_VBLED.Maximum = 50;
+            this.SB_VBLED.Minimum = 5;
+            this.SB_VBLED.Name = "SB_VBLED";
+            this.SB_VBLED.Size = new System.Drawing.Size(176, 20);
+            this.SB_VBLED.TabIndex = 216;
+            this.SB_VBLED.Value = 33;
+            this.SB_VBLED.Scroll += new System.Windows.Forms.ScrollEventHandler(this.SB_VBLED_Scroll);
+            // 
+            // lbl料倉
+            // 
+            this.lbl料倉.AutoSize = true;
+            this.lbl料倉.BackColor = System.Drawing.Color.Green;
+            this.lbl料倉.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl料倉.Location = new System.Drawing.Point(552, 305);
+            this.lbl料倉.Name = "lbl料倉";
+            this.lbl料倉.Size = new System.Drawing.Size(45, 13);
+            this.lbl料倉.TabIndex = 215;
+            this.lbl料倉.Text = "lbl料倉";
+            this.lbl料倉.Click += new System.EventHandler(this.lbl柔震index);
+            // 
+            // lbl上下收
+            // 
+            this.lbl上下收.AutoSize = true;
+            this.lbl上下收.BackColor = System.Drawing.Color.Green;
+            this.lbl上下收.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl上下收.Location = new System.Drawing.Point(432, 305);
+            this.lbl上下收.Name = "lbl上下收";
+            this.lbl上下收.Size = new System.Drawing.Size(58, 13);
+            this.lbl上下收.TabIndex = 214;
+            this.lbl上下收.Text = "lbl上下收";
+            this.lbl上下收.Click += new System.EventHandler(this.lbl柔震index);
+            // 
+            // lbl震散
+            // 
+            this.lbl震散.AutoSize = true;
+            this.lbl震散.BackColor = System.Drawing.Color.Red;
+            this.lbl震散.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl震散.Location = new System.Drawing.Point(387, 305);
+            this.lbl震散.Name = "lbl震散";
+            this.lbl震散.Size = new System.Drawing.Size(45, 13);
+            this.lbl震散.TabIndex = 213;
+            this.lbl震散.Text = "lbl震散";
+            this.lbl震散.Click += new System.EventHandler(this.lbl柔震index);
+            // 
+            // lbl左右收
+            // 
+            this.lbl左右收.AutoSize = true;
+            this.lbl左右收.BackColor = System.Drawing.Color.Green;
+            this.lbl左右收.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl左右收.Location = new System.Drawing.Point(492, 305);
+            this.lbl左右收.Name = "lbl左右收";
+            this.lbl左右收.Size = new System.Drawing.Size(58, 13);
+            this.lbl左右收.TabIndex = 212;
+            this.lbl左右收.Text = "lbl左右收";
+            this.lbl左右收.Click += new System.EventHandler(this.lbl柔震index);
+            // 
             // lbl_debug
             // 
             this.lbl_debug.AutoSize = true;
@@ -469,7 +548,7 @@
             // 
             this.lbl_植針吹氣流量閥.AutoSize = true;
             this.lbl_植針吹氣流量閥.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_植針吹氣流量閥.Location = new System.Drawing.Point(1170, 25);
+            this.lbl_植針吹氣流量閥.Location = new System.Drawing.Point(1089, 20);
             this.lbl_植針吹氣流量閥.Name = "lbl_植針吹氣流量閥";
             this.lbl_植針吹氣流量閥.Size = new System.Drawing.Size(116, 13);
             this.lbl_植針吹氣流量閥.TabIndex = 210;
@@ -543,7 +622,7 @@
             // 
             // vcb_植針吹氣流量閥
             // 
-            this.vcb_植針吹氣流量閥.Location = new System.Drawing.Point(1175, 50);
+            this.vcb_植針吹氣流量閥.Location = new System.Drawing.Point(1094, 45);
             this.vcb_植針吹氣流量閥.Maximum = 110;
             this.vcb_植針吹氣流量閥.Minimum = -10;
             this.vcb_植針吹氣流量閥.Name = "vcb_植針吹氣流量閥";
@@ -552,32 +631,10 @@
             this.vcb_植針吹氣流量閥.Value = 110;
             this.vcb_植針吹氣流量閥.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
             // 
-            // btnVibrationLEDOff
-            // 
-            this.btnVibrationLEDOff.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnVibrationLEDOff.Location = new System.Drawing.Point(490, 332);
-            this.btnVibrationLEDOff.Name = "btnVibrationLEDOff";
-            this.btnVibrationLEDOff.Size = new System.Drawing.Size(123, 23);
-            this.btnVibrationLEDOff.TabIndex = 201;
-            this.btnVibrationLEDOff.Text = "btnVibrationLEDOff";
-            this.btnVibrationLEDOff.UseVisualStyleBackColor = true;
-            this.btnVibrationLEDOff.Click += new System.EventHandler(this.btnVibrationLEDOff_Click);
-            // 
-            // btnVibrationLED
-            // 
-            this.btnVibrationLED.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnVibrationLED.Location = new System.Drawing.Point(368, 332);
-            this.btnVibrationLED.Name = "btnVibrationLED";
-            this.btnVibrationLED.Size = new System.Drawing.Size(116, 23);
-            this.btnVibrationLED.TabIndex = 200;
-            this.btnVibrationLED.Text = "btnVibrationLED";
-            this.btnVibrationLED.UseVisualStyleBackColor = true;
-            this.btnVibrationLED.Click += new System.EventHandler(this.btnVibrationLED_Click);
-            // 
             // btnVibrationStop
             // 
             this.btnVibrationStop.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnVibrationStop.Location = new System.Drawing.Point(490, 302);
+            this.btnVibrationStop.Location = new System.Drawing.Point(490, 328);
             this.btnVibrationStop.Name = "btnVibrationStop";
             this.btnVibrationStop.Size = new System.Drawing.Size(116, 23);
             this.btnVibrationStop.TabIndex = 199;
@@ -588,7 +645,7 @@
             // btnVibrationInit
             // 
             this.btnVibrationInit.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnVibrationInit.Location = new System.Drawing.Point(368, 302);
+            this.btnVibrationInit.Location = new System.Drawing.Point(368, 328);
             this.btnVibrationInit.Name = "btnVibrationInit";
             this.btnVibrationInit.Size = new System.Drawing.Size(116, 23);
             this.btnVibrationInit.TabIndex = 198;
@@ -2993,6 +3050,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.lblLog);
             this.tabPage2.Controls.Add(this.txt_取料循環);
             this.tabPage2.Controls.Add(this.btn_TakePin);
             this.tabPage2.Controls.Add(this.btn_home);
@@ -3021,6 +3079,15 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // lblLog
+            // 
+            this.lblLog.AutoSize = true;
+            this.lblLog.Location = new System.Drawing.Point(86, 259);
+            this.lblLog.Name = "lblLog";
+            this.lblLog.Size = new System.Drawing.Size(57, 19);
+            this.lblLog.TabIndex = 212;
+            this.lblLog.Text = "lblLog";
             // 
             // txt_取料循環
             // 
@@ -3112,7 +3179,6 @@
             this.button3.TabIndex = 22;
             this.button3.Text = "Socket";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // btnStop
             // 
@@ -3249,6 +3315,7 @@
             this.inspector1.Name = "inspector1";
             this.inspector1.Size = new System.Drawing.Size(1112, 744);
             this.inspector1.TabIndex = 1;
+            this.inspector1.Load += new System.EventHandler(this.inspector1_Load);
             // 
             // tabControl1
             // 
@@ -3281,6 +3348,12 @@
             this.tmr_TakePin.Enabled = true;
             this.tmr_TakePin.Interval = 5;
             this.tmr_TakePin.Tick += new System.EventHandler(this.tmr_TakePin_Tick);
+            // 
+            // tmr_Warning
+            // 
+            this.tmr_Warning.Enabled = true;
+            this.tmr_Warning.Interval = 300;
+            this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
             // Form1
             // 
@@ -3551,8 +3624,6 @@
         private System.Windows.Forms.Label lbl_spd_JoDell植針嘴;
         private System.Windows.Forms.Label lbl_spd_JoDell植針嘴_lbl;
         private System.Windows.Forms.RadioButton select_JoDell植針嘴;
-        private System.Windows.Forms.Button btnVibrationLEDOff;
-        private System.Windows.Forms.Button btnVibrationLED;
         private System.Windows.Forms.Button btnVibrationStop;
         private System.Windows.Forms.Button btnVibrationInit;
         private System.Windows.Forms.VScrollBar vcb_植針吹氣流量閥;
@@ -3577,6 +3648,14 @@
         private System.Windows.Forms.Timer tmr_TakePin;
         private System.Windows.Forms.Button btn_TakePin;
         private System.Windows.Forms.TextBox txt_取料循環;
+        private System.Windows.Forms.Label lbl上下收;
+        private System.Windows.Forms.Label lbl震散;
+        private System.Windows.Forms.Label lbl左右收;
+        private System.Windows.Forms.Label lbl料倉;
+        private System.Windows.Forms.HScrollBar SB_VBLED;
+        private System.Windows.Forms.Label lblVBLED;
+        private System.Windows.Forms.Label lblLog;
+        private System.Windows.Forms.Timer tmr_Warning;
     }
 }
 
