@@ -139,9 +139,9 @@
             this.lbl_NA_17 = new System.Windows.Forms.Label();
             this.lbl_NA_16 = new System.Windows.Forms.Label();
             this.lbl_NA_15 = new System.Windows.Forms.Label();
-            this.lbl_NA_14 = new System.Windows.Forms.Label();
+            this.lbl_擺放座關 = new System.Windows.Forms.Label();
             this.lbl_NA_13 = new System.Windows.Forms.Label();
-            this.lbl_NA_12 = new System.Windows.Forms.Label();
+            this.lbl_擺放座開 = new System.Windows.Forms.Label();
             this.lbl_NA_11 = new System.Windows.Forms.Label();
             this.lbl急停鈕 = new System.Windows.Forms.Label();
             this.lbl_NA_10 = new System.Windows.Forms.Label();
@@ -270,6 +270,7 @@
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btn上膛 = new System.Windows.Forms.Button();
             this.lblLog = new System.Windows.Forms.Label();
             this.txt_取料循環 = new System.Windows.Forms.TextBox();
             this.btn_TakePin = new System.Windows.Forms.Button();
@@ -1445,9 +1446,9 @@
             this.groupBox1.Controls.Add(this.lbl_NA_17);
             this.groupBox1.Controls.Add(this.lbl_NA_16);
             this.groupBox1.Controls.Add(this.lbl_NA_15);
-            this.groupBox1.Controls.Add(this.lbl_NA_14);
+            this.groupBox1.Controls.Add(this.lbl_擺放座關);
             this.groupBox1.Controls.Add(this.lbl_NA_13);
-            this.groupBox1.Controls.Add(this.lbl_NA_12);
+            this.groupBox1.Controls.Add(this.lbl_擺放座開);
             this.groupBox1.Controls.Add(this.lbl_NA_11);
             this.groupBox1.Controls.Add(this.lbl急停鈕);
             this.groupBox1.Controls.Add(this.lbl_NA_10);
@@ -1705,15 +1706,15 @@
             this.lbl_NA_15.TabIndex = 203;
             this.lbl_NA_15.Text = "lbl_NA_15";
             // 
-            // lbl_NA_14
+            // lbl_擺放座關
             // 
-            this.lbl_NA_14.AutoSize = true;
-            this.lbl_NA_14.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_14.Location = new System.Drawing.Point(420, 80);
-            this.lbl_NA_14.Name = "lbl_NA_14";
-            this.lbl_NA_14.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_14.TabIndex = 202;
-            this.lbl_NA_14.Text = "lbl_NA_14";
+            this.lbl_擺放座關.AutoSize = true;
+            this.lbl_擺放座關.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_擺放座關.Location = new System.Drawing.Point(420, 80);
+            this.lbl_擺放座關.Name = "lbl_擺放座關";
+            this.lbl_擺放座關.Size = new System.Drawing.Size(77, 13);
+            this.lbl_擺放座關.TabIndex = 202;
+            this.lbl_擺放座關.Text = "lbl_擺放座關";
             // 
             // lbl_NA_13
             // 
@@ -1725,15 +1726,15 @@
             this.lbl_NA_13.TabIndex = 201;
             this.lbl_NA_13.Text = "lbl_NA_13";
             // 
-            // lbl_NA_12
+            // lbl_擺放座開
             // 
-            this.lbl_NA_12.AutoSize = true;
-            this.lbl_NA_12.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_12.Location = new System.Drawing.Point(420, 40);
-            this.lbl_NA_12.Name = "lbl_NA_12";
-            this.lbl_NA_12.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_12.TabIndex = 200;
-            this.lbl_NA_12.Text = "lbl_NA_12";
+            this.lbl_擺放座開.AutoSize = true;
+            this.lbl_擺放座開.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_擺放座開.Location = new System.Drawing.Point(420, 40);
+            this.lbl_擺放座開.Name = "lbl_擺放座開";
+            this.lbl_擺放座開.Size = new System.Drawing.Size(77, 13);
+            this.lbl_擺放座開.TabIndex = 200;
+            this.lbl_擺放座開.Text = "lbl_擺放座開";
             // 
             // lbl_NA_11
             // 
@@ -3050,6 +3051,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btn上膛);
             this.tabPage2.Controls.Add(this.lblLog);
             this.tabPage2.Controls.Add(this.txt_取料循環);
             this.tabPage2.Controls.Add(this.btn_TakePin);
@@ -3080,10 +3082,20 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btn上膛
+            // 
+            this.btn上膛.Location = new System.Drawing.Point(380, 210);
+            this.btn上膛.Name = "btn上膛";
+            this.btn上膛.Size = new System.Drawing.Size(165, 40);
+            this.btn上膛.TabIndex = 213;
+            this.btn上膛.Text = "上膛";
+            this.btn上膛.UseVisualStyleBackColor = true;
+            this.btn上膛.Click += new System.EventHandler(this.btn上膛_Click);
+            // 
             // lblLog
             // 
             this.lblLog.AutoSize = true;
-            this.lblLog.Location = new System.Drawing.Point(86, 259);
+            this.lblLog.Location = new System.Drawing.Point(25, 715);
             this.lblLog.Name = "lblLog";
             this.lblLog.Size = new System.Drawing.Size(57, 19);
             this.lblLog.TabIndex = 212;
@@ -3442,9 +3454,9 @@
         private System.Windows.Forms.Label lbl_NA_17;
         private System.Windows.Forms.Label lbl_NA_16;
         private System.Windows.Forms.Label lbl_NA_15;
-        private System.Windows.Forms.Label lbl_NA_14;
+        private System.Windows.Forms.Label lbl_擺放座關;
         private System.Windows.Forms.Label lbl_NA_13;
-        private System.Windows.Forms.Label lbl_NA_12;
+        private System.Windows.Forms.Label lbl_擺放座開;
         private System.Windows.Forms.Label lbl_NA_11;
         private System.Windows.Forms.Label lbl急停鈕;
         private System.Windows.Forms.Label lbl_NA_10;
@@ -3656,6 +3668,7 @@
         private System.Windows.Forms.Label lblVBLED;
         private System.Windows.Forms.Label lblLog;
         private System.Windows.Forms.Timer tmr_Warning;
+        private System.Windows.Forms.Button btn上膛;
     }
 }
 

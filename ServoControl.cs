@@ -166,9 +166,9 @@ namespace InjectorInspector
             pxeIO_NA47            = 47,  //7 未接
 
             pxeIO_Addr33          = 33,  //33
-            pxeIO_NA50            = 50,  //0 位階
+            pxeIO_擺放座蓋板開    = 50,  //0 位階
             pxeIO_NA51            = 51,  //1 位階
-            pxeIO_NA52            = 52,  //2 位階
+            pxeIO_擺放座蓋板合    = 52,  //2 位階
             pxeIO_NA53            = 53,  //3 位階
             pxeIO_NA54            = 54,  //4 位階
             pxeIO_NA55            = 55,  //5 位階
