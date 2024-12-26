@@ -2831,9 +2831,10 @@ namespace InjectorInspector
                                     break;
                                     case xe_tmr_takepin.xett_等待柔震盤散震震動2秒:
                                         iTakePinFinishedCNT1++;
-                                        if(iTakePinFinishedCNT1>=50) { 
-                                            iTakePinFinishedCNT1 = 0;
+                                        if( 50<=iTakePinFinishedCNT1 && iTakePinFinishedCNT1<=52 ) { 
                                             btnVibrationStop_Click(sender, e);
+                                        } else if( 60<=iTakePinFinishedCNT1 ) { 
+                                            iTakePinFinishedCNT1 = 0;
                                             xeTmrTakePin = xe_tmr_takepin.xett_檢查柔震盤針資訊;
                                         }
                                         break;
@@ -2850,6 +2851,9 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_柔震盤無針retry: 
                                     iTakePinFinishedCNT2--;
                                     if(iTakePinFinishedCNT2==0) { 
+                                        //設定retry次數
+                                        iTakePinFinishedCNT2 = 3;
+
                                         xeTmrTakePin = xe_tmr_takepin.xett_取針結束;
                                     } else { 
                                         xeTmrTakePin = xe_tmr_takepin.xett_柔震盤無針;
@@ -2869,12 +2873,17 @@ namespace InjectorInspector
                                 } break;
                                 case xe_tmr_takepin.xett_判斷NozzleZ到0安全位置:           xeTmrTakePin = xe_tmr_takepin.xett_移動NozzleXYR吸料位;  break;
 
-                                case xe_tmr_takepin.xett_移動NozzleXYR吸料位: 
-                                    dbapiNozzleX(db取料Nozzle中心點X + dbPinX_tmrTakePinTick, bTakePin?500*4:500*2);
-                                    dbapiNozzleY(db取料Nozzle中心點Y + dbPinY_tmrTakePinTick, bTakePin?100*8:100*4);    
-                                    dbapiNozzleR(db取料Nozzle中心點R + dbPinR_tmrTakePinTick, bTakePin?360*8:360*4);
-                                    xeTmrTakePin = xe_tmr_takepin.xett_檢測NozzleXYR吸料位;
-                                    break;
+                                case xe_tmr_takepin.xett_移動NozzleXYR吸料位: {
+                                    double dbTargetNozzleY = db取料Nozzle中心點Y + dbPinY_tmrTakePinTick;
+                                    if(dbTargetNozzleY <= 5 && 95 <= dbTargetNozzleY) { 
+                                        xeTmrTakePin = xe_tmr_takepin.xett_柔震盤料倉震動;
+                                    } else { 
+                                        dbapiNozzleX(db取料Nozzle中心點X + dbPinX_tmrTakePinTick, bTakePin?500*4:500*2);
+                                        dbapiNozzleY(db取料Nozzle中心點Y + dbPinY_tmrTakePinTick, bTakePin?100*8:100*4);    
+                                        dbapiNozzleR(db取料Nozzle中心點R + dbPinR_tmrTakePinTick, bTakePin?360*8:360*4);
+                                        xeTmrTakePin = xe_tmr_takepin.xett_檢測NozzleXYR吸料位;
+                                    }
+                                } break;
                                 case xe_tmr_takepin.xett_檢測NozzleXYR吸料位: {
                                     double dbX = dbapiNozzleX(dbRead, 0);
                                     double dbY = dbapiNozzleY(dbRead, 0);
@@ -2929,8 +2938,8 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_NozzleZ縮為0完成:                 xeTmrTakePin = xe_tmr_takepin.xett_移至飛拍起始位置;  break;
 
                                 case xe_tmr_takepin.xett_移至飛拍起始位置:
-                                    dbapiNozzleX(db下視覺取像X_Start,    bTakePin?500*4:500*2);
                                     dbapiNozzleY(db下視覺取像Y,          bTakePin?100*8:100*4);
+                                    dbapiNozzleX(db下視覺取像X_Start,    bTakePin?500*4:500*2);
                                     dbapiNozzleZ(db下視覺取像Z,          bTakePin? 40*8: 40*4);
                                     dbapiNozzleR(db取料Nozzle中心點R+90, bTakePin?360*8:360*4);
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢測是否在飛拍起始位置;

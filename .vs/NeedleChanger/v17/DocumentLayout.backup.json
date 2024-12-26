@@ -3,7 +3,7 @@
   "WorkspaceRootPath": "D:\\NeedleChanger\\Code\\NeedleChanger\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|d:\\needlechanger\\code\\needlechanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -11,7 +11,7 @@
       "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|d:\\needlechanger\\code\\needlechanger\\servocontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\servocontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:servocontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -54,8 +54,7 @@
               "RelativeToolTip": "Form1.Designer.cs",
               "ViewState": "AgIAAA8CAAAAAAAAAAAEwCECAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-24T07:28:21.56Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-24T07:28:21.56Z"
             },
             {
               "$type": "Document",
@@ -63,9 +62,9 @@
               "Title": "Form1.cs",
               "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs",
-              "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAAKAKAAAAAAAAAAAvwLMKAAAhAAAAAAAAAA==",
+              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs*",
+              "RelativeToolTip": "Form1.cs*",
+              "ViewState": "AgIAAGILAAAAAAAAAAAwwHwLAABaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-20T01:45:47.192Z",
               "EditorCaption": ""
@@ -80,8 +79,7 @@
               "RelativeToolTip": "ServoControl.cs",
               "ViewState": "AgIAAG8DAAAAAAAAAADgv4IDAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T05:29:56.19Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-09T05:29:56.19Z"
             },
             {
               "$type": "Document",
@@ -115,8 +113,7 @@
               "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs [\u8A2D\u8A08]",
               "RelativeToolTip": "Form1.cs [\u8A2D\u8A08]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-24T07:33:37.765Z",
-              "EditorCaption": " [\u8A2D\u8A08]"
+              "WhenOpened": "2024-12-24T07:33:37.765Z"
             },
             {
               "$type": "Document",
@@ -148,10 +145,6 @@
           "DockedHeight": 115,
           "SelectedChildIndex": -1,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
