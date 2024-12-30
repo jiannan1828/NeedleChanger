@@ -301,12 +301,15 @@
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
+            this.button2 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tmr_ReadWMX3
@@ -3343,6 +3346,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.button5);
+            this.tabPage3.Controls.Add(this.button2);
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(1228, 758);
@@ -3366,6 +3371,26 @@
             this.tmr_Warning.Enabled = true;
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(115, 77);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 0;
+            this.button2.Text = "存檔";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(115, 138);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 1;
+            this.button5.Text = "讀黨";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
@@ -3392,6 +3417,7 @@
             this.tabPage2.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -3669,6 +3695,8 @@
         private System.Windows.Forms.Label lblLog;
         private System.Windows.Forms.Timer tmr_Warning;
         private System.Windows.Forms.Button btn上膛;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button2;
     }
 }
 

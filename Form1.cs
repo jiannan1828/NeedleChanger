@@ -2878,6 +2878,8 @@ namespace InjectorInspector
                                     if(dbTargetNozzleY <= 5 && 95 <= dbTargetNozzleY) { 
                                         xeTmrTakePin = xe_tmr_takepin.xett_柔震盤料倉震動;
                                     } else { 
+                                        //20241230, XavierTsai,
+                                        //請加一個call api to視覺的"回程拍照"
                                         dbapiNozzleX(db取料Nozzle中心點X + dbPinX_tmrTakePinTick, bTakePin?500*4:500*2);
                                         dbapiNozzleY(db取料Nozzle中心點Y + dbPinY_tmrTakePinTick, bTakePin?100*8:100*4);    
                                         dbapiNozzleR(db取料Nozzle中心點R + dbPinR_tmrTakePinTick, bTakePin?360*8:360*4);
@@ -2893,8 +2895,8 @@ namespace InjectorInspector
                                     double dbTargetY = db取料Nozzle中心點Y + dbPinY_tmrTakePinTick;
                                     double dbTargetR = db取料Nozzle中心點R + dbPinR_tmrTakePinTick;
                                     if( (dbTargetX*0.99<= dbX && dbX <= dbTargetX*1.01) &&
-                                        (dbTargetY*0.99<= dbY && dbY <= dbTargetY*1.01) &&
-                                        ( (dbTargetR*0.99<=dbR && dbR<=dbTargetR*1.01) || (dbTargetR*1.01<=dbR && dbR<=dbTargetR*0.99) ) 
+                                        (dbTargetY*0.99<= dbY && dbY <= dbTargetY*1.01) //&&
+                                        //( (dbTargetR*0.99<=dbR && dbR<=dbTargetR*1.01) || (dbTargetR*1.01<=dbR && dbR<=dbTargetR*0.99) ) 
                                       ) { 
                                         xeTmrTakePin = xe_tmr_takepin.xett_判斷NozzleXYR吸料位為安全位置;
                                     }
@@ -2965,6 +2967,8 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_確認在飛拍起始位置:                        xeTmrTakePin = xe_tmr_takepin.xett_NozzleX以速度250移動來觸發飛拍;  break;
 
                                 case xe_tmr_takepin.xett_NozzleX以速度250移動來觸發飛拍: 
+                                    //20241230, XavierTsai,
+                                    //請加一個call api to視覺的"去程拍照"
                                     dbapiNozzleX(db下視覺取像X_END, 250);
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢測是否飛拍移動完成;
                                     break;
@@ -3420,6 +3424,17 @@ namespace InjectorInspector
 
 
 
+
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            inspector1.SaveRecipe(8);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            inspector1.LoadRecipe(8);
+        }
 
 
 
