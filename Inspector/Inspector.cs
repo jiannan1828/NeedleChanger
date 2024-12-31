@@ -29,7 +29,7 @@ namespace Inspector
         internal bool DebugMode = true; //右鍵選單顯示
         public bool xEngineer = true;   //右鍵選單顯示
         public InspParameter parameter = new InspParameter();
-        Insp入料區 Insp入料;
+        Insp料倉區 Insp料倉;
         InspTray區 InspTray;
         public Insp吸嘴區 InspNozzle;
         InspSocket區 InspSocket;
@@ -54,6 +54,8 @@ namespace Inspector
 
         public double nozzleX, nozzleY;
         public double 移載X, 移載Y;
+        public int 缺料警告數量 = 10;
+        public bool 下視覺正向 = true;
 
         int GetDWord(int Index)
         {
@@ -129,7 +131,7 @@ namespace Inspector
         public void xInit()
         {
             WriteLog("Init");
-            Insp入料 = new Insp入料區(this, Win3);
+            Insp料倉 = new Insp料倉區(this, Win3);
             InspTray = new InspTray區(this, Win2);
             InspNozzle = new Insp吸嘴區(this, Win1);
             InspSocket = new InspSocket區(this, Win5);
@@ -141,6 +143,7 @@ namespace Inspector
             Task.Factory.StartNew(Scan);
             System.Windows.Forms.Application.ApplicationExit += onExit;
             timer1.Tick += onTick1;
+            LoadRecipe(0);
         }
 
         void onExit(object sender, EventArgs e)
@@ -161,7 +164,7 @@ namespace Inspector
 
         void onTick1(object sender, EventArgs e)
         {
-            Insp入料.Show();
+            Insp料倉.Show();
             InspTray.Show();
             InspNozzle.Show();
             InspSocket.Show();
@@ -179,11 +182,10 @@ namespace Inspector
                 string dPath = string.Format("D:\\EQ\\Injector\\Recipe\\{0}.XML", Num);
                 if (File.Exists(dPath))
                     parameter = DeSerializeXML<InspParameter>(File.ReadAllBytes(dPath));
-                num_Pin寬Min.Value = (decimal)parameter.TrayPin寬Min;
-                num_Pin寬Max.Value = (decimal)parameter.TrayPin寬Max;
-                num_Pin長Min.Value = (decimal)parameter.TrayPin長Min;
-                num_Pin長Max.Value = (decimal)parameter.TrayPin長Max;
-                num_距離限制.Value = (decimal)parameter.Pin相鄰距離;
+                num_Pin寬Min.Value = (decimal)parameter.Pin寬度Min;
+                num_Pin寬Max.Value = (decimal)parameter.Pin寬度Max;
+                num_Pin長Min.Value = (decimal)parameter.Pin長度Min;
+                num_Pin長Max.Value = (decimal)parameter.Pin長度Max;
                 num_Throshold.Value = (int)parameter.TrayThreshold;
             }
         }
@@ -219,7 +221,7 @@ namespace Inspector
             {
                 foreach (var P in items)
                 {
-                    if (P == CCDName.入料) Insp入料.CCD.TriggerMode = "FreeRun";
+                    if (P == CCDName.入料) Insp料倉.CCD.TriggerMode = "FreeRun";
                     if (P == CCDName.震動盤) InspTray.CCD.TriggerMode = "FreeRun";
                 }
                 Msg = string.Join(", ", items.Select(x => x.ToString()));
@@ -239,7 +241,7 @@ namespace Inspector
             {
                 foreach (var P in items)
                 {
-                    if (P == CCDName.入料) Insp入料.CCD.TriggerMode = "Stop";
+                    if (P == CCDName.入料) Insp料倉.CCD.TriggerMode = "Stop";
                     if (P == CCDName.震動盤) InspTray.CCD.TriggerMode = "Stop";
                 }
                 Msg = string.Join(", ", items.Select(x => x.ToString()));
@@ -247,7 +249,7 @@ namespace Inspector
             WriteLog("Stop " + Msg);
         }
         /// <summary>分析入料盤，回覆有無料</summary>
-        public bool xInsp入料() { return Insp入料.Insp(); }
+        public bool xInsp入料() { return Insp料倉.Insp(); }
         /// <summary>分析震動盤，回覆針位置，無料時回覆 false</summary>
         public bool xInsp震動盤(out List<Vector3> target) { return InspTray.Insp(out target); }
 
@@ -295,7 +297,7 @@ namespace Inspector
 
         private void 入料CCD設定_DoubleClick(object sender, EventArgs e)
         {
-            Insp入料.CCD.SetParam();
+            Insp料倉.CCD.SetParam();
         }
 
         private void TrayCCD設定_DoubleClick(object sender, EventArgs e)
@@ -324,17 +326,17 @@ namespace Inspector
             }
         }
 
-        internal void WriteImage(HObject img, string title)
+        internal void WriteImage(HObject img, string subDirectory, string title)
         {
             try
             {
-                string FName = string.Format("D:\\Images\\{0:yyyyMMdd}\\{0:HHmmssff}{1}.JPG", DateTime.Now, title);
+                string FName = string.Format("D:\\Images\\{0:yyyyMMdd}\\{1}\\{0:HHmmssff}-{2}.JPG", DateTime.Now, subDirectory, title);
                 string FDir = Path.GetDirectoryName(FName);
                 if (!Directory.Exists(FDir))
                     Directory.CreateDirectory(FDir);
                 HOperatorSet.WriteImage(img, "jpeg 70", 0, FName);
             }
-            catch
+            catch(Exception ex)
             {
             }
         }
@@ -342,15 +344,13 @@ namespace Inspector
         private void num_Pin長Min_ValueChanged(object sender, EventArgs e)
         {
             if (sender == num_Pin寬Min)
-                parameter.TrayPin寬Min = (double)num_Pin寬Min.Value;
+                parameter.Pin寬度Min = (double)num_Pin寬Min.Value;
             if (sender == num_Pin寬Max)
-                parameter.TrayPin寬Max = (double)num_Pin寬Max.Value;
+                parameter.Pin寬度Max = (double)num_Pin寬Max.Value;
             if (sender == num_Pin長Min)
-                parameter.TrayPin長Min = (double)num_Pin長Min.Value;
+                parameter.Pin長度Min = (double)num_Pin長Min.Value;
             if (sender == num_Pin長Max)
-                parameter.TrayPin長Max = (double)num_Pin長Max.Value;
-            if (sender == num_距離限制)
-                parameter.Pin相鄰距離 = (double)num_距離限制.Value;
+                parameter.Pin長度Max = (double)num_Pin長Max.Value;
             if (sender == num_Throshold)
                 parameter.TrayThreshold = (int)num_Throshold.Value;
         }
@@ -551,25 +551,25 @@ namespace Inspector
     public class InspParameter
     {
         public int TrayThreshold = 180;
-        public double TrayPin寬Min = 1;
-        public double TrayPin寬Max = 80;
-        public double TrayPin長Min = 1;
-        public double TrayPin長Max = 70;
+        public double Pin寬度Min = 1;
+        public double Pin寬度Max = 80;
+        public double Pin長度Min = 1;
+        public double Pin長度Max = 70;
         public double Pin相鄰距離 = 40;
     }
     #endregion
 
-    #region 入料
-    public class Insp入料區
+    #region 料倉
+    public class Insp料倉區
     {
         HWindowHelper helper;
         ContextMenuStrip menu;
         internal ImageSource CCD;
         bool first = true, ItemSuccess;
         Inspector owner;
-        HObject binregion;
+        HObject binregion, CheckRegion;
 
-        public Insp入料區(Inspector sender, HWindowControl win)
+        public Insp料倉區(Inspector sender, HWindowControl win)
         {
             owner = sender;
             CCD = new ImageSource("CCD入料", "FreeRun", "./", 5, onRecvImage, IntPtr.Zero);
@@ -596,7 +596,7 @@ namespace Inspector
             helper.hWin.ContextMenuStrip = menu;
             menu.Items.Add("LoadImage", null, (sender, e) => { helper.LoadImage(); });
             menu.Items.Add("分析入料盤", null, (sender, e) => { Insp(); });
-            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "入料"); });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "料倉", "料倉"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
             menu.Opening += onMenu1Opening;
@@ -610,51 +610,44 @@ namespace Inspector
             items.First(x => x.Text == "Set CCD Parameter").Visible = owner.xEngineer;
         }
 
-
-        HObject GetPinArea(HObject image)
+        HObject BlockArea(HObject image)
         {
-            HObject binArea, connArea, SelArea;
-      
-            HTuple usedThr, row1, col1, row2, col2, cnt;
-            HOperatorSet.BinaryThreshold(image, out binArea, "max_separability", "light", out usedThr);
-            HOperatorSet.Connection(binArea, out connArea);
-            HOperatorSet.SelectShape(connArea, out SelArea, "width", "and", 2500, 999999);
-            //HOperatorSet.SortRegion(SelArea, out sortArea, "first_point", "true", "row");
-            HOperatorSet.SmallestRectangle1(SelArea, out row1, out col1, out row2, out col2);
-            HObject area;
-            HOperatorSet.GenEmptyRegion(out area);
-            try
-            {
-                if (row1.Length == 2)
-                {
-                    double dMin = col1.TupleMin().D;
-                    double dMax = col2.TupleMax().D;
-                    HOperatorSet.GenRectangle1(out area, row2.LArr[0] + 10, dMin + 20, row1.LArr[1] - 10, dMax - 500);
-                }
-            }
-            catch { }
-            HOperatorSet.SelectShape(area, out area, "area", "and", 100, 9999999);
-            HOperatorSet.CountObj(area, out cnt);
-            owner.DisposeObj(binArea, connArea, SelArea);
-            return area;
+            HObject thRegion, connRegion, fillRegion, unionRegion, openRegion, erRegion;
+            HOperatorSet.Threshold(image, out thRegion, 0, 60);
+            HOperatorSet.Connection(thRegion, out connRegion);
+            HOperatorSet.FillUp(connRegion, out fillRegion);
+            HOperatorSet.Union1(fillRegion, out unionRegion);
+            HOperatorSet.OpeningRectangle1(unionRegion, out openRegion, 1500, 600);
+            HOperatorSet.ErosionRectangle1(openRegion, out erRegion, 500, 1050);
+            owner.DisposeObj(thRegion, connRegion, fillRegion, unionRegion, openRegion);
+            return erRegion;
         }
 
-        HObject GetAllPin(HObject image)
+        HObject GetAllPin(HObject image, HObject checkarea)
         {
-            HObject rgn1, connregion, SelectedRegions, rgnFill, highpass, rgnFull, rgnDiff, redImage;
-            HTuple min, range, L1, L2, phi, _Max;
-            //HOperatorSet.GetDomain(image, out rgnFull);
-            rgnFull = GetPinArea(image);
-            HOperatorSet.ReduceDomain(image, rgnFull, out redImage);
-            HOperatorSet.MinMaxGray(rgnFull, redImage, 0, out min, out _Max, out range);
-            HOperatorSet.Threshold(redImage, out rgn1, 90, 255);
-            //HOperatorSet.FillUp(rgn1, out rgnFill);
-            //HOperatorSet.Difference(rgnFill, rgn1, out rgnDiff);
-            //HOperatorSet.Connection(rgnDiff, out connregion);
-            //HOperatorSet.SelectShape(connregion, out SelectedRegions, "area", "and", 30, 999999);
-            //owner.DisposeObj(rgn1, rgnFill, rgnFull, rgnDiff, connregion);
-            owner.DisposeObj(rgnFull, redImage);
-            return rgn1;
+            HObject lightRegion, pinArea, conn, LimW, LimH, uniArea;
+            HOperatorSet.Threshold(image, out lightRegion, 30, 255);
+            HOperatorSet.Intersection(lightRegion, checkarea, out pinArea);
+            double w = owner.parameter.Pin寬度Min / CCD.Param.ScaleX / 2.0;
+            double h = owner.parameter.Pin長度Min / CCD.Param.ScaleX / 2.0;
+            HOperatorSet.Connection(pinArea, out conn);
+            HOperatorSet.SelectShape(conn, out LimW, "rect2_len2", "and", w, 9999999);
+            HOperatorSet.SelectShape(LimW, out LimH, "rect2_len1", "and", h, 1000);
+            HOperatorSet.Union1(LimH, out uniArea);
+            owner.DisposeObj(lightRegion, pinArea, conn, LimW, LimH);
+            return uniArea;
+        }
+
+        bool CheckArea(HObject region)
+        {
+            HTuple row, col, area;
+            HOperatorSet.AreaCenter(binregion, out area, out row, out col);
+            double w = (owner.parameter.Pin寬度Max + owner.parameter.Pin寬度Min) * 0.4;
+            double h = (owner.parameter.Pin長度Max + owner.parameter.Pin長度Min) * 0.4;
+            double One = w * h / CCD.Param.ScaleX / CCD.Param.ScaleX;
+            double V = (area.Length > 0) ? area.D / One : 0;
+            var result = V > owner.缺料警告數量;
+            return result;
         }
 
         /// <summary>分析入料盤，回覆有無料</summary>
@@ -667,35 +660,61 @@ namespace Inspector
                 HObject temp;
                 HTuple threshold, W, H, row, col, area;
                 HOperatorSet.CopyImage(helper.Image, out temp);
-                if (manualInsp)
-                    owner.WriteImage(temp, "入料");
+                owner.WriteImage(temp, "料倉", "料倉");
                 HOperatorSet.GetImageSize(temp, out W, out H);
-                Region入料 = GetAllPin(temp);
-                HOperatorSet.Union1(Region入料, out binregion);
-                HOperatorSet.AreaCenter(binregion, out area, out row, out col);
-                result = (area.Length > 0) && (area.I > 400);
+                CheckRegion = BlockArea(temp);
+                binregion = GetAllPin(temp, CheckRegion);
+                result = CheckArea(binregion);
                 ItemSuccess = result;
-                if ((!manualInsp) && result)
-                    owner.WriteImage(temp, "入料");
+                SaveResult(temp, result);
                 owner.DisposeObj(temp, Region入料);
             }
             owner.BeginInvoke(new Action(helper.AdjustView));
             return result;
         }
 
+        void SaveResult(HObject img, bool success)
+        {
+            var imgColor = Compose3(img);
+            HObject mix1, mix2 = null;
+            HOperatorSet.PaintRegion(CheckRegion, imgColor, out mix1, new HTuple(255, 165, 0), "margin");   //orange
+            if (success)
+            {
+                HOperatorSet.PaintRegion(binregion, mix1, out mix2, new HTuple(0, 255, 0), "fill"); //green
+                owner.WriteImage(mix2, "料倉", "料倉Find");
+            }
+            else
+            {
+                if ((binregion != null) && (binregion.CountObj() == 1))
+                {
+                    HOperatorSet.PaintRegion(binregion, mix1, out mix2, new HTuple(255, 0, 0), "fill"); //red
+                    owner.WriteImage(mix2, "料倉", "料倉Find");
+                }
+                else
+                    owner.WriteImage(mix1, "料倉", "料倉Find");
+            }
+
+            owner.DisposeObj(mix1, mix2);
+        }
+
         void ShowResult(HWindowControl Win, HObject image)
         {
             HOperatorSet.ClearWindow(Win.HalconWindow);
             HOperatorSet.DispImage(image, Win.HalconWindow);
-            //Win.HalconWindow.SetDraw("margin");
-            Win.HalconWindow.SetDraw("fill");
-            if (binregion != null)
+            if (CheckRegion != null)
             {
-                if (ItemSuccess)
-                    Win.HalconWindow.SetColor("green");
-                else
-                    Win.HalconWindow.SetColor("red");
-                HOperatorSet.DispRegion(binregion, Win.HalconWindow);
+                Win.HalconWindow.SetDraw("margin");
+                Win.HalconWindow.SetColor("orange");
+                HOperatorSet.DispRegion(CheckRegion, Win.HalconWindow);
+                if (binregion != null)
+                {
+                    Win.HalconWindow.SetDraw("fill");
+                    if (ItemSuccess)
+                        Win.HalconWindow.SetColor("green");
+                    else
+                        Win.HalconWindow.SetColor("red");
+                    HOperatorSet.DispRegion(binregion, Win.HalconWindow);
+                }
             }
         }
 
@@ -704,6 +723,15 @@ namespace Inspector
             helper.doResult();
         }
 
+        HObject Compose3(HObject img)
+        {
+            HObject img2, img3, imgColor;
+            HOperatorSet.CopyImage(img, out img2);
+            HOperatorSet.CopyImage(img, out img3);
+            HOperatorSet.Compose3(img, img2, img3, out imgColor);
+            owner.DisposeObj(img2, img3);
+            return imgColor;
+        }
 
     }
     #endregion
@@ -712,11 +740,12 @@ namespace Inspector
     public class InspTray區
     {
         HWindowHelper helper;
-        HObject RegionTray, RegionMeas, PinArea, MeasPin, CarbArea;
+        HObject RegionTray, RegionMeas, PinArea, MeasPin, CarbArea, WhiteArea;
         HTuple rowTray, colTray, rowDist, colDist, rowPin, colPin;
         ContextMenuStrip menu;
         internal ImageSource CCD;
         bool first = true;
+        double LimitL1, LimitL2;
         Inspector owner;
         int AddL1 = 15;
         PointF CarbPos, CarbH;
@@ -771,9 +800,10 @@ namespace Inspector
                 HOperatorSet.AngleLx(校正點一.Y, 校正點一.X, 校正點二.Y, 校正點二.X, out CarbDeg);
                 CarbDeg = CarbDeg.TupleDeg();
             });
-            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "Tray"); });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "料盤", "料盤"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
+            menu.Items.Add("Save Recipe Default", null, (sender, e) => { owner.SaveRecipe(0); });
             menu.Opening += onMenu1Opening;
         }
 
@@ -785,6 +815,92 @@ namespace Inspector
             items.First(x => x.Text == "Set CCD Parameter").Visible = owner.xEngineer;
         }
 
+        HObject GetWhiteArea(HObject image)
+        {
+            HObject ThRegion, TransRegion, eroRegion;
+            HOperatorSet.Threshold(image, out ThRegion, 128, 255);
+            HOperatorSet.ShapeTrans(ThRegion, out TransRegion, "convex");
+            HOperatorSet.ErosionRectangle1(TransRegion, out eroRegion, 800, 550);
+            owner.DisposeObj(ThRegion, TransRegion);
+            return eroRegion;
+        }
+
+        HObject GetAllPin(HObject img, HObject whiteArea, double WMin, double WMax, double HMin, double HMax)
+        {
+            HObject redImage, meanImg, dynRegion, cloRegion, conn, SelInner, LimH, LimW;
+            HOperatorSet.ReduceDomain(img, whiteArea, out redImage);
+            HOperatorSet.MeanImage(redImage, out meanImg, 9, 9);
+            HOperatorSet.DynThreshold(redImage, meanImg, out dynRegion, 5, "dark");
+            HOperatorSet.ClosingCircle(dynRegion, out cloRegion, WMin);
+            HOperatorSet.Connection(cloRegion, out conn);
+            HOperatorSet.SelectShape(conn, out SelInner, "inner_radius", "and", WMin, 99999);
+            HOperatorSet.SelectShape(SelInner, out LimH, "rect2_len1", "and", HMin, 99999);
+            HOperatorSet.SelectShape(LimH, out LimW, "rect2_len2", "and", WMin, 99999);
+            owner.DisposeObj(redImage, meanImg, dynRegion, cloRegion, conn, SelInner, LimH);
+            return LimW;
+        }
+
+        HObject GetNormalPin(HObject selectRegion, double WMin, double WMax, double HMin, double HMax)
+        {
+            HObject LimH, LimW;
+            HOperatorSet.SelectShape(selectRegion, out LimH, "rect2_len1", "and", HMin, HMax);
+            HOperatorSet.SelectShape(LimH, out LimW, "rect2_len2", "and", WMin, WMax);
+            owner.DisposeObj(LimH);
+            return LimW;
+        }
+
+        HObject RemoveNear(HObject normalpin, HObject allPin, HObject whiteArea)
+        {
+            HTuple Cnt, Num, area, row, col, phi, L1, L2, row1, col1;
+            HTuple rowStart, colStart, rowEnd, colEnd;
+            HObject outRgn, fAllPin, SelPin;
+            HOperatorSet.SmallestRectangle1(whiteArea, out rowStart, out colStart, out rowEnd, out colEnd);
+            HOperatorSet.Union1(allPin, out fAllPin);
+            HOperatorSet.GenEmptyObj(out outRgn);
+            HOperatorSet.CountObj(normalpin, out Cnt);
+            LimitL1 = Math.Max(5.5 / 2, owner.parameter.Pin長度Max / 2) / CCD.Param.ScaleX;
+            LimitL2 = 4.0 / 2 / CCD.Param.ScaleX;
+            HTuple outSel = new HTuple();
+            if (Cnt > 0)
+            {
+                HOperatorSet.SmallestRectangle2(normalpin, out row, out col, out phi, out L1, out L2);
+                for (int i = 0; i < Cnt; i++)
+                {
+                    HObject tempPin = null, intrArea = null, rc, rc2, SelTemp = null;
+                    HOperatorSet.SelectObj(normalpin, out SelPin, i + 1);
+                    HOperatorSet.GenRectangle2(out rc, row[i], col[i], phi[i], LimitL1, LimitL2);
+                    HOperatorSet.SelectShape(rc, out rc2,
+                        new HTuple("row1", "row2", "column1", "column2"),
+                        "and",
+                        new HTuple(rowStart.D + 5, rowStart.D + 5, colStart.D + 5, colStart.D + 5),
+                        new HTuple(rowEnd.D - 5, rowEnd.D - 5, colEnd.D - 5, colEnd.D - 5));
+                    if (rc2.CountObj() > 0)
+                    {
+                        HOperatorSet.Difference(fAllPin, SelPin, out tempPin);
+                        HOperatorSet.Intersection(tempPin, rc2, out intrArea);
+                        HOperatorSet.SelectShape(intrArea, out SelTemp, "area", "and", 2, 999999);
+                        HOperatorSet.AreaCenter(SelTemp, out area, out row1, out col1);
+                        if (area.Length == 0)
+                            outSel.Append(i + 1);
+                    }
+                    owner.DisposeObj(tempPin, intrArea, rc, rc2, SelTemp);
+                }
+                if (outSel.Length > 0)
+                    HOperatorSet.SelectObj(normalpin, out outRgn, outSel);
+            }
+            HOperatorSet.SmallestRectangle2(outRgn, out rowPin, out colPin, out phi, out L1, out L2);
+            for(int i = 0; i < outSel.Length; i++)
+            {
+                L1[i] = LimitL1;
+                L2[i] = LimitL2;
+            }
+            RegionTray = null;
+            if (outSel.Length > 0)
+                HOperatorSet.GenRectangle2(out RegionTray, rowPin, colPin, phi, L1, L2);
+            return outRgn;
+        }
+
+
         HObject GetPinNoOverlap(HObject img, out HObject DarkArea)
         {
             HObject rgn1, ConnectionArea, SelectedRegions, rgnFill, rgnConv, rgnMax;
@@ -794,50 +910,50 @@ namespace Inspector
             HOperatorSet.AreaCenter(ConnectionArea, out _area, out row, out col);
             HOperatorSet.SelectShape(ConnectionArea, out ConnectionArea, "area", "and", 80, 999999);
             HOperatorSet.Union1(ConnectionArea, out DarkArea);
-            HOperatorSet.SelectShape(ConnectionArea, out SelectedRegions, "rect2_len2", "and", owner.parameter.TrayPin寬Min, owner.parameter.TrayPin寬Max);
+            HOperatorSet.SelectShape(ConnectionArea, out SelectedRegions, "rect2_len2", "and", owner.parameter.Pin寬度Min, owner.parameter.Pin寬度Max);
             HOperatorSet.FillUp(SelectedRegions, out rgnFill);
             HOperatorSet.SelectShape(rgnFill, out rgnConv, "convexity", "and", 0.55, 2);
             HOperatorSet.SmallestRectangle2(rgnConv, out row, out col, out phi, out L1, out L2);
             if (L1.Length > 0)
-                HOperatorSet.SelectShape(rgnFill, out rgnMax, "rect2_len1", "and", owner.parameter.TrayPin長Min, owner.parameter.TrayPin長Max);
+                HOperatorSet.SelectShape(rgnFill, out rgnMax, "rect2_len1", "and", owner.parameter.Pin長度Min, owner.parameter.Pin長度Max);
             else
                 HOperatorSet.CopyObj(rgnFill, out rgnMax, 1, 1);
             owner.DisposeObj(ConnectionArea, SelectedRegions, rgnFill, rgnConv);
             return rgnMax;
         }
 
-        HObject RemoveNear(HObject img, HObject pin, HObject allPin)
-        {
-            HTuple Cnt, Num, row, col, phi, L1, L2;
-            HObject outRgn;
-            HOperatorSet.GenEmptyObj(out outRgn);
-            HOperatorSet.SmallestRectangle2(pin, out row, out col, out phi, out L1, out L2);
-            for (int i = 0; i < L2.Length; i++)
-            {
-                L2[i] = L2[i].D + owner.parameter.Pin相鄰距離;
-                L1[i] = L1[i].D + AddL1;
-            }
-            if (L2.Length > 0)
-            {
-                HOperatorSet.GenRectangle2(out RegionMeas, row, col, phi, L1, L2);
-                for (int i = 1; i <= L2.Length; i++)
-                {
-                    HObject Sel, Intr, Connection, PinSel;
-                    HOperatorSet.SelectObj(RegionMeas, out Sel, i);
-                    HOperatorSet.SelectObj(pin, out PinSel, i);
-                    HOperatorSet.Intersection(allPin, Sel, out Intr);
-                    HOperatorSet.Connection(Intr, out Connection);
-                    HOperatorSet.CountObj(Connection, out Cnt);
-                    if (Cnt == 1)
-                        HOperatorSet.ConcatObj(outRgn, PinSel, out outRgn);
-                }
-                HOperatorSet.CountObj(outRgn, out Cnt);
-            }
-            else
-                RegionMeas = null;
+        //HObject RemoveNear(HObject img, HObject pin, HObject allPin)
+        //{
+        //    HTuple Cnt, Num, row, col, phi, L1, L2;
+        //    HObject outRgn;
+        //    HOperatorSet.GenEmptyObj(out outRgn);
+        //    HOperatorSet.SmallestRectangle2(pin, out row, out col, out phi, out L1, out L2);
+        //    for (int i = 0; i < L2.Length; i++)
+        //    {
+        //        L2[i] = L2[i].D + owner.parameter.Pin相鄰距離;
+        //        L1[i] = L1[i].D + AddL1;
+        //    }
+        //    if (L2.Length > 0)
+        //    {
+        //        HOperatorSet.GenRectangle2(out RegionMeas, row, col, phi, L1, L2);
+        //        for (int i = 1; i <= L2.Length; i++)
+        //        {
+        //            HObject Sel, Intr, Connection, PinSel;
+        //            HOperatorSet.SelectObj(RegionMeas, out Sel, i);
+        //            HOperatorSet.SelectObj(pin, out PinSel, i);
+        //            HOperatorSet.Intersection(allPin, Sel, out Intr);
+        //            HOperatorSet.Connection(Intr, out Connection);
+        //            HOperatorSet.CountObj(Connection, out Cnt);
+        //            if (Cnt == 1)
+        //                HOperatorSet.ConcatObj(outRgn, PinSel, out outRgn);
+        //        }
+        //        HOperatorSet.CountObj(outRgn, out Cnt);
+        //    }
+        //    else
+        //        RegionMeas = null;
 
-            return outRgn;
-        }
+        //    return outRgn;
+        //}
 
         HTuple CheckDirection(HTuple row, HTuple col, HTuple phi, HTuple dist, ref HTuple outRow, ref HTuple outCol)
         {
@@ -870,6 +986,9 @@ namespace Inspector
         {
             HObject outPin, SelPin;
             HTuple L1, L2, amp, dist;
+            row = col = phi = new HTuple();
+            if (pin == null)
+                return;
             HOperatorSet.SmallestRectangle2(pin, out row, out col, out phi, out L1, out L2);
             if (L1.Length > 0)
             {
@@ -903,12 +1022,23 @@ namespace Inspector
                 HObject temp, SelectedRegions, SelectPins;
                 HTuple threshold, W, H, phi, L1, L2, deg;
                 HOperatorSet.CopyImage(helper.Image, out temp);
-                if (manualInsp && (!owner.ck_RealTray.Checked))
-                    owner.WriteImage(temp, "Tray");
+                owner.WriteImage(temp, "料盤", "料盤");
                 HOperatorSet.GetImageSize(temp, out W, out H);
-                SelectedRegions = GetPinNoOverlap(temp, out PinArea);
-                SelectPins = owner.RemoveBorder(SelectedRegions, W, H);
-                RegionTray = RemoveNear(temp, SelectPins, PinArea);
+
+                WhiteArea = GetWhiteArea(temp);
+                double WMin = owner.parameter.Pin寬度Min / CCD.Param.ScaleX / 2.0;
+                double WMax = owner.parameter.Pin寬度Max / CCD.Param.ScaleX / 2.0;
+                double HMin = owner.parameter.Pin長度Min / CCD.Param.ScaleX / 2.0;
+                double HMax = owner.parameter.Pin長度Max / CCD.Param.ScaleX / 2.0;
+                var AllPin = GetAllPin(temp, WhiteArea, WMin, WMax, HMin, HMax);
+                var NormalPin = GetNormalPin(AllPin, WMin, WMax, HMin, HMax);
+                PinArea = RemoveNear(NormalPin, AllPin, WhiteArea);
+                SaveResult(temp, WhiteArea, PinArea, RegionTray);
+                owner.DisposeObj(AllPin, NormalPin);
+
+                //SelectedRegions = GetPinNoOverlap(temp, out PinArea);
+                //SelectPins = owner.RemoveBorder(SelectedRegions, W, H);
+                //RegionTray = RemoveNear(temp, SelectPins, PinArea);
                 MeasurePin(temp, RegionTray, W, H, out rowTray, out colTray, out phi);
                 if (phi.Length > 0)
                 {
@@ -918,13 +1048,35 @@ namespace Inspector
                         var P = CCD.GetReal(colTray[i].D, rowTray[i].D, W, H);
                         target.Add(new Vector3() { X = P.X, Y = P.Y, θ = -deg[i].D });
                     }
-                    if ((!manualInsp) && (!owner.ck_RealTray.Checked))
-                        owner.WriteImage(temp, "Tray");
+                    //owner.WriteImage(temp, "料盤", "料盤");
                 }
-                owner.DisposeObj(temp, SelectedRegions, SelectPins);
+                owner.DisposeObj(temp, AllPin, NormalPin);
             }
             owner.BeginInvoke(new Action(Show));
             return target.Count > 0;
+        }
+
+        void SaveResult(HObject img, HObject white, HObject pin, HObject blocked)
+        {
+            var imgColor = Compose3(img);
+            HObject mix1, mix2, mix3 = null;
+            HOperatorSet.PaintRegion(white, imgColor, out mix1, new HTuple(255, 165, 0), "margin");   //orange
+            HOperatorSet.PaintRegion(pin, mix1, out mix2, new HTuple(0, 255, 0), "fill"); //green
+            if (blocked != null)
+            {
+                HOperatorSet.PaintRegion(blocked, mix2, out mix3, new HTuple(255, 165, 0), "margin");
+                owner.WriteImage(mix3, "料盤", "料盤Find");
+            }
+            else
+                owner.WriteImage(mix2, "料盤", "料盤Find");
+            //orange
+            //HOperatorSet.PaintRegion(CheckRegion, imgColor, out mix1, new HTuple(255, 165, 0), "margin");   //orange
+            //if (success)
+            //    HOperatorSet.PaintRegion(binregion, mix1, out mix2, new HTuple(0, 255, 0), "fill"); //green
+            //else
+            //    HOperatorSet.PaintRegion(binregion, mix1, out mix2, new HTuple(255, 0, 0), "fill"); //red
+
+            owner.DisposeObj(mix1, mix2, mix3);
         }
 
         public bool Carb(out PointF Pos)
@@ -958,12 +1110,28 @@ namespace Inspector
                 return;
             HOperatorSet.ClearWindow(Win.HalconWindow);
             HOperatorSet.DispImage(image, Win.HalconWindow);
+            if (WhiteArea != null)
+            {
+                Win.HalconWindow.SetDraw("margin");
+                Win.HalconWindow.SetColor("orange");
+                HOperatorSet.DispRegion(WhiteArea, Win.HalconWindow);
+            }
+            if (PinArea != null)
+            {
+                Win.HalconWindow.SetDraw("margin");
+                Win.HalconWindow.SetColor("green");
+                HOperatorSet.DispRegion(PinArea, Win.HalconWindow);
+                Win.HalconWindow.SetColor("orange");
+                if (RegionTray != null)
+                    HOperatorSet.DispRegion(RegionTray, Win.HalconWindow);
+            }
+            return;
+
             if (RegionTray != null)
             {
                 Win.HalconWindow.SetDraw("margin");
                 Win.HalconWindow.SetColor("orange");
                 HOperatorSet.DispRegion(RegionTray, Win.HalconWindow);
-                if (owner.ck_Limit.Checked && (RegionMeas != null))
                     HOperatorSet.DispRegion(RegionMeas, Win.HalconWindow);
                 Win.HalconWindow.SetColor("green");
                 HOperatorSet.DispCross(Win.HalconWindow, rowTray, colTray, 200, 0);
@@ -993,6 +1161,16 @@ namespace Inspector
         public void Show()
         {
             helper.doResult();
+        }
+
+        HObject Compose3(HObject img)
+        {
+            HObject img2, img3, imgColor;
+            HOperatorSet.CopyImage(img, out img2);
+            HOperatorSet.CopyImage(img, out img3);
+            HOperatorSet.Compose3(img, img2, img3, out imgColor);
+            owner.DisposeObj(img2, img3);
+            return imgColor;
         }
 
     }
@@ -1055,7 +1233,7 @@ namespace Inspector
                 double target;
                 Insp(out target);
             });
-            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "吸嘴"); });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "吸嘴", "吸嘴"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
             menu.Opening += onMenu1Opening;
@@ -1078,7 +1256,7 @@ namespace Inspector
                 HObject temp;
                 HTuple W, H, Cnt;
                 HOperatorSet.CopyImage(helper.Image, out temp);
-                owner.WriteImage(temp, "吸嘴");
+                owner.WriteImage(temp, "吸嘴", "吸嘴");
                 HOperatorSet.GetImageSize(temp, out W, out H);
                 PinArea = GetPinArea(temp, W, H);
                 HOperatorSet.CountObj(PinArea, out Cnt);
@@ -1089,6 +1267,7 @@ namespace Inspector
                 }
                 else
                     success = false;
+                SaveResult(temp, success);
                 owner.DisposeObj(temp);
                 //CenterArea(temp, out Ellipse);
                 //FindCircleArea(temp, Ellipse, out CaliperXLD, out CircleXLD);
@@ -1101,27 +1280,53 @@ namespace Inspector
             return success;
         }
 
+        void SaveResult(HObject img, bool success)
+        {
+            string dir = (owner.下視覺正向) ? "吸嘴正向" : "吸嘴反向";
+            if (success)
+            {
+                var imgColor = Compose3(img);
+                HObject mix1, mix2, mix3;
+                HOperatorSet.PaintRegion(PinArea, imgColor, out mix1, new HTuple(0, 255, 0), "margin");   //green
+                owner.WriteImage(mix1, dir, "吸嘴-OK");
+                owner.DisposeObj(mix1, imgColor);
+            }
+            else
+            {
+                owner.WriteImage(img, dir, "吸嘴-NG");
+            }
+        }
+
         HObject GetPinArea(HObject image, HTuple W, HTuple H)
         {
             HObject fullRegion, region, RegionClosing, ConnectedRegions, SelectedCenterW;
             HObject SelectedCenterH, result, regionRC2, redImage;
             HTuple _Min, _Max, _Range, row, col, phi, L1, L2, usedT;
-            HOperatorSet.GetDomain(image, out fullRegion);
-            HOperatorSet.MinMaxGray(fullRegion, image, 0, out _Min, out _Max, out _Range);
-            HOperatorSet.Threshold(image, out region, 70, 255);
-            HOperatorSet.SmallestRectangle2(region, out row, out col, out phi, out L1, out L2);
-            HOperatorSet.GenRectangle2(out regionRC2, row, col, phi, L1.D * 1.8, L2);
-            HOperatorSet.ReduceDomain(image, regionRC2, out redImage);
-            HOperatorSet.Threshold(redImage, out region, 70, 255);
-            //HOperatorSet.BinaryThreshold(redImage, out region, "max_separability", "light", out usedT);
-            HOperatorSet.ClosingRectangle1(region, out RegionClosing, 1, 20);
+            double wMin, wMax, hMin, hMax;
+            wMin = owner.parameter.Pin寬度Min / CCD.Param.ScaleX / 2;
+            wMax = owner.parameter.Pin寬度Max / CCD.Param.ScaleX / 2;
+            hMin = owner.parameter.Pin長度Min / CCD.Param.ScaleX / 2;
+            hMax = owner.parameter.Pin長度Max / CCD.Param.ScaleX / 2;
+            HOperatorSet.Threshold(image, out region, 100, 255);
+            HOperatorSet.ClosingRectangle1(region, out RegionClosing, 12, wMax);
             HOperatorSet.Connection(RegionClosing, out ConnectedRegions);
-            HOperatorSet.SelectShape(ConnectedRegions, out SelectedCenterW, "column", "and", (W / 2) - 800, (W / 2) + 800);
-            HOperatorSet.SelectShape(SelectedCenterW, out SelectedCenterH, "row", "and", (H / 2) - 500, (H / 2) + 500);
-            HOperatorSet.SelectShape(SelectedCenterH, out SelectedCenterH, "height", "and", 600, 99999);
-            HOperatorSet.SelectShapeStd(SelectedCenterH, out result, "max_area", 70);
-            owner.DisposeObj(regionRC2, redImage, fullRegion, region, RegionClosing, ConnectedRegions, SelectedCenterW, SelectedCenterH);
-            return result;
+            HOperatorSet.SelectShape(ConnectedRegions, out SelectedCenterH, "rect2_len1", "and", hMin, hMax);
+            HOperatorSet.SelectShape(SelectedCenterH, out SelectedCenterW, "rect2_len2", "and", wMin, wMax);
+            //HOperatorSet.GetDomain(image, out fullRegion);
+            //HOperatorSet.MinMaxGray(fullRegion, image, 0, out _Min, out _Max, out _Range);
+            //HOperatorSet.SmallestRectangle2(region, out row, out col, out phi, out L1, out L2);
+            //HOperatorSet.GenRectangle2(out regionRC2, row, col, phi, L1.D * 1.8, L2);
+            //HOperatorSet.ReduceDomain(image, regionRC2, out redImage);
+            //HOperatorSet.Threshold(redImage, out region, 70, 255);
+            //HOperatorSet.BinaryThreshold(redImage, out region, "max_separability", "light", out usedT);
+            //HOperatorSet.ClosingRectangle1(region, out RegionClosing, 1, 20);
+            //HOperatorSet.Connection(RegionClosing, out ConnectedRegions);
+            //HOperatorSet.SelectShape(ConnectedRegions, out SelectedCenterW, "column", "and", (W / 2) - 800, (W / 2) + 800);
+            //HOperatorSet.SelectShape(SelectedCenterW, out SelectedCenterH, "row", "and", (H / 2) - 500, (H / 2) + 500);
+            //HOperatorSet.SelectShape(SelectedCenterH, out SelectedCenterH, "height", "and", 600, 99999);
+            //HOperatorSet.SelectShapeStd(SelectedCenterH, out result, "max_area", 70);
+            owner.DisposeObj(region, RegionClosing, ConnectedRegions, SelectedCenterH);
+            return SelectedCenterW;
         }
 
         double CheckDirection(HObject image, HObject area, HTuple W, HTuple H)
@@ -1201,9 +1406,9 @@ namespace Inspector
                 Win.HalconWindow.SetColor("green");
                 HOperatorSet.DispArrow(Win.HalconWindow, P1y, P1x, P2y, P2x, 12);
             }
-            if (owner.ck_PinArea.Checked && (PinArea != null))
+            if (PinArea != null)
             {
-                Win.HalconWindow.SetColor("red");
+                Win.HalconWindow.SetColor("green");
                 HOperatorSet.DispRegion(PinArea, Win.HalconWindow);
             }
             Win.HalconWindow.SetTposition(60, 250);
@@ -1216,6 +1421,16 @@ namespace Inspector
         public void Show()
         {
             helper.doResult();
+        }
+
+        HObject Compose3(HObject img)
+        {
+            HObject img2, img3, imgColor;
+            HOperatorSet.CopyImage(img, out img2);
+            HOperatorSet.CopyImage(img, out img3);
+            HOperatorSet.Compose3(img, img2, img3, out imgColor);
+            owner.DisposeObj(img2, img3);
+            return imgColor;
         }
 
     }
@@ -1267,7 +1482,7 @@ namespace Inspector
                 Vector3 n;
                 var sel = Insp(out n);
             });
-            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "Socket"); });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "Socket", "Socket"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
             menu.Opening += onMenu1Opening;
@@ -1291,7 +1506,7 @@ namespace Inspector
                 HObject temp, binArea, connArea, SelArea, OutArea, MaxArea, CirArea;
                 HTuple W, H, usedThr, row, col, Radius, Dist;
                 HOperatorSet.CopyImage(helper.Image, out temp);
-                owner.WriteImage(temp, "Socket");
+                owner.WriteImage(temp, "Socket", "Socket");
                 HOperatorSet.GetImageSize(temp, out W, out H);
                 HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
                 HOperatorSet.Connection(binArea, out connArea);
@@ -1414,7 +1629,7 @@ namespace Inspector
                 Vector3 n;
                 var sel = Insp(out n);
             });
-            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "夾爪"); });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "夾爪", "夾爪"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
             menu.Opening += onMenu1Opening;
@@ -1438,7 +1653,7 @@ namespace Inspector
                 HObject temp, binArea, connArea, SelArea, OutArea, MaxArea, CirArea;
                 HTuple W, H, usedThr, row, col, Radius, Dist, area1, area2;
                 HOperatorSet.CopyImage(helper.Image, out temp);
-                owner.WriteImage(temp, "針孔校正");
+                owner.WriteImage(temp, "針孔校正", "針孔校正");
                 HOperatorSet.GetImageSize(temp, out W, out H);
                 HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
                 HOperatorSet.Connection(binArea, out connArea);
@@ -1532,7 +1747,7 @@ namespace Inspector
                 Vector3 n;
                 var sel = Insp(out n);
             });
-            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "針孔校正"); });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "針孔校正", "針孔校正"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
             menu.Opening += onMenu1Opening;
@@ -1556,7 +1771,7 @@ namespace Inspector
                 HObject temp, binArea, connArea, SelArea, OutArea, MaxArea, CirArea;
                 HTuple W, H, usedThr, row, col, Radius, Dist;
                 HOperatorSet.CopyImage(helper.Image, out temp);
-                owner.WriteImage(temp, "針孔校正");
+                owner.WriteImage(temp, "針孔校正", "針孔校正");
                 HOperatorSet.GetImageSize(temp, out W, out H);
                 HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
                 HOperatorSet.Connection(binArea, out connArea);

@@ -55,13 +55,11 @@
     <Reference Include="halcondotnetxl">
       <HintPath>..\..\..\..\..\Program Files\MVTec\HALCON-18.11-Steady\bin\dotnet35\halcondotnetxl.dll</HintPath>
     </Reference>
-    <Reference Include="ic4dotnet, Version=1.2.0.2954, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Resilio-Share\PCCP-Xavier\NeedleChanger\InjectorInspector\Inspector\mvsg\ic4dotnet.dll</HintPath>
+    <Reference Include="ic4dotnet">
+      <HintPath>D:\Package\ic4dotnet.1.2.0.2954\lib\net45\ic4dotnet.dll</HintPath>
     </Reference>
-    <Reference Include="ic4dotnet.System.Drawing, Version=1.2.0.2954, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Resilio-Share\PCCP-Xavier\NeedleChanger\InjectorInspector\Inspector\mvsg\ic4dotnet.System.Drawing.dll</HintPath>
+    <Reference Include="ic4dotnet.System.Drawing">
+      <HintPath>D:\Package\ic4dotnet.System.Drawing.1.2.0.2954\lib\net45\ic4dotnet.System.Drawing.dll</HintPath>
     </Reference>
     <Reference Include="SiSoCsInterface">
       <HintPath>..\..\..\..\..\Program Files\Basler\FramegrabberSDK\lib\SiSoCsInterface.dll</HintPath>

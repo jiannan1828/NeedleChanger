@@ -2564,6 +2564,8 @@ namespace InjectorInspector
                                 xett_等待柔震盤左右震動2秒,
                             xett_柔震盤散震震動,
                                 xett_等待柔震盤散震震動2秒,
+                            xett_柔震盤停止,
+                                xett_等待柔震停止2秒,
                             xett_檢查柔震盤針資訊,
                             xett_柔震盤無針retry,
 
@@ -2691,10 +2693,15 @@ namespace InjectorInspector
         public xe_tmr_takepin xeTmrTakePin = xe_tmr_takepin.xett_Empty;
 
         public int  iTakePinFinishedCNT1 = 0;
+
+
+
         public int  iTakePinFinishedCNT2 = 0;
         public bool bTakePin             = false;
         public bool bChambered           = false;
-
+        public bool bPause               = false;
+        public bool btmrStop             = false;
+        public int  itmrStop             = 1;
         public const double db取料Nozzle中心點X = 49.94;
         public const double db取料Nozzle中心點Y = 49.875;
         public const double db取料Nozzle中心點Z = 26;
@@ -2708,7 +2715,9 @@ namespace InjectorInspector
         public const double db吐料位X           = 243.000;
         public const double db吐料位下降Z高度   = 2.000;
 
-
+        public DateTime Prev_CycleTime;
+        public DateTime Curr_CycleTime;
+        public TimeSpan CycleTime;
 
         private void btn_TakePin_Click(object sender, EventArgs e)
         {
@@ -2718,9 +2727,23 @@ namespace InjectorInspector
         {
             bChambered = true;
         }
-
+        private void btn_tmrStop_Click(object sender, EventArgs e)
+        {
+            btmrStop = true;
+        }
+        private void btn_tmrPause_Click(object sender, EventArgs e)
+        {
+            tmr_TakePin.Enabled = bPause;
+            bPause = !bPause;
+        }
         private void tmr_TakePin_Tick(object sender, EventArgs e)
         {  // start of private void tmr_TakePin_Tick(object sender, EventArgs e)
+            
+
+            if (btmrStop == true && int.Parse(txt_取料循環.Text)>=1 ) { 
+                itmrStop = int.Parse(txt_取料循環.Text);
+                txt_取料循環.Text = "0";
+            }
 
             lblLog.Text = xeTmrTakePin.ToString() + ", 柔震重試:" + iTakePinFinishedCNT2;
             switch (xeTmrTakePin) {
@@ -2732,6 +2755,11 @@ namespace InjectorInspector
                         } else {
                             xeTmrTakePin = xe_tmr_takepin.xett_取針結束;
                         }
+                    }
+                    if(btmrStop == true) {
+                        btmrStop = false;
+                        txt_取料循環.Text = (itmrStop-1).ToString();
+                        itmrStop = 0;
                     }
                     break;
 
@@ -2831,9 +2859,18 @@ namespace InjectorInspector
                                     break;
                                     case xe_tmr_takepin.xett_等待柔震盤散震震動2秒:
                                         iTakePinFinishedCNT1++;
-                                        if( 50<=iTakePinFinishedCNT1 && iTakePinFinishedCNT1<=52 ) { 
-                                            btnVibrationStop_Click(sender, e);
-                                        } else if( 60<=iTakePinFinishedCNT1 ) { 
+                                        if(iTakePinFinishedCNT1>=50) { 
+                                            iTakePinFinishedCNT1 = 0;
+                                            xeTmrTakePin = xe_tmr_takepin.xett_柔震盤停止;
+                                        }
+                                        break;
+                                case xe_tmr_takepin.xett_柔震盤停止:
+                                    btnVibrationStop_Click(sender, e);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_等待柔震停止2秒;
+                                    break;
+                                    case xe_tmr_takepin.xett_等待柔震停止2秒:
+                                        iTakePinFinishedCNT1++;
+                                        if(iTakePinFinishedCNT1>=50) { 
                                             iTakePinFinishedCNT1 = 0;
                                             xeTmrTakePin = xe_tmr_takepin.xett_檢查柔震盤針資訊;
                                         }
@@ -2878,8 +2915,7 @@ namespace InjectorInspector
                                     if(dbTargetNozzleY <= 5 && 95 <= dbTargetNozzleY) { 
                                         xeTmrTakePin = xe_tmr_takepin.xett_柔震盤料倉震動;
                                     } else { 
-                                        //20241230, XavierTsai,
-                                        //請加一個call api to視覺的"回程拍照"
+                                        inspector1.下視覺正向 = false;
                                         dbapiNozzleX(db取料Nozzle中心點X + dbPinX_tmrTakePinTick, bTakePin?500*4:500*2);
                                         dbapiNozzleY(db取料Nozzle中心點Y + dbPinY_tmrTakePinTick, bTakePin?100*8:100*4);    
                                         dbapiNozzleR(db取料Nozzle中心點R + dbPinR_tmrTakePinTick, bTakePin?360*8:360*4);
@@ -2967,8 +3003,7 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_確認在飛拍起始位置:                        xeTmrTakePin = xe_tmr_takepin.xett_NozzleX以速度250移動來觸發飛拍;  break;
 
                                 case xe_tmr_takepin.xett_NozzleX以速度250移動來觸發飛拍: 
-                                    //20241230, XavierTsai,
-                                    //請加一個call api to視覺的"去程拍照"
+                                    inspector1.下視覺正向 = true;
                                     dbapiNozzleX(db下視覺取像X_END, 250);
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢測是否飛拍移動完成;
                                     break;
@@ -3375,7 +3410,13 @@ namespace InjectorInspector
                             xeTmrTakePin = xe_tmr_takepin.xett_不需要取針;
                         }
                     } break;
-                        case xe_tmr_takepin.xett_還需要取針:                               xeTmrTakePin = xe_tmr_takepin.xett_重覆一開始的狀態;  break;
+                        case xe_tmr_takepin.xett_還需要取針:
+                            Curr_CycleTime = DateTime.Now; //20241230 4xuan added
+                            CycleTime = Curr_CycleTime - Prev_CycleTime;
+                            Prev_CycleTime = DateTime.Now;
+
+                            lbl_CycleTime.Text = "循環時間 : " + CycleTime.ToString(@"ss\.fff");
+                    xeTmrTakePin = xe_tmr_takepin.xett_重覆一開始的狀態;  break;
 
                             case xe_tmr_takepin.xett_重覆一開始的狀態:                     xeTmrTakePin = xe_tmr_takepin.xett_確定執行要取針;  break;
 
@@ -3408,6 +3449,8 @@ namespace InjectorInspector
                             case xe_tmr_takepin.xett_確認NozzleXYR在安全位置:              xeTmrTakePin = xe_tmr_takepin.xett_取針結束;  break;
 
                     case xe_tmr_takepin.xett_取針結束:
+                        
+
                         bTakePin   = false; 
                         bChambered = false;
                         xeTmrTakePin = xe_tmr_takepin.xett_Empty;  

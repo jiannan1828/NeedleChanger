@@ -41,8 +41,6 @@
             this.ck_Measure = new System.Windows.Forms.CheckBox();
             this.num_Throshold = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
-            this.num_距離限制 = new System.Windows.Forms.NumericUpDown();
-            this.label9 = new System.Windows.Forms.Label();
             this.num_Pin寬Max = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.num_Pin寬Min = new System.Windows.Forms.NumericUpDown();
@@ -53,13 +51,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.ed_RecipeNo = new System.Windows.Forms.TextBox();
-            this.ck_Limit = new System.Windows.Forms.CheckBox();
             this.ck_RealTray = new System.Windows.Forms.CheckBox();
             this.ck_PinArea = new System.Windows.Forms.CheckBox();
             this.ck_NuCarb = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_Throshold)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_距離限制)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin寬Max)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin寬Min)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin長Max)).BeginInit();
@@ -173,7 +169,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(365, 20);
             this.label1.TabIndex = 6;
-            this.label1.Text = "入料區";
+            this.label1.Text = "料倉區";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label1.DoubleClick += new System.EventHandler(this.入料CCD設定_DoubleClick);
             // 
@@ -237,43 +233,9 @@
             this.label10.TabIndex = 40;
             this.label10.Text = "閥值：";
             // 
-            // num_距離限制
-            // 
-            this.num_距離限制.DecimalPlaces = 1;
-            this.num_距離限制.Location = new System.Drawing.Point(546, 39);
-            this.num_距離限制.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
-            this.num_距離限制.Minimum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            -2147483648});
-            this.num_距離限制.Name = "num_距離限制";
-            this.num_距離限制.Size = new System.Drawing.Size(75, 30);
-            this.num_距離限制.TabIndex = 36;
-            this.num_距離限制.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.num_距離限制.Value = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
-            this.num_距離限制.ValueChanged += new System.EventHandler(this.num_Pin長Min_ValueChanged);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(436, 44);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(104, 19);
-            this.label9.TabIndex = 35;
-            this.label9.Text = "距離限制：";
-            // 
             // num_Pin寬Max
             // 
-            this.num_Pin寬Max.DecimalPlaces = 1;
+            this.num_Pin寬Max.DecimalPlaces = 2;
             this.num_Pin寬Max.Location = new System.Drawing.Point(299, 75);
             this.num_Pin寬Max.Maximum = new decimal(new int[] {
             9999,
@@ -307,7 +269,7 @@
             // 
             // num_Pin寬Min
             // 
-            this.num_Pin寬Min.DecimalPlaces = 1;
+            this.num_Pin寬Min.DecimalPlaces = 2;
             this.num_Pin寬Min.Increment = new decimal(new int[] {
             5,
             0,
@@ -346,7 +308,7 @@
             // 
             // num_Pin長Max
             // 
-            this.num_Pin長Max.DecimalPlaces = 1;
+            this.num_Pin長Max.DecimalPlaces = 2;
             this.num_Pin長Max.Location = new System.Drawing.Point(299, 39);
             this.num_Pin長Max.Maximum = new decimal(new int[] {
             9999,
@@ -380,7 +342,7 @@
             // 
             // num_Pin長Min
             // 
-            this.num_Pin長Min.DecimalPlaces = 1;
+            this.num_Pin長Min.DecimalPlaces = 2;
             this.num_Pin長Min.Increment = new decimal(new int[] {
             5,
             0,
@@ -434,15 +396,6 @@
             this.ed_RecipeNo.TabIndex = 25;
             this.ed_RecipeNo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // ck_Limit
-            // 
-            this.ck_Limit.AutoSize = true;
-            this.ck_Limit.Location = new System.Drawing.Point(415, 47);
-            this.ck_Limit.Name = "ck_Limit";
-            this.ck_Limit.Size = new System.Drawing.Size(15, 14);
-            this.ck_Limit.TabIndex = 45;
-            this.ck_Limit.UseVisualStyleBackColor = true;
-            // 
             // ck_RealTray
             // 
             this.ck_RealTray.AutoSize = true;
@@ -478,13 +431,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.ck_NuCarb);
             this.Controls.Add(this.ck_PinArea);
-            this.Controls.Add(this.ck_Limit);
             this.Controls.Add(this.ck_RealTray);
             this.Controls.Add(this.ck_Measure);
             this.Controls.Add(this.num_Throshold);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.num_距離限制);
-            this.Controls.Add(this.label9);
             this.Controls.Add(this.num_Pin寬Max);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.num_Pin寬Min);
@@ -501,7 +451,6 @@
             this.Size = new System.Drawing.Size(1121, 743);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.num_Throshold)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_距離限制)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin寬Max)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin寬Min)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin長Max)).EndInit();
@@ -526,8 +475,6 @@
         public System.Windows.Forms.CheckBox ck_Measure;
         private System.Windows.Forms.NumericUpDown num_Throshold;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.NumericUpDown num_距離限制;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown num_Pin寬Max;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.NumericUpDown num_Pin寬Min;
@@ -538,7 +485,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox ed_RecipeNo;
-        public System.Windows.Forms.CheckBox ck_Limit;
         public System.Windows.Forms.CheckBox ck_RealTray;
         public System.Windows.Forms.CheckBox ck_PinArea;
         public System.Windows.Forms.CheckBox ck_NuCarb;

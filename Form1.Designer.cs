@@ -298,11 +298,14 @@
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
-            this.button2 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btn_tmrStop = new System.Windows.Forms.Button();
+            this.btn_tmrPause = new System.Windows.Forms.Button();
+            this.lbl_CycleTime = new System.Windows.Forms.Label();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3054,6 +3057,9 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.lbl_CycleTime);
+            this.tabPage2.Controls.Add(this.btn_tmrPause);
+            this.tabPage2.Controls.Add(this.btn_tmrStop);
             this.tabPage2.Controls.Add(this.btn上膛);
             this.tabPage2.Controls.Add(this.lblLog);
             this.tabPage2.Controls.Add(this.txt_取料循環);
@@ -3355,6 +3361,26 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(115, 138);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 1;
+            this.button5.Text = "讀黨";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(115, 77);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 0;
+            this.button2.Text = "存檔";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // tmr_Sequense
             // 
             this.tmr_Sequense.Enabled = true;
@@ -3372,25 +3398,34 @@
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
-            // button2
+            // btn_tmrStop
             // 
-            this.button2.Location = new System.Drawing.Point(115, 77);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "存檔";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btn_tmrStop.Location = new System.Drawing.Point(200, 281);
+            this.btn_tmrStop.Name = "btn_tmrStop";
+            this.btn_tmrStop.Size = new System.Drawing.Size(165, 40);
+            this.btn_tmrStop.TabIndex = 214;
+            this.btn_tmrStop.Text = "循環停止";
+            this.btn_tmrStop.UseVisualStyleBackColor = true;
+            this.btn_tmrStop.Click += new System.EventHandler(this.btn_tmrStop_Click);
             // 
-            // button5
+            // btn_tmrPause
             // 
-            this.button5.Location = new System.Drawing.Point(115, 138);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 1;
-            this.button5.Text = "讀黨";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.btn_tmrPause.Location = new System.Drawing.Point(380, 281);
+            this.btn_tmrPause.Name = "btn_tmrPause";
+            this.btn_tmrPause.Size = new System.Drawing.Size(165, 40);
+            this.btn_tmrPause.TabIndex = 215;
+            this.btn_tmrPause.Text = "循環暫停";
+            this.btn_tmrPause.UseVisualStyleBackColor = true;
+            this.btn_tmrPause.Click += new System.EventHandler(this.btn_tmrPause_Click);
+            // 
+            // lbl_CycleTime
+            // 
+            this.lbl_CycleTime.AutoSize = true;
+            this.lbl_CycleTime.Location = new System.Drawing.Point(144, 431);
+            this.lbl_CycleTime.Name = "lbl_CycleTime";
+            this.lbl_CycleTime.Size = new System.Drawing.Size(138, 19);
+            this.lbl_CycleTime.TabIndex = 216;
+            this.lbl_CycleTime.Text = "取針循環時間 : ";
             // 
             // Form1
             // 
@@ -3697,6 +3732,9 @@
         private System.Windows.Forms.Button btn上膛;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn_tmrPause;
+        private System.Windows.Forms.Button btn_tmrStop;
+        private System.Windows.Forms.Label lbl_CycleTime;
     }
 }
 
