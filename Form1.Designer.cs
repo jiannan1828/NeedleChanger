@@ -270,6 +270,9 @@
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lbl_CycleTime = new System.Windows.Forms.Label();
+            this.btn_tmrPause = new System.Windows.Forms.Button();
+            this.btn_tmrStop = new System.Windows.Forms.Button();
             this.btn上膛 = new System.Windows.Forms.Button();
             this.lblLog = new System.Windows.Forms.Label();
             this.txt_取料循環 = new System.Windows.Forms.TextBox();
@@ -298,14 +301,47 @@
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.cmb_震動測試 = new System.Windows.Forms.ComboBox();
+            this.chk_震動測試 = new System.Windows.Forms.CheckBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lbl_P4_Power = new System.Windows.Forms.Label();
+            this.lbl_P3_Power = new System.Windows.Forms.Label();
+            this.lbl_P2_Power = new System.Windows.Forms.Label();
+            this.lbl_P1_Power = new System.Windows.Forms.Label();
+            this.lbl_P4_Stop = new System.Windows.Forms.Label();
+            this.lbl_P3_Stop = new System.Windows.Forms.Label();
+            this.lbl_P2_Stop = new System.Windows.Forms.Label();
+            this.lbl_P1_Stop = new System.Windows.Forms.Label();
+            this.lbl_P4_Start = new System.Windows.Forms.Label();
+            this.lbl_P3_Start = new System.Windows.Forms.Label();
+            this.lbl_P2_Start = new System.Windows.Forms.Label();
+            this.lbl_P1_Start = new System.Windows.Forms.Label();
+            this.lbl_Freq = new System.Windows.Forms.Label();
+            this.sb_Freq = new System.Windows.Forms.HScrollBar();
+            this.sb_P4_Power = new System.Windows.Forms.HScrollBar();
+            this.sb_P3_Power = new System.Windows.Forms.HScrollBar();
+            this.sb_P2_Power = new System.Windows.Forms.HScrollBar();
+            this.sb_P1_Power = new System.Windows.Forms.HScrollBar();
+            this.sb_P4_Stop = new System.Windows.Forms.HScrollBar();
+            this.sb_P4_Start = new System.Windows.Forms.HScrollBar();
+            this.sb_P3_Stop = new System.Windows.Forms.HScrollBar();
+            this.sb_P3_Start = new System.Windows.Forms.HScrollBar();
+            this.sb_P2_Stop = new System.Windows.Forms.HScrollBar();
+            this.sb_P2_Start = new System.Windows.Forms.HScrollBar();
+            this.sb_P1_Stop = new System.Windows.Forms.HScrollBar();
+            this.sb_P1_Start = new System.Windows.Forms.HScrollBar();
             this.button5 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
-            this.btn_tmrStop = new System.Windows.Forms.Button();
-            this.btn_tmrPause = new System.Windows.Forms.Button();
-            this.lbl_CycleTime = new System.Windows.Forms.Label();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3091,6 +3127,35 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // lbl_CycleTime
+            // 
+            this.lbl_CycleTime.AutoSize = true;
+            this.lbl_CycleTime.Location = new System.Drawing.Point(144, 431);
+            this.lbl_CycleTime.Name = "lbl_CycleTime";
+            this.lbl_CycleTime.Size = new System.Drawing.Size(138, 19);
+            this.lbl_CycleTime.TabIndex = 216;
+            this.lbl_CycleTime.Text = "取針循環時間 : ";
+            // 
+            // btn_tmrPause
+            // 
+            this.btn_tmrPause.Location = new System.Drawing.Point(380, 281);
+            this.btn_tmrPause.Name = "btn_tmrPause";
+            this.btn_tmrPause.Size = new System.Drawing.Size(165, 40);
+            this.btn_tmrPause.TabIndex = 215;
+            this.btn_tmrPause.Text = "循環暫停";
+            this.btn_tmrPause.UseVisualStyleBackColor = true;
+            this.btn_tmrPause.Click += new System.EventHandler(this.btn_tmrPause_Click);
+            // 
+            // btn_tmrStop
+            // 
+            this.btn_tmrStop.Location = new System.Drawing.Point(200, 281);
+            this.btn_tmrStop.Name = "btn_tmrStop";
+            this.btn_tmrStop.Size = new System.Drawing.Size(165, 40);
+            this.btn_tmrStop.TabIndex = 214;
+            this.btn_tmrStop.Text = "循環停止";
+            this.btn_tmrStop.UseVisualStyleBackColor = true;
+            this.btn_tmrStop.Click += new System.EventHandler(this.btn_tmrStop_Click);
+            // 
             // btn上膛
             // 
             this.btn上膛.Location = new System.Drawing.Point(380, 210);
@@ -3352,6 +3417,42 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.cmb_震動測試);
+            this.tabPage3.Controls.Add(this.chk_震動測試);
+            this.tabPage3.Controls.Add(this.label18);
+            this.tabPage3.Controls.Add(this.label17);
+            this.tabPage3.Controls.Add(this.label16);
+            this.tabPage3.Controls.Add(this.label15);
+            this.tabPage3.Controls.Add(this.label14);
+            this.tabPage3.Controls.Add(this.label13);
+            this.tabPage3.Controls.Add(this.label12);
+            this.tabPage3.Controls.Add(this.label11);
+            this.tabPage3.Controls.Add(this.lbl_P4_Power);
+            this.tabPage3.Controls.Add(this.lbl_P3_Power);
+            this.tabPage3.Controls.Add(this.lbl_P2_Power);
+            this.tabPage3.Controls.Add(this.lbl_P1_Power);
+            this.tabPage3.Controls.Add(this.lbl_P4_Stop);
+            this.tabPage3.Controls.Add(this.lbl_P3_Stop);
+            this.tabPage3.Controls.Add(this.lbl_P2_Stop);
+            this.tabPage3.Controls.Add(this.lbl_P1_Stop);
+            this.tabPage3.Controls.Add(this.lbl_P4_Start);
+            this.tabPage3.Controls.Add(this.lbl_P3_Start);
+            this.tabPage3.Controls.Add(this.lbl_P2_Start);
+            this.tabPage3.Controls.Add(this.lbl_P1_Start);
+            this.tabPage3.Controls.Add(this.lbl_Freq);
+            this.tabPage3.Controls.Add(this.sb_Freq);
+            this.tabPage3.Controls.Add(this.sb_P4_Power);
+            this.tabPage3.Controls.Add(this.sb_P3_Power);
+            this.tabPage3.Controls.Add(this.sb_P2_Power);
+            this.tabPage3.Controls.Add(this.sb_P1_Power);
+            this.tabPage3.Controls.Add(this.sb_P4_Stop);
+            this.tabPage3.Controls.Add(this.sb_P4_Start);
+            this.tabPage3.Controls.Add(this.sb_P3_Stop);
+            this.tabPage3.Controls.Add(this.sb_P3_Start);
+            this.tabPage3.Controls.Add(this.sb_P2_Stop);
+            this.tabPage3.Controls.Add(this.sb_P2_Start);
+            this.tabPage3.Controls.Add(this.sb_P1_Stop);
+            this.tabPage3.Controls.Add(this.sb_P1_Start);
             this.tabPage3.Controls.Add(this.button5);
             this.tabPage3.Controls.Add(this.button2);
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
@@ -3360,6 +3461,347 @@
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // cmb_震動測試
+            // 
+            this.cmb_震動測試.Font = new System.Drawing.Font("標楷體", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cmb_震動測試.FormattingEnabled = true;
+            this.cmb_震動測試.Items.AddRange(new object[] {
+            "上下至中",
+            "左右至中",
+            "震散"});
+            this.cmb_震動測試.Location = new System.Drawing.Point(362, 77);
+            this.cmb_震動測試.Name = "cmb_震動測試";
+            this.cmb_震動測試.Size = new System.Drawing.Size(158, 35);
+            this.cmb_震動測試.TabIndex = 40;
+            this.cmb_震動測試.SelectedIndexChanged += new System.EventHandler(this.cmb_震動測試_SelectedIndexChanged);
+            // 
+            // chk_震動測試
+            // 
+            this.chk_震動測試.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chk_震動測試.Location = new System.Drawing.Point(593, 492);
+            this.chk_震動測試.Name = "chk_震動測試";
+            this.chk_震動測試.Size = new System.Drawing.Size(151, 71);
+            this.chk_震動測試.TabIndex = 38;
+            this.chk_震動測試.Text = "震動測試";
+            this.chk_震動測試.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chk_震動測試.UseVisualStyleBackColor = true;
+            this.chk_震動測試.CheckedChanged += new System.EventHandler(this.chk_震動測試_CheckedChanged);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(700, 38);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(85, 19);
+            this.label18.TabIndex = 35;
+            this.label18.Text = "Frequency";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(1003, 138);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(55, 19);
+            this.label17.TabIndex = 34;
+            this.label17.Text = "Power";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(717, 138);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(42, 19);
+            this.label16.TabIndex = 33;
+            this.label16.Text = "Stop";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(424, 138);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(43, 19);
+            this.label15.TabIndex = 32;
+            this.label15.Text = "Start";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(238, 419);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(65, 19);
+            this.label14.TabIndex = 31;
+            this.label14.Text = "Phase 4";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(238, 341);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(65, 19);
+            this.label13.TabIndex = 30;
+            this.label13.Text = "Phase 3";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(238, 271);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(65, 19);
+            this.label12.TabIndex = 29;
+            this.label12.Text = "Phase 2";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(238, 201);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(65, 19);
+            this.label11.TabIndex = 28;
+            this.label11.Text = "Phase 1";
+            // 
+            // lbl_P4_Power
+            // 
+            this.lbl_P4_Power.AutoSize = true;
+            this.lbl_P4_Power.Location = new System.Drawing.Point(1009, 395);
+            this.lbl_P4_Power.Name = "lbl_P4_Power";
+            this.lbl_P4_Power.Size = new System.Drawing.Size(36, 19);
+            this.lbl_P4_Power.TabIndex = 27;
+            this.lbl_P4_Power.Text = "500";
+            // 
+            // lbl_P3_Power
+            // 
+            this.lbl_P3_Power.AutoSize = true;
+            this.lbl_P3_Power.Location = new System.Drawing.Point(1009, 317);
+            this.lbl_P3_Power.Name = "lbl_P3_Power";
+            this.lbl_P3_Power.Size = new System.Drawing.Size(36, 19);
+            this.lbl_P3_Power.TabIndex = 26;
+            this.lbl_P3_Power.Text = "500";
+            // 
+            // lbl_P2_Power
+            // 
+            this.lbl_P2_Power.AutoSize = true;
+            this.lbl_P2_Power.Location = new System.Drawing.Point(1009, 247);
+            this.lbl_P2_Power.Name = "lbl_P2_Power";
+            this.lbl_P2_Power.Size = new System.Drawing.Size(36, 19);
+            this.lbl_P2_Power.TabIndex = 25;
+            this.lbl_P2_Power.Text = "500";
+            // 
+            // lbl_P1_Power
+            // 
+            this.lbl_P1_Power.AutoSize = true;
+            this.lbl_P1_Power.Location = new System.Drawing.Point(1013, 177);
+            this.lbl_P1_Power.Name = "lbl_P1_Power";
+            this.lbl_P1_Power.Size = new System.Drawing.Size(36, 19);
+            this.lbl_P1_Power.TabIndex = 24;
+            this.lbl_P1_Power.Text = "500";
+            // 
+            // lbl_P4_Stop
+            // 
+            this.lbl_P4_Stop.AutoSize = true;
+            this.lbl_P4_Stop.Location = new System.Drawing.Point(724, 395);
+            this.lbl_P4_Stop.Name = "lbl_P4_Stop";
+            this.lbl_P4_Stop.Size = new System.Drawing.Size(36, 19);
+            this.lbl_P4_Stop.TabIndex = 23;
+            this.lbl_P4_Stop.Text = "500";
+            // 
+            // lbl_P3_Stop
+            // 
+            this.lbl_P3_Stop.AutoSize = true;
+            this.lbl_P3_Stop.Location = new System.Drawing.Point(724, 317);
+            this.lbl_P3_Stop.Name = "lbl_P3_Stop";
+            this.lbl_P3_Stop.Size = new System.Drawing.Size(36, 19);
+            this.lbl_P3_Stop.TabIndex = 22;
+            this.lbl_P3_Stop.Text = "500";
+            // 
+            // lbl_P2_Stop
+            // 
+            this.lbl_P2_Stop.AutoSize = true;
+            this.lbl_P2_Stop.Location = new System.Drawing.Point(724, 247);
+            this.lbl_P2_Stop.Name = "lbl_P2_Stop";
+            this.lbl_P2_Stop.Size = new System.Drawing.Size(36, 19);
+            this.lbl_P2_Stop.TabIndex = 21;
+            this.lbl_P2_Stop.Text = "500";
+            // 
+            // lbl_P1_Stop
+            // 
+            this.lbl_P1_Stop.AutoSize = true;
+            this.lbl_P1_Stop.Location = new System.Drawing.Point(724, 177);
+            this.lbl_P1_Stop.Name = "lbl_P1_Stop";
+            this.lbl_P1_Stop.Size = new System.Drawing.Size(36, 19);
+            this.lbl_P1_Stop.TabIndex = 20;
+            this.lbl_P1_Stop.Text = "500";
+            // 
+            // lbl_P4_Start
+            // 
+            this.lbl_P4_Start.AutoSize = true;
+            this.lbl_P4_Start.Location = new System.Drawing.Point(437, 395);
+            this.lbl_P4_Start.Name = "lbl_P4_Start";
+            this.lbl_P4_Start.Size = new System.Drawing.Size(18, 19);
+            this.lbl_P4_Start.TabIndex = 19;
+            this.lbl_P4_Start.Text = "0";
+            // 
+            // lbl_P3_Start
+            // 
+            this.lbl_P3_Start.AutoSize = true;
+            this.lbl_P3_Start.Location = new System.Drawing.Point(437, 317);
+            this.lbl_P3_Start.Name = "lbl_P3_Start";
+            this.lbl_P3_Start.Size = new System.Drawing.Size(18, 19);
+            this.lbl_P3_Start.TabIndex = 18;
+            this.lbl_P3_Start.Text = "0";
+            // 
+            // lbl_P2_Start
+            // 
+            this.lbl_P2_Start.AutoSize = true;
+            this.lbl_P2_Start.Location = new System.Drawing.Point(437, 247);
+            this.lbl_P2_Start.Name = "lbl_P2_Start";
+            this.lbl_P2_Start.Size = new System.Drawing.Size(18, 19);
+            this.lbl_P2_Start.TabIndex = 17;
+            this.lbl_P2_Start.Text = "0";
+            // 
+            // lbl_P1_Start
+            // 
+            this.lbl_P1_Start.AutoSize = true;
+            this.lbl_P1_Start.Location = new System.Drawing.Point(437, 177);
+            this.lbl_P1_Start.Name = "lbl_P1_Start";
+            this.lbl_P1_Start.Size = new System.Drawing.Size(18, 19);
+            this.lbl_P1_Start.TabIndex = 16;
+            this.lbl_P1_Start.Text = "0";
+            // 
+            // lbl_Freq
+            // 
+            this.lbl_Freq.AutoSize = true;
+            this.lbl_Freq.Location = new System.Drawing.Point(723, 69);
+            this.lbl_Freq.Name = "lbl_Freq";
+            this.lbl_Freq.Size = new System.Drawing.Size(36, 19);
+            this.lbl_Freq.TabIndex = 15;
+            this.lbl_Freq.Text = "188";
+            // 
+            // sb_Freq
+            // 
+            this.sb_Freq.Location = new System.Drawing.Point(638, 88);
+            this.sb_Freq.Maximum = 300;
+            this.sb_Freq.Name = "sb_Freq";
+            this.sb_Freq.Size = new System.Drawing.Size(207, 24);
+            this.sb_Freq.TabIndex = 14;
+            this.sb_Freq.Value = 188;
+            this.sb_Freq.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sb_Scroll_Group);
+            // 
+            // sb_P4_Power
+            // 
+            this.sb_P4_Power.Location = new System.Drawing.Point(920, 414);
+            this.sb_P4_Power.Maximum = 1000;
+            this.sb_P4_Power.Name = "sb_P4_Power";
+            this.sb_P4_Power.Size = new System.Drawing.Size(207, 24);
+            this.sb_P4_Power.TabIndex = 13;
+            this.sb_P4_Power.Value = 500;
+            this.sb_P4_Power.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sb_Scroll_Group);
+            // 
+            // sb_P3_Power
+            // 
+            this.sb_P3_Power.Location = new System.Drawing.Point(920, 336);
+            this.sb_P3_Power.Maximum = 1000;
+            this.sb_P3_Power.Name = "sb_P3_Power";
+            this.sb_P3_Power.Size = new System.Drawing.Size(207, 24);
+            this.sb_P3_Power.TabIndex = 12;
+            this.sb_P3_Power.Value = 500;
+            this.sb_P3_Power.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sb_Scroll_Group);
+            // 
+            // sb_P2_Power
+            // 
+            this.sb_P2_Power.Location = new System.Drawing.Point(924, 266);
+            this.sb_P2_Power.Maximum = 1000;
+            this.sb_P2_Power.Name = "sb_P2_Power";
+            this.sb_P2_Power.Size = new System.Drawing.Size(207, 24);
+            this.sb_P2_Power.TabIndex = 11;
+            this.sb_P2_Power.Value = 500;
+            this.sb_P2_Power.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sb_Scroll_Group);
+            // 
+            // sb_P1_Power
+            // 
+            this.sb_P1_Power.Location = new System.Drawing.Point(924, 196);
+            this.sb_P1_Power.Maximum = 1000;
+            this.sb_P1_Power.Name = "sb_P1_Power";
+            this.sb_P1_Power.Size = new System.Drawing.Size(207, 24);
+            this.sb_P1_Power.TabIndex = 10;
+            this.sb_P1_Power.Value = 500;
+            this.sb_P1_Power.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sb_Scroll_Group);
+            // 
+            // sb_P4_Stop
+            // 
+            this.sb_P4_Stop.Location = new System.Drawing.Point(634, 414);
+            this.sb_P4_Stop.Maximum = 1000;
+            this.sb_P4_Stop.Name = "sb_P4_Stop";
+            this.sb_P4_Stop.Size = new System.Drawing.Size(207, 24);
+            this.sb_P4_Stop.TabIndex = 9;
+            this.sb_P4_Stop.Value = 500;
+            this.sb_P4_Stop.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sb_Scroll_Group);
+            // 
+            // sb_P4_Start
+            // 
+            this.sb_P4_Start.Location = new System.Drawing.Point(338, 414);
+            this.sb_P4_Start.Maximum = 1000;
+            this.sb_P4_Start.Name = "sb_P4_Start";
+            this.sb_P4_Start.Size = new System.Drawing.Size(207, 24);
+            this.sb_P4_Start.TabIndex = 8;
+            this.sb_P4_Start.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sb_Scroll_Group);
+            // 
+            // sb_P3_Stop
+            // 
+            this.sb_P3_Stop.Location = new System.Drawing.Point(634, 336);
+            this.sb_P3_Stop.Maximum = 1000;
+            this.sb_P3_Stop.Name = "sb_P3_Stop";
+            this.sb_P3_Stop.Size = new System.Drawing.Size(207, 24);
+            this.sb_P3_Stop.TabIndex = 7;
+            this.sb_P3_Stop.Value = 500;
+            this.sb_P3_Stop.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sb_Scroll_Group);
+            // 
+            // sb_P3_Start
+            // 
+            this.sb_P3_Start.Location = new System.Drawing.Point(338, 336);
+            this.sb_P3_Start.Maximum = 1000;
+            this.sb_P3_Start.Name = "sb_P3_Start";
+            this.sb_P3_Start.Size = new System.Drawing.Size(207, 24);
+            this.sb_P3_Start.TabIndex = 6;
+            this.sb_P3_Start.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sb_Scroll_Group);
+            // 
+            // sb_P2_Stop
+            // 
+            this.sb_P2_Stop.Location = new System.Drawing.Point(638, 266);
+            this.sb_P2_Stop.Maximum = 1000;
+            this.sb_P2_Stop.Name = "sb_P2_Stop";
+            this.sb_P2_Stop.Size = new System.Drawing.Size(207, 24);
+            this.sb_P2_Stop.TabIndex = 5;
+            this.sb_P2_Stop.Value = 500;
+            this.sb_P2_Stop.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sb_Scroll_Group);
+            // 
+            // sb_P2_Start
+            // 
+            this.sb_P2_Start.Location = new System.Drawing.Point(342, 266);
+            this.sb_P2_Start.Maximum = 1000;
+            this.sb_P2_Start.Name = "sb_P2_Start";
+            this.sb_P2_Start.Size = new System.Drawing.Size(207, 24);
+            this.sb_P2_Start.TabIndex = 4;
+            this.sb_P2_Start.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sb_Scroll_Group);
+            // 
+            // sb_P1_Stop
+            // 
+            this.sb_P1_Stop.Location = new System.Drawing.Point(638, 196);
+            this.sb_P1_Stop.Maximum = 1000;
+            this.sb_P1_Stop.Name = "sb_P1_Stop";
+            this.sb_P1_Stop.Size = new System.Drawing.Size(207, 24);
+            this.sb_P1_Stop.TabIndex = 3;
+            this.sb_P1_Stop.Value = 500;
+            this.sb_P1_Stop.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sb_Scroll_Group);
+            // 
+            // sb_P1_Start
+            // 
+            this.sb_P1_Start.Location = new System.Drawing.Point(342, 196);
+            this.sb_P1_Start.Maximum = 1000;
+            this.sb_P1_Start.Name = "sb_P1_Start";
+            this.sb_P1_Start.Size = new System.Drawing.Size(207, 24);
+            this.sb_P1_Start.TabIndex = 2;
+            this.sb_P1_Start.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sb_Scroll_Group);
             // 
             // button5
             // 
@@ -3398,35 +3840,6 @@
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
-            // btn_tmrStop
-            // 
-            this.btn_tmrStop.Location = new System.Drawing.Point(200, 281);
-            this.btn_tmrStop.Name = "btn_tmrStop";
-            this.btn_tmrStop.Size = new System.Drawing.Size(165, 40);
-            this.btn_tmrStop.TabIndex = 214;
-            this.btn_tmrStop.Text = "循環停止";
-            this.btn_tmrStop.UseVisualStyleBackColor = true;
-            this.btn_tmrStop.Click += new System.EventHandler(this.btn_tmrStop_Click);
-            // 
-            // btn_tmrPause
-            // 
-            this.btn_tmrPause.Location = new System.Drawing.Point(380, 281);
-            this.btn_tmrPause.Name = "btn_tmrPause";
-            this.btn_tmrPause.Size = new System.Drawing.Size(165, 40);
-            this.btn_tmrPause.TabIndex = 215;
-            this.btn_tmrPause.Text = "循環暫停";
-            this.btn_tmrPause.UseVisualStyleBackColor = true;
-            this.btn_tmrPause.Click += new System.EventHandler(this.btn_tmrPause_Click);
-            // 
-            // lbl_CycleTime
-            // 
-            this.lbl_CycleTime.AutoSize = true;
-            this.lbl_CycleTime.Location = new System.Drawing.Point(144, 431);
-            this.lbl_CycleTime.Name = "lbl_CycleTime";
-            this.lbl_CycleTime.Size = new System.Drawing.Size(138, 19);
-            this.lbl_CycleTime.TabIndex = 216;
-            this.lbl_CycleTime.Text = "取針循環時間 : ";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -3453,6 +3866,7 @@
             this.tabPage1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -3735,6 +4149,42 @@
         private System.Windows.Forms.Button btn_tmrPause;
         private System.Windows.Forms.Button btn_tmrStop;
         private System.Windows.Forms.Label lbl_CycleTime;
+        private System.Windows.Forms.HScrollBar sb_Freq;
+        private System.Windows.Forms.HScrollBar sb_P4_Power;
+        private System.Windows.Forms.HScrollBar sb_P3_Power;
+        private System.Windows.Forms.HScrollBar sb_P2_Power;
+        private System.Windows.Forms.HScrollBar sb_P1_Power;
+        private System.Windows.Forms.HScrollBar sb_P4_Stop;
+        private System.Windows.Forms.HScrollBar sb_P4_Start;
+        private System.Windows.Forms.HScrollBar sb_P3_Stop;
+        private System.Windows.Forms.HScrollBar sb_P3_Start;
+        private System.Windows.Forms.HScrollBar sb_P2_Stop;
+        private System.Windows.Forms.HScrollBar sb_P2_Start;
+        private System.Windows.Forms.HScrollBar sb_P1_Stop;
+        private System.Windows.Forms.HScrollBar sb_P1_Start;
+        private System.Windows.Forms.Label lbl_Freq;
+        private System.Windows.Forms.Label lbl_P4_Power;
+        private System.Windows.Forms.Label lbl_P3_Power;
+        private System.Windows.Forms.Label lbl_P2_Power;
+        private System.Windows.Forms.Label lbl_P1_Power;
+        private System.Windows.Forms.Label lbl_P4_Stop;
+        private System.Windows.Forms.Label lbl_P3_Stop;
+        private System.Windows.Forms.Label lbl_P2_Stop;
+        private System.Windows.Forms.Label lbl_P1_Stop;
+        private System.Windows.Forms.Label lbl_P4_Start;
+        private System.Windows.Forms.Label lbl_P3_Start;
+        private System.Windows.Forms.Label lbl_P2_Start;
+        private System.Windows.Forms.Label lbl_P1_Start;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.CheckBox chk_震動測試;
+        private System.Windows.Forms.ComboBox cmb_震動測試;
     }
 }
 

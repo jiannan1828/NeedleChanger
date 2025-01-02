@@ -1144,7 +1144,7 @@ namespace xNet
         /// <param name="Watt">功率( 0 - 100%)</param>
         /// <param name="SiloPhase">料倉結束相位</param>
         /// <param name="FreqHz">頻率( 0 - 150Hz)</param>
-        /// <param name="Voltage">料倉振福( 0 - 100%)</param>
+        /// <param name="Voltage">料倉震福( 0 - 100%)</param>
         /// <returns></returns>
         public bool Silo(double StartPhase1, double EndPhase1, double StartPhase2, double EndPhase2, double StartPhase3, double EndPhase3, double StartPhase4, double EndPhase4, double Watt, int SiloPhase, double FreqHz, double Voltage)
         {

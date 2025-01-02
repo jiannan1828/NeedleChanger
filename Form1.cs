@@ -1927,7 +1927,7 @@ namespace InjectorInspector
                相1始 = { 0000, 0297, 0202, 0000 }, 相1終 = { 0500, 0231, 0500, 0000 }, 相1力 = { 0500, 1000, 1000, 0000 },
                相2始 = { 0000, 0056, 0004, 0000 }, 相2終 = { 0500, 0050, 0500, 0000 }, 相2力 = { 0500, 1000, 1000, 0000 },
                相3始 = { 0000, 0485, 0000, 0000 }, 相3終 = { 0500, 0100, 0490, 0000 }, 相3力 = { 0500, 1000, 1000, 0000 },
-               相4始 = { 0000, 0160, 0051, 0000 }, 相4終 = { 0500, 0100, 0377, 0000 }, 相4力 = { 0500, 1000, 1000, 0000 },
+               相4始 = { 0010, 0160, 0051, 0000 }, 相4終 = { 0500, 0100, 0377, 0000 }, 相4力 = { 0500, 1000, 1000, 0000 },
                倉始  = { 0000, 0000, 0000, 0010 }, 倉終  = { 0000, 0000, 0000, 0100 }, 倉力  = { 0000, 0000, 0000, 0440 };
 
         private void lbl柔震index(object sender, EventArgs e)
@@ -1942,12 +1942,35 @@ namespace InjectorInspector
             }
         }
 
-        public void btnVibrationInit_Click(object sender, EventArgs e) {
-                       if (lbl震散.BackColor   == Color.Red) { e柔震 = 柔震.震散;
-                } else if (lbl上下收.BackColor == Color.Red) { e柔震 = 柔震.上下至中;
-                } else if (lbl左右收.BackColor == Color.Red) { e柔震 = 柔震.左右至中;
-                } else if (lbl料倉.BackColor   == Color.Red) { e柔震 = 柔震.料倉;
-                }
+        public void btnVibrationInit_Click(object sender, EventArgs e) 
+        {
+            if (lbl震散.BackColor   == Color.Red) 
+            { 
+                e柔震 = 柔震.震散;
+            } 
+            else if (lbl上下收.BackColor == Color.Red) 
+            { 
+                e柔震 = 柔震.上下至中;
+            } 
+            else if (lbl左右收.BackColor == Color.Red) 
+            { 
+                e柔震 = 柔震.左右至中;
+            } 
+            else if (lbl料倉.BackColor   == Color.Red) 
+            { 
+                e柔震 = 柔震.料倉;
+            }
+
+            sb_Freq.Value = (int)頻率[(int)e柔震];
+            sb_P1_Start.Value = (int)相1始[(int)e柔震]; sb_P1_Stop.Value = (int)相1終[(int)e柔震]; sb_P1_Power.Value = (int)相1力[(int)e柔震];
+            sb_P2_Start.Value = (int)相2始[(int)e柔震]; sb_P2_Stop.Value = (int)相2終[(int)e柔震]; sb_P2_Power.Value = (int)相2力[(int)e柔震];
+            sb_P3_Start.Value = (int)相3始[(int)e柔震]; sb_P3_Stop.Value = (int)相3終[(int)e柔震]; sb_P3_Power.Value = (int)相3力[(int)e柔震];
+            sb_P4_Start.Value = (int)相4始[(int)e柔震]; sb_P4_Stop.Value = (int)相4終[(int)e柔震]; sb_P4_Power.Value = (int)相4力[(int)e柔震];
+            lbl_Freq.Text = sb_Freq.Value.ToString();
+            lbl_P1_Start.Text = sb_P1_Start.Value.ToString(); lbl_P1_Stop.Text = sb_P1_Stop.Value.ToString(); lbl_P1_Power.Text = sb_P1_Power.Value.ToString();
+            lbl_P2_Start.Text = sb_P2_Start.Value.ToString(); lbl_P2_Stop.Text = sb_P2_Stop.Value.ToString(); lbl_P2_Power.Text = sb_P2_Power.Value.ToString();
+            lbl_P3_Start.Text = sb_P3_Start.Value.ToString(); lbl_P3_Stop.Text = sb_P3_Stop.Value.ToString(); lbl_P3_Power.Text = sb_P3_Power.Value.ToString();
+            lbl_P4_Start.Text = sb_P4_Start.Value.ToString(); lbl_P4_Stop.Text = sb_P4_Stop.Value.ToString(); lbl_P4_Power.Text = sb_P4_Power.Value.ToString();
 
             //Vibration
             clsVibration.apiEstablishTCPVibration();
@@ -2704,6 +2727,7 @@ namespace InjectorInspector
         public int  itmrStop             = 1;
         public const double db取料Nozzle中心點X = 49.94;
         public const double db取料Nozzle中心點Y = 49.875;
+
         public const double db取料Nozzle中心點Z = 26;
         public const double db取料Nozzle中心點R = 1.350;
 
@@ -2899,7 +2923,7 @@ namespace InjectorInspector
 
                             case xe_tmr_takepin.xett_得到針資訊:                           xeTmrTakePin = xe_tmr_takepin.xett_縮回Nozzle0到0;  break;
                                 case xe_tmr_takepin.xett_縮回Nozzle0到0: 
-                                    dbapiNozzleZ(0, bTakePin?40*8:40*4);
+                                    dbapiNozzleZ(0, bTakePin?80*8:40*4);
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢測NozzleZ到0;
                                     break;
                                 case xe_tmr_takepin.xett_檢測NozzleZ到0: {
@@ -2916,9 +2940,9 @@ namespace InjectorInspector
                                         xeTmrTakePin = xe_tmr_takepin.xett_柔震盤料倉震動;
                                     } else { 
                                         inspector1.下視覺正向 = false;
-                                        dbapiNozzleX(db取料Nozzle中心點X + dbPinX_tmrTakePinTick, bTakePin?500*4:500*2);
-                                        dbapiNozzleY(db取料Nozzle中心點Y + dbPinY_tmrTakePinTick, bTakePin?100*8:100*4);    
-                                        dbapiNozzleR(db取料Nozzle中心點R + dbPinR_tmrTakePinTick, bTakePin?360*8:360*4);
+                                        dbapiNozzleX(db取料Nozzle中心點X + dbPinX_tmrTakePinTick, bTakePin?530*4:500*2);
+                                        dbapiNozzleY(db取料Nozzle中心點Y + dbPinY_tmrTakePinTick, bTakePin?130*8:100*4);    
+                                        dbapiNozzleR(db取料Nozzle中心點R + dbPinR_tmrTakePinTick, bTakePin?390*8:360*4);
                                         xeTmrTakePin = xe_tmr_takepin.xett_檢測NozzleXYR吸料位;
                                     }
                                 } break;
@@ -2940,7 +2964,7 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_判斷NozzleXYR吸料位為安全位置:    xeTmrTakePin = xe_tmr_takepin.xett_下降NozzleZ;  break;
 
                                 case xe_tmr_takepin.xett_下降NozzleZ: 
-                                    dbapiNozzleZ(db取料Nozzle中心點Z, bTakePin?40*8:40*4);
+                                    dbapiNozzleZ(db取料Nozzle中心點Z, bTakePin?80*8:40*4);
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢測NozzleZ吸料位;
                                     break;
                                 case xe_tmr_takepin.xett_檢測NozzleZ吸料位: {
@@ -2964,7 +2988,7 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_Nozzle吸料完成:                   xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ縮回0;    break;
 
                                 case xe_tmr_takepin.xett_NozzleZ縮回0: 
-                                    dbapiNozzleZ(0, bTakePin?40*8:40*4);
+                                    dbapiNozzleZ(0, bTakePin?80*8:40*4);
                                     xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ檢查是否縮回0;
                                     break;
                                 case xe_tmr_takepin.xett_NozzleZ檢查是否縮回0: 
@@ -2976,10 +3000,10 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_NozzleZ縮為0完成:                 xeTmrTakePin = xe_tmr_takepin.xett_移至飛拍起始位置;  break;
 
                                 case xe_tmr_takepin.xett_移至飛拍起始位置:
-                                    dbapiNozzleY(db下視覺取像Y,          bTakePin?100*8:100*4);
-                                    dbapiNozzleX(db下視覺取像X_Start,    bTakePin?500*4:500*2);
-                                    dbapiNozzleZ(db下視覺取像Z,          bTakePin? 40*8: 40*4);
-                                    dbapiNozzleR(db取料Nozzle中心點R+90, bTakePin?360*8:360*4);
+                                    dbapiNozzleY(db下視覺取像Y,          bTakePin?130*8:100*4);
+                                    dbapiNozzleX(db下視覺取像X_Start,    bTakePin?530*4:500*2);
+                                    dbapiNozzleZ(db下視覺取像Z,          bTakePin? 60*8: 40*4);
+                                    dbapiNozzleR(db取料Nozzle中心點R+90, bTakePin?390*8:360*4);
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢測是否在飛拍起始位置;
                                     break;
                                 case xe_tmr_takepin.xett_檢測是否在飛拍起始位置: {
@@ -3004,7 +3028,7 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_NozzleX以速度250移動來觸發飛拍: 
                                     inspector1.下視覺正向 = true;
-                                    dbapiNozzleX(db下視覺取像X_END, 250);
+                                    dbapiNozzleX(db下視覺取像X_END, 300); // 20241231 4xuan edit : 250 -> 300
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢測是否飛拍移動完成;
                                     break;
                                 case xe_tmr_takepin.xett_檢測是否飛拍移動完成: {
@@ -3017,7 +3041,7 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_確定飛拍移動完成:                 xeTmrTakePin = xe_tmr_takepin.xett_移至吐料位;  break;
 
                                 case xe_tmr_takepin.xett_移至吐料位: 
-                                    dbapiNozzleX(db吐料位X, bTakePin?500*4:500*2);
+                                    dbapiNozzleX(db吐料位X, bTakePin?510*4:500*2); // 20241231 4xuan comment : 吐料位跟飛拍結束位置是相同的
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢測是否在吐料位;
                                     break;
                                 case xe_tmr_takepin.xett_檢測是否在吐料位: {
@@ -3037,7 +3061,7 @@ namespace InjectorInspector
 
                                 /* bTakePin */
                                 case xe_tmr_takepin.xett_NozzleZ下降至吐料高度:
-                                    dbapiNozzleZ(db吐料位下降Z高度, bTakePin?40*8:40*4);
+                                    dbapiNozzleZ(db吐料位下降Z高度, bTakePin?80*8:40*4);
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢查NozzleZ是否在吐料高度;
                                     break;
                                 case xe_tmr_takepin.xett_檢查NozzleZ是否在吐料高度: {
@@ -3073,7 +3097,7 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_NozzleZ退回安全高度0: 
                                     clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴吸)/10,     (int)(WMX3IO對照.pxeIO_取料吸嘴吸)%10,     0);
-                                    dbapiNozzleZ(0, bTakePin?40*8:40*4);
+                                    dbapiNozzleZ(0, bTakePin?80*8:40*4);
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢查NozzleZ是否退回安全高度0;
                                     break;
                                 case xe_tmr_takepin.xett_檢查NozzleZ是否退回安全高度0: {
@@ -3468,6 +3492,172 @@ namespace InjectorInspector
 
 
 
+        uint u32freq = 188;
+        uint u32P1_Start = 0, u32P2_Start = 0, u32P3_Start = 0, u32P4_Start = 0;
+        uint u32P1_Stop = 500, u32P2_Stop = 500, u32P3_Stop = 500, u32P4_Stop = 500;
+        uint u32P1_Power = 500, u32P2_Power = 500, u32P3_Power = 500, u32P4_Power = 500;
+
+        private void sb_Scroll_Group(object sender, ScrollEventArgs e)
+        {
+            System.Windows.Forms.HScrollBar sbgroup = sender as System.Windows.Forms.HScrollBar;
+
+            if(sbgroup == sb_Freq)
+            {
+                u32freq = (uint)sb_Freq.Value;
+                lbl_Freq.Text = u32freq.ToString();
+            }
+            else if(sbgroup == sb_P1_Start)
+            {
+                u32P1_Start = (uint)sb_P1_Start.Value;
+                lbl_P1_Start.Text = u32P1_Start.ToString();
+            }
+            else if(sbgroup == sb_P2_Start)
+            {
+                u32P2_Start = (uint)sb_P2_Start.Value;
+                lbl_P2_Start.Text = u32P2_Start.ToString();
+            }
+            else if(sbgroup == sb_P3_Start)
+            {
+                u32P3_Start = (uint)sb_P3_Start.Value;
+                lbl_P3_Start.Text = u32P3_Start.ToString();
+            }
+            else if(sbgroup == sb_P4_Start)
+            {
+                u32P4_Start = (uint)sb_P4_Start.Value;
+                lbl_P4_Start.Text = u32P4_Start.ToString();
+            }
+            else if (sbgroup == sb_P1_Stop)
+            {
+                u32P1_Stop = (uint)sb_P1_Stop.Value;
+                lbl_P1_Stop.Text = u32P1_Stop.ToString();
+            }
+            else if (sbgroup == sb_P2_Stop)
+            {
+                u32P2_Stop = (uint)sb_P2_Stop.Value;
+                lbl_P2_Stop.Text = u32P2_Stop.ToString();
+            }
+            else if (sbgroup == sb_P3_Stop)
+            {
+                u32P3_Stop = (uint)sb_P3_Stop.Value;
+                lbl_P3_Stop.Text = u32P3_Stop.ToString();
+            }
+            else if (sbgroup == sb_P4_Stop)
+            {
+                u32P4_Stop = (uint)sb_P4_Stop.Value;
+                lbl_P4_Stop.Text = u32P4_Stop.ToString();
+            }
+            else if (sbgroup == sb_P1_Power)
+            {
+                u32P1_Power = (uint)sb_P1_Power.Value;
+                lbl_P1_Power.Text = u32P1_Power.ToString();
+            }
+            else if (sbgroup == sb_P2_Power)
+            {
+                u32P2_Power = (uint)sb_P2_Power.Value;
+                lbl_P2_Power.Text = u32P2_Power.ToString();
+            }
+            else if (sbgroup == sb_P3_Power)
+            {
+                u32P3_Power = (uint)sb_P3_Power.Value;
+                lbl_P3_Power.Text = u32P3_Power.ToString();
+            }
+            else if (sbgroup == sb_P4_Power)
+            {
+                u32P4_Power = (uint)sb_P4_Power.Value;
+                lbl_P4_Power.Text = u32P4_Power.ToString();
+            }
+
+            if (chk_震動測試.Checked)
+            {
+                chk_震動測試_CheckedChanged(this, EventArgs.Empty);
+            }
+        }
+
+        private void chk_震動測試_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chk_震動測試.Checked)
+            {
+                clsVibration.apiEstablishTCPVibration();
+                {
+                    clsVibration.u32Frequency = u32freq;
+                    clsVibration.u32VibrationSource1_StartPhase = u32P1_Start; clsVibration.u32VibrationSource1_StopPhase = u32P1_Stop; clsVibration.u32VibrationSource1_Power = u32P1_Power;
+                    clsVibration.u32VibrationSource2_StartPhase = u32P2_Start; clsVibration.u32VibrationSource2_StopPhase = u32P2_Stop; clsVibration.u32VibrationSource2_Power = u32P2_Power;
+                    clsVibration.u32VibrationSource3_StartPhase = u32P3_Start; clsVibration.u32VibrationSource3_StopPhase = u32P3_Stop; clsVibration.u32VibrationSource3_Power = u32P3_Power;
+                    clsVibration.u32VibrationSource4_StartPhase = u32P4_Start; clsVibration.u32VibrationSource4_StopPhase = u32P4_Stop; clsVibration.u32VibrationSource4_Power = u32P4_Power;
+                    clsVibration.SetVibration(clsVibration.u32Frequency,
+                                              clsVibration.u32VibrationSource1_StartPhase,
+                                              clsVibration.u32VibrationSource1_StopPhase,
+                                              clsVibration.u32VibrationSource2_StartPhase,
+                                              clsVibration.u32VibrationSource2_StopPhase,
+                                              clsVibration.u32VibrationSource3_StartPhase,
+                                              clsVibration.u32VibrationSource3_StopPhase,
+                                              clsVibration.u32VibrationSource4_StartPhase,
+                                              clsVibration.u32VibrationSource4_StopPhase,
+                                              clsVibration.u32BlackDepotSource_StartPhase,
+                                              clsVibration.u32BlackDepotSource_StopPhase,
+                                              clsVibration.u32VibrationSource1_Power,
+                                              clsVibration.u32VibrationSource2_Power,
+                                              clsVibration.u32VibrationSource3_Power,
+                                              clsVibration.u32VibrationSource4_Power,
+                                              clsVibration.u32BlackDepotSource_Power);
+                }
+
+                chk_震動測試.BackColor = Color.Red;
+            }
+            else
+            {
+                clsVibration.apiEstablishTCPVibration();
+                {
+                    uint bRunning = 0;
+                    clsVibration.Px1_SendCMD(xe_U15_CMD.xeUC_TestMode_FunctionOn, bRunning);
+                }
+                chk_震動測試.BackColor = SystemColors.Window;
+            }
+        }
+
+        private void cmb_震動測試_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cmb_震動測試.Text)
+            {
+                case "左右至中":
+                    sb_Freq.Value = (int)頻率[(int)柔震.左右至中];
+                    sb_P1_Start.Value = (int)相1始[(int)柔震.左右至中]; sb_P1_Stop.Value = (int)相1終[(int)柔震.左右至中]; sb_P1_Power.Value = (int)相1力[(int)柔震.左右至中];
+                    sb_P2_Start.Value = (int)相2始[(int)柔震.左右至中]; sb_P2_Stop.Value = (int)相2終[(int)柔震.左右至中]; sb_P2_Power.Value = (int)相2力[(int)柔震.左右至中];
+                    sb_P3_Start.Value = (int)相3始[(int)柔震.左右至中]; sb_P3_Stop.Value = (int)相3終[(int)柔震.左右至中]; sb_P3_Power.Value = (int)相3力[(int)柔震.左右至中];
+                    sb_P4_Start.Value = (int)相4始[(int)柔震.左右至中]; sb_P4_Stop.Value = (int)相4終[(int)柔震.左右至中]; sb_P4_Power.Value = (int)相4力[(int)柔震.左右至中];
+                    break;
+                case "上下至中":
+                    sb_Freq.Value = (int)頻率[(int)柔震.上下至中];
+                    sb_P1_Start.Value = (int)相1始[(int)柔震.上下至中]; sb_P1_Stop.Value = (int)相1終[(int)柔震.上下至中]; sb_P1_Power.Value = (int)相1力[(int)柔震.上下至中];
+                    sb_P2_Start.Value = (int)相2始[(int)柔震.上下至中]; sb_P2_Stop.Value = (int)相2終[(int)柔震.上下至中]; sb_P2_Power.Value = (int)相2力[(int)柔震.上下至中];
+                    sb_P3_Start.Value = (int)相3始[(int)柔震.上下至中]; sb_P3_Stop.Value = (int)相3終[(int)柔震.上下至中]; sb_P3_Power.Value = (int)相3力[(int)柔震.上下至中];
+                    sb_P4_Start.Value = (int)相4始[(int)柔震.上下至中]; sb_P4_Stop.Value = (int)相4終[(int)柔震.上下至中]; sb_P4_Power.Value = (int)相4力[(int)柔震.上下至中];
+                    break;
+                case "震散":
+                    sb_Freq.Value = (int)頻率[(int)柔震.震散];
+                    sb_P1_Start.Value = (int)相1始[(int)柔震.震散]; sb_P1_Stop.Value = (int)相1終[(int)柔震.震散]; sb_P1_Power.Value = (int)相1力[(int)柔震.震散];
+                    sb_P2_Start.Value = (int)相2始[(int)柔震.震散]; sb_P2_Stop.Value = (int)相2終[(int)柔震.震散]; sb_P2_Power.Value = (int)相2力[(int)柔震.震散];
+                    sb_P3_Start.Value = (int)相3始[(int)柔震.震散]; sb_P3_Stop.Value = (int)相3終[(int)柔震.震散]; sb_P3_Power.Value = (int)相3力[(int)柔震.震散];
+                    sb_P4_Start.Value = (int)相4始[(int)柔震.震散]; sb_P4_Stop.Value = (int)相4終[(int)柔震.震散]; sb_P4_Power.Value = (int)相4力[(int)柔震.震散];
+                    break;
+            }
+            u32freq = (uint)sb_Freq.Value;
+            u32P1_Start = (uint)sb_P1_Start.Value; u32P1_Stop = (uint)sb_P1_Stop.Value; u32P1_Power = (uint)sb_P1_Power.Value;
+            u32P2_Start = (uint)sb_P2_Start.Value; u32P2_Stop = (uint)sb_P2_Stop.Value; u32P2_Power = (uint)sb_P2_Power.Value;
+            u32P3_Start = (uint)sb_P3_Start.Value; u32P3_Stop = (uint)sb_P3_Stop.Value; u32P3_Power = (uint)sb_P3_Power.Value;
+            u32P4_Start = (uint)sb_P4_Start.Value; u32P4_Stop = (uint)sb_P4_Stop.Value; u32P4_Power = (uint)sb_P4_Power.Value;
+
+            lbl_Freq.Text = sb_Freq.Value.ToString();
+            lbl_P1_Start.Text = sb_P1_Start.Value.ToString(); lbl_P1_Stop.Text = sb_P1_Stop.Value.ToString(); lbl_P1_Power.Text = sb_P1_Power.Value.ToString();
+            lbl_P2_Start.Text = sb_P2_Start.Value.ToString(); lbl_P2_Stop.Text = sb_P2_Stop.Value.ToString(); lbl_P2_Power.Text = sb_P2_Power.Value.ToString();
+            lbl_P3_Start.Text = sb_P3_Start.Value.ToString(); lbl_P3_Stop.Text = sb_P3_Stop.Value.ToString(); lbl_P3_Power.Text = sb_P3_Power.Value.ToString();
+            lbl_P4_Start.Text = sb_P4_Start.Value.ToString(); lbl_P4_Stop.Text = sb_P4_Stop.Value.ToString(); lbl_P4_Power.Text = sb_P4_Power.Value.ToString();
+
+            if (chk_震動測試.Checked)
+            {
+                chk_震動測試_CheckedChanged(this, EventArgs.Empty);
+            }
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
