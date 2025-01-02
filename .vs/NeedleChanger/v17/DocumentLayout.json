@@ -1,21 +1,21 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\NeedleChanger\\Code\\NeedleChanger\\",
+  "WorkspaceRootPath": "D:\\CodeNeedleChanger\\NeedleChanger\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|d:\\needlechanger\\code\\needlechanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|D:\\CodeNeedleChanger\\NeedleChanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\inspector\\inspector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|d:\\codeneedlechanger\\needlechanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|D:\\CodeNeedleChanger\\NeedleChanger\\inspector\\inspector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|solutionrelative:inspector\\inspector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|d:\\needlechanger\\code\\needlechanger\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|D:\\CodeNeedleChanger\\NeedleChanger\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -26,15 +26,15 @@
       "DocumentGroups": [
         {
           "DockedHeight": 378,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "Form1.Designer.cs",
-              "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.Designer.cs",
+              "DocumentMoniker": "D:\\CodeNeedleChanger\\NeedleChanger\\Form1.Designer.cs",
               "RelativeDocumentMoniker": "Form1.Designer.cs",
-              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.Designer.cs",
+              "ToolTip": "D:\\CodeNeedleChanger\\NeedleChanger\\Form1.Designer.cs",
               "RelativeToolTip": "Form1.Designer.cs",
               "ViewState": "AgIAAAIPAAAAAAAAAAAewAIPAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -43,40 +43,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Inspector.cs [\u8A2D\u8A08]",
-              "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\Inspector\\Inspector.cs",
-              "RelativeDocumentMoniker": "Inspector\\Inspector.cs",
-              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Inspector\\Inspector.cs [\u8A2D\u8A08]",
-              "RelativeToolTip": "Inspector\\Inspector.cs [\u8A2D\u8A08]",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "D:\\CodeNeedleChanger\\NeedleChanger\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "D:\\CodeNeedleChanger\\NeedleChanger\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AgIAAHsHAAAAAAAAAAAwwIYHAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-31T03:04:40.184Z",
-              "EditorCaption": " [\u8A2D\u8A08]"
+              "WhenOpened": "2024-12-20T01:45:47.192Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Form1.cs [\u8A2D\u8A08]",
-              "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs",
-              "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs [\u8A2D\u8A08]",
-              "RelativeToolTip": "Form1.cs [\u8A2D\u8A08]",
+              "DocumentIndex": 2,
+              "Title": "Inspector.cs [\u8A2D\u8A08]",
+              "DocumentMoniker": "D:\\CodeNeedleChanger\\NeedleChanger\\Inspector\\Inspector.cs",
+              "RelativeDocumentMoniker": "Inspector\\Inspector.cs",
+              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Inspector\\Inspector.cs [\u8A2D\u8A08]",
+              "RelativeToolTip": "..\\..\\NeedleChanger\\Code\\NeedleChanger\\Inspector\\Inspector.cs [\u8A2D\u8A08]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-31T02:20:21.283Z",
-              "EditorCaption": " [\u8A2D\u8A08]"
+              "WhenOpened": "2024-12-31T03:04:40.184Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Form1.cs",
-              "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs",
+              "Title": "Form1.cs [\u8A2D\u8A08]",
+              "DocumentMoniker": "D:\\CodeNeedleChanger\\NeedleChanger\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs",
-              "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAAH4HAAAAAAAAAAAwwIIHAAASAAAAAAAAAA==",
+              "ToolTip": "D:\\CodeNeedleChanger\\NeedleChanger\\Form1.cs [\u8A2D\u8A08]",
+              "RelativeToolTip": "Form1.cs [\u8A2D\u8A08]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-20T01:45:47.192Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-31T02:20:21.283Z",
+              "EditorCaption": " [\u8A2D\u8A08]"
             }
           ]
         },
