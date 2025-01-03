@@ -94,3 +94,6 @@ D:\CodeNeedleChanger\NeedleChanger\obj\Debug\NeedleChanger.csproj.CoreCompileInp
 D:\CodeNeedleChanger\NeedleChanger\obj\Debug\NeedleCh.FD94171B.Up2Date
 D:\CodeNeedleChanger\NeedleChanger\obj\Debug\京元植針機.exe
 D:\CodeNeedleChanger\NeedleChanger\obj\Debug\京元植針機.pdb
+D:\CodeNeedleChanger\NeedleChanger\bin\Debug\NeedleManual.exe
+D:\CodeNeedleChanger\NeedleChanger\bin\Debug\NeedleManual.pdb
+D:\CodeNeedleChanger\NeedleChanger\bin\Debug\NeedleManual.exe.config

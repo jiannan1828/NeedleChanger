@@ -298,7 +298,6 @@
             this.btn_Connect = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
-            this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.cmb_震動測試 = new System.Windows.Forms.ComboBox();
@@ -342,6 +341,11 @@
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+
+            this.inspector1 = new Inspector.Inspector();
+            this.Frm_NeedleManual = new NeedleManual.Frm_Main();
+
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3409,6 +3413,7 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabJob);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -3840,6 +3845,17 @@
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(4, 29);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(1228, 758);
+            this.tabPage4.TabIndex = 4;
+            this.tabPage4.Text = "tabPage4";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            this.tabPage4.Controls.Add(this.Frm_NeedleManual);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -4073,7 +4089,6 @@
         private System.Windows.Forms.Button btn_Connect;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button button1;
-        private Inspector.Inspector inspector1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Label lbl_IAI_Convert;
         private System.Windows.Forms.Label lbl_IAI_Back;
@@ -4185,6 +4200,10 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.CheckBox chk_震動測試;
         private System.Windows.Forms.ComboBox cmb_震動測試;
+        private System.Windows.Forms.TabPage tabPage4;
+
+        private Inspector.Inspector inspector1;
+        private NeedleManual.Frm_Main Frm_NeedleManual;
     }
 }
 

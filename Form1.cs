@@ -1345,6 +1345,9 @@ namespace InjectorInspector
             //Add the callback api from snapshot api
             inspector1.on下視覺 = apiCallBackTest;
 
+            //NeedleManual
+            Frm_NeedleManual.Show();
+
             //先跳到第2頁
             int iAimToPageIndex = 4-1;
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];

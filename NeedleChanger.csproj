@@ -125,6 +125,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\NeedleChanger\Code\NeedleChanger\NeedleManual\NeedleManual\NeedleManual.csproj">
+      <Project>{78cd472e-7ea0-4fbc-94a9-9e1eb16df5f6}</Project>
+      <Name>NeedleManual</Name>
+    </ProjectReference>
     <ProjectReference Include="Inspector\Inspector.csproj">
       <Project>{0cc9e3b9-d31b-45f0-b75b-787cf027aeca}</Project>
       <Name>Inspector</Name>

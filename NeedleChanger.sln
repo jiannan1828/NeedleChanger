@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeedleChanger", "NeedleChan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspector", "Inspector\Inspector.csproj", "{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeedleManual", "..\..\NeedleChanger\Code\NeedleChanger\NeedleManual\NeedleManual\NeedleManual.csproj", "{78CD472E-7EA0-4FBC-94A9-9E1EB16DF5F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}.Release|x64.ActiveCfg = Release|x64
 		{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}.Release|x64.Build.0 = Release|x64
+		{78CD472E-7EA0-4FBC-94A9-9E1EB16DF5F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78CD472E-7EA0-4FBC-94A9-9E1EB16DF5F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78CD472E-7EA0-4FBC-94A9-9E1EB16DF5F6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{78CD472E-7EA0-4FBC-94A9-9E1EB16DF5F6}.Debug|x64.Build.0 = Debug|Any CPU
+		{78CD472E-7EA0-4FBC-94A9-9E1EB16DF5F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78CD472E-7EA0-4FBC-94A9-9E1EB16DF5F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78CD472E-7EA0-4FBC-94A9-9E1EB16DF5F6}.Release|x64.ActiveCfg = Release|Any CPU
+		{78CD472E-7EA0-4FBC-94A9-9E1EB16DF5F6}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
