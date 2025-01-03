@@ -271,8 +271,8 @@
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.lbl_CycleTime = new System.Windows.Forms.Label();
-            this.btn_tmrPause = new System.Windows.Forms.Button();
-            this.btn_tmrStop = new System.Windows.Forms.Button();
+            this.btn_Pause = new System.Windows.Forms.Button();
+            this.btn_Stop = new System.Windows.Forms.Button();
             this.btn上膛 = new System.Windows.Forms.Button();
             this.lblLog = new System.Windows.Forms.Label();
             this.txt_取料循環 = new System.Windows.Forms.TextBox();
@@ -298,6 +298,7 @@
             this.btn_Connect = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
+            this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.cmb_震動測試 = new System.Windows.Forms.ComboBox();
@@ -338,14 +339,11 @@
             this.sb_P1_Start = new System.Windows.Forms.HScrollBar();
             this.button5 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.Frm_NeedleManual = new NeedleManual.Frm_Main();
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-
-            this.inspector1 = new Inspector.Inspector();
-            this.Frm_NeedleManual = new NeedleManual.Frm_Main();
-
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -353,6 +351,7 @@
             this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tmr_ReadWMX3
@@ -3098,8 +3097,8 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.lbl_CycleTime);
-            this.tabPage2.Controls.Add(this.btn_tmrPause);
-            this.tabPage2.Controls.Add(this.btn_tmrStop);
+            this.tabPage2.Controls.Add(this.btn_Pause);
+            this.tabPage2.Controls.Add(this.btn_Stop);
             this.tabPage2.Controls.Add(this.btn上膛);
             this.tabPage2.Controls.Add(this.lblLog);
             this.tabPage2.Controls.Add(this.txt_取料循環);
@@ -3140,25 +3139,25 @@
             this.lbl_CycleTime.TabIndex = 216;
             this.lbl_CycleTime.Text = "取針循環時間 : ";
             // 
-            // btn_tmrPause
+            // btn_Pause
             // 
-            this.btn_tmrPause.Location = new System.Drawing.Point(380, 281);
-            this.btn_tmrPause.Name = "btn_tmrPause";
-            this.btn_tmrPause.Size = new System.Drawing.Size(165, 40);
-            this.btn_tmrPause.TabIndex = 215;
-            this.btn_tmrPause.Text = "循環暫停";
-            this.btn_tmrPause.UseVisualStyleBackColor = true;
-            this.btn_tmrPause.Click += new System.EventHandler(this.btn_tmrPause_Click);
+            this.btn_Pause.Location = new System.Drawing.Point(380, 281);
+            this.btn_Pause.Name = "btn_Pause";
+            this.btn_Pause.Size = new System.Drawing.Size(165, 40);
+            this.btn_Pause.TabIndex = 215;
+            this.btn_Pause.Text = "循環暫停";
+            this.btn_Pause.UseVisualStyleBackColor = true;
+            this.btn_Pause.Click += new System.EventHandler(this.btn_Pause_Click);
             // 
-            // btn_tmrStop
+            // btn_Stop
             // 
-            this.btn_tmrStop.Location = new System.Drawing.Point(200, 281);
-            this.btn_tmrStop.Name = "btn_tmrStop";
-            this.btn_tmrStop.Size = new System.Drawing.Size(165, 40);
-            this.btn_tmrStop.TabIndex = 214;
-            this.btn_tmrStop.Text = "循環停止";
-            this.btn_tmrStop.UseVisualStyleBackColor = true;
-            this.btn_tmrStop.Click += new System.EventHandler(this.btn_tmrStop_Click);
+            this.btn_Stop.Location = new System.Drawing.Point(200, 281);
+            this.btn_Stop.Name = "btn_Stop";
+            this.btn_Stop.Size = new System.Drawing.Size(165, 40);
+            this.btn_Stop.TabIndex = 214;
+            this.btn_Stop.Text = "循環停止";
+            this.btn_Stop.UseVisualStyleBackColor = true;
+            this.btn_Stop.Click += new System.EventHandler(this.btn_Stop_Click);
             // 
             // btn上膛
             // 
@@ -3828,25 +3827,9 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // tmr_Sequense
-            // 
-            this.tmr_Sequense.Enabled = true;
-            this.tmr_Sequense.Tick += new System.EventHandler(this.tmr_Sequense_Tick);
-            // 
-            // tmr_TakePin
-            // 
-            this.tmr_TakePin.Enabled = true;
-            this.tmr_TakePin.Interval = 5;
-            this.tmr_TakePin.Tick += new System.EventHandler(this.tmr_TakePin_Tick);
-            // 
-            // tmr_Warning
-            // 
-            this.tmr_Warning.Enabled = true;
-            this.tmr_Warning.Interval = 300;
-            this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
-            // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.Frm_NeedleManual);
             this.tabPage4.Location = new System.Drawing.Point(4, 29);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -3854,7 +3837,27 @@
             this.tabPage4.TabIndex = 4;
             this.tabPage4.Text = "tabPage4";
             this.tabPage4.UseVisualStyleBackColor = true;
-            this.tabPage4.Controls.Add(this.Frm_NeedleManual);
+            // 
+            // Frm_NeedleManual
+            // 
+            this.Frm_NeedleManual.ClientSize = new System.Drawing.Size(1382, 682);
+            this.Frm_NeedleManual.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Frm_NeedleManual.Location = new System.Drawing.Point(0, 0);
+            this.Frm_NeedleManual.Margin = new System.Windows.Forms.Padding(2);
+            this.Frm_NeedleManual.Name = "Frm_NeedleManual";
+            this.Frm_NeedleManual.Text = "4";
+            this.Frm_NeedleManual.Visible = false;
+            // 
+            // tmr_Sequense
+            // 
+            this.tmr_Sequense.Enabled = true;
+            this.tmr_Sequense.Tick += new System.EventHandler(this.tmr_Sequense_Tick);
+            // 
+            // tmr_Warning
+            // 
+            this.tmr_Warning.Enabled = true;
+            this.tmr_Warning.Interval = 300;
+            this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
             // Form1
             // 
@@ -3883,6 +3886,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -4161,8 +4165,8 @@
         private System.Windows.Forms.Button btn上膛;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button btn_tmrPause;
-        private System.Windows.Forms.Button btn_tmrStop;
+        private System.Windows.Forms.Button btn_Pause;
+        private System.Windows.Forms.Button btn_Stop;
         private System.Windows.Forms.Label lbl_CycleTime;
         private System.Windows.Forms.HScrollBar sb_Freq;
         private System.Windows.Forms.HScrollBar sb_P4_Power;
