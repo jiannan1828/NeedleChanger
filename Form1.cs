@@ -53,7 +53,7 @@ namespace InjectorInspector
     {
         //---------------------------------------------------------------------------------------
         //Debug config
-        bool bshow_debug_RAW_Conver_Back_Value = true;
+        bool bshow_debug_RAW_Conver_Back_Value = false;
         
         //---------------------------------------------------------------------------------------
         //WMX3
@@ -1894,10 +1894,10 @@ namespace InjectorInspector
                     料倉     = 3,
         }; 柔震 e柔震 = 柔震.震散;
         uint[] 頻率  = { 0188, 0180, 0169, 0220 },
-               相1始 = { 0000, 0297, 0202, 0000 }, 相1終 = { 0500, 0231, 0500, 0000 }, 相1力 = { 0500, 1000, 1000, 0000 },
-               相2始 = { 0000, 0056, 0004, 0000 }, 相2終 = { 0500, 0050, 0500, 0000 }, 相2力 = { 0500, 1000, 1000, 0000 },
-               相3始 = { 0000, 0485, 0000, 0000 }, 相3終 = { 0500, 0100, 0490, 0000 }, 相3力 = { 0500, 1000, 1000, 0000 },
-               相4始 = { 0000, 0160, 0051, 0000 }, 相4終 = { 0500, 0100, 0377, 0000 }, 相4力 = { 0500, 1000, 1000, 0000 },
+               相1始 = { 0000, 0297, 0000, 0000 }, 相1終 = { 0500, 0572, 0896, 0000 }, 相1力 = { 0750, 1000, 1000, 0000 },
+               相2始 = { 0000, 0056, 0280, 0000 }, 相2終 = { 0500, 0070, 0902, 0000 }, 相2力 = { 0750, 1000, 1000, 0000 },
+               相3始 = { 0000, 0485, 0235, 0000 }, 相3終 = { 0500, 0229, 0457, 0000 }, 相3力 = { 0750, 1000, 1000, 0000 },
+               相4始 = { 0000, 0160, 0381, 0000 }, 相4終 = { 0500, 0318, 0464, 0000 }, 相4力 = { 0750, 1000, 1000, 0000 },
                倉始  = { 0000, 0000, 0000, 0010 }, 倉終  = { 0000, 0000, 0000, 0100 }, 倉力  = { 0000, 0000, 0000, 0440 };
 
         private void lbl柔震index(object sender, EventArgs e)
@@ -2666,8 +2666,6 @@ namespace InjectorInspector
         public int  itmrStop             = 1;
         public const double db取料Nozzle中心點X = 49.94;
         public const double db取料Nozzle中心點Y = 49.875;
-
-
         public const double db取料Nozzle中心點Z = 26;
         public const double db取料Nozzle中心點R = 1.350;
 
@@ -3425,6 +3423,9 @@ namespace InjectorInspector
             }
         }  // end of private void tmr_TakePin_Tick(object sender, EventArgs e)
 
+
+
+
         private void btn_Manual_Click(object sender, EventArgs e)
         {
             frm_Manual.Show();
@@ -3439,6 +3440,7 @@ namespace InjectorInspector
         {
             //inspector1.xInit();
         }
+
 
         private void button2_Click(object sender, EventArgs e)
         {
