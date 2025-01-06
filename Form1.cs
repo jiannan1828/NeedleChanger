@@ -53,7 +53,7 @@ namespace InjectorInspector
     {
         //---------------------------------------------------------------------------------------
         //Debug config
-        bool bshow_debug_RAW_Conver_Back_Value = false;
+        bool bshow_debug_RAW_Conver_Back_Value = true;
         
         //---------------------------------------------------------------------------------------
         //WMX3
@@ -1888,36 +1888,6 @@ namespace InjectorInspector
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /// <summary>
-        /// Reserve function
-        /// </summary>
-        /// 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //inspector1.xInit();
-        }
-
-
-
-
-
-
-        
-
-
         enum 柔震 { 震散     = 0,
                     上下至中 = 1,
                     左右至中 = 2,
@@ -2524,14 +2494,6 @@ namespace InjectorInspector
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Vector3 pos;
-            bool success = inspector1.xInspSocket(out pos);
-            label6.Text = string.Format("Socket 偵測 {0} 中心偏移 = {1:F3} , {2:F3}", success, pos.X, pos.Y);
-            success = inspector1.xInspSocket植針後檢查();
-            label7.Text = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
-        }
 
 
 
@@ -2704,6 +2666,8 @@ namespace InjectorInspector
         public int  itmrStop             = 1;
         public const double db取料Nozzle中心點X = 49.94;
         public const double db取料Nozzle中心點Y = 49.875;
+
+
         public const double db取料Nozzle中心點Z = 26;
         public const double db取料Nozzle中心點R = 1.350;
 
@@ -3461,13 +3425,20 @@ namespace InjectorInspector
             }
         }  // end of private void tmr_TakePin_Tick(object sender, EventArgs e)
 
+        private void btn_Manual_Click(object sender, EventArgs e)
+        {
+            frm_Manual.Show();
+        }
 
 
 
 
 
 
-
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //inspector1.xInit();
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -3479,10 +3450,14 @@ namespace InjectorInspector
             inspector1.LoadRecipe(8);
         }
 
-
-
-
-
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Vector3 pos;
+            bool success = inspector1.xInspSocket(out pos);
+            label6.Text = string.Format("Socket 偵測 {0} 中心偏移 = {1:F3} , {2:F3}", success, pos.X, pos.Y);
+            success = inspector1.xInspSocket植針後檢查();
+            label7.Text = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
+        }
 
 
         private void inspector1_Load(object sender, EventArgs e)

@@ -146,3 +146,15 @@ D:\Resilio\CodeViaTestMklink\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.
 D:\Resilio\CodeViaTestMklink\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.Up2Date
 D:\Resilio\CodeViaTestMklink\NeedleChanger\Inspector\obj\Debug\Inspector.dll
 D:\Resilio\CodeViaTestMklink\NeedleChanger\Inspector\obj\Debug\Inspector.pdb
+D:\CodeNeedleChanger\NeedleChanger\Inspector\bin\Debug\ic4core.dll
+D:\CodeNeedleChanger\NeedleChanger\Inspector\bin\Debug\Inspector.dll
+D:\CodeNeedleChanger\NeedleChanger\Inspector\bin\Debug\Inspector.pdb
+D:\CodeNeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.AssemblyReference.cache
+D:\CodeNeedleChanger\NeedleChanger\Inspector\obj\Debug\Camera.IMSSetFrm.resources
+D:\CodeNeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.Inspector.resources
+D:\CodeNeedleChanger\NeedleChanger\Inspector\obj\Debug\Camera.SisoSetFrm.resources
+D:\CodeNeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.GenerateResource.cache
+D:\CodeNeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.CoreCompileInputs.cache
+D:\CodeNeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.Up2Date
+D:\CodeNeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.dll
+D:\CodeNeedleChanger\NeedleChanger\Inspector\obj\Debug\Inspector.pdb

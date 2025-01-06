@@ -270,6 +270,9 @@
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lbl_CycleTime = new System.Windows.Forms.Label();
+            this.btn_tmrPause = new System.Windows.Forms.Button();
+            this.btn_tmrStop = new System.Windows.Forms.Button();
             this.btn上膛 = new System.Windows.Forms.Button();
             this.lblLog = new System.Windows.Forms.Label();
             this.txt_取料循環 = new System.Windows.Forms.TextBox();
@@ -296,6 +299,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.inspector1 = new Inspector.Inspector();
+            this.frm_Manual = new NeedleManual.Frm_Manual();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.button5 = new System.Windows.Forms.Button();
@@ -303,9 +307,7 @@
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
-            this.btn_tmrStop = new System.Windows.Forms.Button();
-            this.btn_tmrPause = new System.Windows.Forms.Button();
-            this.lbl_CycleTime = new System.Windows.Forms.Label();
+            this.btn_Manual = new System.Windows.Forms.Button();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -323,6 +325,7 @@
             // 
             // tabJob
             // 
+            this.tabJob.Controls.Add(this.btn_Manual);
             this.tabJob.Controls.Add(this.lblVBLED);
             this.tabJob.Controls.Add(this.SB_VBLED);
             this.tabJob.Controls.Add(this.lbl料倉);
@@ -3091,6 +3094,35 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // lbl_CycleTime
+            // 
+            this.lbl_CycleTime.AutoSize = true;
+            this.lbl_CycleTime.Location = new System.Drawing.Point(144, 431);
+            this.lbl_CycleTime.Name = "lbl_CycleTime";
+            this.lbl_CycleTime.Size = new System.Drawing.Size(138, 19);
+            this.lbl_CycleTime.TabIndex = 216;
+            this.lbl_CycleTime.Text = "取針循環時間 : ";
+            // 
+            // btn_tmrPause
+            // 
+            this.btn_tmrPause.Location = new System.Drawing.Point(380, 281);
+            this.btn_tmrPause.Name = "btn_tmrPause";
+            this.btn_tmrPause.Size = new System.Drawing.Size(165, 40);
+            this.btn_tmrPause.TabIndex = 215;
+            this.btn_tmrPause.Text = "循環暫停";
+            this.btn_tmrPause.UseVisualStyleBackColor = true;
+            this.btn_tmrPause.Click += new System.EventHandler(this.btn_tmrPause_Click);
+            // 
+            // btn_tmrStop
+            // 
+            this.btn_tmrStop.Location = new System.Drawing.Point(200, 281);
+            this.btn_tmrStop.Name = "btn_tmrStop";
+            this.btn_tmrStop.Size = new System.Drawing.Size(165, 40);
+            this.btn_tmrStop.TabIndex = 214;
+            this.btn_tmrStop.Text = "循環停止";
+            this.btn_tmrStop.UseVisualStyleBackColor = true;
+            this.btn_tmrStop.Click += new System.EventHandler(this.btn_tmrStop_Click);
+            // 
             // btn上膛
             // 
             this.btn上膛.Location = new System.Drawing.Point(380, 210);
@@ -3398,34 +3430,16 @@
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
-            // btn_tmrStop
+            // btn_Manual
             // 
-            this.btn_tmrStop.Location = new System.Drawing.Point(200, 281);
-            this.btn_tmrStop.Name = "btn_tmrStop";
-            this.btn_tmrStop.Size = new System.Drawing.Size(165, 40);
-            this.btn_tmrStop.TabIndex = 214;
-            this.btn_tmrStop.Text = "循環停止";
-            this.btn_tmrStop.UseVisualStyleBackColor = true;
-            this.btn_tmrStop.Click += new System.EventHandler(this.btn_tmrStop_Click);
-            // 
-            // btn_tmrPause
-            // 
-            this.btn_tmrPause.Location = new System.Drawing.Point(380, 281);
-            this.btn_tmrPause.Name = "btn_tmrPause";
-            this.btn_tmrPause.Size = new System.Drawing.Size(165, 40);
-            this.btn_tmrPause.TabIndex = 215;
-            this.btn_tmrPause.Text = "循環暫停";
-            this.btn_tmrPause.UseVisualStyleBackColor = true;
-            this.btn_tmrPause.Click += new System.EventHandler(this.btn_tmrPause_Click);
-            // 
-            // lbl_CycleTime
-            // 
-            this.lbl_CycleTime.AutoSize = true;
-            this.lbl_CycleTime.Location = new System.Drawing.Point(144, 431);
-            this.lbl_CycleTime.Name = "lbl_CycleTime";
-            this.lbl_CycleTime.Size = new System.Drawing.Size(138, 19);
-            this.lbl_CycleTime.TabIndex = 216;
-            this.lbl_CycleTime.Text = "取針循環時間 : ";
+            this.btn_Manual.Font = new System.Drawing.Font("標楷體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_Manual.Location = new System.Drawing.Point(368, 398);
+            this.btn_Manual.Name = "btn_Manual";
+            this.btn_Manual.Size = new System.Drawing.Size(169, 44);
+            this.btn_Manual.TabIndex = 218;
+            this.btn_Manual.Text = "進入手動介面";
+            this.btn_Manual.UseVisualStyleBackColor = true;
+            this.btn_Manual.Click += new System.EventHandler(this.btn_Manual_Click);
             // 
             // Form1
             // 
@@ -3660,6 +3674,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button button1;
         private Inspector.Inspector inspector1;
+        private NeedleManual.Frm_Manual frm_Manual;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Label lbl_IAI_Convert;
         private System.Windows.Forms.Label lbl_IAI_Back;
@@ -3735,6 +3750,7 @@
         private System.Windows.Forms.Button btn_tmrPause;
         private System.Windows.Forms.Button btn_tmrStop;
         private System.Windows.Forms.Label lbl_CycleTime;
+        private System.Windows.Forms.Button btn_Manual;
     }
 }
 
