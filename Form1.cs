@@ -1353,7 +1353,8 @@ namespace InjectorInspector
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             clsServoControlWMX3.WMX3_destroy_Commu();
-            
+
+            frm_Manual.Close();
             //sw.Close();
         }
         //---------------------------------------------------------------------------------------
@@ -3436,6 +3437,15 @@ namespace InjectorInspector
 
 
 
+
+
+
+
+
+
+
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             //inspector1.xInit();
@@ -3466,6 +3476,7 @@ namespace InjectorInspector
         {
 
         }
+
 
 
 

@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.tmr_ReadWMX3 = new System.Windows.Forms.Timer(this.components);
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.btn_Manual = new System.Windows.Forms.Button();
             this.lblVBLED = new System.Windows.Forms.Label();
             this.SB_VBLED = new System.Windows.Forms.HScrollBar();
             this.lbl料倉 = new System.Windows.Forms.Label();
@@ -307,7 +308,6 @@
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
-            this.btn_Manual = new System.Windows.Forms.Button();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -475,6 +475,17 @@
             this.tabJob.TabIndex = 2;
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
+            // 
+            // btn_Manual
+            // 
+            this.btn_Manual.Font = new System.Drawing.Font("新細明體", 9.75F);
+            this.btn_Manual.Location = new System.Drawing.Point(371, 407);
+            this.btn_Manual.Name = "btn_Manual";
+            this.btn_Manual.Size = new System.Drawing.Size(120, 35);
+            this.btn_Manual.TabIndex = 218;
+            this.btn_Manual.Text = "進入手動介面";
+            this.btn_Manual.UseVisualStyleBackColor = true;
+            this.btn_Manual.Click += new System.EventHandler(this.btn_Manual_Click);
             // 
             // lblVBLED
             // 
@@ -3370,6 +3381,16 @@
             this.inspector1.TabIndex = 1;
             this.inspector1.Load += new System.EventHandler(this.inspector1_Load);
             // 
+            // frm_Manual
+            // 
+            this.frm_Manual.ClientSize = new System.Drawing.Size(616, 468);
+            this.frm_Manual.Font = new System.Drawing.Font("標楷體", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.frm_Manual.Location = new System.Drawing.Point(52, 52);
+            this.frm_Manual.Margin = new System.Windows.Forms.Padding(5);
+            this.frm_Manual.Name = "frm_Manual";
+            this.frm_Manual.Text = "手動介面";
+            this.frm_Manual.Visible = false;
+            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
@@ -3429,17 +3450,6 @@
             this.tmr_Warning.Enabled = true;
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
-            // 
-            // btn_Manual
-            // 
-            this.btn_Manual.Font = new System.Drawing.Font("標楷體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_Manual.Location = new System.Drawing.Point(368, 398);
-            this.btn_Manual.Name = "btn_Manual";
-            this.btn_Manual.Size = new System.Drawing.Size(169, 44);
-            this.btn_Manual.TabIndex = 218;
-            this.btn_Manual.Text = "進入手動介面";
-            this.btn_Manual.UseVisualStyleBackColor = true;
-            this.btn_Manual.Click += new System.EventHandler(this.btn_Manual_Click);
             // 
             // Form1
             // 
