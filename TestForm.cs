@@ -62,7 +62,21 @@ namespace InjectorInspector
                 var comboBoxColumn = new DataGridViewComboBoxColumn();
                 comboBoxColumn.Name = "strLabel";
                 comboBoxColumn.HeaderText = "Label";
-                comboBoxColumn.DataSource = new List<string> { "AA", "BB", "CC" }; // 下拉選單選項
+                comboBoxColumn.DataSource = new List<string> { 
+                    "吸嘴X軸",
+                    "吸嘴Y軸",
+                    "吸嘴Z軸",
+                    "吸嘴R軸",
+                    "載盤X軸",
+                    "載盤Y軸",
+                    "植針Z軸",
+                    "植針R軸",
+                    "工作門",
+                    "Socket檢測",
+                    "3D掃描",
+                    "吸針嘴",
+                    "植針嘴"
+                }; // 下拉選單選項
                 comboBoxColumn.DataPropertyName = "strLabel";  // 綁定到資料屬性
 
                 // 移除自動生成的 strLabel 欄位，並使用 ComboBox 欄位替換
@@ -107,7 +121,7 @@ namespace InjectorInspector
                 {
                     jsonContentList.Add(new JsonTestModeContent
                     {
-                        strLabel = "AA",  // 預設選項，可以根據需求更改
+                        strLabel = "吸嘴R軸",  // 預設選項，可以根據需求更改
                         u32Index = (uint)i,
                         dbPosition = 10.0 + i,
                         strNote = "Note " + i
@@ -127,7 +141,21 @@ namespace InjectorInspector
                 var comboBoxColumn = new DataGridViewComboBoxColumn();
                 comboBoxColumn.Name = "strLabel";
                 comboBoxColumn.HeaderText = "Label";
-                comboBoxColumn.DataSource = new List<string> { "AA", "BB", "CC" }; // 設定選項
+                comboBoxColumn.DataSource = new List<string> {
+                    "吸嘴X軸",
+                    "吸嘴Y軸",
+                    "吸嘴Z軸",
+                    "吸嘴R軸",
+                    "載盤X軸",
+                    "載盤Y軸",
+                    "植針Z軸",
+                    "植針R軸",
+                    "工作門",
+                    "Socket檢測",
+                    "3D掃描",
+                    "吸針嘴",
+                    "植針嘴"
+                }; // 設定選項
                 comboBoxColumn.DataPropertyName = "strLabel";  // 綁定到資料屬性
 
                 // 移除自動生成的 strLabel 欄位，並使用 ComboBox 欄位替換
@@ -205,7 +233,7 @@ namespace InjectorInspector
                 Console.WriteLine("DataGridView 發生錯誤: " + e.Exception.Message);
 
                 // 你可以選擇重設為預設值
-                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "AA"; // 假設 "AA" 是有效的值
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "吸嘴R軸"; // 假設 "吸嘴R軸" 是有效的值
                 e.ThrowException = false; // 防止異常拋出，讓應用繼續執行
             }
         }

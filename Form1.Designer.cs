@@ -761,9 +761,9 @@
             this.select_JoDell吸針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.select_JoDell吸針嘴.Location = new System.Drawing.Point(95, 245);
             this.select_JoDell吸針嘴.Name = "select_JoDell吸針嘴";
-            this.select_JoDell吸針嘴.Size = new System.Drawing.Size(90, 17);
+            this.select_JoDell吸針嘴.Size = new System.Drawing.Size(64, 17);
             this.select_JoDell吸針嘴.TabIndex = 189;
-            this.select_JoDell吸針嘴.Text = "吸針嘴相機";
+            this.select_JoDell吸針嘴.Text = "吸針嘴";
             this.select_JoDell吸針嘴.UseVisualStyleBackColor = true;
             this.select_JoDell吸針嘴.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
@@ -949,9 +949,9 @@
             this.select_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.select_JoDell植針嘴.Location = new System.Drawing.Point(95, 265);
             this.select_JoDell植針嘴.Name = "select_JoDell植針嘴";
-            this.select_JoDell植針嘴.Size = new System.Drawing.Size(90, 17);
+            this.select_JoDell植針嘴.Size = new System.Drawing.Size(64, 17);
             this.select_JoDell植針嘴.TabIndex = 171;
-            this.select_JoDell植針嘴.Text = "植針嘴相機";
+            this.select_JoDell植針嘴.Text = "植針嘴";
             this.select_JoDell植針嘴.UseVisualStyleBackColor = true;
             this.select_JoDell植針嘴.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
