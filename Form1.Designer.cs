@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.tmr_ReadWMX3 = new System.Windows.Forms.Timer(this.components);
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.btn_manual = new System.Windows.Forms.Button();
             this.lblVBLED = new System.Windows.Forms.Label();
             this.SB_VBLED = new System.Windows.Forms.HScrollBar();
             this.lbl料倉 = new System.Windows.Forms.Label();
@@ -306,7 +307,6 @@
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
-            this.button6 = new System.Windows.Forms.Button();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -324,7 +324,7 @@
             // 
             // tabJob
             // 
-            this.tabJob.Controls.Add(this.button6);
+            this.tabJob.Controls.Add(this.btn_manual);
             this.tabJob.Controls.Add(this.lblVBLED);
             this.tabJob.Controls.Add(this.SB_VBLED);
             this.tabJob.Controls.Add(this.lbl料倉);
@@ -474,6 +474,17 @@
             this.tabJob.TabIndex = 2;
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
+            // 
+            // btn_manual
+            // 
+            this.btn_manual.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_manual.Location = new System.Drawing.Point(368, 408);
+            this.btn_manual.Name = "btn_manual";
+            this.btn_manual.Size = new System.Drawing.Size(75, 23);
+            this.btn_manual.TabIndex = 218;
+            this.btn_manual.Text = "btn_manual";
+            this.btn_manual.UseVisualStyleBackColor = true;
+            this.btn_manual.Click += new System.EventHandler(this.button6_Click);
             // 
             // lblVBLED
             // 
@@ -3429,16 +3440,6 @@
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(368, 408);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 218;
-            this.button6.Text = "button6";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -3747,7 +3748,7 @@
         private System.Windows.Forms.Button btn_tmrPause;
         private System.Windows.Forms.Button btn_tmrStop;
         private System.Windows.Forms.Label lbl_CycleTime;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btn_manual;
     }
 }
 

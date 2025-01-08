@@ -1,0 +1,110 @@
+[
+  {
+    "strLabel": "AA",
+    "u32Index": 1,
+    "dbPosition": 11,
+    "strNote": "1\u865F\u738B\u7956\u8CE2"
+  },
+  {
+    "strLabel": "AA",
+    "u32Index": 2,
+    "dbPosition": 12,
+    "strNote": "2\u865F\u5F35\u66FC\u7389"
+  },
+  {
+    "strLabel": "AA",
+    "u32Index": 3,
+    "dbPosition": 13,
+    "strNote": "3\u865F\u90B1\u6DD1\u8C9E"
+  },
+  {
+    "strLabel": "AA",
+    "u32Index": 4,
+    "dbPosition": 14,
+    "strNote": "4\u865F\u8449\u7389\u537F"
+  },
+  {
+    "strLabel": "AA",
+    "u32Index": 5,
+    "dbPosition": 15,
+    "strNote": "5\u865F\u937E\u695A\u7D05"
+  },
+  {
+    "strLabel": "AA",
+    "u32Index": 6,
+    "dbPosition": 16,
+    "strNote": "6\u865F\u8449\u5B50\u5A9A"
+  },
+  {
+    "strLabel": "AA",
+    "u32Index": 7,
+    "dbPosition": 17,
+    "strNote": "7\u865F\u5F35\u570B\u69AE"
+  },
+  {
+    "strLabel": "AA",
+    "u32Index": 8,
+    "dbPosition": 18,
+    "strNote": "8\u865F\u90ED\u5BCC\u57CE"
+  },
+  {
+    "strLabel": "AA",
+    "u32Index": 9,
+    "dbPosition": 19,
+    "strNote": "9\u865F\u8B1D\u9706\u92D2"
+  },
+  {
+    "strLabel": "AA",
+    "u32Index": 10,
+    "dbPosition": 20,
+    "strNote": "10\u865F\u674E\u9023\u6770"
+  },
+  {
+    "strLabel": "BB",
+    "u32Index": 11,
+    "dbPosition": 21,
+    "strNote": "11\u865F\u5F35\u83F2"
+  },
+  {
+    "strLabel": "CC",
+    "u32Index": 12,
+    "dbPosition": 22,
+    "strNote": "12\u865F\u5F35\u5B78\u53CB"
+  },
+  {
+    "strLabel": "BB",
+    "u32Index": 13,
+    "dbPosition": 23,
+    "strNote": "13\u865F\u865F\u9ECE\u660E"
+  },
+  {
+    "strLabel": "BB",
+    "u32Index": 14,
+    "dbPosition": 24,
+    "strNote": "14\u865F\u5F35\u827E\u5609"
+  },
+  {
+    "strLabel": "CC",
+    "u32Index": 15,
+    "dbPosition": 25,
+    "strNote": "15\u865F\u8CF4\u6E05\u5FB7"
+  },
+  {
+    "strLabel": "CC",
+    "u32Index": 16,
+    "dbPosition": 26,
+    "strNote": "16\u865F\u99AC\u82F1\u4E5D"
+  },
+  {
+    "strLabel": "BB",
+    "u32Index": 5987,
+    "dbPosition": 29292947,
+    "strNote": "\u9019\u500B\u4E0D\u77E5\u9053\u5E7E\u865F"
+  },
+  {
+    "strLabel": "BB",
+    "u32Index": 9487,
+    "dbPosition": 29487,
+    "strNote": "\u963F\u8CB4\u597D\u81ED"
+  }
+]

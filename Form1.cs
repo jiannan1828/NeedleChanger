@@ -37,13 +37,19 @@ using static InjectorInspector.Vibration;
 using static InjectorInspector.ServoControl;
 
 //---------------------------------------------------------------------------------------
-//JSON
-using System.IO;
+//wmx3
 using WMX3ApiCLR;
 using static System.Windows.Forms.AxHost;
 using System.Xml.Linq;
+
+//---------------------------------------------------------------------------------------
+//vision
 using static InjectorInspector.Form1;
-//using System.Text.Json;
+
+//---------------------------------------------------------------------------------------
+//JSON
+using System.IO;
+using System.Text.Json;
 
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
@@ -1996,6 +2002,7 @@ namespace InjectorInspector
             clsVibration.apiEstablishTCPVibration(); {
                 clsVibration.u32LED_Level = (uint)SB_VBLED.Value;
                 clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
+                lblVBLED.Text = "Light:" + (uint)SB_VBLED.Value;
             }
         }
 
