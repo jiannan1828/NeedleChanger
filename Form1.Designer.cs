@@ -1,4 +1,6 @@
-﻿namespace InjectorInspector
+﻿using System.Windows.Forms;
+
+namespace InjectorInspector
 {
     partial class Form1
     {
@@ -31,6 +33,8 @@
             this.components = new System.ComponentModel.Container();
             this.tmr_ReadWMX3 = new System.Windows.Forms.Timer(this.components);
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.btn_manual = new System.Windows.Forms.Button();
             this.lblVBLED = new System.Windows.Forms.Label();
             this.SB_VBLED = new System.Windows.Forms.HScrollBar();
@@ -302,8 +306,98 @@
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.grp_NeedleInfo = new System.Windows.Forms.GroupBox();
+            this.rad_Replace = new System.Windows.Forms.RadioButton();
+            this.rad_Remove = new System.Windows.Forms.RadioButton();
+            this.rad_Place = new System.Windows.Forms.RadioButton();
+            this.lbl_Index = new System.Windows.Forms.Label();
+            this.txt_Index = new System.Windows.Forms.TextBox();
+            this.chk_Enable = new System.Windows.Forms.CheckBox();
+            this.chk_Display = new System.Windows.Forms.CheckBox();
+            this.txt_Diameter = new System.Windows.Forms.TextBox();
+            this.lbl_Diameter = new System.Windows.Forms.Label();
+            this.txt_PosX = new System.Windows.Forms.TextBox();
+            this.txt_PosY = new System.Windows.Forms.TextBox();
+            this.lbl_Pos = new System.Windows.Forms.Label();
+            this.txt_Id = new System.Windows.Forms.TextBox();
+            this.lbl_Id = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txt_Name = new System.Windows.Forms.TextBox();
+            this.tab_Needles = new System.Windows.Forms.TabControl();
+            this.tp_Needles = new System.Windows.Forms.TabPage();
+            this.pic_Needles = new System.Windows.Forms.PictureBox();
+            this.tp_NeedlesJudge = new System.Windows.Forms.TabPage();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pic_跑馬燈 = new System.Windows.Forms.PictureBox();
+            this.grp_目前作業項目 = new System.Windows.Forms.GroupBox();
+            this.grp_GroupPin2 = new System.Windows.Forms.GroupBox();
+            this.txt_PogoPin2已植數量2 = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin2已植數量2 = new System.Windows.Forms.Label();
+            this.txt_PogoPin1已植數量2 = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin1已植數量2 = new System.Windows.Forms.Label();
+            this.txt_PogoPin2Qty4 = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin2Qty4 = new System.Windows.Forms.Label();
+            this.txt_PogoPin1Qty4 = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin1Qty4 = new System.Windows.Forms.Label();
+            this.grp_GroupPin1 = new System.Windows.Forms.GroupBox();
+            this.txt_PogoPin2已植數量1 = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin2已植數量1 = new System.Windows.Forms.Label();
+            this.txt_PogoPin1已植數量1 = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin1已植數量1 = new System.Windows.Forms.Label();
+            this.txt_PogoPin2Qty3 = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin2Qty3 = new System.Windows.Forms.Label();
+            this.txt_PogoPin1Qty3 = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin1Qty3 = new System.Windows.Forms.Label();
+            this.rad_ChangeGroupPin = new System.Windows.Forms.RadioButton();
+            this.rad_ChangeAllNewPin = new System.Windows.Forms.RadioButton();
+            this.txt_PogoPin2已植數量 = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin2已植數量 = new System.Windows.Forms.Label();
+            this.txt_PogoPin1已植數量 = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin1已植數量 = new System.Windows.Forms.Label();
+            this.txt_PogoPin2Qty2 = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin2Qty2 = new System.Windows.Forms.Label();
+            this.txt_PogoPin1Qty2 = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin1Qty2 = new System.Windows.Forms.Label();
+            this.grp_SocketTest = new System.Windows.Forms.GroupBox();
+            this.grp_設備治具資訊 = new System.Windows.Forms.GroupBox();
+            this.lbl_PogoPin3Qty1 = new System.Windows.Forms.Label();
+            this.lbl_PogoPin2Qty1 = new System.Windows.Forms.Label();
+            this.lbl_PogoPin1Qty1 = new System.Windows.Forms.Label();
+            this.txt_下針導正模組 = new System.Windows.Forms.TextBox();
+            this.lbl_下針導正模組 = new System.Windows.Forms.Label();
+            this.txt_取針模組PI = new System.Windows.Forms.TextBox();
+            this.lbl_取針模組PI = new System.Windows.Forms.Label();
+            this.txt_PogoPin3Qty1 = new System.Windows.Forms.TextBox();
+            this.txt_PogoPin2Qty1 = new System.Windows.Forms.TextBox();
+            this.txt_PogoPin1Qty1 = new System.Windows.Forms.TextBox();
+            this.grp_配件條碼比對 = new System.Windows.Forms.GroupBox();
+            this.button6 = new System.Windows.Forms.Button();
+            this.btn_確認配件 = new System.Windows.Forms.Button();
+            this.txt_PogoPin2Qty = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin2Qty = new System.Windows.Forms.Label();
+            this.txt_PogoPin1Qty = new System.Windows.Forms.TextBox();
+            this.lbl_PogoPin1Qty = new System.Windows.Forms.Label();
+            this.txt_Socket定位座 = new System.Windows.Forms.TextBox();
+            this.lbl_Socket定位座 = new System.Windows.Forms.Label();
+            this.txt_FileName = new System.Windows.Forms.TextBox();
+            this.lbl_FileName = new System.Windows.Forms.Label();
+            this.txt_Socket = new System.Windows.Forms.TextBox();
+            this.lbl_Socket = new System.Windows.Forms.Label();
+            this.txt_條碼輸入欄位 = new System.Windows.Forms.TextBox();
+            this.lbl_條碼輸入欄位 = new System.Windows.Forms.Label();
+            this.grp_儲存資訊 = new System.Windows.Forms.GroupBox();
+            this.btn_停止 = new System.Windows.Forms.Button();
+            this.btn_開始 = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.登入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.登入ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.登出ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.檔案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.開啟ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.儲存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
@@ -314,6 +408,22 @@
             this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.grp_NeedleInfo.SuspendLayout();
+            this.tab_Needles.SuspendLayout();
+            this.tp_Needles.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_Needles)).BeginInit();
+            this.tp_NeedlesJudge.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_跑馬燈)).BeginInit();
+            this.grp_目前作業項目.SuspendLayout();
+            this.grp_GroupPin2.SuspendLayout();
+            this.grp_GroupPin1.SuspendLayout();
+            this.grp_SocketTest.SuspendLayout();
+            this.grp_設備治具資訊.SuspendLayout();
+            this.grp_配件條碼比對.SuspendLayout();
+            this.grp_儲存資訊.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tmr_ReadWMX3
@@ -324,6 +434,8 @@
             // 
             // tabJob
             // 
+            this.tabJob.Controls.Add(this.button5);
+            this.tabJob.Controls.Add(this.button2);
             this.tabJob.Controls.Add(this.btn_manual);
             this.tabJob.Controls.Add(this.lblVBLED);
             this.tabJob.Controls.Add(this.SB_VBLED);
@@ -470,10 +582,28 @@
             this.tabJob.Location = new System.Drawing.Point(4, 29);
             this.tabJob.Name = "tabJob";
             this.tabJob.Padding = new System.Windows.Forms.Padding(3);
-            this.tabJob.Size = new System.Drawing.Size(1228, 758);
+            this.tabJob.Size = new System.Drawing.Size(1228, 792);
             this.tabJob.TabIndex = 2;
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(685, 387);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 220;
+            this.button5.Text = "讀黨";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(685, 326);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 219;
+            this.button2.Text = "存檔";
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // btn_manual
             // 
@@ -3099,7 +3229,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1228, 758);
+            this.tabPage2.Size = new System.Drawing.Size(1228, 792);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -3355,7 +3485,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1228, 758);
+            this.tabPage1.Size = new System.Drawing.Size(1228, 792);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -3389,39 +3519,1014 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1236, 791);
+            this.tabControl1.Size = new System.Drawing.Size(1236, 825);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.button5);
-            this.tabPage3.Controls.Add(this.button2);
+            this.tabPage3.Controls.Add(this.grp_NeedleInfo);
+            this.tabPage3.Controls.Add(this.tab_Needles);
+            this.tabPage3.Controls.Add(this.pic_跑馬燈);
+            this.tabPage3.Controls.Add(this.grp_目前作業項目);
+            this.tabPage3.Controls.Add(this.grp_SocketTest);
+            this.tabPage3.Controls.Add(this.grp_儲存資訊);
+            this.tabPage3.Controls.Add(this.menuStrip1);
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1228, 758);
+            this.tabPage3.Size = new System.Drawing.Size(1228, 792);
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // grp_NeedleInfo
             // 
-            this.button5.Location = new System.Drawing.Point(115, 138);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 1;
-            this.button5.Text = "讀黨";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.grp_NeedleInfo.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.grp_NeedleInfo.Controls.Add(this.rad_Replace);
+            this.grp_NeedleInfo.Controls.Add(this.rad_Remove);
+            this.grp_NeedleInfo.Controls.Add(this.rad_Place);
+            this.grp_NeedleInfo.Controls.Add(this.lbl_Index);
+            this.grp_NeedleInfo.Controls.Add(this.txt_Index);
+            this.grp_NeedleInfo.Controls.Add(this.chk_Enable);
+            this.grp_NeedleInfo.Controls.Add(this.chk_Display);
+            this.grp_NeedleInfo.Controls.Add(this.txt_Diameter);
+            this.grp_NeedleInfo.Controls.Add(this.lbl_Diameter);
+            this.grp_NeedleInfo.Controls.Add(this.txt_PosX);
+            this.grp_NeedleInfo.Controls.Add(this.txt_PosY);
+            this.grp_NeedleInfo.Controls.Add(this.lbl_Pos);
+            this.grp_NeedleInfo.Controls.Add(this.txt_Id);
+            this.grp_NeedleInfo.Controls.Add(this.lbl_Id);
+            this.grp_NeedleInfo.Controls.Add(this.label13);
+            this.grp_NeedleInfo.Controls.Add(this.txt_Name);
+            this.grp_NeedleInfo.Font = new System.Drawing.Font("微軟正黑體", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.grp_NeedleInfo.Location = new System.Drawing.Point(610, 676);
+            this.grp_NeedleInfo.Margin = new System.Windows.Forms.Padding(2);
+            this.grp_NeedleInfo.Name = "grp_NeedleInfo";
+            this.grp_NeedleInfo.Padding = new System.Windows.Forms.Padding(2);
+            this.grp_NeedleInfo.Size = new System.Drawing.Size(594, 114);
+            this.grp_NeedleInfo.TabIndex = 26;
+            this.grp_NeedleInfo.TabStop = false;
+            this.grp_NeedleInfo.Text = "植針資訊";
             // 
-            // button2
+            // rad_Replace
             // 
-            this.button2.Location = new System.Drawing.Point(115, 77);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "存檔";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.rad_Replace.AutoSize = true;
+            this.rad_Replace.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.rad_Replace.Location = new System.Drawing.Point(533, 76);
+            this.rad_Replace.Margin = new System.Windows.Forms.Padding(2);
+            this.rad_Replace.Name = "rad_Replace";
+            this.rad_Replace.Size = new System.Drawing.Size(57, 20);
+            this.rad_Replace.TabIndex = 2;
+            this.rad_Replace.TabStop = true;
+            this.rad_Replace.Text = "置換";
+            this.rad_Replace.UseVisualStyleBackColor = true;
+            // 
+            // rad_Remove
+            // 
+            this.rad_Remove.AutoSize = true;
+            this.rad_Remove.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.rad_Remove.Location = new System.Drawing.Point(533, 52);
+            this.rad_Remove.Margin = new System.Windows.Forms.Padding(2);
+            this.rad_Remove.Name = "rad_Remove";
+            this.rad_Remove.Size = new System.Drawing.Size(57, 20);
+            this.rad_Remove.TabIndex = 1;
+            this.rad_Remove.TabStop = true;
+            this.rad_Remove.Text = "移除";
+            this.rad_Remove.UseVisualStyleBackColor = true;
+            // 
+            // rad_Place
+            // 
+            this.rad_Place.AutoSize = true;
+            this.rad_Place.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.rad_Place.Location = new System.Drawing.Point(533, 29);
+            this.rad_Place.Margin = new System.Windows.Forms.Padding(2);
+            this.rad_Place.Name = "rad_Place";
+            this.rad_Place.Size = new System.Drawing.Size(57, 20);
+            this.rad_Place.TabIndex = 0;
+            this.rad_Place.TabStop = true;
+            this.rad_Place.Text = "放置";
+            this.rad_Place.UseVisualStyleBackColor = true;
+            // 
+            // lbl_Index
+            // 
+            this.lbl_Index.AutoSize = true;
+            this.lbl_Index.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Index.Location = new System.Drawing.Point(3, 38);
+            this.lbl_Index.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_Index.Name = "lbl_Index";
+            this.lbl_Index.Size = new System.Drawing.Size(55, 16);
+            this.lbl_Index.TabIndex = 22;
+            this.lbl_Index.Text = "流水號";
+            // 
+            // txt_Index
+            // 
+            this.txt_Index.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txt_Index.Location = new System.Drawing.Point(62, 35);
+            this.txt_Index.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_Index.Name = "txt_Index";
+            this.txt_Index.ReadOnly = true;
+            this.txt_Index.Size = new System.Drawing.Size(92, 28);
+            this.txt_Index.TabIndex = 23;
+            // 
+            // chk_Enable
+            // 
+            this.chk_Enable.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chk_Enable.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.chk_Enable.Location = new System.Drawing.Point(452, 31);
+            this.chk_Enable.Margin = new System.Windows.Forms.Padding(2);
+            this.chk_Enable.Name = "chk_Enable";
+            this.chk_Enable.Size = new System.Drawing.Size(63, 30);
+            this.chk_Enable.TabIndex = 21;
+            this.chk_Enable.Text = "啟用";
+            this.chk_Enable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chk_Enable.UseVisualStyleBackColor = true;
+            this.chk_Enable.CheckedChanged += new System.EventHandler(this.chk_Enable_CheckedChanged);
+            // 
+            // chk_Display
+            // 
+            this.chk_Display.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chk_Display.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.chk_Display.Location = new System.Drawing.Point(452, 66);
+            this.chk_Display.Margin = new System.Windows.Forms.Padding(2);
+            this.chk_Display.Name = "chk_Display";
+            this.chk_Display.Size = new System.Drawing.Size(63, 30);
+            this.chk_Display.TabIndex = 20;
+            this.chk_Display.Text = "顯示";
+            this.chk_Display.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chk_Display.UseVisualStyleBackColor = true;
+            this.chk_Display.CheckedChanged += new System.EventHandler(this.chk_Display_CheckedChanged);
+            // 
+            // txt_Diameter
+            // 
+            this.txt_Diameter.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txt_Diameter.Location = new System.Drawing.Point(341, 68);
+            this.txt_Diameter.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_Diameter.Name = "txt_Diameter";
+            this.txt_Diameter.ReadOnly = true;
+            this.txt_Diameter.Size = new System.Drawing.Size(92, 28);
+            this.txt_Diameter.TabIndex = 16;
+            // 
+            // lbl_Diameter
+            // 
+            this.lbl_Diameter.AutoSize = true;
+            this.lbl_Diameter.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Diameter.Location = new System.Drawing.Point(298, 73);
+            this.lbl_Diameter.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_Diameter.Name = "lbl_Diameter";
+            this.lbl_Diameter.Size = new System.Drawing.Size(39, 16);
+            this.lbl_Diameter.TabIndex = 15;
+            this.lbl_Diameter.Text = "直徑";
+            // 
+            // txt_PosX
+            // 
+            this.txt_PosX.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txt_PosX.Location = new System.Drawing.Point(62, 68);
+            this.txt_PosX.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_PosX.Name = "txt_PosX";
+            this.txt_PosX.ReadOnly = true;
+            this.txt_PosX.Size = new System.Drawing.Size(112, 28);
+            this.txt_PosX.TabIndex = 14;
+            // 
+            // txt_PosY
+            // 
+            this.txt_PosY.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txt_PosY.Location = new System.Drawing.Point(182, 68);
+            this.txt_PosY.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_PosY.Name = "txt_PosY";
+            this.txt_PosY.ReadOnly = true;
+            this.txt_PosY.Size = new System.Drawing.Size(112, 28);
+            this.txt_PosY.TabIndex = 13;
+            // 
+            // lbl_Pos
+            // 
+            this.lbl_Pos.AutoSize = true;
+            this.lbl_Pos.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Pos.Location = new System.Drawing.Point(4, 74);
+            this.lbl_Pos.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_Pos.Name = "lbl_Pos";
+            this.lbl_Pos.Size = new System.Drawing.Size(39, 16);
+            this.lbl_Pos.TabIndex = 12;
+            this.lbl_Pos.Text = "座標";
+            // 
+            // txt_Id
+            // 
+            this.txt_Id.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txt_Id.Location = new System.Drawing.Point(341, 36);
+            this.txt_Id.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_Id.Name = "txt_Id";
+            this.txt_Id.Size = new System.Drawing.Size(92, 28);
+            this.txt_Id.TabIndex = 11;
+            // 
+            // lbl_Id
+            // 
+            this.lbl_Id.AutoSize = true;
+            this.lbl_Id.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Id.Location = new System.Drawing.Point(298, 41);
+            this.lbl_Id.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_Id.Name = "lbl_Id";
+            this.lbl_Id.Size = new System.Drawing.Size(39, 16);
+            this.lbl_Id.TabIndex = 10;
+            this.lbl_Id.Text = "編號";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label13.Location = new System.Drawing.Point(159, 41);
+            this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(39, 16);
+            this.label13.TabIndex = 9;
+            this.label13.Text = "名稱";
+            // 
+            // txt_Name
+            // 
+            this.txt_Name.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txt_Name.Location = new System.Drawing.Point(202, 35);
+            this.txt_Name.Margin = new System.Windows.Forms.Padding(2);
+            this.txt_Name.Name = "txt_Name";
+            this.txt_Name.Size = new System.Drawing.Size(92, 28);
+            this.txt_Name.TabIndex = 8;
+            // 
+            // tab_Needles
+            // 
+            this.tab_Needles.Controls.Add(this.tp_Needles);
+            this.tab_Needles.Controls.Add(this.tp_NeedlesJudge);
+            this.tab_Needles.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tab_Needles.Location = new System.Drawing.Point(606, 37);
+            this.tab_Needles.Name = "tab_Needles";
+            this.tab_Needles.SelectedIndex = 0;
+            this.tab_Needles.Size = new System.Drawing.Size(609, 635);
+            this.tab_Needles.TabIndex = 24;
+            // 
+            // tp_Needles
+            // 
+            this.tp_Needles.Controls.Add(this.pic_Needles);
+            this.tp_Needles.Location = new System.Drawing.Point(4, 26);
+            this.tp_Needles.Name = "tp_Needles";
+            this.tp_Needles.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_Needles.Size = new System.Drawing.Size(601, 605);
+            this.tp_Needles.TabIndex = 0;
+            this.tp_Needles.Text = "植針資訊";
+            this.tp_Needles.UseVisualStyleBackColor = true;
+            // 
+            // pic_Needles
+            // 
+            this.pic_Needles.BackColor = System.Drawing.Color.Honeydew;
+            this.pic_Needles.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pic_Needles.Location = new System.Drawing.Point(0, 0);
+            this.pic_Needles.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pic_Needles.Name = "pic_Needles";
+            this.pic_Needles.Size = new System.Drawing.Size(600, 600);
+            this.pic_Needles.TabIndex = 0;
+            this.pic_Needles.TabStop = false;
+            this.pic_Needles.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_Needles_Paint);
+            this.pic_Needles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_Needles_MouseDown);
+            this.pic_Needles.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pic_Needles_MouseMove);
+            this.pic_Needles.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.pic_Needles_MouseWheel);
+            // 
+            // tp_NeedlesJudge
+            // 
+            this.tp_NeedlesJudge.Controls.Add(this.label11);
+            this.tp_NeedlesJudge.Controls.Add(this.label12);
+            this.tp_NeedlesJudge.Controls.Add(this.pictureBox2);
+            this.tp_NeedlesJudge.Controls.Add(this.pictureBox1);
+            this.tp_NeedlesJudge.Location = new System.Drawing.Point(4, 26);
+            this.tp_NeedlesJudge.Name = "tp_NeedlesJudge";
+            this.tp_NeedlesJudge.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_NeedlesJudge.Size = new System.Drawing.Size(601, 605);
+            this.tp_NeedlesJudge.TabIndex = 1;
+            this.tp_NeedlesJudge.Text = "判等";
+            this.tp_NeedlesJudge.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Times New Roman", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(427, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(44, 25);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "NG";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Times New Roman", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(116, 1);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(52, 25);
+            this.label12.TabIndex = 2;
+            this.label12.Text = "Pass";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Honeydew;
+            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox2.Location = new System.Drawing.Point(307, 33);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(294, 568);
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Honeydew;
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 34);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(301, 567);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pic_跑馬燈
+            // 
+            this.pic_跑馬燈.BackColor = System.Drawing.SystemColors.Window;
+            this.pic_跑馬燈.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pic_跑馬燈.Font = new System.Drawing.Font("標楷體", 16F);
+            this.pic_跑馬燈.Location = new System.Drawing.Point(271, 605);
+            this.pic_跑馬燈.Name = "pic_跑馬燈";
+            this.pic_跑馬燈.Size = new System.Drawing.Size(329, 67);
+            this.pic_跑馬燈.TabIndex = 23;
+            this.pic_跑馬燈.TabStop = false;
+            this.pic_跑馬燈.Click += new System.EventHandler(this.pic_跑馬燈_Click);
+            this.pic_跑馬燈.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_跑馬燈_Paint);
+            // 
+            // grp_目前作業項目
+            // 
+            this.grp_目前作業項目.Controls.Add(this.grp_GroupPin2);
+            this.grp_目前作業項目.Controls.Add(this.grp_GroupPin1);
+            this.grp_目前作業項目.Controls.Add(this.rad_ChangeGroupPin);
+            this.grp_目前作業項目.Controls.Add(this.rad_ChangeAllNewPin);
+            this.grp_目前作業項目.Controls.Add(this.txt_PogoPin2已植數量);
+            this.grp_目前作業項目.Controls.Add(this.lbl_PogoPin2已植數量);
+            this.grp_目前作業項目.Controls.Add(this.txt_PogoPin1已植數量);
+            this.grp_目前作業項目.Controls.Add(this.lbl_PogoPin1已植數量);
+            this.grp_目前作業項目.Controls.Add(this.txt_PogoPin2Qty2);
+            this.grp_目前作業項目.Controls.Add(this.lbl_PogoPin2Qty2);
+            this.grp_目前作業項目.Controls.Add(this.txt_PogoPin1Qty2);
+            this.grp_目前作業項目.Controls.Add(this.lbl_PogoPin1Qty2);
+            this.grp_目前作業項目.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grp_目前作業項目.Location = new System.Drawing.Point(361, 37);
+            this.grp_目前作業項目.Name = "grp_目前作業項目";
+            this.grp_目前作業項目.Size = new System.Drawing.Size(239, 562);
+            this.grp_目前作業項目.TabIndex = 22;
+            this.grp_目前作業項目.TabStop = false;
+            this.grp_目前作業項目.Text = "目前作業項目";
+            // 
+            // grp_GroupPin2
+            // 
+            this.grp_GroupPin2.Controls.Add(this.txt_PogoPin2已植數量2);
+            this.grp_GroupPin2.Controls.Add(this.lbl_PogoPin2已植數量2);
+            this.grp_GroupPin2.Controls.Add(this.txt_PogoPin1已植數量2);
+            this.grp_GroupPin2.Controls.Add(this.lbl_PogoPin1已植數量2);
+            this.grp_GroupPin2.Controls.Add(this.txt_PogoPin2Qty4);
+            this.grp_GroupPin2.Controls.Add(this.lbl_PogoPin2Qty4);
+            this.grp_GroupPin2.Controls.Add(this.txt_PogoPin1Qty4);
+            this.grp_GroupPin2.Controls.Add(this.lbl_PogoPin1Qty4);
+            this.grp_GroupPin2.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grp_GroupPin2.Location = new System.Drawing.Point(7, 378);
+            this.grp_GroupPin2.Name = "grp_GroupPin2";
+            this.grp_GroupPin2.Size = new System.Drawing.Size(226, 164);
+            this.grp_GroupPin2.TabIndex = 26;
+            this.grp_GroupPin2.TabStop = false;
+            this.grp_GroupPin2.Text = "Group Pin 2";
+            // 
+            // txt_PogoPin2已植數量2
+            // 
+            this.txt_PogoPin2已植數量2.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin2已植數量2.Location = new System.Drawing.Point(140, 122);
+            this.txt_PogoPin2已植數量2.Name = "txt_PogoPin2已植數量2";
+            this.txt_PogoPin2已植數量2.Size = new System.Drawing.Size(77, 23);
+            this.txt_PogoPin2已植數量2.TabIndex = 30;
+            // 
+            // lbl_PogoPin2已植數量2
+            // 
+            this.lbl_PogoPin2已植數量2.AutoSize = true;
+            this.lbl_PogoPin2已植數量2.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin2已植數量2.Location = new System.Drawing.Point(50, 126);
+            this.lbl_PogoPin2已植數量2.Name = "lbl_PogoPin2已植數量2";
+            this.lbl_PogoPin2已植數量2.Size = new System.Drawing.Size(63, 14);
+            this.lbl_PogoPin2已植數量2.TabIndex = 29;
+            this.lbl_PogoPin2已植數量2.Text = "已植數量";
+            // 
+            // txt_PogoPin1已植數量2
+            // 
+            this.txt_PogoPin1已植數量2.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin1已植數量2.Location = new System.Drawing.Point(140, 56);
+            this.txt_PogoPin1已植數量2.Name = "txt_PogoPin1已植數量2";
+            this.txt_PogoPin1已植數量2.Size = new System.Drawing.Size(77, 23);
+            this.txt_PogoPin1已植數量2.TabIndex = 28;
+            // 
+            // lbl_PogoPin1已植數量2
+            // 
+            this.lbl_PogoPin1已植數量2.AutoSize = true;
+            this.lbl_PogoPin1已植數量2.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin1已植數量2.Location = new System.Drawing.Point(50, 60);
+            this.lbl_PogoPin1已植數量2.Name = "lbl_PogoPin1已植數量2";
+            this.lbl_PogoPin1已植數量2.Size = new System.Drawing.Size(63, 14);
+            this.lbl_PogoPin1已植數量2.TabIndex = 27;
+            this.lbl_PogoPin1已植數量2.Text = "已植數量";
+            // 
+            // txt_PogoPin2Qty4
+            // 
+            this.txt_PogoPin2Qty4.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin2Qty4.Location = new System.Drawing.Point(141, 89);
+            this.txt_PogoPin2Qty4.Name = "txt_PogoPin2Qty4";
+            this.txt_PogoPin2Qty4.Size = new System.Drawing.Size(77, 23);
+            this.txt_PogoPin2Qty4.TabIndex = 26;
+            // 
+            // lbl_PogoPin2Qty4
+            // 
+            this.lbl_PogoPin2Qty4.AutoSize = true;
+            this.lbl_PogoPin2Qty4.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin2Qty4.Location = new System.Drawing.Point(5, 93);
+            this.lbl_PogoPin2Qty4.Name = "lbl_PogoPin2Qty4";
+            this.lbl_PogoPin2Qty4.Size = new System.Drawing.Size(98, 14);
+            this.lbl_PogoPin2Qty4.TabIndex = 25;
+            this.lbl_PogoPin2Qty4.Text = "Pogo Pin2 Qty";
+            // 
+            // txt_PogoPin1Qty4
+            // 
+            this.txt_PogoPin1Qty4.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin1Qty4.Location = new System.Drawing.Point(141, 23);
+            this.txt_PogoPin1Qty4.Name = "txt_PogoPin1Qty4";
+            this.txt_PogoPin1Qty4.Size = new System.Drawing.Size(77, 23);
+            this.txt_PogoPin1Qty4.TabIndex = 24;
+            // 
+            // lbl_PogoPin1Qty4
+            // 
+            this.lbl_PogoPin1Qty4.AutoSize = true;
+            this.lbl_PogoPin1Qty4.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin1Qty4.Location = new System.Drawing.Point(7, 27);
+            this.lbl_PogoPin1Qty4.Name = "lbl_PogoPin1Qty4";
+            this.lbl_PogoPin1Qty4.Size = new System.Drawing.Size(98, 14);
+            this.lbl_PogoPin1Qty4.TabIndex = 23;
+            this.lbl_PogoPin1Qty4.Text = "Pogo Pin1 Qty";
+            // 
+            // grp_GroupPin1
+            // 
+            this.grp_GroupPin1.Controls.Add(this.txt_PogoPin2已植數量1);
+            this.grp_GroupPin1.Controls.Add(this.lbl_PogoPin2已植數量1);
+            this.grp_GroupPin1.Controls.Add(this.txt_PogoPin1已植數量1);
+            this.grp_GroupPin1.Controls.Add(this.lbl_PogoPin1已植數量1);
+            this.grp_GroupPin1.Controls.Add(this.txt_PogoPin2Qty3);
+            this.grp_GroupPin1.Controls.Add(this.lbl_PogoPin2Qty3);
+            this.grp_GroupPin1.Controls.Add(this.txt_PogoPin1Qty3);
+            this.grp_GroupPin1.Controls.Add(this.lbl_PogoPin1Qty3);
+            this.grp_GroupPin1.Font = new System.Drawing.Font("標楷體", 10F);
+            this.grp_GroupPin1.Location = new System.Drawing.Point(6, 216);
+            this.grp_GroupPin1.Name = "grp_GroupPin1";
+            this.grp_GroupPin1.Size = new System.Drawing.Size(226, 156);
+            this.grp_GroupPin1.TabIndex = 25;
+            this.grp_GroupPin1.TabStop = false;
+            this.grp_GroupPin1.Text = "Group Pin 1";
+            // 
+            // txt_PogoPin2已植數量1
+            // 
+            this.txt_PogoPin2已植數量1.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin2已植數量1.Location = new System.Drawing.Point(141, 123);
+            this.txt_PogoPin2已植數量1.Name = "txt_PogoPin2已植數量1";
+            this.txt_PogoPin2已植數量1.Size = new System.Drawing.Size(77, 23);
+            this.txt_PogoPin2已植數量1.TabIndex = 30;
+            // 
+            // lbl_PogoPin2已植數量1
+            // 
+            this.lbl_PogoPin2已植數量1.AutoSize = true;
+            this.lbl_PogoPin2已植數量1.Font = new System.Drawing.Font("標楷體", 10F);
+            this.lbl_PogoPin2已植數量1.Location = new System.Drawing.Point(51, 129);
+            this.lbl_PogoPin2已植數量1.Name = "lbl_PogoPin2已植數量1";
+            this.lbl_PogoPin2已植數量1.Size = new System.Drawing.Size(63, 14);
+            this.lbl_PogoPin2已植數量1.TabIndex = 29;
+            this.lbl_PogoPin2已植數量1.Text = "已植數量";
+            // 
+            // txt_PogoPin1已植數量1
+            // 
+            this.txt_PogoPin1已植數量1.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin1已植數量1.Location = new System.Drawing.Point(141, 57);
+            this.txt_PogoPin1已植數量1.Name = "txt_PogoPin1已植數量1";
+            this.txt_PogoPin1已植數量1.Size = new System.Drawing.Size(77, 23);
+            this.txt_PogoPin1已植數量1.TabIndex = 28;
+            // 
+            // lbl_PogoPin1已植數量1
+            // 
+            this.lbl_PogoPin1已植數量1.AutoSize = true;
+            this.lbl_PogoPin1已植數量1.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin1已植數量1.Location = new System.Drawing.Point(51, 61);
+            this.lbl_PogoPin1已植數量1.Name = "lbl_PogoPin1已植數量1";
+            this.lbl_PogoPin1已植數量1.Size = new System.Drawing.Size(63, 14);
+            this.lbl_PogoPin1已植數量1.TabIndex = 27;
+            this.lbl_PogoPin1已植數量1.Text = "已植數量";
+            // 
+            // txt_PogoPin2Qty3
+            // 
+            this.txt_PogoPin2Qty3.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin2Qty3.Location = new System.Drawing.Point(141, 90);
+            this.txt_PogoPin2Qty3.Name = "txt_PogoPin2Qty3";
+            this.txt_PogoPin2Qty3.Size = new System.Drawing.Size(77, 23);
+            this.txt_PogoPin2Qty3.TabIndex = 26;
+            // 
+            // lbl_PogoPin2Qty3
+            // 
+            this.lbl_PogoPin2Qty3.AutoSize = true;
+            this.lbl_PogoPin2Qty3.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin2Qty3.Location = new System.Drawing.Point(6, 99);
+            this.lbl_PogoPin2Qty3.Name = "lbl_PogoPin2Qty3";
+            this.lbl_PogoPin2Qty3.Size = new System.Drawing.Size(98, 14);
+            this.lbl_PogoPin2Qty3.TabIndex = 25;
+            this.lbl_PogoPin2Qty3.Text = "Pogo Pin2 Qty";
+            // 
+            // txt_PogoPin1Qty3
+            // 
+            this.txt_PogoPin1Qty3.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin1Qty3.Location = new System.Drawing.Point(141, 22);
+            this.txt_PogoPin1Qty3.Name = "txt_PogoPin1Qty3";
+            this.txt_PogoPin1Qty3.Size = new System.Drawing.Size(77, 23);
+            this.txt_PogoPin1Qty3.TabIndex = 24;
+            // 
+            // lbl_PogoPin1Qty3
+            // 
+            this.lbl_PogoPin1Qty3.AutoSize = true;
+            this.lbl_PogoPin1Qty3.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin1Qty3.Location = new System.Drawing.Point(6, 28);
+            this.lbl_PogoPin1Qty3.Name = "lbl_PogoPin1Qty3";
+            this.lbl_PogoPin1Qty3.Size = new System.Drawing.Size(98, 14);
+            this.lbl_PogoPin1Qty3.TabIndex = 23;
+            this.lbl_PogoPin1Qty3.Text = "Pogo Pin1 Qty";
+            // 
+            // rad_ChangeGroupPin
+            // 
+            this.rad_ChangeGroupPin.AutoSize = true;
+            this.rad_ChangeGroupPin.Font = new System.Drawing.Font("標楷體", 10F);
+            this.rad_ChangeGroupPin.Location = new System.Drawing.Point(6, 189);
+            this.rad_ChangeGroupPin.Name = "rad_ChangeGroupPin";
+            this.rad_ChangeGroupPin.Size = new System.Drawing.Size(137, 18);
+            this.rad_ChangeGroupPin.TabIndex = 24;
+            this.rad_ChangeGroupPin.TabStop = true;
+            this.rad_ChangeGroupPin.Text = "Change Group Pin";
+            this.rad_ChangeGroupPin.UseVisualStyleBackColor = true;
+            // 
+            // rad_ChangeAllNewPin
+            // 
+            this.rad_ChangeAllNewPin.AutoSize = true;
+            this.rad_ChangeAllNewPin.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.rad_ChangeAllNewPin.Location = new System.Drawing.Point(6, 26);
+            this.rad_ChangeAllNewPin.Name = "rad_ChangeAllNewPin";
+            this.rad_ChangeAllNewPin.Size = new System.Drawing.Size(151, 18);
+            this.rad_ChangeAllNewPin.TabIndex = 23;
+            this.rad_ChangeAllNewPin.TabStop = true;
+            this.rad_ChangeAllNewPin.Text = "Change All New Pin";
+            this.rad_ChangeAllNewPin.UseVisualStyleBackColor = true;
+            // 
+            // txt_PogoPin2已植數量
+            // 
+            this.txt_PogoPin2已植數量.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin2已植數量.Location = new System.Drawing.Point(152, 156);
+            this.txt_PogoPin2已植數量.Name = "txt_PogoPin2已植數量";
+            this.txt_PogoPin2已植數量.Size = new System.Drawing.Size(72, 23);
+            this.txt_PogoPin2已植數量.TabIndex = 22;
+            // 
+            // lbl_PogoPin2已植數量
+            // 
+            this.lbl_PogoPin2已植數量.AutoSize = true;
+            this.lbl_PogoPin2已植數量.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin2已植數量.Location = new System.Drawing.Point(66, 160);
+            this.lbl_PogoPin2已植數量.Name = "lbl_PogoPin2已植數量";
+            this.lbl_PogoPin2已植數量.Size = new System.Drawing.Size(63, 14);
+            this.lbl_PogoPin2已植數量.TabIndex = 21;
+            this.lbl_PogoPin2已植數量.Text = "已植數量";
+            // 
+            // txt_PogoPin1已植數量
+            // 
+            this.txt_PogoPin1已植數量.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin1已植數量.Location = new System.Drawing.Point(152, 90);
+            this.txt_PogoPin1已植數量.Name = "txt_PogoPin1已植數量";
+            this.txt_PogoPin1已植數量.Size = new System.Drawing.Size(72, 23);
+            this.txt_PogoPin1已植數量.TabIndex = 20;
+            // 
+            // lbl_PogoPin1已植數量
+            // 
+            this.lbl_PogoPin1已植數量.AutoSize = true;
+            this.lbl_PogoPin1已植數量.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin1已植數量.Location = new System.Drawing.Point(66, 94);
+            this.lbl_PogoPin1已植數量.Name = "lbl_PogoPin1已植數量";
+            this.lbl_PogoPin1已植數量.Size = new System.Drawing.Size(63, 14);
+            this.lbl_PogoPin1已植數量.TabIndex = 19;
+            this.lbl_PogoPin1已植數量.Text = "已植數量";
+            // 
+            // txt_PogoPin2Qty2
+            // 
+            this.txt_PogoPin2Qty2.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin2Qty2.Location = new System.Drawing.Point(152, 123);
+            this.txt_PogoPin2Qty2.Name = "txt_PogoPin2Qty2";
+            this.txt_PogoPin2Qty2.Size = new System.Drawing.Size(72, 23);
+            this.txt_PogoPin2Qty2.TabIndex = 15;
+            // 
+            // lbl_PogoPin2Qty2
+            // 
+            this.lbl_PogoPin2Qty2.AutoSize = true;
+            this.lbl_PogoPin2Qty2.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin2Qty2.Location = new System.Drawing.Point(18, 127);
+            this.lbl_PogoPin2Qty2.Name = "lbl_PogoPin2Qty2";
+            this.lbl_PogoPin2Qty2.Size = new System.Drawing.Size(98, 14);
+            this.lbl_PogoPin2Qty2.TabIndex = 14;
+            this.lbl_PogoPin2Qty2.Text = "Pogo Pin2 Qty";
+            // 
+            // txt_PogoPin1Qty2
+            // 
+            this.txt_PogoPin1Qty2.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin1Qty2.Location = new System.Drawing.Point(152, 58);
+            this.txt_PogoPin1Qty2.Name = "txt_PogoPin1Qty2";
+            this.txt_PogoPin1Qty2.Size = new System.Drawing.Size(74, 23);
+            this.txt_PogoPin1Qty2.TabIndex = 13;
+            // 
+            // lbl_PogoPin1Qty2
+            // 
+            this.lbl_PogoPin1Qty2.AutoSize = true;
+            this.lbl_PogoPin1Qty2.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin1Qty2.Location = new System.Drawing.Point(18, 64);
+            this.lbl_PogoPin1Qty2.Name = "lbl_PogoPin1Qty2";
+            this.lbl_PogoPin1Qty2.Size = new System.Drawing.Size(98, 14);
+            this.lbl_PogoPin1Qty2.TabIndex = 12;
+            this.lbl_PogoPin1Qty2.Text = "Pogo Pin1 Qty";
+            // 
+            // grp_SocketTest
+            // 
+            this.grp_SocketTest.Controls.Add(this.grp_設備治具資訊);
+            this.grp_SocketTest.Controls.Add(this.grp_配件條碼比對);
+            this.grp_SocketTest.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grp_SocketTest.Location = new System.Drawing.Point(14, 37);
+            this.grp_SocketTest.Name = "grp_SocketTest";
+            this.grp_SocketTest.Size = new System.Drawing.Size(341, 562);
+            this.grp_SocketTest.TabIndex = 21;
+            this.grp_SocketTest.TabStop = false;
+            this.grp_SocketTest.Text = "Socket資訊";
+            // 
+            // grp_設備治具資訊
+            // 
+            this.grp_設備治具資訊.Controls.Add(this.lbl_PogoPin3Qty1);
+            this.grp_設備治具資訊.Controls.Add(this.lbl_PogoPin2Qty1);
+            this.grp_設備治具資訊.Controls.Add(this.lbl_PogoPin1Qty1);
+            this.grp_設備治具資訊.Controls.Add(this.txt_下針導正模組);
+            this.grp_設備治具資訊.Controls.Add(this.lbl_下針導正模組);
+            this.grp_設備治具資訊.Controls.Add(this.txt_取針模組PI);
+            this.grp_設備治具資訊.Controls.Add(this.lbl_取針模組PI);
+            this.grp_設備治具資訊.Controls.Add(this.txt_PogoPin3Qty1);
+            this.grp_設備治具資訊.Controls.Add(this.txt_PogoPin2Qty1);
+            this.grp_設備治具資訊.Controls.Add(this.txt_PogoPin1Qty1);
+            this.grp_設備治具資訊.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grp_設備治具資訊.Location = new System.Drawing.Point(7, 338);
+            this.grp_設備治具資訊.Name = "grp_設備治具資訊";
+            this.grp_設備治具資訊.Size = new System.Drawing.Size(328, 208);
+            this.grp_設備治具資訊.TabIndex = 1;
+            this.grp_設備治具資訊.TabStop = false;
+            this.grp_設備治具資訊.Text = "設備治具資訊";
+            // 
+            // lbl_PogoPin3Qty1
+            // 
+            this.lbl_PogoPin3Qty1.AutoSize = true;
+            this.lbl_PogoPin3Qty1.Font = new System.Drawing.Font("標楷體", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin3Qty1.Location = new System.Drawing.Point(6, 102);
+            this.lbl_PogoPin3Qty1.Name = "lbl_PogoPin3Qty1";
+            this.lbl_PogoPin3Qty1.Size = new System.Drawing.Size(87, 15);
+            this.lbl_PogoPin3Qty1.TabIndex = 16;
+            this.lbl_PogoPin3Qty1.Text = "Probe Bore";
+            // 
+            // lbl_PogoPin2Qty1
+            // 
+            this.lbl_PogoPin2Qty1.AutoSize = true;
+            this.lbl_PogoPin2Qty1.Font = new System.Drawing.Font("標楷體", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin2Qty1.Location = new System.Drawing.Point(6, 66);
+            this.lbl_PogoPin2Qty1.Name = "lbl_PogoPin2Qty1";
+            this.lbl_PogoPin2Qty1.Size = new System.Drawing.Size(95, 15);
+            this.lbl_PogoPin2Qty1.TabIndex = 15;
+            this.lbl_PogoPin2Qty1.Text = "Probe Plate";
+            // 
+            // lbl_PogoPin1Qty1
+            // 
+            this.lbl_PogoPin1Qty1.AutoSize = true;
+            this.lbl_PogoPin1Qty1.Font = new System.Drawing.Font("標楷體", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin1Qty1.Location = new System.Drawing.Point(7, 29);
+            this.lbl_PogoPin1Qty1.Name = "lbl_PogoPin1Qty1";
+            this.lbl_PogoPin1Qty1.Size = new System.Drawing.Size(71, 15);
+            this.lbl_PogoPin1Qty1.TabIndex = 14;
+            this.lbl_PogoPin1Qty1.Text = "VCM_Pick";
+            // 
+            // txt_下針導正模組
+            // 
+            this.txt_下針導正模組.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_下針導正模組.Location = new System.Drawing.Point(128, 168);
+            this.txt_下針導正模組.Name = "txt_下針導正模組";
+            this.txt_下針導正模組.Size = new System.Drawing.Size(194, 26);
+            this.txt_下針導正模組.TabIndex = 9;
+            this.txt_下針導正模組.Text = "RL20240703-SA01-B001-A";
+            // 
+            // lbl_下針導正模組
+            // 
+            this.lbl_下針導正模組.AutoSize = true;
+            this.lbl_下針導正模組.Font = new System.Drawing.Font("標楷體", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_下針導正模組.Location = new System.Drawing.Point(6, 174);
+            this.lbl_下針導正模組.Name = "lbl_下針導正模組";
+            this.lbl_下針導正模組.Size = new System.Drawing.Size(111, 15);
+            this.lbl_下針導正模組.TabIndex = 8;
+            this.lbl_下針導正模組.Text = "Probe Gripper";
+            // 
+            // txt_取針模組PI
+            // 
+            this.txt_取針模組PI.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_取針模組PI.Location = new System.Drawing.Point(128, 132);
+            this.txt_取針模組PI.Name = "txt_取針模組PI";
+            this.txt_取針模組PI.Size = new System.Drawing.Size(194, 26);
+            this.txt_取針模組PI.TabIndex = 7;
+            this.txt_取針模組PI.Text = "RL20240703-SA01-A001-A";
+            // 
+            // lbl_取針模組PI
+            // 
+            this.lbl_取針模組PI.AutoSize = true;
+            this.lbl_取針模組PI.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_取針模組PI.Location = new System.Drawing.Point(6, 136);
+            this.lbl_取針模組PI.Name = "lbl_取針模組PI";
+            this.lbl_取針模組PI.Size = new System.Drawing.Size(95, 16);
+            this.lbl_取針模組PI.TabIndex = 6;
+            this.lbl_取針模組PI.Text = "Socket Tray";
+            // 
+            // txt_PogoPin3Qty1
+            // 
+            this.txt_PogoPin3Qty1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin3Qty1.Location = new System.Drawing.Point(128, 96);
+            this.txt_PogoPin3Qty1.Name = "txt_PogoPin3Qty1";
+            this.txt_PogoPin3Qty1.Size = new System.Drawing.Size(194, 26);
+            this.txt_PogoPin3Qty1.TabIndex = 5;
+            this.txt_PogoPin3Qty1.Text = "RL20240703-SA01-D002-A";
+            // 
+            // txt_PogoPin2Qty1
+            // 
+            this.txt_PogoPin2Qty1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin2Qty1.Location = new System.Drawing.Point(128, 60);
+            this.txt_PogoPin2Qty1.Name = "txt_PogoPin2Qty1";
+            this.txt_PogoPin2Qty1.Size = new System.Drawing.Size(194, 26);
+            this.txt_PogoPin2Qty1.TabIndex = 3;
+            this.txt_PogoPin2Qty1.Text = "RL20240703-SA01-D001-A";
+            // 
+            // txt_PogoPin1Qty1
+            // 
+            this.txt_PogoPin1Qty1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin1Qty1.Location = new System.Drawing.Point(128, 23);
+            this.txt_PogoPin1Qty1.Name = "txt_PogoPin1Qty1";
+            this.txt_PogoPin1Qty1.Size = new System.Drawing.Size(194, 26);
+            this.txt_PogoPin1Qty1.TabIndex = 1;
+            this.txt_PogoPin1Qty1.Text = "RL20240703-SA01-C001-A";
+            // 
+            // grp_配件條碼比對
+            // 
+            this.grp_配件條碼比對.Controls.Add(this.button6);
+            this.grp_配件條碼比對.Controls.Add(this.btn_確認配件);
+            this.grp_配件條碼比對.Controls.Add(this.txt_PogoPin2Qty);
+            this.grp_配件條碼比對.Controls.Add(this.lbl_PogoPin2Qty);
+            this.grp_配件條碼比對.Controls.Add(this.txt_PogoPin1Qty);
+            this.grp_配件條碼比對.Controls.Add(this.lbl_PogoPin1Qty);
+            this.grp_配件條碼比對.Controls.Add(this.txt_Socket定位座);
+            this.grp_配件條碼比對.Controls.Add(this.lbl_Socket定位座);
+            this.grp_配件條碼比對.Controls.Add(this.txt_FileName);
+            this.grp_配件條碼比對.Controls.Add(this.lbl_FileName);
+            this.grp_配件條碼比對.Controls.Add(this.txt_Socket);
+            this.grp_配件條碼比對.Controls.Add(this.lbl_Socket);
+            this.grp_配件條碼比對.Controls.Add(this.txt_條碼輸入欄位);
+            this.grp_配件條碼比對.Controls.Add(this.lbl_條碼輸入欄位);
+            this.grp_配件條碼比對.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grp_配件條碼比對.Location = new System.Drawing.Point(6, 29);
+            this.grp_配件條碼比對.Name = "grp_配件條碼比對";
+            this.grp_配件條碼比對.Size = new System.Drawing.Size(329, 303);
+            this.grp_配件條碼比對.TabIndex = 0;
+            this.grp_配件條碼比對.TabStop = false;
+            this.grp_配件條碼比對.Text = "配件條碼比對";
+            // 
+            // button6
+            // 
+            this.button6.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button6.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.button6.Location = new System.Drawing.Point(10, 244);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(158, 53);
+            this.button6.TabIndex = 13;
+            this.button6.Text = "更換\r\nSocket";
+            this.button6.UseVisualStyleBackColor = false;
+            // 
+            // btn_確認配件
+            // 
+            this.btn_確認配件.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btn_確認配件.Font = new System.Drawing.Font("標楷體", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_確認配件.Location = new System.Drawing.Point(174, 244);
+            this.btn_確認配件.Name = "btn_確認配件";
+            this.btn_確認配件.Size = new System.Drawing.Size(149, 53);
+            this.btn_確認配件.TabIndex = 12;
+            this.btn_確認配件.Text = "確認配件";
+            this.btn_確認配件.UseVisualStyleBackColor = false;
+            // 
+            // txt_PogoPin2Qty
+            // 
+            this.txt_PogoPin2Qty.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin2Qty.Location = new System.Drawing.Point(101, 208);
+            this.txt_PogoPin2Qty.Name = "txt_PogoPin2Qty";
+            this.txt_PogoPin2Qty.Size = new System.Drawing.Size(222, 26);
+            this.txt_PogoPin2Qty.TabIndex = 11;
+            this.txt_PogoPin2Qty.Text = "TA3-ASC01";
+            // 
+            // lbl_PogoPin2Qty
+            // 
+            this.lbl_PogoPin2Qty.AutoSize = true;
+            this.lbl_PogoPin2Qty.Font = new System.Drawing.Font("標楷體", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin2Qty.Location = new System.Drawing.Point(7, 214);
+            this.lbl_PogoPin2Qty.Name = "lbl_PogoPin2Qty";
+            this.lbl_PogoPin2Qty.Size = new System.Drawing.Size(39, 15);
+            this.lbl_PogoPin2Qty.TabIndex = 10;
+            this.lbl_PogoPin2Qty.Text = "儲位";
+            // 
+            // txt_PogoPin1Qty
+            // 
+            this.txt_PogoPin1Qty.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_PogoPin1Qty.Location = new System.Drawing.Point(101, 172);
+            this.txt_PogoPin1Qty.Name = "txt_PogoPin1Qty";
+            this.txt_PogoPin1Qty.Size = new System.Drawing.Size(222, 26);
+            this.txt_PogoPin1Qty.TabIndex = 9;
+            this.txt_PogoPin1Qty.Text = "3080350240-K9400";
+            // 
+            // lbl_PogoPin1Qty
+            // 
+            this.lbl_PogoPin1Qty.AutoSize = true;
+            this.lbl_PogoPin1Qty.Font = new System.Drawing.Font("標楷體", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PogoPin1Qty.Location = new System.Drawing.Point(7, 178);
+            this.lbl_PogoPin1Qty.Name = "lbl_PogoPin1Qty";
+            this.lbl_PogoPin1Qty.Size = new System.Drawing.Size(55, 15);
+            this.lbl_PogoPin1Qty.TabIndex = 8;
+            this.lbl_PogoPin1Qty.Text = "板全號";
+            // 
+            // txt_Socket定位座
+            // 
+            this.txt_Socket定位座.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_Socket定位座.Location = new System.Drawing.Point(101, 136);
+            this.txt_Socket定位座.Name = "txt_Socket定位座";
+            this.txt_Socket定位座.Size = new System.Drawing.Size(222, 26);
+            this.txt_Socket定位座.TabIndex = 7;
+            this.txt_Socket定位座.Text = "MT6985(23D)";
+            // 
+            // lbl_Socket定位座
+            // 
+            this.lbl_Socket定位座.AutoSize = true;
+            this.lbl_Socket定位座.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Socket定位座.Location = new System.Drawing.Point(6, 139);
+            this.lbl_Socket定位座.Name = "lbl_Socket定位座";
+            this.lbl_Socket定位座.Size = new System.Drawing.Size(39, 16);
+            this.lbl_Socket定位座.TabIndex = 6;
+            this.lbl_Socket定位座.Text = "型號";
+            // 
+            // txt_FileName
+            // 
+            this.txt_FileName.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_FileName.Location = new System.Drawing.Point(101, 100);
+            this.txt_FileName.Name = "txt_FileName";
+            this.txt_FileName.Size = new System.Drawing.Size(222, 27);
+            this.txt_FileName.TabIndex = 5;
+            this.txt_FileName.Text = "聯發科技";
+            // 
+            // lbl_FileName
+            // 
+            this.lbl_FileName.AutoSize = true;
+            this.lbl_FileName.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_FileName.Location = new System.Drawing.Point(6, 104);
+            this.lbl_FileName.Name = "lbl_FileName";
+            this.lbl_FileName.Size = new System.Drawing.Size(39, 16);
+            this.lbl_FileName.TabIndex = 4;
+            this.lbl_FileName.Text = "客戶";
+            // 
+            // txt_Socket
+            // 
+            this.txt_Socket.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_Socket.Location = new System.Drawing.Point(101, 64);
+            this.txt_Socket.Name = "txt_Socket";
+            this.txt_Socket.Size = new System.Drawing.Size(222, 26);
+            this.txt_Socket.TabIndex = 3;
+            this.txt_Socket.Text = "SK21312";
+            // 
+            // lbl_Socket
+            // 
+            this.lbl_Socket.AutoSize = true;
+            this.lbl_Socket.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Socket.Location = new System.Drawing.Point(6, 68);
+            this.lbl_Socket.Name = "lbl_Socket";
+            this.lbl_Socket.Size = new System.Drawing.Size(55, 16);
+            this.lbl_Socket.TabIndex = 2;
+            this.lbl_Socket.Text = "短編號";
+            // 
+            // txt_條碼輸入欄位
+            // 
+            this.txt_條碼輸入欄位.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_條碼輸入欄位.Location = new System.Drawing.Point(101, 23);
+            this.txt_條碼輸入欄位.Name = "txt_條碼輸入欄位";
+            this.txt_條碼輸入欄位.Size = new System.Drawing.Size(222, 26);
+            this.txt_條碼輸入欄位.TabIndex = 1;
+            this.txt_條碼輸入欄位.Text = "S12HEXA9046P01AJG0084";
+            // 
+            // lbl_條碼輸入欄位
+            // 
+            this.lbl_條碼輸入欄位.AutoSize = true;
+            this.lbl_條碼輸入欄位.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_條碼輸入欄位.Location = new System.Drawing.Point(6, 27);
+            this.lbl_條碼輸入欄位.Name = "lbl_條碼輸入欄位";
+            this.lbl_條碼輸入欄位.Size = new System.Drawing.Size(71, 16);
+            this.lbl_條碼輸入欄位.TabIndex = 0;
+            this.lbl_條碼輸入欄位.Text = "配件編號";
+            // 
+            // grp_儲存資訊
+            // 
+            this.grp_儲存資訊.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.grp_儲存資訊.Controls.Add(this.btn_停止);
+            this.grp_儲存資訊.Controls.Add(this.btn_開始);
+            this.grp_儲存資訊.Location = new System.Drawing.Point(14, 605);
+            this.grp_儲存資訊.Name = "grp_儲存資訊";
+            this.grp_儲存資訊.Size = new System.Drawing.Size(251, 67);
+            this.grp_儲存資訊.TabIndex = 20;
+            this.grp_儲存資訊.TabStop = false;
+            // 
+            // btn_停止
+            // 
+            this.btn_停止.BackColor = System.Drawing.Color.Red;
+            this.btn_停止.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_停止.Location = new System.Drawing.Point(135, 9);
+            this.btn_停止.Name = "btn_停止";
+            this.btn_停止.Size = new System.Drawing.Size(109, 52);
+            this.btn_停止.TabIndex = 2;
+            this.btn_停止.Text = "停止";
+            this.btn_停止.UseVisualStyleBackColor = false;
+            // 
+            // btn_開始
+            // 
+            this.btn_開始.BackColor = System.Drawing.Color.Lime;
+            this.btn_開始.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_開始.Location = new System.Drawing.Point(6, 9);
+            this.btn_開始.Name = "btn_開始";
+            this.btn_開始.Size = new System.Drawing.Size(109, 52);
+            this.btn_開始.TabIndex = 1;
+            this.btn_開始.Text = "開始";
+            this.btn_開始.UseVisualStyleBackColor = false;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.登入ToolStripMenuItem,
+            this.檔案ToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1228, 24);
+            this.menuStrip1.TabIndex = 19;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // 登入ToolStripMenuItem
+            // 
+            this.登入ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.登入ToolStripMenuItem1,
+            this.登出ToolStripMenuItem1});
+            this.登入ToolStripMenuItem.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.登入ToolStripMenuItem.Name = "登入ToolStripMenuItem";
+            this.登入ToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.登入ToolStripMenuItem.Text = "帳戶";
+            // 
+            // 登入ToolStripMenuItem1
+            // 
+            this.登入ToolStripMenuItem1.Name = "登入ToolStripMenuItem1";
+            this.登入ToolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
+            this.登入ToolStripMenuItem1.Text = "登入";
+            // 
+            // 登出ToolStripMenuItem1
+            // 
+            this.登出ToolStripMenuItem1.Name = "登出ToolStripMenuItem1";
+            this.登出ToolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
+            this.登出ToolStripMenuItem1.Text = "登出";
+            // 
+            // 檔案ToolStripMenuItem
+            // 
+            this.檔案ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.開啟ToolStripMenuItem,
+            this.儲存ToolStripMenuItem});
+            this.檔案ToolStripMenuItem.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.檔案ToolStripMenuItem.Name = "檔案ToolStripMenuItem";
+            this.檔案ToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.檔案ToolStripMenuItem.Text = "檔案";
+            // 
+            // 開啟ToolStripMenuItem
+            // 
+            this.開啟ToolStripMenuItem.Name = "開啟ToolStripMenuItem";
+            this.開啟ToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.開啟ToolStripMenuItem.Text = "開啟";
+            this.開啟ToolStripMenuItem.Click += new System.EventHandler(this.開啟ToolStripMenuItem_Click);
+            // 
+            // 儲存ToolStripMenuItem
+            // 
+            this.儲存ToolStripMenuItem.Name = "儲存ToolStripMenuItem";
+            this.儲存ToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.儲存ToolStripMenuItem.Text = "儲存";
+            this.儲存ToolStripMenuItem.Click += new System.EventHandler(this.儲存ToolStripMenuItem_Click);
             // 
             // tmr_Sequense
             // 
@@ -3444,7 +4549,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1260, 815);
+            this.ClientSize = new System.Drawing.Size(1256, 847);
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("新細明體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -3466,8 +4571,57 @@
             this.tabPage1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            this.grp_NeedleInfo.ResumeLayout(false);
+            this.grp_NeedleInfo.PerformLayout();
+            this.tab_Needles.ResumeLayout(false);
+            this.tp_Needles.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pic_Needles)).EndInit();
+            this.tp_NeedlesJudge.ResumeLayout(false);
+            this.tp_NeedlesJudge.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_跑馬燈)).EndInit();
+            this.grp_目前作業項目.ResumeLayout(false);
+            this.grp_目前作業項目.PerformLayout();
+            this.grp_GroupPin2.ResumeLayout(false);
+            this.grp_GroupPin2.PerformLayout();
+            this.grp_GroupPin1.ResumeLayout(false);
+            this.grp_GroupPin1.PerformLayout();
+            this.grp_SocketTest.ResumeLayout(false);
+            this.grp_設備治具資訊.ResumeLayout(false);
+            this.grp_設備治具資訊.PerformLayout();
+            this.grp_配件條碼比對.ResumeLayout(false);
+            this.grp_配件條碼比對.PerformLayout();
+            this.grp_儲存資訊.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
 
+        }
+
+        public void Initialize_grp_NeedleInfo_ChildControlChanged_Listener(GroupBox groupBox)
+        {
+            foreach (Control control in groupBox.Controls)
+            {
+                switch (control)
+                {
+                    case TextBox textBox:
+                        textBox.TextChanged += grp_NeedleInfo_ChildControlChanged;
+                        break;
+
+                    case RadioButton radioButton:
+                        radioButton.CheckedChanged += grp_NeedleInfo_ChildControlChanged;
+                        break;
+
+                    case CheckBox checkBox:
+                        checkBox.CheckedChanged += grp_NeedleInfo_ChildControlChanged;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
 
         #endregion
@@ -3743,12 +4897,104 @@
         private System.Windows.Forms.Label lblLog;
         private System.Windows.Forms.Timer tmr_Warning;
         private System.Windows.Forms.Button btn上膛;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btn_tmrPause;
         private System.Windows.Forms.Button btn_tmrStop;
         private System.Windows.Forms.Label lbl_CycleTime;
         public  System.Windows.Forms.Button btn_manual;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TabControl tab_Needles;
+        private System.Windows.Forms.TabPage tp_Needles;
+        private System.Windows.Forms.TabPage tp_NeedlesJudge;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pic_跑馬燈;
+        private System.Windows.Forms.GroupBox grp_目前作業項目;
+        private System.Windows.Forms.GroupBox grp_GroupPin2;
+        private System.Windows.Forms.TextBox txt_PogoPin2已植數量2;
+        private System.Windows.Forms.Label lbl_PogoPin2已植數量2;
+        private System.Windows.Forms.TextBox txt_PogoPin1已植數量2;
+        private System.Windows.Forms.Label lbl_PogoPin1已植數量2;
+        private System.Windows.Forms.TextBox txt_PogoPin2Qty4;
+        private System.Windows.Forms.Label lbl_PogoPin2Qty4;
+        private System.Windows.Forms.TextBox txt_PogoPin1Qty4;
+        private System.Windows.Forms.Label lbl_PogoPin1Qty4;
+        private System.Windows.Forms.GroupBox grp_GroupPin1;
+        private System.Windows.Forms.TextBox txt_PogoPin2已植數量1;
+        private System.Windows.Forms.Label lbl_PogoPin2已植數量1;
+        private System.Windows.Forms.TextBox txt_PogoPin1已植數量1;
+        private System.Windows.Forms.Label lbl_PogoPin1已植數量1;
+        private System.Windows.Forms.TextBox txt_PogoPin2Qty3;
+        private System.Windows.Forms.Label lbl_PogoPin2Qty3;
+        private System.Windows.Forms.TextBox txt_PogoPin1Qty3;
+        private System.Windows.Forms.Label lbl_PogoPin1Qty3;
+        private System.Windows.Forms.RadioButton rad_ChangeGroupPin;
+        private System.Windows.Forms.RadioButton rad_ChangeAllNewPin;
+        private System.Windows.Forms.TextBox txt_PogoPin2已植數量;
+        private System.Windows.Forms.Label lbl_PogoPin2已植數量;
+        private System.Windows.Forms.TextBox txt_PogoPin1已植數量;
+        private System.Windows.Forms.Label lbl_PogoPin1已植數量;
+        private System.Windows.Forms.TextBox txt_PogoPin2Qty2;
+        private System.Windows.Forms.Label lbl_PogoPin2Qty2;
+        private System.Windows.Forms.TextBox txt_PogoPin1Qty2;
+        private System.Windows.Forms.Label lbl_PogoPin1Qty2;
+        private System.Windows.Forms.GroupBox grp_SocketTest;
+        private System.Windows.Forms.GroupBox grp_設備治具資訊;
+        private System.Windows.Forms.Label lbl_PogoPin3Qty1;
+        private System.Windows.Forms.Label lbl_PogoPin2Qty1;
+        private System.Windows.Forms.Label lbl_PogoPin1Qty1;
+        private System.Windows.Forms.TextBox txt_下針導正模組;
+        private System.Windows.Forms.Label lbl_下針導正模組;
+        private System.Windows.Forms.TextBox txt_取針模組PI;
+        private System.Windows.Forms.Label lbl_取針模組PI;
+        private System.Windows.Forms.TextBox txt_PogoPin3Qty1;
+        private System.Windows.Forms.TextBox txt_PogoPin2Qty1;
+        private System.Windows.Forms.TextBox txt_PogoPin1Qty1;
+        private System.Windows.Forms.GroupBox grp_配件條碼比對;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btn_確認配件;
+        private System.Windows.Forms.TextBox txt_PogoPin2Qty;
+        private System.Windows.Forms.Label lbl_PogoPin2Qty;
+        private System.Windows.Forms.TextBox txt_PogoPin1Qty;
+        private System.Windows.Forms.Label lbl_PogoPin1Qty;
+        private System.Windows.Forms.TextBox txt_Socket定位座;
+        private System.Windows.Forms.Label lbl_Socket定位座;
+        private System.Windows.Forms.TextBox txt_FileName;
+        private System.Windows.Forms.Label lbl_FileName;
+        private System.Windows.Forms.TextBox txt_Socket;
+        private System.Windows.Forms.Label lbl_Socket;
+        private System.Windows.Forms.TextBox txt_條碼輸入欄位;
+        private System.Windows.Forms.Label lbl_條碼輸入欄位;
+        private System.Windows.Forms.GroupBox grp_儲存資訊;
+        private System.Windows.Forms.Button btn_停止;
+        private System.Windows.Forms.Button btn_開始;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 登入ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 登入ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 登出ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 檔案ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 開啟ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 儲存ToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pic_Needles;
+        private System.Windows.Forms.GroupBox grp_NeedleInfo;
+        private System.Windows.Forms.RadioButton rad_Replace;
+        private System.Windows.Forms.RadioButton rad_Remove;
+        private System.Windows.Forms.RadioButton rad_Place;
+        private System.Windows.Forms.Label lbl_Index;
+        private System.Windows.Forms.TextBox txt_Index;
+        private System.Windows.Forms.CheckBox chk_Enable;
+        private System.Windows.Forms.CheckBox chk_Display;
+        private System.Windows.Forms.TextBox txt_Diameter;
+        private System.Windows.Forms.Label lbl_Diameter;
+        private System.Windows.Forms.TextBox txt_PosX;
+        private System.Windows.Forms.TextBox txt_PosY;
+        private System.Windows.Forms.Label lbl_Pos;
+        private System.Windows.Forms.TextBox txt_Id;
+        private System.Windows.Forms.Label lbl_Id;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txt_Name;
     }
 }
 

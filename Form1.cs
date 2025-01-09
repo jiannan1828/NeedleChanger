@@ -18,8 +18,6 @@ using System.Xml;
 
 //---------------------------------------------------------------------------------------
 //SMB added
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 using System.Reflection.Emit;
 using System.Diagnostics;
 
@@ -50,6 +48,10 @@ using static InjectorInspector.Form1;
 //JSON
 using System.IO;
 using System.Text.Json;
+
+//---------------------------------------------------------------------------------------
+//小佛
+using static InjectorInspector.Viewer;
 
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
@@ -1342,6 +1344,7 @@ namespace InjectorInspector
         public Form1()
         {
             InitializeComponent();
+            Initialize_grp_NeedleInfo_ChildControlChanged_Listener(grp_NeedleInfo);
         }
         //---------------------------------------------------------------------------------------
         private void Form1_Load(object sender, EventArgs e)
@@ -1859,10 +1862,6 @@ namespace InjectorInspector
         /// Reserve function
         /// </summary>
         /// 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //inspector1.xInit();
-        }
 
 
 
@@ -2479,14 +2478,6 @@ namespace InjectorInspector
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Vector3 pos;
-            bool success = inspector1.xInspSocket(out pos);
-            label6.Text = string.Format("Socket 偵測 {0} 中心偏移 = {1:F3} , {2:F3}", success, pos.X, pos.Y);
-            success = inspector1.xInspSocket植針後檢查();
-            label7.Text = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
-        }
 
 
 
@@ -3416,9 +3407,6 @@ namespace InjectorInspector
             }
         }  // end of private void tmr_TakePin_Tick(object sender, EventArgs e)
 
-
-
-
         private void btn_manual_Click(object sender, EventArgs e)
         {
             TestForm fmTestForm = new TestForm();
@@ -3429,17 +3417,308 @@ namespace InjectorInspector
         }
 
 
+        #region 和尚小佛
+
+        private double minX, minY, maxX, maxY, width, height;
+
+        private const float ScaleFactor = 10;
+        private float ZoomFactor = 1;
+
+        private PointF Offset = new PointF(0, 0);
+        private PointF PrevMousePos = new PointF(0, 0);
+        private PointF RealMousePos = new PointF(0, 0);
+        private PointF RealMousePosBeforeZoom = new PointF(0, 0);
 
 
 
+        private PointF RealMousePosAfterZoom = new PointF(0, 0);
+
+        private readonly Color DefaltCircleColor = Color.ForestGreen;
 
 
 
+        private readonly Color HiddenCircleColor = Color.FromArgb(64, Color.ForestGreen);
+        private readonly Color HighlightedCircleColor = Color.LightBlue;
+        private readonly Color FocusedCircleColor = Color.Red;
+
+        private double Mouse2CircleDistance;
+
+        private Viewer.JSON.Circle HighlightedCircle = null;
+        private Viewer.JSON.Circle FocusedCircle = new Viewer.JSON.Circle();
+
+        private string[] 跑馬燈文字 = {
+            "待機",
+            "運行中",
+            "例外狀況"
+        };
+
+        private int 跑馬燈文字Index = 0;
+        private int 跑馬燈X座標 = 0;
+
+        private void pic_跑馬燈_Paint(object sender, PaintEventArgs e)
+        {
+            // 使用 Graphics 繪製跑馬燈文字
+            Graphics g = e.Graphics;
+            Font font = new Font("標楷體", 16, FontStyle.Bold);
+            Brush brush = Brushes.Red;
+
+            g.DrawString(跑馬燈文字[跑馬燈文字Index], font, brush, 跑馬燈X座標, (pic_跑馬燈.Height - font.Height) / 2);
+        }
+
+        private void pic_跑馬燈_Click(object sender, EventArgs e)
+        {
+            跑馬燈文字Index++;
+
+            if (跑馬燈文字Index > 跑馬燈文字.Length - 1)
+            {
+                跑馬燈文字Index = 0;
+            }
+
+            pic_跑馬燈.Invalidate();
+        }
+
+        private void 開啟ToolStripMenuItem_Click(object sender, EventArgs e)
+        { 
+            if (Viewer.OpenFile())
+            {
+                Viewer.find_Boundary(Viewer.Json, out minX, out minY, out maxX, out maxY, out width, out height);
+                ZoomFactor = Math.Min(pic_Needles.Width / ScaleFactor / (float)width, pic_Needles.Height / ScaleFactor / (float)height);
+                Offset.X = -(float)minX * ScaleFactor * ZoomFactor;
+                Offset.Y = -(float)maxY * ScaleFactor * -ZoomFactor;
+                pic_Needles.Refresh();
+            }
+        }
+
+        private void 儲存ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Viewer.SaveFile();
+        }
+
+        private void pic_Needles_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.ScaleTransform(ZoomFactor, -ZoomFactor);
+            e.Graphics.TranslateTransform(Offset.X / ZoomFactor, Offset.Y / -ZoomFactor); // 拖曳圖片轉換座標
+
+            try
+            {
+                foreach (var circle in Viewer.Json.Circles)
+                {
+                    Brush fillBrush;
+
+                    if (circle.Display == false)
+                    {
+                        fillBrush = new SolidBrush(HiddenCircleColor);
+                    }
+                    else
+                    {
+                        fillBrush = new SolidBrush(DefaltCircleColor);
+                    }
+
+                    RectangleF rectangleF = new RectangleF(
+                        (float)(circle.X * ScaleFactor - circle.Diameter / 2 * ScaleFactor),
+                        (float)(circle.Y * ScaleFactor - circle.Diameter / 2 * ScaleFactor),
+                        (float)(2 * circle.Diameter / 2 * ScaleFactor),
+                        (float)(2 * circle.Diameter / 2 * ScaleFactor)
+                    );
 
 
+                    if (circle == FocusedCircle)
+                    {
+                        fillBrush = new SolidBrush(FocusedCircleColor);
+                    }
+                    else if (circle == HighlightedCircle)
+                    {
+                        fillBrush = new SolidBrush(HighlightedCircleColor);
+                    }
+
+                    e.Graphics.FillEllipse(fillBrush, rectangleF);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+
+        private void pic_Needles_MouseMove(object sender, MouseEventArgs e)
+        {
+            RealMousePos.X = (e.X - Offset.X) / ZoomFactor / ScaleFactor;
+            RealMousePos.Y = (e.Y - Offset.Y) / -ZoomFactor / ScaleFactor;
+
+            // 左鍵拖曳
+            if (e.Button == MouseButtons.Left)
+            {
+                // 計算滑鼠移動的差值
+                Offset.X += e.X - PrevMousePos.X;
+                Offset.Y += e.Y - PrevMousePos.Y;
+
+                PrevMousePos = e.Location; // 拖曳當中隨時紀錄當下滑鼠在 PictureBox 上的位置, 不以左鍵點擊當下的位置
+            }
 
 
+            foreach (var circle in Viewer.Json.Circles)
+            {
+                // 计算鼠标位置与圆心的距离
+                Mouse2CircleDistance = Math.Sqrt(
+                    Math.Pow((e.X - Offset.X) / ScaleFactor / ZoomFactor - circle.X, 2) +
+                    Math.Pow((e.Y - Offset.Y) / ScaleFactor / -ZoomFactor - circle.Y, 2)
+                );
 
+                if (Mouse2CircleDistance <= circle.Diameter / 2)
+                {
+
+                    HighlightedCircle = circle; // 記錄高亮的圓
+
+                    break;
+                }
+                else
+                {
+                    HighlightedCircle = null;
+                }
+            }
+
+            pic_Needles.Refresh();
+        }
+
+        private void pic_Needles_MouseWheel(object sender, MouseEventArgs e)
+        {
+
+            // 滑鼠在 PictureBox 上的位置對應的真實座標（縮放前）
+            RealMousePosBeforeZoom.X = (e.X - Offset.X) / ZoomFactor;
+            RealMousePosBeforeZoom.Y = (e.Y - Offset.Y) / -ZoomFactor;
+
+            if (e.Delta > 0)
+            {
+                ZoomFactor *= 1.1f; // 滾輪向上，放大
+            }
+            else if (e.Delta < 0)
+            {
+                if (ZoomFactor > 1) // 最小就 1 倍
+                {
+                    ZoomFactor /= 1.1f; // 滾輪向下，縮小
+                }
+            }
+
+            // 滑鼠在 PictureBox 上的位置對應的真實座標（縮放後）
+            RealMousePosAfterZoom.X = (e.X - Offset.X) / ZoomFactor;
+            RealMousePosAfterZoom.Y = (e.Y - Offset.Y) / -ZoomFactor;
+
+            // 根據縮放前後的真實座標差異調整偏移量
+            Offset.X += (RealMousePosAfterZoom.X - RealMousePosBeforeZoom.X) * ZoomFactor;
+            Offset.Y += (RealMousePosAfterZoom.Y - RealMousePosBeforeZoom.Y) * -ZoomFactor;
+
+            pic_Needles.Refresh();
+        }
+
+        private void pic_Needles_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                PrevMousePos = e.Location;
+
+                if (HighlightedCircle != null)
+                {
+                    FocusedCircle = HighlightedCircle;
+
+                    show_grp_NeedleInfo(grp_NeedleInfo, FocusedCircle);
+                }
+                else
+                {
+                    FocusedCircle = null;
+
+                    clear_grp_NeedleInfo(grp_NeedleInfo);
+                }
+            }
+        }
+
+        private void grp_NeedleInfo_ChildControlChanged(object sender, EventArgs e)
+        {
+            if (FocusedCircle != null)
+            {
+                switch (sender)
+                {
+                    case TextBox textBox:
+
+                        switch (textBox.Name)
+                        {
+                            case "txt_Name":
+                                Viewer.Json.Circles[FocusedCircle.Index].Name = txt_Name.Text;
+                                break;
+
+                            case "txt_Id":
+                                Viewer.Json.Circles[FocusedCircle.Index].Id = txt_Id.Text;
+                                break;
+                        }
+                        break;
+
+                    case RadioButton radioButton:
+
+                        switch (radioButton.Name)
+                        {
+                            case "rad_Place":
+                                Viewer.Json.Circles[FocusedCircle.Index].Place = rad_Place.Checked;
+                                //dgv_Needles.Rows[FocusedCircle.Index].Cells["Place"].Value = rad_Place.Checked;
+                                break;
+
+                            case "rad_Remove":
+                                Viewer.Json.Circles[FocusedCircle.Index].Remove = rad_Remove.Checked;
+                                break;
+
+                            case "rad_Replace":
+                                Viewer.Json.Circles[FocusedCircle.Index].Replace = rad_Replace.Checked;
+                                break;
+                        }
+
+                        break;
+
+                    case CheckBox checkBox:
+
+                        switch (checkBox.Name)
+                        {
+                            case "chk_Display":
+                                Viewer.Json.Circles[FocusedCircle.Index].Display = chk_Display.Checked;
+                                break;
+
+                            case "chk_Enable":
+                                Viewer.Json.Circles[FocusedCircle.Index].Enable = chk_Enable.Checked;
+                                break;
+                        }
+
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void chk_Display_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chk_Display.Checked)
+            {
+                chk_Display.BackColor = Color.Red;
+            }
+            else
+            {
+                chk_Display.BackColor = SystemColors.Control;
+            }
+        }
+
+        private void chk_Enable_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chk_Enable.Checked)
+            {
+                chk_Enable.BackColor = Color.Red;
+            }
+            else
+            {
+                chk_Enable.BackColor = SystemColors.Control;
+            }
+        }
+
+        #endregion
+
+        #region 熊哥
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -3451,18 +3730,26 @@ namespace InjectorInspector
             inspector1.LoadRecipe(8);
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Vector3 pos;
+            bool success = inspector1.xInspSocket(out pos);
+            label6.Text = string.Format("Socket 偵測 {0} 中心偏移 = {1:F3} , {2:F3}", success, pos.X, pos.Y);
+            success = inspector1.xInspSocket植針後檢查();
+            label7.Text = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
+        }
 
-
-
-
-
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //inspector1.xInit();
+        }
 
         private void inspector1_Load(object sender, EventArgs e)
         {
 
         }
 
-
+        #endregion
 
 
     }  // end of public partial class Form1 : Form

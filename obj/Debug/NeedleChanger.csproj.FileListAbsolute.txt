@@ -115,3 +115,7 @@ D:\CodeNeedleChanger\NeedleChanger\bin\Debug\System.Text.Encodings.Web.xml
 D:\CodeNeedleChanger\NeedleChanger\bin\Debug\System.Text.Json.xml
 D:\CodeNeedleChanger\NeedleChanger\bin\Debug\System.Threading.Tasks.Extensions.xml
 D:\CodeNeedleChanger\NeedleChanger\bin\Debug\System.ValueTuple.xml
+D:\CodeNeedleChanger\NeedleChanger\bin\Debug\netDxf.dll
+D:\CodeNeedleChanger\NeedleChanger\bin\Debug\Newtonsoft.Json.dll
+D:\CodeNeedleChanger\NeedleChanger\bin\Debug\netDxf.xml
+D:\CodeNeedleChanger\NeedleChanger\bin\Debug\Newtonsoft.Json.xml
