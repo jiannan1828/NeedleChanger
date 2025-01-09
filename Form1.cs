@@ -1606,71 +1606,19 @@ namespace InjectorInspector
             if (ptrBtn == btnABSMove) {
                 //辨識選擇之軸
                 switch(wmxId_RadioGroupChanged) {
-                    case WMX3軸定義.吸嘴X軸:
-                        if(enGC_吸嘴X軸 == true) {
-                            dbapiNozzleX(result, 250);
-                        }
-                        break;
-                    case WMX3軸定義.吸嘴Y軸:
-                        if(enGC_吸嘴Y軸 == true) {
-                            dbapiNozzleY(result, 100);
-                        }
-                        break;
-                    case WMX3軸定義.吸嘴Z軸:
-                        if(enGC_吸嘴Z軸 == true) {
-                            dbapiNozzleZ(result, 20);
-                        }
-                        break;
-                    case WMX3軸定義.吸嘴R軸:
-                        if(enGC_吸嘴R軸 == true) {
-                            dbapiNozzleR(result, 70);
-                        }
-                        break;
-                    case WMX3軸定義.載盤X軸:
-                        if(enGC_載盤X軸 == true) {
-                            dbapiCarrierX(result, 190);
-                        }
-                        break;
-                    case WMX3軸定義.載盤Y軸:
-                        if(enGC_載盤Y軸 == true) {
-                            dbapiCarrierY(result, 800);
-                        }
-                        break;
-                    case WMX3軸定義.植針Z軸:
-                        if(enGC_植針Z軸 == true) {
-                            dbapiSetZ(result, 33);
-                        }
-                        break;
-                    case WMX3軸定義.植針R軸:
-                        if(enGC_植針R軸 == true) {
-                            dbapiSetR(result, 360);
-                        }
-                        break;
-                    case WMX3軸定義.工作門:
-                        if(enGC_工作門 == true) {
-                            dbapiGate(result, 580/4);
-                        }
-                        break;
-                    case WMX3軸定義.IAISocket孔檢測:
-                        if(enGC_IAI == true) {
-                            dbapiIAI(result);
-                        }
-                        break;
-                    case WMX3軸定義.JoDell3D掃描:
-                        if(enGC_JoDell3D掃描 == true) {
-                            dbapJoDell3D掃描(result);
-                        }
-                        break;
-                    case WMX3軸定義.JoDell吸針嘴:
-                        if(enGC_JoDell吸針嘴 == true) {
-                            dbapJoDell吸針嘴(result);
-                        }
-                        break;
-                    case WMX3軸定義.JoDell植針嘴:
-                        if(enGC_JoDell植針嘴 == true) {
-                            dbapJoDell植針嘴(result);
-                        }
-                        break;
+                    case WMX3軸定義.吸嘴X軸:         if(enGC_吸嘴X軸       == true) { dbapiNozzleX(    result, 250);   } break;
+                    case WMX3軸定義.吸嘴Y軸:         if(enGC_吸嘴Y軸       == true) { dbapiNozzleY(    result, 100);   } break;
+                    case WMX3軸定義.吸嘴Z軸:         if(enGC_吸嘴Z軸       == true) { dbapiNozzleZ(    result,  20);   } break;
+                    case WMX3軸定義.吸嘴R軸:         if(enGC_吸嘴R軸       == true) { dbapiNozzleR(    result,  70);   } break;
+                    case WMX3軸定義.載盤X軸:         if(enGC_載盤X軸       == true) { dbapiCarrierX(   result, 190);   } break;
+                    case WMX3軸定義.載盤Y軸:         if(enGC_載盤Y軸       == true) { dbapiCarrierY(   result, 800);   } break;
+                    case WMX3軸定義.植針Z軸:         if(enGC_植針Z軸       == true) { dbapiSetZ(       result, 33);    } break;
+                    case WMX3軸定義.植針R軸:         if(enGC_植針R軸       == true) { dbapiSetR(       result, 360);   } break;
+                    case WMX3軸定義.工作門:          if(enGC_工作門        == true) { dbapiGate(       result, 580/4); } break;
+                    case WMX3軸定義.IAISocket孔檢測: if(enGC_IAI           == true) { dbapiIAI(        result);        } break;
+                    case WMX3軸定義.JoDell3D掃描:    if(enGC_JoDell3D掃描  == true) { dbapJoDell3D掃描(result);        } break;
+                    case WMX3軸定義.JoDell吸針嘴:    if(enGC_JoDell吸針嘴  == true) { dbapJoDell吸針嘴(result);        } break;
+                    case WMX3軸定義.JoDell植針嘴:    if(enGC_JoDell植針嘴  == true) { dbapJoDell植針嘴(result);        } break;
                 }
             }
 
@@ -3471,11 +3419,13 @@ namespace InjectorInspector
 
 
 
-        private void button6_Click(object sender, EventArgs e)
+        private void btn_manual_Click(object sender, EventArgs e)
         {
             TestForm fmTestForm = new TestForm();
 
             fmTestForm.Show();
+
+            btn_manual.Enabled = false;
         }
 
 

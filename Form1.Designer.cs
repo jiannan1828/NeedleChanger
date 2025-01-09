@@ -484,7 +484,7 @@
             this.btn_manual.TabIndex = 218;
             this.btn_manual.Text = "btn_manual";
             this.btn_manual.UseVisualStyleBackColor = true;
-            this.btn_manual.Click += new System.EventHandler(this.button6_Click);
+            this.btn_manual.Click += new System.EventHandler(this.btn_manual_Click);
             // 
             // lblVBLED
             // 
@@ -3603,7 +3603,7 @@
         private System.Windows.Forms.Button btn_plus_10;
         private System.Windows.Forms.Button btn_plus_1;
         private System.Windows.Forms.Button btnABSMove;
-        private System.Windows.Forms.TextBox txtABSpos;
+        public  System.Windows.Forms.TextBox txtABSpos;
         private System.Windows.Forms.CheckBox en_工作門;
         private System.Windows.Forms.CheckBox en_植針R軸;
         private System.Windows.Forms.CheckBox en_植針Z軸;
@@ -3649,15 +3649,19 @@
         private System.Windows.Forms.Label lbl_spd_吸嘴Z軸_lbl;
         private System.Windows.Forms.Label lbl_spd_吸嘴Y軸_lbl;
         private System.Windows.Forms.Label lbl_spd_吸嘴X軸_lbl;
-        private System.Windows.Forms.RadioButton select_工作門;
-        private System.Windows.Forms.RadioButton select_植針R軸;
-        private System.Windows.Forms.RadioButton select_植針Z軸;
-        private System.Windows.Forms.RadioButton select_載盤Y軸;
-        private System.Windows.Forms.RadioButton select_載盤X軸;
-        private System.Windows.Forms.RadioButton select_吸嘴R軸;
-        private System.Windows.Forms.RadioButton select_吸嘴Z軸;
-        private System.Windows.Forms.RadioButton select_吸嘴Y軸;
-        private System.Windows.Forms.RadioButton select_吸嘴X軸;
+        public  System.Windows.Forms.RadioButton select_吸嘴X軸;
+        public  System.Windows.Forms.RadioButton select_吸嘴Y軸;
+        public  System.Windows.Forms.RadioButton select_吸嘴Z軸;
+        public  System.Windows.Forms.RadioButton select_吸嘴R軸;
+        public  System.Windows.Forms.RadioButton select_載盤X軸;
+        public  System.Windows.Forms.RadioButton select_載盤Y軸;
+        public  System.Windows.Forms.RadioButton select_植針Z軸;
+        public  System.Windows.Forms.RadioButton select_植針R軸;
+        public  System.Windows.Forms.RadioButton select_工作門;
+        public  System.Windows.Forms.RadioButton select_Socket檢測;
+        public  System.Windows.Forms.RadioButton select_JoDell3D掃描;
+        public  System.Windows.Forms.RadioButton select_JoDell吸針嘴;
+        public  System.Windows.Forms.RadioButton select_JoDell植針嘴;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Label label1;
@@ -3682,7 +3686,6 @@
         private System.Windows.Forms.Label lbl_acpos_IAI_lbl;
         private System.Windows.Forms.Label lbl_spd_IAI;
         private System.Windows.Forms.Label lbl_spd_IAI_lbl;
-        private System.Windows.Forms.RadioButton select_Socket檢測;
         private System.Windows.Forms.Label lbl_JoDell吸針嘴_Convert;
         private System.Windows.Forms.Label lbl_JoDell吸針嘴_Back;
         private System.Windows.Forms.Label lbl_JoDell吸針嘴_RAW;
@@ -3691,7 +3694,6 @@
         private System.Windows.Forms.Label lbl_acpos_JoDell吸針嘴_lbl;
         private System.Windows.Forms.Label lbl_spd_JoDell吸針嘴;
         private System.Windows.Forms.Label lbl_spd_JoDell吸針嘴_lbl;
-        private System.Windows.Forms.RadioButton select_JoDell吸針嘴;
         private System.Windows.Forms.Label lbl_JoDell3D掃描_Convert;
         private System.Windows.Forms.Label lbl_JoDell3D掃描_Back;
         private System.Windows.Forms.Label lbl_JoDell3D掃描_RAW;
@@ -3700,7 +3702,6 @@
         private System.Windows.Forms.Label lbl_acpos_JoDell3D掃描_lbl;
         private System.Windows.Forms.Label lbl_spd_JoDell3D掃描;
         private System.Windows.Forms.Label lbl_spd_JoDell3D掃描_lbl;
-        private System.Windows.Forms.RadioButton select_JoDell3D掃描;
         private System.Windows.Forms.Label lbl_JoDell植針嘴_Convert;
         private System.Windows.Forms.Label lbl_JoDell植針嘴_Back;
         private System.Windows.Forms.Label lbl_JoDell植針嘴_RAW;
@@ -3709,7 +3710,6 @@
         private System.Windows.Forms.Label lbl_acpos_JoDell植針嘴_lbl;
         private System.Windows.Forms.Label lbl_spd_JoDell植針嘴;
         private System.Windows.Forms.Label lbl_spd_JoDell植針嘴_lbl;
-        private System.Windows.Forms.RadioButton select_JoDell植針嘴;
         private System.Windows.Forms.Button btnVibrationStop;
         private System.Windows.Forms.Button btnVibrationInit;
         private System.Windows.Forms.VScrollBar vcb_植針吹氣流量閥;
@@ -3748,7 +3748,7 @@
         private System.Windows.Forms.Button btn_tmrPause;
         private System.Windows.Forms.Button btn_tmrStop;
         private System.Windows.Forms.Label lbl_CycleTime;
-        private System.Windows.Forms.Button btn_manual;
+        public  System.Windows.Forms.Button btn_manual;
     }
 }
 

@@ -96,6 +96,12 @@
     "strNote": "16\u865F\u99AC\u82F1\u4E5D"
   },
   {
+    "strLabel": "\u5DE5\u4F5C\u9580",
+    "u32Index": 1941,
+    "dbPosition": 800,
+    "strNote": "\u534A\u5CF6\u9435\u76D2"
+  },
+  {
     "strLabel": "\u5438\u5634R\u8EF8",
     "u32Index": 5987,
     "dbPosition": 29292947,
@@ -104,7 +110,7 @@
   {
     "strLabel": "\u5DE5\u4F5C\u9580",
     "u32Index": 9487,
-    "dbPosition": 29487,
+    "dbPosition": 0,
     "strNote": "\u963F\u8CB4\u597D\u81ED"
   }
 ]
