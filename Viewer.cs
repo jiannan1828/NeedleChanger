@@ -143,11 +143,11 @@ namespace InjectorInspector
         /// </summary>
         public static bool OpenFile()
         {
-            OpenDxfFileDialog.Filter = "DXF Files (*.dxf)|*.dxf|Json Files (*.json)|*.json";
+            OpenDxfFileDialog.Filter = "JSON Files (*.json)|*.json|DXF Files (*.dxf)|*.dxf";
 
             if (OpenDxfFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (OpenDxfFileDialog.FilterIndex == 1) // 如果選擇 .dxf
+                if (OpenDxfFileDialog.FilterIndex == 2) // 如果選擇 .dxf
                 {
                     try
                     {
@@ -173,7 +173,7 @@ namespace InjectorInspector
                         return false;
                     }
                 }
-                else if (OpenDxfFileDialog.FilterIndex == 2) // 如果選擇 .json
+                else if (OpenDxfFileDialog.FilterIndex == 1) // 如果選擇 .json
                 {
                     try
                     {

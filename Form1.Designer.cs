@@ -779,7 +779,7 @@ namespace InjectorInspector
             this.vcb_植針吹氣流量閥.Size = new System.Drawing.Size(20, 200);
             this.vcb_植針吹氣流量閥.TabIndex = 202;
             this.vcb_植針吹氣流量閥.Value = 110;
-            this.vcb_植針吹氣流量閥.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
+            this.vcb_植針吹氣流量閥.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vcb植針吹氣流量閥_Scroll);
             // 
             // btnVibrationStop
             // 
@@ -3508,7 +3508,6 @@ namespace InjectorInspector
             this.inspector1.Name = "inspector1";
             this.inspector1.Size = new System.Drawing.Size(1112, 744);
             this.inspector1.TabIndex = 1;
-            this.inspector1.Load += new System.EventHandler(this.inspector1_Load);
             // 
             // tabControl1
             // 

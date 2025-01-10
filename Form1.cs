@@ -91,6 +91,24 @@ namespace InjectorInspector
             }
 
         }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            inspector1.SaveRecipe(8);
+        }
+        //---------------------------------------------------------------------------------------
+        private void button5_Click(object sender, EventArgs e)
+        {
+            inspector1.LoadRecipe(8);
+        }
+        //---------------------------------------------------------------------------------------
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Vector3 pos;
+            bool success = inspector1.xInspSocket(out pos);
+            label6.Text = string.Format("Socket 偵測 {0} 中心偏移 = {1:F3} , {2:F3}", success, pos.X, pos.Y);
+            success = inspector1.xInspSocket植針後檢查();
+            label7.Text = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
+        }
         //---------------------------------------------------------------------------------------
         bool   b黑色料倉有料_tmrTakePinTick = false;
         bool   b柔震盤有料_tmrTakePinTick   = false;
@@ -1366,6 +1384,86 @@ namespace InjectorInspector
             //sw.Close();
         }
         //---------------------------------------------------------------------------------------
+        private void btn_manual_Click(object sender, EventArgs e)
+        {
+            TestForm fmTestForm = new TestForm();
+            fmTestForm.Show();
+
+            btn_manual.Enabled = false;
+        }
+        //---------------------------------------------------------------------------------------
+        private void btn_Connect_Click(object sender, EventArgs e)
+        {
+            clsServoControlWMX3.WMX3_establish_Commu();
+        }
+        //---------------------------------------------------------------------------------------
+        private void btn_Disconnect_Click(object sender, EventArgs e)
+        {
+            clsServoControlWMX3.WMX3_destroy_Commu();
+        }
+        //---------------------------------------------------------------------------------------
+        private void btn_AlarmRST_Click(object sender, EventArgs e)
+        {
+            clsServoControlWMX3.WMX3_ClearAlarm();
+        }
+        //---------------------------------------------------------------------------------------
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            bool isOn = false;
+
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門,  isOn);
+
+            clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff,            isOn?1.0:0.0);
+            clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,             isOn?1.0:0.0);
+            clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, isOn?1.0:0.0);
+            clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, isOn?1.0:0.0);
+            clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, isOn?1.0:0.0);
+        }
+        //---------------------------------------------------------------------------------------
+        private void btnSetHome_Click(object sender, EventArgs e)
+        {
+            int rslt = 0;
+            int axis = 0;
+            string position = "";
+            string speed = "";
+
+            axis = (int)WMX3軸定義.吸嘴X軸;
+            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if (rslt == 1)
+            {
+                clsServoControlWMX3.WMX3_SetHomePosition(axis);
+            }
+
+            axis = (int)WMX3軸定義.吸嘴Y軸;
+            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if (rslt == 1)
+            {
+                clsServoControlWMX3.WMX3_SetHomePosition(axis);
+            }
+
+            axis = (int)WMX3軸定義.吸嘴Z軸;
+            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if (rslt == 1)
+            {
+                clsServoControlWMX3.WMX3_SetHomePosition(axis);
+            }
+
+            axis = (int)WMX3軸定義.吸嘴R軸;
+            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
+            if (rslt == 1)
+            {
+                clsServoControlWMX3.WMX3_SetHomePosition(axis);
+            }
+        }
+        //---------------------------------------------------------------------------------------
         public bool enGC_吸嘴X軸      = false;
         public bool enGC_吸嘴Y軸      = false;
         public bool enGC_吸嘴Z軸      = false;
@@ -1574,36 +1672,16 @@ namespace InjectorInspector
 
             double result = double.Parse(txtABSpos.Text) + 0.0;
 
-            if (ptrBtn == btn_plus_d001) {
-                result += 0.001;
-                ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_minus_d001) {
-                result -= 0.001;
-                ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_plus_d01) {
-                result += 0.01;
-                ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_minus_d01) {
-                result -= 0.01;
-                ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_plus_d1) {
-                result += 0.1;
-                ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_minus_d1) {
-                result -= 0.1;
-                ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_plus_1) {
-                result += 1.0;
-                ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_minus_1) {
-                result -= 1.0;
-                ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_plus_10) {
-                result += 10.0;
-                ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_minus_10) {
-                result -= 10.0;
-                ptrBtn = btnABSMove;
+                   if (ptrBtn == btn_plus_d001  ) { result += 0.001; ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_minus_d001 ) { result -= 0.001; ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_plus_d01   ) { result += 0.01;  ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_minus_d01  ) { result -= 0.01;  ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_plus_d1    ) { result += 0.1;   ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_minus_d1   ) { result -= 0.1;   ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_plus_1     ) { result += 1.0;   ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_minus_1    ) { result -= 1.0;   ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_plus_10    ) { result += 10.0;  ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_minus_10   ) { result -= 10.0;  ptrBtn = btnABSMove;
             }
 
             if (ptrBtn == btnABSMove) {
@@ -1770,107 +1848,9 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
 
 
-
-
-
-
         //---------------------------------------------------------------------------------------
-        private void btn_Connect_Click(object sender, EventArgs e)
-        {
-            clsServoControlWMX3.WMX3_establish_Commu();
-        }
-        private void btn_Disconnect_Click(object sender, EventArgs e)
-        {
-            clsServoControlWMX3.WMX3_destroy_Commu();
-        }
-        private void btn_AlarmRST_Click(object sender, EventArgs e)
-        {
-            clsServoControlWMX3.WMX3_ClearAlarm();
-        }
-        private void btnStop_Click(object sender, EventArgs e)
-        {
-            bool isOn = false;
-
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, isOn);
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, isOn);
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, isOn);
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, isOn);
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, isOn);
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, isOn);
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, isOn);
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, isOn);
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門,  isOn);
-
-            clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff,            isOn?1.0:0.0);
-            clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,             isOn?1.0:0.0);
-            clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, isOn?1.0:0.0);
-            clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, isOn?1.0:0.0);
-            clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, isOn?1.0:0.0);
-        }
-        private void btnSetHome_Click(object sender, EventArgs e)
-        {
-            int rslt = 0;
-            int axis = 0;
-            string position = "";
-            string speed = "";
-
-            axis = (int)WMX3軸定義.吸嘴X軸;
-            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1)
-            {
-                clsServoControlWMX3.WMX3_SetHomePosition(axis);
-            }
-
-            axis = (int)WMX3軸定義.吸嘴Y軸;
-            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1)
-            {
-                clsServoControlWMX3.WMX3_SetHomePosition(axis);
-            }
-
-            axis = (int)WMX3軸定義.吸嘴Z軸;
-            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1)
-            {
-                clsServoControlWMX3.WMX3_SetHomePosition(axis);
-            }
-
-            axis = (int)WMX3軸定義.吸嘴R軸;
-            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1)
-            {
-                clsServoControlWMX3.WMX3_SetHomePosition(axis);
-            }
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /// <summary>
-        /// Reserve function
-        /// </summary>
-        /// 
-
-
-
-
-
-
-        
-
-
+        //---------------------------------- Vibration implement --------------------------------
+        //---------------------------------------------------------------------------------------
         enum 柔震 { 震散     = 0,
                     上下至中 = 1,
                     左右至中 = 2,
@@ -1882,7 +1862,7 @@ namespace InjectorInspector
                相3始 = { 0000, 0485, 0235, 0000 }, 相3終 = { 0500, 0229, 0457, 0000 }, 相3力 = { 0750, 1000, 1000, 0000 },
                相4始 = { 0000, 0160, 0381, 0000 }, 相4終 = { 0500, 0318, 0464, 0000 }, 相4力 = { 0750, 1000, 1000, 0000 },
                倉始  = { 0000, 0000, 0000, 0010 }, 倉終  = { 0000, 0000, 0000, 0100 }, 倉力  = { 0000, 0000, 0000, 0440 };
-
+        //---------------------------------------------------------------------------------------
         private void lbl柔震index(object sender, EventArgs e)
         {
             System.Windows.Forms.Label SelectLabel = sender as System.Windows.Forms.Label;
@@ -1894,7 +1874,7 @@ namespace InjectorInspector
                 } 
             }
         }
-
+        //---------------------------------------------------------------------------------------
         public void btnVibrationInit_Click(object sender, EventArgs e) {
                        if (lbl震散.BackColor   == Color.Red) { e柔震 = 柔震.震散;
                 } else if (lbl上下收.BackColor == Color.Red) { e柔震 = 柔震.上下至中;
@@ -1932,7 +1912,7 @@ namespace InjectorInspector
                 clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
             }
         }
-
+        //---------------------------------------------------------------------------------------
         private void btnVibrationStop_Click(object sender, EventArgs e)
         {
             //Vibration
@@ -1942,7 +1922,7 @@ namespace InjectorInspector
                 clsVibration.Px1_SendCMD(xe_U15_CMD.xeUC_TestMode_FunctionOn, bRunning);
             }
         }
-
+        //---------------------------------------------------------------------------------------
         private void SB_VBLED_Scroll(object sender, ScrollEventArgs e)
         {
             //Vibration LED
@@ -1952,12 +1932,14 @@ namespace InjectorInspector
                 lblVBLED.Text = "Light:" + (uint)SB_VBLED.Value;
             }
         }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------- Vibration implement --------------------------------
+        //---------------------------------------------------------------------------------------
 
 
-
-
-
-
+        //---------------------------------------------------------------------------------------
+        //----------------------------- Warning Indicator implement -----------------------------
+        //---------------------------------------------------------------------------------------
         enum eWarningSpeed {
             xeeWS_Disable,
 
@@ -1977,6 +1959,7 @@ namespace InjectorInspector
              bBuzzerWarningYellow = false,
              bBuzzerWarningGreen  = false;
 
+        //---------------------------------------------------------------------------------------
         private void tmr_Buzzer_Tick(object sender, EventArgs e)
         {  // start of private void tmr_Buzzer_Tick(object sender, EventArgs e)
             int iWarningLEDSpeed = 0;
@@ -2044,14 +2027,15 @@ namespace InjectorInspector
                     } break;
             }  // end of switch (eWIndicatorSpeed) {
         }  // end of private void tmr_Buzzer_Tick(object sender, EventArgs e)
+        //---------------------------------------------------------------------------------------
+        //----------------------------- Warning Indicator implement -----------------------------
+        //---------------------------------------------------------------------------------------
 
 
-
-
-
-
-
-        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        //---------------------------------------------------------------------------------------
+        //----------------------------- Flow Valve Control implement ----------------------------
+        //---------------------------------------------------------------------------------------
+        private void vcb植針吹氣流量閥_Scroll(object sender, ScrollEventArgs e)
         {
             /*
                 y=0.000454x−2.5071
@@ -2107,13 +2091,14 @@ namespace InjectorInspector
             //            "y:" + y.ToString();
             lbl_植針吹氣流量閥.Text = string.Format("{0:F1}", y);
         }
+        //---------------------------------------------------------------------------------------
+        //----------------------------- Flow Valve Control implement ----------------------------
+        //---------------------------------------------------------------------------------------
 
 
-
-
-
-
-
+        //---------------------------------------------------------------------------------------
+        //-------------------------------- State Machine implement ------------------------------
+        //---------------------------------------------------------------------------------------
         public enum xe_tmr_sequense {
             xets_empty,
             xets_idle,
@@ -2162,11 +2147,12 @@ namespace InjectorInspector
         public const double dbNozzle安全原點Z = 0;
         public const double dbNozzle安全原點R = 1.350;
 
+        //---------------------------------------------------------------------------------------
         private void btn_home_Click(object sender, EventArgs e)
         {
             bhome = true;
         }
-
+        //---------------------------------------------------------------------------------------
         private void tmr_Sequense_Tick(object sender, EventArgs e)
         {
             int getrslt = 0;
@@ -2477,23 +2463,9 @@ namespace InjectorInspector
             }
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public enum xe_tmr_takepin
-        {
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public enum xe_tmr_takepin {
             xett_Empty,
                 xett_確定執行要取針,
                     xett_關工作門,
@@ -2635,13 +2607,9 @@ namespace InjectorInspector
 
             xett_End,
         };
-
         public xe_tmr_takepin xeTmrTakePin = xe_tmr_takepin.xett_Empty;
 
         public int  iTakePinFinishedCNT1 = 0;
-
-
-
         public int  iTakePinFinishedCNT2 = 0;
         public bool bTakePin             = false;
         public bool bChambered           = false;
@@ -2665,23 +2633,28 @@ namespace InjectorInspector
         public DateTime Curr_CycleTime;
         public TimeSpan CycleTime;
 
+        //---------------------------------------------------------------------------------------
         private void btn_TakePin_Click(object sender, EventArgs e)
         {
             bTakePin = true;
         }
+        //---------------------------------------------------------------------------------------
         private void btn上膛_Click(object sender, EventArgs e)
         {
             bChambered = true;
         }
+        //---------------------------------------------------------------------------------------
         private void btn_tmrStop_Click(object sender, EventArgs e)
         {
             btmrStop = true;
         }
+        //---------------------------------------------------------------------------------------
         private void btn_tmrPause_Click(object sender, EventArgs e)
         {
             tmr_TakePin.Enabled = bPause;
             bPause = !bPause;
         }
+        //---------------------------------------------------------------------------------------
         private void tmr_TakePin_Tick(object sender, EventArgs e)
         {  // start of private void tmr_TakePin_Tick(object sender, EventArgs e)
             
@@ -3249,7 +3222,7 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_開啟流量閥1:
                                     vcb_植針吹氣流量閥.Value = 100-99;
                                     ScrollEventArgs xe = null;
-                                    vScrollBar1_Scroll(sender, xe);
+                                    vcb植針吹氣流量閥_Scroll(sender, xe);
                                     xeTmrTakePin = xe_tmr_takepin.xett_開啟流量閥1等待1秒;
                                     break;
                                 case xe_tmr_takepin.xett_開啟流量閥1等待1秒:  
@@ -3259,7 +3232,7 @@ namespace InjectorInspector
 
                                         vcb_植針吹氣流量閥.Value = 100-0;
                                         ScrollEventArgs xxe = null;
-                                        vScrollBar1_Scroll(sender, xxe);
+                                        vcb植針吹氣流量閥_Scroll(sender, xxe);
 
                                         xeTmrTakePin = xe_tmr_takepin.xett_植針吹氣電磁閥開啟; 
                                     }
@@ -3362,7 +3335,7 @@ namespace InjectorInspector
                             Prev_CycleTime = DateTime.Now;
 
                             lbl_CycleTime.Text = "循環時間 : " + CycleTime.ToString(@"ss\.fff");
-                    xeTmrTakePin = xe_tmr_takepin.xett_重覆一開始的狀態;  break;
+                            xeTmrTakePin = xe_tmr_takepin.xett_重覆一開始的狀態;  break;
 
                             case xe_tmr_takepin.xett_重覆一開始的狀態:                     xeTmrTakePin = xe_tmr_takepin.xett_確定執行要取針;  break;
 
@@ -3406,19 +3379,15 @@ namespace InjectorInspector
                     break;
             }
         }  // end of private void tmr_TakePin_Tick(object sender, EventArgs e)
-
-        private void btn_manual_Click(object sender, EventArgs e)
-        {
-            TestForm fmTestForm = new TestForm();
-
-            fmTestForm.Show();
-
-            btn_manual.Enabled = false;
-        }
+        //---------------------------------------------------------------------------------------
+        //-------------------------------- State Machine implement ------------------------------
+        //---------------------------------------------------------------------------------------
 
 
         #region 和尚小佛
-
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------- 和尚小佛 --------------------------------------
+        //---------------------------------------------------------------------------------------
         private double minX, minY, maxX, maxY, width, height;
 
         private const float ScaleFactor = 10;
@@ -3429,13 +3398,9 @@ namespace InjectorInspector
         private PointF RealMousePos = new PointF(0, 0);
         private PointF RealMousePosBeforeZoom = new PointF(0, 0);
 
-
-
         private PointF RealMousePosAfterZoom = new PointF(0, 0);
 
         private readonly Color DefaltCircleColor = Color.ForestGreen;
-
-
 
         private readonly Color HiddenCircleColor = Color.FromArgb(64, Color.ForestGreen);
         private readonly Color HighlightedCircleColor = Color.LightBlue;
@@ -3455,6 +3420,7 @@ namespace InjectorInspector
         private int 跑馬燈文字Index = 0;
         private int 跑馬燈X座標 = 0;
 
+        //---------------------------------------------------------------------------------------
         private void pic_跑馬燈_Paint(object sender, PaintEventArgs e)
         {
             // 使用 Graphics 繪製跑馬燈文字
@@ -3464,7 +3430,7 @@ namespace InjectorInspector
 
             g.DrawString(跑馬燈文字[跑馬燈文字Index], font, brush, 跑馬燈X座標, (pic_跑馬燈.Height - font.Height) / 2);
         }
-
+        //---------------------------------------------------------------------------------------
         private void pic_跑馬燈_Click(object sender, EventArgs e)
         {
             跑馬燈文字Index++;
@@ -3476,7 +3442,7 @@ namespace InjectorInspector
 
             pic_跑馬燈.Invalidate();
         }
-
+        //---------------------------------------------------------------------------------------
         private void 開啟ToolStripMenuItem_Click(object sender, EventArgs e)
         { 
             if (Viewer.OpenFile())
@@ -3488,12 +3454,12 @@ namespace InjectorInspector
                 pic_Needles.Refresh();
             }
         }
-
+        //---------------------------------------------------------------------------------------
         private void 儲存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Viewer.SaveFile();
         }
-
+        //---------------------------------------------------------------------------------------
         private void pic_Needles_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.ScaleTransform(ZoomFactor, -ZoomFactor);
@@ -3539,7 +3505,7 @@ namespace InjectorInspector
                 Console.WriteLine(ex);
             }
         }
-
+        //---------------------------------------------------------------------------------------
         private void pic_Needles_MouseMove(object sender, MouseEventArgs e)
         {
             RealMousePos.X = (e.X - Offset.X) / ZoomFactor / ScaleFactor;
@@ -3579,7 +3545,7 @@ namespace InjectorInspector
 
             pic_Needles.Refresh();
         }
-
+        //---------------------------------------------------------------------------------------
         private void pic_Needles_MouseWheel(object sender, MouseEventArgs e)
         {
 
@@ -3609,7 +3575,7 @@ namespace InjectorInspector
 
             pic_Needles.Refresh();
         }
-
+        //---------------------------------------------------------------------------------------
         private void pic_Needles_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -3630,7 +3596,7 @@ namespace InjectorInspector
                 }
             }
         }
-
+        //---------------------------------------------------------------------------------------
         private void grp_NeedleInfo_ChildControlChanged(object sender, EventArgs e)
         {
             if (FocusedCircle != null)
@@ -3691,7 +3657,7 @@ namespace InjectorInspector
                 }
             }
         }
-
+        //---------------------------------------------------------------------------------------
         private void chk_Display_CheckedChanged(object sender, EventArgs e)
         {
             if (chk_Display.Checked)
@@ -3703,7 +3669,7 @@ namespace InjectorInspector
                 chk_Display.BackColor = SystemColors.Control;
             }
         }
-
+        //---------------------------------------------------------------------------------------
         private void chk_Enable_CheckedChanged(object sender, EventArgs e)
         {
             if (chk_Enable.Checked)
@@ -3715,40 +3681,23 @@ namespace InjectorInspector
                 chk_Enable.BackColor = SystemColors.Control;
             }
         }
-
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------- 和尚小佛 --------------------------------------
+        //---------------------------------------------------------------------------------------
         #endregion
 
-        #region 熊哥
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            inspector1.SaveRecipe(8);
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            inspector1.LoadRecipe(8);
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            Vector3 pos;
-            bool success = inspector1.xInspSocket(out pos);
-            label6.Text = string.Format("Socket 偵測 {0} 中心偏移 = {1:F3} , {2:F3}", success, pos.X, pos.Y);
-            success = inspector1.xInspSocket植針後檢查();
-            label7.Text = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
-        }
-
+        #region 暫時或實驗中
+        //---------------------------------------------------------------------------------------
+        //-------------------------------------- 暫時或實驗中 ------------------------------------
+        //---------------------------------------------------------------------------------------
         private void button1_Click(object sender, EventArgs e)
         {
             //inspector1.xInit();
         }
-
-        private void inspector1_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        //---------------------------------------------------------------------------------------
+        //-------------------------------------- 暫時或實驗中 ------------------------------------
+        //---------------------------------------------------------------------------------------
         #endregion
 
 
