@@ -401,6 +401,9 @@ namespace InjectorInspector
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
+            this.button7 = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3200,6 +3203,9 @@ namespace InjectorInspector
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label15);
+            this.tabPage2.Controls.Add(this.label14);
+            this.tabPage2.Controls.Add(this.button7);
             this.tabPage2.Controls.Add(this.lbl_CycleTime);
             this.tabPage2.Controls.Add(this.btn_tmrPause);
             this.tabPage2.Controls.Add(this.btn_tmrStop);
@@ -3622,7 +3628,6 @@ namespace InjectorInspector
             this.txt_Index.Location = new System.Drawing.Point(62, 35);
             this.txt_Index.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Index.Name = "txt_Index";
-            this.txt_Index.ReadOnly = true;
             this.txt_Index.Size = new System.Drawing.Size(92, 28);
             this.txt_Index.TabIndex = 23;
             // 
@@ -4544,6 +4549,34 @@ namespace InjectorInspector
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(148, 351);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(109, 42);
+            this.button7.TabIndex = 217;
+            this.button7.Text = "button7";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(280, 351);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(62, 19);
+            this.label14.TabIndex = 218;
+            this.label14.Text = "label14";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(280, 374);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(62, 19);
+            this.label15.TabIndex = 219;
+            this.label15.Text = "label15";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -4607,6 +4640,7 @@ namespace InjectorInspector
                 {
                     case TextBox textBox:
                         textBox.TextChanged += grp_NeedleInfo_ChildControlChanged;
+                        textBox.KeyPress += grp_NeedleInfo_Search; //20250110 4xuan added : 新增 Enter 查詢
                         break;
 
                     case RadioButton radioButton:
@@ -4994,6 +5028,9 @@ namespace InjectorInspector
         private System.Windows.Forms.Label lbl_Id;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txt_Name;
+        private Button button7;
+        private Label label15;
+        private Label label14;
     }
 }
 

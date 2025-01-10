@@ -322,5 +322,49 @@ namespace InjectorInspector
                 }
             }
         }
+
+        /// <summary>
+        /// 填寫流水號, 名稱, ID 搜尋植針
+        /// </summary>
+        /// <param name="needleInfo">流水號名稱ID按下Enter傳進來的 Textbox.Name</param>
+        /// <param name="focusedCircle">按下Enter要查詢的圓</param>
+        /// <returns>無回傳值</returns>
+        public static void search_grp_NeedleInfo(string textBoxType, string textBoxText, ref JSON.Circle SearchCircle)
+        {
+            switch (textBoxType)
+            {
+                case "txt_Index":
+                    foreach (var circle in Json.Circles)
+                    {
+                        if (circle.Index.ToString() == textBoxText)
+                        {
+                            SearchCircle = circle;
+                        }
+                    }
+                    break;
+
+                case "txt_Name":
+                    foreach (var circle in Json.Circles)
+                    {
+                        if (circle.Name == textBoxText)
+                        {
+                            SearchCircle = circle;
+                        }
+                    }
+                    break;
+
+                case "txt_Id":
+                    foreach (var circle in Json.Circles)
+                    {
+                        if (circle.Id == textBoxText)
+                        {
+                            SearchCircle = circle;
+                        }
+                    }
+                    break;
+            }
+
+
+        }
     }
 }

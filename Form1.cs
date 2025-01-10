@@ -52,6 +52,7 @@ using System.Text.Json;
 //---------------------------------------------------------------------------------------
 //小佛
 using static InjectorInspector.Viewer;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
@@ -3397,7 +3398,6 @@ namespace InjectorInspector
         private PointF PrevMousePos = new PointF(0, 0);
         private PointF RealMousePos = new PointF(0, 0);
         private PointF RealMousePosBeforeZoom = new PointF(0, 0);
-
         private PointF RealMousePosAfterZoom = new PointF(0, 0);
 
         private readonly Color DefaltCircleColor = Color.ForestGreen;
@@ -3658,6 +3658,19 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
+        private void grp_NeedleInfo_Search(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (sender is TextBox textbox)
+                {
+                    Viewer.search_grp_NeedleInfo(textbox.Name, textbox.Text, ref FocusedCircle);
+                    Viewer.show_grp_NeedleInfo(grp_NeedleInfo, FocusedCircle);
+                    pic_Needles.Refresh();
+                }
+            }
+        }
+        //---------------------------------------------------------------------------------------
         private void chk_Display_CheckedChanged(object sender, EventArgs e)
         {
             if (chk_Display.Checked)
@@ -3682,6 +3695,15 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
+        public void apiGetCoordinate(int iIndex, ref double dbX, ref double dbY)
+        {
+            Viewer.search_grp_NeedleInfo("txt_Index", iIndex.ToString(), ref FocusedCircle);
+            Viewer.show_grp_NeedleInfo(grp_NeedleInfo, FocusedCircle);
+            pic_Needles.Refresh();
+            dbX = FocusedCircle.X;
+            dbY = FocusedCircle.Y;
+        }
+        //---------------------------------------------------------------------------------------
         //---------------------------------------- 和尚小佛 --------------------------------------
         //---------------------------------------------------------------------------------------
         #endregion
@@ -3694,6 +3716,14 @@ namespace InjectorInspector
         private void button1_Click(object sender, EventArgs e)
         {
             //inspector1.xInit();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            double dbX = 0.0, dbY = 0.0;
+            apiGetCoordinate(12, ref dbX, ref dbY);
+            label14.Text = dbX.ToString();
+            label15.Text = dbY.ToString();
         }
         //---------------------------------------------------------------------------------------
         //-------------------------------------- 暫時或實驗中 ------------------------------------
