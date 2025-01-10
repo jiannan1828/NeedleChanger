@@ -3512,7 +3512,7 @@ namespace InjectorInspector
             RealMousePos.Y = (e.Y - Offset.Y) / -ZoomFactor / ScaleFactor;
 
             // 左鍵拖曳
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Middle)
             {
                 // 計算滑鼠移動的差值
                 Offset.X += e.X - PrevMousePos.X;

@@ -71,10 +71,10 @@ namespace InjectorInspector
             // 遍歷所有圓，更新邊界
             foreach (var circle in dxfJson.Circles)
             {
-                minX = Math.Min(minX, circle.X - circle.Diameter / 2);
-                minY = Math.Min(minY, circle.Y - circle.Diameter / 2);
-                maxX = Math.Max(maxX, circle.X + circle.Diameter / 2);
-                maxY = Math.Max(maxY, circle.Y + circle.Diameter / 2);
+                minX = Math.Min(minX, circle.X - circle.Diameter / 2-1);
+                minY = Math.Min(minY, circle.Y - circle.Diameter / 2-1);
+                maxX = Math.Max(maxX, circle.X + circle.Diameter / 2+1);
+                maxY = Math.Max(maxY, circle.Y + circle.Diameter / 2+1);
             }
 
             width = maxX - minX;
@@ -141,6 +141,7 @@ namespace InjectorInspector
         /// <summary>
         /// 打開 DXF 或者 JSON 檔案
         /// </summary>
+        public static string strFileName = "";
         public static bool OpenFile()
         {
             OpenDxfFileDialog.Filter = "JSON Files (*.json)|*.json|DXF Files (*.dxf)|*.dxf";
@@ -152,6 +153,7 @@ namespace InjectorInspector
                     try
                     {
                         DxfDoc = DxfDocument.Load(OpenDxfFileDialog.FileName);
+                        strFileName = OpenDxfFileDialog.FileName;
 
                         if (DxfDoc.Entities.Circles.Count() > 0)
                         {
@@ -204,6 +206,8 @@ namespace InjectorInspector
         public static void SaveFile()
         {
             SaveJsonFileDialog.Filter = "Json Files (*.json)|*.json";
+
+            SaveJsonFileDialog.FileName = Path.GetFileNameWithoutExtension(strFileName);
 
             if (SaveJsonFileDialog.ShowDialog() == DialogResult.OK)
             {
