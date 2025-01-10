@@ -270,18 +270,130 @@ namespace InjectorInspector
         public void dataGridView1_MouseClick(object sender, MouseEventArgs e)
         {
             // 檢查是否是右鍵點擊
-            if (e.Button == MouseButtons.Right)
-            {
+            if (e.Button == MouseButtons.Right) {
+                if(false) { 
+                    // 獲取點擊的行和列
+                    var hitTest = dataGridView1.HitTest(e.X, e.Y);
+                    int rowIndex = hitTest.RowIndex;
+                    int colIndex = hitTest.ColumnIndex;
+
+                    // 檢查是否點擊了有效的儲存格（排除列頭和行頭）
+                    if (rowIndex >= 0 && colIndex >= 0)
+                    {
+                        var cellValue = dataGridView1.Rows[rowIndex].Cells[colIndex].Value;
+                        var rowValues = dataGridView1.Rows[rowIndex].Cells.Cast<DataGridViewCell>()
+                            .Select(cell => cell.Value?.ToString() ?? "null")
+                            .ToArray();
+
+                        // 打印所選擇的格子資料
+                        Console.WriteLine($"雙擊位置：行 {rowValues}, 列 {cellValue}, 資料：{cellValue}");
+
+                        // 打印該行所有資料
+                        Console.WriteLine("該行所有資料: ");
+                        foreach (var value in rowValues)
+                        {
+                            Console.WriteLine(value);
+                        }
+
+                        switch(rowValues[3])
+                        {
+                            case "吸嘴X軸":
+                                form1.dbapiNozzleX(Convert.ToDouble(rowValues[1]), 250);
+                                if (form1.select_吸嘴X軸.Checked == true) {
+                                    form1.txtABSpos.Text = rowValues[1].ToString();
+                                }
+                                break;
+                            case "吸嘴Y軸":
+                                form1.dbapiNozzleY(Convert.ToDouble(rowValues[1]), 100);
+                                if (form1.select_吸嘴Y軸.Checked == true) {
+                                    form1.txtABSpos.Text = rowValues[1].ToString();
+                                } 
+                                break;
+                            case "吸嘴Z軸":
+                                form1.dbapiNozzleZ(Convert.ToDouble(rowValues[1]), 20);
+                                if (form1.select_吸嘴Z軸.Checked == true) {
+                                    form1.txtABSpos.Text = rowValues[1].ToString();
+                                } 
+                                break;
+                            case "吸嘴R軸":
+                                form1.dbapiNozzleR(Convert.ToDouble(rowValues[1]), 70);
+                                if (form1.select_吸嘴R軸.Checked == true) {
+                                    form1.txtABSpos.Text = rowValues[1].ToString();
+                                } 
+                                break;
+                            case "載盤X軸":
+                                form1.dbapiCarrierX(Convert.ToDouble(rowValues[1]), 190);
+                                if (form1.select_載盤X軸.Checked == true) {
+                                    form1.txtABSpos.Text = rowValues[1].ToString();
+                                } 
+                                break;
+                            case "載盤Y軸":
+                                form1.dbapiCarrierY(Convert.ToDouble(rowValues[1]), 800);
+                                if (form1.select_載盤Y軸.Checked == true) {
+                                    form1.txtABSpos.Text = rowValues[1].ToString();
+                                } 
+                                break;
+                            case "植針Z軸":
+                                form1.dbapiSetZ(Convert.ToDouble(rowValues[1]), 33);
+                                if (form1.select_植針Z軸.Checked == true) {
+                                    form1.txtABSpos.Text = rowValues[1].ToString();
+                                } 
+                                break;
+                            case "植針R軸":
+                                form1.dbapiSetR(Convert.ToDouble(rowValues[1]), 360);
+                                if (form1.select_植針R軸.Checked == true) {
+                                    form1.txtABSpos.Text = rowValues[1].ToString();
+                                } 
+                                break;
+                            case "工作門":
+                                form1.dbapiGate(Convert.ToDouble(rowValues[1]), 580/4);
+                                if (form1.select_工作門.Checked == true) {
+                                    form1.txtABSpos.Text = rowValues[1].ToString();
+                                } 
+                                break;
+                            case "Socket檢測":
+                                form1.dbapiIAI(Convert.ToDouble(rowValues[1]));
+                                if (form1.select_Socket檢測.Checked == true) {
+                                    form1.txtABSpos.Text = rowValues[1].ToString();
+                                } 
+                                break;
+                            case "3D掃描":
+                                form1.dbapJoDell3D掃描(Convert.ToDouble(rowValues[1]));
+                                if (form1.select_JoDell3D掃描.Checked == true) {
+                                    form1.txtABSpos.Text = rowValues[1].ToString();
+                                } 
+                                break;
+                            case "吸針嘴":
+                                form1.dbapJoDell吸針嘴(Convert.ToDouble(rowValues[1]));
+                                if (form1.select_JoDell吸針嘴.Checked == true) {
+                                    form1.txtABSpos.Text = rowValues[1].ToString();
+                                } 
+                                break;
+                            case "植針嘴":
+                                form1.dbapJoDell植針嘴(Convert.ToDouble(rowValues[1]));
+                                if (form1.select_JoDell植針嘴.Checked == true) {
+                                    form1.txtABSpos.Text = rowValues[1].ToString();
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void btn_run_Click(object sender, EventArgs e)
+        {
+            if(true) { 
                 // 獲取點擊的行和列
-                var hitTest = dataGridView1.HitTest(e.X, e.Y);
-                int rowIndex = hitTest.RowIndex;
-                int colIndex = hitTest.ColumnIndex;
+                //var hitTest = dataGridView1.HitTest(e.X, e.Y);
+                //int rowIndex = hitTest.RowIndex;
+                //int colIndex = hitTest.ColumnIndex;
 
                 // 檢查是否點擊了有效的儲存格（排除列頭和行頭）
-                if (rowIndex >= 0 && colIndex >= 0)
+                //if (rowIndex >= 0 && colIndex >= 0)
                 {
-                    var cellValue = dataGridView1.Rows[rowIndex].Cells[colIndex].Value;
-                    var rowValues = dataGridView1.Rows[rowIndex].Cells.Cast<DataGridViewCell>()
+                    var cellValue = dataGridView1.CurrentRow.Cells[1].Value;
+                    var rowValues = dataGridView1.CurrentRow.Cells.Cast<DataGridViewCell>()
                         .Select(cell => cell.Value?.ToString() ?? "null")
                         .ToArray();
 
@@ -379,8 +491,6 @@ namespace InjectorInspector
                 }
             }
         }
-
-
     }
 
 
