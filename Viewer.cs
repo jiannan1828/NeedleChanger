@@ -102,9 +102,9 @@ namespace InjectorInspector
         public static void find_Drag_Boundary(Point Drag_Start, Point Drag_End)
         {
             Drag_Boundary.minX = Math.Min(Drag_Start.X, Drag_End.X);
-            Drag_Boundary.minY = Math.Min(Drag_Start.Y, Drag_End.Y);
+            Drag_Boundary.minY = Math.Max(Drag_Start.Y, Drag_End.Y); // 20250113 4xuan edit : Y軸鏡像, 所以改成取 Max
             Drag_Boundary.maxX = Math.Max(Drag_Start.X, Drag_End.X);
-            Drag_Boundary.maxY = Math.Max(Drag_Start.Y, Drag_End.Y);
+            Drag_Boundary.maxY = Math.Min(Drag_Start.Y, Drag_End.Y); // 20250113 4xuan edit : Y軸鏡像, 所以改成取 Min
             Drag_Boundary.width = Math.Abs(Drag_End.X - Drag_Start.X);
             Drag_Boundary.height = Math.Abs(Drag_End.Y - Drag_Start.Y);
         }
