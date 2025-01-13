@@ -1374,7 +1374,7 @@ namespace InjectorInspector
             inspector1.on下視覺 = apiCallBackTest;
 
             //先跳到第2頁
-            int iAimToPageIndex = 5-1;
+            int iAimToPageIndex = 4-1;
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
         }
         //---------------------------------------------------------------------------------------
@@ -3389,6 +3389,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------- 和尚小佛 --------------------------------------
         //---------------------------------------------------------------------------------------
+        private double minX, minY, maxX, maxY, width, height;
 
         private const float ScaleFactor = 10;
         private float ZoomFactor = 1;
@@ -3408,11 +3409,7 @@ namespace InjectorInspector
         private double Mouse2CircleDistance;
 
         private Viewer.JSON.Circle HighlightedCircle = null;
-        private Viewer.JSON.Circle FocusedCircle = null;
-
-        private bool IsDrag = false; 
-        private Point Drag_Start = new Point(0, 0);
-        private Point Drag_End = new Point(0, 0);
+        private Viewer.JSON.Circle FocusedCircle = new Viewer.JSON.Circle();
 
         private string[] 跑馬燈文字 = {
             "待機",
@@ -3422,11 +3419,6 @@ namespace InjectorInspector
 
         private int 跑馬燈文字Index = 0;
         private int 跑馬燈X座標 = 0;
-
-        public static double xo1 = 0.0, 
-                             yo1 = 0.0, 
-                             xo2 = 0.0, 
-                             yo2 = 0.0;
 
         //---------------------------------------------------------------------------------------
         private void pic_跑馬燈_Paint(object sender, PaintEventArgs e)
@@ -3453,12 +3445,12 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         private void 開啟ToolStripMenuItem_Click(object sender, EventArgs e)
         { 
-            if (OpenFile())
+            if (Viewer.OpenFile())
             {
-                find_Json_Boundary(Json);
-                ZoomFactor = Math.Min(pic_Needles.Width / ScaleFactor / Json_Boundary.width, pic_Needles.Height / ScaleFactor / Json_Boundary.height);
-                Offset.X = -Json_Boundary.minX * ScaleFactor * ZoomFactor;
-                Offset.Y = -Json_Boundary.maxY * ScaleFactor * -ZoomFactor;
+                Viewer.find_Boundary(Viewer.Json, out minX, out minY, out maxX, out maxY, out width, out height);
+                ZoomFactor = Math.Min(pic_Needles.Width / ScaleFactor / (float)width, pic_Needles.Height / ScaleFactor / (float)height);
+                Offset.X = -(float)minX * ScaleFactor * ZoomFactor;
+                Offset.Y = -(float)maxY * ScaleFactor * -ZoomFactor;
                 pic_Needles.Refresh();
             }
         }
@@ -3468,129 +3460,50 @@ namespace InjectorInspector
             Viewer.SaveFile();
         }
         //---------------------------------------------------------------------------------------
-        public float rMax(float a, float b)
-        {
-            return (a > b) ? a : b;
-        }
-        public float rMin(float a, float b)
-        {
-            return (a < b) ? a : b;
-        }
         private void pic_Needles_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.ScaleTransform(ZoomFactor, -ZoomFactor);
             e.Graphics.TranslateTransform(Offset.X / ZoomFactor, Offset.Y / -ZoomFactor); // 拖曳圖片轉換座標
 
-            #region 畫圓
-            foreach (var circle in Viewer.Json.Circles)
+            try
             {
-                Brush fillBrush;
-
-                if (circle.Display == false)
+                foreach (var circle in Viewer.Json.Circles)
                 {
-                    fillBrush = new SolidBrush(HiddenCircleColor);
-                }
-                else
-                {
-                    fillBrush = new SolidBrush(DefaltCircleColor);
-                }
+                    Brush fillBrush;
 
-                RectangleF rectangleF = new RectangleF(
-                    (float)(circle.X * ScaleFactor - circle.Diameter / 2 * ScaleFactor),
-                    (float)(circle.Y * ScaleFactor - circle.Diameter / 2 * ScaleFactor),
-                    (float)(2 * circle.Diameter / 2 * ScaleFactor),
-                    (float)(2 * circle.Diameter / 2 * ScaleFactor)
-                );
-
-                if (circle == FocusedCircle)
-                {
-                    fillBrush = new SolidBrush(FocusedCircleColor);
-                }
-                else if (circle == HighlightedCircle)
-                {
-                    fillBrush = new SolidBrush(HighlightedCircleColor);
-                }
-
-                e.Graphics.FillEllipse(fillBrush, rectangleF);
-
-                //Xavier Test
-                if(false) {
-                    // 設置半透明框的顏色 (Alpha 值為 128，表示半透明)
-                    Color DragBoxColor = Color.FromArgb(255, 0, 0, 255);
-                    Brush DragBoxBrush = new SolidBrush(DragBoxColor);
-
-                    double x1 = Drag_Boundary.minX;
-                    double y1 = Drag_Boundary.minY * (-1) - Drag_Boundary.height;
-                    double x2 = Drag_Boundary.width;
-                    double y2 = Drag_Boundary.height;
-
-                    //Mouse Down
-                    switch(IsDrag)
+                    if (circle.Display == false)
                     {
-                        case true:
-                            if (xo1 == 0.0)
-                            {
-                                //滑鼠左鍵點下去取得
-                                if (HighlightedCircle != null)  //不是這個
-                                { 
-                                    xo1 = (float)(HighlightedCircle.X * ScaleFactor - circle.Diameter / 2 * ScaleFactor);
-                                    yo1 = (float)(HighlightedCircle.Y * ScaleFactor - circle.Diameter / 2 * ScaleFactor);
-                                }
-                            }
-
-                            //畫一個方塊大小來debug
-                            //xo2 = (float)(2 * circle.Diameter / 2 * ScaleFactor);
-                            //yo2 = (float)(2 * circle.Diameter / 2 * ScaleFactor);
-
-                            x1 = xo1;  //+ (Drag_Boundary.minX)                               / ZoomFactor;
-                            y1 = yo1;  //+ (Drag_Boundary.minY * (-1) - Drag_Boundary.height) / ZoomFactor;
-                            x2 = xo2 + Drag_Boundary.width  / ZoomFactor;
-                            y2 = yo2 + Drag_Boundary.height / ZoomFactor;
-                            break;
-
-                        case false:
-                            xo1 = 0.0;
-                            yo1 = 0.0;
-                            xo2 = 0.0;
-                            yo2 = 0.0;
-                            break;
+                        fillBrush = new SolidBrush(HiddenCircleColor);
+                    }
+                    else
+                    {
+                        fillBrush = new SolidBrush(DefaltCircleColor);
                     }
 
-                    // 創建矩形
-                    Rectangle rect = new Rectangle((int)x1, (int)y1, (int)x2, (int)y2);
+                    RectangleF rectangleF = new RectangleF(
+                        (float)(circle.X * ScaleFactor - circle.Diameter / 2 * ScaleFactor),
+                        (float)(circle.Y * ScaleFactor - circle.Diameter / 2 * ScaleFactor),
+                        (float)(2 * circle.Diameter / 2 * ScaleFactor),
+                        (float)(2 * circle.Diameter / 2 * ScaleFactor)
+                    );
 
-                    // 在畫布上繪製矩形 (假設你有Graphics物件 g)
-                    e.Graphics.FillRectangle(DragBoxBrush, rect);
 
-                    label16.Text = (Drag_Boundary.minX * ScaleFactor).ToString();
-                    label17.Text = (Drag_Boundary.minY * ScaleFactor).ToString();
+                    if (circle == FocusedCircle)
+                    {
+                        fillBrush = new SolidBrush(FocusedCircleColor);
+                    }
+                    else if (circle == HighlightedCircle)
+                    {
+                        fillBrush = new SolidBrush(HighlightedCircleColor);
+                    }
+
+                    e.Graphics.FillEllipse(fillBrush, rectangleF);
                 }
             }
-            #endregion
-
-            #region 畫拖曳框
-            if( (IsDrag) || (true) )
-            if(false)
+            catch (Exception ex)
             {
-                // 設置半透明框的顏色 (Alpha 值為 128，表示半透明)
-                Color DragBoxColor = Color.FromArgb(255, 0, 0, 255);
-                Brush DragBoxBrush = new SolidBrush(DragBoxColor);
-
-                float x1 = Drag_Boundary.minX;
-                float y1 = Drag_Boundary.minY*(-1) - Drag_Boundary.height;
-                float x2 = Drag_Boundary.width;
-                float y2 = Drag_Boundary.height;
-
-                // 創建矩形
-                Rectangle rect = new Rectangle((int)x1, (int)y1, (int)x2, (int)y2);
-
-                // 在畫布上繪製矩形 (假設你有Graphics物件 g)
-                e.Graphics.FillRectangle(DragBoxBrush, rect);
-
-                label16.Text = (Drag_Boundary.minX * ScaleFactor).ToString();
-                label17.Text = (Drag_Boundary.minY * ScaleFactor).ToString();
+                Console.WriteLine(ex);
             }
-            #endregion
         }
         //---------------------------------------------------------------------------------------
         private void pic_Needles_MouseMove(object sender, MouseEventArgs e)
@@ -3598,26 +3511,14 @@ namespace InjectorInspector
             RealMousePos.X = (e.X - Offset.X) / ZoomFactor / ScaleFactor;
             RealMousePos.Y = (e.Y - Offset.Y) / -ZoomFactor / ScaleFactor;
 
-            label18.Text = RealMousePos.ToString();  
-
-            // 左鍵移動顯示位置
-            if (e.Button == MouseButtons.Left)
+            // 左鍵拖曳
+            if (e.Button == MouseButtons.Middle)
             {
-                switch (Control.ModifierKeys)
-                {
-                    case Keys.Shift:
-                        Drag_End = e.Location;
-                        find_Drag_Boundary(Drag_Start, Drag_End);
+                // 計算滑鼠移動的差值
+                Offset.X += e.X - PrevMousePos.X;
+                Offset.Y += e.Y - PrevMousePos.Y;
 
-                        break;
-                    default:
-                        // 計算滑鼠移動的差值
-                        Offset.X += e.X - PrevMousePos.X;
-                        Offset.Y += e.Y - PrevMousePos.Y;
-
-                        PrevMousePos = e.Location; // 拖曳當中隨時紀錄當下滑鼠在 PictureBox 上的位置, 不以左鍵點擊當下的位置
-                        break;
-                }
+                PrevMousePos = e.Location; // 拖曳當中隨時紀錄當下滑鼠在 PictureBox 上的位置, 不以左鍵點擊當下的位置
             }
 
 
@@ -3643,61 +3544,6 @@ namespace InjectorInspector
             }
 
             pic_Needles.Refresh();
-        }
-        //---------------------------------------------------------------------------------------
-        private void pic_Needles_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                switch (Control.ModifierKeys)
-                {
-                    case Keys.Shift:
-
-                        if (!IsDrag)
-                        {
-                            Drag_Start = e.Location;
-                            IsDrag = true;
-                        }
-
-                        break;
-
-                    default:
-                        PrevMousePos = e.Location;
-
-                        if (HighlightedCircle != null)
-                        {
-                            FocusedCircle = HighlightedCircle;
-
-                            show_grp_NeedleInfo(grp_NeedleInfo, FocusedCircle);
-                        }
-                        else
-                        {
-                            FocusedCircle = null;
-
-                            clear_grp_NeedleInfo(grp_NeedleInfo);
-                        }
-                        break;
-                }
-            }
-        }
-        //---------------------------------------------------------------------------------------
-        private void pic_Needles_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                switch (Control.ModifierKeys)
-                {
-                    case Keys.Shift:
-                        if (IsDrag)
-                        {
-                            //20250113 4xuan comment: 後續加入判斷框進那些圓
-                        }
-
-                        break;
-                }
-
-                IsDrag = false; // 這裡不能寫在 case 裡面, 如果拖曳中途先把 Shift 放掉, 就無法清除 Flag
-            }
         }
         //---------------------------------------------------------------------------------------
         private void pic_Needles_MouseWheel(object sender, MouseEventArgs e)
@@ -3728,6 +3574,27 @@ namespace InjectorInspector
             Offset.Y += (RealMousePosAfterZoom.Y - RealMousePosBeforeZoom.Y) * -ZoomFactor;
 
             pic_Needles.Refresh();
+        }
+        //---------------------------------------------------------------------------------------
+        private void pic_Needles_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                PrevMousePos = e.Location;
+
+                if (HighlightedCircle != null)
+                {
+                    FocusedCircle = HighlightedCircle;
+
+                    show_grp_NeedleInfo(grp_NeedleInfo, FocusedCircle);
+                }
+                else
+                {
+                    FocusedCircle = null;
+
+                    clear_grp_NeedleInfo(grp_NeedleInfo);
+                }
+            }
         }
         //---------------------------------------------------------------------------------------
         private void grp_NeedleInfo_ChildControlChanged(object sender, EventArgs e)

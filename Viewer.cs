@@ -6,7 +6,6 @@ using netDxf;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Xml;
-using System.Drawing;
 
 namespace InjectorInspector
 {
@@ -17,9 +16,6 @@ namespace InjectorInspector
 
         public static DxfDocument DxfDoc = new DxfDocument();
         public static JSON Json = new JSON(); // 底下 JSON 不寫成靜態, HighlightedCircle, FocusedCircle會用到
-
-        public static Boundary Json_Boundary = new Boundary();
-        public static Boundary Drag_Boundary = new Boundary();
 
         /// <summary>
         /// 讀取 DXF 後儲存到這個物件, 後面會存成 JSON 檔
@@ -55,58 +51,34 @@ namespace InjectorInspector
         }
 
         /// <summary>
-        /// 所有圓形的邊界資訊
-        /// </summary>
-        /// 
-        public class Boundary
-        {
-            public float minX { get; set; }
-            public float maxX { get; set; }
-            public float minY { get; set; }
-            public float maxY { get; set; }
-            public float width { get; set; }
-            public float height { get; set; }
-        }
-
-        /// <summary>
         /// 計算 dxf 檔所有圓的邊界
         /// </summary>
-        /// <param name="Json">已讀取的 JSON 資料</param>
-        public static void find_Json_Boundary(JSON Json)
+        /// <param name="dxfJson">已讀取的 JSON 資料</param>
+        /// <param name="minX">左邊界</param>
+        /// <param name="minY">上邊界</param>
+        /// <param name="maxX">右邊界</param>
+        /// <param name="maxY">下邊界</param>
+        /// <param name="width">邊界寬度</param>
+        /// <param name="height">邊界高度</param>
+        public static void find_Boundary(JSON dxfJson, out double minX, out double minY, out double maxX, out double maxY, out double width, out double height)
         {
             // 初始化邊界
-            Json_Boundary.minX = float.MaxValue;
-            Json_Boundary.minY = float.MaxValue;
-            Json_Boundary.maxX = float.MinValue;
-            Json_Boundary.maxY = float.MinValue;
+            minX = double.MaxValue;
+            minY = double.MaxValue;
+            maxX = double.MinValue;
+            maxY = double.MinValue;
 
             // 遍歷所有圓，更新邊界
-            foreach (var circle in Json.Circles)
+            foreach (var circle in dxfJson.Circles)
             {
-                Json_Boundary.minX = (float)Math.Min(Json_Boundary.minX, circle.X - circle.Diameter / 2-1);
-                Json_Boundary.minY = (float)Math.Min(Json_Boundary.minY, circle.Y - circle.Diameter / 2-1);
-                Json_Boundary.maxX = (float)Math.Max(Json_Boundary.maxX, circle.X + circle.Diameter / 2+1);
-                Json_Boundary.maxY = (float)Math.Max(Json_Boundary.maxY, circle.Y + circle.Diameter / 2+1);
+                minX = Math.Min(minX, circle.X - circle.Diameter / 2-1);
+                minY = Math.Min(minY, circle.Y - circle.Diameter / 2-1);
+                maxX = Math.Max(maxX, circle.X + circle.Diameter / 2+1);
+                maxY = Math.Max(maxY, circle.Y + circle.Diameter / 2+1);
             }
 
-            Json_Boundary.width = Json_Boundary.maxX - Json_Boundary.minX;
-            Json_Boundary.height = Json_Boundary.maxY - Json_Boundary.minY;
-        }
-
-        /// <summary>
-        /// 將拖曳框的參數帶入 Drag_Boundary
-        /// </summary>
-        /// <param name="Drag_Boundary">目標物件</param>
-        /// <param name="Drag_Start">拖曳起始位置</param>
-        /// <param name="Drag_End">拖曳結束位置</param>
-        public static void find_Drag_Boundary(Point Drag_Start, Point Drag_End)
-        {
-            Drag_Boundary.minX = Math.Min(Drag_Start.X, Drag_End.X);
-            Drag_Boundary.minY = Math.Min(Drag_Start.Y, Drag_End.Y);
-            Drag_Boundary.maxX = Math.Max(Drag_Start.X, Drag_End.X);
-            Drag_Boundary.maxY = Math.Max(Drag_Start.Y, Drag_End.Y);
-            Drag_Boundary.width = Math.Abs(Drag_End.X - Drag_Start.X);
-            Drag_Boundary.height = Math.Abs(Drag_End.Y - Drag_Start.Y);
+            width = maxX - minX;
+            height = maxY - minY;
         }
 
         /// <summary>
