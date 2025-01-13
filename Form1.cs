@@ -1374,7 +1374,7 @@ namespace InjectorInspector
             inspector1.on下視覺 = apiCallBackTest;
 
             //先跳到第2頁
-            int iAimToPageIndex = 4-1;
+            int iAimToPageIndex = 5-1;
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
         }
         //---------------------------------------------------------------------------------------
@@ -3422,6 +3422,7 @@ namespace InjectorInspector
 
         private int 跑馬燈文字Index = 0;
         private int 跑馬燈X座標 = 0;
+
         public static double xo1 = 0.0, 
                              yo1 = 0.0, 
                              xo2 = 0.0, 
@@ -3568,20 +3569,23 @@ namespace InjectorInspector
             #endregion
 
             #region 畫拖曳框
-            if(IsDrag)
+            if( (IsDrag) || (true) )
+            if(false)
             {
                 // 設置半透明框的顏色 (Alpha 值為 128，表示半透明)
-                Color DragBoxColor = Color.FromArgb(128, 0, 0, 255);
+                Color DragBoxColor = Color.FromArgb(255, 0, 0, 255);
                 Brush DragBoxBrush = new SolidBrush(DragBoxColor);
 
-                RectangleF DragBox = new RectangleF(
-                    Drag_Boundary.minX - Offset.X / ZoomFactor,
-                    -Drag_Boundary.minY + Offset.Y / ZoomFactor, // Y軸鏡像
-                    Drag_Boundary.width,
-                    Drag_Boundary.height
-                );
+                float x1 = Drag_Boundary.minX;
+                float y1 = Drag_Boundary.minY*(-1) - Drag_Boundary.height;
+                float x2 = Drag_Boundary.width;
+                float y2 = Drag_Boundary.height;
 
-                e.Graphics.FillRectangle(DragBoxBrush, DragBox);
+                // 創建矩形
+                Rectangle rect = new Rectangle((int)x1, (int)y1, (int)x2, (int)y2);
+
+                // 在畫布上繪製矩形 (假設你有Graphics物件 g)
+                e.Graphics.FillRectangle(DragBoxBrush, rect);
 
                 label16.Text = (Drag_Boundary.minX * ScaleFactor).ToString();
                 label17.Text = (Drag_Boundary.minY * ScaleFactor).ToString();
@@ -3592,7 +3596,7 @@ namespace InjectorInspector
         private void pic_Needles_MouseMove(object sender, MouseEventArgs e)
         {
             RealMousePos.X = (e.X - Offset.X) / ZoomFactor / ScaleFactor;
-            RealMousePos.Y = (e.Y - Offset.Y) / ZoomFactor / ScaleFactor;
+            RealMousePos.Y = (e.Y - Offset.Y) / -ZoomFactor / ScaleFactor;
 
             label18.Text = RealMousePos.ToString();  
 

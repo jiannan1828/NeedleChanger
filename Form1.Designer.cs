@@ -309,9 +309,6 @@ namespace InjectorInspector
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
             this.grp_NeedleInfo = new System.Windows.Forms.GroupBox();
             this.rad_Replace = new System.Windows.Forms.RadioButton();
             this.rad_Remove = new System.Windows.Forms.RadioButton();
@@ -407,6 +404,9 @@ namespace InjectorInspector
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3409,7 +3409,6 @@ namespace InjectorInspector
             this.button3.TabIndex = 22;
             this.button3.Text = "Socket";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // btnStop
             // 
@@ -3577,33 +3576,6 @@ namespace InjectorInspector
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(364, 753);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(62, 19);
-            this.label18.TabIndex = 29;
-            this.label18.Text = "label18";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(450, 724);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(62, 19);
-            this.label17.TabIndex = 28;
-            this.label17.Text = "label17";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(368, 724);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(62, 19);
-            this.label16.TabIndex = 27;
-            this.label16.Text = "label16";
             // 
             // grp_NeedleInfo
             // 
@@ -4611,6 +4583,33 @@ namespace InjectorInspector
             this.tmr_Warning.Enabled = true;
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(368, 724);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(62, 19);
+            this.label16.TabIndex = 27;
+            this.label16.Text = "label16";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(450, 724);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(62, 19);
+            this.label17.TabIndex = 28;
+            this.label17.Text = "label17";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(364, 753);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(62, 19);
+            this.label18.TabIndex = 29;
+            this.label18.Text = "label18";
             // 
             // Form1
             // 
