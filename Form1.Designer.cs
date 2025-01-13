@@ -275,6 +275,9 @@ namespace InjectorInspector
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
             this.lbl_CycleTime = new System.Windows.Forms.Label();
             this.btn_tmrPause = new System.Windows.Forms.Button();
             this.btn_tmrStop = new System.Windows.Forms.Button();
@@ -306,6 +309,9 @@ namespace InjectorInspector
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.grp_NeedleInfo = new System.Windows.Forms.GroupBox();
             this.rad_Replace = new System.Windows.Forms.RadioButton();
             this.rad_Remove = new System.Windows.Forms.RadioButton();
@@ -401,9 +407,6 @@ namespace InjectorInspector
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
-            this.button7 = new System.Windows.Forms.Button();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3240,6 +3243,34 @@ namespace InjectorInspector
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(280, 374);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(62, 19);
+            this.label15.TabIndex = 219;
+            this.label15.Text = "label15";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(280, 351);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(62, 19);
+            this.label14.TabIndex = 218;
+            this.label14.Text = "label14";
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(148, 351);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(109, 42);
+            this.button7.TabIndex = 217;
+            this.button7.Text = "button7";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // lbl_CycleTime
             // 
             this.lbl_CycleTime.AutoSize = true;
@@ -3378,6 +3409,7 @@ namespace InjectorInspector
             this.button3.TabIndex = 22;
             this.button3.Text = "Socket";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // btnStop
             // 
@@ -3529,6 +3561,9 @@ namespace InjectorInspector
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label18);
+            this.tabPage3.Controls.Add(this.label17);
+            this.tabPage3.Controls.Add(this.label16);
             this.tabPage3.Controls.Add(this.grp_NeedleInfo);
             this.tabPage3.Controls.Add(this.tab_Needles);
             this.tabPage3.Controls.Add(this.pic_跑馬燈);
@@ -3542,6 +3577,33 @@ namespace InjectorInspector
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(364, 753);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(62, 19);
+            this.label18.TabIndex = 29;
+            this.label18.Text = "label18";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(450, 724);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(62, 19);
+            this.label17.TabIndex = 28;
+            this.label17.Text = "label17";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(368, 724);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(62, 19);
+            this.label16.TabIndex = 27;
+            this.label16.Text = "label16";
             // 
             // grp_NeedleInfo
             // 
@@ -3786,6 +3848,7 @@ namespace InjectorInspector
             this.pic_Needles.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_Needles_Paint);
             this.pic_Needles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_Needles_MouseDown);
             this.pic_Needles.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pic_Needles_MouseMove);
+            this.pic_Needles.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pic_Needles_MouseUp);
             this.pic_Needles.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.pic_Needles_MouseWheel);
             // 
             // tp_NeedlesJudge
@@ -4549,34 +4612,6 @@ namespace InjectorInspector
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(148, 351);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(109, 42);
-            this.button7.TabIndex = 217;
-            this.button7.Text = "button7";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(280, 351);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(62, 19);
-            this.label14.TabIndex = 218;
-            this.label14.Text = "label14";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(280, 374);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(62, 19);
-            this.label15.TabIndex = 219;
-            this.label15.Text = "label15";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -5031,6 +5066,9 @@ namespace InjectorInspector
         private Button button7;
         private Label label15;
         private Label label14;
+        private Label label16;
+        private Label label17;
+        private Label label18;
     }
 }
 
