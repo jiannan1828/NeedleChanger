@@ -309,9 +309,6 @@ namespace InjectorInspector
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
             this.grp_NeedleInfo = new System.Windows.Forms.GroupBox();
             this.rad_Replace = new System.Windows.Forms.RadioButton();
             this.rad_Remove = new System.Windows.Forms.RadioButton();
@@ -327,7 +324,7 @@ namespace InjectorInspector
             this.lbl_Pos = new System.Windows.Forms.Label();
             this.txt_Id = new System.Windows.Forms.TextBox();
             this.lbl_Id = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.lbl_Name = new System.Windows.Forms.Label();
             this.txt_Name = new System.Windows.Forms.TextBox();
             this.tab_Needles = new System.Windows.Forms.TabControl();
             this.tp_Needles = new System.Windows.Forms.TabPage();
@@ -407,6 +404,10 @@ namespace InjectorInspector
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
+            this.lbl_RealMousePos = new System.Windows.Forms.Label();
+            this.lbl_PicMousePos = new System.Windows.Forms.Label();
+            this.lbl_Offset = new System.Windows.Forms.Label();
+            this.lbl_ZoomFactor = new System.Windows.Forms.Label();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3561,9 +3562,10 @@ namespace InjectorInspector
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.label18);
-            this.tabPage3.Controls.Add(this.label17);
-            this.tabPage3.Controls.Add(this.label16);
+            this.tabPage3.Controls.Add(this.lbl_ZoomFactor);
+            this.tabPage3.Controls.Add(this.lbl_Offset);
+            this.tabPage3.Controls.Add(this.lbl_PicMousePos);
+            this.tabPage3.Controls.Add(this.lbl_RealMousePos);
             this.tabPage3.Controls.Add(this.grp_NeedleInfo);
             this.tabPage3.Controls.Add(this.tab_Needles);
             this.tabPage3.Controls.Add(this.pic_跑馬燈);
@@ -3577,33 +3579,6 @@ namespace InjectorInspector
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(364, 753);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(62, 19);
-            this.label18.TabIndex = 29;
-            this.label18.Text = "label18";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(450, 724);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(62, 19);
-            this.label17.TabIndex = 28;
-            this.label17.Text = "label17";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(368, 724);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(62, 19);
-            this.label16.TabIndex = 27;
-            this.label16.Text = "label16";
             // 
             // grp_NeedleInfo
             // 
@@ -3622,7 +3597,7 @@ namespace InjectorInspector
             this.grp_NeedleInfo.Controls.Add(this.lbl_Pos);
             this.grp_NeedleInfo.Controls.Add(this.txt_Id);
             this.grp_NeedleInfo.Controls.Add(this.lbl_Id);
-            this.grp_NeedleInfo.Controls.Add(this.label13);
+            this.grp_NeedleInfo.Controls.Add(this.lbl_Name);
             this.grp_NeedleInfo.Controls.Add(this.txt_Name);
             this.grp_NeedleInfo.Font = new System.Drawing.Font("微軟正黑體", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.grp_NeedleInfo.Location = new System.Drawing.Point(610, 676);
@@ -3793,16 +3768,16 @@ namespace InjectorInspector
             this.lbl_Id.TabIndex = 10;
             this.lbl_Id.Text = "編號";
             // 
-            // label13
+            // lbl_Name
             // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label13.Location = new System.Drawing.Point(159, 41);
-            this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(39, 16);
-            this.label13.TabIndex = 9;
-            this.label13.Text = "名稱";
+            this.lbl_Name.AutoSize = true;
+            this.lbl_Name.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Name.Location = new System.Drawing.Point(159, 41);
+            this.lbl_Name.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_Name.Name = "lbl_Name";
+            this.lbl_Name.Size = new System.Drawing.Size(39, 16);
+            this.lbl_Name.TabIndex = 9;
+            this.lbl_Name.Text = "名稱";
             // 
             // txt_Name
             // 
@@ -4612,6 +4587,42 @@ namespace InjectorInspector
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
+            // lbl_RealMousePos
+            // 
+            this.lbl_RealMousePos.AutoSize = true;
+            this.lbl_RealMousePos.Location = new System.Drawing.Point(117, 690);
+            this.lbl_RealMousePos.Name = "lbl_RealMousePos";
+            this.lbl_RealMousePos.Size = new System.Drawing.Size(100, 19);
+            this.lbl_RealMousePos.TabIndex = 27;
+            this.lbl_RealMousePos.Text = "真實座標 : ";
+            // 
+            // lbl_PicMousePos
+            // 
+            this.lbl_PicMousePos.AutoSize = true;
+            this.lbl_PicMousePos.Location = new System.Drawing.Point(117, 717);
+            this.lbl_PicMousePos.Name = "lbl_PicMousePos";
+            this.lbl_PicMousePos.Size = new System.Drawing.Size(100, 19);
+            this.lbl_PicMousePos.TabIndex = 28;
+            this.lbl_PicMousePos.Text = "繪圖座標 : ";
+            // 
+            // lbl_Offset
+            // 
+            this.lbl_Offset.AutoSize = true;
+            this.lbl_Offset.Location = new System.Drawing.Point(145, 744);
+            this.lbl_Offset.Name = "lbl_Offset";
+            this.lbl_Offset.Size = new System.Drawing.Size(69, 19);
+            this.lbl_Offset.TabIndex = 29;
+            this.lbl_Offset.Text = "Offset : ";
+            // 
+            // lbl_ZoomFactor
+            // 
+            this.lbl_ZoomFactor.AutoSize = true;
+            this.lbl_ZoomFactor.Location = new System.Drawing.Point(107, 771);
+            this.lbl_ZoomFactor.Name = "lbl_ZoomFactor";
+            this.lbl_ZoomFactor.Size = new System.Drawing.Size(110, 19);
+            this.lbl_ZoomFactor.TabIndex = 30;
+            this.lbl_ZoomFactor.Text = "縮放比例  :  ";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -5061,14 +5072,15 @@ namespace InjectorInspector
         private System.Windows.Forms.Label lbl_Pos;
         private System.Windows.Forms.TextBox txt_Id;
         private System.Windows.Forms.Label lbl_Id;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label lbl_Name;
         private System.Windows.Forms.TextBox txt_Name;
         private Button button7;
         private Label label15;
         private Label label14;
-        private Label label16;
-        private Label label17;
-        private Label label18;
+        private Label lbl_PicMousePos;
+        private Label lbl_RealMousePos;
+        private Label lbl_Offset;
+        private Label lbl_ZoomFactor;
     }
 }
 

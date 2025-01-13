@@ -3530,10 +3530,6 @@ namespace InjectorInspector
                 );
 
                 e.Graphics.FillRectangle(DragBoxBrush, DragBox);
-
-                label16.Text = (Drag_Boundary.minX * ScaleFactor).ToString();
-                label17.Text = (Drag_Boundary.minY * ScaleFactor).ToString();
-
                //IsDrag = false; //debug mode
             }
             #endregion
@@ -3544,7 +3540,10 @@ namespace InjectorInspector
             RealMousePos.X = (e.X - Offset.X) / ZoomFactor ;
             RealMousePos.Y = -(e.Y - Offset.Y) / ZoomFactor ;
 
-            label18.Text = RealMousePos.ToString();  
+            lbl_RealMousePos.Text = "真實座標 : " + RealMousePos.ToString();  
+            lbl_PicMousePos.Text = "繪圖座標 : " + e.Location.ToString();
+            lbl_Offset.Text = "Offset : " + Offset.ToString();
+            lbl_ZoomFactor.Text = "縮放比例 : " + ZoomFactor.ToString();
 
             // 左鍵移動顯示位置
             if (e.Button == MouseButtons.Left)
