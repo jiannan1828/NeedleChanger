@@ -3390,8 +3390,6 @@ namespace InjectorInspector
         //---------------------------------------- 和尚小佛 --------------------------------------
         //---------------------------------------------------------------------------------------
 
-        
-
         private string[] 跑馬燈文字 = {
             "待機",
             "運行中",
@@ -3441,21 +3439,13 @@ namespace InjectorInspector
             Viewer.SaveFile();
         }
         //---------------------------------------------------------------------------------------
-        public float rMax(float a, float b)
-        {
-            return (a > b) ? a : b;
-        }
-        public float rMin(float a, float b)
-        {
-            return (a < b) ? a : b;
-        }
         private void pic_Needles_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.ScaleTransform(ZoomFactor, -ZoomFactor);
             e.Graphics.TranslateTransform(Offset.X / ZoomFactor, Offset.Y / -ZoomFactor); // 拖曳圖片轉換座標
 
-            #region 畫圓
-            foreach (var circle in Viewer.Json.Circles)
+            #region 畫出所有圓
+            foreach (var circle in Json.Circles)
             {
                 Brush fillBrush;
 
@@ -3504,6 +3494,25 @@ namespace InjectorInspector
                 );
 
                 e.Graphics.FillRectangle(DragBoxBrush, DragBox);
+            }
+            #endregion
+
+            #region 畫框選中的圓
+
+            foreach (var circle in SelectedCircles)
+            {
+                Brush fillBrush;
+
+                fillBrush = new SolidBrush(SelectedCirclesColor);
+                
+                RectangleF rectangleF = new RectangleF(
+                    (float)(circle.X * ScaleFactor - circle.Diameter / 2 * ScaleFactor),
+                    (float)(circle.Y * ScaleFactor - circle.Diameter / 2 * ScaleFactor),
+                    (float)(2 * circle.Diameter / 2 * ScaleFactor),
+                    (float)(2 * circle.Diameter / 2 * ScaleFactor)
+                );
+
+                e.Graphics.FillEllipse(fillBrush, rectangleF);
             }
             #endregion
         }
@@ -3613,6 +3622,7 @@ namespace InjectorInspector
                         if (IsDrag)
                         {
                             find_Selected_Circles();
+                            pic_Needles.Refresh();
                         }
 
                         break;

@@ -38,6 +38,7 @@ namespace InjectorInspector
         public static readonly Color HiddenCircleColor = Color.FromArgb(64, Color.ForestGreen);
         public static readonly Color HighlightedCircleColor = Color.LightBlue;
         public static readonly Color FocusedCircleColor = Color.Red;
+        public static readonly Color SelectedCirclesColor = Color.Pink;
 
         public static double Mouse2CircleDistance;
 
@@ -125,9 +126,9 @@ namespace InjectorInspector
         public static void find_Drag_Boundary()
         {
             Drag_Boundary.minX = Math.Min(Drag_Start.X, Drag_End.X);
-            Drag_Boundary.minY = Math.Min(Drag_Start.Y, Drag_End.Y); // 20250113 4xuan edit : Y軸鏡像, 所以改成取 Max
+            Drag_Boundary.minY = Math.Min(Drag_Start.Y, Drag_End.Y); 
             Drag_Boundary.maxX = Math.Max(Drag_Start.X, Drag_End.X);
-            Drag_Boundary.maxY = Math.Max(Drag_Start.Y, Drag_End.Y); // 20250113 4xuan edit : Y軸鏡像, 所以改成取 Min
+            Drag_Boundary.maxY = Math.Max(Drag_Start.Y, Drag_End.Y); 
             Drag_Boundary.width = Math.Abs(Drag_End.X - Drag_Start.X);
             Drag_Boundary.height = Math.Abs(Drag_End.Y - Drag_Start.Y);
         }
