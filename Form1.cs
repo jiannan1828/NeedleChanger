@@ -2658,12 +2658,6 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         private void tmr_TakePin_Tick(object sender, EventArgs e)
         {  // start of private void tmr_TakePin_Tick(object sender, EventArgs e)
-            
-
-            if (btmrStop == true && int.Parse(txt_取料循環.Text)>=1 ) { 
-                itmrStop = int.Parse(txt_取料循環.Text);
-                txt_取料循環.Text = "0";
-            }
 
             lblLog.Text = xeTmrTakePin.ToString() + ", 柔震重試:" + iTakePinFinishedCNT2;
             switch (xeTmrTakePin) {
@@ -2675,11 +2669,6 @@ namespace InjectorInspector
                         } else {
                             xeTmrTakePin = xe_tmr_takepin.xett_取針結束;
                         }
-                    }
-                    if(btmrStop == true) {
-                        btmrStop = false;
-                        txt_取料循環.Text = (itmrStop-1).ToString();
-                        itmrStop = 0;
                     }
                     break;
 
@@ -3324,9 +3313,10 @@ namespace InjectorInspector
                         int 求出取料循環次數 = int.Parse(txt_取料循環.Text);
                         求出取料循環次數--;
                         txt_取料循環.Text = 求出取料循環次數.ToString();
-                        if(求出取料循環次數>=1) { 
+                        if(求出取料循環次數>=1 && btmrStop==false) { 
                             xeTmrTakePin = xe_tmr_takepin.xett_還需要取針;  
                         } else {
+                            btmrStop = false;
                             xeTmrTakePin = xe_tmr_takepin.xett_不需要取針;
                         }
                     } break;
