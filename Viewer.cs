@@ -18,8 +18,32 @@ namespace InjectorInspector
         public static DxfDocument DxfDoc = new DxfDocument();
         public static JSON Json = new JSON(); // 底下 JSON 不寫成靜態, HighlightedCircle, FocusedCircle會用到
 
+        public static JSON.Circle HighlightedCircle = null;
+        public static JSON.Circle FocusedCircle = null;
+        public static List<JSON.Circle> SelectedCircles = new List<JSON.Circle>();
+
         public static Boundary Json_Boundary = new Boundary();
         public static Boundary Drag_Boundary = new Boundary();
+
+        public const float ScaleFactor = 10;
+        public static float ZoomFactor = 1;
+
+        public static PointF Offset = new PointF(0, 0);
+        public static PointF PrevMousePos = new PointF(0, 0);
+        public static PointF RealMousePos = new PointF(0, 0);
+        public static  PointF RealMousePosBeforeZoom = new PointF(0, 0);
+        public static PointF RealMousePosAfterZoom = new PointF(0, 0);
+
+        public static readonly Color DefaltCircleColor = Color.ForestGreen;
+        public static readonly Color HiddenCircleColor = Color.FromArgb(64, Color.ForestGreen);
+        public static readonly Color HighlightedCircleColor = Color.LightBlue;
+        public static readonly Color FocusedCircleColor = Color.Red;
+
+        public static double Mouse2CircleDistance;
+
+        public static bool IsDrag = false;
+        public static PointF Drag_Start = new PointF(0, 0);
+        public static PointF Drag_End = new PointF(0, 0);
 
         /// <summary>
         /// 讀取 DXF 後儲存到這個物件, 後面會存成 JSON 檔
@@ -83,10 +107,10 @@ namespace InjectorInspector
             // 遍歷所有圓，更新邊界
             foreach (var circle in Json.Circles)
             {
-                Json_Boundary.minX = (float)Math.Min(Json_Boundary.minX, circle.X - circle.Diameter / 2-1);
-                Json_Boundary.minY = (float)Math.Min(Json_Boundary.minY, circle.Y - circle.Diameter / 2-1);
-                Json_Boundary.maxX = (float)Math.Max(Json_Boundary.maxX, circle.X + circle.Diameter / 2+1);
-                Json_Boundary.maxY = (float)Math.Max(Json_Boundary.maxY, circle.Y + circle.Diameter / 2+1);
+                Json_Boundary.minX = (float)Math.Min(Json_Boundary.minX, circle.X - circle.Diameter / 2 - 1);
+                Json_Boundary.minY = (float)Math.Min(Json_Boundary.minY, circle.Y - circle.Diameter / 2 - 1);
+                Json_Boundary.maxX = (float)Math.Max(Json_Boundary.maxX, circle.X + circle.Diameter / 2 + 1);
+                Json_Boundary.maxY = (float)Math.Max(Json_Boundary.maxY, circle.Y + circle.Diameter / 2 + 1);
             }
 
             Json_Boundary.width = Json_Boundary.maxX - Json_Boundary.minX;
@@ -96,10 +120,9 @@ namespace InjectorInspector
         /// <summary>
         /// 將拖曳框的參數帶入 Drag_Boundary
         /// </summary>
-        /// <param name="Drag_Boundary">目標物件</param>
         /// <param name="Drag_Start">拖曳起始位置</param>
         /// <param name="Drag_End">拖曳結束位置</param>
-        public static void find_Drag_Boundary(PointF Drag_Start, PointF Drag_End)
+        public static void find_Drag_Boundary()
         {
             Drag_Boundary.minX = Math.Min(Drag_Start.X, Drag_End.X);
             Drag_Boundary.minY = Math.Min(Drag_Start.Y, Drag_End.Y); // 20250113 4xuan edit : Y軸鏡像, 所以改成取 Max
@@ -107,6 +130,23 @@ namespace InjectorInspector
             Drag_Boundary.maxY = Math.Max(Drag_Start.Y, Drag_End.Y); // 20250113 4xuan edit : Y軸鏡像, 所以改成取 Min
             Drag_Boundary.width = Math.Abs(Drag_End.X - Drag_Start.X);
             Drag_Boundary.height = Math.Abs(Drag_End.Y - Drag_Start.Y);
+        }
+
+        /// <summary>
+        /// 拖曳框找出選重的圓
+        /// </summary>
+        public static void find_Selected_Circles()
+        {
+            foreach (var circle in Json.Circles)
+            {
+                if (Drag_Boundary.minX < (circle.X - circle.Diameter / 2) * ScaleFactor &&
+                    Drag_Boundary.minY < (circle.Y - circle.Diameter / 2) * ScaleFactor &&
+                    Drag_Boundary.maxX > (circle.X + circle.Diameter / 2) * ScaleFactor &&
+                    Drag_Boundary.maxY > (circle.Y + circle.Diameter / 2) * ScaleFactor)
+                {
+                    SelectedCircles.Add(circle);
+                }
+            }
         }
 
         /// <summary>

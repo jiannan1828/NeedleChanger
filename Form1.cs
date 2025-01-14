@@ -3390,29 +3390,7 @@ namespace InjectorInspector
         //---------------------------------------- 和尚小佛 --------------------------------------
         //---------------------------------------------------------------------------------------
 
-        private const float ScaleFactor = 10;
-        private float ZoomFactor = 1;
-
-        private PointF Offset = new PointF(0, 0);
-        private PointF PrevMousePos = new PointF(0, 0);
-        private PointF RealMousePos = new PointF(0, 0);
-        private PointF RealMousePosBeforeZoom = new PointF(0, 0);
-        private PointF RealMousePosAfterZoom = new PointF(0, 0);
-
-        private readonly Color DefaltCircleColor = Color.ForestGreen;
-
-        private readonly Color HiddenCircleColor = Color.FromArgb(64, Color.ForestGreen);
-        private readonly Color HighlightedCircleColor = Color.LightBlue;
-        private readonly Color FocusedCircleColor = Color.Red;
-
-        private double Mouse2CircleDistance;
-
-        private Viewer.JSON.Circle HighlightedCircle = null;
-        private Viewer.JSON.Circle FocusedCircle = null;
-
-        private bool IsDrag = false; 
-        private PointF Drag_Start = new PointF(0, 0);
-        private PointF Drag_End = new PointF(0, 0);
+        
 
         private string[] 跑馬燈文字 = {
             "待機",
@@ -3422,10 +3400,6 @@ namespace InjectorInspector
 
         private int 跑馬燈文字Index = 0;
         private int 跑馬燈X座標 = 0;
-        public static double xo1 = 0.0, 
-                             yo1 = 0.0, 
-                             xo2 = 0.0, 
-                             yo2 = 0.0;
 
         //---------------------------------------------------------------------------------------
         private void pic_跑馬燈_Paint(object sender, PaintEventArgs e)
@@ -3530,7 +3504,6 @@ namespace InjectorInspector
                 );
 
                 e.Graphics.FillRectangle(DragBoxBrush, DragBox);
-               //IsDrag = false; //debug mode
             }
             #endregion
         }
@@ -3553,7 +3526,7 @@ namespace InjectorInspector
                     case Keys.Shift:
                         Drag_End.X = (e.X - Offset.X) / ZoomFactor;
                         Drag_End.Y = -(e.Y - Offset.Y) / ZoomFactor;
-                        find_Drag_Boundary(Drag_Start, Drag_End);
+                        find_Drag_Boundary();
 
                         break;
                     default:
@@ -3609,6 +3582,8 @@ namespace InjectorInspector
                         break;
 
                     default:
+                        SelectedCircles.Clear(); // 清空拖曳框選擇到的圓
+
                         PrevMousePos = e.Location;
 
                         if (HighlightedCircle != null)
@@ -3637,7 +3612,7 @@ namespace InjectorInspector
                     case Keys.Shift:
                         if (IsDrag)
                         {
-                            //20250113 4xuan comment: 後續加入判斷框進那些圓
+                            find_Selected_Circles();
                         }
 
                         break;
