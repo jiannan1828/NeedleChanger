@@ -102,13 +102,49 @@ namespace InjectorInspector
             inspector1.LoadRecipe(8);
         }
         //---------------------------------------------------------------------------------------
+        bool   b有看到校正孔         = false;
+        double dbCameraCalibrationX = 0.0;
+        double dbCameraCalibrationY = 0.0;
         private void button3_Click(object sender, EventArgs e)
         {
             Vector3 pos;
+
+            //植針孔位置校正攝影機取像
             bool success = inspector1.xInspSocket(out pos);
+            
+            //取得校正攝影機校正參數
+            success      = inspector1.xInspSocket植針後檢查();
+            b有看到校正孔 = success;
+            dbCameraCalibrationX = pos.X;
+            dbCameraCalibrationY = pos.Y;
+
             label6.Text = string.Format("Socket 偵測 {0} 中心偏移 = {1:F3} , {2:F3}", success, pos.X, pos.Y);
-            success = inspector1.xInspSocket植針後檢查();
-            label7.Text = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
+            label7.Text  = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
+        }
+        //---------------------------------------------------------------------------------------
+        double dbPinHolePositionX = 0.0;
+        double dbPinHolePositionY = 0.0;
+        int    iHoleIndex         = 0;
+        private void button7_Click(object sender, EventArgs e)
+        {
+            double dbX = 0.0, dbY = 0.0;
+
+            iHoleIndex = int.Parse(txt_HoldIndex.Text);
+            apiGetCoordinate(iHoleIndex, ref dbX, ref dbY);
+            iHoleIndex++;
+            txt_HoldIndex.Text = iHoleIndex.ToString();
+
+            dbPinHolePositionX = dbX;
+            dbPinHolePositionY = dbY;
+
+            label14.Text = dbX.ToString();
+            label15.Text = dbY.ToString();
+        }
+        //---------------------------------------------------------------------------------------
+        bool bResume = false;
+        private void btn_Resume_Click(object sender, EventArgs e)
+        {
+            bResume = true;
         }
         //---------------------------------------------------------------------------------------
         bool   b黑色料倉有料_tmrTakePinTick = false;
@@ -2536,20 +2572,20 @@ namespace InjectorInspector
                             xett_檢查NozzleZ是否退回安全高度0,                 xett_確認擺放座R軸至放料位,
                             xett_確定NozzleZ已退回安全高度0,
                                                                                xett_擺放座Z軸至放料位,
-                xett_檢測是否還需要取針,                                       xett_檢查擺放座Z軸是否至放料位,
-                    xett_還需要取針,                                           xett_確認擺放座Z軸至放料位,
-                        xett_重覆一開始的狀態,
+                                                                               xett_檢查擺放座Z軸是否至放料位,
+                                                                               xett_確認擺放座Z軸至放料位,
+
                                                                                xett_NozzleZ下降至上膛位,
-                    xett_不需要取針,                                           xett_檢查NozzleZ是否下降至上膛位,
-                        xett_NozzleXYR移置安全位置,                            xett_確認NozzleZ下降至上膛位,
-                        xett_檢查NozzleXYR是否移至安全位置,
-                        xett_確認NozzleXYR在安全位置,                          xett_擺放座開真空,
+                                                                               xett_檢查NozzleZ是否下降至上膛位,
+                                                                               xett_確認NozzleZ下降至上膛位,
+
+                                                                               xett_擺放座開真空,
                                                                                xett_擺放座開真空等待1秒,
 
                                                                                xett_Nozzle吸嘴關真空,
                                                                                xett_Nozzle吸嘴關真空等待1秒,
 
-                xett_取針結束,                                                 xett_吸嘴破真空,
+                                                                               xett_吸嘴破真空,
                                                                                xett_吸嘴破真空等待1秒,
                                                                                xett_吸嘴破真空關閉,
 
@@ -2566,9 +2602,17 @@ namespace InjectorInspector
                                                                                xett_檢查擺放座蓋板是否關閉,
                                                                                xett_確認擺放座蓋板關閉,
 
+                                                                               xett_取得植針目標座標,
+
+                                                                               //載盤
                                                                                xett_載盤XY移置拍照檢查位,
                                                                                xett_檢查載盤XY是否移置拍照檢查位,
+                                                                               xett_等待載盤XY移置拍照檢查位,
                                                                                xett_確認載盤XY移置拍照檢查位,
+
+                                                                               xett_載盤移植直針孔相機補正位,
+                                                                               xett_檢查載盤移植直針孔相機補正位,
+                                                                               xett_確認載盤移植直針孔相機補正位,
 
                                                                                xett_載盤XY移置直針位,
                                                                                xett_檢查載盤XY是否移置直針位,
@@ -2603,8 +2647,20 @@ namespace InjectorInspector
 
                                                                                xett_載盤XY再次移置拍照檢查位,
                                                                                xett_檢查載盤XY是否再次移置拍照檢查位,
+                                                                               xett_等待載盤XY再次移置拍照檢查位,
                                                                                xett_確認載盤XY再次移置拍照檢查位,
 
+
+                xett_檢測是否還需要取針,
+                    xett_還需要取針,
+                        xett_重覆一開始的狀態,
+
+                    xett_不需要取針,
+                        xett_NozzleXYR移置安全位置,
+                        xett_檢查NozzleXYR是否移至安全位置,
+                        xett_確認NozzleXYR在安全位置,
+
+                xett_取針結束,
 
             xett_End,
         };
@@ -2665,7 +2721,7 @@ namespace InjectorInspector
                     if(bTakePin==true || bChambered==true) {
                         int 求出取料循環次數 = int.Parse(txt_取料循環.Text);
                         if(求出取料循環次數>=1) { 
-                            xeTmrTakePin = xe_tmr_takepin.xett_確定執行要取針;  
+                            xeTmrTakePin = xe_tmr_takepin.xett_確定執行要取針;
                         } else {
                             xeTmrTakePin = xe_tmr_takepin.xett_取針結束;
                         }
@@ -2863,12 +2919,14 @@ namespace InjectorInspector
                                     xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸料開始;
                                     break;
 
-                                case xe_tmr_takepin.xett_Nozzle吸料開始: 
-                                    if(bTakePin == true) { 
-                                        clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴吸)/10, (int)(WMX3IO對照.pxeIO_取料吸嘴吸)%10, 1);
+                                case xe_tmr_takepin.xett_Nozzle吸料開始: {
+                                    byte b吸嘴吸 = 0;
+                                    if(bTakePin == true) {  //  || bChambered == true) { 
+                                        b吸嘴吸 = 1;
                                     }
+                                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴吸)/10, (int)(WMX3IO對照.pxeIO_取料吸嘴吸)%10, b吸嘴吸);
                                     xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸料等待;
-                                    break;
+                                } break;
                                 case xe_tmr_takepin.xett_Nozzle吸料等待:                   xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸料完成;  break;
                                 case xe_tmr_takepin.xett_Nozzle吸料完成:                   xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ縮回0;    break;
 
@@ -2968,9 +3026,9 @@ namespace InjectorInspector
                                     xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吐料等待;
                                     break;
                                 case xe_tmr_takepin.xett_Nozzle吐料等待:            
-                                    iTakePinFinishedCNT2++;
-                                    if(iTakePinFinishedCNT2>=30) { 
-                                        iTakePinFinishedCNT2 = 0;
+                                    iTakePinFinishedCNT1++;
+                                    if(iTakePinFinishedCNT1>=30) { 
+                                        iTakePinFinishedCNT1 = 0;
                                         xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吐料完成; 
                                     }
                                     break;
@@ -3029,9 +3087,9 @@ namespace InjectorInspector
                                     }
                                     break;
                                 case xe_tmr_takepin.xett_擺放座蓋板打開等待1秒:
-                                    iTakePinFinishedCNT2++;
-                                    if(iTakePinFinishedCNT2>=20) { 
-                                        iTakePinFinishedCNT2 = 0;
+                                    iTakePinFinishedCNT1++;
+                                    if(iTakePinFinishedCNT1>=20) { 
+                                        iTakePinFinishedCNT1 = 0;
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認擺放座蓋板打開; 
                                     }
                                     break;
@@ -3064,12 +3122,12 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_確認擺放座Z軸至放料位:                                  xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ下降至上膛位;  break;
                                          
                                 case xe_tmr_takepin.xett_NozzleZ下降至上膛位:      
-                                    dbapiNozzleZ(36.72, 40*4);
+                                    dbapiNozzleZ(36.65, 40*4);
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢查NozzleZ是否下降至上膛位;
                                     break;
                                 case xe_tmr_takepin.xett_檢查NozzleZ是否下降至上膛位:  {
                                     double dbZ = dbapiNozzleZ(dbRead, 0);
-                                    double dbTargetZ = 36.72;
+                                    double dbTargetZ = 36.65;
                                     if( (dbTargetZ*0.99<= dbZ && dbZ <= dbTargetZ*1.01) ) { 
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認NozzleZ下降至上膛位;
                                     }
@@ -3081,9 +3139,9 @@ namespace InjectorInspector
                                     xeTmrTakePin = xe_tmr_takepin.xett_擺放座開真空等待1秒;
                                     break;
                                 case xe_tmr_takepin.xett_擺放座開真空等待1秒:                    
-                                    iTakePinFinishedCNT2++;
-                                    if(iTakePinFinishedCNT2>=20) { 
-                                        iTakePinFinishedCNT2 = 0;
+                                    iTakePinFinishedCNT1++;
+                                    if(iTakePinFinishedCNT1>=20) { 
+                                        iTakePinFinishedCNT1 = 0;
                                         xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸嘴關真空; 
                                     }
                                     break;
@@ -3093,9 +3151,9 @@ namespace InjectorInspector
                                     xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸嘴關真空等待1秒; 
                                     break;
                                 case xe_tmr_takepin.xett_Nozzle吸嘴關真空等待1秒: 
-                                    iTakePinFinishedCNT2++;
-                                    if(iTakePinFinishedCNT2>=10) { 
-                                        iTakePinFinishedCNT2 = 0;
+                                    iTakePinFinishedCNT1++;
+                                    if(iTakePinFinishedCNT1>=10) { 
+                                        iTakePinFinishedCNT1 = 0;
                                         xeTmrTakePin = xe_tmr_takepin.xett_吸嘴破真空; 
                                     }
                                     break;
@@ -3105,9 +3163,9 @@ namespace InjectorInspector
                                     xeTmrTakePin = xe_tmr_takepin.xett_吸嘴破真空等待1秒; 
                                     break;
                                 case xe_tmr_takepin.xett_吸嘴破真空等待1秒:
-                                    iTakePinFinishedCNT2++;
-                                    if(iTakePinFinishedCNT2>=30) { 
-                                        iTakePinFinishedCNT2 = 0;
+                                    iTakePinFinishedCNT1++;
+                                    if(iTakePinFinishedCNT1>=30) { 
+                                        iTakePinFinishedCNT1 = 0;
                                         xeTmrTakePin = xe_tmr_takepin.xett_吸嘴破真空關閉; 
                                     }
                                     break;
@@ -3153,52 +3211,113 @@ namespace InjectorInspector
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認擺放座蓋板關閉;
                                     }
                                     break;
-                                case xe_tmr_takepin.xett_確認擺放座蓋板關閉:                                    xeTmrTakePin = xe_tmr_takepin.xett_載盤XY移置拍照檢查位;  break;
+                                case xe_tmr_takepin.xett_確認擺放座蓋板關閉:                                     xeTmrTakePin = xe_tmr_takepin.xett_取得植針目標座標;  break;
 
-                                case xe_tmr_takepin.xett_載盤XY移置拍照檢查位:     
-                                    dbapiCarrierX(134.511, 190*0.8);
-                                    dbapiCarrierY(606.255, 800*0.8);
+                                case xe_tmr_takepin.xett_取得植針目標座標: {
+                                    button7_Click(sender, e);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_載盤XY移置拍照檢查位;
+                                } break;
+
+                                case xe_tmr_takepin.xett_載盤XY移置拍照檢查位: { 
+                                    double dbTargetX = dbPinHolePositionX;
+                                    double dbTargetY = dbPinHolePositionY;
+
+                                    dbapiCarrierX(dbTargetX, 190*0.8);
+                                    dbapiCarrierY(dbTargetY, 800*0.8);
+
+                                    dbapiIAI(22.0);
+
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢查載盤XY是否移置拍照檢查位;
-                                    break;
+                                } break;
                                 case xe_tmr_takepin.xett_檢查載盤XY是否移置拍照檢查位: {
+                                    double dbreadX = dbapiCarrierX(dbRead, 0);
+                                    double dbreadY = dbapiCarrierY(dbRead, 0);
+
+                                    double dbTargetX = dbPinHolePositionX;
+                                    double dbTargetY = dbPinHolePositionY;
+                                    if( (dbTargetX*0.99 <= dbreadX && dbreadX <= dbTargetX*1.01) &&
+                                        (dbTargetY*0.99 <= dbreadY && dbreadY <= dbTargetY*1.01) ) { 
+
+                                        if(bResume == true) {
+                                            bResume = false;
+                                            xeTmrTakePin = xe_tmr_takepin.xett_等待載盤XY移置拍照檢查位;
+                                        }
+                                    }
+                                } break;
+                                case xe_tmr_takepin.xett_等待載盤XY移置拍照檢查位:
+                                    iTakePinFinishedCNT1++;
+                                    if(iTakePinFinishedCNT1>=10) { 
+                                        iTakePinFinishedCNT1 = 0;
+                                        xeTmrTakePin = xe_tmr_takepin.xett_確認載盤XY移置拍照檢查位;
+                                    }
+                                    break;
+                                case xe_tmr_takepin.xett_確認載盤XY移置拍照檢查位:                                xeTmrTakePin = xe_tmr_takepin.xett_載盤移植直針孔相機補正位;  break;
+
+                                case xe_tmr_takepin.xett_載盤移植直針孔相機補正位: {  
+                                    button3_Click(sender, e);
+
+                                    double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX;
+                                    double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY;
+
+                                    dbapiCarrierX(dbTargetX, 190*0.8);
+                                    dbapiCarrierY(dbTargetY, 800*0.8);
+
+                                    xeTmrTakePin = xe_tmr_takepin.xett_檢查載盤移植直針孔相機補正位;  
+                                } break;
+                                case xe_tmr_takepin.xett_檢查載盤移植直針孔相機補正位: {    
                                     double dbX = dbapiCarrierX(dbRead, 0);
                                     double dbY = dbapiCarrierY(dbRead, 0);
 
-                                    double dbTargetX = 134.511;
-                                    double dbTargetY = 606.255;
-                                    if( (dbTargetX*0.99<= dbX && dbX <= dbTargetX*1.01) &&
-                                        (dbTargetY*0.99<= dbY && dbY <= dbTargetY*1.01) ) { 
-                                        xeTmrTakePin = xe_tmr_takepin.xett_確認載盤XY移置拍照檢查位;
+                                    double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX;
+                                    double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY;
+                                    if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
+                                        (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
+
+                                        if(bResume == true) {
+                                            bResume = false;
+                                            xeTmrTakePin = xe_tmr_takepin.xett_確認載盤移植直針孔相機補正位;
+                                        }
                                     }
                                 } break;
-                                case xe_tmr_takepin.xett_確認載盤XY移置拍照檢查位:                                xeTmrTakePin = xe_tmr_takepin.xett_載盤XY移置直針位;  break;
+                                case xe_tmr_takepin.xett_確認載盤移植直針孔相機補正位:                            xeTmrTakePin = xe_tmr_takepin.xett_載盤XY移置直針位;  break;
 
-                                case xe_tmr_takepin.xett_載盤XY移置直針位:     
-                                    dbapiCarrierX(125.666, 190*0.8);
-                                    dbapiCarrierY(662.417, 800*0.8);
+                                case xe_tmr_takepin.xett_載盤XY移置直針位: {  
+                                    const double SetPinOffsetX = 1.821;
+                                    const double SetPinOffsetY = 54.802;
+
+                                    double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX + SetPinOffsetX;
+                                    double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY + SetPinOffsetY;
+
+                                    dbapiCarrierX(dbTargetX, 190*0.8);
+                                    dbapiCarrierY(dbTargetY, 800*0.8);
+
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢查載盤XY是否移置直針位;
-                                    break;
+                                } break;
                                 case xe_tmr_takepin.xett_檢查載盤XY是否移置直針位: {
                                     double dbX = dbapiCarrierX(dbRead, 0);
                                     double dbY = dbapiCarrierY(dbRead, 0);
 
-                                    double dbTargetX = 125.666;
-                                    double dbTargetY = 662.417;
-                                    if( (dbTargetX*0.99<= dbX && dbX <= dbTargetX*1.01) &&
-                                        (dbTargetY*0.99<= dbY && dbY <= dbTargetY*1.01) ) { 
+                                    const double SetPinOffsetX = 1.821;
+                                    const double SetPinOffsetY = 54.802;
+
+                                    double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX + SetPinOffsetX;
+                                    double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY + SetPinOffsetY;
+                                    if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
+                                        (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
+
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認載盤XY移置直針位;
                                     }
                                 } break;
                                 case xe_tmr_takepin.xett_確認載盤XY移置直針位:                                  xeTmrTakePin = xe_tmr_takepin.xett_擺放座Z軸至植針位;  break;
 
                                 case xe_tmr_takepin.xett_擺放座Z軸至植針位:   
-                                    dbapiSetZ(21.000, 33);
+                                    dbapiSetZ(26, 33);
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢查擺放座Z軸是否至植針位;
                                     break;
                                 case xe_tmr_takepin.xett_檢查擺放座Z軸是否至植針位: {
                                     double dbZ = dbapiSetZ(dbRead, 0);
-                                    double dbTargetZ = 21.000;
-                                    if( (dbTargetZ*0.99<= dbZ && dbZ <= dbTargetZ*1.01) ) { 
+                                    double dbTargetZ = 26;
+                                    if( (dbTargetZ*0.99 <= dbZ && dbZ <= dbTargetZ*1.01) ) { 
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認擺放座Z軸至植針位;
                                     }
                                 } break;
@@ -3216,9 +3335,9 @@ namespace InjectorInspector
                                     xeTmrTakePin = xe_tmr_takepin.xett_開啟流量閥1等待1秒;
                                     break;
                                 case xe_tmr_takepin.xett_開啟流量閥1等待1秒:  
-                                    iTakePinFinishedCNT2++;
-                                    if(iTakePinFinishedCNT2>=20) { 
-                                        iTakePinFinishedCNT2 = 0;
+                                    iTakePinFinishedCNT1++;
+                                    if(iTakePinFinishedCNT1>=20) { 
+                                        iTakePinFinishedCNT1 = 0;
 
                                         vcb_植針吹氣流量閥.Value = 100-0;
                                         ScrollEventArgs xxe = null;
@@ -3233,9 +3352,9 @@ namespace InjectorInspector
                                     xeTmrTakePin = xe_tmr_takepin.xett_植針吹氣電磁閥開啟等待1秒; 
                                     break;
                                 case xe_tmr_takepin.xett_植針吹氣電磁閥開啟等待1秒:  
-                                    iTakePinFinishedCNT2++;
-                                    if(iTakePinFinishedCNT2>=20) { 
-                                        iTakePinFinishedCNT2 = 0;
+                                    iTakePinFinishedCNT1++;
+                                    if(iTakePinFinishedCNT1>=20) { 
+                                        iTakePinFinishedCNT1 = 0;
                                         xeTmrTakePin = xe_tmr_takepin.xett_植針吹氣電磁閥關閉; 
                                     }
                                     break;
@@ -3257,9 +3376,9 @@ namespace InjectorInspector
                                     }
                                     break;
                                 case xe_tmr_takepin.xett_擺放座蓋板再次打開等待1秒:
-                                    iTakePinFinishedCNT2++;
-                                    if(iTakePinFinishedCNT2>=20) { 
-                                        iTakePinFinishedCNT2 = 0;
+                                    iTakePinFinishedCNT1++;
+                                    if(iTakePinFinishedCNT1>=20) { 
+                                        iTakePinFinishedCNT1 = 0;
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認擺放座蓋板再次打開; 
                                     }
                                     break;
@@ -3291,22 +3410,37 @@ namespace InjectorInspector
                                 } break;
                                 case xe_tmr_takepin.xett_確認擺放座Z軸再次至放料位:                    xeTmrTakePin = xe_tmr_takepin.xett_載盤XY再次移置拍照檢查位;  break;
 
-                                case xe_tmr_takepin.xett_載盤XY再次移置拍照檢查位:      
-                                    dbapiCarrierX(134.511, 190*0.8);
-                                    dbapiCarrierY(606.255, 800*0.8);
+                                case xe_tmr_takepin.xett_載盤XY再次移置拍照檢查位: {
+                                    double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX;
+                                    double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY;
+
+                                    dbapiCarrierX(dbTargetX, 190*0.8);
+                                    dbapiCarrierY(dbTargetY, 800*0.8);
+
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢查載盤XY是否再次移置拍照檢查位;
-                                    break;
+                                } break;
                                 case xe_tmr_takepin.xett_檢查載盤XY是否再次移置拍照檢查位: {
                                     double dbX = dbapiCarrierX(dbRead, 0);
                                     double dbY = dbapiCarrierY(dbRead, 0);
 
-                                    double dbTargetX = 134.511;
-                                    double dbTargetY = 606.255;
-                                    if( (dbTargetX*0.99<= dbX && dbX <= dbTargetX*1.01) &&
-                                        (dbTargetY*0.99<= dbY && dbY <= dbTargetY*1.01) ) { 
-                                        xeTmrTakePin = xe_tmr_takepin.xett_確認載盤XY再次移置拍照檢查位;
+                                    double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX;
+                                    double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY;
+                                    if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
+                                        (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
+
+                                        if(bResume == true) {
+                                            bResume = false;
+                                            xeTmrTakePin = xe_tmr_takepin.xett_等待載盤XY再次移置拍照檢查位;
+                                        }
                                     }
                                 } break;
+                                case xe_tmr_takepin.xett_等待載盤XY再次移置拍照檢查位:
+                                    iTakePinFinishedCNT1++;
+                                    if(iTakePinFinishedCNT1>=10) { 
+                                        iTakePinFinishedCNT1 = 0;
+                                        xeTmrTakePin = xe_tmr_takepin.xett_確認載盤XY再次移置拍照檢查位;
+                                    }
+                                    break;
                                 case xe_tmr_takepin.xett_確認載盤XY再次移置拍照檢查位:                  xeTmrTakePin = xe_tmr_takepin.xett_檢測是否還需要取針;  break;
                     //-----------------------------------------------------------------------------------------------------------------------------------------------
                     case xe_tmr_takepin.xett_檢測是否還需要取針: {    
@@ -3690,8 +3824,14 @@ namespace InjectorInspector
             Viewer.search_grp_NeedleInfo("txt_Index", iIndex.ToString(), ref FocusedCircle);
             Viewer.show_grp_NeedleInfo(grp_NeedleInfo, FocusedCircle);
             pic_Needles.Refresh();
-            dbX = FocusedCircle.X;
-            dbY = FocusedCircle.Y;
+
+            //Socket1, point0, x=137.07
+            //Socket1, point0, y=602.225
+            const double OffsetX =  259.55823254488018;  //137.07
+            const double OffsetY = -494.75072809104171;  //602.225
+
+            dbX = FocusedCircle.X - OffsetX;  
+            dbY = FocusedCircle.Y - OffsetY;  
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------- 和尚小佛 --------------------------------------
@@ -3706,14 +3846,6 @@ namespace InjectorInspector
         private void button1_Click(object sender, EventArgs e)
         {
             //inspector1.xInit();
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            double dbX = 0.0, dbY = 0.0;
-            apiGetCoordinate(12, ref dbX, ref dbY);
-            label14.Text = dbX.ToString();
-            label15.Text = dbY.ToString();
         }
         //---------------------------------------------------------------------------------------
         //-------------------------------------- 暫時或實驗中 ------------------------------------

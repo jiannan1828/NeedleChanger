@@ -275,6 +275,9 @@ namespace InjectorInspector
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.button7 = new System.Windows.Forms.Button();
             this.lbl_CycleTime = new System.Windows.Forms.Label();
             this.btn_tmrPause = new System.Windows.Forms.Button();
             this.btn_tmrStop = new System.Windows.Forms.Button();
@@ -401,9 +404,8 @@ namespace InjectorInspector
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
-            this.button7 = new System.Windows.Forms.Button();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.btn_Resume = new System.Windows.Forms.Button();
+            this.txt_HoldIndex = new System.Windows.Forms.TextBox();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3203,6 +3205,8 @@ namespace InjectorInspector
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.txt_HoldIndex);
+            this.tabPage2.Controls.Add(this.btn_Resume);
             this.tabPage2.Controls.Add(this.label15);
             this.tabPage2.Controls.Add(this.label14);
             this.tabPage2.Controls.Add(this.button7);
@@ -3239,6 +3243,34 @@ namespace InjectorInspector
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(280, 374);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(62, 19);
+            this.label15.TabIndex = 219;
+            this.label15.Text = "label15";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(280, 351);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(62, 19);
+            this.label14.TabIndex = 218;
+            this.label14.Text = "label14";
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(148, 351);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(109, 42);
+            this.button7.TabIndex = 217;
+            this.button7.Text = "button7";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // lbl_CycleTime
             // 
@@ -3378,6 +3410,7 @@ namespace InjectorInspector
             this.button3.TabIndex = 22;
             this.button3.Text = "Socket";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // btnStop
             // 
@@ -4549,33 +4582,23 @@ namespace InjectorInspector
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
-            // button7
+            // btn_Resume
             // 
-            this.button7.Location = new System.Drawing.Point(148, 351);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(109, 42);
-            this.button7.TabIndex = 217;
-            this.button7.Text = "button7";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.btn_Resume.Location = new System.Drawing.Point(90, 506);
+            this.btn_Resume.Name = "btn_Resume";
+            this.btn_Resume.Size = new System.Drawing.Size(142, 37);
+            this.btn_Resume.TabIndex = 220;
+            this.btn_Resume.Text = "btn_Resume";
+            this.btn_Resume.UseVisualStyleBackColor = true;
+            this.btn_Resume.Click += new System.EventHandler(this.btn_Resume_Click);
             // 
-            // label14
+            // txt_HoldIndex
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(280, 351);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(62, 19);
-            this.label14.TabIndex = 218;
-            this.label14.Text = "label14";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(280, 374);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(62, 19);
-            this.label15.TabIndex = 219;
-            this.label15.Text = "label15";
+            this.txt_HoldIndex.Location = new System.Drawing.Point(242, 509);
+            this.txt_HoldIndex.Name = "txt_HoldIndex";
+            this.txt_HoldIndex.Size = new System.Drawing.Size(50, 30);
+            this.txt_HoldIndex.TabIndex = 221;
+            this.txt_HoldIndex.Text = "0";
             // 
             // Form1
             // 
@@ -5031,6 +5054,8 @@ namespace InjectorInspector
         private Button button7;
         private Label label15;
         private Label label14;
+        private Button btn_Resume;
+        private TextBox txt_HoldIndex;
     }
 }
 
