@@ -85,20 +85,19 @@
               "RelativeToolTip": "Form1.Designer.cs",
               "ViewState": "AgIAAOURAAAAAAAAAAAswPoRAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-09T02:47:53.263Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-09T02:47:53.263Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Form1.cs [\u8A2D\u8A08]",
+              "Title": "Form1.cs [Design]",
               "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs [\u8A2D\u8A08]",
-              "RelativeToolTip": "Form1.cs [\u8A2D\u8A08]",
+              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs [Design]",
+              "RelativeToolTip": "Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-09T02:35:53.25Z",
-              "EditorCaption": " [\u8A2D\u8A08]"
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
@@ -108,7 +107,7 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAAHEAAAAAAAAAAAAYwIMAAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAG4KAAAAAAAAAAAAwIAKAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-09T00:47:01.74Z",
               "EditorCaption": ""

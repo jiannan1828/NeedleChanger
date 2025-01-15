@@ -1575,6 +1575,17 @@ namespace Inspector
                 Win.HalconWindow.SetTposition((int)(pY.D + 300), 300);
                 Win.HalconWindow.WriteString(string.Format("X = {0:F3} , Y = {1:F3}", hole.X, hole.Y));
             }
+            HTuple W, H;
+            if (image != null)
+            {
+                Win.HalconWindow.SetColor("green");
+                HOperatorSet.GetImageSize(image, out W, out H);
+                var LStyle = Win.HalconWindow.GetLineStyle();
+                Win.HalconWindow.SetLineStyle(7);
+                Win.HalconWindow.DispLine(H.I / 2.0, 0, H.I / 2, W.I - 1);
+                Win.HalconWindow.DispLine(0, W.I / 2.0, H.I - 1, W.I / 2.0);
+                Win.HalconWindow.SetLineStyle(LStyle);
+            }
         }
         public void Show()
         {
@@ -1693,6 +1704,17 @@ namespace Inspector
                 Win.HalconWindow.SetTposition((int)(pY.D + 300), 300);
                 Win.HalconWindow.WriteString(string.Format("X = {0:F3} , Y = {1:F3}", hole.X, hole.Y));
             }
+            HTuple W, H;
+            if (image != null)
+            {
+                Win.HalconWindow.SetColor("green");
+                HOperatorSet.GetImageSize(image, out W, out H);
+                var LStyle = Win.HalconWindow.GetLineStyle();
+                Win.HalconWindow.SetLineStyle(7);
+                Win.HalconWindow.DispLine(H.I / 2.0, 0, H.I / 2, W.I - 1);
+                Win.HalconWindow.DispLine(0, W.I / 2.0, H.I - 1, W.I / 2.0);
+                Win.HalconWindow.SetLineStyle(LStyle);
+            }
         }
         public void Show()
         {
@@ -1804,6 +1826,17 @@ namespace Inspector
                 Win.HalconWindow.DispCross(pY, pX, 300, 0);
                 Win.HalconWindow.SetTposition((int)(pY.D + 300), 300);
                 Win.HalconWindow.WriteString(string.Format("X = {0:F3} , Y = {1:F3}", hole.X, hole.Y));
+            }
+            HTuple W, H;
+            if (image != null)
+            {
+                Win.HalconWindow.SetColor("green");
+                HOperatorSet.GetImageSize(image, out W, out H);
+                var LStyle = Win.HalconWindow.GetLineStyle();
+                Win.HalconWindow.SetLineStyle(7);
+                Win.HalconWindow.DispLine(H.I / 2.0, 0, H.I / 2, W.I - 1);
+                Win.HalconWindow.DispLine(0, W.I / 2.0, H.I - 1, W.I / 2.0);
+                Win.HalconWindow.SetLineStyle(LStyle);
             }
         }
         public void Show()
