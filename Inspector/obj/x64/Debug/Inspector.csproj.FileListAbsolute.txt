@@ -1,0 +1,6 @@
+D:\Resilio\CodeViaTestMklink\NeedleChanger\Inspector\obj\x64\Debug\Inspector.csproj.AssemblyReference.cache
+D:\Resilio\CodeViaTestMklink\NeedleChanger\Inspector\obj\x64\Debug\Camera.IMSSetFrm.resources
+D:\Resilio\CodeViaTestMklink\NeedleChanger\Inspector\obj\x64\Debug\Inspector.Inspector.resources
+D:\Resilio\CodeViaTestMklink\NeedleChanger\Inspector\obj\x64\Debug\Camera.SisoSetFrm.resources
+D:\Resilio\CodeViaTestMklink\NeedleChanger\Inspector\obj\x64\Debug\Inspector.csproj.GenerateResource.cache
+D:\Resilio\CodeViaTestMklink\NeedleChanger\Inspector\obj\x64\Debug\Inspector.csproj.CoreCompileInputs.cache

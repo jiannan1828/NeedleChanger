@@ -1,0 +1,58 @@
+{
+  "Circles": [
+    {
+      "Index": 0,
+      "Name": null,
+      "Id": null,
+      "X": 389.72823254488043,
+      "Y": 152.42427190895839,
+      "Diameter": 2.0,
+      "Place": false,
+      "Remove": false,
+      "Replace": false,
+      "Display": true,
+      "Enable": false,
+      "Reserve1": false,
+      "Reserve2": null,
+      "Reserve3": null,
+      "Reserve4": null,
+      "Reserve5": null
+    },
+    {
+      "Index": 1,
+      "Name": null,
+      "Id": null,
+      "X": 389.72823254488043,
+      "Y": 49.42427190895841,
+      "Diameter": 1.9999999999998861,
+      "Place": false,
+      "Remove": false,
+      "Replace": false,
+      "Display": true,
+      "Enable": false,
+      "Reserve1": false,
+      "Reserve2": null,
+      "Reserve3": null,
+      "Reserve4": null,
+      "Reserve5": null
+    },
+    {
+      "Index": 2,
+      "Name": null,
+      "Id": null,
+      "X": 492.72823254488031,
+      "Y": 49.424271908958417,
+      "Diameter": 2.0,
+      "Place": false,
+      "Remove": false,
+      "Replace": false,
+      "Display": true,
+      "Enable": false,
+      "Reserve1": false,
+      "Reserve2": null,
+      "Reserve3": null,
+      "Reserve4": null,
+      "Reserve5": null
+    }
+  ]
+}

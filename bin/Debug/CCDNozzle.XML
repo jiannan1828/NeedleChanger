@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ParamDefine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Key>1-imaWorx CXP-12 Quad:0</Key>
+  <Gamma>1</Gamma>
+  <Exposure>5000</Exposure>
+  <SpeedRate>12</SpeedRate>
+  <MirrorX>false</MirrorX>
+  <MirrorY>false</MirrorY>
+  <Binning>false</Binning>
+  <ImageRotate>0</ImageRotate>
+  <ScaleX>0.003125</ScaleX>
+  <ScaleY>0.003125</ScaleY>
+  <vDx_X>1</vDx_X>
+  <vDx_Y>0</vDx_Y>
+  <vDy_X>0</vDy_X>
+  <vDy_Y>1</vDy_Y>
+</ParamDefine>
