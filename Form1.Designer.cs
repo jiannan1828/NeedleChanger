@@ -309,6 +309,10 @@ namespace InjectorInspector
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.lbl_ZoomFactor = new System.Windows.Forms.Label();
+            this.lbl_Offset = new System.Windows.Forms.Label();
+            this.lbl_PicMousePos = new System.Windows.Forms.Label();
+            this.lbl_RealMousePos = new System.Windows.Forms.Label();
             this.grp_NeedleInfo = new System.Windows.Forms.GroupBox();
             this.rad_Replace = new System.Windows.Forms.RadioButton();
             this.rad_Remove = new System.Windows.Forms.RadioButton();
@@ -394,20 +398,20 @@ namespace InjectorInspector
             this.grp_儲存資訊 = new System.Windows.Forms.GroupBox();
             this.btn_停止 = new System.Windows.Forms.Button();
             this.btn_開始 = new System.Windows.Forms.Button();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.登入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.登入ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.登出ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.檔案ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.開啟ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.儲存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ms_Needles = new System.Windows.Forms.MenuStrip();
+            this.tsm_Account = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Login = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Logout = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsm_File = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_OpenFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_SaveFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
-            this.lbl_RealMousePos = new System.Windows.Forms.Label();
-            this.lbl_PicMousePos = new System.Windows.Forms.Label();
-            this.lbl_Offset = new System.Windows.Forms.Label();
-            this.lbl_ZoomFactor = new System.Windows.Forms.Label();
+            this.cms_Needles = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmi_Place = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Remove = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Replace = new System.Windows.Forms.ToolStripMenuItem();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -430,7 +434,8 @@ namespace InjectorInspector
             this.grp_設備治具資訊.SuspendLayout();
             this.grp_配件條碼比對.SuspendLayout();
             this.grp_儲存資訊.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.ms_Needles.SuspendLayout();
+            this.cms_Needles.SuspendLayout();
             this.SuspendLayout();
             // 
             // tmr_ReadWMX3
@@ -3572,13 +3577,49 @@ namespace InjectorInspector
             this.tabPage3.Controls.Add(this.grp_目前作業項目);
             this.tabPage3.Controls.Add(this.grp_SocketTest);
             this.tabPage3.Controls.Add(this.grp_儲存資訊);
-            this.tabPage3.Controls.Add(this.menuStrip1);
+            this.tabPage3.Controls.Add(this.ms_Needles);
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(1228, 792);
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // lbl_ZoomFactor
+            // 
+            this.lbl_ZoomFactor.AutoSize = true;
+            this.lbl_ZoomFactor.Location = new System.Drawing.Point(107, 771);
+            this.lbl_ZoomFactor.Name = "lbl_ZoomFactor";
+            this.lbl_ZoomFactor.Size = new System.Drawing.Size(110, 19);
+            this.lbl_ZoomFactor.TabIndex = 30;
+            this.lbl_ZoomFactor.Text = "縮放比例  :  ";
+            // 
+            // lbl_Offset
+            // 
+            this.lbl_Offset.AutoSize = true;
+            this.lbl_Offset.Location = new System.Drawing.Point(145, 744);
+            this.lbl_Offset.Name = "lbl_Offset";
+            this.lbl_Offset.Size = new System.Drawing.Size(69, 19);
+            this.lbl_Offset.TabIndex = 29;
+            this.lbl_Offset.Text = "Offset : ";
+            // 
+            // lbl_PicMousePos
+            // 
+            this.lbl_PicMousePos.AutoSize = true;
+            this.lbl_PicMousePos.Location = new System.Drawing.Point(117, 717);
+            this.lbl_PicMousePos.Name = "lbl_PicMousePos";
+            this.lbl_PicMousePos.Size = new System.Drawing.Size(100, 19);
+            this.lbl_PicMousePos.TabIndex = 28;
+            this.lbl_PicMousePos.Text = "繪圖座標 : ";
+            // 
+            // lbl_RealMousePos
+            // 
+            this.lbl_RealMousePos.AutoSize = true;
+            this.lbl_RealMousePos.Location = new System.Drawing.Point(117, 690);
+            this.lbl_RealMousePos.Name = "lbl_RealMousePos";
+            this.lbl_RealMousePos.Size = new System.Drawing.Size(100, 19);
+            this.lbl_RealMousePos.TabIndex = 27;
+            this.lbl_RealMousePos.Text = "真實座標 : ";
             // 
             // grp_NeedleInfo
             // 
@@ -3632,7 +3673,7 @@ namespace InjectorInspector
             this.rad_Remove.Size = new System.Drawing.Size(57, 20);
             this.rad_Remove.TabIndex = 1;
             this.rad_Remove.TabStop = true;
-            this.rad_Remove.Text = "移除";
+            this.rad_Remove.Text = "取針";
             this.rad_Remove.UseVisualStyleBackColor = true;
             // 
             // rad_Place
@@ -3645,7 +3686,7 @@ namespace InjectorInspector
             this.rad_Place.Size = new System.Drawing.Size(57, 20);
             this.rad_Place.TabIndex = 0;
             this.rad_Place.TabStop = true;
-            this.rad_Place.Text = "放置";
+            this.rad_Place.Text = "植針";
             this.rad_Place.UseVisualStyleBackColor = true;
             // 
             // lbl_Index
@@ -3814,6 +3855,7 @@ namespace InjectorInspector
             // 
             this.pic_Needles.BackColor = System.Drawing.Color.Honeydew;
             this.pic_Needles.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pic_Needles.ContextMenuStrip = this.cms_Needles;
             this.pic_Needles.Location = new System.Drawing.Point(0, 0);
             this.pic_Needles.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pic_Needles.Name = "pic_Needles";
@@ -4511,64 +4553,64 @@ namespace InjectorInspector
             this.btn_開始.Text = "開始";
             this.btn_開始.UseVisualStyleBackColor = false;
             // 
-            // menuStrip1
+            // ms_Needles
             // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.登入ToolStripMenuItem,
-            this.檔案ToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1228, 24);
-            this.menuStrip1.TabIndex = 19;
-            this.menuStrip1.Text = "menuStrip1";
+            this.ms_Needles.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ms_Needles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsm_Account,
+            this.tsm_File});
+            this.ms_Needles.Location = new System.Drawing.Point(0, 0);
+            this.ms_Needles.Name = "ms_Needles";
+            this.ms_Needles.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.ms_Needles.Size = new System.Drawing.Size(1228, 24);
+            this.ms_Needles.TabIndex = 19;
+            this.ms_Needles.Text = "menuStrip1";
             // 
-            // 登入ToolStripMenuItem
+            // tsm_Account
             // 
-            this.登入ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.登入ToolStripMenuItem1,
-            this.登出ToolStripMenuItem1});
-            this.登入ToolStripMenuItem.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.登入ToolStripMenuItem.Name = "登入ToolStripMenuItem";
-            this.登入ToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
-            this.登入ToolStripMenuItem.Text = "帳戶";
+            this.tsm_Account.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_Login,
+            this.tsmi_Logout});
+            this.tsm_Account.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tsm_Account.Name = "tsm_Account";
+            this.tsm_Account.Size = new System.Drawing.Size(51, 20);
+            this.tsm_Account.Text = "帳戶";
             // 
-            // 登入ToolStripMenuItem1
+            // tsmi_Login
             // 
-            this.登入ToolStripMenuItem1.Name = "登入ToolStripMenuItem1";
-            this.登入ToolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
-            this.登入ToolStripMenuItem1.Text = "登入";
+            this.tsmi_Login.Name = "tsmi_Login";
+            this.tsmi_Login.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_Login.Text = "登入";
             // 
-            // 登出ToolStripMenuItem1
+            // tsmi_Logout
             // 
-            this.登出ToolStripMenuItem1.Name = "登出ToolStripMenuItem1";
-            this.登出ToolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
-            this.登出ToolStripMenuItem1.Text = "登出";
+            this.tsmi_Logout.Name = "tsmi_Logout";
+            this.tsmi_Logout.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_Logout.Text = "登出";
             // 
-            // 檔案ToolStripMenuItem
+            // tsm_File
             // 
-            this.檔案ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.開啟ToolStripMenuItem,
-            this.儲存ToolStripMenuItem});
-            this.檔案ToolStripMenuItem.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.檔案ToolStripMenuItem.Name = "檔案ToolStripMenuItem";
-            this.檔案ToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
-            this.檔案ToolStripMenuItem.Text = "檔案";
+            this.tsm_File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_OpenFile,
+            this.tsmi_SaveFile});
+            this.tsm_File.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tsm_File.Name = "tsm_File";
+            this.tsm_File.Size = new System.Drawing.Size(51, 20);
+            this.tsm_File.Text = "檔案";
             // 
-            // 開啟ToolStripMenuItem
+            // tsmi_OpenFile
             // 
-            this.開啟ToolStripMenuItem.Name = "開啟ToolStripMenuItem";
-            this.開啟ToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
-            this.開啟ToolStripMenuItem.Text = "開啟";
-            this.開啟ToolStripMenuItem.Click += new System.EventHandler(this.開啟ToolStripMenuItem_Click);
+            this.tsmi_OpenFile.Name = "tsmi_OpenFile";
+            this.tsmi_OpenFile.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_OpenFile.Text = "開啟";
+            this.tsmi_OpenFile.Click += new System.EventHandler(this.開啟ToolStripMenuItem_Click);
             // 
-            // 儲存ToolStripMenuItem
+            // tsmi_SaveFile
             // 
-            this.儲存ToolStripMenuItem.Name = "儲存ToolStripMenuItem";
-            this.儲存ToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
-            this.儲存ToolStripMenuItem.Text = "儲存";
-            this.儲存ToolStripMenuItem.Click += new System.EventHandler(this.儲存ToolStripMenuItem_Click);
+            this.tsmi_SaveFile.Name = "tsmi_SaveFile";
+            this.tsmi_SaveFile.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_SaveFile.Text = "儲存";
+            this.tsmi_SaveFile.Click += new System.EventHandler(this.儲存ToolStripMenuItem_Click);
             // 
             // tmr_Sequense
             // 
@@ -4587,41 +4629,35 @@ namespace InjectorInspector
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
-            // lbl_RealMousePos
+            // cms_Needles
             // 
-            this.lbl_RealMousePos.AutoSize = true;
-            this.lbl_RealMousePos.Location = new System.Drawing.Point(117, 690);
-            this.lbl_RealMousePos.Name = "lbl_RealMousePos";
-            this.lbl_RealMousePos.Size = new System.Drawing.Size(100, 19);
-            this.lbl_RealMousePos.TabIndex = 27;
-            this.lbl_RealMousePos.Text = "真實座標 : ";
+            this.cms_Needles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_Place,
+            this.tsmi_Remove,
+            this.tsmi_Replace});
+            this.cms_Needles.Name = "cms_Needles";
+            this.cms_Needles.Size = new System.Drawing.Size(181, 114);
             // 
-            // lbl_PicMousePos
+            // tsmi_Place
             // 
-            this.lbl_PicMousePos.AutoSize = true;
-            this.lbl_PicMousePos.Location = new System.Drawing.Point(117, 717);
-            this.lbl_PicMousePos.Name = "lbl_PicMousePos";
-            this.lbl_PicMousePos.Size = new System.Drawing.Size(100, 19);
-            this.lbl_PicMousePos.TabIndex = 28;
-            this.lbl_PicMousePos.Text = "繪圖座標 : ";
+            this.tsmi_Place.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tsmi_Place.Name = "tsmi_Place";
+            this.tsmi_Place.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_Place.Text = "植針";
             // 
-            // lbl_Offset
+            // tsmi_Remove
             // 
-            this.lbl_Offset.AutoSize = true;
-            this.lbl_Offset.Location = new System.Drawing.Point(145, 744);
-            this.lbl_Offset.Name = "lbl_Offset";
-            this.lbl_Offset.Size = new System.Drawing.Size(69, 19);
-            this.lbl_Offset.TabIndex = 29;
-            this.lbl_Offset.Text = "Offset : ";
+            this.tsmi_Remove.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tsmi_Remove.Name = "tsmi_Remove";
+            this.tsmi_Remove.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_Remove.Text = "取針";
             // 
-            // lbl_ZoomFactor
+            // tsmi_Replace
             // 
-            this.lbl_ZoomFactor.AutoSize = true;
-            this.lbl_ZoomFactor.Location = new System.Drawing.Point(107, 771);
-            this.lbl_ZoomFactor.Name = "lbl_ZoomFactor";
-            this.lbl_ZoomFactor.Size = new System.Drawing.Size(110, 19);
-            this.lbl_ZoomFactor.TabIndex = 30;
-            this.lbl_ZoomFactor.Text = "縮放比例  :  ";
+            this.tsmi_Replace.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tsmi_Replace.Name = "tsmi_Replace";
+            this.tsmi_Replace.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_Replace.Text = "置換";
             // 
             // Form1
             // 
@@ -4672,8 +4708,9 @@ namespace InjectorInspector
             this.grp_配件條碼比對.ResumeLayout(false);
             this.grp_配件條碼比對.PerformLayout();
             this.grp_儲存資訊.ResumeLayout(false);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.ms_Needles.ResumeLayout(false);
+            this.ms_Needles.PerformLayout();
+            this.cms_Needles.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -5049,13 +5086,13 @@ namespace InjectorInspector
         private System.Windows.Forms.GroupBox grp_儲存資訊;
         private System.Windows.Forms.Button btn_停止;
         private System.Windows.Forms.Button btn_開始;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 登入ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 登入ToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem 登出ToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem 檔案ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 開啟ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 儲存ToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip ms_Needles;
+        private System.Windows.Forms.ToolStripMenuItem tsm_Account;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_Login;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_Logout;
+        private System.Windows.Forms.ToolStripMenuItem tsm_File;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_OpenFile;
+        private System.Windows.Forms.ToolStripMenuItem tsmi_SaveFile;
         private System.Windows.Forms.PictureBox pic_Needles;
         private System.Windows.Forms.GroupBox grp_NeedleInfo;
         private System.Windows.Forms.RadioButton rad_Replace;
@@ -5081,6 +5118,10 @@ namespace InjectorInspector
         private Label lbl_RealMousePos;
         private Label lbl_Offset;
         private Label lbl_ZoomFactor;
+        private ContextMenuStrip cms_Needles;
+        private ToolStripMenuItem tsmi_Place;
+        private ToolStripMenuItem tsmi_Remove;
+        private ToolStripMenuItem tsmi_Replace;
     }
 }
 

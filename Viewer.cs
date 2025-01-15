@@ -23,6 +23,12 @@ namespace InjectorInspector
         public static List<JSON.Circle> SelectedCircles = new List<JSON.Circle>();
         public static List<JSON.Circle> PlacedCircles = new List<JSON.Circle>();
 
+        public static readonly Color DefaltCircleColor = Color.ForestGreen;
+        public static readonly Color HiddenCircleColor = Color.FromArgb(64, Color.ForestGreen);
+        public static readonly Color HighlightedCircleColor = Color.LightBlue;
+        public static readonly Color FocusedCircleColor = Color.Red;
+        public static readonly Color SelectedCirclesColor = Color.Pink;
+
         public static Boundary Json_Boundary = new Boundary();
         public static Boundary Drag_Boundary = new Boundary();
 
@@ -35,17 +41,19 @@ namespace InjectorInspector
         public static PointF RealMousePosBeforeZoom = new PointF(0, 0);
         public static PointF RealMousePosAfterZoom = new PointF(0, 0);
 
-        public static readonly Color DefaltCircleColor = Color.ForestGreen;
-        public static readonly Color HiddenCircleColor = Color.FromArgb(64, Color.ForestGreen);
-        public static readonly Color HighlightedCircleColor = Color.LightBlue;
-        public static readonly Color FocusedCircleColor = Color.Red;
-        public static readonly Color SelectedCirclesColor = Color.Pink;
-
         public static double Mouse2CircleDistance;
 
         public static bool IsDrag = false;
         public static PointF Drag_Start = new PointF(0, 0);
         public static PointF Drag_End = new PointF(0, 0);
+
+        public static string[] 跑馬燈文字 = {
+            "待機",
+            "運行中",
+            "例外狀況"
+        };
+        public static int 跑馬燈文字Index = 0;
+        public static int 跑馬燈X座標 = 0;
 
         /// <summary>
         /// 讀取 DXF 後儲存到這個物件, 後面會存成 JSON 檔
