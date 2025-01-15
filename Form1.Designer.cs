@@ -314,6 +314,7 @@ namespace InjectorInspector
             this.lbl_PicMousePos = new System.Windows.Forms.Label();
             this.lbl_RealMousePos = new System.Windows.Forms.Label();
             this.grp_NeedleInfo = new System.Windows.Forms.GroupBox();
+            this.chk_Reserve1 = new System.Windows.Forms.CheckBox();
             this.rad_Replace = new System.Windows.Forms.RadioButton();
             this.rad_Remove = new System.Windows.Forms.RadioButton();
             this.rad_Place = new System.Windows.Forms.RadioButton();
@@ -333,6 +334,13 @@ namespace InjectorInspector
             this.tab_Needles = new System.Windows.Forms.TabControl();
             this.tp_Needles = new System.Windows.Forms.TabPage();
             this.pic_Needles = new System.Windows.Forms.PictureBox();
+            this.cms_pic_Needles = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmi_Place = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Remove = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Replace = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Display = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Enable = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Reset = new System.Windows.Forms.ToolStripMenuItem();
             this.tp_NeedlesJudge = new System.Windows.Forms.TabPage();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -398,7 +406,7 @@ namespace InjectorInspector
             this.grp_儲存資訊 = new System.Windows.Forms.GroupBox();
             this.btn_停止 = new System.Windows.Forms.Button();
             this.btn_開始 = new System.Windows.Forms.Button();
-            this.ms_Needles = new System.Windows.Forms.MenuStrip();
+            this.ms_Viewer = new System.Windows.Forms.MenuStrip();
             this.tsm_Account = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Login = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Logout = new System.Windows.Forms.ToolStripMenuItem();
@@ -408,10 +416,7 @@ namespace InjectorInspector
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
-            this.cms_Needles = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.tsmi_Place = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_Remove = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmi_Replace = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Reserve1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -423,6 +428,7 @@ namespace InjectorInspector
             this.tab_Needles.SuspendLayout();
             this.tp_Needles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_Needles)).BeginInit();
+            this.cms_pic_Needles.SuspendLayout();
             this.tp_NeedlesJudge.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -434,8 +440,7 @@ namespace InjectorInspector
             this.grp_設備治具資訊.SuspendLayout();
             this.grp_配件條碼比對.SuspendLayout();
             this.grp_儲存資訊.SuspendLayout();
-            this.ms_Needles.SuspendLayout();
-            this.cms_Needles.SuspendLayout();
+            this.ms_Viewer.SuspendLayout();
             this.SuspendLayout();
             // 
             // tmr_ReadWMX3
@@ -3577,7 +3582,7 @@ namespace InjectorInspector
             this.tabPage3.Controls.Add(this.grp_目前作業項目);
             this.tabPage3.Controls.Add(this.grp_SocketTest);
             this.tabPage3.Controls.Add(this.grp_儲存資訊);
-            this.tabPage3.Controls.Add(this.ms_Needles);
+            this.tabPage3.Controls.Add(this.ms_Viewer);
             this.tabPage3.Location = new System.Drawing.Point(4, 29);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(1228, 792);
@@ -3624,6 +3629,7 @@ namespace InjectorInspector
             // grp_NeedleInfo
             // 
             this.grp_NeedleInfo.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.grp_NeedleInfo.Controls.Add(this.chk_Reserve1);
             this.grp_NeedleInfo.Controls.Add(this.rad_Replace);
             this.grp_NeedleInfo.Controls.Add(this.rad_Remove);
             this.grp_NeedleInfo.Controls.Add(this.rad_Place);
@@ -3640,7 +3646,7 @@ namespace InjectorInspector
             this.grp_NeedleInfo.Controls.Add(this.lbl_Id);
             this.grp_NeedleInfo.Controls.Add(this.lbl_Name);
             this.grp_NeedleInfo.Controls.Add(this.txt_Name);
-            this.grp_NeedleInfo.Font = new System.Drawing.Font("微軟正黑體", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.grp_NeedleInfo.Font = new System.Drawing.Font("標楷體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.grp_NeedleInfo.Location = new System.Drawing.Point(610, 676);
             this.grp_NeedleInfo.Margin = new System.Windows.Forms.Padding(2);
             this.grp_NeedleInfo.Name = "grp_NeedleInfo";
@@ -3650,10 +3656,24 @@ namespace InjectorInspector
             this.grp_NeedleInfo.TabStop = false;
             this.grp_NeedleInfo.Text = "植針資訊";
             // 
+            // chk_Reserve1
+            // 
+            this.chk_Reserve1.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chk_Reserve1.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.chk_Reserve1.Location = new System.Drawing.Point(460, 77);
+            this.chk_Reserve1.Margin = new System.Windows.Forms.Padding(2);
+            this.chk_Reserve1.Name = "chk_Reserve1";
+            this.chk_Reserve1.Size = new System.Drawing.Size(60, 25);
+            this.chk_Reserve1.TabIndex = 24;
+            this.chk_Reserve1.Text = "保留";
+            this.chk_Reserve1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chk_Reserve1.UseVisualStyleBackColor = true;
+            this.chk_Reserve1.CheckedChanged += new System.EventHandler(this.chk_Reserve1_CheckedChanged);
+            // 
             // rad_Replace
             // 
             this.rad_Replace.AutoSize = true;
-            this.rad_Replace.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.rad_Replace.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.rad_Replace.Location = new System.Drawing.Point(533, 76);
             this.rad_Replace.Margin = new System.Windows.Forms.Padding(2);
             this.rad_Replace.Name = "rad_Replace";
@@ -3666,7 +3686,7 @@ namespace InjectorInspector
             // rad_Remove
             // 
             this.rad_Remove.AutoSize = true;
-            this.rad_Remove.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.rad_Remove.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.rad_Remove.Location = new System.Drawing.Point(533, 52);
             this.rad_Remove.Margin = new System.Windows.Forms.Padding(2);
             this.rad_Remove.Name = "rad_Remove";
@@ -3679,7 +3699,7 @@ namespace InjectorInspector
             // rad_Place
             // 
             this.rad_Place.AutoSize = true;
-            this.rad_Place.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.rad_Place.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.rad_Place.Location = new System.Drawing.Point(533, 29);
             this.rad_Place.Margin = new System.Windows.Forms.Padding(2);
             this.rad_Place.Name = "rad_Place";
@@ -3692,8 +3712,8 @@ namespace InjectorInspector
             // lbl_Index
             // 
             this.lbl_Index.AutoSize = true;
-            this.lbl_Index.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_Index.Location = new System.Drawing.Point(3, 38);
+            this.lbl_Index.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Index.Location = new System.Drawing.Point(4, 41);
             this.lbl_Index.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Index.Name = "lbl_Index";
             this.lbl_Index.Size = new System.Drawing.Size(55, 16);
@@ -3712,11 +3732,11 @@ namespace InjectorInspector
             // chk_Enable
             // 
             this.chk_Enable.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chk_Enable.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.chk_Enable.Location = new System.Drawing.Point(452, 31);
+            this.chk_Enable.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.chk_Enable.Location = new System.Drawing.Point(460, 52);
             this.chk_Enable.Margin = new System.Windows.Forms.Padding(2);
             this.chk_Enable.Name = "chk_Enable";
-            this.chk_Enable.Size = new System.Drawing.Size(63, 30);
+            this.chk_Enable.Size = new System.Drawing.Size(60, 25);
             this.chk_Enable.TabIndex = 21;
             this.chk_Enable.Text = "啟用";
             this.chk_Enable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -3726,11 +3746,11 @@ namespace InjectorInspector
             // chk_Display
             // 
             this.chk_Display.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chk_Display.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.chk_Display.Location = new System.Drawing.Point(452, 66);
+            this.chk_Display.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.chk_Display.Location = new System.Drawing.Point(460, 27);
             this.chk_Display.Margin = new System.Windows.Forms.Padding(2);
             this.chk_Display.Name = "chk_Display";
-            this.chk_Display.Size = new System.Drawing.Size(63, 30);
+            this.chk_Display.Size = new System.Drawing.Size(60, 25);
             this.chk_Display.TabIndex = 20;
             this.chk_Display.Text = "顯示";
             this.chk_Display.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -3750,7 +3770,7 @@ namespace InjectorInspector
             // lbl_Diameter
             // 
             this.lbl_Diameter.AutoSize = true;
-            this.lbl_Diameter.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Diameter.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lbl_Diameter.Location = new System.Drawing.Point(298, 73);
             this.lbl_Diameter.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Diameter.Name = "lbl_Diameter";
@@ -3781,8 +3801,8 @@ namespace InjectorInspector
             // lbl_Pos
             // 
             this.lbl_Pos.AutoSize = true;
-            this.lbl_Pos.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_Pos.Location = new System.Drawing.Point(4, 74);
+            this.lbl_Pos.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Pos.Location = new System.Drawing.Point(19, 75);
             this.lbl_Pos.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Pos.Name = "lbl_Pos";
             this.lbl_Pos.Size = new System.Drawing.Size(39, 16);
@@ -3801,8 +3821,8 @@ namespace InjectorInspector
             // lbl_Id
             // 
             this.lbl_Id.AutoSize = true;
-            this.lbl_Id.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_Id.Location = new System.Drawing.Point(298, 41);
+            this.lbl_Id.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Id.Location = new System.Drawing.Point(298, 42);
             this.lbl_Id.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Id.Name = "lbl_Id";
             this.lbl_Id.Size = new System.Drawing.Size(39, 16);
@@ -3812,7 +3832,7 @@ namespace InjectorInspector
             // lbl_Name
             // 
             this.lbl_Name.AutoSize = true;
-            this.lbl_Name.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_Name.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.lbl_Name.Location = new System.Drawing.Point(159, 41);
             this.lbl_Name.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Name.Name = "lbl_Name";
@@ -3855,7 +3875,7 @@ namespace InjectorInspector
             // 
             this.pic_Needles.BackColor = System.Drawing.Color.Honeydew;
             this.pic_Needles.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pic_Needles.ContextMenuStrip = this.cms_Needles;
+            this.pic_Needles.ContextMenuStrip = this.cms_pic_Needles;
             this.pic_Needles.Location = new System.Drawing.Point(0, 0);
             this.pic_Needles.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pic_Needles.Name = "pic_Needles";
@@ -3867,6 +3887,68 @@ namespace InjectorInspector
             this.pic_Needles.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pic_Needles_MouseMove);
             this.pic_Needles.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pic_Needles_MouseUp);
             this.pic_Needles.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.pic_Needles_MouseWheel);
+            // 
+            // cms_pic_Needles
+            // 
+            this.cms_pic_Needles.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.cms_pic_Needles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmi_Place,
+            this.tsmi_Remove,
+            this.tsmi_Replace,
+            this.tsmi_Display,
+            this.tsmi_Enable,
+            this.tsmi_Reset,
+            this.tsmi_Reserve1});
+            this.cms_pic_Needles.Name = "cms_pic_Needles";
+            this.cms_pic_Needles.Size = new System.Drawing.Size(115, 158);
+            this.cms_pic_Needles.Opened += new System.EventHandler(this.cms_pic_Needles_Opened);
+            // 
+            // tsmi_Place
+            // 
+            this.tsmi_Place.Enabled = false;
+            this.tsmi_Place.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tsmi_Place.Name = "tsmi_Place";
+            this.tsmi_Place.Size = new System.Drawing.Size(114, 22);
+            this.tsmi_Place.Text = "植針";
+            // 
+            // tsmi_Remove
+            // 
+            this.tsmi_Remove.Enabled = false;
+            this.tsmi_Remove.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tsmi_Remove.Name = "tsmi_Remove";
+            this.tsmi_Remove.Size = new System.Drawing.Size(114, 22);
+            this.tsmi_Remove.Text = "取針";
+            // 
+            // tsmi_Replace
+            // 
+            this.tsmi_Replace.Enabled = false;
+            this.tsmi_Replace.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tsmi_Replace.Name = "tsmi_Replace";
+            this.tsmi_Replace.Size = new System.Drawing.Size(114, 22);
+            this.tsmi_Replace.Text = "置換";
+            // 
+            // tsmi_Display
+            // 
+            this.tsmi_Display.Enabled = false;
+            this.tsmi_Display.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tsmi_Display.Name = "tsmi_Display";
+            this.tsmi_Display.Size = new System.Drawing.Size(114, 22);
+            this.tsmi_Display.Text = "顯示";
+            // 
+            // tsmi_Enable
+            // 
+            this.tsmi_Enable.Enabled = false;
+            this.tsmi_Enable.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.tsmi_Enable.Name = "tsmi_Enable";
+            this.tsmi_Enable.Size = new System.Drawing.Size(114, 22);
+            this.tsmi_Enable.Text = "啟用";
+            // 
+            // tsmi_Reset
+            // 
+            this.tsmi_Reset.Enabled = false;
+            this.tsmi_Reset.Name = "tsmi_Reset";
+            this.tsmi_Reset.Size = new System.Drawing.Size(114, 22);
+            this.tsmi_Reset.Text = "清除";
             // 
             // tp_NeedlesJudge
             // 
@@ -4553,18 +4635,18 @@ namespace InjectorInspector
             this.btn_開始.Text = "開始";
             this.btn_開始.UseVisualStyleBackColor = false;
             // 
-            // ms_Needles
+            // ms_Viewer
             // 
-            this.ms_Needles.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.ms_Needles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ms_Viewer.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ms_Viewer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsm_Account,
             this.tsm_File});
-            this.ms_Needles.Location = new System.Drawing.Point(0, 0);
-            this.ms_Needles.Name = "ms_Needles";
-            this.ms_Needles.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.ms_Needles.Size = new System.Drawing.Size(1228, 24);
-            this.ms_Needles.TabIndex = 19;
-            this.ms_Needles.Text = "menuStrip1";
+            this.ms_Viewer.Location = new System.Drawing.Point(0, 0);
+            this.ms_Viewer.Name = "ms_Viewer";
+            this.ms_Viewer.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.ms_Viewer.Size = new System.Drawing.Size(1228, 24);
+            this.ms_Viewer.TabIndex = 19;
+            this.ms_Viewer.Text = "menuStrip1";
             // 
             // tsm_Account
             // 
@@ -4579,13 +4661,13 @@ namespace InjectorInspector
             // tsmi_Login
             // 
             this.tsmi_Login.Name = "tsmi_Login";
-            this.tsmi_Login.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_Login.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Login.Text = "登入";
             // 
             // tsmi_Logout
             // 
             this.tsmi_Logout.Name = "tsmi_Logout";
-            this.tsmi_Logout.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_Logout.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Logout.Text = "登出";
             // 
             // tsm_File
@@ -4601,16 +4683,16 @@ namespace InjectorInspector
             // tsmi_OpenFile
             // 
             this.tsmi_OpenFile.Name = "tsmi_OpenFile";
-            this.tsmi_OpenFile.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_OpenFile.Size = new System.Drawing.Size(114, 22);
             this.tsmi_OpenFile.Text = "開啟";
-            this.tsmi_OpenFile.Click += new System.EventHandler(this.開啟ToolStripMenuItem_Click);
+            this.tsmi_OpenFile.Click += new System.EventHandler(this.tsmi_OpenFile_Click);
             // 
             // tsmi_SaveFile
             // 
             this.tsmi_SaveFile.Name = "tsmi_SaveFile";
-            this.tsmi_SaveFile.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_SaveFile.Size = new System.Drawing.Size(114, 22);
             this.tsmi_SaveFile.Text = "儲存";
-            this.tsmi_SaveFile.Click += new System.EventHandler(this.儲存ToolStripMenuItem_Click);
+            this.tsmi_SaveFile.Click += new System.EventHandler(this.tsmi_SaveFile_Click);
             // 
             // tmr_Sequense
             // 
@@ -4629,35 +4711,12 @@ namespace InjectorInspector
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
-            // cms_Needles
+            // tsmi_Reserve1
             // 
-            this.cms_Needles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmi_Place,
-            this.tsmi_Remove,
-            this.tsmi_Replace});
-            this.cms_Needles.Name = "cms_Needles";
-            this.cms_Needles.Size = new System.Drawing.Size(181, 114);
-            // 
-            // tsmi_Place
-            // 
-            this.tsmi_Place.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tsmi_Place.Name = "tsmi_Place";
-            this.tsmi_Place.Size = new System.Drawing.Size(180, 22);
-            this.tsmi_Place.Text = "植針";
-            // 
-            // tsmi_Remove
-            // 
-            this.tsmi_Remove.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tsmi_Remove.Name = "tsmi_Remove";
-            this.tsmi_Remove.Size = new System.Drawing.Size(180, 22);
-            this.tsmi_Remove.Text = "取針";
-            // 
-            // tsmi_Replace
-            // 
-            this.tsmi_Replace.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tsmi_Replace.Name = "tsmi_Replace";
-            this.tsmi_Replace.Size = new System.Drawing.Size(180, 22);
-            this.tsmi_Replace.Text = "置換";
+            this.tsmi_Reserve1.Enabled = false;
+            this.tsmi_Reserve1.Name = "tsmi_Reserve1";
+            this.tsmi_Reserve1.Size = new System.Drawing.Size(114, 22);
+            this.tsmi_Reserve1.Text = "保留";
             // 
             // Form1
             // 
@@ -4691,6 +4750,7 @@ namespace InjectorInspector
             this.tab_Needles.ResumeLayout(false);
             this.tp_Needles.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pic_Needles)).EndInit();
+            this.cms_pic_Needles.ResumeLayout(false);
             this.tp_NeedlesJudge.ResumeLayout(false);
             this.tp_NeedlesJudge.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -4708,9 +4768,8 @@ namespace InjectorInspector
             this.grp_配件條碼比對.ResumeLayout(false);
             this.grp_配件條碼比對.PerformLayout();
             this.grp_儲存資訊.ResumeLayout(false);
-            this.ms_Needles.ResumeLayout(false);
-            this.ms_Needles.PerformLayout();
-            this.cms_Needles.ResumeLayout(false);
+            this.ms_Viewer.ResumeLayout(false);
+            this.ms_Viewer.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -4737,6 +4796,14 @@ namespace InjectorInspector
                     default:
                         break;
                 }
+            }
+        }
+
+        public void Initialize_cms_pic_Needles_ItemClicked_Listener(ContextMenuStrip contextMenuStrip)
+        {
+            foreach (ToolStripMenuItem item in contextMenuStrip.Items)
+            {
+                item.Click += cms_pic_Needles_ItemClicked;
             }
         }
 
@@ -5086,7 +5153,7 @@ namespace InjectorInspector
         private System.Windows.Forms.GroupBox grp_儲存資訊;
         private System.Windows.Forms.Button btn_停止;
         private System.Windows.Forms.Button btn_開始;
-        private System.Windows.Forms.MenuStrip ms_Needles;
+        private System.Windows.Forms.MenuStrip ms_Viewer;
         private System.Windows.Forms.ToolStripMenuItem tsm_Account;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Login;
         private System.Windows.Forms.ToolStripMenuItem tsmi_Logout;
@@ -5118,10 +5185,15 @@ namespace InjectorInspector
         private Label lbl_RealMousePos;
         private Label lbl_Offset;
         private Label lbl_ZoomFactor;
-        private ContextMenuStrip cms_Needles;
+        private ContextMenuStrip cms_pic_Needles;
         private ToolStripMenuItem tsmi_Place;
         private ToolStripMenuItem tsmi_Remove;
         private ToolStripMenuItem tsmi_Replace;
+        private ToolStripMenuItem tsmi_Display;
+        private ToolStripMenuItem tsmi_Enable;
+        private ToolStripMenuItem tsmi_Reset;
+        private CheckBox chk_Reserve1;
+        private ToolStripMenuItem tsmi_Reserve1;
     }
 }
 

@@ -64,18 +64,18 @@ namespace InjectorInspector
 
             public class Circle
             {
-                public int Index { get; set; }
-                public string Name { get; set; }
-                public string Id { get; set; }
-                public double X { get; set; }
-                public double Y { get; set; }
+                public int    Index    { get; set; }
+                public string Name     { get; set; }
+                public string Id       { get; set; }
+                public double X        { get; set; }
+                public double Y        { get; set; }
                 public double Diameter { get; set; }
-                public bool Place { get; set; }
-                public bool Remove { get; set; }
-                public bool Replace { get; set; }
-                public bool Display { get; set; }
-                public bool Enable { get; set; }
-                public string Reserve1 { get; set; }
+                public bool   Place    { get; set; }
+                public bool   Remove   { get; set; }
+                public bool   Replace  { get; set; }
+                public bool   Display  { get; set; }
+                public bool   Enable   { get; set; }
+                public bool   Reserve1 { get; set; }
                 public string Reserve2 { get; set; }
                 public string Reserve3 { get; set; }
                 public string Reserve4 { get; set; }
@@ -369,7 +369,9 @@ namespace InjectorInspector
                             case "chk_Enable":
                                 checkBox.Checked = FocusedCircle.Enable;
                                 break;
-
+                            case "chk_Reserve1":
+                                checkBox.Checked = FocusedCircle.Reserve1;
+                                break;
                         }
 
                         break;

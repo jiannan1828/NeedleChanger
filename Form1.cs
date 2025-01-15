@@ -1364,6 +1364,7 @@ namespace InjectorInspector
         {
             InitializeComponent();
             Initialize_grp_NeedleInfo_ChildControlChanged_Listener(grp_NeedleInfo);
+            Initialize_cms_pic_Needles_ItemClicked_Listener(cms_pic_Needles);
         }
         //---------------------------------------------------------------------------------------
         private void Form1_Load(object sender, EventArgs e)
@@ -3415,7 +3416,7 @@ namespace InjectorInspector
             pic_跑馬燈.Invalidate();
         }
         //---------------------------------------------------------------------------------------
-        private void 開啟ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tsmi_OpenFile_Click(object sender, EventArgs e)
         { 
             if (OpenFile())
             {
@@ -3427,7 +3428,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void 儲存ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tsmi_SaveFile_Click(object sender, EventArgs e)
         {
             Viewer.SaveFile();
         }
@@ -3574,6 +3575,8 @@ namespace InjectorInspector
                 {
                     case Keys.Shift:
 
+                        clear_grp_NeedleInfo(grp_NeedleInfo);
+
                         if (!IsDrag)
                         {
                             Drag_Start.X = (e.X - Offset.X) / ZoomFactor;
@@ -3655,6 +3658,74 @@ namespace InjectorInspector
             pic_Needles.Refresh();
         }
         //---------------------------------------------------------------------------------------
+        private void cms_pic_Needles_Opened(object sender, EventArgs e)
+        {
+            if (SelectedCircles.Count != 0)
+            {
+                tsmi_Place.Enabled    = true;
+                tsmi_Remove.Enabled   = true;
+                tsmi_Replace.Enabled  = true;
+                tsmi_Display.Enabled  = true;
+                tsmi_Enable.Enabled   = true;
+                tsmi_Reset.Enabled    = true;
+                tsmi_Reserve1.Enabled = true;
+            }
+            else
+            {
+                tsmi_Place.Enabled    = false;
+                tsmi_Remove.Enabled   = false;
+                tsmi_Replace.Enabled  = false;
+                tsmi_Display.Enabled  = false;
+                tsmi_Enable.Enabled   = false;
+                tsmi_Reset.Enabled    = false;
+                tsmi_Reserve1.Enabled = false;
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        private void cms_pic_Needles_ItemClicked(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+
+            foreach (var circle in SelectedCircles)
+            {
+                switch (item.Text)
+                {
+                    case "植針":
+                        Json.Circles[circle.Index].Place = true;
+                        break;
+
+                    case "取針":
+                        Json.Circles[circle.Index].Remove = true;
+                        break;
+
+                    case "置換":
+                        Json.Circles[circle.Index].Replace = true;
+                        break;
+
+                    case "顯示":
+                        Json.Circles[circle.Index].Display = true;
+                        break;
+
+                    case "啟用":
+                        Json.Circles[circle.Index].Enable = true;
+                        break;
+
+                    case "保留":
+                        Json.Circles[circle.Index].Reserve1 = true;
+                        break;
+
+                    case "清除":
+                        Json.Circles[circle.Index].Place    = false;
+                        Json.Circles[circle.Index].Remove   = false;
+                        Json.Circles[circle.Index].Replace  = false;
+                        Json.Circles[circle.Index].Display  = true;
+                        Json.Circles[circle.Index].Enable   = false;
+                        Json.Circles[circle.Index].Reserve1 = false;
+                        break;
+                }
+            }
+        }
+        //---------------------------------------------------------------------------------------
         private void grp_NeedleInfo_ChildControlChanged(object sender, EventArgs e)
         {
             if (FocusedCircle != null)
@@ -3666,11 +3737,11 @@ namespace InjectorInspector
                         switch (textBox.Name)
                         {
                             case "txt_Name":
-                                Viewer.Json.Circles[FocusedCircle.Index].Name = txt_Name.Text;
+                                Json.Circles[FocusedCircle.Index].Name = txt_Name.Text;
                                 break;
 
                             case "txt_Id":
-                                Viewer.Json.Circles[FocusedCircle.Index].Id = txt_Id.Text;
+                                Json.Circles[FocusedCircle.Index].Id = txt_Id.Text;
                                 break;
                         }
                         break;
@@ -3680,16 +3751,16 @@ namespace InjectorInspector
                         switch (radioButton.Name)
                         {
                             case "rad_Place":
-                                Viewer.Json.Circles[FocusedCircle.Index].Place = rad_Place.Checked;
+                                Json.Circles[FocusedCircle.Index].Place = rad_Place.Checked;
                                 //dgv_Needles.Rows[FocusedCircle.Index].Cells["Place"].Value = rad_Place.Checked;
                                 break;
 
                             case "rad_Remove":
-                                Viewer.Json.Circles[FocusedCircle.Index].Remove = rad_Remove.Checked;
+                                Json.Circles[FocusedCircle.Index].Remove = rad_Remove.Checked;
                                 break;
 
                             case "rad_Replace":
-                                Viewer.Json.Circles[FocusedCircle.Index].Replace = rad_Replace.Checked;
+                                Json.Circles[FocusedCircle.Index].Replace = rad_Replace.Checked;
                                 break;
                         }
 
@@ -3700,11 +3771,15 @@ namespace InjectorInspector
                         switch (checkBox.Name)
                         {
                             case "chk_Display":
-                                Viewer.Json.Circles[FocusedCircle.Index].Display = chk_Display.Checked;
+                                Json.Circles[FocusedCircle.Index].Display = chk_Display.Checked;
                                 break;
 
                             case "chk_Enable":
-                                Viewer.Json.Circles[FocusedCircle.Index].Enable = chk_Enable.Checked;
+                                Json.Circles[FocusedCircle.Index].Enable = chk_Enable.Checked;
+                                break;
+
+                            case "chk_Reserve1":
+                                Json.Circles[FocusedCircle.Index].Reserve1 = chk_Reserve1.Checked;
                                 break;
                         }
 
@@ -3750,6 +3825,18 @@ namespace InjectorInspector
             else
             {
                 chk_Enable.BackColor = SystemColors.Control;
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        private void chk_Reserve1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chk_Reserve1.Checked)
+            {
+                chk_Reserve1.BackColor = Color.Red;
+            }
+            else
+            {
+                chk_Reserve1.BackColor = SystemColors.Control;
             }
         }
         //---------------------------------------------------------------------------------------
