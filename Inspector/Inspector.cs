@@ -330,7 +330,7 @@ namespace Inspector
         {
             try
             {
-                string FName = string.Format("D:\\Images\\{0:yyyyMMdd}\\{1}\\{0:HHmmssff}-{2}.JPG", DateTime.Now, subDirectory, title);
+                string FName = string.Format("D:\\Images\\{0:yyyyMMdd}\\{1}\\{0:HHmmssff}-{2},{3}.JPG", DateTime.Now, subDirectory, title, PinDeg);
                 string FDir = Path.GetDirectoryName(FName);
                 if (!Directory.Exists(FDir))
                     Directory.CreateDirectory(FDir);

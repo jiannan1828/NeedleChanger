@@ -419,6 +419,7 @@ namespace InjectorInspector
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
+            this.btn_tmrClear = new System.Windows.Forms.Button();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3219,6 +3220,7 @@ namespace InjectorInspector
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btn_tmrClear);
             this.tabPage2.Controls.Add(this.txt_HoldIndex);
             this.tabPage2.Controls.Add(this.btn_Resume);
             this.tabPage2.Controls.Add(this.label15);
@@ -3315,7 +3317,7 @@ namespace InjectorInspector
             // 
             // btn_tmrPause
             // 
-            this.btn_tmrPause.Location = new System.Drawing.Point(380, 281);
+            this.btn_tmrPause.Location = new System.Drawing.Point(380, 255);
             this.btn_tmrPause.Name = "btn_tmrPause";
             this.btn_tmrPause.Size = new System.Drawing.Size(165, 40);
             this.btn_tmrPause.TabIndex = 215;
@@ -3325,7 +3327,7 @@ namespace InjectorInspector
             // 
             // btn_tmrStop
             // 
-            this.btn_tmrStop.Location = new System.Drawing.Point(200, 281);
+            this.btn_tmrStop.Location = new System.Drawing.Point(200, 255);
             this.btn_tmrStop.Name = "btn_tmrStop";
             this.btn_tmrStop.Size = new System.Drawing.Size(165, 40);
             this.btn_tmrStop.TabIndex = 214;
@@ -4740,6 +4742,16 @@ namespace InjectorInspector
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
+            // btn_tmrClear
+            // 
+            this.btn_tmrClear.Location = new System.Drawing.Point(380, 300);
+            this.btn_tmrClear.Name = "btn_tmrClear";
+            this.btn_tmrClear.Size = new System.Drawing.Size(165, 40);
+            this.btn_tmrClear.TabIndex = 222;
+            this.btn_tmrClear.Text = "清除流程";
+            this.btn_tmrClear.UseVisualStyleBackColor = true;
+            this.btn_tmrClear.Click += new System.EventHandler(this.btn_tmrClear_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -5218,6 +5230,7 @@ namespace InjectorInspector
         private ToolStripMenuItem tsmi_Reset;
         private CheckBox chk_Reserve1;
         private ToolStripMenuItem tsmi_Reserve1;
+        private Button btn_tmrClear;
     }
 }
 

@@ -7,6 +7,14 @@
       "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\inspector\\inspector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|solutionrelative:inspector\\inspector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\testform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:testform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
@@ -21,12 +29,36 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 422,
-          "SelectedChildIndex": 1,
+          "DockedHeight": 389,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Inspector.cs",
+              "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\Inspector\\Inspector.cs",
+              "RelativeDocumentMoniker": "Inspector\\Inspector.cs",
+              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Inspector\\Inspector.cs",
+              "RelativeToolTip": "Inspector\\Inspector.cs",
+              "ViewState": "AgIAAEABAAAAAAAAAAAIwFQBAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T09:13:04.99Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "TestForm.cs",
+              "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\TestForm.cs",
+              "RelativeDocumentMoniker": "TestForm.cs",
+              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\TestForm.cs",
+              "RelativeToolTip": "TestForm.cs",
+              "ViewState": "AgIAAJwBAAAAAAAAAAAuwK4BAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-15T08:19:15.074Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Viewer.cs",
               "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\Viewer.cs",
               "RelativeDocumentMoniker": "Viewer.cs",
@@ -34,8 +66,7 @@
               "RelativeToolTip": "Viewer.cs",
               "ViewState": "AgIAAJsAAAAAAAAAAAAcwLUAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-15T05:33:48.952Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-15T05:33:48.952Z"
             },
             {
               "$type": "Document",
@@ -45,27 +76,26 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAAJEAAAAAAAAAAAAuwKMAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAACgNAAAAAAAAAADwvzMNAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-15T05:01:28.826Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Form1.cs [\u8A2D\u8A08]",
               "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs [\u8A2D\u8A08]",
               "RelativeToolTip": "Form1.cs [\u8A2D\u8A08]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-15T04:54:15.79Z",
-              "EditorCaption": " [\u8A2D\u8A08]"
+              "WhenOpened": "2025-01-15T04:54:15.79Z"
             }
           ]
         },
         {
-          "DockedHeight": 77,
+          "DockedHeight": 110,
           "SelectedChildIndex": -1,
           "Children": [
             {
