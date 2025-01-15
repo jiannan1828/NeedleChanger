@@ -6,6 +6,7 @@ using netDxf;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Xml;
+using System.Drawing;
 
 namespace InjectorInspector
 {
@@ -17,6 +18,43 @@ namespace InjectorInspector
         public static DxfDocument DxfDoc = new DxfDocument();
         public static JSON Json = new JSON(); // 底下 JSON 不寫成靜態, HighlightedCircle, FocusedCircle會用到
 
+        public static JSON.Circle HighlightedCircle = null;
+        public static JSON.Circle FocusedCircle = null;
+        public static List<JSON.Circle> SelectedCircles = new List<JSON.Circle>();
+        public static List<JSON.Circle> PlacedCircles = new List<JSON.Circle>();
+
+        public static readonly Color DefaltCircleColor = Color.ForestGreen;
+        public static readonly Color HiddenCircleColor = Color.FromArgb(64, Color.ForestGreen);
+        public static readonly Color HighlightedCircleColor = Color.LightBlue;
+        public static readonly Color FocusedCircleColor = Color.Red;
+        public static readonly Color SelectedCirclesColor = Color.Pink;
+
+        public static Boundary Json_Boundary = new Boundary();
+        public static Boundary Drag_Boundary = new Boundary();
+
+        public const float ScaleFactor = 10;
+        public static float ZoomFactor = 1;
+
+        public static PointF Offset = new PointF(0, 0);
+        public static PointF PrevMousePos = new PointF(0, 0);
+        public static PointF RealMousePos = new PointF(0, 0);
+        public static PointF RealMousePosBeforeZoom = new PointF(0, 0);
+        public static PointF RealMousePosAfterZoom = new PointF(0, 0);
+
+        public static double Mouse2CircleDistance;
+
+        public static bool IsDrag = false;
+        public static PointF Drag_Start = new PointF(0, 0);
+        public static PointF Drag_End = new PointF(0, 0);
+
+        public static string[] 跑馬燈文字 = {
+            "待機",
+            "運行中",
+            "例外狀況"
+        };
+        public static int 跑馬燈文字Index = 0;
+        public static int 跑馬燈X座標 = 0;
+
         /// <summary>
         /// 讀取 DXF 後儲存到這個物件, 後面會存成 JSON 檔
         /// </summary>
@@ -26,18 +64,18 @@ namespace InjectorInspector
 
             public class Circle
             {
-                public int Index { get; set; }
-                public string Name { get; set; }
-                public string Id { get; set; }
-                public double X { get; set; }
-                public double Y { get; set; }
+                public int    Index    { get; set; }
+                public string Name     { get; set; }
+                public string Id       { get; set; }
+                public double X        { get; set; }
+                public double Y        { get; set; }
                 public double Diameter { get; set; }
-                public bool Place { get; set; }
-                public bool Remove { get; set; }
-                public bool Replace { get; set; }
-                public bool Display { get; set; }
-                public bool Enable { get; set; }
-                public string Reserve1 { get; set; }
+                public bool   Place    { get; set; }
+                public bool   Remove   { get; set; }
+                public bool   Replace  { get; set; }
+                public bool   Display  { get; set; }
+                public bool   Enable   { get; set; }
+                public bool   Reserve1 { get; set; }
                 public string Reserve2 { get; set; }
                 public string Reserve3 { get; set; }
                 public string Reserve4 { get; set; }
@@ -51,34 +89,92 @@ namespace InjectorInspector
         }
 
         /// <summary>
+        /// 所有圓形的邊界資訊
+        /// </summary>
+        /// 
+        public class Boundary
+        {
+            public float minX { get; set; }
+            public float maxX { get; set; }
+            public float minY { get; set; }
+            public float maxY { get; set; }
+            public float width { get; set; }
+            public float height { get; set; }
+        }
+
+        /// <summary>
         /// 計算 dxf 檔所有圓的邊界
         /// </summary>
-        /// <param name="dxfJson">已讀取的 JSON 資料</param>
-        /// <param name="minX">左邊界</param>
-        /// <param name="minY">上邊界</param>
-        /// <param name="maxX">右邊界</param>
-        /// <param name="maxY">下邊界</param>
-        /// <param name="width">邊界寬度</param>
-        /// <param name="height">邊界高度</param>
-        public static void find_Boundary(JSON dxfJson, out double minX, out double minY, out double maxX, out double maxY, out double width, out double height)
+        /// <param name="Json">已讀取的 JSON 資料</param>
+        public static void find_Json_Boundary(JSON Json)
         {
             // 初始化邊界
-            minX = double.MaxValue;
-            minY = double.MaxValue;
-            maxX = double.MinValue;
-            maxY = double.MinValue;
+            Json_Boundary.minX = float.MaxValue;
+            Json_Boundary.minY = float.MaxValue;
+            Json_Boundary.maxX = float.MinValue;
+            Json_Boundary.maxY = float.MinValue;
 
             // 遍歷所有圓，更新邊界
-            foreach (var circle in dxfJson.Circles)
+            foreach (var circle in Json.Circles)
             {
-                minX = Math.Min(minX, circle.X - circle.Diameter / 2-1);
-                minY = Math.Min(minY, circle.Y - circle.Diameter / 2-1);
-                maxX = Math.Max(maxX, circle.X + circle.Diameter / 2+1);
-                maxY = Math.Max(maxY, circle.Y + circle.Diameter / 2+1);
+                Json_Boundary.minX = (float)Math.Min(Json_Boundary.minX, circle.X - circle.Diameter / 2 - 1);
+                Json_Boundary.minY = (float)Math.Min(Json_Boundary.minY, circle.Y - circle.Diameter / 2 - 1);
+                Json_Boundary.maxX = (float)Math.Max(Json_Boundary.maxX, circle.X + circle.Diameter / 2 + 1);
+                Json_Boundary.maxY = (float)Math.Max(Json_Boundary.maxY, circle.Y + circle.Diameter / 2 + 1);
             }
 
-            width = maxX - minX;
-            height = maxY - minY;
+            Json_Boundary.width = Json_Boundary.maxX - Json_Boundary.minX;
+            Json_Boundary.height = Json_Boundary.maxY - Json_Boundary.minY;
+        }
+
+        /// <summary>
+        /// 將拖曳框的參數帶入 Drag_Boundary
+        /// </summary>
+        /// <param name="Drag_Start">拖曳起始位置</param>
+        /// <param name="Drag_End">拖曳結束位置</param>
+        public static void find_Drag_Boundary()
+        {
+            Drag_Boundary.minX = Math.Min(Drag_Start.X, Drag_End.X);
+            Drag_Boundary.minY = Math.Min(Drag_Start.Y, Drag_End.Y); 
+            Drag_Boundary.maxX = Math.Max(Drag_Start.X, Drag_End.X);
+            Drag_Boundary.maxY = Math.Max(Drag_Start.Y, Drag_End.Y); 
+            Drag_Boundary.width = Math.Abs(Drag_End.X - Drag_Start.X);
+            Drag_Boundary.height = Math.Abs(Drag_End.Y - Drag_Start.Y);
+        }
+
+        /// <summary>
+        /// 拖曳框找出選重的圓
+        /// </summary>
+        public static void find_Selected_Circles()
+        {
+            SelectedCircles.Clear();
+
+            foreach (var circle in Json.Circles)
+            {
+                if (Drag_Boundary.minX < (circle.X - circle.Diameter / 2) * ScaleFactor &&
+                    Drag_Boundary.minY < (circle.Y - circle.Diameter / 2) * ScaleFactor &&
+                    Drag_Boundary.maxX > (circle.X + circle.Diameter / 2) * ScaleFactor &&
+                    Drag_Boundary.maxY > (circle.Y + circle.Diameter / 2) * ScaleFactor)
+                {
+                    SelectedCircles.Add(circle);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 找出需要植針的圓
+        /// </summary>
+        public static void find_Placed_Circles()
+        {
+            PlacedCircles.Clear();
+
+            foreach (var circle in Json.Circles)
+            {
+                if (circle.Place == true)
+                {
+                    PlacedCircles.Add(circle);
+                }
+            }
         }
 
         /// <summary>
@@ -230,7 +326,7 @@ namespace InjectorInspector
         /// <param name="grp_NeedleInfo">植針資訊的 Groupbox</param>
         /// <param name="focusedCircle">在 picturebox 上按下的圓</param>
         /// <returns>無回傳值</returns>
-        public static void show_grp_NeedleInfo(GroupBox grp_NeedleInfo, JSON.Circle focusedCircle)
+        public static void show_grp_NeedleInfo(GroupBox grp_NeedleInfo)
         {
             foreach (Control control in grp_NeedleInfo.Controls)
             {
@@ -241,22 +337,22 @@ namespace InjectorInspector
                         switch (textBox.Name)
                         {
                             case "txt_Index":
-                                textBox.Text = (focusedCircle.Index).ToString();
+                                textBox.Text = (FocusedCircle.Index).ToString();
                                 break;
                             case "txt_Name":
-                                textBox.Text = focusedCircle.Name;
+                                textBox.Text = FocusedCircle.Name;
                                 break;
                             case "txt_Id":
-                                textBox.Text = focusedCircle.Id;
+                                textBox.Text = FocusedCircle.Id;
                                 break;
                             case "txt_PosX":
-                                textBox.Text = (focusedCircle.X).ToString();
+                                textBox.Text = (FocusedCircle.X).ToString();
                                 break;
                             case "txt_PosY":
-                                textBox.Text = (focusedCircle.Y).ToString();
+                                textBox.Text = (FocusedCircle.Y).ToString();
                                 break;
                             case "txt_Diameter":
-                                textBox.Text = (focusedCircle.Diameter).ToString();
+                                textBox.Text = (FocusedCircle.Diameter).ToString();
                                 break;
                         }
 
@@ -268,12 +364,14 @@ namespace InjectorInspector
                         {
                             
                             case "chk_Display":
-                                checkBox.Checked = focusedCircle.Display;
+                                checkBox.Checked = FocusedCircle.Display;
                                 break;
                             case "chk_Enable":
-                                checkBox.Checked = focusedCircle.Enable;
+                                checkBox.Checked = FocusedCircle.Enable;
                                 break;
-
+                            case "chk_Reserve1":
+                                checkBox.Checked = FocusedCircle.Reserve1;
+                                break;
                         }
 
                         break;
@@ -283,13 +381,13 @@ namespace InjectorInspector
                         switch (radioButton.Name)
                         {
                             case "rad_Place":
-                                radioButton.Checked = focusedCircle.Place;
+                                radioButton.Checked = FocusedCircle.Place;
                                 break;
                             case "rad_Remove":
-                                radioButton.Checked = focusedCircle.Remove;
+                                radioButton.Checked = FocusedCircle.Remove;
                                 break;
                             case "rad_Replace":
-                                radioButton.Checked = focusedCircle.Replace;
+                                radioButton.Checked = FocusedCircle.Replace;
                                 break;
                         }
                         break;
@@ -329,7 +427,7 @@ namespace InjectorInspector
         /// <param name="needleInfo">流水號名稱ID按下Enter傳進來的 Textbox.Name</param>
         /// <param name="focusedCircle">按下Enter要查詢的圓</param>
         /// <returns>無回傳值</returns>
-        public static void search_grp_NeedleInfo(string textBoxType, string textBoxText, ref JSON.Circle SearchCircle)
+        public static void search_grp_NeedleInfo(string textBoxType, string textBoxText)
         {
             switch (textBoxType)
             {
@@ -338,7 +436,7 @@ namespace InjectorInspector
                     {
                         if (circle.Index.ToString() == textBoxText)
                         {
-                            SearchCircle = circle;
+                            FocusedCircle = circle;
                         }
                     }
                     break;
@@ -348,7 +446,7 @@ namespace InjectorInspector
                     {
                         if (circle.Name == textBoxText)
                         {
-                            SearchCircle = circle;
+                            FocusedCircle = circle;
                         }
                     }
                     break;
@@ -358,13 +456,11 @@ namespace InjectorInspector
                     {
                         if (circle.Id == textBoxText)
                         {
-                            SearchCircle = circle;
+                            FocusedCircle = circle;
                         }
                     }
                     break;
             }
-
-
         }
     }
 }
