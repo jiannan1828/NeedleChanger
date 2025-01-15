@@ -3599,7 +3599,7 @@ namespace InjectorInspector
                         {
                             FocusedCircle = HighlightedCircle;
 
-                            show_grp_NeedleInfo(grp_NeedleInfo, FocusedCircle);
+                            show_grp_NeedleInfo(grp_NeedleInfo);
                         }
                         else
                         {
@@ -3729,8 +3729,8 @@ namespace InjectorInspector
             {
                 if (sender is TextBox textbox)
                 {
-                    Viewer.search_grp_NeedleInfo(textbox.Name, textbox.Text, ref FocusedCircle);
-                    Viewer.show_grp_NeedleInfo(grp_NeedleInfo, FocusedCircle);
+                    Viewer.search_grp_NeedleInfo(textbox.Name, textbox.Text);
+                    Viewer.show_grp_NeedleInfo(grp_NeedleInfo);
                     pic_Needles.Refresh();
                 }
             }
@@ -3762,8 +3762,8 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public void apiGetCoordinate(int iIndex, ref double dbX, ref double dbY)
         {
-            Viewer.search_grp_NeedleInfo("txt_Index", iIndex.ToString(), ref FocusedCircle);
-            Viewer.show_grp_NeedleInfo(grp_NeedleInfo, FocusedCircle);
+            search_grp_NeedleInfo("txt_Index", iIndex.ToString());
+            show_grp_NeedleInfo(grp_NeedleInfo);
             pic_Needles.Refresh();
             dbX = FocusedCircle.X;
             dbY = FocusedCircle.Y;

@@ -21,6 +21,7 @@ namespace InjectorInspector
         public static JSON.Circle HighlightedCircle = null;
         public static JSON.Circle FocusedCircle = null;
         public static List<JSON.Circle> SelectedCircles = new List<JSON.Circle>();
+        public static List<JSON.Circle> PlacedCircles = new List<JSON.Circle>();
 
         public static Boundary Json_Boundary = new Boundary();
         public static Boundary Drag_Boundary = new Boundary();
@@ -31,7 +32,7 @@ namespace InjectorInspector
         public static PointF Offset = new PointF(0, 0);
         public static PointF PrevMousePos = new PointF(0, 0);
         public static PointF RealMousePos = new PointF(0, 0);
-        public static  PointF RealMousePosBeforeZoom = new PointF(0, 0);
+        public static PointF RealMousePosBeforeZoom = new PointF(0, 0);
         public static PointF RealMousePosAfterZoom = new PointF(0, 0);
 
         public static readonly Color DefaltCircleColor = Color.ForestGreen;
@@ -138,6 +139,8 @@ namespace InjectorInspector
         /// </summary>
         public static void find_Selected_Circles()
         {
+            SelectedCircles.Clear();
+
             foreach (var circle in Json.Circles)
             {
                 if (Drag_Boundary.minX < (circle.X - circle.Diameter / 2) * ScaleFactor &&
@@ -146,6 +149,22 @@ namespace InjectorInspector
                     Drag_Boundary.maxY > (circle.Y + circle.Diameter / 2) * ScaleFactor)
                 {
                     SelectedCircles.Add(circle);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 找出需要植針的圓
+        /// </summary>
+        public static void find_Placed_Circles()
+        {
+            PlacedCircles.Clear();
+
+            foreach (var circle in Json.Circles)
+            {
+                if (circle.Place == true)
+                {
+                    PlacedCircles.Add(circle);
                 }
             }
         }
@@ -299,7 +318,7 @@ namespace InjectorInspector
         /// <param name="grp_NeedleInfo">植針資訊的 Groupbox</param>
         /// <param name="focusedCircle">在 picturebox 上按下的圓</param>
         /// <returns>無回傳值</returns>
-        public static void show_grp_NeedleInfo(GroupBox grp_NeedleInfo, JSON.Circle focusedCircle)
+        public static void show_grp_NeedleInfo(GroupBox grp_NeedleInfo)
         {
             foreach (Control control in grp_NeedleInfo.Controls)
             {
@@ -310,22 +329,22 @@ namespace InjectorInspector
                         switch (textBox.Name)
                         {
                             case "txt_Index":
-                                textBox.Text = (focusedCircle.Index).ToString();
+                                textBox.Text = (FocusedCircle.Index).ToString();
                                 break;
                             case "txt_Name":
-                                textBox.Text = focusedCircle.Name;
+                                textBox.Text = FocusedCircle.Name;
                                 break;
                             case "txt_Id":
-                                textBox.Text = focusedCircle.Id;
+                                textBox.Text = FocusedCircle.Id;
                                 break;
                             case "txt_PosX":
-                                textBox.Text = (focusedCircle.X).ToString();
+                                textBox.Text = (FocusedCircle.X).ToString();
                                 break;
                             case "txt_PosY":
-                                textBox.Text = (focusedCircle.Y).ToString();
+                                textBox.Text = (FocusedCircle.Y).ToString();
                                 break;
                             case "txt_Diameter":
-                                textBox.Text = (focusedCircle.Diameter).ToString();
+                                textBox.Text = (FocusedCircle.Diameter).ToString();
                                 break;
                         }
 
@@ -337,10 +356,10 @@ namespace InjectorInspector
                         {
                             
                             case "chk_Display":
-                                checkBox.Checked = focusedCircle.Display;
+                                checkBox.Checked = FocusedCircle.Display;
                                 break;
                             case "chk_Enable":
-                                checkBox.Checked = focusedCircle.Enable;
+                                checkBox.Checked = FocusedCircle.Enable;
                                 break;
 
                         }
@@ -352,13 +371,13 @@ namespace InjectorInspector
                         switch (radioButton.Name)
                         {
                             case "rad_Place":
-                                radioButton.Checked = focusedCircle.Place;
+                                radioButton.Checked = FocusedCircle.Place;
                                 break;
                             case "rad_Remove":
-                                radioButton.Checked = focusedCircle.Remove;
+                                radioButton.Checked = FocusedCircle.Remove;
                                 break;
                             case "rad_Replace":
-                                radioButton.Checked = focusedCircle.Replace;
+                                radioButton.Checked = FocusedCircle.Replace;
                                 break;
                         }
                         break;
@@ -398,7 +417,7 @@ namespace InjectorInspector
         /// <param name="needleInfo">流水號名稱ID按下Enter傳進來的 Textbox.Name</param>
         /// <param name="focusedCircle">按下Enter要查詢的圓</param>
         /// <returns>無回傳值</returns>
-        public static void search_grp_NeedleInfo(string textBoxType, string textBoxText, ref JSON.Circle SearchCircle)
+        public static void search_grp_NeedleInfo(string textBoxType, string textBoxText)
         {
             switch (textBoxType)
             {
@@ -407,7 +426,7 @@ namespace InjectorInspector
                     {
                         if (circle.Index.ToString() == textBoxText)
                         {
-                            SearchCircle = circle;
+                            FocusedCircle = circle;
                         }
                     }
                     break;
@@ -417,7 +436,7 @@ namespace InjectorInspector
                     {
                         if (circle.Name == textBoxText)
                         {
-                            SearchCircle = circle;
+                            FocusedCircle = circle;
                         }
                     }
                     break;
@@ -427,13 +446,11 @@ namespace InjectorInspector
                     {
                         if (circle.Id == textBoxText)
                         {
-                            SearchCircle = circle;
+                            FocusedCircle = circle;
                         }
                     }
                     break;
             }
-
-
         }
     }
 }
