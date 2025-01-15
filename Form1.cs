@@ -107,18 +107,16 @@ namespace InjectorInspector
         double dbCameraCalibrationY = 0.0;
         private void button3_Click(object sender, EventArgs e)
         {
-            Vector3 pos;
-
             //植針孔位置校正攝影機取像
+            Vector3 pos;
             bool success = inspector1.xInspSocket(out pos);
-            
-            //取得校正攝影機校正參數
-            success      = inspector1.xInspSocket植針後檢查();
             b有看到校正孔 = success;
             dbCameraCalibrationX = pos.X;
             dbCameraCalibrationY = pos.Y;
-
             label6.Text = string.Format("Socket 偵測 {0} 中心偏移 = {1:F3} , {2:F3}", success, pos.X, pos.Y);
+
+            //取得校正攝影機校正參數
+            success      = inspector1.xInspSocket植針後檢查();
             label7.Text  = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
         }
         //---------------------------------------------------------------------------------------
@@ -127,18 +125,40 @@ namespace InjectorInspector
         int    iHoleIndex         = 0;
         private void button7_Click(object sender, EventArgs e)
         {
-            double dbX = 0.0, dbY = 0.0;
+            //找下一個要植針的ID
+            int iPC = PlacedCircles.Count();
+            if(iPC == 0) { 
+                find_Placed_Circles();
+            }
+            try {
+                iHoleIndex = PlacedCircles[0].Index;  // 嘗試訪問索引 0 的元素
+            } catch (Exception ex) {
+                // 捕捉其他類型的異常
+                Console.WriteLine("發生錯誤：" + ex.Message);
+                iHoleIndex = -1;
+            }
 
-            iHoleIndex = int.Parse(txt_HoldIndex.Text);
-            apiGetCoordinate(iHoleIndex, ref dbX, ref dbY);
-            iHoleIndex++;
-            txt_HoldIndex.Text = iHoleIndex.ToString();
+            //取得目前植針ID的位置
+            if(iHoleIndex == -1) { 
+                //沒拿到
+            } else if (iHoleIndex>=0) {
+                //沒拿到
+                double dbX = 0.0, dbY = 0.0;
 
-            dbPinHolePositionX = dbX;
-            dbPinHolePositionY = dbY;
+                apiGetCoordinate(iHoleIndex, ref dbX, ref dbY);
+                txt_HoldIndex.Text = iHoleIndex.ToString();
 
-            label14.Text = dbX.ToString();
-            label15.Text = dbY.ToString();
+                dbPinHolePositionX = dbX;
+                dbPinHolePositionY = dbY;
+
+                label14.Text = dbX.ToString();
+                label15.Text = dbY.ToString();
+            }
+
+            //刪除目前的植針ID
+            if (iPC >= 1) { 
+                PlacedCircles.RemoveAt(0);
+            }
         }
         //---------------------------------------------------------------------------------------
         bool bResume = false;
@@ -2922,7 +2942,7 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_Nozzle吸料開始: {
                                     byte b吸嘴吸 = 0;
-                                    if(bTakePin == true) {  //  || bChambered == true) { 
+                                    if(bTakePin == true || bChambered == true) { 
                                         b吸嘴吸 = 1;
                                     }
                                     clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴吸)/10, (int)(WMX3IO對照.pxeIO_取料吸嘴吸)%10, b吸嘴吸);

@@ -164,8 +164,10 @@ namespace InjectorInspector
         /// <summary>
         /// 找出需要植針的圓
         /// </summary>
-        public static void find_Placed_Circles()
+        public static int find_Placed_Circles()
         {
+            int irsltCount = 0;
+
             PlacedCircles.Clear();
 
             foreach (var circle in Json.Circles)
@@ -175,6 +177,8 @@ namespace InjectorInspector
                     PlacedCircles.Add(circle);
                 }
             }
+
+            return irsltCount = PlacedCircles.Count();
         }
 
         /// <summary>
