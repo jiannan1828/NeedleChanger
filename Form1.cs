@@ -2684,7 +2684,7 @@ namespace InjectorInspector
         public const double db下視覺取像Y       = 27.05;
         public const double db下視覺取像Z       = 0;
 
-        public const double db吐料位X           = 243.000;
+        public const double db吐料位X          = 243.000;
         public const double db吐料位下降Z高度   = 2.000;
 
         public DateTime Prev_CycleTime;
@@ -3970,13 +3970,16 @@ namespace InjectorInspector
             show_grp_NeedleInfo(grp_NeedleInfo);
             pic_Needles.Refresh();
 
+            double dbTargetX = FocusedCircle.X*(-1);
+            double dbTargetY = FocusedCircle.Y*(-1);
+
             //Socket1, point0, x=137.07
             //Socket1, point0, y=602.225
-            const double OffsetX =  259.55823254488018;  //137.07
-            const double OffsetY = -494.75072809104171;  //602.225
+            const double OffsetX = -533.69823254488;   //137.07
+            const double OffsetY = -709.699271908958;  //602.225
 
-            dbX = FocusedCircle.X - OffsetX;  
-            dbY = FocusedCircle.Y - OffsetY;  
+            dbX = dbTargetX - OffsetX;  
+            dbY = dbTargetY - OffsetY;  
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------- 和尚小佛 --------------------------------------

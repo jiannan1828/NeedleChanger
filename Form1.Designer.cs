@@ -275,6 +275,8 @@ namespace InjectorInspector
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.txt_HoldIndex = new System.Windows.Forms.TextBox();
+            this.btn_Resume = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
@@ -341,6 +343,7 @@ namespace InjectorInspector
             this.tsmi_Display = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Enable = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Reset = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_Reserve1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tp_NeedlesJudge = new System.Windows.Forms.TabPage();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -416,9 +419,6 @@ namespace InjectorInspector
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
-            this.btn_Resume = new System.Windows.Forms.Button();
-            this.txt_HoldIndex = new System.Windows.Forms.TextBox();
-            this.tsmi_Reserve1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3258,6 +3258,24 @@ namespace InjectorInspector
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // txt_HoldIndex
+            // 
+            this.txt_HoldIndex.Location = new System.Drawing.Point(242, 509);
+            this.txt_HoldIndex.Name = "txt_HoldIndex";
+            this.txt_HoldIndex.Size = new System.Drawing.Size(50, 30);
+            this.txt_HoldIndex.TabIndex = 221;
+            this.txt_HoldIndex.Text = "0";
+            // 
+            // btn_Resume
+            // 
+            this.btn_Resume.Location = new System.Drawing.Point(90, 506);
+            this.btn_Resume.Name = "btn_Resume";
+            this.btn_Resume.Size = new System.Drawing.Size(142, 37);
+            this.btn_Resume.TabIndex = 220;
+            this.btn_Resume.Text = "btn_Resume";
+            this.btn_Resume.UseVisualStyleBackColor = true;
+            this.btn_Resume.Click += new System.EventHandler(this.btn_Resume_Click);
+            // 
             // label15
             // 
             this.label15.AutoSize = true;
@@ -3953,6 +3971,13 @@ namespace InjectorInspector
             this.tsmi_Reset.Name = "tsmi_Reset";
             this.tsmi_Reset.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Reset.Text = "清除";
+            // 
+            // tsmi_Reserve1
+            // 
+            this.tsmi_Reserve1.Enabled = false;
+            this.tsmi_Reserve1.Name = "tsmi_Reserve1";
+            this.tsmi_Reserve1.Size = new System.Drawing.Size(114, 22);
+            this.tsmi_Reserve1.Text = "保留";
             // 
             // tp_NeedlesJudge
             // 
@@ -4714,30 +4739,6 @@ namespace InjectorInspector
             this.tmr_Warning.Enabled = true;
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
-            // 
-            // btn_Resume
-            // 
-            this.btn_Resume.Location = new System.Drawing.Point(90, 506);
-            this.btn_Resume.Name = "btn_Resume";
-            this.btn_Resume.Size = new System.Drawing.Size(142, 37);
-            this.btn_Resume.TabIndex = 220;
-            this.btn_Resume.Text = "btn_Resume";
-            this.btn_Resume.UseVisualStyleBackColor = true;
-            this.btn_Resume.Click += new System.EventHandler(this.btn_Resume_Click);
-            // 
-            // txt_HoldIndex
-            // 
-            this.txt_HoldIndex.Location = new System.Drawing.Point(242, 509);
-            this.txt_HoldIndex.Name = "txt_HoldIndex";
-            this.txt_HoldIndex.Size = new System.Drawing.Size(50, 30);
-            this.txt_HoldIndex.TabIndex = 221;
-            this.txt_HoldIndex.Text = "0";
-            // tsmi_Reserve1
-            // 
-            this.tsmi_Reserve1.Enabled = false;
-            this.tsmi_Reserve1.Name = "tsmi_Reserve1";
-            this.tsmi_Reserve1.Size = new System.Drawing.Size(114, 22);
-            this.tsmi_Reserve1.Text = "保留";
             // 
             // Form1
             // 
