@@ -33,6 +33,8 @@ namespace InjectorInspector
             this.components = new System.ComponentModel.Container();
             this.tmr_ReadWMX3 = new System.Windows.Forms.Timer(this.components);
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.lbl_吸嘴破真空流量閥 = new System.Windows.Forms.Label();
+            this.vcb_吸嘴破真空流量閥 = new System.Windows.Forms.VScrollBar();
             this.button5 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btn_manual = new System.Windows.Forms.Button();
@@ -422,8 +424,6 @@ namespace InjectorInspector
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
             this.ttp_NeedleInfo = new System.Windows.Forms.ToolTip(this.components);
-            this.lbl_吸嘴破真空流量閥 = new System.Windows.Forms.Label();
-            this.vcb_吸嘴破真空流量閥 = new System.Windows.Forms.VScrollBar();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -612,6 +612,27 @@ namespace InjectorInspector
             this.tabJob.TabIndex = 2;
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
+            // 
+            // lbl_吸嘴破真空流量閥
+            // 
+            this.lbl_吸嘴破真空流量閥.AutoSize = true;
+            this.lbl_吸嘴破真空流量閥.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_吸嘴破真空流量閥.Location = new System.Drawing.Point(935, 20);
+            this.lbl_吸嘴破真空流量閥.Name = "lbl_吸嘴破真空流量閥";
+            this.lbl_吸嘴破真空流量閥.Size = new System.Drawing.Size(129, 13);
+            this.lbl_吸嘴破真空流量閥.TabIndex = 224;
+            this.lbl_吸嘴破真空流量閥.Text = "lbl_吸嘴破真空流量閥";
+            // 
+            // vcb_吸嘴破真空流量閥
+            // 
+            this.vcb_吸嘴破真空流量閥.Location = new System.Drawing.Point(940, 45);
+            this.vcb_吸嘴破真空流量閥.Maximum = 110;
+            this.vcb_吸嘴破真空流量閥.Minimum = -10;
+            this.vcb_吸嘴破真空流量閥.Name = "vcb_吸嘴破真空流量閥";
+            this.vcb_吸嘴破真空流量閥.Size = new System.Drawing.Size(20, 200);
+            this.vcb_吸嘴破真空流量閥.TabIndex = 223;
+            this.vcb_吸嘴破真空流量閥.Value = 110;
+            this.vcb_吸嘴破真空流量閥.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vcb流量閥_Scroll);
             // 
             // button5
             // 
@@ -4769,27 +4790,6 @@ namespace InjectorInspector
             this.tmr_Warning.Enabled = true;
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
-            // 
-            // lbl_吸嘴破真空流量閥
-            // 
-            this.lbl_吸嘴破真空流量閥.AutoSize = true;
-            this.lbl_吸嘴破真空流量閥.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴破真空流量閥.Location = new System.Drawing.Point(935, 20);
-            this.lbl_吸嘴破真空流量閥.Name = "lbl_吸嘴破真空流量閥";
-            this.lbl_吸嘴破真空流量閥.Size = new System.Drawing.Size(129, 13);
-            this.lbl_吸嘴破真空流量閥.TabIndex = 224;
-            this.lbl_吸嘴破真空流量閥.Text = "lbl_吸嘴破真空流量閥";
-            // 
-            // vcb_吸嘴破真空流量閥
-            // 
-            this.vcb_吸嘴破真空流量閥.Location = new System.Drawing.Point(940, 45);
-            this.vcb_吸嘴破真空流量閥.Maximum = 110;
-            this.vcb_吸嘴破真空流量閥.Minimum = -10;
-            this.vcb_吸嘴破真空流量閥.Name = "vcb_吸嘴破真空流量閥";
-            this.vcb_吸嘴破真空流量閥.Size = new System.Drawing.Size(20, 200);
-            this.vcb_吸嘴破真空流量閥.TabIndex = 223;
-            this.vcb_吸嘴破真空流量閥.Value = 110;
-            this.vcb_吸嘴破真空流量閥.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vcb流量閥_Scroll);
             // 
             // Form1
             // 
