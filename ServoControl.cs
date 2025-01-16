@@ -95,11 +95,11 @@ namespace InjectorInspector
             pxeIO_Addr6           =  6,  //6
             pxeIO_取料吸嘴吸      = 20,  //0 取料吸嘴溪真空
             pxeIO_下後左門鎖      = 21,  //1 下後左門鎖
-            pxeIO_取料吸嘴破真空  = 22,  //2 取料吸嘴破真空
+            pxeIO_取料吸嘴破真空舊  = 22,  //2 取料吸嘴破真空舊
             pxeIO_下後右門鎖      = 23,  //3 下後右門鎖
             pxeIO_植針Z煞車       = 24,  //4 植針Z煞車
             pxeIO_HEPA            = 25,  //5 hipa
-            pxeIO_NA_O_26         = 26,  //6 未接
+            pxeIO_取料吸嘴破真空新         = 26,  //6 pxeIO_取料吸嘴破真空新
             pxeIO_LIGHT           = 27,  //7 艙內燈
 
             pxeIO_Addr7           =  7,  //7
