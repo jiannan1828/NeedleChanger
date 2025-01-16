@@ -179,7 +179,7 @@ namespace Inspector
                 this.Invoke(new Action<int>(LoadRecipe), Num);
             else
             {
-                string dPath = string.Format("D:\\EQ\\Injector\\Recipe\\{0}.XML", Num);
+                string dPath = string.Format("{0}\\Recipe\\{1}.XML", System.Windows.Forms.Application.StartupPath, Num);
                 if (File.Exists(dPath))
                     parameter = DeSerializeXML<InspParameter>(File.ReadAllBytes(dPath));
                 num_Pin寬Min.Value = (decimal)parameter.Pin寬度Min;
@@ -187,7 +187,7 @@ namespace Inspector
                 num_Pin長Min.Value = (decimal)parameter.Pin長度Min;
                 num_Pin長Max.Value = (decimal)parameter.Pin長度Max;
                 num_Throshold.Value = (int)parameter.TrayThreshold;
-                string dPath2 = string.Format("D:\\EQ\\Injector\\Recipe\\{0}.model", Num);
+                string dPath2 = string.Format("{0}\\Recipe\\{1}.model", System.Windows.Forms.Application.StartupPath, Num);
                 if (File.Exists(dPath2))
                     HOperatorSet.ReadShapeModel(dPath2, out InspNozzle.model);
             }
@@ -199,8 +199,8 @@ namespace Inspector
                 this.Invoke(new Action<int>(LoadRecipe), Num);
             else
             {
-                string dPath = string.Format("D:\\EQ\\Injector\\Recipe\\{0}.XML", Num);
-                string dPath2 = string.Format("D:\\EQ\\Injector\\Recipe\\{0}.model", Num);
+                string dPath = string.Format("{0}\\Recipe\\{1}.XML", System.Windows.Forms.Application.StartupPath, Num);
+                string dPath2 = string.Format("{0}\\Recipe\\{1}.model", System.Windows.Forms.Application.StartupPath, Num);
                 string dDir = Path.GetDirectoryName(dPath);
                 try
                 {

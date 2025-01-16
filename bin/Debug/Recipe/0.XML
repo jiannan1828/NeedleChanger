@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<InspParameter xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <TrayThreshold>180</TrayThreshold>
+  <Pin寬度Min>0.1</Pin寬度Min>
+  <Pin寬度Max>0.4</Pin寬度Max>
+  <Pin長度Min>2</Pin長度Min>
+  <Pin長度Max>2.6</Pin長度Max>
+  <Pin相鄰距離>40</Pin相鄰距離>
+  <下視覺特徵為針頭>true</下視覺特徵為針頭>
+</InspParameter>
