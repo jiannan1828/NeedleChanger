@@ -857,7 +857,7 @@ namespace InjectorInspector
             if (wmx != null)
             {
                 // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
-                if (pData == null || addr == 0 || size == 0 || pData.Length < size)
+                if (pData == null || size == 0 || pData.Length < size)
                 {
                     return 0;  // 錯誤長度
                 }
