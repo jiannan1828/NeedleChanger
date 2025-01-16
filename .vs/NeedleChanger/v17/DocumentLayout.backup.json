@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|solutionrelative:inspector\\inspector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|d:\\needlechanger\\code\\needlechanger\\viewer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:viewer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\viewer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:viewer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,7 +29,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 389,
+          "DockedHeight": 346,
           "SelectedChildIndex": 0,
           "Children": [
             {
@@ -38,22 +38,22 @@
               "Title": "Inspector.cs",
               "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\Inspector\\Inspector.cs",
               "RelativeDocumentMoniker": "Inspector\\Inspector.cs",
-              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Inspector\\Inspector.cs",
-              "RelativeToolTip": "Inspector\\Inspector.cs",
-              "ViewState": "AgIAAMkAAAAAAAAAAAAgwMsAAAAGAAAAAAAAAA==",
+              "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Inspector\\Inspector.cs*",
+              "RelativeToolTip": "Inspector\\Inspector.cs*",
+              "ViewState": "AgIAADQBAAAAAAAAAIA3wFQBAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-16T03:03:32.003Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Viewer.cs",
               "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\Viewer.cs",
               "RelativeDocumentMoniker": "Viewer.cs",
               "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Viewer.cs",
               "RelativeToolTip": "Viewer.cs",
-              "ViewState": "AgIAAFQBAAAAAAAAAAAAAGABAAALAAAAAAAAAA==",
+              "ViewState": "AgIAAFEBAAAAAAAAAABSwGABAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-16T02:48:31.137Z",
               "EditorCaption": ""
@@ -67,19 +67,21 @@
               "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs [\u8A2D\u8A08]",
               "RelativeToolTip": "Form1.cs [\u8A2D\u8A08]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-16T02:41:28.485Z"
+              "WhenOpened": "2025-01-16T02:41:28.485Z",
+              "EditorCaption": " [\u8A2D\u8A08]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Form1.cs",
               "DocumentMoniker": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AgIAAKsOAAAAAAAAAAAuwLkOAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAAHkKAAAAAAAAAAAvwJAKAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-16T02:13:05.133Z"
+              "WhenOpened": "2025-01-16T02:13:05.133Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -91,7 +93,34 @@
               "RelativeToolTip": "Form1.Designer.cs",
               "ViewState": "AgIAAHEUAAAAAAAAAAAewH8UAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-16T02:12:26.395Z"
+              "WhenOpened": "2025-01-16T02:12:26.395Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedHeight": 153,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
             }
           ]
         }

@@ -2702,7 +2702,7 @@ namespace InjectorInspector
         public const double db取料Nozzle中心點X = 49.94;
         public const double db取料Nozzle中心點Y = 49.875;
         public const double db取料Nozzle中心點Z = 26;
-        public const double db取料Nozzle中心點R = 1.350;
+        public const double db取料Nozzle中心點R = 0;  //1.350;
 
         public const double db下視覺取像X_Start = 105;
         public const double db下視覺取像X_END   = 243.000;

@@ -341,7 +341,14 @@ namespace Inspector
         {
             try
             {
-                string FName = string.Format("D:\\Images\\{0:yyyyMMdd}\\{1}\\{0:HHmmssff}-{2},{3}.JPG", DateTime.Now, subDirectory, title, PinDeg);
+                string FolderDirection;
+                if(PinDeg >= 0) {
+                    FolderDirection = "正向";
+                } else {
+                    FolderDirection = "反向";
+                }
+
+                string FName = string.Format("D:\\Images\\{0:yyyyMMdd}\\{1}\\{4}\\{0:HHmmssff}-{2},{3}.JPG", DateTime.Now, subDirectory, title, PinDeg, FolderDirection);
                 string FDir = Path.GetDirectoryName(FName);
                 if (!Directory.Exists(FDir))
                     Directory.CreateDirectory(FDir);
@@ -1296,7 +1303,7 @@ namespace Inspector
                             var dAngle1 = dAngle.TupleDeg();
                             if (!owner.parameter.下視覺特徵為針頭)
                                 dAngle1 = dAngle1.D + 180;
-                            PinDeg = targetθ = dAngle1;
+                            owner.PinDeg = PinDeg = targetθ = dAngle1;
                         }
                         owner.DisposeObj(reduces);
                     }

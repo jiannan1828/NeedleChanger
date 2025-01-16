@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.4.0">
+<procedure name="main">
+<interface/>
+<body>
+<l>dev_get_window (WindowHandle)</l>
+<l>read_image (Image09463294socket, 'D:/Images/20241223/10441453Socket.JPG')</l>
+<l>binary_threshold (Image09463294socket, Region, 'max_separability', 'light', UsedThreshold)</l>
+<l>connection (Region, ConnectedRegions)</l>
+<l>select_shape (ConnectedRegions, SelectedRegions1, 'circularity', 'and', 0.9, 1)</l>
+<l>select_shape (SelectedRegions1, SelectedRegions2, 'outer_radius', 'and', 20, 99999)</l>
+<l>select_shape_std (SelectedRegions2, SelectedRegions, 'max_area', 70)</l>
+<l>smallest_circle (SelectedRegions, Row, Column, Radius)</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>
