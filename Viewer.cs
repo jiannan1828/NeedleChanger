@@ -24,10 +24,10 @@ namespace InjectorInspector
         public static List<JSON.Circle> PlacedCircles = new List<JSON.Circle>();
 
         public static readonly Color DefaltCircleColor = Color.ForestGreen;
-        public static readonly Color HiddenCircleColor = Color.FromArgb(64, Color.ForestGreen);
-        public static readonly Color HighlightedCircleColor = Color.LightBlue;
-        public static readonly Color FocusedCircleColor = Color.Red;
-        public static readonly Color SelectedCirclesColor = Color.Pink;
+        public static readonly Color HiddenCirclesColor = Color.FromArgb(64, Color.ForestGreen);
+        public static readonly Color FocusedCircleColor = Color.Goldenrod;
+        public static readonly Color SelectedCirclesColor = Color.MediumVioletRed;
+        public static readonly Color PlaceCirclesColor = Color.Red;
 
         public static Boundary Json_Boundary = new Boundary();
         public static Boundary Drag_Boundary = new Boundary();
@@ -42,6 +42,7 @@ namespace InjectorInspector
         public static PointF RealMousePosAfterZoom = new PointF(0, 0);
 
         public static double Mouse2CircleDistance;
+        public static bool IsMouseinCircle;
 
         public static bool IsDrag = false;
         public static PointF Drag_Start = new PointF(0, 0);
@@ -350,13 +351,13 @@ namespace InjectorInspector
                                 textBox.Text = FocusedCircle.Id;
                                 break;
                             case "txt_PosX":
-                                textBox.Text = (FocusedCircle.X).ToString();
+                                textBox.Text = (FocusedCircle.X).ToString("F3");
                                 break;
                             case "txt_PosY":
-                                textBox.Text = (FocusedCircle.Y).ToString();
+                                textBox.Text = (FocusedCircle.Y).ToString("F3");
                                 break;
                             case "txt_Diameter":
-                                textBox.Text = (FocusedCircle.Diameter).ToString();
+                                textBox.Text = (FocusedCircle.Diameter).ToString("F3");
                                 break;
                         }
 

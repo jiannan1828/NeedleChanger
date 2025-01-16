@@ -275,6 +275,7 @@ namespace InjectorInspector
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btn_tmrClear = new System.Windows.Forms.Button();
             this.txt_HoldIndex = new System.Windows.Forms.TextBox();
             this.btn_Resume = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
@@ -328,7 +329,7 @@ namespace InjectorInspector
             this.lbl_Diameter = new System.Windows.Forms.Label();
             this.txt_PosX = new System.Windows.Forms.TextBox();
             this.txt_PosY = new System.Windows.Forms.TextBox();
-            this.lbl_Pos = new System.Windows.Forms.Label();
+            this.lbl_PosX = new System.Windows.Forms.Label();
             this.txt_Id = new System.Windows.Forms.TextBox();
             this.lbl_Id = new System.Windows.Forms.Label();
             this.lbl_Name = new System.Windows.Forms.Label();
@@ -419,7 +420,8 @@ namespace InjectorInspector
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
-            this.btn_tmrClear = new System.Windows.Forms.Button();
+            this.ttp_NeedleInfo = new System.Windows.Forms.ToolTip(this.components);
+            this.label13 = new System.Windows.Forms.Label();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3260,6 +3262,16 @@ namespace InjectorInspector
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btn_tmrClear
+            // 
+            this.btn_tmrClear.Location = new System.Drawing.Point(380, 300);
+            this.btn_tmrClear.Name = "btn_tmrClear";
+            this.btn_tmrClear.Size = new System.Drawing.Size(165, 40);
+            this.btn_tmrClear.TabIndex = 222;
+            this.btn_tmrClear.Text = "清除流程";
+            this.btn_tmrClear.UseVisualStyleBackColor = true;
+            this.btn_tmrClear.Click += new System.EventHandler(this.btn_tmrClear_Click);
+            // 
             // txt_HoldIndex
             // 
             this.txt_HoldIndex.Location = new System.Drawing.Point(242, 509);
@@ -3653,6 +3665,7 @@ namespace InjectorInspector
             // grp_NeedleInfo
             // 
             this.grp_NeedleInfo.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.grp_NeedleInfo.Controls.Add(this.label13);
             this.grp_NeedleInfo.Controls.Add(this.chk_Reserve1);
             this.grp_NeedleInfo.Controls.Add(this.rad_Replace);
             this.grp_NeedleInfo.Controls.Add(this.rad_Remove);
@@ -3665,7 +3678,7 @@ namespace InjectorInspector
             this.grp_NeedleInfo.Controls.Add(this.lbl_Diameter);
             this.grp_NeedleInfo.Controls.Add(this.txt_PosX);
             this.grp_NeedleInfo.Controls.Add(this.txt_PosY);
-            this.grp_NeedleInfo.Controls.Add(this.lbl_Pos);
+            this.grp_NeedleInfo.Controls.Add(this.lbl_PosX);
             this.grp_NeedleInfo.Controls.Add(this.txt_Id);
             this.grp_NeedleInfo.Controls.Add(this.lbl_Id);
             this.grp_NeedleInfo.Controls.Add(this.lbl_Name);
@@ -3737,7 +3750,7 @@ namespace InjectorInspector
             // 
             this.lbl_Index.AutoSize = true;
             this.lbl_Index.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_Index.Location = new System.Drawing.Point(4, 41);
+            this.lbl_Index.Location = new System.Drawing.Point(3, 42);
             this.lbl_Index.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Index.Name = "lbl_Index";
             this.lbl_Index.Size = new System.Drawing.Size(55, 16);
@@ -3747,10 +3760,10 @@ namespace InjectorInspector
             // txt_Index
             // 
             this.txt_Index.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txt_Index.Location = new System.Drawing.Point(62, 35);
+            this.txt_Index.Location = new System.Drawing.Point(63, 35);
             this.txt_Index.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Index.Name = "txt_Index";
-            this.txt_Index.Size = new System.Drawing.Size(92, 28);
+            this.txt_Index.Size = new System.Drawing.Size(85, 28);
             this.txt_Index.TabIndex = 23;
             // 
             // chk_Enable
@@ -3784,11 +3797,11 @@ namespace InjectorInspector
             // txt_Diameter
             // 
             this.txt_Diameter.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txt_Diameter.Location = new System.Drawing.Point(341, 68);
+            this.txt_Diameter.Location = new System.Drawing.Point(341, 67);
             this.txt_Diameter.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Diameter.Name = "txt_Diameter";
             this.txt_Diameter.ReadOnly = true;
-            this.txt_Diameter.Size = new System.Drawing.Size(92, 28);
+            this.txt_Diameter.Size = new System.Drawing.Size(85, 28);
             this.txt_Diameter.TabIndex = 16;
             // 
             // lbl_Diameter
@@ -3805,41 +3818,41 @@ namespace InjectorInspector
             // txt_PosX
             // 
             this.txt_PosX.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txt_PosX.Location = new System.Drawing.Point(62, 68);
+            this.txt_PosX.Location = new System.Drawing.Point(63, 68);
             this.txt_PosX.Margin = new System.Windows.Forms.Padding(2);
             this.txt_PosX.Name = "txt_PosX";
             this.txt_PosX.ReadOnly = true;
-            this.txt_PosX.Size = new System.Drawing.Size(112, 28);
+            this.txt_PosX.Size = new System.Drawing.Size(85, 28);
             this.txt_PosX.TabIndex = 14;
             // 
             // txt_PosY
             // 
             this.txt_PosY.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txt_PosY.Location = new System.Drawing.Point(182, 68);
+            this.txt_PosY.Location = new System.Drawing.Point(209, 68);
             this.txt_PosY.Margin = new System.Windows.Forms.Padding(2);
             this.txt_PosY.Name = "txt_PosY";
             this.txt_PosY.ReadOnly = true;
-            this.txt_PosY.Size = new System.Drawing.Size(112, 28);
+            this.txt_PosY.Size = new System.Drawing.Size(85, 28);
             this.txt_PosY.TabIndex = 13;
             // 
-            // lbl_Pos
+            // lbl_PosX
             // 
-            this.lbl_Pos.AutoSize = true;
-            this.lbl_Pos.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_Pos.Location = new System.Drawing.Point(19, 75);
-            this.lbl_Pos.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lbl_Pos.Name = "lbl_Pos";
-            this.lbl_Pos.Size = new System.Drawing.Size(39, 16);
-            this.lbl_Pos.TabIndex = 12;
-            this.lbl_Pos.Text = "座標";
+            this.lbl_PosX.AutoSize = true;
+            this.lbl_PosX.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_PosX.Location = new System.Drawing.Point(12, 74);
+            this.lbl_PosX.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lbl_PosX.Name = "lbl_PosX";
+            this.lbl_PosX.Size = new System.Drawing.Size(47, 16);
+            this.lbl_PosX.TabIndex = 12;
+            this.lbl_PosX.Text = "座標X";
             // 
             // txt_Id
             // 
             this.txt_Id.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txt_Id.Location = new System.Drawing.Point(341, 36);
+            this.txt_Id.Location = new System.Drawing.Point(341, 35);
             this.txt_Id.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Id.Name = "txt_Id";
-            this.txt_Id.Size = new System.Drawing.Size(92, 28);
+            this.txt_Id.Size = new System.Drawing.Size(85, 28);
             this.txt_Id.TabIndex = 11;
             // 
             // lbl_Id
@@ -3867,10 +3880,10 @@ namespace InjectorInspector
             // txt_Name
             // 
             this.txt_Name.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txt_Name.Location = new System.Drawing.Point(202, 35);
+            this.txt_Name.Location = new System.Drawing.Point(209, 35);
             this.txt_Name.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Name.Name = "txt_Name";
-            this.txt_Name.Size = new System.Drawing.Size(92, 28);
+            this.txt_Name.Size = new System.Drawing.Size(85, 28);
             this.txt_Name.TabIndex = 8;
             // 
             // tab_Needles
@@ -4742,15 +4755,16 @@ namespace InjectorInspector
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
-            // btn_tmrClear
+            // label13
             // 
-            this.btn_tmrClear.Location = new System.Drawing.Point(380, 300);
-            this.btn_tmrClear.Name = "btn_tmrClear";
-            this.btn_tmrClear.Size = new System.Drawing.Size(165, 40);
-            this.btn_tmrClear.TabIndex = 222;
-            this.btn_tmrClear.Text = "清除流程";
-            this.btn_tmrClear.UseVisualStyleBackColor = true;
-            this.btn_tmrClear.Click += new System.EventHandler(this.btn_tmrClear_Click);
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label13.Location = new System.Drawing.Point(158, 74);
+            this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(47, 16);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "座標Y";
             // 
             // Form1
             // 
@@ -5207,7 +5221,7 @@ namespace InjectorInspector
         private System.Windows.Forms.Label lbl_Diameter;
         private System.Windows.Forms.TextBox txt_PosX;
         private System.Windows.Forms.TextBox txt_PosY;
-        private System.Windows.Forms.Label lbl_Pos;
+        private System.Windows.Forms.Label lbl_PosX;
         private System.Windows.Forms.TextBox txt_Id;
         private System.Windows.Forms.Label lbl_Id;
         private System.Windows.Forms.Label lbl_Name;
@@ -5231,6 +5245,8 @@ namespace InjectorInspector
         private CheckBox chk_Reserve1;
         private ToolStripMenuItem tsmi_Reserve1;
         private Button btn_tmrClear;
+        private ToolTip ttp_NeedleInfo;
+        private Label label13;
     }
 }
 

@@ -54,6 +54,7 @@
             this.ck_RealTray = new System.Windows.Forms.CheckBox();
             this.ck_PinArea = new System.Windows.Forms.CheckBox();
             this.ck_NuCarb = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_Throshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin寬Max)).BeginInit();
@@ -425,10 +426,21 @@
             this.ck_NuCarb.Text = "校正區域";
             this.ck_NuCarb.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(546, 53);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(158, 37);
+            this.button1.TabIndex = 48;
+            this.button1.Text = "下視覺建立特徵";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Inspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.ck_NuCarb);
             this.Controls.Add(this.ck_PinArea);
             this.Controls.Add(this.ck_RealTray);
@@ -488,5 +500,6 @@
         public System.Windows.Forms.CheckBox ck_RealTray;
         public System.Windows.Forms.CheckBox ck_PinArea;
         public System.Windows.Forms.CheckBox ck_NuCarb;
+        private System.Windows.Forms.Button button1;
     }
 }

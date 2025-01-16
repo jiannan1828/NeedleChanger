@@ -53,6 +53,7 @@ using System.Text.Json;
 //小佛
 using static InjectorInspector.Viewer;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
+//using static System.Windows.Forms.VisualStyles.VisualStyleElement;  //會自動長出 要手動刪掉
 
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
@@ -3627,15 +3628,6 @@ namespace InjectorInspector
             {
                 Brush fillBrush;
 
-                if (circle.Display == false)
-                {
-                    fillBrush = new SolidBrush(HiddenCircleColor);
-                }
-                else
-                {
-                    fillBrush = new SolidBrush(DefaltCircleColor);
-                }
-
                 RectangleF rectangleF = new RectangleF(
                     (float)(circle.X * ScaleFactor - circle.Diameter / 2 * ScaleFactor),
                     (float)(circle.Y * ScaleFactor - circle.Diameter / 2 * ScaleFactor),
@@ -3643,13 +3635,32 @@ namespace InjectorInspector
                     (float)(2 * circle.Diameter / 2 * ScaleFactor)
                 );
 
-                if (circle == FocusedCircle)
+                if (circle.Display == false) // 隱藏圓
+                {
+                    fillBrush = new SolidBrush(HiddenCirclesColor);
+                }
+                else if (circle.Place == true) // 植針圓
+                {
+                    fillBrush= new SolidBrush(PlaceCirclesColor);
+                }
+                else // 預設圓
+                {
+                    fillBrush = new SolidBrush(DefaltCircleColor);
+                }
+
+                if (circle == FocusedCircle) // 點擊圓
                 {
                     fillBrush = new SolidBrush(FocusedCircleColor);
                 }
-                else if (circle == HighlightedCircle)
+                else if (circle == HighlightedCircle) // 觸擊圓
                 {
-                    fillBrush = new SolidBrush(HighlightedCircleColor);
+                    fillBrush = new SolidBrush(HiddenCirclesColor);
+                    //rectangleF = new RectangleF(
+                    //    (float)((circle.X * ScaleFactor - circle.Diameter / 2 * ScaleFactor) - (circle.Diameter / 2 * ScaleFactor * 0.5)),
+                    //    (float)((circle.Y * ScaleFactor - circle.Diameter / 2 * ScaleFactor) - (circle.Diameter / 2 * ScaleFactor * 0.5)),
+                    //    (float)(2 * circle.Diameter / 2 * ScaleFactor * 1.5),
+                    //    (float)(2 * circle.Diameter / 2 * ScaleFactor * 1.5)
+                    //);
                 }
 
                 e.Graphics.FillEllipse(fillBrush, rectangleF);
@@ -3737,6 +3748,7 @@ namespace InjectorInspector
 
                 if (Mouse2CircleDistance <= circle.Diameter / 2)
                 {
+                    IsMouseinCircle = true;
 
                     HighlightedCircle = circle; // 記錄高亮的圓
 
@@ -3744,8 +3756,25 @@ namespace InjectorInspector
                 }
                 else
                 {
+                    IsMouseinCircle = false;
                     HighlightedCircle = null;
                 }
+            }
+
+            if (IsMouseinCircle) {
+                ttp_NeedleInfo.SetToolTip(
+                    pic_Needles,
+                    "流水號 : " + HighlightedCircle.Index.ToString() + "\n" +
+                    "名稱 : " + (HighlightedCircle.Name ?? "無") + "\n" +  // 如果為 null, 顯示 "無"
+                    "Id : " + (HighlightedCircle.Id ?? "無") + "\n" +
+                    "座標X : " + HighlightedCircle.X.ToString("F3") + "\n" +
+                    "座標Y : " + HighlightedCircle.Y.ToString("F3") + "\n" +
+                    "直徑 : " + HighlightedCircle.Diameter.ToString("F3") + "\n" 
+                );
+            }
+            else
+            {
+                ttp_NeedleInfo.SetToolTip(pic_Needles, string.Empty);  // 清除提示
             }
 
             pic_Needles.Refresh();
