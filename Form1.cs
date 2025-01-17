@@ -310,6 +310,10 @@ namespace InjectorInspector
                 label5.Text = "吸嘴物料分析失敗";
 
             int cntdebug = inspector1.RecvCount;
+
+            if(cB_料盤有料.Checked == true) {
+                b柔震盤有料_tmrTakePinTick = true;
+            }
         }
         //---------------------------------------------------------------------------------------
         //------------------------------ Test function with Vision ------------------------------
@@ -3018,6 +3022,11 @@ namespace InjectorInspector
         {  // start of private void tmr_TakePin_Tick(object sender, EventArgs e)
 
             lblLog.Text = xeTmrTakePin.ToString() + ", 柔震重試:" + iTakePinFinishedCNT2;
+
+            if(cB_AlwaysResume.Checked == true) {
+                bResume = true;
+            }
+
             switch (xeTmrTakePin) {
                 case xe_tmr_takepin.xett_Empty:  
                     if(bTakePin==true || bChambered==true) {
@@ -3562,6 +3571,12 @@ namespace InjectorInspector
                                     break;
                                 case xe_tmr_takepin.xett_檢查擺放座蓋板是否關閉:   
                                     int 擺放座蓋板閉合是否為4 = pDataGetInIO[((int)(WMX3IO對照.pxeIO_擺放座蓋板合) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座蓋板合) % 10);
+
+                                    if(bResume == true) {
+                                        bResume = false;
+                                        擺放座蓋板閉合是否為4 = 4;
+                                    }
+
                                     if (擺放座蓋板閉合是否為4 == 4) { 
                                         //已閉合
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認擺放座蓋板關閉;

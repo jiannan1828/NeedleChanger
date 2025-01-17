@@ -277,6 +277,9 @@ namespace InjectorInspector
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.cB_AlwaysResume = new System.Windows.Forms.CheckBox();
+            this.lbl_PinIndex = new System.Windows.Forms.Label();
+            this.btn_SwitchPointAB = new System.Windows.Forms.Button();
             this.btn_ToPointB = new System.Windows.Forms.Button();
             this.btn_ToPointA = new System.Windows.Forms.Button();
             this.lbl_計算角度 = new System.Windows.Forms.Label();
@@ -433,7 +436,7 @@ namespace InjectorInspector
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
             this.ttp_NeedleInfo = new System.Windows.Forms.ToolTip(this.components);
-            this.btn_SwitchPointAB = new System.Windows.Forms.Button();
+            this.cB_料盤有料 = new System.Windows.Forms.CheckBox();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3257,6 +3260,9 @@ namespace InjectorInspector
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.cB_料盤有料);
+            this.tabPage2.Controls.Add(this.cB_AlwaysResume);
+            this.tabPage2.Controls.Add(this.lbl_PinIndex);
             this.tabPage2.Controls.Add(this.btn_SwitchPointAB);
             this.tabPage2.Controls.Add(this.btn_ToPointB);
             this.tabPage2.Controls.Add(this.btn_ToPointA);
@@ -3306,6 +3312,35 @@ namespace InjectorInspector
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // cB_AlwaysResume
+            // 
+            this.cB_AlwaysResume.AutoSize = true;
+            this.cB_AlwaysResume.Location = new System.Drawing.Point(165, 468);
+            this.cB_AlwaysResume.Name = "cB_AlwaysResume";
+            this.cB_AlwaysResume.Size = new System.Drawing.Size(170, 23);
+            this.cB_AlwaysResume.TabIndex = 234;
+            this.cB_AlwaysResume.Text = "cB_AlwaysResume";
+            this.cB_AlwaysResume.UseVisualStyleBackColor = true;
+            // 
+            // lbl_PinIndex
+            // 
+            this.lbl_PinIndex.AutoSize = true;
+            this.lbl_PinIndex.Location = new System.Drawing.Point(34, 436);
+            this.lbl_PinIndex.Name = "lbl_PinIndex";
+            this.lbl_PinIndex.Size = new System.Drawing.Size(102, 19);
+            this.lbl_PinIndex.TabIndex = 233;
+            this.lbl_PinIndex.Text = "lbl_PinIndex";
+            // 
+            // btn_SwitchPointAB
+            // 
+            this.btn_SwitchPointAB.Location = new System.Drawing.Point(395, 540);
+            this.btn_SwitchPointAB.Name = "btn_SwitchPointAB";
+            this.btn_SwitchPointAB.Size = new System.Drawing.Size(80, 40);
+            this.btn_SwitchPointAB.TabIndex = 232;
+            this.btn_SwitchPointAB.Text = "AB交換";
+            this.btn_SwitchPointAB.UseVisualStyleBackColor = true;
+            this.btn_SwitchPointAB.Click += new System.EventHandler(this.btn_ToPointAB);
             // 
             // btn_ToPointB
             // 
@@ -3402,7 +3437,7 @@ namespace InjectorInspector
             // 
             // txt_HoldIndex
             // 
-            this.txt_HoldIndex.Location = new System.Drawing.Point(181, 451);
+            this.txt_HoldIndex.Location = new System.Drawing.Point(38, 458);
             this.txt_HoldIndex.Name = "txt_HoldIndex";
             this.txt_HoldIndex.Size = new System.Drawing.Size(50, 30);
             this.txt_HoldIndex.TabIndex = 221;
@@ -3410,9 +3445,9 @@ namespace InjectorInspector
             // 
             // btn_Resume
             // 
-            this.btn_Resume.Location = new System.Drawing.Point(29, 448);
+            this.btn_Resume.Location = new System.Drawing.Point(165, 430);
             this.btn_Resume.Name = "btn_Resume";
-            this.btn_Resume.Size = new System.Drawing.Size(142, 37);
+            this.btn_Resume.Size = new System.Drawing.Size(116, 31);
             this.btn_Resume.TabIndex = 220;
             this.btn_Resume.Text = "btn_Resume";
             this.btn_Resume.UseVisualStyleBackColor = true;
@@ -4894,15 +4929,15 @@ namespace InjectorInspector
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
-            // btn_SwitchPointAB
+            // cB_料盤有料
             // 
-            this.btn_SwitchPointAB.Location = new System.Drawing.Point(395, 540);
-            this.btn_SwitchPointAB.Name = "btn_SwitchPointAB";
-            this.btn_SwitchPointAB.Size = new System.Drawing.Size(80, 40);
-            this.btn_SwitchPointAB.TabIndex = 232;
-            this.btn_SwitchPointAB.Text = "AB交換";
-            this.btn_SwitchPointAB.UseVisualStyleBackColor = true;
-            this.btn_SwitchPointAB.Click += new System.EventHandler(this.btn_ToPointAB);
+            this.cB_料盤有料.AutoSize = true;
+            this.cB_料盤有料.Location = new System.Drawing.Point(342, 436);
+            this.cB_料盤有料.Name = "cB_料盤有料";
+            this.cB_料盤有料.Size = new System.Drawing.Size(133, 23);
+            this.cB_料盤有料.TabIndex = 235;
+            this.cB_料盤有料.Text = "cB_料盤有料";
+            this.cB_料盤有料.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -5397,6 +5432,9 @@ namespace InjectorInspector
         private Button btn_ToPointB;
         private Button btn_ToPointA;
         private Button btn_SwitchPointAB;
+        private CheckBox cB_AlwaysResume;
+        private Label lbl_PinIndex;
+        private CheckBox cB_料盤有料;
     }
 }
 
