@@ -260,6 +260,8 @@ namespace Inspector
         public bool xInsp震動盤(out List<Vector3> target) { return InspTray.Insp(out target); }
 
         public bool xCarb震動盤(out PointF Pos) { return InspTray.Carb(out Pos); }
+
+        public bool xCarb震動盤二孔(out PointF Pos, out double deg) { return InspTray.Carb2Hole(out Pos, out deg); }
         /// <summary>分析吸嘴，傳入目前吸附位置(X / Y / θ)，輸出針位置，無料 / 重疊時回覆 false</summary>
         public bool xInsp吸嘴(out double targetθ) 
         {
@@ -768,7 +770,7 @@ namespace Inspector
         Inspector owner;
         int AddL1 = 15;
         PointF CarbPos, CarbH;
-        PointF 校正點一 = new PointF(), 校正點二 = new PointF();
+        PointF 校正點一 = new PointF(), 校正點二 = new PointF(), 吸嘴中心 = new PointF();
         HTuple CarbDeg = 0.0;
 
         public InspTray區(Inspector sender, HWindowControl win)
@@ -783,9 +785,10 @@ namespace Inspector
         {
             HImage temp = new HImage("byte", width, height, buffer);
             HImage temp1 = temp.RotateImage(90.0, "constant");
-            owner.DisposeObj(temp);
-            helper.Image = temp1;
-            helper.SetImageSize(temp1);
+            HImage temp2 = temp1.RotateImage(-0.72, "constant");
+            owner.DisposeObj(temp, temp1);
+            helper.Image = temp2;
+            helper.SetImageSize(temp2);
             if (first)
             {
                 first = false;
@@ -811,13 +814,23 @@ namespace Inspector
                 HOperatorSet.AngleLx(校正點一.Y, 校正點一.X, 校正點二.Y, 校正點二.X, out CarbDeg);
                 CarbDeg = CarbDeg.TupleDeg();
             });
-            menu.Items.Add("分析校正一", null, (sender, e) =>
+            menu.Items.Add("分析校正二", null, (sender, e) =>
             {
                 Carb(out 校正點二);
                 校正點二.X = (float)owner.nozzleX - 校正點二.X;
                 校正點二.Y = (float)owner.nozzleY - 校正點二.Y;
                 HOperatorSet.AngleLx(校正點一.Y, 校正點一.X, 校正點二.Y, 校正點二.X, out CarbDeg);
                 CarbDeg = CarbDeg.TupleDeg();
+            });
+            menu.Items.Add("校正二孔", null, (sender, e) =>
+            {
+                double nDeg = 0;
+                PointF dCenter;
+                Carb2Hole(out dCenter, out nDeg);
+                吸嘴中心.X = (float)owner.nozzleX - dCenter.X;
+                吸嘴中心.Y = (float)owner.nozzleY - dCenter.Y;
+                //HOperatorSet.AngleLx(校正點一.Y, 校正點一.X, 校正點二.Y, 校正點二.X, out CarbDeg);
+                CarbDeg = nDeg;
             });
             menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "料盤", "料盤"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
@@ -1123,6 +1136,44 @@ namespace Inspector
             }
             return success;
         }
+
+        public bool Carb2Hole(out PointF Center, out double Deg)
+        {
+            bool success = false;
+            Center = new PointF(0, 0);
+            Deg = 0;
+            if (helper.ContainImage)
+            {
+                HObject temp, region, connArea, Sel1, Sel2, dSort;
+                HTuple usedT, row, col, rad, W, H;
+                HOperatorSet.CopyImage(helper.Image, out temp);
+                HOperatorSet.GetImageSize(temp, out W, out H);
+                HOperatorSet.BinaryThreshold(temp, out region, "max_separability", "light", out usedT);
+                HOperatorSet.Connection(region, out connArea);
+                HOperatorSet.SelectShape(connArea, out Sel1, "circularity", "and", 0.9, 1);
+                HOperatorSet.SelectShape(Sel1, out Sel2, "outer_radius", "and", 45, 65);
+                HOperatorSet.SortRegion(Sel2, out dSort, "first_point", "true", "column");
+                HOperatorSet.SmallestCircle(dSort, out row, out col, out rad);
+                if (row.Length == 2)
+                {
+                    var Carb1 = new PointF((float)col.DArr[0], (float)row.DArr[0]);
+                    var Carb2 = new PointF((float)col.DArr[1], (float)row.DArr[1]);
+                    double dx = (Carb1.X - Carb2.X) / 10.0 * 14.5;
+                    double dy = (Carb1.Y - Carb2.Y) / 10.0 * 14.5;
+                    double tx = Carb1.X + dx;
+                    double ty = Carb1.Y + dy;
+                    CarbH = new PointF((float)tx, (float)ty);
+                    CarbPos = Center = CCD.GetReal(tx, ty, W, H);
+                    HTuple ndeg;
+                    HOperatorSet.AngleLx(Carb1.Y, Carb1.X, Carb2.Y, Carb2.X, out ndeg);
+                    Deg = ndeg.TupleDeg().D;
+                    //CarbH = new PointF((float)col.D, (float)row.D);
+                    //CarbPos = Pos = CCD.GetReal(col.D, row.D, W, H);
+                    success = true;
+                }
+            }
+            return success;
+        }
         void ShowResult(HWindowControl Win, HObject image)
         {
             if (image == null)
@@ -1144,6 +1195,21 @@ namespace Inspector
                 if (RegionTray != null)
                     HOperatorSet.DispRegion(RegionTray, Win.HalconWindow);
             }
+            HTuple W, H;
+            if (image != null)
+            {
+                Win.HalconWindow.SetColor("green");
+                HOperatorSet.GetImageSize(image, out W, out H);
+                var LStyle = Win.HalconWindow.GetLineStyle();
+                Win.HalconWindow.SetLineStyle(7);
+                Win.HalconWindow.DispLine(H.I / 2.0, 0, H.I / 2, W.I - 1);
+                Win.HalconWindow.DispLine(0, W.I / 2.0, H.I - 1, W.I / 2.0);
+                Win.HalconWindow.SetLineStyle(LStyle);
+            }
+
+            if (owner.ck_NuCarb.Checked)
+                HOperatorSet.DispCross(Win.HalconWindow, CarbH.Y, CarbH.X, 60, 0);
+
             return;
 
             if (RegionTray != null)

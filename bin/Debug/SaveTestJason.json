@@ -88,5 +88,47 @@
     "u32Index": 15,
     "dbPosition": 36.649999999999999,
     "strNote": "\u81F3\u4E0A\u819B\u4F4D\u4E0A\u6599\u4F4D"
+  },
+  {
+    "strLabel": "\u5438\u5634Y\u8EF8",
+    "u32Index": 16,
+    "dbPosition": 50.109999999999999,
+    "strNote": "\u7AF9\u873B\u8713(R:0)\u5B54A, Y0"
+  },
+  {
+    "strLabel": "\u5438\u5634X\u8EF8",
+    "u32Index": 17,
+    "dbPosition": 35.490000000000002,
+    "strNote": "\u7AF9\u873B\u8713(R:0)\u5B54A, X0"
+  },
+  {
+    "strLabel": "\u5438\u5634Z\u8EF8",
+    "u32Index": 18,
+    "dbPosition": 26,
+    "strNote": "\u7AF9\u873B\u8713(R:0)\u5B54A, Z26"
+  },
+  {
+    "strLabel": "\u5438\u5634Z\u8EF8",
+    "u32Index": 19,
+    "dbPosition": 0,
+    "strNote": "\u539F\u9EDE"
+  },
+  {
+    "strLabel": "\u5438\u5634X\u8EF8",
+    "u32Index": 20,
+    "dbPosition": 36,
+    "strNote": "\u96D9\u908A\u7AF9\u873B\u8713Ax"
+  },
+  {
+    "strLabel": "\u5438\u5634X\u8EF8",
+    "u32Index": 21,
+    "dbPosition": 60,
+    "strNote": "\u96D9\u908A\u7AF9\u873B\u8713Bx"
+  },
+  {
+    "strLabel": "\u5438\u5634Y\u8EF8",
+    "u32Index": 22,
+    "dbPosition": 50,
+    "strNote": "\u96D9\u908A\u7AF9\u873B\u8713AyBy"
   }
 ]

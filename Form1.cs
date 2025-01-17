@@ -125,6 +125,90 @@ namespace InjectorInspector
             label7.Text  = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
         }
         //---------------------------------------------------------------------------------------
+        private void tB_PointAB_Calculate(object sender, EventArgs e)
+        {
+            System.Windows.Forms.TextBox CalculateDegreePoint = sender as System.Windows.Forms.TextBox;
+
+            const double PI = 3.14159265358979323846;
+            double Ax, Ay, Bx, By;
+
+            // 從文字框中取得點的坐標
+            Ax = Double.Parse(tB_Ax.Text);
+            Ay = Double.Parse(tB_Ay.Text);
+            Bx = Double.Parse(tB_Bx.Text);
+            By = Double.Parse(tB_By.Text);
+
+            // 計算斜率
+            double rise = By - Ay;   // 垂直變化
+            double run  = Bx - Ax;   // 水平變化
+
+            // 計算中心
+            double Cx = (Ax+Bx)/2,
+                   Cy = (Ay+By)/2;
+
+            // 確保 run 不為 0，避免除以零的錯誤
+            if (run == 0) {
+                if (rise > 0) {
+                    lbl_計算角度.Text = "夾角為 90 度(垂直向上)";
+                } else if (rise < 0) {
+                    lbl_計算角度.Text = "夾角為 270 度(垂直向下)";
+                } else {
+                    lbl_計算角度.Text = "兩點相同，無法計算夾角";
+                }
+            } else {
+                // 使用 Math.Atan2 計算角度，這樣可以處理所有象限的情況
+                double angle_radians = Math.Atan2(rise, run);
+
+                // 將角度從弧度轉換為度數
+                double angle_degrees = angle_radians * (180 / PI);
+
+                // 確保角度在-180度~180度內
+                while (180 <= angle_degrees) {
+                    angle_degrees = angle_degrees - 360;
+                }
+                while(angle_degrees <= -180) {
+                    angle_degrees = angle_degrees + 360;
+                }
+
+                // 顯示夾角
+                lbl_計算角度.Text = string.Format("Cx:{1}, Cy:{2}, 夾角: {0:F2} 度", angle_degrees, Cx, Cy);
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        private void btn_ToPointAB(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Button SetToPoint = sender as System.Windows.Forms.Button;
+
+            //吸料盤校正用
+            PointF pos = new PointF(0, 0);  // 使用正確的初始化方式
+            bool success = false;
+            if (inspector1.btn_二孔校正.Checked == false) {
+                success = inspector1.xCarb震動盤(out pos);
+                pos.X = (float)inspector1.nozzleX - pos.X;
+                pos.Y = (float)inspector1.nozzleY - pos.Y;
+                label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y);
+            }
+
+            if(SetToPoint == btn_ToPointA) {
+                tB_Ax.Text = pos.X.ToString();
+                tB_Ay.Text = pos.Y.ToString();
+            } else if(SetToPoint == btn_ToPointB) {
+                tB_Bx.Text = pos.X.ToString();
+                tB_By.Text = pos.Y.ToString();
+            } else if(SetToPoint == btn_SwitchPointAB) {
+                double dbX = 0.0, dbY = 0.0;
+
+                dbX = double.Parse(tB_Ax.Text);
+                dbY = double.Parse(tB_Ay.Text);
+
+                tB_Ax.Text = tB_Bx.Text;
+                tB_Ay.Text = tB_By.Text;
+
+                tB_Bx.Text = dbX.ToString();
+                tB_By.Text = dbY.ToString();    
+            }
+        }
+        //---------------------------------------------------------------------------------------
         double dbPinHolePositionX = 0.0;
         double dbPinHolePositionY = 0.0;
         int    iHoleIndex         = 0;
@@ -181,8 +265,28 @@ namespace InjectorInspector
         {
             //吸料盤校正用
             PointF pos;
-            bool success = inspector1.xCarb震動盤(out pos);
-            label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y);
+            double deg1;
+            bool success = false;
+            if (inspector1.btn_二孔校正.Checked)
+            {
+                success = inspector1.xCarb震動盤二孔(out pos, out deg1);
+                pos.X = (float)inspector1.nozzleX - pos.X;
+                pos.Y = (float)inspector1.nozzleY - pos.Y;
+                label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}, deg= {3:F2}", success, pos.X, pos.Y, deg1);
+            }
+            else
+            {
+                success = inspector1.xCarb震動盤(out pos);
+                pos.X = (float)inspector1.nozzleX - pos.X;
+                pos.Y = (float)inspector1.nozzleY - pos.Y;
+                label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y);
+            }
+            //bool success = inspector1.xCarb震動盤(out pos);
+            //label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y);
+            //bool success = inspector1.xCarb震動盤二孔(out pos, out deg1);
+            //pos.X = (float)inspector1.nozzleX - pos.X;
+            //pos.Y = (float)inspector1.nozzleY - pos.Y;
+            //label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}, deg= {3:F2}", success, pos.X, pos.Y, deg1);
 
             //黑色料倉
             bool 料倉有料 = inspector1.xInsp入料();
@@ -2864,10 +2968,10 @@ namespace InjectorInspector
         public bool bPause               = false;
         public bool btmrStop             = false;
         public int  itmrStop             = 1;
-        public const double db取料Nozzle中心點X = 49.94;
-        public const double db取料Nozzle中心點Y = 49.875;
+        public const double db取料Nozzle中心點X = 49.93;
+        public const double db取料Nozzle中心點Y = 49.81;
         public const double db取料Nozzle中心點Z = 26;
-        public const double db取料Nozzle中心點R = 0;  //1.350;
+        public const double db取料Nozzle中心點R = 1.34;
 
         public const double db下視覺取像X_Start = 105;
         public const double db下視覺取像X_END   = 243.000;
@@ -3110,7 +3214,11 @@ namespace InjectorInspector
                                     double dbZ = dbapiNozzleZ(dbRead, 0);
                                     double dbTargetZ = db取料Nozzle中心點Z;
                                     if( (dbTargetZ*0.99<= dbZ && dbZ <= dbTargetZ*1.01) ) { 
-                                        xeTmrTakePin = xe_tmr_takepin.xett_判斷NozzleZ吸料位安全位置;
+
+                                        if(bResume == true) {
+                                            bResume = false;
+                                            xeTmrTakePin = xe_tmr_takepin.xett_判斷NozzleZ吸料位安全位置;
+                                        }
                                     }
                                 } break;
                                 case xe_tmr_takepin.xett_判斷NozzleZ吸料位安全位置: 

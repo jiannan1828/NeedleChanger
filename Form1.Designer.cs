@@ -277,6 +277,15 @@ namespace InjectorInspector
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btn_ToPointB = new System.Windows.Forms.Button();
+            this.btn_ToPointA = new System.Windows.Forms.Button();
+            this.lbl_計算角度 = new System.Windows.Forms.Label();
+            this.tB_By = new System.Windows.Forms.TextBox();
+            this.tB_Ay = new System.Windows.Forms.TextBox();
+            this.tB_Bx = new System.Windows.Forms.TextBox();
+            this.tB_Ax = new System.Windows.Forms.TextBox();
+            this.lbl_竹蜻蜓座標B = new System.Windows.Forms.Label();
+            this.lbl_竹蜻蜓座標A = new System.Windows.Forms.Label();
             this.btn_tmrClear = new System.Windows.Forms.Button();
             this.txt_HoldIndex = new System.Windows.Forms.TextBox();
             this.btn_Resume = new System.Windows.Forms.Button();
@@ -424,6 +433,7 @@ namespace InjectorInspector
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
             this.ttp_NeedleInfo = new System.Windows.Forms.ToolTip(this.components);
+            this.btn_SwitchPointAB = new System.Windows.Forms.Button();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3247,6 +3257,16 @@ namespace InjectorInspector
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btn_SwitchPointAB);
+            this.tabPage2.Controls.Add(this.btn_ToPointB);
+            this.tabPage2.Controls.Add(this.btn_ToPointA);
+            this.tabPage2.Controls.Add(this.lbl_計算角度);
+            this.tabPage2.Controls.Add(this.tB_By);
+            this.tabPage2.Controls.Add(this.tB_Ay);
+            this.tabPage2.Controls.Add(this.tB_Bx);
+            this.tabPage2.Controls.Add(this.tB_Ax);
+            this.tabPage2.Controls.Add(this.lbl_竹蜻蜓座標B);
+            this.tabPage2.Controls.Add(this.lbl_竹蜻蜓座標A);
             this.tabPage2.Controls.Add(this.btn_tmrClear);
             this.tabPage2.Controls.Add(this.txt_HoldIndex);
             this.tabPage2.Controls.Add(this.btn_Resume);
@@ -3287,6 +3307,89 @@ namespace InjectorInspector
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // btn_ToPointB
+            // 
+            this.btn_ToPointB.Location = new System.Drawing.Point(850, 50);
+            this.btn_ToPointB.Name = "btn_ToPointB";
+            this.btn_ToPointB.Size = new System.Drawing.Size(70, 40);
+            this.btn_ToPointB.TabIndex = 231;
+            this.btn_ToPointB.Text = "To P:B";
+            this.btn_ToPointB.UseVisualStyleBackColor = true;
+            this.btn_ToPointB.Click += new System.EventHandler(this.btn_ToPointAB);
+            // 
+            // btn_ToPointA
+            // 
+            this.btn_ToPointA.Location = new System.Drawing.Point(780, 50);
+            this.btn_ToPointA.Name = "btn_ToPointA";
+            this.btn_ToPointA.Size = new System.Drawing.Size(70, 40);
+            this.btn_ToPointA.TabIndex = 230;
+            this.btn_ToPointA.Text = "To P:A";
+            this.btn_ToPointA.UseVisualStyleBackColor = true;
+            this.btn_ToPointA.Click += new System.EventHandler(this.btn_ToPointAB);
+            // 
+            // lbl_計算角度
+            // 
+            this.lbl_計算角度.AutoSize = true;
+            this.lbl_計算角度.Location = new System.Drawing.Point(34, 608);
+            this.lbl_計算角度.Name = "lbl_計算角度";
+            this.lbl_計算角度.Size = new System.Drawing.Size(156, 19);
+            this.lbl_計算角度.TabIndex = 229;
+            this.lbl_計算角度.Text = "lbl_計算角度 : 0度";
+            // 
+            // tB_By
+            // 
+            this.tB_By.Location = new System.Drawing.Point(330, 564);
+            this.tB_By.Name = "tB_By";
+            this.tB_By.Size = new System.Drawing.Size(50, 30);
+            this.tB_By.TabIndex = 228;
+            this.tB_By.Text = "0";
+            this.tB_By.TextChanged += new System.EventHandler(this.tB_PointAB_Calculate);
+            // 
+            // tB_Ay
+            // 
+            this.tB_Ay.Location = new System.Drawing.Point(330, 527);
+            this.tB_Ay.Name = "tB_Ay";
+            this.tB_Ay.Size = new System.Drawing.Size(50, 30);
+            this.tB_Ay.TabIndex = 227;
+            this.tB_Ay.Text = "0";
+            this.tB_Ay.TextChanged += new System.EventHandler(this.tB_PointAB_Calculate);
+            // 
+            // tB_Bx
+            // 
+            this.tB_Bx.Location = new System.Drawing.Point(193, 564);
+            this.tB_Bx.Name = "tB_Bx";
+            this.tB_Bx.Size = new System.Drawing.Size(50, 30);
+            this.tB_Bx.TabIndex = 226;
+            this.tB_Bx.Text = "0";
+            this.tB_Bx.TextChanged += new System.EventHandler(this.tB_PointAB_Calculate);
+            // 
+            // tB_Ax
+            // 
+            this.tB_Ax.Location = new System.Drawing.Point(194, 527);
+            this.tB_Ax.Name = "tB_Ax";
+            this.tB_Ax.Size = new System.Drawing.Size(50, 30);
+            this.tB_Ax.TabIndex = 225;
+            this.tB_Ax.Text = "0";
+            this.tB_Ax.TextChanged += new System.EventHandler(this.tB_PointAB_Calculate);
+            // 
+            // lbl_竹蜻蜓座標B
+            // 
+            this.lbl_竹蜻蜓座標B.AutoSize = true;
+            this.lbl_竹蜻蜓座標B.Location = new System.Drawing.Point(34, 575);
+            this.lbl_竹蜻蜓座標B.Name = "lbl_竹蜻蜓座標B";
+            this.lbl_竹蜻蜓座標B.Size = new System.Drawing.Size(292, 19);
+            this.lbl_竹蜻蜓座標B.TabIndex = 224;
+            this.lbl_竹蜻蜓座標B.Text = "lbl_竹蜻蜓 座標Bx               座標By";
+            // 
+            // lbl_竹蜻蜓座標A
+            // 
+            this.lbl_竹蜻蜓座標A.AutoSize = true;
+            this.lbl_竹蜻蜓座標A.Location = new System.Drawing.Point(34, 538);
+            this.lbl_竹蜻蜓座標A.Name = "lbl_竹蜻蜓座標A";
+            this.lbl_竹蜻蜓座標A.Size = new System.Drawing.Size(294, 19);
+            this.lbl_竹蜻蜓座標A.TabIndex = 223;
+            this.lbl_竹蜻蜓座標A.Text = "lbl_竹蜻蜓 座標Ax               座標Ay";
+            // 
             // btn_tmrClear
             // 
             this.btn_tmrClear.Location = new System.Drawing.Point(380, 300);
@@ -3299,7 +3402,7 @@ namespace InjectorInspector
             // 
             // txt_HoldIndex
             // 
-            this.txt_HoldIndex.Location = new System.Drawing.Point(242, 509);
+            this.txt_HoldIndex.Location = new System.Drawing.Point(181, 451);
             this.txt_HoldIndex.Name = "txt_HoldIndex";
             this.txt_HoldIndex.Size = new System.Drawing.Size(50, 30);
             this.txt_HoldIndex.TabIndex = 221;
@@ -3307,7 +3410,7 @@ namespace InjectorInspector
             // 
             // btn_Resume
             // 
-            this.btn_Resume.Location = new System.Drawing.Point(90, 506);
+            this.btn_Resume.Location = new System.Drawing.Point(29, 448);
             this.btn_Resume.Name = "btn_Resume";
             this.btn_Resume.Size = new System.Drawing.Size(142, 37);
             this.btn_Resume.TabIndex = 220;
@@ -3318,7 +3421,7 @@ namespace InjectorInspector
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(280, 374);
+            this.label15.Location = new System.Drawing.Point(161, 346);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(62, 19);
             this.label15.TabIndex = 219;
@@ -3327,7 +3430,7 @@ namespace InjectorInspector
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(280, 351);
+            this.label14.Location = new System.Drawing.Point(161, 323);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(62, 19);
             this.label14.TabIndex = 218;
@@ -3335,7 +3438,7 @@ namespace InjectorInspector
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(148, 351);
+            this.button7.Location = new System.Drawing.Point(29, 323);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(109, 42);
             this.button7.TabIndex = 217;
@@ -3346,7 +3449,7 @@ namespace InjectorInspector
             // lbl_CycleTime
             // 
             this.lbl_CycleTime.AutoSize = true;
-            this.lbl_CycleTime.Location = new System.Drawing.Point(144, 431);
+            this.lbl_CycleTime.Location = new System.Drawing.Point(25, 387);
             this.lbl_CycleTime.Name = "lbl_CycleTime";
             this.lbl_CycleTime.Size = new System.Drawing.Size(138, 19);
             this.lbl_CycleTime.TabIndex = 216;
@@ -3560,9 +3663,9 @@ namespace InjectorInspector
             // 
             // btn_取得PinInfo
             // 
-            this.btn_取得PinInfo.Location = new System.Drawing.Point(629, 52);
+            this.btn_取得PinInfo.Location = new System.Drawing.Point(630, 50);
             this.btn_取得PinInfo.Name = "btn_取得PinInfo";
-            this.btn_取得PinInfo.Size = new System.Drawing.Size(155, 40);
+            this.btn_取得PinInfo.Size = new System.Drawing.Size(150, 40);
             this.btn_取得PinInfo.TabIndex = 4;
             this.btn_取得PinInfo.Text = "btn_取得PinInfo";
             this.btn_取得PinInfo.UseVisualStyleBackColor = true;
@@ -4791,6 +4894,16 @@ namespace InjectorInspector
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
+            // btn_SwitchPointAB
+            // 
+            this.btn_SwitchPointAB.Location = new System.Drawing.Point(395, 540);
+            this.btn_SwitchPointAB.Name = "btn_SwitchPointAB";
+            this.btn_SwitchPointAB.Size = new System.Drawing.Size(80, 40);
+            this.btn_SwitchPointAB.TabIndex = 232;
+            this.btn_SwitchPointAB.Text = "AB交換";
+            this.btn_SwitchPointAB.UseVisualStyleBackColor = true;
+            this.btn_SwitchPointAB.Click += new System.EventHandler(this.btn_ToPointAB);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -5274,6 +5387,16 @@ namespace InjectorInspector
         private Label label13;
         private Label lbl_吸嘴破真空流量閥;
         private VScrollBar vcb_吸嘴破真空流量閥;
+        private Label lbl_竹蜻蜓座標B;
+        private Label lbl_竹蜻蜓座標A;
+        private TextBox tB_Bx;
+        private TextBox tB_Ax;
+        private TextBox tB_By;
+        private TextBox tB_Ay;
+        private Label lbl_計算角度;
+        private Button btn_ToPointB;
+        private Button btn_ToPointA;
+        private Button btn_SwitchPointAB;
     }
 }
 
