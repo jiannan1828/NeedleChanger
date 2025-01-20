@@ -327,6 +327,7 @@ namespace InjectorInspector
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.rtb_Status = new System.Windows.Forms.RichTextBox();
             this.lbl_ZoomFactor = new System.Windows.Forms.Label();
             this.lbl_Offset = new System.Windows.Forms.Label();
             this.lbl_PicMousePos = new System.Windows.Forms.Label();
@@ -366,7 +367,6 @@ namespace InjectorInspector
             this.label12 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pic_跑馬燈 = new System.Windows.Forms.PictureBox();
             this.grp_目前作業項目 = new System.Windows.Forms.GroupBox();
             this.grp_GroupPin2 = new System.Windows.Forms.GroupBox();
             this.txt_PogoPin2已植數量2 = new System.Windows.Forms.TextBox();
@@ -452,7 +452,6 @@ namespace InjectorInspector
             this.tp_NeedlesJudge.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_跑馬燈)).BeginInit();
             this.grp_目前作業項目.SuspendLayout();
             this.grp_GroupPin2.SuspendLayout();
             this.grp_GroupPin1.SuspendLayout();
@@ -618,11 +617,10 @@ namespace InjectorInspector
             this.tabJob.Controls.Add(this.select_吸嘴Z軸);
             this.tabJob.Controls.Add(this.select_吸嘴Y軸);
             this.tabJob.Controls.Add(this.select_吸嘴X軸);
-            this.tabJob.Location = new System.Drawing.Point(4, 34);
-            this.tabJob.Margin = new System.Windows.Forms.Padding(4);
+            this.tabJob.Location = new System.Drawing.Point(4, 29);
             this.tabJob.Name = "tabJob";
-            this.tabJob.Padding = new System.Windows.Forms.Padding(4);
-            this.tabJob.Size = new System.Drawing.Size(1537, 993);
+            this.tabJob.Padding = new System.Windows.Forms.Padding(3);
+            this.tabJob.Size = new System.Drawing.Size(1228, 792);
             this.tabJob.TabIndex = 2;
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
@@ -631,40 +629,37 @@ namespace InjectorInspector
             // 
             this.lbl_吸嘴破真空流量閥.AutoSize = true;
             this.lbl_吸嘴破真空流量閥.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴破真空流量閥.Location = new System.Drawing.Point(1169, 25);
-            this.lbl_吸嘴破真空流量閥.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_吸嘴破真空流量閥.Location = new System.Drawing.Point(935, 20);
             this.lbl_吸嘴破真空流量閥.Name = "lbl_吸嘴破真空流量閥";
-            this.lbl_吸嘴破真空流量閥.Size = new System.Drawing.Size(168, 17);
+            this.lbl_吸嘴破真空流量閥.Size = new System.Drawing.Size(129, 13);
             this.lbl_吸嘴破真空流量閥.TabIndex = 224;
             this.lbl_吸嘴破真空流量閥.Text = "lbl_吸嘴破真空流量閥";
             // 
             // vcb_吸嘴破真空流量閥
             // 
-            this.vcb_吸嘴破真空流量閥.Location = new System.Drawing.Point(1175, 56);
+            this.vcb_吸嘴破真空流量閥.Location = new System.Drawing.Point(940, 45);
             this.vcb_吸嘴破真空流量閥.Maximum = 110;
             this.vcb_吸嘴破真空流量閥.Minimum = -10;
             this.vcb_吸嘴破真空流量閥.Name = "vcb_吸嘴破真空流量閥";
-            this.vcb_吸嘴破真空流量閥.Size = new System.Drawing.Size(20, 250);
+            this.vcb_吸嘴破真空流量閥.Size = new System.Drawing.Size(20, 200);
             this.vcb_吸嘴破真空流量閥.TabIndex = 223;
             this.vcb_吸嘴破真空流量閥.Value = 110;
             this.vcb_吸嘴破真空流量閥.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vcb流量閥_Scroll);
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(856, 484);
-            this.button5.Margin = new System.Windows.Forms.Padding(4);
+            this.button5.Location = new System.Drawing.Point(685, 387);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(94, 29);
+            this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 220;
             this.button5.Text = "讀黨";
             this.button5.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(856, 408);
-            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Location = new System.Drawing.Point(685, 326);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(94, 29);
+            this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 219;
             this.button2.Text = "存檔";
             this.button2.UseVisualStyleBackColor = true;
@@ -672,10 +667,9 @@ namespace InjectorInspector
             // btn_manual
             // 
             this.btn_manual.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_manual.Location = new System.Drawing.Point(460, 510);
-            this.btn_manual.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_manual.Location = new System.Drawing.Point(368, 408);
             this.btn_manual.Name = "btn_manual";
-            this.btn_manual.Size = new System.Drawing.Size(94, 29);
+            this.btn_manual.Size = new System.Drawing.Size(75, 23);
             this.btn_manual.TabIndex = 218;
             this.btn_manual.Text = "btn_manual";
             this.btn_manual.UseVisualStyleBackColor = true;
@@ -685,20 +679,19 @@ namespace InjectorInspector
             // 
             this.lblVBLED.AutoSize = true;
             this.lblVBLED.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblVBLED.Location = new System.Drawing.Point(460, 454);
-            this.lblVBLED.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblVBLED.Location = new System.Drawing.Point(368, 363);
             this.lblVBLED.Name = "lblVBLED";
-            this.lblVBLED.Size = new System.Drawing.Size(79, 17);
+            this.lblVBLED.Size = new System.Drawing.Size(59, 13);
             this.lblVBLED.TabIndex = 217;
             this.lblVBLED.Text = "lblVBLED";
             // 
             // SB_VBLED
             // 
-            this.SB_VBLED.Location = new System.Drawing.Point(538, 449);
+            this.SB_VBLED.Location = new System.Drawing.Point(430, 359);
             this.SB_VBLED.Maximum = 50;
             this.SB_VBLED.Minimum = 5;
             this.SB_VBLED.Name = "SB_VBLED";
-            this.SB_VBLED.Size = new System.Drawing.Size(220, 20);
+            this.SB_VBLED.Size = new System.Drawing.Size(176, 20);
             this.SB_VBLED.TabIndex = 216;
             this.SB_VBLED.Value = 33;
             this.SB_VBLED.Scroll += new System.Windows.Forms.ScrollEventHandler(this.SB_VBLED_Scroll);
@@ -708,10 +701,9 @@ namespace InjectorInspector
             this.lbl料倉.AutoSize = true;
             this.lbl料倉.BackColor = System.Drawing.Color.Green;
             this.lbl料倉.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl料倉.Location = new System.Drawing.Point(690, 381);
-            this.lbl料倉.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl料倉.Location = new System.Drawing.Point(552, 305);
             this.lbl料倉.Name = "lbl料倉";
-            this.lbl料倉.Size = new System.Drawing.Size(58, 17);
+            this.lbl料倉.Size = new System.Drawing.Size(45, 13);
             this.lbl料倉.TabIndex = 215;
             this.lbl料倉.Text = "lbl料倉";
             this.lbl料倉.Click += new System.EventHandler(this.lbl柔震index);
@@ -721,10 +713,9 @@ namespace InjectorInspector
             this.lbl上下收.AutoSize = true;
             this.lbl上下收.BackColor = System.Drawing.Color.Green;
             this.lbl上下收.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl上下收.Location = new System.Drawing.Point(540, 381);
-            this.lbl上下收.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl上下收.Location = new System.Drawing.Point(432, 305);
             this.lbl上下收.Name = "lbl上下收";
-            this.lbl上下收.Size = new System.Drawing.Size(75, 17);
+            this.lbl上下收.Size = new System.Drawing.Size(58, 13);
             this.lbl上下收.TabIndex = 214;
             this.lbl上下收.Text = "lbl上下收";
             this.lbl上下收.Click += new System.EventHandler(this.lbl柔震index);
@@ -734,10 +725,9 @@ namespace InjectorInspector
             this.lbl震散.AutoSize = true;
             this.lbl震散.BackColor = System.Drawing.Color.Red;
             this.lbl震散.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl震散.Location = new System.Drawing.Point(484, 381);
-            this.lbl震散.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl震散.Location = new System.Drawing.Point(387, 305);
             this.lbl震散.Name = "lbl震散";
-            this.lbl震散.Size = new System.Drawing.Size(58, 17);
+            this.lbl震散.Size = new System.Drawing.Size(45, 13);
             this.lbl震散.TabIndex = 213;
             this.lbl震散.Text = "lbl震散";
             this.lbl震散.Click += new System.EventHandler(this.lbl柔震index);
@@ -747,10 +737,9 @@ namespace InjectorInspector
             this.lbl左右收.AutoSize = true;
             this.lbl左右收.BackColor = System.Drawing.Color.Green;
             this.lbl左右收.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl左右收.Location = new System.Drawing.Point(615, 381);
-            this.lbl左右收.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl左右收.Location = new System.Drawing.Point(492, 305);
             this.lbl左右收.Name = "lbl左右收";
-            this.lbl左右收.Size = new System.Drawing.Size(75, 17);
+            this.lbl左右收.Size = new System.Drawing.Size(58, 13);
             this.lbl左右收.TabIndex = 212;
             this.lbl左右收.Text = "lbl左右收";
             this.lbl左右收.Click += new System.EventHandler(this.lbl柔震index);
@@ -758,10 +747,9 @@ namespace InjectorInspector
             // lbl_debug
             // 
             this.lbl_debug.AutoSize = true;
-            this.lbl_debug.Location = new System.Drawing.Point(990, 446);
-            this.lbl_debug.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_debug.Location = new System.Drawing.Point(792, 357);
             this.lbl_debug.Name = "lbl_debug";
-            this.lbl_debug.Size = new System.Drawing.Size(98, 24);
+            this.lbl_debug.Size = new System.Drawing.Size(81, 19);
             this.lbl_debug.TabIndex = 211;
             this.lbl_debug.Text = "lbl_debug";
             // 
@@ -769,20 +757,18 @@ namespace InjectorInspector
             // 
             this.lbl_植針吹氣流量閥.AutoSize = true;
             this.lbl_植針吹氣流量閥.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_植針吹氣流量閥.Location = new System.Drawing.Point(1362, 25);
-            this.lbl_植針吹氣流量閥.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_植針吹氣流量閥.Location = new System.Drawing.Point(1090, 20);
             this.lbl_植針吹氣流量閥.Name = "lbl_植針吹氣流量閥";
-            this.lbl_植針吹氣流量閥.Size = new System.Drawing.Size(151, 17);
+            this.lbl_植針吹氣流量閥.Size = new System.Drawing.Size(116, 13);
             this.lbl_植針吹氣流量閥.TabIndex = 210;
             this.lbl_植針吹氣流量閥.Text = "lbl_植針吹氣流量閥";
             // 
             // btn_minus_d001
             // 
             this.btn_minus_d001.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_minus_d001.Location = new System.Drawing.Point(312, 374);
-            this.btn_minus_d001.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_minus_d001.Location = new System.Drawing.Point(250, 299);
             this.btn_minus_d001.Name = "btn_minus_d001";
-            this.btn_minus_d001.Size = new System.Drawing.Size(94, 29);
+            this.btn_minus_d001.Size = new System.Drawing.Size(75, 23);
             this.btn_minus_d001.TabIndex = 209;
             this.btn_minus_d001.Text = "-0.001";
             this.btn_minus_d001.UseVisualStyleBackColor = true;
@@ -791,10 +777,9 @@ namespace InjectorInspector
             // btn_plus_d001
             // 
             this.btn_plus_d001.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plus_d001.Location = new System.Drawing.Point(194, 374);
-            this.btn_plus_d001.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_plus_d001.Location = new System.Drawing.Point(155, 299);
             this.btn_plus_d001.Name = "btn_plus_d001";
-            this.btn_plus_d001.Size = new System.Drawing.Size(94, 29);
+            this.btn_plus_d001.Size = new System.Drawing.Size(75, 23);
             this.btn_plus_d001.TabIndex = 208;
             this.btn_plus_d001.Text = "+0.001";
             this.btn_plus_d001.UseVisualStyleBackColor = true;
@@ -803,10 +788,9 @@ namespace InjectorInspector
             // btn_minus_d01
             // 
             this.btn_minus_d01.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_minus_d01.Location = new System.Drawing.Point(312, 410);
-            this.btn_minus_d01.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_minus_d01.Location = new System.Drawing.Point(250, 328);
             this.btn_minus_d01.Name = "btn_minus_d01";
-            this.btn_minus_d01.Size = new System.Drawing.Size(94, 29);
+            this.btn_minus_d01.Size = new System.Drawing.Size(75, 23);
             this.btn_minus_d01.TabIndex = 207;
             this.btn_minus_d01.Text = "-0.01";
             this.btn_minus_d01.UseVisualStyleBackColor = true;
@@ -815,10 +799,9 @@ namespace InjectorInspector
             // btn_plus_d01
             // 
             this.btn_plus_d01.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plus_d01.Location = new System.Drawing.Point(194, 410);
-            this.btn_plus_d01.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_plus_d01.Location = new System.Drawing.Point(155, 328);
             this.btn_plus_d01.Name = "btn_plus_d01";
-            this.btn_plus_d01.Size = new System.Drawing.Size(94, 29);
+            this.btn_plus_d01.Size = new System.Drawing.Size(75, 23);
             this.btn_plus_d01.TabIndex = 206;
             this.btn_plus_d01.Text = "+0.01";
             this.btn_plus_d01.UseVisualStyleBackColor = true;
@@ -827,10 +810,9 @@ namespace InjectorInspector
             // btn_minus_d1
             // 
             this.btn_minus_d1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_minus_d1.Location = new System.Drawing.Point(312, 446);
-            this.btn_minus_d1.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_minus_d1.Location = new System.Drawing.Point(250, 357);
             this.btn_minus_d1.Name = "btn_minus_d1";
-            this.btn_minus_d1.Size = new System.Drawing.Size(94, 29);
+            this.btn_minus_d1.Size = new System.Drawing.Size(75, 23);
             this.btn_minus_d1.TabIndex = 205;
             this.btn_minus_d1.Text = "-0.1";
             this.btn_minus_d1.UseVisualStyleBackColor = true;
@@ -839,10 +821,9 @@ namespace InjectorInspector
             // btn_plus_d1
             // 
             this.btn_plus_d1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plus_d1.Location = new System.Drawing.Point(194, 446);
-            this.btn_plus_d1.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_plus_d1.Location = new System.Drawing.Point(155, 357);
             this.btn_plus_d1.Name = "btn_plus_d1";
-            this.btn_plus_d1.Size = new System.Drawing.Size(94, 29);
+            this.btn_plus_d1.Size = new System.Drawing.Size(75, 23);
             this.btn_plus_d1.TabIndex = 204;
             this.btn_plus_d1.Text = "+0.1";
             this.btn_plus_d1.UseVisualStyleBackColor = true;
@@ -850,11 +831,11 @@ namespace InjectorInspector
             // 
             // vcb_植針吹氣流量閥
             // 
-            this.vcb_植針吹氣流量閥.Location = new System.Drawing.Point(1369, 56);
+            this.vcb_植針吹氣流量閥.Location = new System.Drawing.Point(1095, 45);
             this.vcb_植針吹氣流量閥.Maximum = 110;
             this.vcb_植針吹氣流量閥.Minimum = -10;
             this.vcb_植針吹氣流量閥.Name = "vcb_植針吹氣流量閥";
-            this.vcb_植針吹氣流量閥.Size = new System.Drawing.Size(20, 250);
+            this.vcb_植針吹氣流量閥.Size = new System.Drawing.Size(20, 200);
             this.vcb_植針吹氣流量閥.TabIndex = 202;
             this.vcb_植針吹氣流量閥.Value = 110;
             this.vcb_植針吹氣流量閥.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vcb流量閥_Scroll);
@@ -862,10 +843,9 @@ namespace InjectorInspector
             // btnVibrationStop
             // 
             this.btnVibrationStop.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnVibrationStop.Location = new System.Drawing.Point(612, 410);
-            this.btnVibrationStop.Margin = new System.Windows.Forms.Padding(4);
+            this.btnVibrationStop.Location = new System.Drawing.Point(490, 328);
             this.btnVibrationStop.Name = "btnVibrationStop";
-            this.btnVibrationStop.Size = new System.Drawing.Size(145, 29);
+            this.btnVibrationStop.Size = new System.Drawing.Size(116, 23);
             this.btnVibrationStop.TabIndex = 199;
             this.btnVibrationStop.Text = "btnVibrationStop";
             this.btnVibrationStop.UseVisualStyleBackColor = true;
@@ -874,10 +854,9 @@ namespace InjectorInspector
             // btnVibrationInit
             // 
             this.btnVibrationInit.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnVibrationInit.Location = new System.Drawing.Point(460, 410);
-            this.btnVibrationInit.Margin = new System.Windows.Forms.Padding(4);
+            this.btnVibrationInit.Location = new System.Drawing.Point(368, 328);
             this.btnVibrationInit.Name = "btnVibrationInit";
-            this.btnVibrationInit.Size = new System.Drawing.Size(145, 29);
+            this.btnVibrationInit.Size = new System.Drawing.Size(116, 23);
             this.btnVibrationInit.TabIndex = 198;
             this.btnVibrationInit.Text = "btnVibrationInit";
             this.btnVibrationInit.UseVisualStyleBackColor = true;
@@ -887,10 +866,9 @@ namespace InjectorInspector
             // 
             this.lbl_JoDell吸針嘴_Convert.AutoSize = true;
             this.lbl_JoDell吸針嘴_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell吸針嘴_Convert.Location = new System.Drawing.Point(738, 306);
-            this.lbl_JoDell吸針嘴_Convert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_JoDell吸針嘴_Convert.Location = new System.Drawing.Point(590, 245);
             this.lbl_JoDell吸針嘴_Convert.Name = "lbl_JoDell吸針嘴_Convert";
-            this.lbl_JoDell吸針嘴_Convert.Size = new System.Drawing.Size(183, 17);
+            this.lbl_JoDell吸針嘴_Convert.Size = new System.Drawing.Size(139, 13);
             this.lbl_JoDell吸針嘴_Convert.TabIndex = 197;
             this.lbl_JoDell吸針嘴_Convert.Text = "lbl_JoDell吸針嘴_Convert";
             // 
@@ -898,10 +876,9 @@ namespace InjectorInspector
             // 
             this.lbl_JoDell吸針嘴_Back.AutoSize = true;
             this.lbl_JoDell吸針嘴_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell吸針嘴_Back.Location = new System.Drawing.Point(962, 306);
-            this.lbl_JoDell吸針嘴_Back.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_JoDell吸針嘴_Back.Location = new System.Drawing.Point(770, 245);
             this.lbl_JoDell吸針嘴_Back.Name = "lbl_JoDell吸針嘴_Back";
-            this.lbl_JoDell吸針嘴_Back.Size = new System.Drawing.Size(165, 17);
+            this.lbl_JoDell吸針嘴_Back.Size = new System.Drawing.Size(125, 13);
             this.lbl_JoDell吸針嘴_Back.TabIndex = 196;
             this.lbl_JoDell吸針嘴_Back.Text = "lbl_JoDell吸針嘴_Back";
             // 
@@ -909,10 +886,9 @@ namespace InjectorInspector
             // 
             this.lbl_JoDell吸針嘴_RAW.AutoSize = true;
             this.lbl_JoDell吸針嘴_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell吸針嘴_RAW.Location = new System.Drawing.Point(525, 306);
-            this.lbl_JoDell吸針嘴_RAW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_JoDell吸針嘴_RAW.Location = new System.Drawing.Point(420, 245);
             this.lbl_JoDell吸針嘴_RAW.Name = "lbl_JoDell吸針嘴_RAW";
-            this.lbl_JoDell吸針嘴_RAW.Size = new System.Drawing.Size(170, 17);
+            this.lbl_JoDell吸針嘴_RAW.Size = new System.Drawing.Size(130, 13);
             this.lbl_JoDell吸針嘴_RAW.TabIndex = 195;
             this.lbl_JoDell吸針嘴_RAW.Text = "lbl_JoDell吸針嘴_RAW";
             // 
@@ -920,10 +896,9 @@ namespace InjectorInspector
             // 
             this.en_JoDell吸針嘴.AutoSize = true;
             this.en_JoDell吸針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_JoDell吸針嘴.Location = new System.Drawing.Point(31, 306);
-            this.en_JoDell吸針嘴.Margin = new System.Windows.Forms.Padding(4);
+            this.en_JoDell吸針嘴.Location = new System.Drawing.Point(25, 245);
             this.en_JoDell吸針嘴.Name = "en_JoDell吸針嘴";
-            this.en_JoDell吸針嘴.Size = new System.Drawing.Size(74, 21);
+            this.en_JoDell吸針嘴.Size = new System.Drawing.Size(58, 17);
             this.en_JoDell吸針嘴.TabIndex = 194;
             this.en_JoDell吸針嘴.Text = "Enable";
             this.en_JoDell吸針嘴.UseVisualStyleBackColor = true;
@@ -933,10 +908,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_JoDell吸針嘴.AutoSize = true;
             this.lbl_acpos_JoDell吸針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell吸針嘴.Location = new System.Drawing.Point(425, 306);
-            this.lbl_acpos_JoDell吸針嘴.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_JoDell吸針嘴.Location = new System.Drawing.Point(340, 245);
             this.lbl_acpos_JoDell吸針嘴.Name = "lbl_acpos_JoDell吸針嘴";
-            this.lbl_acpos_JoDell吸針嘴.Size = new System.Drawing.Size(36, 17);
+            this.lbl_acpos_JoDell吸針嘴.Size = new System.Drawing.Size(28, 13);
             this.lbl_acpos_JoDell吸針嘴.TabIndex = 193;
             this.lbl_acpos_JoDell吸針嘴.Text = "0.00";
             // 
@@ -944,10 +918,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_JoDell吸針嘴_lbl.AutoSize = true;
             this.lbl_acpos_JoDell吸針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell吸針嘴_lbl.Location = new System.Drawing.Point(362, 306);
-            this.lbl_acpos_JoDell吸針嘴_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_JoDell吸針嘴_lbl.Location = new System.Drawing.Point(290, 245);
             this.lbl_acpos_JoDell吸針嘴_lbl.Name = "lbl_acpos_JoDell吸針嘴_lbl";
-            this.lbl_acpos_JoDell吸針嘴_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_acpos_JoDell吸針嘴_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_acpos_JoDell吸針嘴_lbl.TabIndex = 192;
             this.lbl_acpos_JoDell吸針嘴_lbl.Text = "acpos";
             // 
@@ -955,10 +928,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_JoDell吸針嘴.AutoSize = true;
             this.lbl_spd_JoDell吸針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell吸針嘴.Location = new System.Drawing.Point(288, 306);
-            this.lbl_spd_JoDell吸針嘴.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_JoDell吸針嘴.Location = new System.Drawing.Point(230, 245);
             this.lbl_spd_JoDell吸針嘴.Name = "lbl_spd_JoDell吸針嘴";
-            this.lbl_spd_JoDell吸針嘴.Size = new System.Drawing.Size(36, 17);
+            this.lbl_spd_JoDell吸針嘴.Size = new System.Drawing.Size(28, 13);
             this.lbl_spd_JoDell吸針嘴.TabIndex = 191;
             this.lbl_spd_JoDell吸針嘴.Text = "0.00";
             // 
@@ -966,10 +938,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_JoDell吸針嘴_lbl.AutoSize = true;
             this.lbl_spd_JoDell吸針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell吸針嘴_lbl.Location = new System.Drawing.Point(225, 306);
-            this.lbl_spd_JoDell吸針嘴_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_JoDell吸針嘴_lbl.Location = new System.Drawing.Point(180, 245);
             this.lbl_spd_JoDell吸針嘴_lbl.Name = "lbl_spd_JoDell吸針嘴_lbl";
-            this.lbl_spd_JoDell吸針嘴_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_spd_JoDell吸針嘴_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_spd_JoDell吸針嘴_lbl.TabIndex = 190;
             this.lbl_spd_JoDell吸針嘴_lbl.Text = "speed";
             // 
@@ -977,10 +948,9 @@ namespace InjectorInspector
             // 
             this.select_JoDell吸針嘴.AutoSize = true;
             this.select_JoDell吸針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_JoDell吸針嘴.Location = new System.Drawing.Point(119, 306);
-            this.select_JoDell吸針嘴.Margin = new System.Windows.Forms.Padding(4);
+            this.select_JoDell吸針嘴.Location = new System.Drawing.Point(95, 245);
             this.select_JoDell吸針嘴.Name = "select_JoDell吸針嘴";
-            this.select_JoDell吸針嘴.Size = new System.Drawing.Size(80, 21);
+            this.select_JoDell吸針嘴.Size = new System.Drawing.Size(64, 17);
             this.select_JoDell吸針嘴.TabIndex = 189;
             this.select_JoDell吸針嘴.Text = "吸針嘴";
             this.select_JoDell吸針嘴.UseVisualStyleBackColor = true;
@@ -990,10 +960,9 @@ namespace InjectorInspector
             // 
             this.lbl_JoDell3D掃描_Convert.AutoSize = true;
             this.lbl_JoDell3D掃描_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell3D掃描_Convert.Location = new System.Drawing.Point(738, 281);
-            this.lbl_JoDell3D掃描_Convert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_JoDell3D掃描_Convert.Location = new System.Drawing.Point(590, 225);
             this.lbl_JoDell3D掃描_Convert.Name = "lbl_JoDell3D掃描_Convert";
-            this.lbl_JoDell3D掃描_Convert.Size = new System.Drawing.Size(186, 17);
+            this.lbl_JoDell3D掃描_Convert.Size = new System.Drawing.Size(141, 13);
             this.lbl_JoDell3D掃描_Convert.TabIndex = 188;
             this.lbl_JoDell3D掃描_Convert.Text = "lbl_JoDell3D掃描_Convert";
             // 
@@ -1001,10 +970,9 @@ namespace InjectorInspector
             // 
             this.lbl_JoDell3D掃描_Back.AutoSize = true;
             this.lbl_JoDell3D掃描_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell3D掃描_Back.Location = new System.Drawing.Point(962, 281);
-            this.lbl_JoDell3D掃描_Back.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_JoDell3D掃描_Back.Location = new System.Drawing.Point(770, 225);
             this.lbl_JoDell3D掃描_Back.Name = "lbl_JoDell3D掃描_Back";
-            this.lbl_JoDell3D掃描_Back.Size = new System.Drawing.Size(168, 17);
+            this.lbl_JoDell3D掃描_Back.Size = new System.Drawing.Size(127, 13);
             this.lbl_JoDell3D掃描_Back.TabIndex = 187;
             this.lbl_JoDell3D掃描_Back.Text = "lbl_JoDell3D掃描_Back";
             // 
@@ -1012,10 +980,9 @@ namespace InjectorInspector
             // 
             this.lbl_JoDell3D掃描_RAW.AutoSize = true;
             this.lbl_JoDell3D掃描_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell3D掃描_RAW.Location = new System.Drawing.Point(525, 281);
-            this.lbl_JoDell3D掃描_RAW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_JoDell3D掃描_RAW.Location = new System.Drawing.Point(420, 225);
             this.lbl_JoDell3D掃描_RAW.Name = "lbl_JoDell3D掃描_RAW";
-            this.lbl_JoDell3D掃描_RAW.Size = new System.Drawing.Size(173, 17);
+            this.lbl_JoDell3D掃描_RAW.Size = new System.Drawing.Size(132, 13);
             this.lbl_JoDell3D掃描_RAW.TabIndex = 186;
             this.lbl_JoDell3D掃描_RAW.Text = "lbl_JoDell3D掃描_RAW";
             // 
@@ -1023,10 +990,9 @@ namespace InjectorInspector
             // 
             this.en_JoDell3D掃描.AutoSize = true;
             this.en_JoDell3D掃描.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_JoDell3D掃描.Location = new System.Drawing.Point(31, 281);
-            this.en_JoDell3D掃描.Margin = new System.Windows.Forms.Padding(4);
+            this.en_JoDell3D掃描.Location = new System.Drawing.Point(25, 225);
             this.en_JoDell3D掃描.Name = "en_JoDell3D掃描";
-            this.en_JoDell3D掃描.Size = new System.Drawing.Size(74, 21);
+            this.en_JoDell3D掃描.Size = new System.Drawing.Size(58, 17);
             this.en_JoDell3D掃描.TabIndex = 185;
             this.en_JoDell3D掃描.Text = "Enable";
             this.en_JoDell3D掃描.UseVisualStyleBackColor = true;
@@ -1036,10 +1002,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_JoDell3D掃描.AutoSize = true;
             this.lbl_acpos_JoDell3D掃描.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell3D掃描.Location = new System.Drawing.Point(425, 281);
-            this.lbl_acpos_JoDell3D掃描.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_JoDell3D掃描.Location = new System.Drawing.Point(340, 225);
             this.lbl_acpos_JoDell3D掃描.Name = "lbl_acpos_JoDell3D掃描";
-            this.lbl_acpos_JoDell3D掃描.Size = new System.Drawing.Size(36, 17);
+            this.lbl_acpos_JoDell3D掃描.Size = new System.Drawing.Size(28, 13);
             this.lbl_acpos_JoDell3D掃描.TabIndex = 184;
             this.lbl_acpos_JoDell3D掃描.Text = "0.00";
             // 
@@ -1047,10 +1012,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_JoDell3D掃描_lbl.AutoSize = true;
             this.lbl_acpos_JoDell3D掃描_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell3D掃描_lbl.Location = new System.Drawing.Point(362, 281);
-            this.lbl_acpos_JoDell3D掃描_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_JoDell3D掃描_lbl.Location = new System.Drawing.Point(290, 225);
             this.lbl_acpos_JoDell3D掃描_lbl.Name = "lbl_acpos_JoDell3D掃描_lbl";
-            this.lbl_acpos_JoDell3D掃描_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_acpos_JoDell3D掃描_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_acpos_JoDell3D掃描_lbl.TabIndex = 183;
             this.lbl_acpos_JoDell3D掃描_lbl.Text = "acpos";
             // 
@@ -1058,10 +1022,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_JoDell3D掃描.AutoSize = true;
             this.lbl_spd_JoDell3D掃描.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell3D掃描.Location = new System.Drawing.Point(288, 281);
-            this.lbl_spd_JoDell3D掃描.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_JoDell3D掃描.Location = new System.Drawing.Point(230, 225);
             this.lbl_spd_JoDell3D掃描.Name = "lbl_spd_JoDell3D掃描";
-            this.lbl_spd_JoDell3D掃描.Size = new System.Drawing.Size(36, 17);
+            this.lbl_spd_JoDell3D掃描.Size = new System.Drawing.Size(28, 13);
             this.lbl_spd_JoDell3D掃描.TabIndex = 182;
             this.lbl_spd_JoDell3D掃描.Text = "0.00";
             // 
@@ -1069,10 +1032,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_JoDell3D掃描_lbl.AutoSize = true;
             this.lbl_spd_JoDell3D掃描_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell3D掃描_lbl.Location = new System.Drawing.Point(225, 281);
-            this.lbl_spd_JoDell3D掃描_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_JoDell3D掃描_lbl.Location = new System.Drawing.Point(180, 225);
             this.lbl_spd_JoDell3D掃描_lbl.Name = "lbl_spd_JoDell3D掃描_lbl";
-            this.lbl_spd_JoDell3D掃描_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_spd_JoDell3D掃描_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_spd_JoDell3D掃描_lbl.TabIndex = 181;
             this.lbl_spd_JoDell3D掃描_lbl.Text = "speed";
             // 
@@ -1080,10 +1042,9 @@ namespace InjectorInspector
             // 
             this.select_JoDell3D掃描.AutoSize = true;
             this.select_JoDell3D掃描.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_JoDell3D掃描.Location = new System.Drawing.Point(119, 281);
-            this.select_JoDell3D掃描.Margin = new System.Windows.Forms.Padding(4);
+            this.select_JoDell3D掃描.Location = new System.Drawing.Point(95, 225);
             this.select_JoDell3D掃描.Name = "select_JoDell3D掃描";
-            this.select_JoDell3D掃描.Size = new System.Drawing.Size(83, 21);
+            this.select_JoDell3D掃描.Size = new System.Drawing.Size(66, 17);
             this.select_JoDell3D掃描.TabIndex = 180;
             this.select_JoDell3D掃描.Text = "3D掃描";
             this.select_JoDell3D掃描.UseVisualStyleBackColor = true;
@@ -1093,10 +1054,9 @@ namespace InjectorInspector
             // 
             this.lbl_JoDell植針嘴_Convert.AutoSize = true;
             this.lbl_JoDell植針嘴_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell植針嘴_Convert.Location = new System.Drawing.Point(738, 331);
-            this.lbl_JoDell植針嘴_Convert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_JoDell植針嘴_Convert.Location = new System.Drawing.Point(590, 265);
             this.lbl_JoDell植針嘴_Convert.Name = "lbl_JoDell植針嘴_Convert";
-            this.lbl_JoDell植針嘴_Convert.Size = new System.Drawing.Size(183, 17);
+            this.lbl_JoDell植針嘴_Convert.Size = new System.Drawing.Size(139, 13);
             this.lbl_JoDell植針嘴_Convert.TabIndex = 179;
             this.lbl_JoDell植針嘴_Convert.Text = "lbl_JoDell植針嘴_Convert";
             // 
@@ -1104,10 +1064,9 @@ namespace InjectorInspector
             // 
             this.lbl_JoDell植針嘴_Back.AutoSize = true;
             this.lbl_JoDell植針嘴_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell植針嘴_Back.Location = new System.Drawing.Point(962, 331);
-            this.lbl_JoDell植針嘴_Back.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_JoDell植針嘴_Back.Location = new System.Drawing.Point(770, 265);
             this.lbl_JoDell植針嘴_Back.Name = "lbl_JoDell植針嘴_Back";
-            this.lbl_JoDell植針嘴_Back.Size = new System.Drawing.Size(165, 17);
+            this.lbl_JoDell植針嘴_Back.Size = new System.Drawing.Size(125, 13);
             this.lbl_JoDell植針嘴_Back.TabIndex = 178;
             this.lbl_JoDell植針嘴_Back.Text = "lbl_JoDell植針嘴_Back";
             // 
@@ -1115,10 +1074,9 @@ namespace InjectorInspector
             // 
             this.lbl_JoDell植針嘴_RAW.AutoSize = true;
             this.lbl_JoDell植針嘴_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell植針嘴_RAW.Location = new System.Drawing.Point(525, 331);
-            this.lbl_JoDell植針嘴_RAW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_JoDell植針嘴_RAW.Location = new System.Drawing.Point(420, 265);
             this.lbl_JoDell植針嘴_RAW.Name = "lbl_JoDell植針嘴_RAW";
-            this.lbl_JoDell植針嘴_RAW.Size = new System.Drawing.Size(170, 17);
+            this.lbl_JoDell植針嘴_RAW.Size = new System.Drawing.Size(130, 13);
             this.lbl_JoDell植針嘴_RAW.TabIndex = 177;
             this.lbl_JoDell植針嘴_RAW.Text = "lbl_JoDell植針嘴_RAW";
             // 
@@ -1126,10 +1084,9 @@ namespace InjectorInspector
             // 
             this.en_JoDell植針嘴.AutoSize = true;
             this.en_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_JoDell植針嘴.Location = new System.Drawing.Point(31, 331);
-            this.en_JoDell植針嘴.Margin = new System.Windows.Forms.Padding(4);
+            this.en_JoDell植針嘴.Location = new System.Drawing.Point(25, 265);
             this.en_JoDell植針嘴.Name = "en_JoDell植針嘴";
-            this.en_JoDell植針嘴.Size = new System.Drawing.Size(74, 21);
+            this.en_JoDell植針嘴.Size = new System.Drawing.Size(58, 17);
             this.en_JoDell植針嘴.TabIndex = 176;
             this.en_JoDell植針嘴.Text = "Enable";
             this.en_JoDell植針嘴.UseVisualStyleBackColor = true;
@@ -1139,10 +1096,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_JoDell植針嘴.AutoSize = true;
             this.lbl_acpos_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell植針嘴.Location = new System.Drawing.Point(425, 331);
-            this.lbl_acpos_JoDell植針嘴.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_JoDell植針嘴.Location = new System.Drawing.Point(340, 265);
             this.lbl_acpos_JoDell植針嘴.Name = "lbl_acpos_JoDell植針嘴";
-            this.lbl_acpos_JoDell植針嘴.Size = new System.Drawing.Size(36, 17);
+            this.lbl_acpos_JoDell植針嘴.Size = new System.Drawing.Size(28, 13);
             this.lbl_acpos_JoDell植針嘴.TabIndex = 175;
             this.lbl_acpos_JoDell植針嘴.Text = "0.00";
             // 
@@ -1150,10 +1106,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_JoDell植針嘴_lbl.AutoSize = true;
             this.lbl_acpos_JoDell植針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell植針嘴_lbl.Location = new System.Drawing.Point(362, 331);
-            this.lbl_acpos_JoDell植針嘴_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_JoDell植針嘴_lbl.Location = new System.Drawing.Point(290, 265);
             this.lbl_acpos_JoDell植針嘴_lbl.Name = "lbl_acpos_JoDell植針嘴_lbl";
-            this.lbl_acpos_JoDell植針嘴_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_acpos_JoDell植針嘴_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_acpos_JoDell植針嘴_lbl.TabIndex = 174;
             this.lbl_acpos_JoDell植針嘴_lbl.Text = "acpos";
             // 
@@ -1161,10 +1116,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_JoDell植針嘴.AutoSize = true;
             this.lbl_spd_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell植針嘴.Location = new System.Drawing.Point(288, 331);
-            this.lbl_spd_JoDell植針嘴.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_JoDell植針嘴.Location = new System.Drawing.Point(230, 265);
             this.lbl_spd_JoDell植針嘴.Name = "lbl_spd_JoDell植針嘴";
-            this.lbl_spd_JoDell植針嘴.Size = new System.Drawing.Size(36, 17);
+            this.lbl_spd_JoDell植針嘴.Size = new System.Drawing.Size(28, 13);
             this.lbl_spd_JoDell植針嘴.TabIndex = 173;
             this.lbl_spd_JoDell植針嘴.Text = "0.00";
             // 
@@ -1172,10 +1126,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_JoDell植針嘴_lbl.AutoSize = true;
             this.lbl_spd_JoDell植針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell植針嘴_lbl.Location = new System.Drawing.Point(225, 331);
-            this.lbl_spd_JoDell植針嘴_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_JoDell植針嘴_lbl.Location = new System.Drawing.Point(180, 265);
             this.lbl_spd_JoDell植針嘴_lbl.Name = "lbl_spd_JoDell植針嘴_lbl";
-            this.lbl_spd_JoDell植針嘴_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_spd_JoDell植針嘴_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_spd_JoDell植針嘴_lbl.TabIndex = 172;
             this.lbl_spd_JoDell植針嘴_lbl.Text = "speed";
             // 
@@ -1183,10 +1136,9 @@ namespace InjectorInspector
             // 
             this.select_JoDell植針嘴.AutoSize = true;
             this.select_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_JoDell植針嘴.Location = new System.Drawing.Point(119, 331);
-            this.select_JoDell植針嘴.Margin = new System.Windows.Forms.Padding(4);
+            this.select_JoDell植針嘴.Location = new System.Drawing.Point(95, 265);
             this.select_JoDell植針嘴.Name = "select_JoDell植針嘴";
-            this.select_JoDell植針嘴.Size = new System.Drawing.Size(80, 21);
+            this.select_JoDell植針嘴.Size = new System.Drawing.Size(64, 17);
             this.select_JoDell植針嘴.TabIndex = 171;
             this.select_JoDell植針嘴.Text = "植針嘴";
             this.select_JoDell植針嘴.UseVisualStyleBackColor = true;
@@ -1196,10 +1148,9 @@ namespace InjectorInspector
             // 
             this.lbl_IAI_Convert.AutoSize = true;
             this.lbl_IAI_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_IAI_Convert.Location = new System.Drawing.Point(738, 256);
-            this.lbl_IAI_Convert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_IAI_Convert.Location = new System.Drawing.Point(590, 205);
             this.lbl_IAI_Convert.Name = "lbl_IAI_Convert";
-            this.lbl_IAI_Convert.Size = new System.Drawing.Size(113, 17);
+            this.lbl_IAI_Convert.Size = new System.Drawing.Size(86, 13);
             this.lbl_IAI_Convert.TabIndex = 170;
             this.lbl_IAI_Convert.Text = "lbl_IAI_Convert";
             // 
@@ -1207,10 +1158,9 @@ namespace InjectorInspector
             // 
             this.lbl_IAI_Back.AutoSize = true;
             this.lbl_IAI_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_IAI_Back.Location = new System.Drawing.Point(962, 256);
-            this.lbl_IAI_Back.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_IAI_Back.Location = new System.Drawing.Point(770, 205);
             this.lbl_IAI_Back.Name = "lbl_IAI_Back";
-            this.lbl_IAI_Back.Size = new System.Drawing.Size(95, 17);
+            this.lbl_IAI_Back.Size = new System.Drawing.Size(72, 13);
             this.lbl_IAI_Back.TabIndex = 169;
             this.lbl_IAI_Back.Text = "lbl_IAI_Back";
             // 
@@ -1218,10 +1168,9 @@ namespace InjectorInspector
             // 
             this.lbl_IAI_RAW.AutoSize = true;
             this.lbl_IAI_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_IAI_RAW.Location = new System.Drawing.Point(525, 256);
-            this.lbl_IAI_RAW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_IAI_RAW.Location = new System.Drawing.Point(420, 205);
             this.lbl_IAI_RAW.Name = "lbl_IAI_RAW";
-            this.lbl_IAI_RAW.Size = new System.Drawing.Size(100, 17);
+            this.lbl_IAI_RAW.Size = new System.Drawing.Size(77, 13);
             this.lbl_IAI_RAW.TabIndex = 168;
             this.lbl_IAI_RAW.Text = "lbl_IAI_RAW";
             // 
@@ -1229,10 +1178,9 @@ namespace InjectorInspector
             // 
             this.en_IAI.AutoSize = true;
             this.en_IAI.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_IAI.Location = new System.Drawing.Point(31, 256);
-            this.en_IAI.Margin = new System.Windows.Forms.Padding(4);
+            this.en_IAI.Location = new System.Drawing.Point(25, 205);
             this.en_IAI.Name = "en_IAI";
-            this.en_IAI.Size = new System.Drawing.Size(74, 21);
+            this.en_IAI.Size = new System.Drawing.Size(58, 17);
             this.en_IAI.TabIndex = 167;
             this.en_IAI.Text = "Enable";
             this.en_IAI.UseVisualStyleBackColor = true;
@@ -1242,10 +1190,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_IAI.AutoSize = true;
             this.lbl_acpos_IAI.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_IAI.Location = new System.Drawing.Point(425, 256);
-            this.lbl_acpos_IAI.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_IAI.Location = new System.Drawing.Point(340, 205);
             this.lbl_acpos_IAI.Name = "lbl_acpos_IAI";
-            this.lbl_acpos_IAI.Size = new System.Drawing.Size(36, 17);
+            this.lbl_acpos_IAI.Size = new System.Drawing.Size(28, 13);
             this.lbl_acpos_IAI.TabIndex = 166;
             this.lbl_acpos_IAI.Text = "0.00";
             // 
@@ -1253,10 +1200,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_IAI_lbl.AutoSize = true;
             this.lbl_acpos_IAI_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_IAI_lbl.Location = new System.Drawing.Point(362, 256);
-            this.lbl_acpos_IAI_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_IAI_lbl.Location = new System.Drawing.Point(290, 205);
             this.lbl_acpos_IAI_lbl.Name = "lbl_acpos_IAI_lbl";
-            this.lbl_acpos_IAI_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_acpos_IAI_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_acpos_IAI_lbl.TabIndex = 165;
             this.lbl_acpos_IAI_lbl.Text = "acpos";
             // 
@@ -1264,10 +1210,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_IAI.AutoSize = true;
             this.lbl_spd_IAI.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_IAI.Location = new System.Drawing.Point(288, 256);
-            this.lbl_spd_IAI.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_IAI.Location = new System.Drawing.Point(230, 205);
             this.lbl_spd_IAI.Name = "lbl_spd_IAI";
-            this.lbl_spd_IAI.Size = new System.Drawing.Size(36, 17);
+            this.lbl_spd_IAI.Size = new System.Drawing.Size(28, 13);
             this.lbl_spd_IAI.TabIndex = 164;
             this.lbl_spd_IAI.Text = "0.00";
             // 
@@ -1275,10 +1220,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_IAI_lbl.AutoSize = true;
             this.lbl_spd_IAI_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_IAI_lbl.Location = new System.Drawing.Point(225, 256);
-            this.lbl_spd_IAI_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_IAI_lbl.Location = new System.Drawing.Point(180, 205);
             this.lbl_spd_IAI_lbl.Name = "lbl_spd_IAI_lbl";
-            this.lbl_spd_IAI_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_spd_IAI_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_spd_IAI_lbl.TabIndex = 163;
             this.lbl_spd_IAI_lbl.Text = "speed";
             // 
@@ -1286,10 +1230,9 @@ namespace InjectorInspector
             // 
             this.select_Socket檢測.AutoSize = true;
             this.select_Socket檢測.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_Socket檢測.Location = new System.Drawing.Point(119, 256);
-            this.select_Socket檢測.Margin = new System.Windows.Forms.Padding(4);
+            this.select_Socket檢測.Location = new System.Drawing.Point(95, 205);
             this.select_Socket檢測.Name = "select_Socket檢測";
-            this.select_Socket檢測.Size = new System.Drawing.Size(106, 21);
+            this.select_Socket檢測.Size = new System.Drawing.Size(83, 17);
             this.select_Socket檢測.TabIndex = 162;
             this.select_Socket檢測.Text = "Socket檢測";
             this.select_Socket檢測.UseVisualStyleBackColor = true;
@@ -1329,11 +1272,9 @@ namespace InjectorInspector
             this.groupBox2.Controls.Add(this.lbl堵料吹氣缸);
             this.groupBox2.Controls.Add(this.lbl吸料真空閥);
             this.groupBox2.Controls.Add(this.lbl擺放蓋板);
-            this.groupBox2.Location = new System.Drawing.Point(899, 570);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Location = new System.Drawing.Point(719, 456);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(525, 262);
+            this.groupBox2.Size = new System.Drawing.Size(420, 210);
             this.groupBox2.TabIndex = 161;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "WriteIO";
@@ -1342,10 +1283,9 @@ namespace InjectorInspector
             // 
             this.lblBuzzer.AutoSize = true;
             this.lblBuzzer.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblBuzzer.Location = new System.Drawing.Point(400, 225);
-            this.lblBuzzer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBuzzer.Location = new System.Drawing.Point(320, 180);
             this.lblBuzzer.Name = "lblBuzzer";
-            this.lblBuzzer.Size = new System.Drawing.Size(69, 17);
+            this.lblBuzzer.Size = new System.Drawing.Size(52, 13);
             this.lblBuzzer.TabIndex = 191;
             this.lblBuzzer.Text = "lblBuzzer";
             this.lblBuzzer.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1354,10 +1294,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_31.AutoSize = true;
             this.lbl_NA_31.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_31.Location = new System.Drawing.Point(400, 200);
-            this.lbl_NA_31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_31.Location = new System.Drawing.Point(320, 160);
             this.lbl_NA_31.Name = "lbl_NA_31";
-            this.lbl_NA_31.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_31.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_31.TabIndex = 190;
             this.lbl_NA_31.Text = "lbl_NA_31";
             this.lbl_NA_31.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1366,10 +1305,9 @@ namespace InjectorInspector
             // 
             this.lbl綠燈.AutoSize = true;
             this.lbl綠燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl綠燈.Location = new System.Drawing.Point(400, 175);
-            this.lbl綠燈.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl綠燈.Location = new System.Drawing.Point(320, 140);
             this.lbl綠燈.Name = "lbl綠燈";
-            this.lbl綠燈.Size = new System.Drawing.Size(58, 17);
+            this.lbl綠燈.Size = new System.Drawing.Size(45, 13);
             this.lbl綠燈.TabIndex = 189;
             this.lbl綠燈.Text = "lbl綠燈";
             this.lbl綠燈.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1378,10 +1316,9 @@ namespace InjectorInspector
             // 
             this.lbl左按鈕紅燈.AutoSize = true;
             this.lbl左按鈕紅燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl左按鈕紅燈.Location = new System.Drawing.Point(400, 150);
-            this.lbl左按鈕紅燈.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl左按鈕紅燈.Location = new System.Drawing.Point(320, 120);
             this.lbl左按鈕紅燈.Name = "lbl左按鈕紅燈";
-            this.lbl左按鈕紅燈.Size = new System.Drawing.Size(109, 17);
+            this.lbl左按鈕紅燈.Size = new System.Drawing.Size(84, 13);
             this.lbl左按鈕紅燈.TabIndex = 188;
             this.lbl左按鈕紅燈.Text = "lbl左按鈕紅燈";
             this.lbl左按鈕紅燈.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1390,10 +1327,9 @@ namespace InjectorInspector
             // 
             this.lbl黃燈.AutoSize = true;
             this.lbl黃燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl黃燈.Location = new System.Drawing.Point(400, 125);
-            this.lbl黃燈.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl黃燈.Location = new System.Drawing.Point(320, 100);
             this.lbl黃燈.Name = "lbl黃燈";
-            this.lbl黃燈.Size = new System.Drawing.Size(58, 17);
+            this.lbl黃燈.Size = new System.Drawing.Size(45, 13);
             this.lbl黃燈.TabIndex = 187;
             this.lbl黃燈.Text = "lbl黃燈";
             this.lbl黃燈.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1402,10 +1338,9 @@ namespace InjectorInspector
             // 
             this.lbl中按鈕綠燈.AutoSize = true;
             this.lbl中按鈕綠燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl中按鈕綠燈.Location = new System.Drawing.Point(400, 100);
-            this.lbl中按鈕綠燈.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl中按鈕綠燈.Location = new System.Drawing.Point(320, 80);
             this.lbl中按鈕綠燈.Name = "lbl中按鈕綠燈";
-            this.lbl中按鈕綠燈.Size = new System.Drawing.Size(109, 17);
+            this.lbl中按鈕綠燈.Size = new System.Drawing.Size(84, 13);
             this.lbl中按鈕綠燈.TabIndex = 186;
             this.lbl中按鈕綠燈.Text = "lbl中按鈕綠燈";
             this.lbl中按鈕綠燈.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1414,10 +1349,9 @@ namespace InjectorInspector
             // 
             this.lbl紅燈.AutoSize = true;
             this.lbl紅燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl紅燈.Location = new System.Drawing.Point(400, 75);
-            this.lbl紅燈.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl紅燈.Location = new System.Drawing.Point(320, 60);
             this.lbl紅燈.Name = "lbl紅燈";
-            this.lbl紅燈.Size = new System.Drawing.Size(58, 17);
+            this.lbl紅燈.Size = new System.Drawing.Size(45, 13);
             this.lbl紅燈.TabIndex = 185;
             this.lbl紅燈.Text = "lbl紅燈";
             this.lbl紅燈.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1426,10 +1360,9 @@ namespace InjectorInspector
             // 
             this.lbl右按鈕綠燈.AutoSize = true;
             this.lbl右按鈕綠燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl右按鈕綠燈.Location = new System.Drawing.Point(400, 50);
-            this.lbl右按鈕綠燈.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl右按鈕綠燈.Location = new System.Drawing.Point(320, 40);
             this.lbl右按鈕綠燈.Name = "lbl右按鈕綠燈";
-            this.lbl右按鈕綠燈.Size = new System.Drawing.Size(109, 17);
+            this.lbl右按鈕綠燈.Size = new System.Drawing.Size(84, 13);
             this.lbl右按鈕綠燈.TabIndex = 184;
             this.lbl右按鈕綠燈.Text = "lbl右按鈕綠燈";
             this.lbl右按鈕綠燈.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1438,10 +1371,9 @@ namespace InjectorInspector
             // 
             this.lbl艙內燈.AutoSize = true;
             this.lbl艙內燈.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl艙內燈.Location = new System.Drawing.Point(275, 225);
-            this.lbl艙內燈.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl艙內燈.Location = new System.Drawing.Point(220, 180);
             this.lbl艙內燈.Name = "lbl艙內燈";
-            this.lbl艙內燈.Size = new System.Drawing.Size(75, 17);
+            this.lbl艙內燈.Size = new System.Drawing.Size(58, 13);
             this.lbl艙內燈.TabIndex = 183;
             this.lbl艙內燈.Text = "lbl艙內燈";
             this.lbl艙內燈.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1450,10 +1382,9 @@ namespace InjectorInspector
             // 
             this.lbl取料吸嘴破新.AutoSize = true;
             this.lbl取料吸嘴破新.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl取料吸嘴破新.Location = new System.Drawing.Point(275, 200);
-            this.lbl取料吸嘴破新.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl取料吸嘴破新.Location = new System.Drawing.Point(220, 160);
             this.lbl取料吸嘴破新.Name = "lbl取料吸嘴破新";
-            this.lbl取料吸嘴破新.Size = new System.Drawing.Size(126, 17);
+            this.lbl取料吸嘴破新.Size = new System.Drawing.Size(97, 13);
             this.lbl取料吸嘴破新.TabIndex = 182;
             this.lbl取料吸嘴破新.Text = "lbl取料吸嘴破新";
             this.lbl取料吸嘴破新.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1462,10 +1393,9 @@ namespace InjectorInspector
             // 
             this.lblHEPA.AutoSize = true;
             this.lblHEPA.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblHEPA.Location = new System.Drawing.Point(275, 175);
-            this.lblHEPA.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblHEPA.Location = new System.Drawing.Point(220, 140);
             this.lblHEPA.Name = "lblHEPA";
-            this.lblHEPA.Size = new System.Drawing.Size(67, 17);
+            this.lblHEPA.Size = new System.Drawing.Size(51, 13);
             this.lblHEPA.TabIndex = 181;
             this.lblHEPA.Text = "lblHEPA";
             this.lblHEPA.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1474,10 +1404,9 @@ namespace InjectorInspector
             // 
             this.lbl植針Z煞車.AutoSize = true;
             this.lbl植針Z煞車.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl植針Z煞車.Location = new System.Drawing.Point(275, 150);
-            this.lbl植針Z煞車.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl植針Z煞車.Location = new System.Drawing.Point(220, 120);
             this.lbl植針Z煞車.Name = "lbl植針Z煞車";
-            this.lbl植針Z煞車.Size = new System.Drawing.Size(102, 17);
+            this.lbl植針Z煞車.Size = new System.Drawing.Size(78, 13);
             this.lbl植針Z煞車.TabIndex = 180;
             this.lbl植針Z煞車.Text = "lbl植針Z煞車";
             this.lbl植針Z煞車.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1486,10 +1415,9 @@ namespace InjectorInspector
             // 
             this.lbl下後右門鎖.AutoSize = true;
             this.lbl下後右門鎖.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl下後右門鎖.Location = new System.Drawing.Point(275, 125);
-            this.lbl下後右門鎖.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl下後右門鎖.Location = new System.Drawing.Point(220, 100);
             this.lbl下後右門鎖.Name = "lbl下後右門鎖";
-            this.lbl下後右門鎖.Size = new System.Drawing.Size(109, 17);
+            this.lbl下後右門鎖.Size = new System.Drawing.Size(84, 13);
             this.lbl下後右門鎖.TabIndex = 179;
             this.lbl下後右門鎖.Text = "lbl下後右門鎖";
             this.lbl下後右門鎖.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1498,10 +1426,9 @@ namespace InjectorInspector
             // 
             this.lbl取料吸嘴破舊.AutoSize = true;
             this.lbl取料吸嘴破舊.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl取料吸嘴破舊.Location = new System.Drawing.Point(275, 100);
-            this.lbl取料吸嘴破舊.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl取料吸嘴破舊.Location = new System.Drawing.Point(220, 80);
             this.lbl取料吸嘴破舊.Name = "lbl取料吸嘴破舊";
-            this.lbl取料吸嘴破舊.Size = new System.Drawing.Size(126, 17);
+            this.lbl取料吸嘴破舊.Size = new System.Drawing.Size(97, 13);
             this.lbl取料吸嘴破舊.TabIndex = 178;
             this.lbl取料吸嘴破舊.Text = "lbl取料吸嘴破舊";
             this.lbl取料吸嘴破舊.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1510,10 +1437,9 @@ namespace InjectorInspector
             // 
             this.lbl下後左門鎖.AutoSize = true;
             this.lbl下後左門鎖.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl下後左門鎖.Location = new System.Drawing.Point(275, 75);
-            this.lbl下後左門鎖.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl下後左門鎖.Location = new System.Drawing.Point(220, 60);
             this.lbl下後左門鎖.Name = "lbl下後左門鎖";
-            this.lbl下後左門鎖.Size = new System.Drawing.Size(109, 17);
+            this.lbl下後左門鎖.Size = new System.Drawing.Size(84, 13);
             this.lbl下後左門鎖.TabIndex = 177;
             this.lbl下後左門鎖.Text = "lbl下後左門鎖";
             this.lbl下後左門鎖.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1522,10 +1448,9 @@ namespace InjectorInspector
             // 
             this.lbl取料吸嘴吸.AutoSize = true;
             this.lbl取料吸嘴吸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl取料吸嘴吸.Location = new System.Drawing.Point(275, 50);
-            this.lbl取料吸嘴吸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl取料吸嘴吸.Location = new System.Drawing.Point(220, 40);
             this.lbl取料吸嘴吸.Name = "lbl取料吸嘴吸";
-            this.lbl取料吸嘴吸.Size = new System.Drawing.Size(109, 17);
+            this.lbl取料吸嘴吸.Size = new System.Drawing.Size(84, 13);
             this.lbl取料吸嘴吸.TabIndex = 176;
             this.lbl取料吸嘴吸.Text = "lbl取料吸嘴吸";
             this.lbl取料吸嘴吸.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1534,10 +1459,9 @@ namespace InjectorInspector
             // 
             this.lbl擺放破真空.AutoSize = true;
             this.lbl擺放破真空.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl擺放破真空.Location = new System.Drawing.Point(150, 225);
-            this.lbl擺放破真空.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl擺放破真空.Location = new System.Drawing.Point(120, 180);
             this.lbl擺放破真空.Name = "lbl擺放破真空";
-            this.lbl擺放破真空.Size = new System.Drawing.Size(109, 17);
+            this.lbl擺放破真空.Size = new System.Drawing.Size(84, 13);
             this.lbl擺放破真空.TabIndex = 175;
             this.lbl擺放破真空.Text = "lbl擺放破真空";
             this.lbl擺放破真空.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1546,10 +1470,9 @@ namespace InjectorInspector
             // 
             this.lblsk破真空1.AutoSize = true;
             this.lblsk破真空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblsk破真空1.Location = new System.Drawing.Point(150, 200);
-            this.lblsk破真空1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblsk破真空1.Location = new System.Drawing.Point(120, 160);
             this.lblsk破真空1.Name = "lblsk破真空1";
-            this.lblsk破真空1.Size = new System.Drawing.Size(97, 17);
+            this.lblsk破真空1.Size = new System.Drawing.Size(75, 13);
             this.lblsk破真空1.TabIndex = 174;
             this.lblsk破真空1.Text = "lblsk破真空1";
             this.lblsk破真空1.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1558,10 +1481,9 @@ namespace InjectorInspector
             // 
             this.lbl擺放座真空.AutoSize = true;
             this.lbl擺放座真空.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl擺放座真空.Location = new System.Drawing.Point(150, 175);
-            this.lbl擺放座真空.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl擺放座真空.Location = new System.Drawing.Point(120, 140);
             this.lbl擺放座真空.Name = "lbl擺放座真空";
-            this.lbl擺放座真空.Size = new System.Drawing.Size(109, 17);
+            this.lbl擺放座真空.Size = new System.Drawing.Size(84, 13);
             this.lbl擺放座真空.TabIndex = 173;
             this.lbl擺放座真空.Text = "lbl擺放座真空";
             this.lbl擺放座真空.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1570,10 +1492,9 @@ namespace InjectorInspector
             // 
             this.lblsk真空1.AutoSize = true;
             this.lblsk真空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblsk真空1.Location = new System.Drawing.Point(150, 150);
-            this.lblsk真空1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblsk真空1.Location = new System.Drawing.Point(120, 120);
             this.lblsk真空1.Name = "lblsk真空1";
-            this.lblsk真空1.Size = new System.Drawing.Size(80, 17);
+            this.lblsk真空1.Size = new System.Drawing.Size(62, 13);
             this.lblsk真空1.TabIndex = 172;
             this.lblsk真空1.Text = "lblsk真空1";
             this.lblsk真空1.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1582,10 +1503,9 @@ namespace InjectorInspector
             // 
             this.lblsk破真空2.AutoSize = true;
             this.lblsk破真空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblsk破真空2.Location = new System.Drawing.Point(150, 125);
-            this.lblsk破真空2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblsk破真空2.Location = new System.Drawing.Point(120, 100);
             this.lblsk破真空2.Name = "lblsk破真空2";
-            this.lblsk破真空2.Size = new System.Drawing.Size(97, 17);
+            this.lblsk破真空2.Size = new System.Drawing.Size(75, 13);
             this.lblsk破真空2.TabIndex = 171;
             this.lblsk破真空2.Text = "lblsk破真空2";
             this.lblsk破真空2.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1594,10 +1514,9 @@ namespace InjectorInspector
             // 
             this.lbl載盤破真空.AutoSize = true;
             this.lbl載盤破真空.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤破真空.Location = new System.Drawing.Point(150, 100);
-            this.lbl載盤破真空.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl載盤破真空.Location = new System.Drawing.Point(120, 80);
             this.lbl載盤破真空.Name = "lbl載盤破真空";
-            this.lbl載盤破真空.Size = new System.Drawing.Size(109, 17);
+            this.lbl載盤破真空.Size = new System.Drawing.Size(84, 13);
             this.lbl載盤破真空.TabIndex = 170;
             this.lbl載盤破真空.Text = "lbl載盤破真空";
             this.lbl載盤破真空.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1606,10 +1525,9 @@ namespace InjectorInspector
             // 
             this.lblsk真空2.AutoSize = true;
             this.lblsk真空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblsk真空2.Location = new System.Drawing.Point(150, 75);
-            this.lblsk真空2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblsk真空2.Location = new System.Drawing.Point(120, 60);
             this.lblsk真空2.Name = "lblsk真空2";
-            this.lblsk真空2.Size = new System.Drawing.Size(80, 17);
+            this.lblsk真空2.Size = new System.Drawing.Size(62, 13);
             this.lblsk真空2.TabIndex = 169;
             this.lblsk真空2.Text = "lblsk真空2";
             this.lblsk真空2.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1618,10 +1536,9 @@ namespace InjectorInspector
             // 
             this.lbl載盤真空閥.AutoSize = true;
             this.lbl載盤真空閥.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤真空閥.Location = new System.Drawing.Point(150, 50);
-            this.lbl載盤真空閥.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl載盤真空閥.Location = new System.Drawing.Point(120, 40);
             this.lbl載盤真空閥.Name = "lbl載盤真空閥";
-            this.lbl載盤真空閥.Size = new System.Drawing.Size(109, 17);
+            this.lbl載盤真空閥.Size = new System.Drawing.Size(84, 13);
             this.lbl載盤真空閥.TabIndex = 168;
             this.lbl載盤真空閥.Text = "lbl載盤真空閥";
             this.lbl載盤真空閥.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1630,10 +1547,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_25.AutoSize = true;
             this.lbl_NA_25.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_25.Location = new System.Drawing.Point(25, 225);
-            this.lbl_NA_25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_25.Location = new System.Drawing.Point(20, 180);
             this.lbl_NA_25.Name = "lbl_NA_25";
-            this.lbl_NA_25.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_25.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_25.TabIndex = 167;
             this.lbl_NA_25.Text = "lbl_NA_25";
             this.lbl_NA_25.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1642,10 +1558,9 @@ namespace InjectorInspector
             // 
             this.lbl堵料吹氣.AutoSize = true;
             this.lbl堵料吹氣.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl堵料吹氣.Location = new System.Drawing.Point(25, 200);
-            this.lbl堵料吹氣.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl堵料吹氣.Location = new System.Drawing.Point(20, 160);
             this.lbl堵料吹氣.Name = "lbl堵料吹氣";
-            this.lbl堵料吹氣.Size = new System.Drawing.Size(92, 17);
+            this.lbl堵料吹氣.Size = new System.Drawing.Size(71, 13);
             this.lbl堵料吹氣.TabIndex = 166;
             this.lbl堵料吹氣.Text = "lbl堵料吹氣";
             this.lbl堵料吹氣.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1654,10 +1569,9 @@ namespace InjectorInspector
             // 
             this.lbl收料區缸.AutoSize = true;
             this.lbl收料區缸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl收料區缸.Location = new System.Drawing.Point(25, 175);
-            this.lbl收料區缸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl收料區缸.Location = new System.Drawing.Point(20, 140);
             this.lbl收料區缸.Name = "lbl收料區缸";
-            this.lbl收料區缸.Size = new System.Drawing.Size(92, 17);
+            this.lbl收料區缸.Size = new System.Drawing.Size(71, 13);
             this.lbl收料區缸.TabIndex = 165;
             this.lbl收料區缸.Text = "lbl收料區缸";
             this.lbl收料區缸.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1666,10 +1580,9 @@ namespace InjectorInspector
             // 
             this.lbl植針吹氣.AutoSize = true;
             this.lbl植針吹氣.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl植針吹氣.Location = new System.Drawing.Point(25, 150);
-            this.lbl植針吹氣.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl植針吹氣.Location = new System.Drawing.Point(20, 120);
             this.lbl植針吹氣.Name = "lbl植針吹氣";
-            this.lbl植針吹氣.Size = new System.Drawing.Size(92, 17);
+            this.lbl植針吹氣.Size = new System.Drawing.Size(71, 13);
             this.lbl植針吹氣.TabIndex = 164;
             this.lbl植針吹氣.Text = "lbl植針吹氣";
             this.lbl植針吹氣.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1678,10 +1591,9 @@ namespace InjectorInspector
             // 
             this.lbl接料區缸.AutoSize = true;
             this.lbl接料區缸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl接料區缸.Location = new System.Drawing.Point(25, 125);
-            this.lbl接料區缸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl接料區缸.Location = new System.Drawing.Point(20, 100);
             this.lbl接料區缸.Name = "lbl接料區缸";
-            this.lbl接料區缸.Size = new System.Drawing.Size(92, 17);
+            this.lbl接料區缸.Size = new System.Drawing.Size(71, 13);
             this.lbl接料區缸.TabIndex = 163;
             this.lbl接料區缸.Text = "lbl接料區缸";
             this.lbl接料區缸.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1690,10 +1602,9 @@ namespace InjectorInspector
             // 
             this.lbl堵料吹氣缸.AutoSize = true;
             this.lbl堵料吹氣缸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl堵料吹氣缸.Location = new System.Drawing.Point(25, 100);
-            this.lbl堵料吹氣缸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl堵料吹氣缸.Location = new System.Drawing.Point(20, 80);
             this.lbl堵料吹氣缸.Name = "lbl堵料吹氣缸";
-            this.lbl堵料吹氣缸.Size = new System.Drawing.Size(109, 17);
+            this.lbl堵料吹氣缸.Size = new System.Drawing.Size(84, 13);
             this.lbl堵料吹氣缸.TabIndex = 162;
             this.lbl堵料吹氣缸.Text = "lbl堵料吹氣缸";
             this.lbl堵料吹氣缸.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1702,10 +1613,9 @@ namespace InjectorInspector
             // 
             this.lbl吸料真空閥.AutoSize = true;
             this.lbl吸料真空閥.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl吸料真空閥.Location = new System.Drawing.Point(25, 75);
-            this.lbl吸料真空閥.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl吸料真空閥.Location = new System.Drawing.Point(20, 60);
             this.lbl吸料真空閥.Name = "lbl吸料真空閥";
-            this.lbl吸料真空閥.Size = new System.Drawing.Size(109, 17);
+            this.lbl吸料真空閥.Size = new System.Drawing.Size(84, 13);
             this.lbl吸料真空閥.TabIndex = 161;
             this.lbl吸料真空閥.Text = "lbl吸料真空閥";
             this.lbl吸料真空閥.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1714,10 +1624,9 @@ namespace InjectorInspector
             // 
             this.lbl擺放蓋板.AutoSize = true;
             this.lbl擺放蓋板.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl擺放蓋板.Location = new System.Drawing.Point(25, 50);
-            this.lbl擺放蓋板.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl擺放蓋板.Location = new System.Drawing.Point(20, 40);
             this.lbl擺放蓋板.Name = "lbl擺放蓋板";
-            this.lbl擺放蓋板.Size = new System.Drawing.Size(92, 17);
+            this.lbl擺放蓋板.Size = new System.Drawing.Size(71, 13);
             this.lbl擺放蓋板.TabIndex = 160;
             this.lbl擺放蓋板.Text = "lbl擺放蓋板";
             this.lbl擺放蓋板.Click += new System.EventHandler(this.lbl_SetIO_Click);
@@ -1788,11 +1697,9 @@ namespace InjectorInspector
             this.groupBox1.Controls.Add(this.lbl載盤Y前);
             this.groupBox1.Controls.Add(this.lbl取料Y後);
             this.groupBox1.Controls.Add(this.lbl載盤Y後);
-            this.groupBox1.Location = new System.Drawing.Point(31, 570);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Location = new System.Drawing.Point(25, 456);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(838, 262);
+            this.groupBox1.Size = new System.Drawing.Size(670, 210);
             this.groupBox1.TabIndex = 160;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ReadIO";
@@ -1801,10 +1708,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_24.AutoSize = true;
             this.lbl_NA_24.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_24.Location = new System.Drawing.Point(725, 225);
-            this.lbl_NA_24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_24.Location = new System.Drawing.Point(580, 180);
             this.lbl_NA_24.Name = "lbl_NA_24";
-            this.lbl_NA_24.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_24.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_24.TabIndex = 223;
             this.lbl_NA_24.Text = "lbl_NA_24";
             // 
@@ -1812,10 +1718,9 @@ namespace InjectorInspector
             // 
             this.lbl下右左門.AutoSize = true;
             this.lbl下右左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl下右左門.Location = new System.Drawing.Point(725, 200);
-            this.lbl下右左門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl下右左門.Location = new System.Drawing.Point(580, 160);
             this.lbl下右左門.Name = "lbl下右左門";
-            this.lbl下右左門.Size = new System.Drawing.Size(92, 17);
+            this.lbl下右左門.Size = new System.Drawing.Size(71, 13);
             this.lbl下右左門.TabIndex = 222;
             this.lbl下右左門.Text = "lbl下右左門";
             // 
@@ -1823,10 +1728,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_23.AutoSize = true;
             this.lbl_NA_23.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_23.Location = new System.Drawing.Point(725, 175);
-            this.lbl_NA_23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_23.Location = new System.Drawing.Point(580, 140);
             this.lbl_NA_23.Name = "lbl_NA_23";
-            this.lbl_NA_23.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_23.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_23.TabIndex = 221;
             this.lbl_NA_23.Text = "lbl_NA_23";
             // 
@@ -1834,10 +1738,9 @@ namespace InjectorInspector
             // 
             this.lbl下右右門.AutoSize = true;
             this.lbl下右右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl下右右門.Location = new System.Drawing.Point(725, 150);
-            this.lbl下右右門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl下右右門.Location = new System.Drawing.Point(580, 120);
             this.lbl下右右門.Name = "lbl下右右門";
-            this.lbl下右右門.Size = new System.Drawing.Size(92, 17);
+            this.lbl下右右門.Size = new System.Drawing.Size(71, 13);
             this.lbl下右右門.TabIndex = 220;
             this.lbl下右右門.Text = "lbl下右右門";
             // 
@@ -1845,10 +1748,9 @@ namespace InjectorInspector
             // 
             this.lbl下後右門.AutoSize = true;
             this.lbl下後右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl下後右門.Location = new System.Drawing.Point(725, 125);
-            this.lbl下後右門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl下後右門.Location = new System.Drawing.Point(580, 100);
             this.lbl下後右門.Name = "lbl下後右門";
-            this.lbl下後右門.Size = new System.Drawing.Size(92, 17);
+            this.lbl下後右門.Size = new System.Drawing.Size(71, 13);
             this.lbl下後右門.TabIndex = 219;
             this.lbl下後右門.Text = "lbl下後右門";
             // 
@@ -1856,10 +1758,9 @@ namespace InjectorInspector
             // 
             this.lbl下左左門.AutoSize = true;
             this.lbl下左左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl下左左門.Location = new System.Drawing.Point(725, 100);
-            this.lbl下左左門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl下左左門.Location = new System.Drawing.Point(580, 80);
             this.lbl下左左門.Name = "lbl下左左門";
-            this.lbl下左左門.Size = new System.Drawing.Size(92, 17);
+            this.lbl下左左門.Size = new System.Drawing.Size(71, 13);
             this.lbl下左左門.TabIndex = 218;
             this.lbl下左左門.Text = "lbl下左左門";
             // 
@@ -1867,10 +1768,9 @@ namespace InjectorInspector
             // 
             this.lbl下後左門.AutoSize = true;
             this.lbl下後左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl下後左門.Location = new System.Drawing.Point(725, 75);
-            this.lbl下後左門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl下後左門.Location = new System.Drawing.Point(580, 60);
             this.lbl下後左門.Name = "lbl下後左門";
-            this.lbl下後左門.Size = new System.Drawing.Size(92, 17);
+            this.lbl下後左門.Size = new System.Drawing.Size(71, 13);
             this.lbl下後左門.TabIndex = 217;
             this.lbl下後左門.Text = "lbl下後左門";
             // 
@@ -1878,10 +1778,9 @@ namespace InjectorInspector
             // 
             this.lbl下左右門.AutoSize = true;
             this.lbl下左右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl下左右門.Location = new System.Drawing.Point(725, 50);
-            this.lbl下左右門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl下左右門.Location = new System.Drawing.Point(580, 40);
             this.lbl下左右門.Name = "lbl下左右門";
-            this.lbl下左右門.Size = new System.Drawing.Size(92, 17);
+            this.lbl下左右門.Size = new System.Drawing.Size(71, 13);
             this.lbl下左右門.TabIndex = 216;
             this.lbl下左右門.Text = "lbl下左右門";
             // 
@@ -1889,10 +1788,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_20.AutoSize = true;
             this.lbl_NA_20.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_20.Location = new System.Drawing.Point(625, 225);
-            this.lbl_NA_20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_20.Location = new System.Drawing.Point(500, 180);
             this.lbl_NA_20.Name = "lbl_NA_20";
-            this.lbl_NA_20.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_20.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_20.TabIndex = 215;
             this.lbl_NA_20.Text = "lbl_NA_20";
             // 
@@ -1900,10 +1798,9 @@ namespace InjectorInspector
             // 
             this.lbl上後左門.AutoSize = true;
             this.lbl上後左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl上後左門.Location = new System.Drawing.Point(625, 200);
-            this.lbl上後左門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl上後左門.Location = new System.Drawing.Point(500, 160);
             this.lbl上後左門.Name = "lbl上後左門";
-            this.lbl上後左門.Size = new System.Drawing.Size(92, 17);
+            this.lbl上後左門.Size = new System.Drawing.Size(71, 13);
             this.lbl上後左門.TabIndex = 214;
             this.lbl上後左門.Text = "lbl上後左門";
             // 
@@ -1911,10 +1808,9 @@ namespace InjectorInspector
             // 
             this.lbl螢幕小門.AutoSize = true;
             this.lbl螢幕小門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl螢幕小門.Location = new System.Drawing.Point(625, 175);
-            this.lbl螢幕小門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl螢幕小門.Location = new System.Drawing.Point(500, 140);
             this.lbl螢幕小門.Name = "lbl螢幕小門";
-            this.lbl螢幕小門.Size = new System.Drawing.Size(92, 17);
+            this.lbl螢幕小門.Size = new System.Drawing.Size(71, 13);
             this.lbl螢幕小門.TabIndex = 213;
             this.lbl螢幕小門.Text = "lbl螢幕小門";
             // 
@@ -1922,10 +1818,9 @@ namespace InjectorInspector
             // 
             this.lbl上後右門.AutoSize = true;
             this.lbl上後右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl上後右門.Location = new System.Drawing.Point(625, 150);
-            this.lbl上後右門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl上後右門.Location = new System.Drawing.Point(500, 120);
             this.lbl上後右門.Name = "lbl上後右門";
-            this.lbl上後右門.Size = new System.Drawing.Size(92, 17);
+            this.lbl上後右門.Size = new System.Drawing.Size(71, 13);
             this.lbl上後右門.TabIndex = 212;
             this.lbl上後右門.Text = "lbl上後右門";
             // 
@@ -1933,10 +1828,9 @@ namespace InjectorInspector
             // 
             this.lbl上右左門.AutoSize = true;
             this.lbl上右左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl上右左門.Location = new System.Drawing.Point(625, 125);
-            this.lbl上右左門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl上右左門.Location = new System.Drawing.Point(500, 100);
             this.lbl上右左門.Name = "lbl上右左門";
-            this.lbl上右左門.Size = new System.Drawing.Size(92, 17);
+            this.lbl上右左門.Size = new System.Drawing.Size(71, 13);
             this.lbl上右左門.TabIndex = 211;
             this.lbl上右左門.Text = "lbl上右左門";
             // 
@@ -1944,10 +1838,9 @@ namespace InjectorInspector
             // 
             this.lbl上左左門.AutoSize = true;
             this.lbl上左左門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl上左左門.Location = new System.Drawing.Point(625, 100);
-            this.lbl上左左門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl上左左門.Location = new System.Drawing.Point(500, 80);
             this.lbl上左左門.Name = "lbl上左左門";
-            this.lbl上左左門.Size = new System.Drawing.Size(92, 17);
+            this.lbl上左左門.Size = new System.Drawing.Size(71, 13);
             this.lbl上左左門.TabIndex = 210;
             this.lbl上左左門.Text = "lbl上左左門";
             // 
@@ -1955,10 +1848,9 @@ namespace InjectorInspector
             // 
             this.lbl上右右門.AutoSize = true;
             this.lbl上右右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl上右右門.Location = new System.Drawing.Point(625, 75);
-            this.lbl上右右門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl上右右門.Location = new System.Drawing.Point(500, 60);
             this.lbl上右右門.Name = "lbl上右右門";
-            this.lbl上右右門.Size = new System.Drawing.Size(92, 17);
+            this.lbl上右右門.Size = new System.Drawing.Size(71, 13);
             this.lbl上右右門.TabIndex = 209;
             this.lbl上右右門.Text = "lbl上右右門";
             // 
@@ -1966,10 +1858,9 @@ namespace InjectorInspector
             // 
             this.lbl上左右門.AutoSize = true;
             this.lbl上左右門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl上左右門.Location = new System.Drawing.Point(625, 50);
-            this.lbl上左右門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl上左右門.Location = new System.Drawing.Point(500, 40);
             this.lbl上左右門.Name = "lbl上左右門";
-            this.lbl上左右門.Size = new System.Drawing.Size(92, 17);
+            this.lbl上左右門.Size = new System.Drawing.Size(71, 13);
             this.lbl上左右門.TabIndex = 208;
             this.lbl上左右門.Text = "lbl上左右門";
             // 
@@ -1977,10 +1868,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_19.AutoSize = true;
             this.lbl_NA_19.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_19.Location = new System.Drawing.Point(525, 225);
-            this.lbl_NA_19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_19.Location = new System.Drawing.Point(420, 180);
             this.lbl_NA_19.Name = "lbl_NA_19";
-            this.lbl_NA_19.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_19.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_19.TabIndex = 207;
             this.lbl_NA_19.Text = "lbl_NA_19";
             // 
@@ -1988,10 +1878,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_18.AutoSize = true;
             this.lbl_NA_18.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_18.Location = new System.Drawing.Point(525, 200);
-            this.lbl_NA_18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_18.Location = new System.Drawing.Point(420, 160);
             this.lbl_NA_18.Name = "lbl_NA_18";
-            this.lbl_NA_18.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_18.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_18.TabIndex = 206;
             this.lbl_NA_18.Text = "lbl_NA_18";
             // 
@@ -1999,10 +1888,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_17.AutoSize = true;
             this.lbl_NA_17.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_17.Location = new System.Drawing.Point(525, 175);
-            this.lbl_NA_17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_17.Location = new System.Drawing.Point(420, 140);
             this.lbl_NA_17.Name = "lbl_NA_17";
-            this.lbl_NA_17.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_17.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_17.TabIndex = 205;
             this.lbl_NA_17.Text = "lbl_NA_17";
             // 
@@ -2010,10 +1898,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_16.AutoSize = true;
             this.lbl_NA_16.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_16.Location = new System.Drawing.Point(525, 150);
-            this.lbl_NA_16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_16.Location = new System.Drawing.Point(420, 120);
             this.lbl_NA_16.Name = "lbl_NA_16";
-            this.lbl_NA_16.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_16.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_16.TabIndex = 204;
             this.lbl_NA_16.Text = "lbl_NA_16";
             // 
@@ -2021,10 +1908,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_15.AutoSize = true;
             this.lbl_NA_15.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_15.Location = new System.Drawing.Point(525, 125);
-            this.lbl_NA_15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_15.Location = new System.Drawing.Point(420, 100);
             this.lbl_NA_15.Name = "lbl_NA_15";
-            this.lbl_NA_15.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_15.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_15.TabIndex = 203;
             this.lbl_NA_15.Text = "lbl_NA_15";
             // 
@@ -2032,10 +1918,9 @@ namespace InjectorInspector
             // 
             this.lbl_擺放座關.AutoSize = true;
             this.lbl_擺放座關.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_擺放座關.Location = new System.Drawing.Point(525, 100);
-            this.lbl_擺放座關.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_擺放座關.Location = new System.Drawing.Point(420, 80);
             this.lbl_擺放座關.Name = "lbl_擺放座關";
-            this.lbl_擺放座關.Size = new System.Drawing.Size(100, 17);
+            this.lbl_擺放座關.Size = new System.Drawing.Size(77, 13);
             this.lbl_擺放座關.TabIndex = 202;
             this.lbl_擺放座關.Text = "lbl_擺放座關";
             // 
@@ -2043,10 +1928,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_13.AutoSize = true;
             this.lbl_NA_13.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_13.Location = new System.Drawing.Point(525, 75);
-            this.lbl_NA_13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_13.Location = new System.Drawing.Point(420, 60);
             this.lbl_NA_13.Name = "lbl_NA_13";
-            this.lbl_NA_13.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_13.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_13.TabIndex = 201;
             this.lbl_NA_13.Text = "lbl_NA_13";
             // 
@@ -2054,10 +1938,9 @@ namespace InjectorInspector
             // 
             this.lbl_擺放座開.AutoSize = true;
             this.lbl_擺放座開.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_擺放座開.Location = new System.Drawing.Point(525, 50);
-            this.lbl_擺放座開.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_擺放座開.Location = new System.Drawing.Point(420, 40);
             this.lbl_擺放座開.Name = "lbl_擺放座開";
-            this.lbl_擺放座開.Size = new System.Drawing.Size(100, 17);
+            this.lbl_擺放座開.Size = new System.Drawing.Size(77, 13);
             this.lbl_擺放座開.TabIndex = 200;
             this.lbl_擺放座開.Text = "lbl_擺放座開";
             // 
@@ -2065,10 +1948,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_11.AutoSize = true;
             this.lbl_NA_11.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_11.Location = new System.Drawing.Point(425, 225);
-            this.lbl_NA_11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_11.Location = new System.Drawing.Point(340, 180);
             this.lbl_NA_11.Name = "lbl_NA_11";
-            this.lbl_NA_11.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_11.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_11.TabIndex = 199;
             this.lbl_NA_11.Text = "lbl_NA_11";
             // 
@@ -2076,10 +1958,9 @@ namespace InjectorInspector
             // 
             this.lbl急停鈕.AutoSize = true;
             this.lbl急停鈕.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl急停鈕.Location = new System.Drawing.Point(425, 200);
-            this.lbl急停鈕.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl急停鈕.Location = new System.Drawing.Point(340, 160);
             this.lbl急停鈕.Name = "lbl急停鈕";
-            this.lbl急停鈕.Size = new System.Drawing.Size(75, 17);
+            this.lbl急停鈕.Size = new System.Drawing.Size(58, 13);
             this.lbl急停鈕.TabIndex = 198;
             this.lbl急停鈕.Text = "lbl急停鈕";
             // 
@@ -2087,10 +1968,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_10.AutoSize = true;
             this.lbl_NA_10.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_10.Location = new System.Drawing.Point(425, 175);
-            this.lbl_NA_10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_10.Location = new System.Drawing.Point(340, 140);
             this.lbl_NA_10.Name = "lbl_NA_10";
-            this.lbl_NA_10.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_10.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_10.TabIndex = 197;
             this.lbl_NA_10.Text = "lbl_NA_10";
             // 
@@ -2098,10 +1978,9 @@ namespace InjectorInspector
             // 
             this.lbl停止鈕.AutoSize = true;
             this.lbl停止鈕.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl停止鈕.Location = new System.Drawing.Point(425, 150);
-            this.lbl停止鈕.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl停止鈕.Location = new System.Drawing.Point(340, 120);
             this.lbl停止鈕.Name = "lbl停止鈕";
-            this.lbl停止鈕.Size = new System.Drawing.Size(75, 17);
+            this.lbl停止鈕.Size = new System.Drawing.Size(58, 13);
             this.lbl停止鈕.TabIndex = 196;
             this.lbl停止鈕.Text = "lbl停止鈕";
             // 
@@ -2109,10 +1988,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_09.AutoSize = true;
             this.lbl_NA_09.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_09.Location = new System.Drawing.Point(425, 125);
-            this.lbl_NA_09.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_09.Location = new System.Drawing.Point(340, 100);
             this.lbl_NA_09.Name = "lbl_NA_09";
-            this.lbl_NA_09.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_09.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_09.TabIndex = 195;
             this.lbl_NA_09.Text = "lbl_NA_09";
             // 
@@ -2120,10 +1998,9 @@ namespace InjectorInspector
             // 
             this.lbl啟動鈕.AutoSize = true;
             this.lbl啟動鈕.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl啟動鈕.Location = new System.Drawing.Point(425, 100);
-            this.lbl啟動鈕.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl啟動鈕.Location = new System.Drawing.Point(340, 80);
             this.lbl啟動鈕.Name = "lbl啟動鈕";
-            this.lbl啟動鈕.Size = new System.Drawing.Size(75, 17);
+            this.lbl啟動鈕.Size = new System.Drawing.Size(58, 13);
             this.lbl啟動鈕.TabIndex = 194;
             this.lbl啟動鈕.Text = "lbl啟動鈕";
             // 
@@ -2131,10 +2008,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_08.AutoSize = true;
             this.lbl_NA_08.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_08.Location = new System.Drawing.Point(425, 75);
-            this.lbl_NA_08.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_08.Location = new System.Drawing.Point(340, 60);
             this.lbl_NA_08.Name = "lbl_NA_08";
-            this.lbl_NA_08.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_08.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_08.TabIndex = 193;
             this.lbl_NA_08.Text = "lbl_NA_08";
             // 
@@ -2142,10 +2018,9 @@ namespace InjectorInspector
             // 
             this.lbl復歸鈕.AutoSize = true;
             this.lbl復歸鈕.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl復歸鈕.Location = new System.Drawing.Point(425, 50);
-            this.lbl復歸鈕.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl復歸鈕.Location = new System.Drawing.Point(340, 40);
             this.lbl復歸鈕.Name = "lbl復歸鈕";
-            this.lbl復歸鈕.Size = new System.Drawing.Size(75, 17);
+            this.lbl復歸鈕.Size = new System.Drawing.Size(58, 13);
             this.lbl復歸鈕.TabIndex = 192;
             this.lbl復歸鈕.Text = "lbl復歸鈕";
             // 
@@ -2153,10 +2028,9 @@ namespace InjectorInspector
             // 
             this.lbl吸料盒.AutoSize = true;
             this.lbl吸料盒.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl吸料盒.Location = new System.Drawing.Point(325, 225);
-            this.lbl吸料盒.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl吸料盒.Location = new System.Drawing.Point(260, 180);
             this.lbl吸料盒.Name = "lbl吸料盒";
-            this.lbl吸料盒.Size = new System.Drawing.Size(75, 17);
+            this.lbl吸料盒.Size = new System.Drawing.Size(58, 13);
             this.lbl吸料盒.TabIndex = 191;
             this.lbl吸料盒.Text = "lbl吸料盒";
             // 
@@ -2164,10 +2038,9 @@ namespace InjectorInspector
             // 
             this.lbl兩點壓2.AutoSize = true;
             this.lbl兩點壓2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl兩點壓2.Location = new System.Drawing.Point(325, 200);
-            this.lbl兩點壓2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl兩點壓2.Location = new System.Drawing.Point(260, 160);
             this.lbl兩點壓2.Name = "lbl兩點壓2";
-            this.lbl兩點壓2.Size = new System.Drawing.Size(83, 17);
+            this.lbl兩點壓2.Size = new System.Drawing.Size(64, 13);
             this.lbl兩點壓2.TabIndex = 190;
             this.lbl兩點壓2.Text = "lbl兩點壓2";
             // 
@@ -2175,10 +2048,9 @@ namespace InjectorInspector
             // 
             this.lbl堵料盒.AutoSize = true;
             this.lbl堵料盒.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl堵料盒.Location = new System.Drawing.Point(325, 175);
-            this.lbl堵料盒.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl堵料盒.Location = new System.Drawing.Point(260, 140);
             this.lbl堵料盒.Name = "lbl堵料盒";
-            this.lbl堵料盒.Size = new System.Drawing.Size(75, 17);
+            this.lbl堵料盒.Size = new System.Drawing.Size(58, 13);
             this.lbl堵料盒.TabIndex = 189;
             this.lbl堵料盒.Text = "lbl堵料盒";
             // 
@@ -2186,10 +2058,9 @@ namespace InjectorInspector
             // 
             this.lbl兩點壓1.AutoSize = true;
             this.lbl兩點壓1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl兩點壓1.Location = new System.Drawing.Point(325, 150);
-            this.lbl兩點壓1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl兩點壓1.Location = new System.Drawing.Point(260, 120);
             this.lbl兩點壓1.Name = "lbl兩點壓1";
-            this.lbl兩點壓1.Size = new System.Drawing.Size(83, 17);
+            this.lbl兩點壓1.Size = new System.Drawing.Size(64, 13);
             this.lbl兩點壓1.TabIndex = 188;
             this.lbl兩點壓1.Text = "lbl兩點壓1";
             // 
@@ -2197,10 +2068,9 @@ namespace InjectorInspector
             // 
             this.lbl取料ng盒.AutoSize = true;
             this.lbl取料ng盒.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl取料ng盒.Location = new System.Drawing.Point(325, 125);
-            this.lbl取料ng盒.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl取料ng盒.Location = new System.Drawing.Point(260, 100);
             this.lbl取料ng盒.Name = "lbl取料ng盒";
-            this.lbl取料ng盒.Size = new System.Drawing.Size(91, 17);
+            this.lbl取料ng盒.Size = new System.Drawing.Size(70, 13);
             this.lbl取料ng盒.TabIndex = 187;
             this.lbl取料ng盒.Text = "lbl取料ng盒";
             // 
@@ -2208,10 +2078,9 @@ namespace InjectorInspector
             // 
             this.lbl吸嘴空2.AutoSize = true;
             this.lbl吸嘴空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl吸嘴空2.Location = new System.Drawing.Point(325, 100);
-            this.lbl吸嘴空2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl吸嘴空2.Location = new System.Drawing.Point(260, 80);
             this.lbl吸嘴空2.Name = "lbl吸嘴空2";
-            this.lbl吸嘴空2.Size = new System.Drawing.Size(83, 17);
+            this.lbl吸嘴空2.Size = new System.Drawing.Size(64, 13);
             this.lbl吸嘴空2.TabIndex = 186;
             this.lbl吸嘴空2.Text = "lbl吸嘴空2";
             // 
@@ -2219,10 +2088,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_07.AutoSize = true;
             this.lbl_NA_07.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_07.Location = new System.Drawing.Point(325, 75);
-            this.lbl_NA_07.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_07.Location = new System.Drawing.Point(260, 60);
             this.lbl_NA_07.Name = "lbl_NA_07";
-            this.lbl_NA_07.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_07.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_07.TabIndex = 185;
             this.lbl_NA_07.Text = "lbl_NA_07";
             // 
@@ -2230,10 +2098,9 @@ namespace InjectorInspector
             // 
             this.lbl吸嘴空1.AutoSize = true;
             this.lbl吸嘴空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl吸嘴空1.Location = new System.Drawing.Point(325, 50);
-            this.lbl吸嘴空1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl吸嘴空1.Location = new System.Drawing.Point(260, 40);
             this.lbl吸嘴空1.Name = "lbl吸嘴空1";
-            this.lbl吸嘴空1.Size = new System.Drawing.Size(83, 17);
+            this.lbl吸嘴空1.Size = new System.Drawing.Size(64, 13);
             this.lbl吸嘴空1.TabIndex = 184;
             this.lbl吸嘴空1.Text = "lbl吸嘴空1";
             // 
@@ -2241,10 +2108,9 @@ namespace InjectorInspector
             // 
             this.lbl擺放空2.AutoSize = true;
             this.lbl擺放空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl擺放空2.Location = new System.Drawing.Point(225, 225);
-            this.lbl擺放空2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl擺放空2.Location = new System.Drawing.Point(180, 180);
             this.lbl擺放空2.Name = "lbl擺放空2";
-            this.lbl擺放空2.Size = new System.Drawing.Size(83, 17);
+            this.lbl擺放空2.Size = new System.Drawing.Size(64, 13);
             this.lbl擺放空2.TabIndex = 183;
             this.lbl擺放空2.Text = "lbl擺放空2";
             // 
@@ -2252,10 +2118,9 @@ namespace InjectorInspector
             // 
             this.lblsk1空2.AutoSize = true;
             this.lblsk1空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblsk1空2.Location = new System.Drawing.Point(225, 200);
-            this.lblsk1空2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblsk1空2.Location = new System.Drawing.Point(180, 160);
             this.lblsk1空2.Name = "lblsk1空2";
-            this.lblsk1空2.Size = new System.Drawing.Size(71, 17);
+            this.lblsk1空2.Size = new System.Drawing.Size(55, 13);
             this.lblsk1空2.TabIndex = 182;
             this.lblsk1空2.Text = "lblsk1空2";
             // 
@@ -2263,10 +2128,9 @@ namespace InjectorInspector
             // 
             this.lbl擺放空1.AutoSize = true;
             this.lbl擺放空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl擺放空1.Location = new System.Drawing.Point(225, 175);
-            this.lbl擺放空1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl擺放空1.Location = new System.Drawing.Point(180, 140);
             this.lbl擺放空1.Name = "lbl擺放空1";
-            this.lbl擺放空1.Size = new System.Drawing.Size(83, 17);
+            this.lbl擺放空1.Size = new System.Drawing.Size(64, 13);
             this.lbl擺放空1.TabIndex = 181;
             this.lbl擺放空1.Text = "lbl擺放空1";
             // 
@@ -2274,10 +2138,9 @@ namespace InjectorInspector
             // 
             this.lblsk1空1.AutoSize = true;
             this.lblsk1空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblsk1空1.Location = new System.Drawing.Point(225, 150);
-            this.lblsk1空1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblsk1空1.Location = new System.Drawing.Point(180, 120);
             this.lblsk1空1.Name = "lblsk1空1";
-            this.lblsk1空1.Size = new System.Drawing.Size(71, 17);
+            this.lblsk1空1.Size = new System.Drawing.Size(55, 13);
             this.lblsk1空1.TabIndex = 180;
             this.lblsk1空1.Text = "lblsk1空1";
             // 
@@ -2285,10 +2148,9 @@ namespace InjectorInspector
             // 
             this.lblsk2空2.AutoSize = true;
             this.lblsk2空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblsk2空2.Location = new System.Drawing.Point(225, 125);
-            this.lblsk2空2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblsk2空2.Location = new System.Drawing.Point(180, 100);
             this.lblsk2空2.Name = "lblsk2空2";
-            this.lblsk2空2.Size = new System.Drawing.Size(71, 17);
+            this.lblsk2空2.Size = new System.Drawing.Size(55, 13);
             this.lblsk2空2.TabIndex = 179;
             this.lblsk2空2.Text = "lblsk2空2";
             // 
@@ -2296,10 +2158,9 @@ namespace InjectorInspector
             // 
             this.lbl載盤空2.AutoSize = true;
             this.lbl載盤空2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤空2.Location = new System.Drawing.Point(225, 100);
-            this.lbl載盤空2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl載盤空2.Location = new System.Drawing.Point(180, 80);
             this.lbl載盤空2.Name = "lbl載盤空2";
-            this.lbl載盤空2.Size = new System.Drawing.Size(83, 17);
+            this.lbl載盤空2.Size = new System.Drawing.Size(64, 13);
             this.lbl載盤空2.TabIndex = 178;
             this.lbl載盤空2.Text = "lbl載盤空2";
             // 
@@ -2307,10 +2168,9 @@ namespace InjectorInspector
             // 
             this.lblsk2空1.AutoSize = true;
             this.lblsk2空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lblsk2空1.Location = new System.Drawing.Point(225, 75);
-            this.lblsk2空1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblsk2空1.Location = new System.Drawing.Point(180, 60);
             this.lblsk2空1.Name = "lblsk2空1";
-            this.lblsk2空1.Size = new System.Drawing.Size(71, 17);
+            this.lblsk2空1.Size = new System.Drawing.Size(55, 13);
             this.lblsk2空1.TabIndex = 177;
             this.lblsk2空1.Text = "lblsk2空1";
             // 
@@ -2318,10 +2178,9 @@ namespace InjectorInspector
             // 
             this.lbl載盤空1.AutoSize = true;
             this.lbl載盤空1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤空1.Location = new System.Drawing.Point(225, 50);
-            this.lbl載盤空1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl載盤空1.Location = new System.Drawing.Point(180, 40);
             this.lbl載盤空1.Name = "lbl載盤空1";
-            this.lbl載盤空1.Size = new System.Drawing.Size(83, 17);
+            this.lbl載盤空1.Size = new System.Drawing.Size(64, 13);
             this.lbl載盤空1.TabIndex = 176;
             this.lbl載盤空1.Text = "lbl載盤空1";
             // 
@@ -2329,10 +2188,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_06.AutoSize = true;
             this.lbl_NA_06.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_06.Location = new System.Drawing.Point(125, 225);
-            this.lbl_NA_06.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_06.Location = new System.Drawing.Point(100, 180);
             this.lbl_NA_06.Name = "lbl_NA_06";
-            this.lbl_NA_06.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_06.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_06.TabIndex = 175;
             this.lbl_NA_06.Text = "lbl_NA_06";
             // 
@@ -2340,10 +2198,9 @@ namespace InjectorInspector
             // 
             this.lbl載盤X後.AutoSize = true;
             this.lbl載盤X後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤X後.Location = new System.Drawing.Point(125, 200);
-            this.lbl載盤X後.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl載盤X後.Location = new System.Drawing.Point(100, 160);
             this.lbl載盤X後.Name = "lbl載盤X後";
-            this.lbl載盤X後.Size = new System.Drawing.Size(87, 17);
+            this.lbl載盤X後.Size = new System.Drawing.Size(67, 13);
             this.lbl載盤X後.TabIndex = 174;
             this.lbl載盤X後.Text = "lbl載盤X後";
             // 
@@ -2351,10 +2208,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_05.AutoSize = true;
             this.lbl_NA_05.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_05.Location = new System.Drawing.Point(125, 175);
-            this.lbl_NA_05.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_05.Location = new System.Drawing.Point(100, 140);
             this.lbl_NA_05.Name = "lbl_NA_05";
-            this.lbl_NA_05.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_05.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_05.TabIndex = 173;
             this.lbl_NA_05.Text = "lbl_NA_05";
             // 
@@ -2362,10 +2218,9 @@ namespace InjectorInspector
             // 
             this.lbl載盤X前.AutoSize = true;
             this.lbl載盤X前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤X前.Location = new System.Drawing.Point(125, 150);
-            this.lbl載盤X前.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl載盤X前.Location = new System.Drawing.Point(100, 120);
             this.lbl載盤X前.Name = "lbl載盤X前";
-            this.lbl載盤X前.Size = new System.Drawing.Size(87, 17);
+            this.lbl載盤X前.Size = new System.Drawing.Size(67, 13);
             this.lbl載盤X前.TabIndex = 172;
             this.lbl載盤X前.Text = "lbl載盤X前";
             // 
@@ -2373,10 +2228,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_04.AutoSize = true;
             this.lbl_NA_04.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_04.Location = new System.Drawing.Point(125, 125);
-            this.lbl_NA_04.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_04.Location = new System.Drawing.Point(100, 100);
             this.lbl_NA_04.Name = "lbl_NA_04";
-            this.lbl_NA_04.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_04.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_04.TabIndex = 171;
             this.lbl_NA_04.Text = "lbl_NA_04";
             // 
@@ -2384,10 +2238,9 @@ namespace InjectorInspector
             // 
             this.lbl植針Z前.AutoSize = true;
             this.lbl植針Z前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl植針Z前.Location = new System.Drawing.Point(125, 100);
-            this.lbl植針Z前.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl植針Z前.Location = new System.Drawing.Point(100, 80);
             this.lbl植針Z前.Name = "lbl植針Z前";
-            this.lbl植針Z前.Size = new System.Drawing.Size(85, 17);
+            this.lbl植針Z前.Size = new System.Drawing.Size(65, 13);
             this.lbl植針Z前.TabIndex = 170;
             this.lbl植針Z前.Text = "lbl植針Z前";
             // 
@@ -2395,10 +2248,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_03.AutoSize = true;
             this.lbl_NA_03.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_03.Location = new System.Drawing.Point(125, 75);
-            this.lbl_NA_03.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_03.Location = new System.Drawing.Point(100, 60);
             this.lbl_NA_03.Name = "lbl_NA_03";
-            this.lbl_NA_03.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_03.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_03.TabIndex = 169;
             this.lbl_NA_03.Text = "lbl_NA_03";
             // 
@@ -2406,10 +2258,9 @@ namespace InjectorInspector
             // 
             this.lbl植針Z後.AutoSize = true;
             this.lbl植針Z後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl植針Z後.Location = new System.Drawing.Point(125, 50);
-            this.lbl植針Z後.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl植針Z後.Location = new System.Drawing.Point(100, 40);
             this.lbl植針Z後.Name = "lbl植針Z後";
-            this.lbl植針Z後.Size = new System.Drawing.Size(85, 17);
+            this.lbl植針Z後.Size = new System.Drawing.Size(65, 13);
             this.lbl植針Z後.TabIndex = 168;
             this.lbl植針Z後.Text = "lbl植針Z後";
             // 
@@ -2417,10 +2268,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_02.AutoSize = true;
             this.lbl_NA_02.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_02.Location = new System.Drawing.Point(25, 225);
-            this.lbl_NA_02.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_02.Location = new System.Drawing.Point(20, 180);
             this.lbl_NA_02.Name = "lbl_NA_02";
-            this.lbl_NA_02.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_02.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_02.TabIndex = 167;
             this.lbl_NA_02.Text = "lbl_NA_02";
             // 
@@ -2428,10 +2278,9 @@ namespace InjectorInspector
             // 
             this.lbl取料X前.AutoSize = true;
             this.lbl取料X前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl取料X前.Location = new System.Drawing.Point(25, 200);
-            this.lbl取料X前.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl取料X前.Location = new System.Drawing.Point(20, 160);
             this.lbl取料X前.Name = "lbl取料X前";
-            this.lbl取料X前.Size = new System.Drawing.Size(87, 17);
+            this.lbl取料X前.Size = new System.Drawing.Size(67, 13);
             this.lbl取料X前.TabIndex = 166;
             this.lbl取料X前.Text = "lbl取料X前";
             // 
@@ -2439,10 +2288,9 @@ namespace InjectorInspector
             // 
             this.lbl_NA_01.AutoSize = true;
             this.lbl_NA_01.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_01.Location = new System.Drawing.Point(25, 175);
-            this.lbl_NA_01.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_NA_01.Location = new System.Drawing.Point(20, 140);
             this.lbl_NA_01.Name = "lbl_NA_01";
-            this.lbl_NA_01.Size = new System.Drawing.Size(80, 17);
+            this.lbl_NA_01.Size = new System.Drawing.Size(61, 13);
             this.lbl_NA_01.TabIndex = 165;
             this.lbl_NA_01.Text = "lbl_NA_01";
             // 
@@ -2450,10 +2298,9 @@ namespace InjectorInspector
             // 
             this.lbl取料X後.AutoSize = true;
             this.lbl取料X後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl取料X後.Location = new System.Drawing.Point(25, 150);
-            this.lbl取料X後.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl取料X後.Location = new System.Drawing.Point(20, 120);
             this.lbl取料X後.Name = "lbl取料X後";
-            this.lbl取料X後.Size = new System.Drawing.Size(87, 17);
+            this.lbl取料X後.Size = new System.Drawing.Size(67, 13);
             this.lbl取料X後.TabIndex = 164;
             this.lbl取料X後.Text = "lbl取料X後";
             // 
@@ -2461,10 +2308,9 @@ namespace InjectorInspector
             // 
             this.lbl取料Y前.AutoSize = true;
             this.lbl取料Y前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl取料Y前.Location = new System.Drawing.Point(25, 125);
-            this.lbl取料Y前.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl取料Y前.Location = new System.Drawing.Point(20, 100);
             this.lbl取料Y前.Name = "lbl取料Y前";
-            this.lbl取料Y前.Size = new System.Drawing.Size(87, 17);
+            this.lbl取料Y前.Size = new System.Drawing.Size(67, 13);
             this.lbl取料Y前.TabIndex = 163;
             this.lbl取料Y前.Text = "lbl取料Y前";
             // 
@@ -2472,10 +2318,9 @@ namespace InjectorInspector
             // 
             this.lbl載盤Y前.AutoSize = true;
             this.lbl載盤Y前.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤Y前.Location = new System.Drawing.Point(25, 100);
-            this.lbl載盤Y前.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl載盤Y前.Location = new System.Drawing.Point(20, 80);
             this.lbl載盤Y前.Name = "lbl載盤Y前";
-            this.lbl載盤Y前.Size = new System.Drawing.Size(87, 17);
+            this.lbl載盤Y前.Size = new System.Drawing.Size(67, 13);
             this.lbl載盤Y前.TabIndex = 162;
             this.lbl載盤Y前.Text = "lbl載盤Y前";
             // 
@@ -2483,10 +2328,9 @@ namespace InjectorInspector
             // 
             this.lbl取料Y後.AutoSize = true;
             this.lbl取料Y後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl取料Y後.Location = new System.Drawing.Point(25, 75);
-            this.lbl取料Y後.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl取料Y後.Location = new System.Drawing.Point(20, 60);
             this.lbl取料Y後.Name = "lbl取料Y後";
-            this.lbl取料Y後.Size = new System.Drawing.Size(87, 17);
+            this.lbl取料Y後.Size = new System.Drawing.Size(67, 13);
             this.lbl取料Y後.TabIndex = 161;
             this.lbl取料Y後.Text = "lbl取料Y後";
             // 
@@ -2494,10 +2338,9 @@ namespace InjectorInspector
             // 
             this.lbl載盤Y後.AutoSize = true;
             this.lbl載盤Y後.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl載盤Y後.Location = new System.Drawing.Point(25, 50);
-            this.lbl載盤Y後.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl載盤Y後.Location = new System.Drawing.Point(20, 40);
             this.lbl載盤Y後.Name = "lbl載盤Y後";
-            this.lbl載盤Y後.Size = new System.Drawing.Size(87, 17);
+            this.lbl載盤Y後.Size = new System.Drawing.Size(67, 13);
             this.lbl載盤Y後.TabIndex = 160;
             this.lbl載盤Y後.Text = "lbl載盤Y後";
             // 
@@ -2505,10 +2348,9 @@ namespace InjectorInspector
             // 
             this.lbl_工作門_Convert.AutoSize = true;
             this.lbl_工作門_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_工作門_Convert.Location = new System.Drawing.Point(738, 231);
-            this.lbl_工作門_Convert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_工作門_Convert.Location = new System.Drawing.Point(590, 185);
             this.lbl_工作門_Convert.Name = "lbl_工作門_Convert";
-            this.lbl_工作門_Convert.Size = new System.Drawing.Size(142, 17);
+            this.lbl_工作門_Convert.Size = new System.Drawing.Size(108, 13);
             this.lbl_工作門_Convert.TabIndex = 95;
             this.lbl_工作門_Convert.Text = "lbl_工作門_Convert";
             // 
@@ -2516,10 +2358,9 @@ namespace InjectorInspector
             // 
             this.lbl_植針R軸_Convert.AutoSize = true;
             this.lbl_植針R軸_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_植針R軸_Convert.Location = new System.Drawing.Point(738, 206);
-            this.lbl_植針R軸_Convert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_植針R軸_Convert.Location = new System.Drawing.Point(590, 165);
             this.lbl_植針R軸_Convert.Name = "lbl_植針R軸_Convert";
-            this.lbl_植針R軸_Convert.Size = new System.Drawing.Size(153, 17);
+            this.lbl_植針R軸_Convert.Size = new System.Drawing.Size(116, 13);
             this.lbl_植針R軸_Convert.TabIndex = 94;
             this.lbl_植針R軸_Convert.Text = "lbl_植針R軸_Convert";
             // 
@@ -2527,10 +2368,9 @@ namespace InjectorInspector
             // 
             this.lbl_植針Z軸_Convert.AutoSize = true;
             this.lbl_植針Z軸_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_植針Z軸_Convert.Location = new System.Drawing.Point(738, 181);
-            this.lbl_植針Z軸_Convert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_植針Z軸_Convert.Location = new System.Drawing.Point(590, 145);
             this.lbl_植針Z軸_Convert.Name = "lbl_植針Z軸_Convert";
-            this.lbl_植針Z軸_Convert.Size = new System.Drawing.Size(152, 17);
+            this.lbl_植針Z軸_Convert.Size = new System.Drawing.Size(115, 13);
             this.lbl_植針Z軸_Convert.TabIndex = 93;
             this.lbl_植針Z軸_Convert.Text = "lbl_植針Z軸_Convert";
             // 
@@ -2538,10 +2378,9 @@ namespace InjectorInspector
             // 
             this.lbl_載盤Y軸_Convert.AutoSize = true;
             this.lbl_載盤Y軸_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_載盤Y軸_Convert.Location = new System.Drawing.Point(738, 156);
-            this.lbl_載盤Y軸_Convert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_載盤Y軸_Convert.Location = new System.Drawing.Point(590, 125);
             this.lbl_載盤Y軸_Convert.Name = "lbl_載盤Y軸_Convert";
-            this.lbl_載盤Y軸_Convert.Size = new System.Drawing.Size(154, 17);
+            this.lbl_載盤Y軸_Convert.Size = new System.Drawing.Size(117, 13);
             this.lbl_載盤Y軸_Convert.TabIndex = 92;
             this.lbl_載盤Y軸_Convert.Text = "lbl_載盤Y軸_Convert";
             // 
@@ -2549,10 +2388,9 @@ namespace InjectorInspector
             // 
             this.lbl_載盤X軸_Convert.AutoSize = true;
             this.lbl_載盤X軸_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_載盤X軸_Convert.Location = new System.Drawing.Point(738, 131);
-            this.lbl_載盤X軸_Convert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_載盤X軸_Convert.Location = new System.Drawing.Point(590, 105);
             this.lbl_載盤X軸_Convert.Name = "lbl_載盤X軸_Convert";
-            this.lbl_載盤X軸_Convert.Size = new System.Drawing.Size(154, 17);
+            this.lbl_載盤X軸_Convert.Size = new System.Drawing.Size(117, 13);
             this.lbl_載盤X軸_Convert.TabIndex = 91;
             this.lbl_載盤X軸_Convert.Text = "lbl_載盤X軸_Convert";
             // 
@@ -2560,10 +2398,9 @@ namespace InjectorInspector
             // 
             this.lbl_吸嘴R軸_Convert.AutoSize = true;
             this.lbl_吸嘴R軸_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴R軸_Convert.Location = new System.Drawing.Point(738, 106);
-            this.lbl_吸嘴R軸_Convert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_吸嘴R軸_Convert.Location = new System.Drawing.Point(590, 85);
             this.lbl_吸嘴R軸_Convert.Name = "lbl_吸嘴R軸_Convert";
-            this.lbl_吸嘴R軸_Convert.Size = new System.Drawing.Size(153, 17);
+            this.lbl_吸嘴R軸_Convert.Size = new System.Drawing.Size(116, 13);
             this.lbl_吸嘴R軸_Convert.TabIndex = 90;
             this.lbl_吸嘴R軸_Convert.Text = "lbl_吸嘴R軸_Convert";
             // 
@@ -2571,10 +2408,9 @@ namespace InjectorInspector
             // 
             this.lbl_吸嘴Z軸_Convert.AutoSize = true;
             this.lbl_吸嘴Z軸_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴Z軸_Convert.Location = new System.Drawing.Point(738, 81);
-            this.lbl_吸嘴Z軸_Convert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_吸嘴Z軸_Convert.Location = new System.Drawing.Point(590, 65);
             this.lbl_吸嘴Z軸_Convert.Name = "lbl_吸嘴Z軸_Convert";
-            this.lbl_吸嘴Z軸_Convert.Size = new System.Drawing.Size(152, 17);
+            this.lbl_吸嘴Z軸_Convert.Size = new System.Drawing.Size(115, 13);
             this.lbl_吸嘴Z軸_Convert.TabIndex = 89;
             this.lbl_吸嘴Z軸_Convert.Text = "lbl_吸嘴Z軸_Convert";
             // 
@@ -2582,10 +2418,9 @@ namespace InjectorInspector
             // 
             this.lbl_吸嘴Y軸_Convert.AutoSize = true;
             this.lbl_吸嘴Y軸_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴Y軸_Convert.Location = new System.Drawing.Point(738, 56);
-            this.lbl_吸嘴Y軸_Convert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_吸嘴Y軸_Convert.Location = new System.Drawing.Point(590, 45);
             this.lbl_吸嘴Y軸_Convert.Name = "lbl_吸嘴Y軸_Convert";
-            this.lbl_吸嘴Y軸_Convert.Size = new System.Drawing.Size(154, 17);
+            this.lbl_吸嘴Y軸_Convert.Size = new System.Drawing.Size(117, 13);
             this.lbl_吸嘴Y軸_Convert.TabIndex = 88;
             this.lbl_吸嘴Y軸_Convert.Text = "lbl_吸嘴Y軸_Convert";
             // 
@@ -2593,10 +2428,9 @@ namespace InjectorInspector
             // 
             this.lbl_吸嘴X軸_Convert.AutoSize = true;
             this.lbl_吸嘴X軸_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴X軸_Convert.Location = new System.Drawing.Point(738, 31);
-            this.lbl_吸嘴X軸_Convert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_吸嘴X軸_Convert.Location = new System.Drawing.Point(590, 25);
             this.lbl_吸嘴X軸_Convert.Name = "lbl_吸嘴X軸_Convert";
-            this.lbl_吸嘴X軸_Convert.Size = new System.Drawing.Size(154, 17);
+            this.lbl_吸嘴X軸_Convert.Size = new System.Drawing.Size(117, 13);
             this.lbl_吸嘴X軸_Convert.TabIndex = 87;
             this.lbl_吸嘴X軸_Convert.Text = "lbl_吸嘴X軸_Convert";
             // 
@@ -2604,10 +2438,9 @@ namespace InjectorInspector
             // 
             this.lbl_工作門_Back.AutoSize = true;
             this.lbl_工作門_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_工作門_Back.Location = new System.Drawing.Point(962, 231);
-            this.lbl_工作門_Back.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_工作門_Back.Location = new System.Drawing.Point(770, 185);
             this.lbl_工作門_Back.Name = "lbl_工作門_Back";
-            this.lbl_工作門_Back.Size = new System.Drawing.Size(124, 17);
+            this.lbl_工作門_Back.Size = new System.Drawing.Size(94, 13);
             this.lbl_工作門_Back.TabIndex = 86;
             this.lbl_工作門_Back.Text = "lbl_工作門_Back";
             // 
@@ -2615,10 +2448,9 @@ namespace InjectorInspector
             // 
             this.lbl_工作門_RAW.AutoSize = true;
             this.lbl_工作門_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_工作門_RAW.Location = new System.Drawing.Point(525, 231);
-            this.lbl_工作門_RAW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_工作門_RAW.Location = new System.Drawing.Point(420, 185);
             this.lbl_工作門_RAW.Name = "lbl_工作門_RAW";
-            this.lbl_工作門_RAW.Size = new System.Drawing.Size(129, 17);
+            this.lbl_工作門_RAW.Size = new System.Drawing.Size(99, 13);
             this.lbl_工作門_RAW.TabIndex = 85;
             this.lbl_工作門_RAW.Text = "lbl_工作門_RAW";
             // 
@@ -2626,10 +2458,9 @@ namespace InjectorInspector
             // 
             this.lbl_植針R軸_Back.AutoSize = true;
             this.lbl_植針R軸_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_植針R軸_Back.Location = new System.Drawing.Point(962, 206);
-            this.lbl_植針R軸_Back.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_植針R軸_Back.Location = new System.Drawing.Point(770, 165);
             this.lbl_植針R軸_Back.Name = "lbl_植針R軸_Back";
-            this.lbl_植針R軸_Back.Size = new System.Drawing.Size(135, 17);
+            this.lbl_植針R軸_Back.Size = new System.Drawing.Size(102, 13);
             this.lbl_植針R軸_Back.TabIndex = 83;
             this.lbl_植針R軸_Back.Text = "lbl_植針R軸_Back";
             // 
@@ -2637,10 +2468,9 @@ namespace InjectorInspector
             // 
             this.lbl_植針R軸_RAW.AutoSize = true;
             this.lbl_植針R軸_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_植針R軸_RAW.Location = new System.Drawing.Point(525, 206);
-            this.lbl_植針R軸_RAW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_植針R軸_RAW.Location = new System.Drawing.Point(420, 165);
             this.lbl_植針R軸_RAW.Name = "lbl_植針R軸_RAW";
-            this.lbl_植針R軸_RAW.Size = new System.Drawing.Size(140, 17);
+            this.lbl_植針R軸_RAW.Size = new System.Drawing.Size(107, 13);
             this.lbl_植針R軸_RAW.TabIndex = 82;
             this.lbl_植針R軸_RAW.Text = "lbl_植針R軸_RAW";
             // 
@@ -2648,10 +2478,9 @@ namespace InjectorInspector
             // 
             this.lbl_植針Z軸_Back.AutoSize = true;
             this.lbl_植針Z軸_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_植針Z軸_Back.Location = new System.Drawing.Point(962, 181);
-            this.lbl_植針Z軸_Back.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_植針Z軸_Back.Location = new System.Drawing.Point(770, 145);
             this.lbl_植針Z軸_Back.Name = "lbl_植針Z軸_Back";
-            this.lbl_植針Z軸_Back.Size = new System.Drawing.Size(134, 17);
+            this.lbl_植針Z軸_Back.Size = new System.Drawing.Size(101, 13);
             this.lbl_植針Z軸_Back.TabIndex = 80;
             this.lbl_植針Z軸_Back.Text = "lbl_植針Z軸_Back";
             // 
@@ -2659,10 +2488,9 @@ namespace InjectorInspector
             // 
             this.lbl_植針Z軸_RAW.AutoSize = true;
             this.lbl_植針Z軸_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_植針Z軸_RAW.Location = new System.Drawing.Point(525, 181);
-            this.lbl_植針Z軸_RAW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_植針Z軸_RAW.Location = new System.Drawing.Point(420, 145);
             this.lbl_植針Z軸_RAW.Name = "lbl_植針Z軸_RAW";
-            this.lbl_植針Z軸_RAW.Size = new System.Drawing.Size(139, 17);
+            this.lbl_植針Z軸_RAW.Size = new System.Drawing.Size(106, 13);
             this.lbl_植針Z軸_RAW.TabIndex = 79;
             this.lbl_植針Z軸_RAW.Text = "lbl_植針Z軸_RAW";
             // 
@@ -2670,10 +2498,9 @@ namespace InjectorInspector
             // 
             this.lbl_載盤Y軸_Back.AutoSize = true;
             this.lbl_載盤Y軸_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_載盤Y軸_Back.Location = new System.Drawing.Point(962, 156);
-            this.lbl_載盤Y軸_Back.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_載盤Y軸_Back.Location = new System.Drawing.Point(770, 125);
             this.lbl_載盤Y軸_Back.Name = "lbl_載盤Y軸_Back";
-            this.lbl_載盤Y軸_Back.Size = new System.Drawing.Size(136, 17);
+            this.lbl_載盤Y軸_Back.Size = new System.Drawing.Size(103, 13);
             this.lbl_載盤Y軸_Back.TabIndex = 77;
             this.lbl_載盤Y軸_Back.Text = "lbl_載盤Y軸_Back";
             // 
@@ -2681,10 +2508,9 @@ namespace InjectorInspector
             // 
             this.lbl_載盤Y軸_RAW.AutoSize = true;
             this.lbl_載盤Y軸_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_載盤Y軸_RAW.Location = new System.Drawing.Point(525, 156);
-            this.lbl_載盤Y軸_RAW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_載盤Y軸_RAW.Location = new System.Drawing.Point(420, 125);
             this.lbl_載盤Y軸_RAW.Name = "lbl_載盤Y軸_RAW";
-            this.lbl_載盤Y軸_RAW.Size = new System.Drawing.Size(141, 17);
+            this.lbl_載盤Y軸_RAW.Size = new System.Drawing.Size(108, 13);
             this.lbl_載盤Y軸_RAW.TabIndex = 76;
             this.lbl_載盤Y軸_RAW.Text = "lbl_載盤Y軸_RAW";
             // 
@@ -2692,10 +2518,9 @@ namespace InjectorInspector
             // 
             this.lbl_載盤X軸_Back.AutoSize = true;
             this.lbl_載盤X軸_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_載盤X軸_Back.Location = new System.Drawing.Point(962, 131);
-            this.lbl_載盤X軸_Back.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_載盤X軸_Back.Location = new System.Drawing.Point(770, 105);
             this.lbl_載盤X軸_Back.Name = "lbl_載盤X軸_Back";
-            this.lbl_載盤X軸_Back.Size = new System.Drawing.Size(136, 17);
+            this.lbl_載盤X軸_Back.Size = new System.Drawing.Size(103, 13);
             this.lbl_載盤X軸_Back.TabIndex = 74;
             this.lbl_載盤X軸_Back.Text = "lbl_載盤X軸_Back";
             // 
@@ -2703,10 +2528,9 @@ namespace InjectorInspector
             // 
             this.lbl_載盤X軸_RAW.AutoSize = true;
             this.lbl_載盤X軸_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_載盤X軸_RAW.Location = new System.Drawing.Point(525, 131);
-            this.lbl_載盤X軸_RAW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_載盤X軸_RAW.Location = new System.Drawing.Point(420, 105);
             this.lbl_載盤X軸_RAW.Name = "lbl_載盤X軸_RAW";
-            this.lbl_載盤X軸_RAW.Size = new System.Drawing.Size(141, 17);
+            this.lbl_載盤X軸_RAW.Size = new System.Drawing.Size(108, 13);
             this.lbl_載盤X軸_RAW.TabIndex = 73;
             this.lbl_載盤X軸_RAW.Text = "lbl_載盤X軸_RAW";
             // 
@@ -2714,10 +2538,9 @@ namespace InjectorInspector
             // 
             this.lbl_吸嘴R軸_Back.AutoSize = true;
             this.lbl_吸嘴R軸_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴R軸_Back.Location = new System.Drawing.Point(962, 106);
-            this.lbl_吸嘴R軸_Back.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_吸嘴R軸_Back.Location = new System.Drawing.Point(770, 85);
             this.lbl_吸嘴R軸_Back.Name = "lbl_吸嘴R軸_Back";
-            this.lbl_吸嘴R軸_Back.Size = new System.Drawing.Size(135, 17);
+            this.lbl_吸嘴R軸_Back.Size = new System.Drawing.Size(102, 13);
             this.lbl_吸嘴R軸_Back.TabIndex = 71;
             this.lbl_吸嘴R軸_Back.Text = "lbl_吸嘴R軸_Back";
             // 
@@ -2725,10 +2548,9 @@ namespace InjectorInspector
             // 
             this.lbl_吸嘴R軸_RAW.AutoSize = true;
             this.lbl_吸嘴R軸_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴R軸_RAW.Location = new System.Drawing.Point(525, 106);
-            this.lbl_吸嘴R軸_RAW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_吸嘴R軸_RAW.Location = new System.Drawing.Point(420, 85);
             this.lbl_吸嘴R軸_RAW.Name = "lbl_吸嘴R軸_RAW";
-            this.lbl_吸嘴R軸_RAW.Size = new System.Drawing.Size(140, 17);
+            this.lbl_吸嘴R軸_RAW.Size = new System.Drawing.Size(107, 13);
             this.lbl_吸嘴R軸_RAW.TabIndex = 70;
             this.lbl_吸嘴R軸_RAW.Text = "lbl_吸嘴R軸_RAW";
             // 
@@ -2736,10 +2558,9 @@ namespace InjectorInspector
             // 
             this.lbl_吸嘴Z軸_Back.AutoSize = true;
             this.lbl_吸嘴Z軸_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴Z軸_Back.Location = new System.Drawing.Point(962, 81);
-            this.lbl_吸嘴Z軸_Back.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_吸嘴Z軸_Back.Location = new System.Drawing.Point(770, 65);
             this.lbl_吸嘴Z軸_Back.Name = "lbl_吸嘴Z軸_Back";
-            this.lbl_吸嘴Z軸_Back.Size = new System.Drawing.Size(134, 17);
+            this.lbl_吸嘴Z軸_Back.Size = new System.Drawing.Size(101, 13);
             this.lbl_吸嘴Z軸_Back.TabIndex = 68;
             this.lbl_吸嘴Z軸_Back.Text = "lbl_吸嘴Z軸_Back";
             // 
@@ -2747,10 +2568,9 @@ namespace InjectorInspector
             // 
             this.lbl_吸嘴Z軸_RAW.AutoSize = true;
             this.lbl_吸嘴Z軸_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴Z軸_RAW.Location = new System.Drawing.Point(525, 81);
-            this.lbl_吸嘴Z軸_RAW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_吸嘴Z軸_RAW.Location = new System.Drawing.Point(420, 65);
             this.lbl_吸嘴Z軸_RAW.Name = "lbl_吸嘴Z軸_RAW";
-            this.lbl_吸嘴Z軸_RAW.Size = new System.Drawing.Size(139, 17);
+            this.lbl_吸嘴Z軸_RAW.Size = new System.Drawing.Size(106, 13);
             this.lbl_吸嘴Z軸_RAW.TabIndex = 67;
             this.lbl_吸嘴Z軸_RAW.Text = "lbl_吸嘴Z軸_RAW";
             // 
@@ -2758,10 +2578,9 @@ namespace InjectorInspector
             // 
             this.lbl_吸嘴Y軸_Back.AutoSize = true;
             this.lbl_吸嘴Y軸_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴Y軸_Back.Location = new System.Drawing.Point(962, 56);
-            this.lbl_吸嘴Y軸_Back.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_吸嘴Y軸_Back.Location = new System.Drawing.Point(770, 45);
             this.lbl_吸嘴Y軸_Back.Name = "lbl_吸嘴Y軸_Back";
-            this.lbl_吸嘴Y軸_Back.Size = new System.Drawing.Size(136, 17);
+            this.lbl_吸嘴Y軸_Back.Size = new System.Drawing.Size(103, 13);
             this.lbl_吸嘴Y軸_Back.TabIndex = 65;
             this.lbl_吸嘴Y軸_Back.Text = "lbl_吸嘴Y軸_Back";
             // 
@@ -2769,10 +2588,9 @@ namespace InjectorInspector
             // 
             this.lbl_吸嘴Y軸_RAW.AutoSize = true;
             this.lbl_吸嘴Y軸_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴Y軸_RAW.Location = new System.Drawing.Point(525, 56);
-            this.lbl_吸嘴Y軸_RAW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_吸嘴Y軸_RAW.Location = new System.Drawing.Point(420, 45);
             this.lbl_吸嘴Y軸_RAW.Name = "lbl_吸嘴Y軸_RAW";
-            this.lbl_吸嘴Y軸_RAW.Size = new System.Drawing.Size(141, 17);
+            this.lbl_吸嘴Y軸_RAW.Size = new System.Drawing.Size(108, 13);
             this.lbl_吸嘴Y軸_RAW.TabIndex = 64;
             this.lbl_吸嘴Y軸_RAW.Text = "lbl_吸嘴Y軸_RAW";
             // 
@@ -2780,10 +2598,9 @@ namespace InjectorInspector
             // 
             this.lbl_吸嘴X軸_Back.AutoSize = true;
             this.lbl_吸嘴X軸_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴X軸_Back.Location = new System.Drawing.Point(962, 31);
-            this.lbl_吸嘴X軸_Back.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_吸嘴X軸_Back.Location = new System.Drawing.Point(770, 25);
             this.lbl_吸嘴X軸_Back.Name = "lbl_吸嘴X軸_Back";
-            this.lbl_吸嘴X軸_Back.Size = new System.Drawing.Size(136, 17);
+            this.lbl_吸嘴X軸_Back.Size = new System.Drawing.Size(103, 13);
             this.lbl_吸嘴X軸_Back.TabIndex = 62;
             this.lbl_吸嘴X軸_Back.Text = "lbl_吸嘴X軸_Back";
             // 
@@ -2791,20 +2608,18 @@ namespace InjectorInspector
             // 
             this.lbl_吸嘴X軸_RAW.AutoSize = true;
             this.lbl_吸嘴X軸_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_吸嘴X軸_RAW.Location = new System.Drawing.Point(525, 31);
-            this.lbl_吸嘴X軸_RAW.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_吸嘴X軸_RAW.Location = new System.Drawing.Point(420, 25);
             this.lbl_吸嘴X軸_RAW.Name = "lbl_吸嘴X軸_RAW";
-            this.lbl_吸嘴X軸_RAW.Size = new System.Drawing.Size(141, 17);
+            this.lbl_吸嘴X軸_RAW.Size = new System.Drawing.Size(108, 13);
             this.lbl_吸嘴X軸_RAW.TabIndex = 61;
             this.lbl_吸嘴X軸_RAW.Text = "lbl_吸嘴X軸_RAW";
             // 
             // btn_minus_10
             // 
             this.btn_minus_10.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_minus_10.Location = new System.Drawing.Point(312, 524);
-            this.btn_minus_10.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_minus_10.Location = new System.Drawing.Point(250, 419);
             this.btn_minus_10.Name = "btn_minus_10";
-            this.btn_minus_10.Size = new System.Drawing.Size(94, 29);
+            this.btn_minus_10.Size = new System.Drawing.Size(75, 23);
             this.btn_minus_10.TabIndex = 59;
             this.btn_minus_10.Text = "-10";
             this.btn_minus_10.UseVisualStyleBackColor = true;
@@ -2813,10 +2628,9 @@ namespace InjectorInspector
             // btn_minus_1
             // 
             this.btn_minus_1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_minus_1.Location = new System.Drawing.Point(312, 486);
-            this.btn_minus_1.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_minus_1.Location = new System.Drawing.Point(250, 389);
             this.btn_minus_1.Name = "btn_minus_1";
-            this.btn_minus_1.Size = new System.Drawing.Size(94, 29);
+            this.btn_minus_1.Size = new System.Drawing.Size(75, 23);
             this.btn_minus_1.TabIndex = 58;
             this.btn_minus_1.Text = "-1";
             this.btn_minus_1.UseVisualStyleBackColor = true;
@@ -2825,10 +2639,9 @@ namespace InjectorInspector
             // btn_plus_10
             // 
             this.btn_plus_10.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plus_10.Location = new System.Drawing.Point(194, 524);
-            this.btn_plus_10.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_plus_10.Location = new System.Drawing.Point(155, 419);
             this.btn_plus_10.Name = "btn_plus_10";
-            this.btn_plus_10.Size = new System.Drawing.Size(94, 29);
+            this.btn_plus_10.Size = new System.Drawing.Size(75, 23);
             this.btn_plus_10.TabIndex = 57;
             this.btn_plus_10.Text = "+10";
             this.btn_plus_10.UseVisualStyleBackColor = true;
@@ -2837,10 +2650,9 @@ namespace InjectorInspector
             // btn_plus_1
             // 
             this.btn_plus_1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_plus_1.Location = new System.Drawing.Point(194, 486);
-            this.btn_plus_1.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_plus_1.Location = new System.Drawing.Point(155, 389);
             this.btn_plus_1.Name = "btn_plus_1";
-            this.btn_plus_1.Size = new System.Drawing.Size(94, 29);
+            this.btn_plus_1.Size = new System.Drawing.Size(75, 23);
             this.btn_plus_1.TabIndex = 56;
             this.btn_plus_1.Text = "+1";
             this.btn_plus_1.UseVisualStyleBackColor = true;
@@ -2849,10 +2661,9 @@ namespace InjectorInspector
             // btnABSMove
             // 
             this.btnABSMove.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btnABSMove.Location = new System.Drawing.Point(31, 415);
-            this.btnABSMove.Margin = new System.Windows.Forms.Padding(4);
+            this.btnABSMove.Location = new System.Drawing.Point(25, 332);
             this.btnABSMove.Name = "btnABSMove";
-            this.btnABSMove.Size = new System.Drawing.Size(139, 29);
+            this.btnABSMove.Size = new System.Drawing.Size(111, 23);
             this.btnABSMove.TabIndex = 55;
             this.btnABSMove.Text = "移動至指定位置";
             this.btnABSMove.UseVisualStyleBackColor = true;
@@ -2861,10 +2672,9 @@ namespace InjectorInspector
             // txtABSpos
             // 
             this.txtABSpos.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txtABSpos.Location = new System.Drawing.Point(31, 378);
-            this.txtABSpos.Margin = new System.Windows.Forms.Padding(4);
+            this.txtABSpos.Location = new System.Drawing.Point(25, 302);
             this.txtABSpos.Name = "txtABSpos";
-            this.txtABSpos.Size = new System.Drawing.Size(138, 27);
+            this.txtABSpos.Size = new System.Drawing.Size(111, 23);
             this.txtABSpos.TabIndex = 54;
             this.txtABSpos.Text = "0.0";
             // 
@@ -2872,10 +2682,9 @@ namespace InjectorInspector
             // 
             this.en_工作門.AutoSize = true;
             this.en_工作門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_工作門.Location = new System.Drawing.Point(31, 231);
-            this.en_工作門.Margin = new System.Windows.Forms.Padding(4);
+            this.en_工作門.Location = new System.Drawing.Point(25, 185);
             this.en_工作門.Name = "en_工作門";
-            this.en_工作門.Size = new System.Drawing.Size(74, 21);
+            this.en_工作門.Size = new System.Drawing.Size(58, 17);
             this.en_工作門.TabIndex = 53;
             this.en_工作門.Text = "Enable";
             this.en_工作門.UseVisualStyleBackColor = true;
@@ -2885,10 +2694,9 @@ namespace InjectorInspector
             // 
             this.en_植針R軸.AutoSize = true;
             this.en_植針R軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_植針R軸.Location = new System.Drawing.Point(31, 206);
-            this.en_植針R軸.Margin = new System.Windows.Forms.Padding(4);
+            this.en_植針R軸.Location = new System.Drawing.Point(25, 165);
             this.en_植針R軸.Name = "en_植針R軸";
-            this.en_植針R軸.Size = new System.Drawing.Size(74, 21);
+            this.en_植針R軸.Size = new System.Drawing.Size(58, 17);
             this.en_植針R軸.TabIndex = 52;
             this.en_植針R軸.Text = "Enable";
             this.en_植針R軸.UseVisualStyleBackColor = true;
@@ -2898,10 +2706,9 @@ namespace InjectorInspector
             // 
             this.en_植針Z軸.AutoSize = true;
             this.en_植針Z軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_植針Z軸.Location = new System.Drawing.Point(31, 181);
-            this.en_植針Z軸.Margin = new System.Windows.Forms.Padding(4);
+            this.en_植針Z軸.Location = new System.Drawing.Point(25, 145);
             this.en_植針Z軸.Name = "en_植針Z軸";
-            this.en_植針Z軸.Size = new System.Drawing.Size(74, 21);
+            this.en_植針Z軸.Size = new System.Drawing.Size(58, 17);
             this.en_植針Z軸.TabIndex = 51;
             this.en_植針Z軸.Text = "Enable";
             this.en_植針Z軸.UseVisualStyleBackColor = true;
@@ -2911,10 +2718,9 @@ namespace InjectorInspector
             // 
             this.en_載盤Y軸.AutoSize = true;
             this.en_載盤Y軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_載盤Y軸.Location = new System.Drawing.Point(31, 156);
-            this.en_載盤Y軸.Margin = new System.Windows.Forms.Padding(4);
+            this.en_載盤Y軸.Location = new System.Drawing.Point(25, 125);
             this.en_載盤Y軸.Name = "en_載盤Y軸";
-            this.en_載盤Y軸.Size = new System.Drawing.Size(74, 21);
+            this.en_載盤Y軸.Size = new System.Drawing.Size(58, 17);
             this.en_載盤Y軸.TabIndex = 50;
             this.en_載盤Y軸.Text = "Enable";
             this.en_載盤Y軸.UseVisualStyleBackColor = true;
@@ -2924,10 +2730,9 @@ namespace InjectorInspector
             // 
             this.en_載盤X軸.AutoSize = true;
             this.en_載盤X軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_載盤X軸.Location = new System.Drawing.Point(31, 131);
-            this.en_載盤X軸.Margin = new System.Windows.Forms.Padding(4);
+            this.en_載盤X軸.Location = new System.Drawing.Point(25, 105);
             this.en_載盤X軸.Name = "en_載盤X軸";
-            this.en_載盤X軸.Size = new System.Drawing.Size(74, 21);
+            this.en_載盤X軸.Size = new System.Drawing.Size(58, 17);
             this.en_載盤X軸.TabIndex = 49;
             this.en_載盤X軸.Text = "Enable";
             this.en_載盤X軸.UseVisualStyleBackColor = true;
@@ -2937,10 +2742,9 @@ namespace InjectorInspector
             // 
             this.en_吸嘴R軸.AutoSize = true;
             this.en_吸嘴R軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_吸嘴R軸.Location = new System.Drawing.Point(31, 106);
-            this.en_吸嘴R軸.Margin = new System.Windows.Forms.Padding(4);
+            this.en_吸嘴R軸.Location = new System.Drawing.Point(25, 85);
             this.en_吸嘴R軸.Name = "en_吸嘴R軸";
-            this.en_吸嘴R軸.Size = new System.Drawing.Size(74, 21);
+            this.en_吸嘴R軸.Size = new System.Drawing.Size(58, 17);
             this.en_吸嘴R軸.TabIndex = 48;
             this.en_吸嘴R軸.Text = "Enable";
             this.en_吸嘴R軸.UseVisualStyleBackColor = true;
@@ -2950,10 +2754,9 @@ namespace InjectorInspector
             // 
             this.en_吸嘴Z軸.AutoSize = true;
             this.en_吸嘴Z軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_吸嘴Z軸.Location = new System.Drawing.Point(31, 81);
-            this.en_吸嘴Z軸.Margin = new System.Windows.Forms.Padding(4);
+            this.en_吸嘴Z軸.Location = new System.Drawing.Point(25, 65);
             this.en_吸嘴Z軸.Name = "en_吸嘴Z軸";
-            this.en_吸嘴Z軸.Size = new System.Drawing.Size(74, 21);
+            this.en_吸嘴Z軸.Size = new System.Drawing.Size(58, 17);
             this.en_吸嘴Z軸.TabIndex = 47;
             this.en_吸嘴Z軸.Text = "Enable";
             this.en_吸嘴Z軸.UseVisualStyleBackColor = true;
@@ -2963,10 +2766,9 @@ namespace InjectorInspector
             // 
             this.en_吸嘴Y軸.AutoSize = true;
             this.en_吸嘴Y軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_吸嘴Y軸.Location = new System.Drawing.Point(31, 56);
-            this.en_吸嘴Y軸.Margin = new System.Windows.Forms.Padding(4);
+            this.en_吸嘴Y軸.Location = new System.Drawing.Point(25, 45);
             this.en_吸嘴Y軸.Name = "en_吸嘴Y軸";
-            this.en_吸嘴Y軸.Size = new System.Drawing.Size(74, 21);
+            this.en_吸嘴Y軸.Size = new System.Drawing.Size(58, 17);
             this.en_吸嘴Y軸.TabIndex = 46;
             this.en_吸嘴Y軸.Text = "Enable";
             this.en_吸嘴Y軸.UseVisualStyleBackColor = true;
@@ -2976,10 +2778,9 @@ namespace InjectorInspector
             // 
             this.en_吸嘴X軸.AutoSize = true;
             this.en_吸嘴X軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_吸嘴X軸.Location = new System.Drawing.Point(31, 31);
-            this.en_吸嘴X軸.Margin = new System.Windows.Forms.Padding(4);
+            this.en_吸嘴X軸.Location = new System.Drawing.Point(25, 25);
             this.en_吸嘴X軸.Name = "en_吸嘴X軸";
-            this.en_吸嘴X軸.Size = new System.Drawing.Size(74, 21);
+            this.en_吸嘴X軸.Size = new System.Drawing.Size(58, 17);
             this.en_吸嘴X軸.TabIndex = 45;
             this.en_吸嘴X軸.Text = "Enable";
             this.en_吸嘴X軸.UseVisualStyleBackColor = true;
@@ -2990,10 +2791,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_工作門.AutoSize = true;
             this.lbl_acpos_工作門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_工作門.Location = new System.Drawing.Point(425, 231);
-            this.lbl_acpos_工作門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_工作門.Location = new System.Drawing.Point(340, 185);
             this.lbl_acpos_工作門.Name = "lbl_acpos_工作門";
-            this.lbl_acpos_工作門.Size = new System.Drawing.Size(36, 17);
+            this.lbl_acpos_工作門.Size = new System.Drawing.Size(28, 13);
             this.lbl_acpos_工作門.TabIndex = 44;
             this.lbl_acpos_工作門.Text = "0.00";
             // 
@@ -3001,10 +2801,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_植針R軸.AutoSize = true;
             this.lbl_acpos_植針R軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_植針R軸.Location = new System.Drawing.Point(425, 206);
-            this.lbl_acpos_植針R軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_植針R軸.Location = new System.Drawing.Point(340, 165);
             this.lbl_acpos_植針R軸.Name = "lbl_acpos_植針R軸";
-            this.lbl_acpos_植針R軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_acpos_植針R軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_acpos_植針R軸.TabIndex = 43;
             this.lbl_acpos_植針R軸.Text = "0.00";
             // 
@@ -3012,10 +2811,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_植針Z軸.AutoSize = true;
             this.lbl_acpos_植針Z軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_植針Z軸.Location = new System.Drawing.Point(425, 181);
-            this.lbl_acpos_植針Z軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_植針Z軸.Location = new System.Drawing.Point(340, 145);
             this.lbl_acpos_植針Z軸.Name = "lbl_acpos_植針Z軸";
-            this.lbl_acpos_植針Z軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_acpos_植針Z軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_acpos_植針Z軸.TabIndex = 42;
             this.lbl_acpos_植針Z軸.Text = "0.00";
             // 
@@ -3023,10 +2821,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_載盤Y軸.AutoSize = true;
             this.lbl_acpos_載盤Y軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_載盤Y軸.Location = new System.Drawing.Point(425, 156);
-            this.lbl_acpos_載盤Y軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_載盤Y軸.Location = new System.Drawing.Point(340, 125);
             this.lbl_acpos_載盤Y軸.Name = "lbl_acpos_載盤Y軸";
-            this.lbl_acpos_載盤Y軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_acpos_載盤Y軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_acpos_載盤Y軸.TabIndex = 41;
             this.lbl_acpos_載盤Y軸.Text = "0.00";
             // 
@@ -3034,10 +2831,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_載盤X軸.AutoSize = true;
             this.lbl_acpos_載盤X軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_載盤X軸.Location = new System.Drawing.Point(425, 131);
-            this.lbl_acpos_載盤X軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_載盤X軸.Location = new System.Drawing.Point(340, 105);
             this.lbl_acpos_載盤X軸.Name = "lbl_acpos_載盤X軸";
-            this.lbl_acpos_載盤X軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_acpos_載盤X軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_acpos_載盤X軸.TabIndex = 40;
             this.lbl_acpos_載盤X軸.Text = "0.00";
             // 
@@ -3045,10 +2841,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_吸嘴R軸.AutoSize = true;
             this.lbl_acpos_吸嘴R軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_吸嘴R軸.Location = new System.Drawing.Point(425, 106);
-            this.lbl_acpos_吸嘴R軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_吸嘴R軸.Location = new System.Drawing.Point(340, 85);
             this.lbl_acpos_吸嘴R軸.Name = "lbl_acpos_吸嘴R軸";
-            this.lbl_acpos_吸嘴R軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_acpos_吸嘴R軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_acpos_吸嘴R軸.TabIndex = 39;
             this.lbl_acpos_吸嘴R軸.Text = "0.00";
             // 
@@ -3056,10 +2851,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_吸嘴Z軸.AutoSize = true;
             this.lbl_acpos_吸嘴Z軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_吸嘴Z軸.Location = new System.Drawing.Point(425, 81);
-            this.lbl_acpos_吸嘴Z軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_吸嘴Z軸.Location = new System.Drawing.Point(340, 65);
             this.lbl_acpos_吸嘴Z軸.Name = "lbl_acpos_吸嘴Z軸";
-            this.lbl_acpos_吸嘴Z軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_acpos_吸嘴Z軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_acpos_吸嘴Z軸.TabIndex = 38;
             this.lbl_acpos_吸嘴Z軸.Text = "0.00";
             // 
@@ -3067,10 +2861,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_吸嘴Y軸.AutoSize = true;
             this.lbl_acpos_吸嘴Y軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_吸嘴Y軸.Location = new System.Drawing.Point(425, 56);
-            this.lbl_acpos_吸嘴Y軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_吸嘴Y軸.Location = new System.Drawing.Point(340, 45);
             this.lbl_acpos_吸嘴Y軸.Name = "lbl_acpos_吸嘴Y軸";
-            this.lbl_acpos_吸嘴Y軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_acpos_吸嘴Y軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_acpos_吸嘴Y軸.TabIndex = 37;
             this.lbl_acpos_吸嘴Y軸.Text = "0.00";
             // 
@@ -3078,10 +2871,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_吸嘴X軸.AutoSize = true;
             this.lbl_acpos_吸嘴X軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_吸嘴X軸.Location = new System.Drawing.Point(425, 31);
-            this.lbl_acpos_吸嘴X軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_吸嘴X軸.Location = new System.Drawing.Point(340, 25);
             this.lbl_acpos_吸嘴X軸.Name = "lbl_acpos_吸嘴X軸";
-            this.lbl_acpos_吸嘴X軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_acpos_吸嘴X軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_acpos_吸嘴X軸.TabIndex = 36;
             this.lbl_acpos_吸嘴X軸.Text = "0.00";
             // 
@@ -3089,10 +2881,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_工作門_lbl.AutoSize = true;
             this.lbl_acpos_工作門_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_工作門_lbl.Location = new System.Drawing.Point(362, 231);
-            this.lbl_acpos_工作門_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_工作門_lbl.Location = new System.Drawing.Point(290, 185);
             this.lbl_acpos_工作門_lbl.Name = "lbl_acpos_工作門_lbl";
-            this.lbl_acpos_工作門_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_acpos_工作門_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_acpos_工作門_lbl.TabIndex = 35;
             this.lbl_acpos_工作門_lbl.Text = "acpos";
             // 
@@ -3100,10 +2891,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_植針R軸_lbl.AutoSize = true;
             this.lbl_acpos_植針R軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_植針R軸_lbl.Location = new System.Drawing.Point(362, 206);
-            this.lbl_acpos_植針R軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_植針R軸_lbl.Location = new System.Drawing.Point(290, 165);
             this.lbl_acpos_植針R軸_lbl.Name = "lbl_acpos_植針R軸_lbl";
-            this.lbl_acpos_植針R軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_acpos_植針R軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_acpos_植針R軸_lbl.TabIndex = 34;
             this.lbl_acpos_植針R軸_lbl.Text = "acpos";
             // 
@@ -3111,10 +2901,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_植針Z軸_lbl.AutoSize = true;
             this.lbl_acpos_植針Z軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_植針Z軸_lbl.Location = new System.Drawing.Point(362, 181);
-            this.lbl_acpos_植針Z軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_植針Z軸_lbl.Location = new System.Drawing.Point(290, 145);
             this.lbl_acpos_植針Z軸_lbl.Name = "lbl_acpos_植針Z軸_lbl";
-            this.lbl_acpos_植針Z軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_acpos_植針Z軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_acpos_植針Z軸_lbl.TabIndex = 33;
             this.lbl_acpos_植針Z軸_lbl.Text = "acpos";
             // 
@@ -3122,10 +2911,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_載盤Y軸_lbl.AutoSize = true;
             this.lbl_acpos_載盤Y軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_載盤Y軸_lbl.Location = new System.Drawing.Point(362, 156);
-            this.lbl_acpos_載盤Y軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_載盤Y軸_lbl.Location = new System.Drawing.Point(290, 125);
             this.lbl_acpos_載盤Y軸_lbl.Name = "lbl_acpos_載盤Y軸_lbl";
-            this.lbl_acpos_載盤Y軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_acpos_載盤Y軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_acpos_載盤Y軸_lbl.TabIndex = 32;
             this.lbl_acpos_載盤Y軸_lbl.Text = "acpos";
             // 
@@ -3133,10 +2921,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_載盤X軸_lbl.AutoSize = true;
             this.lbl_acpos_載盤X軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_載盤X軸_lbl.Location = new System.Drawing.Point(362, 131);
-            this.lbl_acpos_載盤X軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_載盤X軸_lbl.Location = new System.Drawing.Point(290, 105);
             this.lbl_acpos_載盤X軸_lbl.Name = "lbl_acpos_載盤X軸_lbl";
-            this.lbl_acpos_載盤X軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_acpos_載盤X軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_acpos_載盤X軸_lbl.TabIndex = 31;
             this.lbl_acpos_載盤X軸_lbl.Text = "acpos";
             // 
@@ -3144,10 +2931,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_吸嘴R軸_lbl.AutoSize = true;
             this.lbl_acpos_吸嘴R軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_吸嘴R軸_lbl.Location = new System.Drawing.Point(362, 106);
-            this.lbl_acpos_吸嘴R軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_吸嘴R軸_lbl.Location = new System.Drawing.Point(290, 85);
             this.lbl_acpos_吸嘴R軸_lbl.Name = "lbl_acpos_吸嘴R軸_lbl";
-            this.lbl_acpos_吸嘴R軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_acpos_吸嘴R軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_acpos_吸嘴R軸_lbl.TabIndex = 30;
             this.lbl_acpos_吸嘴R軸_lbl.Text = "acpos";
             // 
@@ -3155,10 +2941,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_吸嘴Z軸_lbl.AutoSize = true;
             this.lbl_acpos_吸嘴Z軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_吸嘴Z軸_lbl.Location = new System.Drawing.Point(362, 81);
-            this.lbl_acpos_吸嘴Z軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_吸嘴Z軸_lbl.Location = new System.Drawing.Point(290, 65);
             this.lbl_acpos_吸嘴Z軸_lbl.Name = "lbl_acpos_吸嘴Z軸_lbl";
-            this.lbl_acpos_吸嘴Z軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_acpos_吸嘴Z軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_acpos_吸嘴Z軸_lbl.TabIndex = 29;
             this.lbl_acpos_吸嘴Z軸_lbl.Text = "acpos";
             // 
@@ -3166,10 +2951,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_吸嘴Y軸_lbl.AutoSize = true;
             this.lbl_acpos_吸嘴Y軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_吸嘴Y軸_lbl.Location = new System.Drawing.Point(362, 56);
-            this.lbl_acpos_吸嘴Y軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_吸嘴Y軸_lbl.Location = new System.Drawing.Point(290, 45);
             this.lbl_acpos_吸嘴Y軸_lbl.Name = "lbl_acpos_吸嘴Y軸_lbl";
-            this.lbl_acpos_吸嘴Y軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_acpos_吸嘴Y軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_acpos_吸嘴Y軸_lbl.TabIndex = 28;
             this.lbl_acpos_吸嘴Y軸_lbl.Text = "acpos";
             // 
@@ -3177,10 +2961,9 @@ namespace InjectorInspector
             // 
             this.lbl_acpos_吸嘴X軸_lbl.AutoSize = true;
             this.lbl_acpos_吸嘴X軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_吸嘴X軸_lbl.Location = new System.Drawing.Point(362, 31);
-            this.lbl_acpos_吸嘴X軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_acpos_吸嘴X軸_lbl.Location = new System.Drawing.Point(290, 25);
             this.lbl_acpos_吸嘴X軸_lbl.Name = "lbl_acpos_吸嘴X軸_lbl";
-            this.lbl_acpos_吸嘴X軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_acpos_吸嘴X軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_acpos_吸嘴X軸_lbl.TabIndex = 27;
             this.lbl_acpos_吸嘴X軸_lbl.Text = "acpos";
             // 
@@ -3188,10 +2971,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_工作門.AutoSize = true;
             this.lbl_spd_工作門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_工作門.Location = new System.Drawing.Point(288, 231);
-            this.lbl_spd_工作門.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_工作門.Location = new System.Drawing.Point(230, 185);
             this.lbl_spd_工作門.Name = "lbl_spd_工作門";
-            this.lbl_spd_工作門.Size = new System.Drawing.Size(36, 17);
+            this.lbl_spd_工作門.Size = new System.Drawing.Size(28, 13);
             this.lbl_spd_工作門.TabIndex = 26;
             this.lbl_spd_工作門.Text = "0.00";
             // 
@@ -3199,10 +2981,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_植針R軸.AutoSize = true;
             this.lbl_spd_植針R軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_植針R軸.Location = new System.Drawing.Point(288, 206);
-            this.lbl_spd_植針R軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_植針R軸.Location = new System.Drawing.Point(230, 165);
             this.lbl_spd_植針R軸.Name = "lbl_spd_植針R軸";
-            this.lbl_spd_植針R軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_spd_植針R軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_spd_植針R軸.TabIndex = 25;
             this.lbl_spd_植針R軸.Text = "0.00";
             // 
@@ -3210,10 +2991,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_植針Z軸.AutoSize = true;
             this.lbl_spd_植針Z軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_植針Z軸.Location = new System.Drawing.Point(288, 181);
-            this.lbl_spd_植針Z軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_植針Z軸.Location = new System.Drawing.Point(230, 145);
             this.lbl_spd_植針Z軸.Name = "lbl_spd_植針Z軸";
-            this.lbl_spd_植針Z軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_spd_植針Z軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_spd_植針Z軸.TabIndex = 24;
             this.lbl_spd_植針Z軸.Text = "0.00";
             // 
@@ -3221,10 +3001,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_載盤Y軸.AutoSize = true;
             this.lbl_spd_載盤Y軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_載盤Y軸.Location = new System.Drawing.Point(288, 156);
-            this.lbl_spd_載盤Y軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_載盤Y軸.Location = new System.Drawing.Point(230, 125);
             this.lbl_spd_載盤Y軸.Name = "lbl_spd_載盤Y軸";
-            this.lbl_spd_載盤Y軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_spd_載盤Y軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_spd_載盤Y軸.TabIndex = 23;
             this.lbl_spd_載盤Y軸.Text = "0.00";
             // 
@@ -3232,10 +3011,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_載盤X軸.AutoSize = true;
             this.lbl_spd_載盤X軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_載盤X軸.Location = new System.Drawing.Point(288, 131);
-            this.lbl_spd_載盤X軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_載盤X軸.Location = new System.Drawing.Point(230, 105);
             this.lbl_spd_載盤X軸.Name = "lbl_spd_載盤X軸";
-            this.lbl_spd_載盤X軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_spd_載盤X軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_spd_載盤X軸.TabIndex = 22;
             this.lbl_spd_載盤X軸.Text = "0.00";
             // 
@@ -3243,10 +3021,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_吸嘴R軸.AutoSize = true;
             this.lbl_spd_吸嘴R軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_吸嘴R軸.Location = new System.Drawing.Point(288, 106);
-            this.lbl_spd_吸嘴R軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_吸嘴R軸.Location = new System.Drawing.Point(230, 85);
             this.lbl_spd_吸嘴R軸.Name = "lbl_spd_吸嘴R軸";
-            this.lbl_spd_吸嘴R軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_spd_吸嘴R軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_spd_吸嘴R軸.TabIndex = 21;
             this.lbl_spd_吸嘴R軸.Text = "0.00";
             // 
@@ -3254,10 +3031,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_吸嘴Z軸.AutoSize = true;
             this.lbl_spd_吸嘴Z軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_吸嘴Z軸.Location = new System.Drawing.Point(288, 81);
-            this.lbl_spd_吸嘴Z軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_吸嘴Z軸.Location = new System.Drawing.Point(230, 65);
             this.lbl_spd_吸嘴Z軸.Name = "lbl_spd_吸嘴Z軸";
-            this.lbl_spd_吸嘴Z軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_spd_吸嘴Z軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_spd_吸嘴Z軸.TabIndex = 20;
             this.lbl_spd_吸嘴Z軸.Text = "0.00";
             // 
@@ -3265,10 +3041,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_吸嘴Y軸.AutoSize = true;
             this.lbl_spd_吸嘴Y軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_吸嘴Y軸.Location = new System.Drawing.Point(288, 56);
-            this.lbl_spd_吸嘴Y軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_吸嘴Y軸.Location = new System.Drawing.Point(230, 45);
             this.lbl_spd_吸嘴Y軸.Name = "lbl_spd_吸嘴Y軸";
-            this.lbl_spd_吸嘴Y軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_spd_吸嘴Y軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_spd_吸嘴Y軸.TabIndex = 19;
             this.lbl_spd_吸嘴Y軸.Text = "0.00";
             // 
@@ -3276,10 +3051,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_吸嘴X軸.AutoSize = true;
             this.lbl_spd_吸嘴X軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_吸嘴X軸.Location = new System.Drawing.Point(288, 31);
-            this.lbl_spd_吸嘴X軸.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_吸嘴X軸.Location = new System.Drawing.Point(230, 25);
             this.lbl_spd_吸嘴X軸.Name = "lbl_spd_吸嘴X軸";
-            this.lbl_spd_吸嘴X軸.Size = new System.Drawing.Size(36, 17);
+            this.lbl_spd_吸嘴X軸.Size = new System.Drawing.Size(28, 13);
             this.lbl_spd_吸嘴X軸.TabIndex = 18;
             this.lbl_spd_吸嘴X軸.Text = "0.00";
             // 
@@ -3287,10 +3061,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_工作門_lbl.AutoSize = true;
             this.lbl_spd_工作門_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_工作門_lbl.Location = new System.Drawing.Point(225, 231);
-            this.lbl_spd_工作門_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_工作門_lbl.Location = new System.Drawing.Point(180, 185);
             this.lbl_spd_工作門_lbl.Name = "lbl_spd_工作門_lbl";
-            this.lbl_spd_工作門_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_spd_工作門_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_spd_工作門_lbl.TabIndex = 17;
             this.lbl_spd_工作門_lbl.Text = "speed";
             // 
@@ -3298,10 +3071,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_植針R軸_lbl.AutoSize = true;
             this.lbl_spd_植針R軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_植針R軸_lbl.Location = new System.Drawing.Point(225, 206);
-            this.lbl_spd_植針R軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_植針R軸_lbl.Location = new System.Drawing.Point(180, 165);
             this.lbl_spd_植針R軸_lbl.Name = "lbl_spd_植針R軸_lbl";
-            this.lbl_spd_植針R軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_spd_植針R軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_spd_植針R軸_lbl.TabIndex = 16;
             this.lbl_spd_植針R軸_lbl.Text = "speed";
             // 
@@ -3309,10 +3081,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_植針Z軸_lbl.AutoSize = true;
             this.lbl_spd_植針Z軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_植針Z軸_lbl.Location = new System.Drawing.Point(225, 181);
-            this.lbl_spd_植針Z軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_植針Z軸_lbl.Location = new System.Drawing.Point(180, 145);
             this.lbl_spd_植針Z軸_lbl.Name = "lbl_spd_植針Z軸_lbl";
-            this.lbl_spd_植針Z軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_spd_植針Z軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_spd_植針Z軸_lbl.TabIndex = 15;
             this.lbl_spd_植針Z軸_lbl.Text = "speed";
             // 
@@ -3320,10 +3091,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_載盤Y軸_lbl.AutoSize = true;
             this.lbl_spd_載盤Y軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_載盤Y軸_lbl.Location = new System.Drawing.Point(225, 156);
-            this.lbl_spd_載盤Y軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_載盤Y軸_lbl.Location = new System.Drawing.Point(180, 125);
             this.lbl_spd_載盤Y軸_lbl.Name = "lbl_spd_載盤Y軸_lbl";
-            this.lbl_spd_載盤Y軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_spd_載盤Y軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_spd_載盤Y軸_lbl.TabIndex = 14;
             this.lbl_spd_載盤Y軸_lbl.Text = "speed";
             // 
@@ -3331,10 +3101,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_載盤X軸_lbl.AutoSize = true;
             this.lbl_spd_載盤X軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_載盤X軸_lbl.Location = new System.Drawing.Point(225, 131);
-            this.lbl_spd_載盤X軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_載盤X軸_lbl.Location = new System.Drawing.Point(180, 105);
             this.lbl_spd_載盤X軸_lbl.Name = "lbl_spd_載盤X軸_lbl";
-            this.lbl_spd_載盤X軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_spd_載盤X軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_spd_載盤X軸_lbl.TabIndex = 13;
             this.lbl_spd_載盤X軸_lbl.Text = "speed";
             // 
@@ -3342,10 +3111,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_吸嘴R軸_lbl.AutoSize = true;
             this.lbl_spd_吸嘴R軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_吸嘴R軸_lbl.Location = new System.Drawing.Point(225, 106);
-            this.lbl_spd_吸嘴R軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_吸嘴R軸_lbl.Location = new System.Drawing.Point(180, 85);
             this.lbl_spd_吸嘴R軸_lbl.Name = "lbl_spd_吸嘴R軸_lbl";
-            this.lbl_spd_吸嘴R軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_spd_吸嘴R軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_spd_吸嘴R軸_lbl.TabIndex = 12;
             this.lbl_spd_吸嘴R軸_lbl.Text = "speed";
             // 
@@ -3353,10 +3121,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_吸嘴Z軸_lbl.AutoSize = true;
             this.lbl_spd_吸嘴Z軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_吸嘴Z軸_lbl.Location = new System.Drawing.Point(225, 81);
-            this.lbl_spd_吸嘴Z軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_吸嘴Z軸_lbl.Location = new System.Drawing.Point(180, 65);
             this.lbl_spd_吸嘴Z軸_lbl.Name = "lbl_spd_吸嘴Z軸_lbl";
-            this.lbl_spd_吸嘴Z軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_spd_吸嘴Z軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_spd_吸嘴Z軸_lbl.TabIndex = 11;
             this.lbl_spd_吸嘴Z軸_lbl.Text = "speed";
             // 
@@ -3364,10 +3131,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_吸嘴Y軸_lbl.AutoSize = true;
             this.lbl_spd_吸嘴Y軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_吸嘴Y軸_lbl.Location = new System.Drawing.Point(225, 56);
-            this.lbl_spd_吸嘴Y軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_吸嘴Y軸_lbl.Location = new System.Drawing.Point(180, 45);
             this.lbl_spd_吸嘴Y軸_lbl.Name = "lbl_spd_吸嘴Y軸_lbl";
-            this.lbl_spd_吸嘴Y軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_spd_吸嘴Y軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_spd_吸嘴Y軸_lbl.TabIndex = 10;
             this.lbl_spd_吸嘴Y軸_lbl.Text = "speed";
             // 
@@ -3375,10 +3141,9 @@ namespace InjectorInspector
             // 
             this.lbl_spd_吸嘴X軸_lbl.AutoSize = true;
             this.lbl_spd_吸嘴X軸_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_吸嘴X軸_lbl.Location = new System.Drawing.Point(225, 31);
-            this.lbl_spd_吸嘴X軸_lbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_spd_吸嘴X軸_lbl.Location = new System.Drawing.Point(180, 25);
             this.lbl_spd_吸嘴X軸_lbl.Name = "lbl_spd_吸嘴X軸_lbl";
-            this.lbl_spd_吸嘴X軸_lbl.Size = new System.Drawing.Size(44, 17);
+            this.lbl_spd_吸嘴X軸_lbl.Size = new System.Drawing.Size(34, 13);
             this.lbl_spd_吸嘴X軸_lbl.TabIndex = 9;
             this.lbl_spd_吸嘴X軸_lbl.Text = "speed";
             // 
@@ -3386,10 +3151,9 @@ namespace InjectorInspector
             // 
             this.select_工作門.AutoSize = true;
             this.select_工作門.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_工作門.Location = new System.Drawing.Point(119, 231);
-            this.select_工作門.Margin = new System.Windows.Forms.Padding(4);
+            this.select_工作門.Location = new System.Drawing.Point(95, 185);
             this.select_工作門.Name = "select_工作門";
-            this.select_工作門.Size = new System.Drawing.Size(80, 21);
+            this.select_工作門.Size = new System.Drawing.Size(64, 17);
             this.select_工作門.TabIndex = 8;
             this.select_工作門.Text = "工作門";
             this.select_工作門.UseVisualStyleBackColor = true;
@@ -3399,10 +3163,9 @@ namespace InjectorInspector
             // 
             this.select_植針R軸.AutoSize = true;
             this.select_植針R軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_植針R軸.Location = new System.Drawing.Point(119, 206);
-            this.select_植針R軸.Margin = new System.Windows.Forms.Padding(4);
+            this.select_植針R軸.Location = new System.Drawing.Point(95, 165);
             this.select_植針R軸.Name = "select_植針R軸";
-            this.select_植針R軸.Size = new System.Drawing.Size(91, 21);
+            this.select_植針R軸.Size = new System.Drawing.Size(72, 17);
             this.select_植針R軸.TabIndex = 7;
             this.select_植針R軸.Text = "植針R軸";
             this.select_植針R軸.UseVisualStyleBackColor = true;
@@ -3412,10 +3175,9 @@ namespace InjectorInspector
             // 
             this.select_植針Z軸.AutoSize = true;
             this.select_植針Z軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_植針Z軸.Location = new System.Drawing.Point(119, 181);
-            this.select_植針Z軸.Margin = new System.Windows.Forms.Padding(4);
+            this.select_植針Z軸.Location = new System.Drawing.Point(95, 145);
             this.select_植針Z軸.Name = "select_植針Z軸";
-            this.select_植針Z軸.Size = new System.Drawing.Size(90, 21);
+            this.select_植針Z軸.Size = new System.Drawing.Size(71, 17);
             this.select_植針Z軸.TabIndex = 6;
             this.select_植針Z軸.Text = "植針Z軸";
             this.select_植針Z軸.UseVisualStyleBackColor = true;
@@ -3425,10 +3187,9 @@ namespace InjectorInspector
             // 
             this.select_載盤Y軸.AutoSize = true;
             this.select_載盤Y軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_載盤Y軸.Location = new System.Drawing.Point(119, 156);
-            this.select_載盤Y軸.Margin = new System.Windows.Forms.Padding(4);
+            this.select_載盤Y軸.Location = new System.Drawing.Point(95, 125);
             this.select_載盤Y軸.Name = "select_載盤Y軸";
-            this.select_載盤Y軸.Size = new System.Drawing.Size(92, 21);
+            this.select_載盤Y軸.Size = new System.Drawing.Size(73, 17);
             this.select_載盤Y軸.TabIndex = 5;
             this.select_載盤Y軸.Text = "載盤Y軸";
             this.select_載盤Y軸.UseVisualStyleBackColor = true;
@@ -3438,10 +3199,9 @@ namespace InjectorInspector
             // 
             this.select_載盤X軸.AutoSize = true;
             this.select_載盤X軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_載盤X軸.Location = new System.Drawing.Point(119, 131);
-            this.select_載盤X軸.Margin = new System.Windows.Forms.Padding(4);
+            this.select_載盤X軸.Location = new System.Drawing.Point(95, 105);
             this.select_載盤X軸.Name = "select_載盤X軸";
-            this.select_載盤X軸.Size = new System.Drawing.Size(92, 21);
+            this.select_載盤X軸.Size = new System.Drawing.Size(73, 17);
             this.select_載盤X軸.TabIndex = 4;
             this.select_載盤X軸.Text = "載盤X軸";
             this.select_載盤X軸.UseVisualStyleBackColor = true;
@@ -3451,10 +3211,9 @@ namespace InjectorInspector
             // 
             this.select_吸嘴R軸.AutoSize = true;
             this.select_吸嘴R軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_吸嘴R軸.Location = new System.Drawing.Point(119, 106);
-            this.select_吸嘴R軸.Margin = new System.Windows.Forms.Padding(4);
+            this.select_吸嘴R軸.Location = new System.Drawing.Point(95, 85);
             this.select_吸嘴R軸.Name = "select_吸嘴R軸";
-            this.select_吸嘴R軸.Size = new System.Drawing.Size(91, 21);
+            this.select_吸嘴R軸.Size = new System.Drawing.Size(72, 17);
             this.select_吸嘴R軸.TabIndex = 3;
             this.select_吸嘴R軸.Text = "吸嘴R軸";
             this.select_吸嘴R軸.UseVisualStyleBackColor = true;
@@ -3464,10 +3223,9 @@ namespace InjectorInspector
             // 
             this.select_吸嘴Z軸.AutoSize = true;
             this.select_吸嘴Z軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_吸嘴Z軸.Location = new System.Drawing.Point(119, 81);
-            this.select_吸嘴Z軸.Margin = new System.Windows.Forms.Padding(4);
+            this.select_吸嘴Z軸.Location = new System.Drawing.Point(95, 65);
             this.select_吸嘴Z軸.Name = "select_吸嘴Z軸";
-            this.select_吸嘴Z軸.Size = new System.Drawing.Size(90, 21);
+            this.select_吸嘴Z軸.Size = new System.Drawing.Size(71, 17);
             this.select_吸嘴Z軸.TabIndex = 2;
             this.select_吸嘴Z軸.Text = "吸嘴Z軸";
             this.select_吸嘴Z軸.UseVisualStyleBackColor = true;
@@ -3477,10 +3235,9 @@ namespace InjectorInspector
             // 
             this.select_吸嘴Y軸.AutoSize = true;
             this.select_吸嘴Y軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_吸嘴Y軸.Location = new System.Drawing.Point(119, 56);
-            this.select_吸嘴Y軸.Margin = new System.Windows.Forms.Padding(4);
+            this.select_吸嘴Y軸.Location = new System.Drawing.Point(95, 45);
             this.select_吸嘴Y軸.Name = "select_吸嘴Y軸";
-            this.select_吸嘴Y軸.Size = new System.Drawing.Size(92, 21);
+            this.select_吸嘴Y軸.Size = new System.Drawing.Size(73, 17);
             this.select_吸嘴Y軸.TabIndex = 1;
             this.select_吸嘴Y軸.Text = "吸嘴Y軸";
             this.select_吸嘴Y軸.UseVisualStyleBackColor = true;
@@ -3491,10 +3248,9 @@ namespace InjectorInspector
             this.select_吸嘴X軸.AutoSize = true;
             this.select_吸嘴X軸.Checked = true;
             this.select_吸嘴X軸.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_吸嘴X軸.Location = new System.Drawing.Point(119, 31);
-            this.select_吸嘴X軸.Margin = new System.Windows.Forms.Padding(4);
+            this.select_吸嘴X軸.Location = new System.Drawing.Point(95, 25);
             this.select_吸嘴X軸.Name = "select_吸嘴X軸";
-            this.select_吸嘴X軸.Size = new System.Drawing.Size(92, 21);
+            this.select_吸嘴X軸.Size = new System.Drawing.Size(73, 17);
             this.select_吸嘴X軸.TabIndex = 0;
             this.select_吸嘴X軸.TabStop = true;
             this.select_吸嘴X軸.Text = "吸嘴X軸";
@@ -3548,11 +3304,10 @@ namespace InjectorInspector
             this.tabPage2.Controls.Add(this.btn_取得PinInfo);
             this.tabPage2.Controls.Add(this.btn_AlarmRST);
             this.tabPage2.Controls.Add(this.btn_Connect);
-            this.tabPage2.Location = new System.Drawing.Point(4, 34);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(1537, 993);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1228, 792);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -3560,10 +3315,9 @@ namespace InjectorInspector
             // cB_料盤有料
             // 
             this.cB_料盤有料.AutoSize = true;
-            this.cB_料盤有料.Location = new System.Drawing.Point(428, 545);
-            this.cB_料盤有料.Margin = new System.Windows.Forms.Padding(4);
+            this.cB_料盤有料.Location = new System.Drawing.Point(342, 436);
             this.cB_料盤有料.Name = "cB_料盤有料";
-            this.cB_料盤有料.Size = new System.Drawing.Size(164, 28);
+            this.cB_料盤有料.Size = new System.Drawing.Size(133, 23);
             this.cB_料盤有料.TabIndex = 235;
             this.cB_料盤有料.Text = "cB_料盤有料";
             this.cB_料盤有料.UseVisualStyleBackColor = true;
@@ -3571,10 +3325,9 @@ namespace InjectorInspector
             // cB_AlwaysResume
             // 
             this.cB_AlwaysResume.AutoSize = true;
-            this.cB_AlwaysResume.Location = new System.Drawing.Point(206, 585);
-            this.cB_AlwaysResume.Margin = new System.Windows.Forms.Padding(4);
+            this.cB_AlwaysResume.Location = new System.Drawing.Point(165, 468);
             this.cB_AlwaysResume.Name = "cB_AlwaysResume";
-            this.cB_AlwaysResume.Size = new System.Drawing.Size(209, 28);
+            this.cB_AlwaysResume.Size = new System.Drawing.Size(170, 23);
             this.cB_AlwaysResume.TabIndex = 234;
             this.cB_AlwaysResume.Text = "cB_AlwaysResume";
             this.cB_AlwaysResume.UseVisualStyleBackColor = true;
@@ -3582,19 +3335,17 @@ namespace InjectorInspector
             // lbl_PinIndex
             // 
             this.lbl_PinIndex.AutoSize = true;
-            this.lbl_PinIndex.Location = new System.Drawing.Point(42, 545);
-            this.lbl_PinIndex.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PinIndex.Location = new System.Drawing.Point(34, 436);
             this.lbl_PinIndex.Name = "lbl_PinIndex";
-            this.lbl_PinIndex.Size = new System.Drawing.Size(125, 24);
+            this.lbl_PinIndex.Size = new System.Drawing.Size(102, 19);
             this.lbl_PinIndex.TabIndex = 233;
             this.lbl_PinIndex.Text = "lbl_PinIndex";
             // 
             // btn_SwitchPointAB
             // 
-            this.btn_SwitchPointAB.Location = new System.Drawing.Point(494, 675);
-            this.btn_SwitchPointAB.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_SwitchPointAB.Location = new System.Drawing.Point(395, 540);
             this.btn_SwitchPointAB.Name = "btn_SwitchPointAB";
-            this.btn_SwitchPointAB.Size = new System.Drawing.Size(100, 50);
+            this.btn_SwitchPointAB.Size = new System.Drawing.Size(80, 40);
             this.btn_SwitchPointAB.TabIndex = 232;
             this.btn_SwitchPointAB.Text = "AB交換";
             this.btn_SwitchPointAB.UseVisualStyleBackColor = true;
@@ -3602,10 +3353,9 @@ namespace InjectorInspector
             // 
             // btn_ToPointB
             // 
-            this.btn_ToPointB.Location = new System.Drawing.Point(1062, 62);
-            this.btn_ToPointB.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_ToPointB.Location = new System.Drawing.Point(850, 50);
             this.btn_ToPointB.Name = "btn_ToPointB";
-            this.btn_ToPointB.Size = new System.Drawing.Size(88, 50);
+            this.btn_ToPointB.Size = new System.Drawing.Size(70, 40);
             this.btn_ToPointB.TabIndex = 231;
             this.btn_ToPointB.Text = "To P:B";
             this.btn_ToPointB.UseVisualStyleBackColor = true;
@@ -3613,10 +3363,9 @@ namespace InjectorInspector
             // 
             // btn_ToPointA
             // 
-            this.btn_ToPointA.Location = new System.Drawing.Point(975, 62);
-            this.btn_ToPointA.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_ToPointA.Location = new System.Drawing.Point(780, 50);
             this.btn_ToPointA.Name = "btn_ToPointA";
-            this.btn_ToPointA.Size = new System.Drawing.Size(88, 50);
+            this.btn_ToPointA.Size = new System.Drawing.Size(70, 40);
             this.btn_ToPointA.TabIndex = 230;
             this.btn_ToPointA.Text = "To P:A";
             this.btn_ToPointA.UseVisualStyleBackColor = true;
@@ -3625,49 +3374,44 @@ namespace InjectorInspector
             // lbl_計算角度
             // 
             this.lbl_計算角度.AutoSize = true;
-            this.lbl_計算角度.Location = new System.Drawing.Point(42, 760);
-            this.lbl_計算角度.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_計算角度.Location = new System.Drawing.Point(34, 608);
             this.lbl_計算角度.Name = "lbl_計算角度";
-            this.lbl_計算角度.Size = new System.Drawing.Size(193, 24);
+            this.lbl_計算角度.Size = new System.Drawing.Size(156, 19);
             this.lbl_計算角度.TabIndex = 229;
             this.lbl_計算角度.Text = "lbl_計算角度 : 0度";
             // 
             // tB_By
             // 
-            this.tB_By.Location = new System.Drawing.Point(412, 705);
-            this.tB_By.Margin = new System.Windows.Forms.Padding(4);
+            this.tB_By.Location = new System.Drawing.Point(330, 564);
             this.tB_By.Name = "tB_By";
-            this.tB_By.Size = new System.Drawing.Size(62, 36);
+            this.tB_By.Size = new System.Drawing.Size(50, 30);
             this.tB_By.TabIndex = 228;
             this.tB_By.Text = "0";
             this.tB_By.TextChanged += new System.EventHandler(this.tB_PointAB_Calculate);
             // 
             // tB_Ay
             // 
-            this.tB_Ay.Location = new System.Drawing.Point(412, 659);
-            this.tB_Ay.Margin = new System.Windows.Forms.Padding(4);
+            this.tB_Ay.Location = new System.Drawing.Point(330, 527);
             this.tB_Ay.Name = "tB_Ay";
-            this.tB_Ay.Size = new System.Drawing.Size(62, 36);
+            this.tB_Ay.Size = new System.Drawing.Size(50, 30);
             this.tB_Ay.TabIndex = 227;
             this.tB_Ay.Text = "0";
             this.tB_Ay.TextChanged += new System.EventHandler(this.tB_PointAB_Calculate);
             // 
             // tB_Bx
             // 
-            this.tB_Bx.Location = new System.Drawing.Point(241, 705);
-            this.tB_Bx.Margin = new System.Windows.Forms.Padding(4);
+            this.tB_Bx.Location = new System.Drawing.Point(193, 564);
             this.tB_Bx.Name = "tB_Bx";
-            this.tB_Bx.Size = new System.Drawing.Size(62, 36);
+            this.tB_Bx.Size = new System.Drawing.Size(50, 30);
             this.tB_Bx.TabIndex = 226;
             this.tB_Bx.Text = "0";
             this.tB_Bx.TextChanged += new System.EventHandler(this.tB_PointAB_Calculate);
             // 
             // tB_Ax
             // 
-            this.tB_Ax.Location = new System.Drawing.Point(242, 659);
-            this.tB_Ax.Margin = new System.Windows.Forms.Padding(4);
+            this.tB_Ax.Location = new System.Drawing.Point(194, 527);
             this.tB_Ax.Name = "tB_Ax";
-            this.tB_Ax.Size = new System.Drawing.Size(62, 36);
+            this.tB_Ax.Size = new System.Drawing.Size(50, 30);
             this.tB_Ax.TabIndex = 225;
             this.tB_Ax.Text = "0";
             this.tB_Ax.TextChanged += new System.EventHandler(this.tB_PointAB_Calculate);
@@ -3675,29 +3419,26 @@ namespace InjectorInspector
             // lbl_竹蜻蜓座標B
             // 
             this.lbl_竹蜻蜓座標B.AutoSize = true;
-            this.lbl_竹蜻蜓座標B.Location = new System.Drawing.Point(42, 719);
-            this.lbl_竹蜻蜓座標B.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_竹蜻蜓座標B.Location = new System.Drawing.Point(34, 575);
             this.lbl_竹蜻蜓座標B.Name = "lbl_竹蜻蜓座標B";
-            this.lbl_竹蜻蜓座標B.Size = new System.Drawing.Size(360, 24);
+            this.lbl_竹蜻蜓座標B.Size = new System.Drawing.Size(292, 19);
             this.lbl_竹蜻蜓座標B.TabIndex = 224;
             this.lbl_竹蜻蜓座標B.Text = "lbl_竹蜻蜓 座標Bx               座標By";
             // 
             // lbl_竹蜻蜓座標A
             // 
             this.lbl_竹蜻蜓座標A.AutoSize = true;
-            this.lbl_竹蜻蜓座標A.Location = new System.Drawing.Point(42, 672);
-            this.lbl_竹蜻蜓座標A.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_竹蜻蜓座標A.Location = new System.Drawing.Point(34, 538);
             this.lbl_竹蜻蜓座標A.Name = "lbl_竹蜻蜓座標A";
-            this.lbl_竹蜻蜓座標A.Size = new System.Drawing.Size(362, 24);
+            this.lbl_竹蜻蜓座標A.Size = new System.Drawing.Size(294, 19);
             this.lbl_竹蜻蜓座標A.TabIndex = 223;
             this.lbl_竹蜻蜓座標A.Text = "lbl_竹蜻蜓 座標Ax               座標Ay";
             // 
             // btn_tmrClear
             // 
-            this.btn_tmrClear.Location = new System.Drawing.Point(475, 375);
-            this.btn_tmrClear.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_tmrClear.Location = new System.Drawing.Point(380, 300);
             this.btn_tmrClear.Name = "btn_tmrClear";
-            this.btn_tmrClear.Size = new System.Drawing.Size(206, 50);
+            this.btn_tmrClear.Size = new System.Drawing.Size(165, 40);
             this.btn_tmrClear.TabIndex = 222;
             this.btn_tmrClear.Text = "清除流程";
             this.btn_tmrClear.UseVisualStyleBackColor = true;
@@ -3705,19 +3446,17 @@ namespace InjectorInspector
             // 
             // txt_HoldIndex
             // 
-            this.txt_HoldIndex.Location = new System.Drawing.Point(48, 572);
-            this.txt_HoldIndex.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_HoldIndex.Location = new System.Drawing.Point(38, 458);
             this.txt_HoldIndex.Name = "txt_HoldIndex";
-            this.txt_HoldIndex.Size = new System.Drawing.Size(62, 36);
+            this.txt_HoldIndex.Size = new System.Drawing.Size(50, 30);
             this.txt_HoldIndex.TabIndex = 221;
             this.txt_HoldIndex.Text = "0";
             // 
             // btn_Resume
             // 
-            this.btn_Resume.Location = new System.Drawing.Point(206, 538);
-            this.btn_Resume.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Resume.Location = new System.Drawing.Point(165, 430);
             this.btn_Resume.Name = "btn_Resume";
-            this.btn_Resume.Size = new System.Drawing.Size(145, 39);
+            this.btn_Resume.Size = new System.Drawing.Size(116, 31);
             this.btn_Resume.TabIndex = 220;
             this.btn_Resume.Text = "btn_Resume";
             this.btn_Resume.UseVisualStyleBackColor = true;
@@ -3726,29 +3465,26 @@ namespace InjectorInspector
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(201, 432);
-            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label15.Location = new System.Drawing.Point(161, 346);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(75, 24);
+            this.label15.Size = new System.Drawing.Size(62, 19);
             this.label15.TabIndex = 219;
             this.label15.Text = "label15";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(201, 404);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Location = new System.Drawing.Point(161, 323);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(75, 24);
+            this.label14.Size = new System.Drawing.Size(62, 19);
             this.label14.TabIndex = 218;
             this.label14.Text = "label14";
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(36, 404);
-            this.button7.Margin = new System.Windows.Forms.Padding(4);
+            this.button7.Location = new System.Drawing.Point(29, 323);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(136, 52);
+            this.button7.Size = new System.Drawing.Size(109, 42);
             this.button7.TabIndex = 217;
             this.button7.Text = "button7";
             this.button7.UseVisualStyleBackColor = true;
@@ -3757,19 +3493,17 @@ namespace InjectorInspector
             // lbl_CycleTime
             // 
             this.lbl_CycleTime.AutoSize = true;
-            this.lbl_CycleTime.Location = new System.Drawing.Point(31, 484);
-            this.lbl_CycleTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_CycleTime.Location = new System.Drawing.Point(25, 387);
             this.lbl_CycleTime.Name = "lbl_CycleTime";
-            this.lbl_CycleTime.Size = new System.Drawing.Size(172, 24);
+            this.lbl_CycleTime.Size = new System.Drawing.Size(138, 19);
             this.lbl_CycleTime.TabIndex = 216;
             this.lbl_CycleTime.Text = "取針循環時間 : ";
             // 
             // btn_tmrPause
             // 
-            this.btn_tmrPause.Location = new System.Drawing.Point(475, 319);
-            this.btn_tmrPause.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_tmrPause.Location = new System.Drawing.Point(380, 255);
             this.btn_tmrPause.Name = "btn_tmrPause";
-            this.btn_tmrPause.Size = new System.Drawing.Size(206, 50);
+            this.btn_tmrPause.Size = new System.Drawing.Size(165, 40);
             this.btn_tmrPause.TabIndex = 215;
             this.btn_tmrPause.Text = "循環暫停";
             this.btn_tmrPause.UseVisualStyleBackColor = true;
@@ -3777,10 +3511,9 @@ namespace InjectorInspector
             // 
             // btn_tmrStop
             // 
-            this.btn_tmrStop.Location = new System.Drawing.Point(250, 319);
-            this.btn_tmrStop.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_tmrStop.Location = new System.Drawing.Point(200, 255);
             this.btn_tmrStop.Name = "btn_tmrStop";
-            this.btn_tmrStop.Size = new System.Drawing.Size(206, 50);
+            this.btn_tmrStop.Size = new System.Drawing.Size(165, 40);
             this.btn_tmrStop.TabIndex = 214;
             this.btn_tmrStop.Text = "循環停止";
             this.btn_tmrStop.UseVisualStyleBackColor = true;
@@ -3788,10 +3521,9 @@ namespace InjectorInspector
             // 
             // btn上膛
             // 
-            this.btn上膛.Location = new System.Drawing.Point(475, 262);
-            this.btn上膛.Margin = new System.Windows.Forms.Padding(4);
+            this.btn上膛.Location = new System.Drawing.Point(380, 210);
             this.btn上膛.Name = "btn上膛";
-            this.btn上膛.Size = new System.Drawing.Size(206, 50);
+            this.btn上膛.Size = new System.Drawing.Size(165, 40);
             this.btn上膛.TabIndex = 213;
             this.btn上膛.Text = "上膛";
             this.btn上膛.UseVisualStyleBackColor = true;
@@ -3800,28 +3532,25 @@ namespace InjectorInspector
             // lblLog
             // 
             this.lblLog.AutoSize = true;
-            this.lblLog.Location = new System.Drawing.Point(31, 894);
-            this.lblLog.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblLog.Location = new System.Drawing.Point(25, 715);
             this.lblLog.Name = "lblLog";
-            this.lblLog.Size = new System.Drawing.Size(69, 24);
+            this.lblLog.Size = new System.Drawing.Size(57, 19);
             this.lblLog.TabIndex = 212;
             this.lblLog.Text = "lblLog";
             // 
             // txt_取料循環
             // 
-            this.txt_取料循環.Location = new System.Drawing.Point(112, 272);
-            this.txt_取料循環.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_取料循環.Location = new System.Drawing.Point(90, 218);
             this.txt_取料循環.Name = "txt_取料循環";
-            this.txt_取料循環.Size = new System.Drawing.Size(124, 36);
+            this.txt_取料循環.Size = new System.Drawing.Size(100, 30);
             this.txt_取料循環.TabIndex = 31;
             this.txt_取料循環.Text = "1";
             // 
             // btn_TakePin
             // 
-            this.btn_TakePin.Location = new System.Drawing.Point(250, 262);
-            this.btn_TakePin.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_TakePin.Location = new System.Drawing.Point(200, 210);
             this.btn_TakePin.Name = "btn_TakePin";
-            this.btn_TakePin.Size = new System.Drawing.Size(206, 50);
+            this.btn_TakePin.Size = new System.Drawing.Size(165, 40);
             this.btn_TakePin.TabIndex = 30;
             this.btn_TakePin.Text = "取針丟棄";
             this.btn_TakePin.UseVisualStyleBackColor = true;
@@ -3829,10 +3558,9 @@ namespace InjectorInspector
             // 
             // btn_home
             // 
-            this.btn_home.Location = new System.Drawing.Point(31, 200);
-            this.btn_home.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_home.Location = new System.Drawing.Point(25, 160);
             this.btn_home.Name = "btn_home";
-            this.btn_home.Size = new System.Drawing.Size(206, 50);
+            this.btn_home.Size = new System.Drawing.Size(165, 40);
             this.btn_home.TabIndex = 29;
             this.btn_home.Text = "home";
             this.btn_home.UseVisualStyleBackColor = true;
@@ -3841,39 +3569,35 @@ namespace InjectorInspector
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(781, 632);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Location = new System.Drawing.Point(625, 506);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(64, 24);
+            this.label8.Size = new System.Drawing.Size(53, 19);
             this.label8.TabIndex = 28;
             this.label8.Text = "label8";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(781, 598);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Location = new System.Drawing.Point(625, 478);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(64, 24);
+            this.label9.Size = new System.Drawing.Size(53, 19);
             this.label9.TabIndex = 27;
             this.label9.Text = "label9";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(781, 560);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Location = new System.Drawing.Point(625, 448);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(75, 24);
+            this.label10.Size = new System.Drawing.Size(62, 19);
             this.label10.TabIndex = 26;
             this.label10.Text = "label10";
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(786, 484);
-            this.button4.Margin = new System.Windows.Forms.Padding(4);
+            this.button4.Location = new System.Drawing.Point(629, 387);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(131, 48);
+            this.button4.Size = new System.Drawing.Size(105, 38);
             this.button4.TabIndex = 25;
             this.button4.Text = "下視覺";
             this.button4.UseVisualStyleBackColor = true;
@@ -3881,29 +3605,26 @@ namespace InjectorInspector
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(781, 419);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(625, 335);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(64, 24);
+            this.label7.Size = new System.Drawing.Size(53, 19);
             this.label7.TabIndex = 24;
             this.label7.Text = "label7";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(781, 378);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(625, 302);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(64, 24);
+            this.label6.Size = new System.Drawing.Size(53, 19);
             this.label6.TabIndex = 23;
             this.label6.Text = "label6";
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(786, 310);
-            this.button3.Margin = new System.Windows.Forms.Padding(4);
+            this.button3.Location = new System.Drawing.Point(629, 248);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(131, 51);
+            this.button3.Size = new System.Drawing.Size(105, 41);
             this.button3.TabIndex = 22;
             this.button3.Text = "Socket";
             this.button3.UseVisualStyleBackColor = true;
@@ -3911,10 +3632,9 @@ namespace InjectorInspector
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(250, 62);
-            this.btnStop.Margin = new System.Windows.Forms.Padding(4);
+            this.btnStop.Location = new System.Drawing.Point(200, 50);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(206, 50);
+            this.btnStop.Size = new System.Drawing.Size(165, 40);
             this.btnStop.TabIndex = 21;
             this.btnStop.Text = "btnStop";
             this.btnStop.UseVisualStyleBackColor = true;
@@ -3923,19 +3643,17 @@ namespace InjectorInspector
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 31);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(25, 25);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 24);
+            this.label1.Size = new System.Drawing.Size(53, 19);
             this.label1.TabIndex = 15;
             this.label1.Text = "label1";
             // 
             // btnSetHome
             // 
-            this.btnSetHome.Location = new System.Drawing.Point(475, 62);
-            this.btnSetHome.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSetHome.Location = new System.Drawing.Point(380, 50);
             this.btnSetHome.Name = "btnSetHome";
-            this.btnSetHome.Size = new System.Drawing.Size(206, 50);
+            this.btnSetHome.Size = new System.Drawing.Size(165, 40);
             this.btnSetHome.TabIndex = 14;
             this.btnSetHome.Text = "btnSetHome";
             this.btnSetHome.UseVisualStyleBackColor = true;
@@ -3943,10 +3661,9 @@ namespace InjectorInspector
             // 
             // btn_Disconnect
             // 
-            this.btn_Disconnect.Location = new System.Drawing.Point(31, 125);
-            this.btn_Disconnect.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Disconnect.Location = new System.Drawing.Point(25, 100);
             this.btn_Disconnect.Name = "btn_Disconnect";
-            this.btn_Disconnect.Size = new System.Drawing.Size(206, 50);
+            this.btn_Disconnect.Size = new System.Drawing.Size(165, 40);
             this.btn_Disconnect.TabIndex = 9;
             this.btn_Disconnect.Text = "btn_Disconnect";
             this.btn_Disconnect.UseVisualStyleBackColor = true;
@@ -3955,49 +3672,44 @@ namespace InjectorInspector
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(781, 236);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(625, 189);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 24);
+            this.label5.Size = new System.Drawing.Size(53, 19);
             this.label5.TabIndex = 8;
             this.label5.Text = "label5";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(781, 201);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(625, 161);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 24);
+            this.label4.Size = new System.Drawing.Size(53, 19);
             this.label4.TabIndex = 7;
             this.label4.Text = "label4";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(781, 166);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(625, 133);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 24);
+            this.label3.Size = new System.Drawing.Size(53, 19);
             this.label3.TabIndex = 6;
             this.label3.Text = "label3";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(781, 129);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(625, 103);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 24);
+            this.label2.Size = new System.Drawing.Size(53, 19);
             this.label2.TabIndex = 5;
             this.label2.Text = "label2";
             // 
             // btn_取得PinInfo
             // 
-            this.btn_取得PinInfo.Location = new System.Drawing.Point(788, 62);
-            this.btn_取得PinInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_取得PinInfo.Location = new System.Drawing.Point(630, 50);
             this.btn_取得PinInfo.Name = "btn_取得PinInfo";
-            this.btn_取得PinInfo.Size = new System.Drawing.Size(188, 50);
+            this.btn_取得PinInfo.Size = new System.Drawing.Size(150, 40);
             this.btn_取得PinInfo.TabIndex = 4;
             this.btn_取得PinInfo.Text = "btn_取得PinInfo";
             this.btn_取得PinInfo.UseVisualStyleBackColor = true;
@@ -4005,10 +3717,9 @@ namespace InjectorInspector
             // 
             // btn_AlarmRST
             // 
-            this.btn_AlarmRST.Location = new System.Drawing.Point(250, 125);
-            this.btn_AlarmRST.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_AlarmRST.Location = new System.Drawing.Point(200, 100);
             this.btn_AlarmRST.Name = "btn_AlarmRST";
-            this.btn_AlarmRST.Size = new System.Drawing.Size(206, 50);
+            this.btn_AlarmRST.Size = new System.Drawing.Size(165, 40);
             this.btn_AlarmRST.TabIndex = 3;
             this.btn_AlarmRST.Text = "btn_AlarmRST";
             this.btn_AlarmRST.UseVisualStyleBackColor = true;
@@ -4016,10 +3727,9 @@ namespace InjectorInspector
             // 
             // btn_Connect
             // 
-            this.btn_Connect.Location = new System.Drawing.Point(31, 62);
-            this.btn_Connect.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_Connect.Location = new System.Drawing.Point(25, 50);
             this.btn_Connect.Name = "btn_Connect";
-            this.btn_Connect.Size = new System.Drawing.Size(206, 50);
+            this.btn_Connect.Size = new System.Drawing.Size(165, 40);
             this.btn_Connect.TabIndex = 1;
             this.btn_Connect.Text = "btn_Connect";
             this.btn_Connect.UseVisualStyleBackColor = true;
@@ -4029,21 +3739,19 @@ namespace InjectorInspector
             // 
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.inspector1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 34);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(1537, 993);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1228, 792);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1328, 30);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Location = new System.Drawing.Point(1062, 24);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(104, 104);
+            this.button1.Size = new System.Drawing.Size(83, 83);
             this.button1.TabIndex = 2;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
@@ -4052,10 +3760,10 @@ namespace InjectorInspector
             // inspector1
             // 
             this.inspector1.Font = new System.Drawing.Font("新細明體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.inspector1.Location = new System.Drawing.Point(72, 9);
-            this.inspector1.Margin = new System.Windows.Forms.Padding(6);
+            this.inspector1.Location = new System.Drawing.Point(58, 7);
+            this.inspector1.Margin = new System.Windows.Forms.Padding(5);
             this.inspector1.Name = "inspector1";
-            this.inspector1.Size = new System.Drawing.Size(1390, 930);
+            this.inspector1.Size = new System.Drawing.Size(1112, 744);
             this.inspector1.TabIndex = 1;
             // 
             // tabControl1
@@ -4064,71 +3772,75 @@ namespace InjectorInspector
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabJob);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(15, 15);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1545, 1031);
+            this.tabControl1.Size = new System.Drawing.Size(1236, 825);
             this.tabControl1.TabIndex = 2;
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.rtb_Status);
             this.tabPage3.Controls.Add(this.lbl_ZoomFactor);
             this.tabPage3.Controls.Add(this.lbl_Offset);
             this.tabPage3.Controls.Add(this.lbl_PicMousePos);
             this.tabPage3.Controls.Add(this.lbl_RealMousePos);
             this.tabPage3.Controls.Add(this.grp_NeedleInfo);
             this.tabPage3.Controls.Add(this.tab_Needles);
-            this.tabPage3.Controls.Add(this.pic_跑馬燈);
             this.tabPage3.Controls.Add(this.grp_目前作業項目);
             this.tabPage3.Controls.Add(this.grp_SocketInfo);
             this.tabPage3.Controls.Add(this.grp_儲存資訊);
             this.tabPage3.Controls.Add(this.ms_Viewer);
-            this.tabPage3.Location = new System.Drawing.Point(4, 34);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage3.Location = new System.Drawing.Point(4, 29);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1537, 993);
+            this.tabPage3.Size = new System.Drawing.Size(1228, 792);
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // rtb_Status
+            // 
+            this.rtb_Status.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.rtb_Status.Location = new System.Drawing.Point(271, 605);
+            this.rtb_Status.Name = "rtb_Status";
+            this.rtb_Status.ReadOnly = true;
+            this.rtb_Status.Size = new System.Drawing.Size(329, 180);
+            this.rtb_Status.TabIndex = 31;
+            this.rtb_Status.Text = "";
+            // 
             // lbl_ZoomFactor
             // 
             this.lbl_ZoomFactor.AutoSize = true;
-            this.lbl_ZoomFactor.Location = new System.Drawing.Point(134, 964);
-            this.lbl_ZoomFactor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_ZoomFactor.Location = new System.Drawing.Point(12, 734);
             this.lbl_ZoomFactor.Name = "lbl_ZoomFactor";
-            this.lbl_ZoomFactor.Size = new System.Drawing.Size(136, 24);
+            this.lbl_ZoomFactor.Size = new System.Drawing.Size(110, 19);
             this.lbl_ZoomFactor.TabIndex = 30;
             this.lbl_ZoomFactor.Text = "縮放比例  :  ";
             // 
             // lbl_Offset
             // 
             this.lbl_Offset.AutoSize = true;
-            this.lbl_Offset.Location = new System.Drawing.Point(181, 930);
-            this.lbl_Offset.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Offset.Location = new System.Drawing.Point(48, 715);
             this.lbl_Offset.Name = "lbl_Offset";
-            this.lbl_Offset.Size = new System.Drawing.Size(85, 24);
+            this.lbl_Offset.Size = new System.Drawing.Size(69, 19);
             this.lbl_Offset.TabIndex = 29;
             this.lbl_Offset.Text = "Offset : ";
             // 
             // lbl_PicMousePos
             // 
             this.lbl_PicMousePos.AutoSize = true;
-            this.lbl_PicMousePos.Location = new System.Drawing.Point(146, 896);
-            this.lbl_PicMousePos.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PicMousePos.Location = new System.Drawing.Point(17, 695);
             this.lbl_PicMousePos.Name = "lbl_PicMousePos";
-            this.lbl_PicMousePos.Size = new System.Drawing.Size(124, 24);
+            this.lbl_PicMousePos.Size = new System.Drawing.Size(100, 19);
             this.lbl_PicMousePos.TabIndex = 28;
             this.lbl_PicMousePos.Text = "繪圖座標 : ";
             // 
             // lbl_RealMousePos
             // 
             this.lbl_RealMousePos.AutoSize = true;
-            this.lbl_RealMousePos.Location = new System.Drawing.Point(146, 862);
-            this.lbl_RealMousePos.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_RealMousePos.Location = new System.Drawing.Point(17, 676);
             this.lbl_RealMousePos.Name = "lbl_RealMousePos";
-            this.lbl_RealMousePos.Size = new System.Drawing.Size(124, 24);
+            this.lbl_RealMousePos.Size = new System.Drawing.Size(100, 19);
             this.lbl_RealMousePos.TabIndex = 27;
             this.lbl_RealMousePos.Text = "真實座標 : ";
             // 
@@ -4154,11 +3866,11 @@ namespace InjectorInspector
             this.grp_NeedleInfo.Controls.Add(this.lbl_Name);
             this.grp_NeedleInfo.Controls.Add(this.txt_Name);
             this.grp_NeedleInfo.Font = new System.Drawing.Font("標楷體", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.grp_NeedleInfo.Location = new System.Drawing.Point(762, 845);
+            this.grp_NeedleInfo.Location = new System.Drawing.Point(610, 676);
             this.grp_NeedleInfo.Margin = new System.Windows.Forms.Padding(2);
             this.grp_NeedleInfo.Name = "grp_NeedleInfo";
             this.grp_NeedleInfo.Padding = new System.Windows.Forms.Padding(2);
-            this.grp_NeedleInfo.Size = new System.Drawing.Size(742, 142);
+            this.grp_NeedleInfo.Size = new System.Drawing.Size(594, 114);
             this.grp_NeedleInfo.TabIndex = 26;
             this.grp_NeedleInfo.TabStop = false;
             this.grp_NeedleInfo.Text = "植針資訊";
@@ -4167,10 +3879,10 @@ namespace InjectorInspector
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.label13.Location = new System.Drawing.Point(198, 92);
+            this.label13.Location = new System.Drawing.Point(158, 74);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(59, 20);
+            this.label13.Size = new System.Drawing.Size(47, 16);
             this.label13.TabIndex = 25;
             this.label13.Text = "座標Y";
             // 
@@ -4178,10 +3890,10 @@ namespace InjectorInspector
             // 
             this.chk_Reserve1.Appearance = System.Windows.Forms.Appearance.Button;
             this.chk_Reserve1.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.chk_Reserve1.Location = new System.Drawing.Point(575, 96);
+            this.chk_Reserve1.Location = new System.Drawing.Point(460, 77);
             this.chk_Reserve1.Margin = new System.Windows.Forms.Padding(2);
             this.chk_Reserve1.Name = "chk_Reserve1";
-            this.chk_Reserve1.Size = new System.Drawing.Size(75, 31);
+            this.chk_Reserve1.Size = new System.Drawing.Size(60, 25);
             this.chk_Reserve1.TabIndex = 24;
             this.chk_Reserve1.Text = "保留";
             this.chk_Reserve1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4192,10 +3904,10 @@ namespace InjectorInspector
             // 
             this.rad_Replace.AutoSize = true;
             this.rad_Replace.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.rad_Replace.Location = new System.Drawing.Point(666, 95);
+            this.rad_Replace.Location = new System.Drawing.Point(533, 76);
             this.rad_Replace.Margin = new System.Windows.Forms.Padding(2);
             this.rad_Replace.Name = "rad_Replace";
-            this.rad_Replace.Size = new System.Drawing.Size(70, 24);
+            this.rad_Replace.Size = new System.Drawing.Size(57, 20);
             this.rad_Replace.TabIndex = 2;
             this.rad_Replace.TabStop = true;
             this.rad_Replace.Text = "置換";
@@ -4205,10 +3917,10 @@ namespace InjectorInspector
             // 
             this.rad_Remove.AutoSize = true;
             this.rad_Remove.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.rad_Remove.Location = new System.Drawing.Point(666, 65);
+            this.rad_Remove.Location = new System.Drawing.Point(533, 52);
             this.rad_Remove.Margin = new System.Windows.Forms.Padding(2);
             this.rad_Remove.Name = "rad_Remove";
-            this.rad_Remove.Size = new System.Drawing.Size(70, 24);
+            this.rad_Remove.Size = new System.Drawing.Size(57, 20);
             this.rad_Remove.TabIndex = 1;
             this.rad_Remove.TabStop = true;
             this.rad_Remove.Text = "取針";
@@ -4218,10 +3930,10 @@ namespace InjectorInspector
             // 
             this.rad_Place.AutoSize = true;
             this.rad_Place.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.rad_Place.Location = new System.Drawing.Point(666, 36);
+            this.rad_Place.Location = new System.Drawing.Point(533, 29);
             this.rad_Place.Margin = new System.Windows.Forms.Padding(2);
             this.rad_Place.Name = "rad_Place";
-            this.rad_Place.Size = new System.Drawing.Size(70, 24);
+            this.rad_Place.Size = new System.Drawing.Size(57, 20);
             this.rad_Place.TabIndex = 0;
             this.rad_Place.TabStop = true;
             this.rad_Place.Text = "植針";
@@ -4231,30 +3943,30 @@ namespace InjectorInspector
             // 
             this.lbl_Index.AutoSize = true;
             this.lbl_Index.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_Index.Location = new System.Drawing.Point(4, 52);
+            this.lbl_Index.Location = new System.Drawing.Point(3, 42);
             this.lbl_Index.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Index.Name = "lbl_Index";
-            this.lbl_Index.Size = new System.Drawing.Size(69, 20);
+            this.lbl_Index.Size = new System.Drawing.Size(55, 16);
             this.lbl_Index.TabIndex = 22;
             this.lbl_Index.Text = "流水號";
             // 
             // txt_Index
             // 
             this.txt_Index.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txt_Index.Location = new System.Drawing.Point(79, 44);
+            this.txt_Index.Location = new System.Drawing.Point(63, 35);
             this.txt_Index.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Index.Name = "txt_Index";
-            this.txt_Index.Size = new System.Drawing.Size(105, 33);
+            this.txt_Index.Size = new System.Drawing.Size(85, 28);
             this.txt_Index.TabIndex = 23;
             // 
             // chk_Enable
             // 
             this.chk_Enable.Appearance = System.Windows.Forms.Appearance.Button;
             this.chk_Enable.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.chk_Enable.Location = new System.Drawing.Point(575, 65);
+            this.chk_Enable.Location = new System.Drawing.Point(460, 52);
             this.chk_Enable.Margin = new System.Windows.Forms.Padding(2);
             this.chk_Enable.Name = "chk_Enable";
-            this.chk_Enable.Size = new System.Drawing.Size(75, 31);
+            this.chk_Enable.Size = new System.Drawing.Size(60, 25);
             this.chk_Enable.TabIndex = 21;
             this.chk_Enable.Text = "啟用";
             this.chk_Enable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4265,10 +3977,10 @@ namespace InjectorInspector
             // 
             this.chk_Display.Appearance = System.Windows.Forms.Appearance.Button;
             this.chk_Display.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.chk_Display.Location = new System.Drawing.Point(575, 34);
+            this.chk_Display.Location = new System.Drawing.Point(460, 27);
             this.chk_Display.Margin = new System.Windows.Forms.Padding(2);
             this.chk_Display.Name = "chk_Display";
-            this.chk_Display.Size = new System.Drawing.Size(75, 31);
+            this.chk_Display.Size = new System.Drawing.Size(60, 25);
             this.chk_Display.TabIndex = 20;
             this.chk_Display.Text = "顯示";
             this.chk_Display.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4278,72 +3990,72 @@ namespace InjectorInspector
             // txt_Diameter
             // 
             this.txt_Diameter.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txt_Diameter.Location = new System.Drawing.Point(426, 84);
+            this.txt_Diameter.Location = new System.Drawing.Point(341, 67);
             this.txt_Diameter.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Diameter.Name = "txt_Diameter";
             this.txt_Diameter.ReadOnly = true;
-            this.txt_Diameter.Size = new System.Drawing.Size(105, 33);
+            this.txt_Diameter.Size = new System.Drawing.Size(85, 28);
             this.txt_Diameter.TabIndex = 16;
             // 
             // lbl_Diameter
             // 
             this.lbl_Diameter.AutoSize = true;
             this.lbl_Diameter.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_Diameter.Location = new System.Drawing.Point(372, 91);
+            this.lbl_Diameter.Location = new System.Drawing.Point(298, 73);
             this.lbl_Diameter.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Diameter.Name = "lbl_Diameter";
-            this.lbl_Diameter.Size = new System.Drawing.Size(49, 20);
+            this.lbl_Diameter.Size = new System.Drawing.Size(39, 16);
             this.lbl_Diameter.TabIndex = 15;
             this.lbl_Diameter.Text = "直徑";
             // 
             // txt_PosX
             // 
             this.txt_PosX.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txt_PosX.Location = new System.Drawing.Point(79, 85);
+            this.txt_PosX.Location = new System.Drawing.Point(63, 68);
             this.txt_PosX.Margin = new System.Windows.Forms.Padding(2);
             this.txt_PosX.Name = "txt_PosX";
             this.txt_PosX.ReadOnly = true;
-            this.txt_PosX.Size = new System.Drawing.Size(105, 33);
+            this.txt_PosX.Size = new System.Drawing.Size(85, 28);
             this.txt_PosX.TabIndex = 14;
             // 
             // txt_PosY
             // 
             this.txt_PosY.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txt_PosY.Location = new System.Drawing.Point(261, 85);
+            this.txt_PosY.Location = new System.Drawing.Point(209, 68);
             this.txt_PosY.Margin = new System.Windows.Forms.Padding(2);
             this.txt_PosY.Name = "txt_PosY";
             this.txt_PosY.ReadOnly = true;
-            this.txt_PosY.Size = new System.Drawing.Size(105, 33);
+            this.txt_PosY.Size = new System.Drawing.Size(85, 28);
             this.txt_PosY.TabIndex = 13;
             // 
             // lbl_PosX
             // 
             this.lbl_PosX.AutoSize = true;
             this.lbl_PosX.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PosX.Location = new System.Drawing.Point(15, 92);
+            this.lbl_PosX.Location = new System.Drawing.Point(12, 74);
             this.lbl_PosX.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_PosX.Name = "lbl_PosX";
-            this.lbl_PosX.Size = new System.Drawing.Size(59, 20);
+            this.lbl_PosX.Size = new System.Drawing.Size(47, 16);
             this.lbl_PosX.TabIndex = 12;
             this.lbl_PosX.Text = "座標X";
             // 
             // txt_Id
             // 
             this.txt_Id.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txt_Id.Location = new System.Drawing.Point(426, 44);
+            this.txt_Id.Location = new System.Drawing.Point(341, 35);
             this.txt_Id.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Id.Name = "txt_Id";
-            this.txt_Id.Size = new System.Drawing.Size(105, 33);
+            this.txt_Id.Size = new System.Drawing.Size(85, 28);
             this.txt_Id.TabIndex = 11;
             // 
             // lbl_Id
             // 
             this.lbl_Id.AutoSize = true;
             this.lbl_Id.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_Id.Location = new System.Drawing.Point(372, 52);
+            this.lbl_Id.Location = new System.Drawing.Point(298, 42);
             this.lbl_Id.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Id.Name = "lbl_Id";
-            this.lbl_Id.Size = new System.Drawing.Size(49, 20);
+            this.lbl_Id.Size = new System.Drawing.Size(39, 16);
             this.lbl_Id.TabIndex = 10;
             this.lbl_Id.Text = "編號";
             // 
@@ -4351,20 +4063,20 @@ namespace InjectorInspector
             // 
             this.lbl_Name.AutoSize = true;
             this.lbl_Name.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_Name.Location = new System.Drawing.Point(199, 51);
+            this.lbl_Name.Location = new System.Drawing.Point(159, 41);
             this.lbl_Name.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_Name.Name = "lbl_Name";
-            this.lbl_Name.Size = new System.Drawing.Size(49, 20);
+            this.lbl_Name.Size = new System.Drawing.Size(39, 16);
             this.lbl_Name.TabIndex = 9;
             this.lbl_Name.Text = "名稱";
             // 
             // txt_Name
             // 
             this.txt_Name.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.txt_Name.Location = new System.Drawing.Point(261, 44);
+            this.txt_Name.Location = new System.Drawing.Point(209, 35);
             this.txt_Name.Margin = new System.Windows.Forms.Padding(2);
             this.txt_Name.Name = "txt_Name";
-            this.txt_Name.Size = new System.Drawing.Size(105, 33);
+            this.txt_Name.Size = new System.Drawing.Size(85, 28);
             this.txt_Name.TabIndex = 8;
             // 
             // tab_Needles
@@ -4372,21 +4084,19 @@ namespace InjectorInspector
             this.tab_Needles.Controls.Add(this.tp_Needles);
             this.tab_Needles.Controls.Add(this.tp_NeedlesJudge);
             this.tab_Needles.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.tab_Needles.Location = new System.Drawing.Point(758, 46);
-            this.tab_Needles.Margin = new System.Windows.Forms.Padding(4);
+            this.tab_Needles.Location = new System.Drawing.Point(606, 37);
             this.tab_Needles.Name = "tab_Needles";
             this.tab_Needles.SelectedIndex = 0;
-            this.tab_Needles.Size = new System.Drawing.Size(761, 794);
+            this.tab_Needles.Size = new System.Drawing.Size(609, 635);
             this.tab_Needles.TabIndex = 24;
             // 
             // tp_Needles
             // 
             this.tp_Needles.Controls.Add(this.pic_Needles);
-            this.tp_Needles.Location = new System.Drawing.Point(4, 30);
-            this.tp_Needles.Margin = new System.Windows.Forms.Padding(4);
+            this.tp_Needles.Location = new System.Drawing.Point(4, 26);
             this.tp_Needles.Name = "tp_Needles";
-            this.tp_Needles.Padding = new System.Windows.Forms.Padding(4);
-            this.tp_Needles.Size = new System.Drawing.Size(753, 760);
+            this.tp_Needles.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_Needles.Size = new System.Drawing.Size(601, 605);
             this.tp_Needles.TabIndex = 0;
             this.tp_Needles.Text = "植針資訊";
             this.tp_Needles.UseVisualStyleBackColor = true;
@@ -4397,9 +4107,9 @@ namespace InjectorInspector
             this.pic_Needles.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pic_Needles.ContextMenuStrip = this.cms_pic_Needles;
             this.pic_Needles.Location = new System.Drawing.Point(0, 0);
-            this.pic_Needles.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.pic_Needles.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pic_Needles.Name = "pic_Needles";
-            this.pic_Needles.Size = new System.Drawing.Size(749, 749);
+            this.pic_Needles.Size = new System.Drawing.Size(600, 600);
             this.pic_Needles.TabIndex = 0;
             this.pic_Needles.TabStop = false;
             this.pic_Needles.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_Needles_Paint);
@@ -4421,7 +4131,7 @@ namespace InjectorInspector
             this.tsmi_Reset,
             this.tsmi_Reserve1});
             this.cms_pic_Needles.Name = "cms_pic_Needles";
-            this.cms_pic_Needles.Size = new System.Drawing.Size(129, 172);
+            this.cms_pic_Needles.Size = new System.Drawing.Size(115, 158);
             this.cms_pic_Needles.Opened += new System.EventHandler(this.cms_pic_Needles_Opened);
             // 
             // tsmi_Place
@@ -4429,7 +4139,7 @@ namespace InjectorInspector
             this.tsmi_Place.Enabled = false;
             this.tsmi_Place.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tsmi_Place.Name = "tsmi_Place";
-            this.tsmi_Place.Size = new System.Drawing.Size(128, 24);
+            this.tsmi_Place.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Place.Text = "植針";
             // 
             // tsmi_Remove
@@ -4437,7 +4147,7 @@ namespace InjectorInspector
             this.tsmi_Remove.Enabled = false;
             this.tsmi_Remove.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tsmi_Remove.Name = "tsmi_Remove";
-            this.tsmi_Remove.Size = new System.Drawing.Size(128, 24);
+            this.tsmi_Remove.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Remove.Text = "取針";
             // 
             // tsmi_Replace
@@ -4445,7 +4155,7 @@ namespace InjectorInspector
             this.tsmi_Replace.Enabled = false;
             this.tsmi_Replace.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tsmi_Replace.Name = "tsmi_Replace";
-            this.tsmi_Replace.Size = new System.Drawing.Size(128, 24);
+            this.tsmi_Replace.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Replace.Text = "置換";
             // 
             // tsmi_Display
@@ -4453,7 +4163,7 @@ namespace InjectorInspector
             this.tsmi_Display.Enabled = false;
             this.tsmi_Display.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tsmi_Display.Name = "tsmi_Display";
-            this.tsmi_Display.Size = new System.Drawing.Size(128, 24);
+            this.tsmi_Display.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Display.Text = "顯示";
             // 
             // tsmi_Enable
@@ -4461,21 +4171,21 @@ namespace InjectorInspector
             this.tsmi_Enable.Enabled = false;
             this.tsmi_Enable.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tsmi_Enable.Name = "tsmi_Enable";
-            this.tsmi_Enable.Size = new System.Drawing.Size(128, 24);
+            this.tsmi_Enable.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Enable.Text = "啟用";
             // 
             // tsmi_Reset
             // 
             this.tsmi_Reset.Enabled = false;
             this.tsmi_Reset.Name = "tsmi_Reset";
-            this.tsmi_Reset.Size = new System.Drawing.Size(128, 24);
+            this.tsmi_Reset.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Reset.Text = "清除";
             // 
             // tsmi_Reserve1
             // 
             this.tsmi_Reserve1.Enabled = false;
             this.tsmi_Reserve1.Name = "tsmi_Reserve1";
-            this.tsmi_Reserve1.Size = new System.Drawing.Size(128, 24);
+            this.tsmi_Reserve1.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Reserve1.Text = "保留";
             // 
             // tp_NeedlesJudge
@@ -4484,11 +4194,10 @@ namespace InjectorInspector
             this.tp_NeedlesJudge.Controls.Add(this.label12);
             this.tp_NeedlesJudge.Controls.Add(this.pictureBox2);
             this.tp_NeedlesJudge.Controls.Add(this.pictureBox1);
-            this.tp_NeedlesJudge.Location = new System.Drawing.Point(4, 30);
-            this.tp_NeedlesJudge.Margin = new System.Windows.Forms.Padding(4);
+            this.tp_NeedlesJudge.Location = new System.Drawing.Point(4, 26);
             this.tp_NeedlesJudge.Name = "tp_NeedlesJudge";
-            this.tp_NeedlesJudge.Padding = new System.Windows.Forms.Padding(4);
-            this.tp_NeedlesJudge.Size = new System.Drawing.Size(753, 760);
+            this.tp_NeedlesJudge.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_NeedlesJudge.Size = new System.Drawing.Size(601, 605);
             this.tp_NeedlesJudge.TabIndex = 1;
             this.tp_NeedlesJudge.Text = "判等";
             this.tp_NeedlesJudge.UseVisualStyleBackColor = true;
@@ -4497,10 +4206,9 @@ namespace InjectorInspector
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Times New Roman", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(534, 0);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Location = new System.Drawing.Point(427, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(54, 33);
+            this.label11.Size = new System.Drawing.Size(44, 25);
             this.label11.TabIndex = 3;
             this.label11.Text = "NG";
             // 
@@ -4508,10 +4216,9 @@ namespace InjectorInspector
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Times New Roman", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(145, 1);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Location = new System.Drawing.Point(116, 1);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(65, 33);
+            this.label12.Size = new System.Drawing.Size(52, 25);
             this.label12.TabIndex = 2;
             this.label12.Text = "Pass";
             // 
@@ -4519,10 +4226,9 @@ namespace InjectorInspector
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Honeydew;
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox2.Location = new System.Drawing.Point(384, 41);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox2.Location = new System.Drawing.Point(307, 33);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(366, 709);
+            this.pictureBox2.Size = new System.Drawing.Size(294, 568);
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
             // 
@@ -4530,26 +4236,11 @@ namespace InjectorInspector
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Honeydew;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 42);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 34);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(375, 708);
+            this.pictureBox1.Size = new System.Drawing.Size(301, 567);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
-            // pic_跑馬燈
-            // 
-            this.pic_跑馬燈.BackColor = System.Drawing.SystemColors.Window;
-            this.pic_跑馬燈.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pic_跑馬燈.Font = new System.Drawing.Font("標楷體", 16F);
-            this.pic_跑馬燈.Location = new System.Drawing.Point(339, 756);
-            this.pic_跑馬燈.Margin = new System.Windows.Forms.Padding(4);
-            this.pic_跑馬燈.Name = "pic_跑馬燈";
-            this.pic_跑馬燈.Size = new System.Drawing.Size(410, 83);
-            this.pic_跑馬燈.TabIndex = 23;
-            this.pic_跑馬燈.TabStop = false;
-            this.pic_跑馬燈.Click += new System.EventHandler(this.pic_跑馬燈_Click);
-            this.pic_跑馬燈.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_跑馬燈_Paint);
             // 
             // grp_目前作業項目
             // 
@@ -4566,11 +4257,9 @@ namespace InjectorInspector
             this.grp_目前作業項目.Controls.Add(this.txt_PogoPin1Qty2);
             this.grp_目前作業項目.Controls.Add(this.lbl_PogoPin1Qty2);
             this.grp_目前作業項目.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grp_目前作業項目.Location = new System.Drawing.Point(451, 46);
-            this.grp_目前作業項目.Margin = new System.Windows.Forms.Padding(4);
+            this.grp_目前作業項目.Location = new System.Drawing.Point(361, 37);
             this.grp_目前作業項目.Name = "grp_目前作業項目";
-            this.grp_目前作業項目.Padding = new System.Windows.Forms.Padding(4);
-            this.grp_目前作業項目.Size = new System.Drawing.Size(299, 702);
+            this.grp_目前作業項目.Size = new System.Drawing.Size(239, 562);
             this.grp_目前作業項目.TabIndex = 22;
             this.grp_目前作業項目.TabStop = false;
             this.grp_目前作業項目.Text = "目前作業項目";
@@ -4586,11 +4275,9 @@ namespace InjectorInspector
             this.grp_GroupPin2.Controls.Add(this.txt_PogoPin1Qty4);
             this.grp_GroupPin2.Controls.Add(this.lbl_PogoPin1Qty4);
             this.grp_GroupPin2.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grp_GroupPin2.Location = new System.Drawing.Point(9, 472);
-            this.grp_GroupPin2.Margin = new System.Windows.Forms.Padding(4);
+            this.grp_GroupPin2.Location = new System.Drawing.Point(7, 378);
             this.grp_GroupPin2.Name = "grp_GroupPin2";
-            this.grp_GroupPin2.Padding = new System.Windows.Forms.Padding(4);
-            this.grp_GroupPin2.Size = new System.Drawing.Size(282, 205);
+            this.grp_GroupPin2.Size = new System.Drawing.Size(226, 164);
             this.grp_GroupPin2.TabIndex = 26;
             this.grp_GroupPin2.TabStop = false;
             this.grp_GroupPin2.Text = "Group Pin 2";
@@ -4598,80 +4285,72 @@ namespace InjectorInspector
             // txt_PogoPin2已植數量2
             // 
             this.txt_PogoPin2已植數量2.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin2已植數量2.Location = new System.Drawing.Point(175, 152);
-            this.txt_PogoPin2已植數量2.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin2已植數量2.Location = new System.Drawing.Point(140, 122);
             this.txt_PogoPin2已植數量2.Name = "txt_PogoPin2已植數量2";
-            this.txt_PogoPin2已植數量2.Size = new System.Drawing.Size(95, 27);
+            this.txt_PogoPin2已植數量2.Size = new System.Drawing.Size(77, 23);
             this.txt_PogoPin2已植數量2.TabIndex = 30;
             // 
             // lbl_PogoPin2已植數量2
             // 
             this.lbl_PogoPin2已植數量2.AutoSize = true;
             this.lbl_PogoPin2已植數量2.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin2已植數量2.Location = new System.Drawing.Point(62, 158);
-            this.lbl_PogoPin2已植數量2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin2已植數量2.Location = new System.Drawing.Point(50, 126);
             this.lbl_PogoPin2已植數量2.Name = "lbl_PogoPin2已植數量2";
-            this.lbl_PogoPin2已植數量2.Size = new System.Drawing.Size(80, 17);
+            this.lbl_PogoPin2已植數量2.Size = new System.Drawing.Size(63, 14);
             this.lbl_PogoPin2已植數量2.TabIndex = 29;
             this.lbl_PogoPin2已植數量2.Text = "已植數量";
             // 
             // txt_PogoPin1已植數量2
             // 
             this.txt_PogoPin1已植數量2.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin1已植數量2.Location = new System.Drawing.Point(175, 70);
-            this.txt_PogoPin1已植數量2.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin1已植數量2.Location = new System.Drawing.Point(140, 56);
             this.txt_PogoPin1已植數量2.Name = "txt_PogoPin1已植數量2";
-            this.txt_PogoPin1已植數量2.Size = new System.Drawing.Size(95, 27);
+            this.txt_PogoPin1已植數量2.Size = new System.Drawing.Size(77, 23);
             this.txt_PogoPin1已植數量2.TabIndex = 28;
             // 
             // lbl_PogoPin1已植數量2
             // 
             this.lbl_PogoPin1已植數量2.AutoSize = true;
             this.lbl_PogoPin1已植數量2.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin1已植數量2.Location = new System.Drawing.Point(62, 75);
-            this.lbl_PogoPin1已植數量2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin1已植數量2.Location = new System.Drawing.Point(50, 60);
             this.lbl_PogoPin1已植數量2.Name = "lbl_PogoPin1已植數量2";
-            this.lbl_PogoPin1已植數量2.Size = new System.Drawing.Size(80, 17);
+            this.lbl_PogoPin1已植數量2.Size = new System.Drawing.Size(63, 14);
             this.lbl_PogoPin1已植數量2.TabIndex = 27;
             this.lbl_PogoPin1已植數量2.Text = "已植數量";
             // 
             // txt_PogoPin2Qty4
             // 
             this.txt_PogoPin2Qty4.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin2Qty4.Location = new System.Drawing.Point(176, 111);
-            this.txt_PogoPin2Qty4.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin2Qty4.Location = new System.Drawing.Point(141, 89);
             this.txt_PogoPin2Qty4.Name = "txt_PogoPin2Qty4";
-            this.txt_PogoPin2Qty4.Size = new System.Drawing.Size(95, 27);
+            this.txt_PogoPin2Qty4.Size = new System.Drawing.Size(77, 23);
             this.txt_PogoPin2Qty4.TabIndex = 26;
             // 
             // lbl_PogoPin2Qty4
             // 
             this.lbl_PogoPin2Qty4.AutoSize = true;
             this.lbl_PogoPin2Qty4.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin2Qty4.Location = new System.Drawing.Point(6, 116);
-            this.lbl_PogoPin2Qty4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin2Qty4.Location = new System.Drawing.Point(5, 93);
             this.lbl_PogoPin2Qty4.Name = "lbl_PogoPin2Qty4";
-            this.lbl_PogoPin2Qty4.Size = new System.Drawing.Size(125, 17);
+            this.lbl_PogoPin2Qty4.Size = new System.Drawing.Size(98, 14);
             this.lbl_PogoPin2Qty4.TabIndex = 25;
             this.lbl_PogoPin2Qty4.Text = "Pogo Pin2 Qty";
             // 
             // txt_PogoPin1Qty4
             // 
             this.txt_PogoPin1Qty4.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin1Qty4.Location = new System.Drawing.Point(176, 29);
-            this.txt_PogoPin1Qty4.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin1Qty4.Location = new System.Drawing.Point(141, 23);
             this.txt_PogoPin1Qty4.Name = "txt_PogoPin1Qty4";
-            this.txt_PogoPin1Qty4.Size = new System.Drawing.Size(95, 27);
+            this.txt_PogoPin1Qty4.Size = new System.Drawing.Size(77, 23);
             this.txt_PogoPin1Qty4.TabIndex = 24;
             // 
             // lbl_PogoPin1Qty4
             // 
             this.lbl_PogoPin1Qty4.AutoSize = true;
             this.lbl_PogoPin1Qty4.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin1Qty4.Location = new System.Drawing.Point(9, 34);
-            this.lbl_PogoPin1Qty4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin1Qty4.Location = new System.Drawing.Point(7, 27);
             this.lbl_PogoPin1Qty4.Name = "lbl_PogoPin1Qty4";
-            this.lbl_PogoPin1Qty4.Size = new System.Drawing.Size(125, 17);
+            this.lbl_PogoPin1Qty4.Size = new System.Drawing.Size(98, 14);
             this.lbl_PogoPin1Qty4.TabIndex = 23;
             this.lbl_PogoPin1Qty4.Text = "Pogo Pin1 Qty";
             // 
@@ -4686,11 +4365,9 @@ namespace InjectorInspector
             this.grp_GroupPin1.Controls.Add(this.txt_PogoPin1Qty3);
             this.grp_GroupPin1.Controls.Add(this.lbl_PogoPin1Qty3);
             this.grp_GroupPin1.Font = new System.Drawing.Font("標楷體", 10F);
-            this.grp_GroupPin1.Location = new System.Drawing.Point(8, 270);
-            this.grp_GroupPin1.Margin = new System.Windows.Forms.Padding(4);
+            this.grp_GroupPin1.Location = new System.Drawing.Point(6, 216);
             this.grp_GroupPin1.Name = "grp_GroupPin1";
-            this.grp_GroupPin1.Padding = new System.Windows.Forms.Padding(4);
-            this.grp_GroupPin1.Size = new System.Drawing.Size(282, 195);
+            this.grp_GroupPin1.Size = new System.Drawing.Size(226, 156);
             this.grp_GroupPin1.TabIndex = 25;
             this.grp_GroupPin1.TabStop = false;
             this.grp_GroupPin1.Text = "Group Pin 1";
@@ -4698,80 +4375,72 @@ namespace InjectorInspector
             // txt_PogoPin2已植數量1
             // 
             this.txt_PogoPin2已植數量1.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin2已植數量1.Location = new System.Drawing.Point(176, 154);
-            this.txt_PogoPin2已植數量1.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin2已植數量1.Location = new System.Drawing.Point(141, 123);
             this.txt_PogoPin2已植數量1.Name = "txt_PogoPin2已植數量1";
-            this.txt_PogoPin2已植數量1.Size = new System.Drawing.Size(95, 27);
+            this.txt_PogoPin2已植數量1.Size = new System.Drawing.Size(77, 23);
             this.txt_PogoPin2已植數量1.TabIndex = 30;
             // 
             // lbl_PogoPin2已植數量1
             // 
             this.lbl_PogoPin2已植數量1.AutoSize = true;
             this.lbl_PogoPin2已植數量1.Font = new System.Drawing.Font("標楷體", 10F);
-            this.lbl_PogoPin2已植數量1.Location = new System.Drawing.Point(64, 161);
-            this.lbl_PogoPin2已植數量1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin2已植數量1.Location = new System.Drawing.Point(51, 129);
             this.lbl_PogoPin2已植數量1.Name = "lbl_PogoPin2已植數量1";
-            this.lbl_PogoPin2已植數量1.Size = new System.Drawing.Size(80, 17);
+            this.lbl_PogoPin2已植數量1.Size = new System.Drawing.Size(63, 14);
             this.lbl_PogoPin2已植數量1.TabIndex = 29;
             this.lbl_PogoPin2已植數量1.Text = "已植數量";
             // 
             // txt_PogoPin1已植數量1
             // 
             this.txt_PogoPin1已植數量1.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin1已植數量1.Location = new System.Drawing.Point(176, 71);
-            this.txt_PogoPin1已植數量1.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin1已植數量1.Location = new System.Drawing.Point(141, 57);
             this.txt_PogoPin1已植數量1.Name = "txt_PogoPin1已植數量1";
-            this.txt_PogoPin1已植數量1.Size = new System.Drawing.Size(95, 27);
+            this.txt_PogoPin1已植數量1.Size = new System.Drawing.Size(77, 23);
             this.txt_PogoPin1已植數量1.TabIndex = 28;
             // 
             // lbl_PogoPin1已植數量1
             // 
             this.lbl_PogoPin1已植數量1.AutoSize = true;
             this.lbl_PogoPin1已植數量1.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin1已植數量1.Location = new System.Drawing.Point(64, 76);
-            this.lbl_PogoPin1已植數量1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin1已植數量1.Location = new System.Drawing.Point(51, 61);
             this.lbl_PogoPin1已植數量1.Name = "lbl_PogoPin1已植數量1";
-            this.lbl_PogoPin1已植數量1.Size = new System.Drawing.Size(80, 17);
+            this.lbl_PogoPin1已植數量1.Size = new System.Drawing.Size(63, 14);
             this.lbl_PogoPin1已植數量1.TabIndex = 27;
             this.lbl_PogoPin1已植數量1.Text = "已植數量";
             // 
             // txt_PogoPin2Qty3
             // 
             this.txt_PogoPin2Qty3.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin2Qty3.Location = new System.Drawing.Point(176, 112);
-            this.txt_PogoPin2Qty3.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin2Qty3.Location = new System.Drawing.Point(141, 90);
             this.txt_PogoPin2Qty3.Name = "txt_PogoPin2Qty3";
-            this.txt_PogoPin2Qty3.Size = new System.Drawing.Size(95, 27);
+            this.txt_PogoPin2Qty3.Size = new System.Drawing.Size(77, 23);
             this.txt_PogoPin2Qty3.TabIndex = 26;
             // 
             // lbl_PogoPin2Qty3
             // 
             this.lbl_PogoPin2Qty3.AutoSize = true;
             this.lbl_PogoPin2Qty3.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin2Qty3.Location = new System.Drawing.Point(8, 124);
-            this.lbl_PogoPin2Qty3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin2Qty3.Location = new System.Drawing.Point(6, 99);
             this.lbl_PogoPin2Qty3.Name = "lbl_PogoPin2Qty3";
-            this.lbl_PogoPin2Qty3.Size = new System.Drawing.Size(125, 17);
+            this.lbl_PogoPin2Qty3.Size = new System.Drawing.Size(98, 14);
             this.lbl_PogoPin2Qty3.TabIndex = 25;
             this.lbl_PogoPin2Qty3.Text = "Pogo Pin2 Qty";
             // 
             // txt_PogoPin1Qty3
             // 
             this.txt_PogoPin1Qty3.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin1Qty3.Location = new System.Drawing.Point(176, 28);
-            this.txt_PogoPin1Qty3.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin1Qty3.Location = new System.Drawing.Point(141, 22);
             this.txt_PogoPin1Qty3.Name = "txt_PogoPin1Qty3";
-            this.txt_PogoPin1Qty3.Size = new System.Drawing.Size(95, 27);
+            this.txt_PogoPin1Qty3.Size = new System.Drawing.Size(77, 23);
             this.txt_PogoPin1Qty3.TabIndex = 24;
             // 
             // lbl_PogoPin1Qty3
             // 
             this.lbl_PogoPin1Qty3.AutoSize = true;
             this.lbl_PogoPin1Qty3.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin1Qty3.Location = new System.Drawing.Point(8, 35);
-            this.lbl_PogoPin1Qty3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin1Qty3.Location = new System.Drawing.Point(6, 28);
             this.lbl_PogoPin1Qty3.Name = "lbl_PogoPin1Qty3";
-            this.lbl_PogoPin1Qty3.Size = new System.Drawing.Size(125, 17);
+            this.lbl_PogoPin1Qty3.Size = new System.Drawing.Size(98, 14);
             this.lbl_PogoPin1Qty3.TabIndex = 23;
             this.lbl_PogoPin1Qty3.Text = "Pogo Pin1 Qty";
             // 
@@ -4779,10 +4448,9 @@ namespace InjectorInspector
             // 
             this.rad_ChangeGroupPin.AutoSize = true;
             this.rad_ChangeGroupPin.Font = new System.Drawing.Font("標楷體", 10F);
-            this.rad_ChangeGroupPin.Location = new System.Drawing.Point(8, 236);
-            this.rad_ChangeGroupPin.Margin = new System.Windows.Forms.Padding(4);
+            this.rad_ChangeGroupPin.Location = new System.Drawing.Point(6, 189);
             this.rad_ChangeGroupPin.Name = "rad_ChangeGroupPin";
-            this.rad_ChangeGroupPin.Size = new System.Drawing.Size(173, 21);
+            this.rad_ChangeGroupPin.Size = new System.Drawing.Size(137, 18);
             this.rad_ChangeGroupPin.TabIndex = 24;
             this.rad_ChangeGroupPin.TabStop = true;
             this.rad_ChangeGroupPin.Text = "Change Group Pin";
@@ -4792,10 +4460,9 @@ namespace InjectorInspector
             // 
             this.rad_ChangeAllNewPin.AutoSize = true;
             this.rad_ChangeAllNewPin.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.rad_ChangeAllNewPin.Location = new System.Drawing.Point(8, 32);
-            this.rad_ChangeAllNewPin.Margin = new System.Windows.Forms.Padding(4);
+            this.rad_ChangeAllNewPin.Location = new System.Drawing.Point(6, 26);
             this.rad_ChangeAllNewPin.Name = "rad_ChangeAllNewPin";
-            this.rad_ChangeAllNewPin.Size = new System.Drawing.Size(191, 21);
+            this.rad_ChangeAllNewPin.Size = new System.Drawing.Size(151, 18);
             this.rad_ChangeAllNewPin.TabIndex = 23;
             this.rad_ChangeAllNewPin.TabStop = true;
             this.rad_ChangeAllNewPin.Text = "Change All New Pin";
@@ -4804,80 +4471,72 @@ namespace InjectorInspector
             // txt_PogoPin2已植數量
             // 
             this.txt_PogoPin2已植數量.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin2已植數量.Location = new System.Drawing.Point(190, 195);
-            this.txt_PogoPin2已植數量.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin2已植數量.Location = new System.Drawing.Point(152, 156);
             this.txt_PogoPin2已植數量.Name = "txt_PogoPin2已植數量";
-            this.txt_PogoPin2已植數量.Size = new System.Drawing.Size(89, 27);
+            this.txt_PogoPin2已植數量.Size = new System.Drawing.Size(72, 23);
             this.txt_PogoPin2已植數量.TabIndex = 22;
             // 
             // lbl_PogoPin2已植數量
             // 
             this.lbl_PogoPin2已植數量.AutoSize = true;
             this.lbl_PogoPin2已植數量.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin2已植數量.Location = new System.Drawing.Point(82, 200);
-            this.lbl_PogoPin2已植數量.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin2已植數量.Location = new System.Drawing.Point(66, 160);
             this.lbl_PogoPin2已植數量.Name = "lbl_PogoPin2已植數量";
-            this.lbl_PogoPin2已植數量.Size = new System.Drawing.Size(80, 17);
+            this.lbl_PogoPin2已植數量.Size = new System.Drawing.Size(63, 14);
             this.lbl_PogoPin2已植數量.TabIndex = 21;
             this.lbl_PogoPin2已植數量.Text = "已植數量";
             // 
             // txt_PogoPin1已植數量
             // 
             this.txt_PogoPin1已植數量.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin1已植數量.Location = new System.Drawing.Point(190, 112);
-            this.txt_PogoPin1已植數量.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin1已植數量.Location = new System.Drawing.Point(152, 90);
             this.txt_PogoPin1已植數量.Name = "txt_PogoPin1已植數量";
-            this.txt_PogoPin1已植數量.Size = new System.Drawing.Size(89, 27);
+            this.txt_PogoPin1已植數量.Size = new System.Drawing.Size(72, 23);
             this.txt_PogoPin1已植數量.TabIndex = 20;
             // 
             // lbl_PogoPin1已植數量
             // 
             this.lbl_PogoPin1已植數量.AutoSize = true;
             this.lbl_PogoPin1已植數量.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin1已植數量.Location = new System.Drawing.Point(82, 118);
-            this.lbl_PogoPin1已植數量.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin1已植數量.Location = new System.Drawing.Point(66, 94);
             this.lbl_PogoPin1已植數量.Name = "lbl_PogoPin1已植數量";
-            this.lbl_PogoPin1已植數量.Size = new System.Drawing.Size(80, 17);
+            this.lbl_PogoPin1已植數量.Size = new System.Drawing.Size(63, 14);
             this.lbl_PogoPin1已植數量.TabIndex = 19;
             this.lbl_PogoPin1已植數量.Text = "已植數量";
             // 
             // txt_PogoPin2Qty2
             // 
             this.txt_PogoPin2Qty2.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin2Qty2.Location = new System.Drawing.Point(190, 154);
-            this.txt_PogoPin2Qty2.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin2Qty2.Location = new System.Drawing.Point(152, 123);
             this.txt_PogoPin2Qty2.Name = "txt_PogoPin2Qty2";
-            this.txt_PogoPin2Qty2.Size = new System.Drawing.Size(89, 27);
+            this.txt_PogoPin2Qty2.Size = new System.Drawing.Size(72, 23);
             this.txt_PogoPin2Qty2.TabIndex = 15;
             // 
             // lbl_PogoPin2Qty2
             // 
             this.lbl_PogoPin2Qty2.AutoSize = true;
             this.lbl_PogoPin2Qty2.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin2Qty2.Location = new System.Drawing.Point(22, 159);
-            this.lbl_PogoPin2Qty2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin2Qty2.Location = new System.Drawing.Point(18, 127);
             this.lbl_PogoPin2Qty2.Name = "lbl_PogoPin2Qty2";
-            this.lbl_PogoPin2Qty2.Size = new System.Drawing.Size(125, 17);
+            this.lbl_PogoPin2Qty2.Size = new System.Drawing.Size(98, 14);
             this.lbl_PogoPin2Qty2.TabIndex = 14;
             this.lbl_PogoPin2Qty2.Text = "Pogo Pin2 Qty";
             // 
             // txt_PogoPin1Qty2
             // 
             this.txt_PogoPin1Qty2.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin1Qty2.Location = new System.Drawing.Point(190, 72);
-            this.txt_PogoPin1Qty2.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin1Qty2.Location = new System.Drawing.Point(152, 58);
             this.txt_PogoPin1Qty2.Name = "txt_PogoPin1Qty2";
-            this.txt_PogoPin1Qty2.Size = new System.Drawing.Size(92, 27);
+            this.txt_PogoPin1Qty2.Size = new System.Drawing.Size(74, 23);
             this.txt_PogoPin1Qty2.TabIndex = 13;
             // 
             // lbl_PogoPin1Qty2
             // 
             this.lbl_PogoPin1Qty2.AutoSize = true;
             this.lbl_PogoPin1Qty2.Font = new System.Drawing.Font("標楷體", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin1Qty2.Location = new System.Drawing.Point(22, 80);
-            this.lbl_PogoPin1Qty2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin1Qty2.Location = new System.Drawing.Point(18, 64);
             this.lbl_PogoPin1Qty2.Name = "lbl_PogoPin1Qty2";
-            this.lbl_PogoPin1Qty2.Size = new System.Drawing.Size(125, 17);
+            this.lbl_PogoPin1Qty2.Size = new System.Drawing.Size(98, 14);
             this.lbl_PogoPin1Qty2.TabIndex = 12;
             this.lbl_PogoPin1Qty2.Text = "Pogo Pin1 Qty";
             // 
@@ -4886,11 +4545,9 @@ namespace InjectorInspector
             this.grp_SocketInfo.Controls.Add(this.grp_設備治具資訊);
             this.grp_SocketInfo.Controls.Add(this.grp_BarcodeInfo);
             this.grp_SocketInfo.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grp_SocketInfo.Location = new System.Drawing.Point(18, 46);
-            this.grp_SocketInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.grp_SocketInfo.Location = new System.Drawing.Point(14, 37);
             this.grp_SocketInfo.Name = "grp_SocketInfo";
-            this.grp_SocketInfo.Padding = new System.Windows.Forms.Padding(4);
-            this.grp_SocketInfo.Size = new System.Drawing.Size(426, 702);
+            this.grp_SocketInfo.Size = new System.Drawing.Size(341, 562);
             this.grp_SocketInfo.TabIndex = 21;
             this.grp_SocketInfo.TabStop = false;
             this.grp_SocketInfo.Text = "Socket資訊";
@@ -4908,11 +4565,9 @@ namespace InjectorInspector
             this.grp_設備治具資訊.Controls.Add(this.txt_PogoPin2Qty1);
             this.grp_設備治具資訊.Controls.Add(this.txt_PogoPin1Qty1);
             this.grp_設備治具資訊.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grp_設備治具資訊.Location = new System.Drawing.Point(9, 422);
-            this.grp_設備治具資訊.Margin = new System.Windows.Forms.Padding(4);
+            this.grp_設備治具資訊.Location = new System.Drawing.Point(7, 338);
             this.grp_設備治具資訊.Name = "grp_設備治具資訊";
-            this.grp_設備治具資訊.Padding = new System.Windows.Forms.Padding(4);
-            this.grp_設備治具資訊.Size = new System.Drawing.Size(410, 260);
+            this.grp_設備治具資訊.Size = new System.Drawing.Size(328, 208);
             this.grp_設備治具資訊.TabIndex = 1;
             this.grp_設備治具資訊.TabStop = false;
             this.grp_設備治具資訊.Text = "設備治具資訊";
@@ -4921,10 +4576,9 @@ namespace InjectorInspector
             // 
             this.lbl_PogoPin3Qty1.AutoSize = true;
             this.lbl_PogoPin3Qty1.Font = new System.Drawing.Font("標楷體", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin3Qty1.Location = new System.Drawing.Point(8, 128);
-            this.lbl_PogoPin3Qty1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin3Qty1.Location = new System.Drawing.Point(6, 102);
             this.lbl_PogoPin3Qty1.Name = "lbl_PogoPin3Qty1";
-            this.lbl_PogoPin3Qty1.Size = new System.Drawing.Size(98, 18);
+            this.lbl_PogoPin3Qty1.Size = new System.Drawing.Size(87, 15);
             this.lbl_PogoPin3Qty1.TabIndex = 16;
             this.lbl_PogoPin3Qty1.Text = "Probe Bore";
             // 
@@ -4932,10 +4586,9 @@ namespace InjectorInspector
             // 
             this.lbl_PogoPin2Qty1.AutoSize = true;
             this.lbl_PogoPin2Qty1.Font = new System.Drawing.Font("標楷體", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin2Qty1.Location = new System.Drawing.Point(8, 82);
-            this.lbl_PogoPin2Qty1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin2Qty1.Location = new System.Drawing.Point(6, 66);
             this.lbl_PogoPin2Qty1.Name = "lbl_PogoPin2Qty1";
-            this.lbl_PogoPin2Qty1.Size = new System.Drawing.Size(107, 18);
+            this.lbl_PogoPin2Qty1.Size = new System.Drawing.Size(95, 15);
             this.lbl_PogoPin2Qty1.TabIndex = 15;
             this.lbl_PogoPin2Qty1.Text = "Probe Plate";
             // 
@@ -4943,20 +4596,18 @@ namespace InjectorInspector
             // 
             this.lbl_PogoPin1Qty1.AutoSize = true;
             this.lbl_PogoPin1Qty1.Font = new System.Drawing.Font("標楷體", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin1Qty1.Location = new System.Drawing.Point(9, 36);
-            this.lbl_PogoPin1Qty1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin1Qty1.Location = new System.Drawing.Point(7, 29);
             this.lbl_PogoPin1Qty1.Name = "lbl_PogoPin1Qty1";
-            this.lbl_PogoPin1Qty1.Size = new System.Drawing.Size(80, 18);
+            this.lbl_PogoPin1Qty1.Size = new System.Drawing.Size(71, 15);
             this.lbl_PogoPin1Qty1.TabIndex = 14;
             this.lbl_PogoPin1Qty1.Text = "VCM_Pick";
             // 
             // txt_下針導正模組
             // 
             this.txt_下針導正模組.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_下針導正模組.Location = new System.Drawing.Point(160, 210);
-            this.txt_下針導正模組.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_下針導正模組.Location = new System.Drawing.Point(128, 168);
             this.txt_下針導正模組.Name = "txt_下針導正模組";
-            this.txt_下針導正模組.Size = new System.Drawing.Size(242, 30);
+            this.txt_下針導正模組.Size = new System.Drawing.Size(194, 26);
             this.txt_下針導正模組.TabIndex = 9;
             this.txt_下針導正模組.Text = "RL20240703-SA01-B001-A";
             // 
@@ -4964,20 +4615,18 @@ namespace InjectorInspector
             // 
             this.lbl_下針導正模組.AutoSize = true;
             this.lbl_下針導正模組.Font = new System.Drawing.Font("標楷體", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_下針導正模組.Location = new System.Drawing.Point(8, 218);
-            this.lbl_下針導正模組.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_下針導正模組.Location = new System.Drawing.Point(6, 174);
             this.lbl_下針導正模組.Name = "lbl_下針導正模組";
-            this.lbl_下針導正模組.Size = new System.Drawing.Size(125, 18);
+            this.lbl_下針導正模組.Size = new System.Drawing.Size(111, 15);
             this.lbl_下針導正模組.TabIndex = 8;
             this.lbl_下針導正模組.Text = "Probe Gripper";
             // 
             // txt_取針模組PI
             // 
             this.txt_取針模組PI.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_取針模組PI.Location = new System.Drawing.Point(160, 165);
-            this.txt_取針模組PI.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_取針模組PI.Location = new System.Drawing.Point(128, 132);
             this.txt_取針模組PI.Name = "txt_取針模組PI";
-            this.txt_取針模組PI.Size = new System.Drawing.Size(242, 30);
+            this.txt_取針模組PI.Size = new System.Drawing.Size(194, 26);
             this.txt_取針模組PI.TabIndex = 7;
             this.txt_取針模組PI.Text = "RL20240703-SA01-A001-A";
             // 
@@ -4985,40 +4634,36 @@ namespace InjectorInspector
             // 
             this.lbl_取針模組PI.AutoSize = true;
             this.lbl_取針模組PI.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_取針模組PI.Location = new System.Drawing.Point(8, 170);
-            this.lbl_取針模組PI.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_取針模組PI.Location = new System.Drawing.Point(6, 136);
             this.lbl_取針模組PI.Name = "lbl_取針模組PI";
-            this.lbl_取針模組PI.Size = new System.Drawing.Size(119, 20);
+            this.lbl_取針模組PI.Size = new System.Drawing.Size(95, 16);
             this.lbl_取針模組PI.TabIndex = 6;
             this.lbl_取針模組PI.Text = "Socket Tray";
             // 
             // txt_PogoPin3Qty1
             // 
             this.txt_PogoPin3Qty1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin3Qty1.Location = new System.Drawing.Point(160, 120);
-            this.txt_PogoPin3Qty1.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin3Qty1.Location = new System.Drawing.Point(128, 96);
             this.txt_PogoPin3Qty1.Name = "txt_PogoPin3Qty1";
-            this.txt_PogoPin3Qty1.Size = new System.Drawing.Size(242, 30);
+            this.txt_PogoPin3Qty1.Size = new System.Drawing.Size(194, 26);
             this.txt_PogoPin3Qty1.TabIndex = 5;
             this.txt_PogoPin3Qty1.Text = "RL20240703-SA01-D002-A";
             // 
             // txt_PogoPin2Qty1
             // 
             this.txt_PogoPin2Qty1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin2Qty1.Location = new System.Drawing.Point(160, 75);
-            this.txt_PogoPin2Qty1.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin2Qty1.Location = new System.Drawing.Point(128, 60);
             this.txt_PogoPin2Qty1.Name = "txt_PogoPin2Qty1";
-            this.txt_PogoPin2Qty1.Size = new System.Drawing.Size(242, 30);
+            this.txt_PogoPin2Qty1.Size = new System.Drawing.Size(194, 26);
             this.txt_PogoPin2Qty1.TabIndex = 3;
             this.txt_PogoPin2Qty1.Text = "RL20240703-SA01-D001-A";
             // 
             // txt_PogoPin1Qty1
             // 
             this.txt_PogoPin1Qty1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_PogoPin1Qty1.Location = new System.Drawing.Point(160, 29);
-            this.txt_PogoPin1Qty1.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_PogoPin1Qty1.Location = new System.Drawing.Point(128, 23);
             this.txt_PogoPin1Qty1.Name = "txt_PogoPin1Qty1";
-            this.txt_PogoPin1Qty1.Size = new System.Drawing.Size(242, 30);
+            this.txt_PogoPin1Qty1.Size = new System.Drawing.Size(194, 26);
             this.txt_PogoPin1Qty1.TabIndex = 1;
             this.txt_PogoPin1Qty1.Text = "RL20240703-SA01-C001-A";
             // 
@@ -5039,11 +4684,9 @@ namespace InjectorInspector
             this.grp_BarcodeInfo.Controls.Add(this.txt_Barcode);
             this.grp_BarcodeInfo.Controls.Add(this.lbl_條碼輸入欄位);
             this.grp_BarcodeInfo.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grp_BarcodeInfo.Location = new System.Drawing.Point(8, 36);
-            this.grp_BarcodeInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.grp_BarcodeInfo.Location = new System.Drawing.Point(6, 29);
             this.grp_BarcodeInfo.Name = "grp_BarcodeInfo";
-            this.grp_BarcodeInfo.Padding = new System.Windows.Forms.Padding(4);
-            this.grp_BarcodeInfo.Size = new System.Drawing.Size(411, 379);
+            this.grp_BarcodeInfo.Size = new System.Drawing.Size(329, 303);
             this.grp_BarcodeInfo.TabIndex = 0;
             this.grp_BarcodeInfo.TabStop = false;
             this.grp_BarcodeInfo.Text = "配件條碼資訊";
@@ -5053,10 +4696,9 @@ namespace InjectorInspector
             this.btn_SaveFile.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.btn_SaveFile.Enabled = false;
             this.btn_SaveFile.Font = new System.Drawing.Font("標楷體", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_SaveFile.Location = new System.Drawing.Point(12, 305);
-            this.btn_SaveFile.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_SaveFile.Location = new System.Drawing.Point(10, 244);
             this.btn_SaveFile.Name = "btn_SaveFile";
-            this.btn_SaveFile.Size = new System.Drawing.Size(198, 66);
+            this.btn_SaveFile.Size = new System.Drawing.Size(158, 53);
             this.btn_SaveFile.TabIndex = 13;
             this.btn_SaveFile.Text = "更新";
             this.btn_SaveFile.UseVisualStyleBackColor = false;
@@ -5066,10 +4708,9 @@ namespace InjectorInspector
             // 
             this.btn_OpenFile.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.btn_OpenFile.Font = new System.Drawing.Font("標楷體", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_OpenFile.Location = new System.Drawing.Point(218, 305);
-            this.btn_OpenFile.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_OpenFile.Location = new System.Drawing.Point(174, 244);
             this.btn_OpenFile.Name = "btn_OpenFile";
-            this.btn_OpenFile.Size = new System.Drawing.Size(186, 66);
+            this.btn_OpenFile.Size = new System.Drawing.Size(149, 53);
             this.btn_OpenFile.TabIndex = 12;
             this.btn_OpenFile.Text = "查詢";
             this.btn_OpenFile.UseVisualStyleBackColor = false;
@@ -5078,126 +4719,114 @@ namespace InjectorInspector
             // txt_儲位
             // 
             this.txt_儲位.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_儲位.Location = new System.Drawing.Point(126, 260);
-            this.txt_儲位.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_儲位.Location = new System.Drawing.Point(101, 208);
             this.txt_儲位.MaxLength = 256;
             this.txt_儲位.Name = "txt_儲位";
-            this.txt_儲位.Size = new System.Drawing.Size(276, 30);
+            this.txt_儲位.Size = new System.Drawing.Size(222, 26);
             this.txt_儲位.TabIndex = 11;
             // 
             // lbl_PogoPin2Qty
             // 
             this.lbl_PogoPin2Qty.AutoSize = true;
             this.lbl_PogoPin2Qty.Font = new System.Drawing.Font("標楷體", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin2Qty.Location = new System.Drawing.Point(9, 268);
-            this.lbl_PogoPin2Qty.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin2Qty.Location = new System.Drawing.Point(7, 214);
             this.lbl_PogoPin2Qty.Name = "lbl_PogoPin2Qty";
-            this.lbl_PogoPin2Qty.Size = new System.Drawing.Size(44, 18);
+            this.lbl_PogoPin2Qty.Size = new System.Drawing.Size(39, 15);
             this.lbl_PogoPin2Qty.TabIndex = 10;
             this.lbl_PogoPin2Qty.Text = "儲位";
             // 
             // txt_板全號
             // 
             this.txt_板全號.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_板全號.Location = new System.Drawing.Point(126, 215);
-            this.txt_板全號.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_板全號.Location = new System.Drawing.Point(101, 172);
             this.txt_板全號.MaxLength = 256;
             this.txt_板全號.Name = "txt_板全號";
-            this.txt_板全號.Size = new System.Drawing.Size(276, 30);
+            this.txt_板全號.Size = new System.Drawing.Size(222, 26);
             this.txt_板全號.TabIndex = 9;
             // 
             // lbl_PogoPin1Qty
             // 
             this.lbl_PogoPin1Qty.AutoSize = true;
             this.lbl_PogoPin1Qty.Font = new System.Drawing.Font("標楷體", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_PogoPin1Qty.Location = new System.Drawing.Point(9, 222);
-            this.lbl_PogoPin1Qty.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_PogoPin1Qty.Location = new System.Drawing.Point(7, 178);
             this.lbl_PogoPin1Qty.Name = "lbl_PogoPin1Qty";
-            this.lbl_PogoPin1Qty.Size = new System.Drawing.Size(62, 18);
+            this.lbl_PogoPin1Qty.Size = new System.Drawing.Size(55, 15);
             this.lbl_PogoPin1Qty.TabIndex = 8;
             this.lbl_PogoPin1Qty.Text = "板全號";
             // 
             // txt_型號
             // 
             this.txt_型號.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_型號.Location = new System.Drawing.Point(126, 170);
-            this.txt_型號.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_型號.Location = new System.Drawing.Point(101, 136);
             this.txt_型號.MaxLength = 256;
             this.txt_型號.Name = "txt_型號";
-            this.txt_型號.Size = new System.Drawing.Size(276, 30);
+            this.txt_型號.Size = new System.Drawing.Size(222, 26);
             this.txt_型號.TabIndex = 7;
             // 
             // lbl_Socket定位座
             // 
             this.lbl_Socket定位座.AutoSize = true;
             this.lbl_Socket定位座.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_Socket定位座.Location = new System.Drawing.Point(8, 174);
-            this.lbl_Socket定位座.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Socket定位座.Location = new System.Drawing.Point(6, 139);
             this.lbl_Socket定位座.Name = "lbl_Socket定位座";
-            this.lbl_Socket定位座.Size = new System.Drawing.Size(49, 20);
+            this.lbl_Socket定位座.Size = new System.Drawing.Size(39, 16);
             this.lbl_Socket定位座.TabIndex = 6;
             this.lbl_Socket定位座.Text = "型號";
             // 
             // txt_客戶
             // 
             this.txt_客戶.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_客戶.Location = new System.Drawing.Point(126, 125);
-            this.txt_客戶.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_客戶.Location = new System.Drawing.Point(101, 100);
             this.txt_客戶.MaxLength = 256;
             this.txt_客戶.Name = "txt_客戶";
-            this.txt_客戶.Size = new System.Drawing.Size(276, 31);
+            this.txt_客戶.Size = new System.Drawing.Size(222, 27);
             this.txt_客戶.TabIndex = 5;
             // 
             // lbl_FileName
             // 
             this.lbl_FileName.AutoSize = true;
             this.lbl_FileName.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_FileName.Location = new System.Drawing.Point(8, 130);
-            this.lbl_FileName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_FileName.Location = new System.Drawing.Point(6, 104);
             this.lbl_FileName.Name = "lbl_FileName";
-            this.lbl_FileName.Size = new System.Drawing.Size(49, 20);
+            this.lbl_FileName.Size = new System.Drawing.Size(39, 16);
             this.lbl_FileName.TabIndex = 4;
             this.lbl_FileName.Text = "客戶";
             // 
             // txt_短編號
             // 
             this.txt_短編號.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_短編號.Location = new System.Drawing.Point(126, 80);
-            this.txt_短編號.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_短編號.Location = new System.Drawing.Point(101, 64);
             this.txt_短編號.MaxLength = 256;
             this.txt_短編號.Name = "txt_短編號";
-            this.txt_短編號.Size = new System.Drawing.Size(276, 30);
+            this.txt_短編號.Size = new System.Drawing.Size(222, 26);
             this.txt_短編號.TabIndex = 3;
             // 
             // lbl_Socket
             // 
             this.lbl_Socket.AutoSize = true;
             this.lbl_Socket.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_Socket.Location = new System.Drawing.Point(8, 85);
-            this.lbl_Socket.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_Socket.Location = new System.Drawing.Point(6, 68);
             this.lbl_Socket.Name = "lbl_Socket";
-            this.lbl_Socket.Size = new System.Drawing.Size(69, 20);
+            this.lbl_Socket.Size = new System.Drawing.Size(55, 16);
             this.lbl_Socket.TabIndex = 2;
             this.lbl_Socket.Text = "短編號";
             // 
             // txt_Barcode
             // 
             this.txt_Barcode.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_Barcode.Location = new System.Drawing.Point(126, 29);
-            this.txt_Barcode.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_Barcode.Location = new System.Drawing.Point(101, 23);
             this.txt_Barcode.MaxLength = 256;
             this.txt_Barcode.Name = "txt_Barcode";
-            this.txt_Barcode.Size = new System.Drawing.Size(276, 30);
+            this.txt_Barcode.Size = new System.Drawing.Size(222, 26);
             this.txt_Barcode.TabIndex = 1;
             // 
             // lbl_條碼輸入欄位
             // 
             this.lbl_條碼輸入欄位.AutoSize = true;
             this.lbl_條碼輸入欄位.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_條碼輸入欄位.Location = new System.Drawing.Point(8, 34);
-            this.lbl_條碼輸入欄位.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_條碼輸入欄位.Location = new System.Drawing.Point(6, 27);
             this.lbl_條碼輸入欄位.Name = "lbl_條碼輸入欄位";
-            this.lbl_條碼輸入欄位.Size = new System.Drawing.Size(89, 20);
+            this.lbl_條碼輸入欄位.Size = new System.Drawing.Size(71, 16);
             this.lbl_條碼輸入欄位.TabIndex = 0;
             this.lbl_條碼輸入欄位.Text = "配件編號";
             // 
@@ -5206,11 +4835,9 @@ namespace InjectorInspector
             this.grp_儲存資訊.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.grp_儲存資訊.Controls.Add(this.btn_停止);
             this.grp_儲存資訊.Controls.Add(this.btn_開始);
-            this.grp_儲存資訊.Location = new System.Drawing.Point(18, 756);
-            this.grp_儲存資訊.Margin = new System.Windows.Forms.Padding(4);
+            this.grp_儲存資訊.Location = new System.Drawing.Point(14, 605);
             this.grp_儲存資訊.Name = "grp_儲存資訊";
-            this.grp_儲存資訊.Padding = new System.Windows.Forms.Padding(4);
-            this.grp_儲存資訊.Size = new System.Drawing.Size(314, 84);
+            this.grp_儲存資訊.Size = new System.Drawing.Size(251, 67);
             this.grp_儲存資訊.TabIndex = 20;
             this.grp_儲存資訊.TabStop = false;
             // 
@@ -5218,10 +4845,9 @@ namespace InjectorInspector
             // 
             this.btn_停止.BackColor = System.Drawing.Color.Red;
             this.btn_停止.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_停止.Location = new System.Drawing.Point(169, 11);
-            this.btn_停止.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_停止.Location = new System.Drawing.Point(135, 9);
             this.btn_停止.Name = "btn_停止";
-            this.btn_停止.Size = new System.Drawing.Size(136, 65);
+            this.btn_停止.Size = new System.Drawing.Size(109, 52);
             this.btn_停止.TabIndex = 2;
             this.btn_停止.Text = "停止";
             this.btn_停止.UseVisualStyleBackColor = false;
@@ -5230,10 +4856,9 @@ namespace InjectorInspector
             // 
             this.btn_開始.BackColor = System.Drawing.Color.Lime;
             this.btn_開始.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_開始.Location = new System.Drawing.Point(8, 11);
-            this.btn_開始.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_開始.Location = new System.Drawing.Point(6, 9);
             this.btn_開始.Name = "btn_開始";
-            this.btn_開始.Size = new System.Drawing.Size(136, 65);
+            this.btn_開始.Size = new System.Drawing.Size(109, 52);
             this.btn_開始.TabIndex = 1;
             this.btn_開始.Text = "開始";
             this.btn_開始.UseVisualStyleBackColor = false;
@@ -5246,8 +4871,8 @@ namespace InjectorInspector
             this.tsm_File});
             this.ms_Viewer.Location = new System.Drawing.Point(0, 0);
             this.ms_Viewer.Name = "ms_Viewer";
-            this.ms_Viewer.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.ms_Viewer.Size = new System.Drawing.Size(1537, 28);
+            this.ms_Viewer.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.ms_Viewer.Size = new System.Drawing.Size(1228, 24);
             this.ms_Viewer.TabIndex = 19;
             this.ms_Viewer.Text = "menuStrip1";
             // 
@@ -5258,19 +4883,19 @@ namespace InjectorInspector
             this.tsmi_Logout});
             this.tsm_Account.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tsm_Account.Name = "tsm_Account";
-            this.tsm_Account.Size = new System.Drawing.Size(63, 24);
+            this.tsm_Account.Size = new System.Drawing.Size(51, 20);
             this.tsm_Account.Text = "帳戶";
             // 
             // tsmi_Login
             // 
             this.tsmi_Login.Name = "tsmi_Login";
-            this.tsmi_Login.Size = new System.Drawing.Size(142, 26);
+            this.tsmi_Login.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Login.Text = "登入";
             // 
             // tsmi_Logout
             // 
             this.tsmi_Logout.Name = "tsmi_Logout";
-            this.tsmi_Logout.Size = new System.Drawing.Size(142, 26);
+            this.tsmi_Logout.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Logout.Text = "登出";
             // 
             // tsm_File
@@ -5280,13 +4905,13 @@ namespace InjectorInspector
             this.tsmi_SaveFile});
             this.tsm_File.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tsm_File.Name = "tsm_File";
-            this.tsm_File.Size = new System.Drawing.Size(63, 24);
+            this.tsm_File.Size = new System.Drawing.Size(51, 20);
             this.tsm_File.Text = "檔案";
             // 
             // tsmi_OpenFile
             // 
             this.tsmi_OpenFile.Name = "tsmi_OpenFile";
-            this.tsmi_OpenFile.Size = new System.Drawing.Size(142, 26);
+            this.tsmi_OpenFile.Size = new System.Drawing.Size(114, 22);
             this.tsmi_OpenFile.Text = "開啟";
             this.tsmi_OpenFile.Click += new System.EventHandler(this.tsmi_OpenFile_Click);
             // 
@@ -5294,7 +4919,7 @@ namespace InjectorInspector
             // 
             this.tsmi_SaveFile.Enabled = false;
             this.tsmi_SaveFile.Name = "tsmi_SaveFile";
-            this.tsmi_SaveFile.Size = new System.Drawing.Size(142, 26);
+            this.tsmi_SaveFile.Size = new System.Drawing.Size(114, 22);
             this.tsmi_SaveFile.Text = "儲存";
             this.tsmi_SaveFile.Click += new System.EventHandler(this.tsmi_SaveFile_Click);
             // 
@@ -5317,13 +4942,12 @@ namespace InjectorInspector
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1570, 1059);
+            this.ClientSize = new System.Drawing.Size(1256, 847);
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("新細明體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
@@ -5353,7 +4977,6 @@ namespace InjectorInspector
             this.tp_NeedlesJudge.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_跑馬燈)).EndInit();
             this.grp_目前作業項目.ResumeLayout(false);
             this.grp_目前作業項目.PerformLayout();
             this.grp_GroupPin2.ResumeLayout(false);
@@ -5707,7 +5330,6 @@ namespace InjectorInspector
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pic_跑馬燈;
         private System.Windows.Forms.GroupBox grp_目前作業項目;
         private System.Windows.Forms.GroupBox grp_GroupPin2;
         private System.Windows.Forms.TextBox txt_PogoPin2已植數量2;
@@ -5828,6 +5450,7 @@ namespace InjectorInspector
         private CheckBox cB_AlwaysResume;
         private Label lbl_PinIndex;
         private CheckBox cB_料盤有料;
+        private RichTextBox rtb_Status;
     }
 }
 

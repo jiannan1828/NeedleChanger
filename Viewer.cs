@@ -528,5 +528,25 @@ namespace InjectorInspector
                 }
             }
         }
+
+        /// <summary>
+        /// 在 richtextbox 顯示當前資訊
+        /// </summary>
+        /// <param name="message">目標資訊</param>
+        /// <returns>無回傳值</returns>
+        public static void rtb_Status_AppendMessage(RichTextBox rtb_Status, string message)
+        {
+            // 獲取當前時間
+            string currentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            // 構造帶有當前時間和訊息的字串
+            string textToAdd = $"[{currentTime}] {message}";
+
+            // 更新RichTextBox內容，保持換行
+            rtb_Status.AppendText(textToAdd + Environment.NewLine);
+
+            // 滾動到最後一行
+            rtb_Status.ScrollToCaret();
+        }
     }
 }

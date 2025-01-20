@@ -48,12 +48,14 @@ using static InjectorInspector.Form1;
 //JSON
 using System.IO;
 using System.Text.Json;
+using Newtonsoft.Json;
 
 //---------------------------------------------------------------------------------------
 //小佛
 using static InjectorInspector.Viewer;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 //using static System.Windows.Forms.VisualStyles.VisualStyleElement;  //會自動長出 要手動刪掉
+using System.Runtime.InteropServices;
 
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
@@ -113,7 +115,7 @@ namespace InjectorInspector
         private void button3_Click(object sender, EventArgs e)
         {
             //植針孔位置校正攝影機取像
-            Vector3 pos;
+            Inspector.Vector3 pos;
             bool success = inspector1.xInspSocket(out pos);
             b有看到校正孔 = success;
             dbCameraCalibrationX = pos.X;
@@ -3908,32 +3910,6 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------- 和尚小佛 --------------------------------------
         //---------------------------------------------------------------------------------------
-
-
-
-        //---------------------------------------------------------------------------------------
-        private void pic_跑馬燈_Paint(object sender, PaintEventArgs e)
-        {
-            // 使用 Graphics 繪製跑馬燈文字
-            Graphics g = e.Graphics;
-            Font font = new Font("標楷體", 16, FontStyle.Bold);
-            Brush brush = Brushes.Red;
-
-            g.DrawString(跑馬燈文字[跑馬燈文字Index], font, brush, 跑馬燈X座標, (pic_跑馬燈.Height - font.Height) / 2);
-        }
-        //---------------------------------------------------------------------------------------
-        private void pic_跑馬燈_Click(object sender, EventArgs e)
-        {
-            跑馬燈文字Index++;
-
-            if (跑馬燈文字Index > 跑馬燈文字.Length - 1)
-            {
-                跑馬燈文字Index = 0;
-            }
-
-            pic_跑馬燈.Invalidate();
-        }
-        //---------------------------------------------------------------------------------------
         private void tsmi_OpenFile_Click(object sender, EventArgs e)
         { 
             if (OpenFile())
@@ -4447,13 +4423,15 @@ namespace InjectorInspector
             {
                 Json = JsonConvert.DeserializeObject<JSON>(File.ReadAllText(@"028\" + txt_Barcode.Text + ".json"));
                 show_grp_BarcodeInfo(grp_BarcodeInfo);
+
                 //MessageBox.Show($"檔案 {@"028\" + txt_Barcode.Text + ".json"} 成功讀取！");
+                rtb_Status_AppendMessage(rtb_Status, $"檔案 {@"028\" + txt_Barcode.Text + ".json"} 成功讀取！");
 
                 find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
             }
             catch (Exception ex)
             {
-                //MessageBox.Show($"讀取 Json 檔時發生錯誤: {ex.Message}");
+                MessageBox.Show($"讀取 Json 檔時發生錯誤: {ex.Message}");
             }
         }
         //---------------------------------------------------------------------------------------
