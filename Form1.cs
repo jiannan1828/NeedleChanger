@@ -215,12 +215,12 @@ namespace InjectorInspector
         private void button7_Click(object sender, EventArgs e)
         {
             //找下一個要植針的ID
-            int iPC = PlacedCircles.Count();
+            int iPC = PlacedNeedles.Count();
             if(iPC == 0) { 
-                find_Placed_Circles();
+                find_Placed_Needles();
             }
             try {
-                iHoleIndex = PlacedCircles[0].Index;  // 嘗試訪問索引 0 的元素
+                iHoleIndex = PlacedNeedles[0].Index;  // 嘗試訪問索引 0 的元素
             } catch (Exception ex) {
                 // 捕捉其他類型的異常
                 Console.WriteLine("發生錯誤：" + ex.Message);
@@ -246,7 +246,7 @@ namespace InjectorInspector
 
             //刪除目前的植針ID
             if (iPC >= 1) { 
-                PlacedCircles.RemoveAt(0);
+                PlacedNeedles.RemoveAt(0);
             }
         }
         //---------------------------------------------------------------------------------------
@@ -1529,11 +1529,33 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //-------------------------------- Project Code implement -------------------------------
         //---------------------------------------------------------------------------------------
+        public GlobalKeyboardHook gkh;
+        private List<char> BarcodeBuffer = new List<char>(100); // 初始容量為 100
         public Form1()
         {
             InitializeComponent();
+
             Initialize_grp_NeedleInfo_ChildControlChanged_Listener(grp_NeedleInfo);
             Initialize_cms_pic_Needles_ItemClicked_Listener(cms_pic_Needles);
+
+            Initialize_grp_BarcodeInfo_ChildControlChanged_Listener(grp_BarcodeInfo);
+            gkh = new GlobalKeyboardHook();
+            gkh.KeyUp += Gkh_KeyUp;
+        }
+        //---------------------------------------------------------------------------------------
+        private void Gkh_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txt_Barcode.Text = new string(BarcodeBuffer.ToArray()).Trim();
+                btn_OpenFile_Click(sender, e);
+                BarcodeBuffer.Clear();
+            }
+            else
+            {
+                
+                BarcodeBuffer.Add((char)e.KeyCode);
+            }
         }
         //---------------------------------------------------------------------------------------
         private void Form1_Load(object sender, EventArgs e)
@@ -3916,10 +3938,11 @@ namespace InjectorInspector
         { 
             if (OpenFile())
             {
-                find_Json_Boundary(Json);
-                ZoomFactor = Math.Min(pic_Needles.Width / ScaleFactor / Json_Boundary.width, pic_Needles.Height / ScaleFactor / Json_Boundary.height);
-                Offset.X = -Json_Boundary.minX * ScaleFactor * ZoomFactor;
-                Offset.Y = -Json_Boundary.maxY * ScaleFactor * -ZoomFactor;
+                tsmi_SaveFile.Enabled = true;
+                btn_SaveFile.Enabled = true;
+
+                find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
+
                 pic_Needles.Refresh();
             }
         }
@@ -3935,7 +3958,7 @@ namespace InjectorInspector
             e.Graphics.TranslateTransform(Offset.X / ZoomFactor, Offset.Y / -ZoomFactor); // 拖曳圖片轉換座標
 
             #region 畫出所有圓
-            foreach (var circle in Json.Circles)
+            foreach (var circle in Json.Needles)
             {
                 Brush fillBrush;
 
@@ -3948,24 +3971,24 @@ namespace InjectorInspector
 
                 if (circle.Display == false) // 隱藏圓
                 {
-                    fillBrush = new SolidBrush(HiddenCirclesColor);
+                    fillBrush = new SolidBrush(HiddenNeedlesColor);
                 }
                 else if (circle.Place == true) // 植針圓
                 {
-                    fillBrush= new SolidBrush(PlaceCirclesColor);
+                    fillBrush= new SolidBrush(PlaceNeedlesColor);
                 }
                 else // 預設圓
                 {
-                    fillBrush = new SolidBrush(DefaltCircleColor);
+                    fillBrush = new SolidBrush(DefaltNeedleColor);
                 }
 
-                if (circle == FocusedCircle) // 點擊圓
+                if (circle == FocusedNeedle) // 點擊圓
                 {
-                    fillBrush = new SolidBrush(FocusedCircleColor);
+                    fillBrush = new SolidBrush(FocusedNeedleColor);
                 }
-                else if (circle == HighlightedCircle) // 觸擊圓
+                else if (circle == HighlightedNeedle) // 觸擊圓
                 {
-                    fillBrush = new SolidBrush(HiddenCirclesColor);
+                    fillBrush = new SolidBrush(HiddenNeedlesColor);
                     //rectangleF = new RectangleF(
                     //    (float)((circle.X * ScaleFactor - circle.Diameter / 2 * ScaleFactor) - (circle.Diameter / 2 * ScaleFactor * 0.5)),
                     //    (float)((circle.Y * ScaleFactor - circle.Diameter / 2 * ScaleFactor) - (circle.Diameter / 2 * ScaleFactor * 0.5)),
@@ -3999,11 +4022,11 @@ namespace InjectorInspector
 
             #region 畫框選中的圓
 
-            foreach (var circle in SelectedCircles)
+            foreach (var circle in SelectedNeedles)
             {
                 Brush fillBrush;
 
-                fillBrush = new SolidBrush(SelectedCirclesColor);
+                fillBrush = new SolidBrush(SelectedNeedlesColor);
                 
                 RectangleF rectangleF = new RectangleF(
                     (float)(circle.X * ScaleFactor - circle.Diameter / 2 * ScaleFactor),
@@ -4049,7 +4072,7 @@ namespace InjectorInspector
             }
 
 
-            foreach (var circle in Viewer.Json.Circles)
+            foreach (var circle in Viewer.Json.Needles)
             {
                 // 计算鼠标位置与圆心的距离
                 Mouse2CircleDistance = Math.Sqrt(
@@ -4061,26 +4084,26 @@ namespace InjectorInspector
                 {
                     IsMouseinCircle = true;
 
-                    HighlightedCircle = circle; // 記錄高亮的圓
+                    HighlightedNeedle = circle; // 記錄高亮的圓
 
                     break;
                 }
                 else
                 {
                     IsMouseinCircle = false;
-                    HighlightedCircle = null;
+                    HighlightedNeedle = null;
                 }
             }
 
             if (IsMouseinCircle) {
                 ttp_NeedleInfo.SetToolTip(
                     pic_Needles,
-                    "流水號 : " + HighlightedCircle.Index.ToString() + "\n" +
-                    "名稱 : " + (HighlightedCircle.Name ?? "無") + "\n" +  // 如果為 null, 顯示 "無"
-                    "Id : " + (HighlightedCircle.Id ?? "無") + "\n" +
-                    "座標X : " + HighlightedCircle.X.ToString("F3") + "\n" +
-                    "座標Y : " + HighlightedCircle.Y.ToString("F3") + "\n" +
-                    "直徑 : " + HighlightedCircle.Diameter.ToString("F3") + "\n" 
+                    "流水號 : " + HighlightedNeedle.Index.ToString() + "\n" +
+                    "名稱 : " + (HighlightedNeedle.Name ?? "無") + "\n" +  // 如果為 null, 顯示 "無"
+                    "Id : " + (HighlightedNeedle.Id ?? "無") + "\n" +
+                    "座標X : " + HighlightedNeedle.X.ToString("F3") + "\n" +
+                    "座標Y : " + HighlightedNeedle.Y.ToString("F3") + "\n" +
+                    "直徑 : " + HighlightedNeedle.Diameter.ToString("F3") + "\n" 
                 );
             }
             else
@@ -4111,19 +4134,19 @@ namespace InjectorInspector
                         break;
 
                     default:
-                        SelectedCircles.Clear(); // 清空拖曳框選擇到的圓
+                        SelectedNeedles.Clear(); // 清空拖曳框選擇到的圓
 
                         PrevMousePos = e.Location;
 
-                        if (HighlightedCircle != null)
+                        if (HighlightedNeedle != null)
                         {
-                            FocusedCircle = HighlightedCircle;
+                            FocusedNeedle = HighlightedNeedle;
 
                             show_grp_NeedleInfo(grp_NeedleInfo);
                         }
                         else
                         {
-                            FocusedCircle = null;
+                            FocusedNeedle = null;
 
                             clear_grp_NeedleInfo(grp_NeedleInfo);
                         }
@@ -4141,7 +4164,7 @@ namespace InjectorInspector
                     case Keys.Shift:
                         if (IsDrag)
                         {
-                            find_Selected_Circles();
+                            find_Selected_Needles();
                             pic_Needles.Refresh();
                         }
 
@@ -4184,7 +4207,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         private void cms_pic_Needles_Opened(object sender, EventArgs e)
         {
-            if (SelectedCircles.Count != 0)
+            if (SelectedNeedles.Count != 0)
             {
                 tsmi_Place.Enabled    = true;
                 tsmi_Remove.Enabled   = true;
@@ -4210,41 +4233,41 @@ namespace InjectorInspector
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
 
-            foreach (var circle in SelectedCircles)
+            foreach (var circle in SelectedNeedles)
             {
                 switch (item.Text)
                 {
                     case "植針":
-                        Json.Circles[circle.Index].Place = true;
+                        Json.Needles[circle.Index].Place = true;
                         break;
 
                     case "取針":
-                        Json.Circles[circle.Index].Remove = true;
+                        Json.Needles[circle.Index].Remove = true;
                         break;
 
                     case "置換":
-                        Json.Circles[circle.Index].Replace = true;
+                        Json.Needles[circle.Index].Replace = true;
                         break;
 
                     case "顯示":
-                        Json.Circles[circle.Index].Display = true;
+                        Json.Needles[circle.Index].Display = true;
                         break;
 
                     case "啟用":
-                        Json.Circles[circle.Index].Enable = true;
+                        Json.Needles[circle.Index].Enable = true;
                         break;
 
                     case "保留":
-                        Json.Circles[circle.Index].Reserve1 = true;
+                        Json.Needles[circle.Index].Reserve1 = true;
                         break;
 
                     case "清除":
-                        Json.Circles[circle.Index].Place    = false;
-                        Json.Circles[circle.Index].Remove   = false;
-                        Json.Circles[circle.Index].Replace  = false;
-                        Json.Circles[circle.Index].Display  = true;
-                        Json.Circles[circle.Index].Enable   = false;
-                        Json.Circles[circle.Index].Reserve1 = false;
+                        Json.Needles[circle.Index].Place    = false;
+                        Json.Needles[circle.Index].Remove   = false;
+                        Json.Needles[circle.Index].Replace  = false;
+                        Json.Needles[circle.Index].Display  = true;
+                        Json.Needles[circle.Index].Enable   = false;
+                        Json.Needles[circle.Index].Reserve1 = false;
                         break;
                 }
             }
@@ -4252,7 +4275,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         private void grp_NeedleInfo_ChildControlChanged(object sender, EventArgs e)
         {
-            if (FocusedCircle != null)
+            if (FocusedNeedle != null)
             {
                 switch (sender)
                 {
@@ -4261,11 +4284,11 @@ namespace InjectorInspector
                         switch (textBox.Name)
                         {
                             case "txt_Name":
-                                Json.Circles[FocusedCircle.Index].Name = txt_Name.Text;
+                                Json.Needles[FocusedNeedle.Index].Name = txt_Name.Text;
                                 break;
 
                             case "txt_Id":
-                                Json.Circles[FocusedCircle.Index].Id = txt_Id.Text;
+                                Json.Needles[FocusedNeedle.Index].Id = txt_Id.Text;
                                 break;
                         }
                         break;
@@ -4275,16 +4298,16 @@ namespace InjectorInspector
                         switch (radioButton.Name)
                         {
                             case "rad_Place":
-                                Json.Circles[FocusedCircle.Index].Place = rad_Place.Checked;
-                                //dgv_Needles.Rows[FocusedCircle.Index].Cells["Place"].Value = rad_Place.Checked;
+                                Json.Needles[FocusedNeedle.Index].Place = rad_Place.Checked;
+                                //dgv_Needles.Rows[FocusedNeedle.Index].Cells["Place"].Value = rad_Place.Checked;
                                 break;
 
                             case "rad_Remove":
-                                Json.Circles[FocusedCircle.Index].Remove = rad_Remove.Checked;
+                                Json.Needles[FocusedNeedle.Index].Remove = rad_Remove.Checked;
                                 break;
 
                             case "rad_Replace":
-                                Json.Circles[FocusedCircle.Index].Replace = rad_Replace.Checked;
+                                Json.Needles[FocusedNeedle.Index].Replace = rad_Replace.Checked;
                                 break;
                         }
 
@@ -4295,15 +4318,15 @@ namespace InjectorInspector
                         switch (checkBox.Name)
                         {
                             case "chk_Display":
-                                Json.Circles[FocusedCircle.Index].Display = chk_Display.Checked;
+                                Json.Needles[FocusedNeedle.Index].Display = chk_Display.Checked;
                                 break;
 
                             case "chk_Enable":
-                                Json.Circles[FocusedCircle.Index].Enable = chk_Enable.Checked;
+                                Json.Needles[FocusedNeedle.Index].Enable = chk_Enable.Checked;
                                 break;
 
                             case "chk_Reserve1":
-                                Json.Circles[FocusedCircle.Index].Reserve1 = chk_Reserve1.Checked;
+                                Json.Needles[FocusedNeedle.Index].Reserve1 = chk_Reserve1.Checked;
                                 break;
                         }
 
@@ -4370,8 +4393,8 @@ namespace InjectorInspector
             show_grp_NeedleInfo(grp_NeedleInfo);
             pic_Needles.Refresh();
 
-            double dbTargetX = FocusedCircle.X*(-1);
-            double dbTargetY = FocusedCircle.Y*(-1);
+            double dbTargetX = FocusedNeedle.X*(-1);
+            double dbTargetY = FocusedNeedle.Y*(-1);
 
             //Socket1, point0, x=137.07
             //Socket1, point0, y=602.225
@@ -4380,6 +4403,73 @@ namespace InjectorInspector
 
             dbX = dbTargetX - OffsetX;  
             dbY = dbTargetY - OffsetY;  
+        }
+        //---------------------------------------------------------------------------------------
+        private void grp_BarcodeInfo_ChildControlChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+
+            switch (textBox.Name)
+            {
+                case "txt_Barcode":
+                    Json.Barcode.Barcode = txt_Barcode.Text;
+                    break;
+
+                case "txt_短編號":
+                    Json.Barcode.短編號 = txt_短編號.Text;
+                    break;
+
+                case "txt_客戶":
+                    Json.Barcode.客戶 = txt_客戶.Text;
+                    break;
+
+                case "txt_型號":
+                    Json.Barcode.型號 = txt_型號.Text;
+                    break;
+
+                case "txt_板全號":
+                    Json.Barcode.板全號 = txt_板全號.Text;
+                    break;
+
+                case "txt_儲位":
+                    Json.Barcode.儲位 = txt_儲位.Text;
+                    break;
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        private void btn_OpenFile_Click(object sender, EventArgs e)
+        {
+            tsmi_SaveFile.Enabled = true;
+            btn_SaveFile.Enabled = true;
+
+            strFileName = txt_Barcode.Text;
+            try
+            {
+                Json = JsonConvert.DeserializeObject<JSON>(File.ReadAllText(@"028\" + txt_Barcode.Text + ".json"));
+                show_grp_BarcodeInfo(grp_BarcodeInfo);
+                //MessageBox.Show($"檔案 {@"028\" + txt_Barcode.Text + ".json"} 成功讀取！");
+
+                find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show($"讀取 Json 檔時發生錯誤: {ex.Message}");
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        private void btn_SaveFile_Click(object sender, EventArgs e)
+        {
+            // 使用 Newtonsoft.Json 進行物件序列化，並設定格式化輸出（會縮排顯示）
+            string json = JsonConvert.SerializeObject(Json, Newtonsoft.Json.Formatting.Indented);
+            // 使用 StreamWriter 儲存 Json 到選定的檔案
+            strFileName = txt_Barcode.Text + ".json";
+
+            using (StreamWriter writer = new StreamWriter(@"028\" + strFileName))
+            {
+                writer.Write(json);
+            }
+
+            MessageBox.Show("檔案儲存成功！");
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------- 和尚小佛 --------------------------------------
@@ -4402,5 +4492,68 @@ namespace InjectorInspector
 
 
     }  // end of public partial class Form1 : Form
+    //---------------------------------------------------------------------------------------
 
+    //---------------------------------------------------------------------------------------
+    public class GlobalKeyboardHook
+    {
+        // 鍵盤掛勾的委派
+        private delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
+        private HookProc hookProc;
+
+        // 鍵盤掛勾句柄
+        private IntPtr hookID = IntPtr.Zero;
+
+        // 鍵盤事件
+        public event EventHandler<KeyEventArgs> KeyUp;
+
+        // 掛勾類型
+        private const int WH_KEYBOARD_LL = 13;
+        private const int WM_KEYUP = 0x0101;
+
+        //---------------------------------------------------------------------------------------
+        public GlobalKeyboardHook()
+        {
+            hookProc = HookCallback;
+            hookID = SetHook(hookProc);
+        }
+        //---------------------------------------------------------------------------------------
+        ~GlobalKeyboardHook()
+        {
+            UnhookWindowsHookEx(hookID);
+        }
+        //---------------------------------------------------------------------------------------
+        private IntPtr SetHook(HookProc proc)
+        {
+            using (var curProcess = Process.GetCurrentProcess())
+            using (var curModule = curProcess.MainModule)
+            {
+                return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        {
+            if (nCode >= 0 && wParam == (IntPtr)WM_KEYUP)
+            {
+                int vkCode = Marshal.ReadInt32(lParam);
+                KeyUp?.Invoke(this, new KeyEventArgs((Keys)vkCode));
+            }
+            return CallNextHookEx(hookID, nCode, wParam, lParam);
+        }
+        //---------------------------------------------------------------------------------------
+        [DllImport("user32.dll")]
+        private static extern IntPtr SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, uint dwThreadId);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr GetModuleHandle(string lpModuleName);
+    }
+    //---------------------------------------------------------------------------------------
 }  // end of namespace InjectorInspector
