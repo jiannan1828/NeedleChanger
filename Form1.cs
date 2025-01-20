@@ -214,15 +214,16 @@ namespace InjectorInspector
         double dbPinHolePositionX = 0.0;
         double dbPinHolePositionY = 0.0;
         int    iHoleIndex         = 0;
+        int iPC = 0;
         private void button7_Click(object sender, EventArgs e)
         {
             //找下一個要植針的ID
-            int iPC = PlacedNeedles.Count();
-            if(iPC == 0) { 
-                find_Placed_Needles();
+            if(iPC == 0) {
+                iPC = find_PlaceNeedles();
             }
+
             try {
-                iHoleIndex = PlacedNeedles[0].Index;  // 嘗試訪問索引 0 的元素
+                iHoleIndex = PlaceNeedles[0].Index;  // 嘗試訪問索引 0 的元素
             } catch (Exception ex) {
                 // 捕捉其他類型的異常
                 Console.WriteLine("發生錯誤：" + ex.Message);
@@ -232,11 +233,15 @@ namespace InjectorInspector
             //取得目前植針ID的位置
             if(iHoleIndex == -1) { 
                 //沒拿到
-            } else if (iHoleIndex>=0) {
+            } else if (iHoleIndex >= 0) {
                 //沒拿到
                 double dbX = 0.0, dbY = 0.0;
 
-                apiGetCoordinate(iHoleIndex, ref dbX, ref dbY);
+                find_PlaceNeedle_Position(iHoleIndex, ref dbX, ref dbY);
+                FocusedNeedle = PlaceNeedles[0];
+                show_grp_NeedleInfo(grp_NeedleInfo);
+                pic_Needles.Refresh();
+
                 txt_HoldIndex.Text = iHoleIndex.ToString();
 
                 dbPinHolePositionX = dbX;
@@ -247,9 +252,8 @@ namespace InjectorInspector
             }
 
             //刪除目前的植針ID
-            if (iPC >= 1) { 
-                PlacedNeedles.RemoveAt(0);
-            }
+            PlaceNeedles.RemoveAt(0);
+            iPC = PlaceNeedles.Count();
         }
         //---------------------------------------------------------------------------------------
         bool bResume = false;
@@ -4404,24 +4408,7 @@ namespace InjectorInspector
                 chk_Reserve1.BackColor = SystemColors.Control;
             }
         }
-        //---------------------------------------------------------------------------------------
-        public void apiGetCoordinate(int iIndex, ref double dbX, ref double dbY)
-        {
-            search_grp_NeedleInfo("txt_Index", iIndex.ToString());
-            show_grp_NeedleInfo(grp_NeedleInfo);
-            pic_Needles.Refresh();
-
-            double dbTargetX = FocusedNeedle.X*(-1);
-            double dbTargetY = FocusedNeedle.Y*(-1);
-
-            //Socket1, point0, x=137.07
-            //Socket1, point0, y=602.225
-            const double OffsetX = -533.69823254488;   //137.07
-            const double OffsetY = -709.699271908958;  //602.225
-
-            dbX = dbTargetX - OffsetX;  
-            dbY = dbTargetY - OffsetY;  
-        }
+        //-------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         private void grp_BarcodeInfo_ChildControlChanged(object sender, EventArgs e)
         {

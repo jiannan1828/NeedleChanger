@@ -21,7 +21,7 @@ namespace InjectorInspector
         public static JSON.NeedleInfo HighlightedNeedle = null;
         public static JSON.NeedleInfo FocusedNeedle = null;
         public static List<JSON.NeedleInfo> SelectedNeedles = new List<JSON.NeedleInfo>();
-        public static List<JSON.NeedleInfo> PlacedNeedles = new List<JSON.NeedleInfo>();
+        public static List<JSON.NeedleInfo> PlaceNeedles = new List<JSON.NeedleInfo>();
 
         public static readonly Color DefaltNeedleColor = Color.ForestGreen;
         public static readonly Color HiddenNeedlesColor = Color.FromArgb(64, Color.ForestGreen);
@@ -182,21 +182,41 @@ namespace InjectorInspector
         /// <summary>
         /// 找出需要植針的圓
         /// </summary>
-        public static int find_Placed_Needles()
+        public static int find_PlaceNeedles()
         {
             int irsltCount = 0;
 
-            PlacedNeedles.Clear();
+            PlaceNeedles.Clear();
 
             foreach (var circle in Json.Needles)
             {
                 if (circle.Place == true)
                 {
-                    PlacedNeedles.Add(circle);
+                    PlaceNeedles.Add(circle);
                 }
             }
 
-            return irsltCount = PlacedNeedles.Count();
+            return irsltCount = PlaceNeedles.Count();
+        }
+
+        /// <summary>
+        /// 找出需要植針圓的座標
+        /// </summary>
+        public static void find_PlaceNeedle_Position(int iIndex, ref double dbX, ref double dbY)
+        {
+            search_grp_NeedleInfo("txt_Index", iIndex.ToString());
+            
+
+            double dbTargetX = FocusedNeedle.X * (-1);  //-396.62823254488018
+            double dbTargetY = FocusedNeedle.Y * (-1);  //-107.4742719089583
+
+            //Socket1, point0, x=136.816
+            //Socket1, point0, y=602.420
+            const double OffsetX = -533.4442325448801;  //136.816
+            const double OffsetY = -709.8942719089583;  //602.420
+
+            dbX = dbTargetX - OffsetX;  //136.816 = -396.62823254488018 - OffsetX, OffsetX = 533.4442325448801
+            dbY = dbTargetY - OffsetY;  //602.420 = -107.4742719089583  - OffsetY, OffsetY = 709.8942719089583
         }
 
         /// <summary>
