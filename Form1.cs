@@ -1556,21 +1556,53 @@ namespace InjectorInspector
             isFormActive = false;
         }
         //---------------------------------------------------------------------------------------
-        private void Gkh_KeyUp(object sender, KeyEventArgs e)
+        public static int i計時300ms = 0;
+        const int i計時300ms_Define = 30;
+        public void Gkh_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            switch(e.KeyCode)
             {
-                txt_Barcode.Text = new string(BarcodeBuffer.ToArray()).Trim();
-                btn_OpenFile_Click(sender, e);
-                BarcodeBuffer.Clear();
+                case Keys.Enter:
+                    i計時300ms = 0;
+
+                    if (BarcodeBuffer.Count > 0)
+                    {
+                        btn_OpenFile_Click(sender, e);
+                        BarcodeBuffer.Clear();
+                    }
+                    break;
+
+                default:
+                    // 判斷輸入字為: 0~9 或 'a'~'z' 或 'A'~'Z'
+                    if (Char.IsLetter((char)e.KeyCode) || Char.IsDigit((char)e.KeyCode) || (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9))
+                    {
+                        BarcodeBuffer.Add((char)e.KeyCode);  // 將有效的字符添加到緩衝區
+                        i計時300ms = i計時300ms_Define;
+                    }
+                    break;
             }
-            else
+        }
+
+        public void tmrBarCodeScanner_Tick(object sender, EventArgs e)
+        {
+            if (i計時300ms > 0)
             {
-                BarcodeBuffer.Add((char)e.KeyCode);
+                i計時300ms--;
+
+            }
+
+            if (i計時300ms == 0)
+            {
+                i計時300ms = 0;
+
+                if (BarcodeBuffer.Count > 0)
+                {
+                    BarcodeBuffer.Clear();
+                }
             }
         }
         //---------------------------------------------------------------------------------------
-        private void Form1_Load(object sender, EventArgs e)
+        public void Form1_Load(object sender, EventArgs e)
         {
             //init vision
             inspector1.xInit();
@@ -1582,7 +1614,7 @@ namespace InjectorInspector
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
         }
         //---------------------------------------------------------------------------------------
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        public void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             clsServoControlWMX3.WMX3_destroy_Commu();
             
@@ -4428,20 +4460,22 @@ namespace InjectorInspector
             tsmi_SaveFile.Enabled = true;
             btn_SaveFile.Enabled = true;
 
-            strFileName = txt_Barcode.Text;
+            strFileName = new string(BarcodeBuffer.ToArray()).Trim(); 
             try
             {
-                Json = JsonConvert.DeserializeObject<JSON>(File.ReadAllText(@"028\" + txt_Barcode.Text + ".json"));
+                Json = JsonConvert.DeserializeObject<JSON>(File.ReadAllText(@"028\" + strFileName + ".json"));
                 show_grp_BarcodeInfo(grp_BarcodeInfo);
 
                 //MessageBox.Show($"檔案 {@"028\" + txt_Barcode.Text + ".json"} 成功讀取！");
-                rtb_Status_AppendMessage(rtb_Status, $"檔案 {@"028\" + txt_Barcode.Text + ".json"} 成功讀取！");
+                rtb_Status_AppendMessage(rtb_Status, $"檔案 {@"028\" + strFileName + ".json"} 成功讀取！");
 
                 find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
+
+                pic_Needles.Refresh();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"讀取 Json 檔時發生錯誤: {ex.Message}");
+                //MessageBox.Show($"讀取 Json 檔時發生錯誤: {ex.Message}");
             }
         }
         //---------------------------------------------------------------------------------------

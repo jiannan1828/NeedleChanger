@@ -437,6 +437,7 @@ namespace InjectorInspector
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
             this.ttp_NeedleInfo = new System.Windows.Forms.ToolTip(this.components);
+            this.tmrBarCodeScanner = new System.Windows.Forms.Timer(this.components);
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -4940,6 +4941,12 @@ namespace InjectorInspector
             this.tmr_Warning.Interval = 300;
             this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
+            // tmrBarCodeScanner
+            // 
+            this.tmrBarCodeScanner.Enabled = true;
+            this.tmrBarCodeScanner.Interval = 10;
+            this.tmrBarCodeScanner.Tick += new System.EventHandler(this.tmrBarCodeScanner_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -5453,6 +5460,7 @@ namespace InjectorInspector
         private Label lbl_PinIndex;
         private CheckBox cB_料盤有料;
         private RichTextBox rtb_Status;
+        private Timer tmrBarCodeScanner;
     }
 }
 
