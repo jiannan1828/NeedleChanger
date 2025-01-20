@@ -1532,7 +1532,8 @@ namespace InjectorInspector
         //-------------------------------- Project Code implement -------------------------------
         //---------------------------------------------------------------------------------------
         public GlobalKeyboardHook gkh;
-        private List<char> BarcodeBuffer = new List<char>(100); // 初始容量為 100
+        public List<char> BarcodeBuffer = new List<char>(100); // 初始容量為 100
+        public static bool isFormActive = false;
         public Form1()
         {
             InitializeComponent();
@@ -1545,6 +1546,16 @@ namespace InjectorInspector
             gkh.KeyUp += Gkh_KeyUp;
         }
         //---------------------------------------------------------------------------------------
+        public void Form1_Activated(object sender, EventArgs e)
+        {
+            isFormActive = true;
+        }
+        //---------------------------------------------------------------------------------------
+        public void Form1_Deactivate(object sender, EventArgs e)
+        {
+            isFormActive = false;
+        }
+        //---------------------------------------------------------------------------------------
         private void Gkh_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -1555,7 +1566,6 @@ namespace InjectorInspector
             }
             else
             {
-                
                 BarcodeBuffer.Add((char)e.KeyCode);
             }
         }
@@ -4515,8 +4525,13 @@ namespace InjectorInspector
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYUP)
             {
                 int vkCode = Marshal.ReadInt32(lParam);
-                KeyUp?.Invoke(this, new KeyEventArgs((Keys)vkCode));
+
+                // 如果 Form1 在當前活動狀態，才觸發事件
+                if (isFormActive) {
+                    KeyUp?.Invoke(this, new KeyEventArgs((Keys)vkCode));
+                }
             }
+
             return CallNextHookEx(hookID, nCode, wParam, lParam);
         }
         //---------------------------------------------------------------------------------------
