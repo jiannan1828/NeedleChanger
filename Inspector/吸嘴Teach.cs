@@ -43,9 +43,11 @@ namespace Inspector
 
         private void 吸嘴Teach_Load(object sender, EventArgs e)
         {
+#if (false)
             helper = new HWindowHelper(hWin) { ShowResult = ShowResult };
             helper.Image = Image;
             helper.AdjustView();
+#endif
         }
         
         void ShowResult(HWindowControl Win, HObject image)
@@ -88,7 +90,9 @@ namespace Inspector
 
         private void btn_建立特徵_Click(object sender, EventArgs e)
         {
+#if (false)
             helper.inShow = true;
+#endif
             hWin.Focus();
             double row1, col1, row2, col2;
             hWin.HalconWindow.DrawRectangle1(out row1, out col1, out row2, out col2);

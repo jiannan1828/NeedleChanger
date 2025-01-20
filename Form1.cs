@@ -36,9 +36,11 @@ using static InjectorInspector.ServoControl;
 
 //---------------------------------------------------------------------------------------
 //wmx3
+#if (false)
 using WMX3ApiCLR;
 using static System.Windows.Forms.AxHost;
 using System.Xml.Linq;
+#endif
 
 //---------------------------------------------------------------------------------------
 //vision
@@ -85,7 +87,9 @@ namespace InjectorInspector
         public void apiCallBackTest()
         {
             cntcallback++;
+#if (false)
             this.Text = cntcallback.ToString() + "  " + inspector1.InspNozzle.CCD.GrabCount.ToString();
+#endif
 
             dbNozzleDegInverse = false;
             if (inspector1.InspectOK == true && inspector1.Inspected == true) {
@@ -183,7 +187,9 @@ namespace InjectorInspector
             PointF pos = new PointF(0, 0);  // 使用正確的初始化方式
             bool success = false;
             if (inspector1.btn_二孔校正.Checked == false) {
+#if (false)
                 success = inspector1.xCarb震動盤(out pos);
+#endif
                 pos.X = (float)inspector1.nozzleX - pos.X;
                 pos.Y = (float)inspector1.nozzleY - pos.Y;
                 label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y);
@@ -263,6 +269,7 @@ namespace InjectorInspector
                dbPinR_tmrTakePinTick        = 0.0;
         private void btn_取得PinInfo_Click(object sender, EventArgs e)
         {
+#if (false)
             //吸料盤校正用
             PointF pos;
             double deg1;
@@ -314,6 +321,7 @@ namespace InjectorInspector
             if(cB_料盤有料.Checked == true) {
                 b柔震盤有料_tmrTakePinTick = true;
             }
+#endif
         }
         //---------------------------------------------------------------------------------------
         //------------------------------ Test function with Vision ------------------------------

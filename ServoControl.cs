@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 //---------------------------------------------------------------------------------------
 //WMX3
+#if(false)
 using WMX3ApiCLR;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Diagnostics;
@@ -19,7 +20,7 @@ using System.Data;
 using System.Threading;
 using static WMX3ApiCLR.Config;
 using System.Net.NetworkInformation;
-
+#endif
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
 {
@@ -403,6 +404,7 @@ namespace InjectorInspector
 
         //---------------------------------------------------------------------------------------
         //WMX3
+#if(false)
         private WMX3Api          wmx;
         private CoreMotion       motion;
         private CoreMotionStatus CmStatus;
@@ -413,7 +415,7 @@ namespace InjectorInspector
         private Io               io;
         public static CoreMotionAxisStatus[] cmAxis = new CoreMotionAxisStatus[8];
         public System.Windows.Forms.NumericUpDown NUD_Motor_NO;
-
+#endif
         //---------------------------------------------------------------------------------------
         public ServoControl()
         {  // 建構子，初始化物件
@@ -437,6 +439,7 @@ namespace InjectorInspector
             KillWMX3Handle();
 
             // 僅在初始化時進行一次賦值，避免重複初始化
+#if(false)
             if (wmx == null)                      wmx = new WMX3Api();
             if (motion == null)                motion = new CoreMotion();
             if (CmStatus == null)            CmStatus = new CoreMotionStatus();
@@ -445,10 +448,12 @@ namespace InjectorInspector
             if (stopWatch == null)          stopWatch = new Stopwatch();
             if (advmon == null)                advmon = new AdvancedMotion();
             if (io == null)                        io = new Io();
+#endif
         }
         //---------------------------------------------------------------------------------------
         public void KillWMX3Handle()
         {
+#if (false)
             //清除未知記憶體
             if (wmx != null)           { wmx.Dispose();              wmx = null; }
             if (motion != null)        { motion.Dispose();        motion = null; }
@@ -458,10 +463,12 @@ namespace InjectorInspector
             if (stopWatch != null)     {                       stopWatch = null; }
             if (advmon != null)        { advmon.Dispose();        advmon = null; }
             if (io != null)            { io.Dispose();                io = null; }
+#endif
         }
         //---------------------------------------------------------------------------------------
         public void WMX3_Initial()
         {
+#if (false)
             //建立WMX3 Handle
             CreateWMX3Handle();
 
@@ -511,13 +518,13 @@ namespace InjectorInspector
             {
                 return;
             }
-
+#endif
         }  //end of public void WMX3_Initial()
         //---------------------------------------------------------------------------------------
         public int WMX3_establish_Commu()
         {
             int rslt = 0;
-
+#if (false)
             //Active WMX3
             WMX3_Initial();
 
@@ -538,13 +545,13 @@ namespace InjectorInspector
             {
                 rslt = 0;
             }
-
+#endif
             return rslt;
         }  //end of public void WMX3_establish_Commu()
         //---------------------------------------------------------------------------------------
         public void WMX3_destroy_Commu()
         {
-
+#if (false)
             if (wmx != null)
             {
                 if (false)
@@ -566,13 +573,13 @@ namespace InjectorInspector
             {
                 return;
             }
-
+#endif
         }  //end of public void WMX3_destroy_Commu()
         //---------------------------------------------------------------------------------------
         public int WMX3_check_Commu()
         {
             int rslt = 0;
-
+#if (false)
             if (wmx != null)
             {
                 //讀取當前通訊狀態
@@ -594,14 +601,14 @@ namespace InjectorInspector
             {
                 rslt = 0;
             }
-
+#endif
             return rslt;
         }  //end of public int WMX3_check_Commu()
         //---------------------------------------------------------------------------------------
         public void WMX3_ServoOnOff(int axis, bool bOn)
         {
             int newStatus = bOn?1:0;
-
+#if (false)
             if (wmx != null)
             {
                  //啟動伺服
@@ -617,13 +624,13 @@ namespace InjectorInspector
             {
                 return;
             }
-
+#endif
         }  //end of public void WMX3_ServoOn(int axis)
         //---------------------------------------------------------------------------------------
         public int WMX3_check_ServoOnOff(int axis, ref string position, ref string speed)
         {
             int rslt = 0;
-
+#if (false)
             if (wmx != null)
             { 
                 //讀取SV ON狀態
@@ -649,12 +656,13 @@ namespace InjectorInspector
             {
                 rslt = 0;
             }
-
+#endif
             return rslt;
         }  //end of int WMX3_check_ServoOnOff(int axis)
            //---------------------------------------------------------------------------------------
         public string WMX3_check_ServoOpState(int axis, ref int iOpState)
         {
+#if (false)
             if (wmx != null) {
                 //讀取SV ON狀態
                 CoreMotionAxisStatus cmAxis = CmStatus.AxesStatus[axis];
@@ -683,14 +691,14 @@ namespace InjectorInspector
                 case 14: return "SyncCatchUp";    
                 case 15: return "DancerControl";  
             }
-
+#endif
             return "null";
         }  //end of int WMX3_check_ServoOnOff(int axis)
         //---------------------------------------------------------------------------------------
         public int WMX3_check_ServoMovingState(int axis)
         {
             int rslt = 0;
-
+#if (false)
             if (wmx != null) { 
                 //讀取SV ON狀態
                 CoreMotionAxisStatus cmAxis = CmStatus.AxesStatus[axis];
@@ -710,14 +718,14 @@ namespace InjectorInspector
             }  else {
                 rslt = 0;
             }
-
+#endif
             return rslt;
         }  //end of int WMX3_check_ServoOnOff(int axis)
         //---------------------------------------------------------------------------------------
         public int WMX3_Pivot(int axis, int pivot, int speed, int accel, int daccel)
         {
             int rslt = 0;
-
+#if (false)
             if (wmx != null)
             {
                 //位置控制設定
@@ -746,14 +754,14 @@ namespace InjectorInspector
             { 
                 rslt = 0;
             }
-
+#endif
             return rslt;
         }  //end of public void WMX3_Pivot(int pivot, int speed, int accel, int daccel)
         //---------------------------------------------------------------------------------------
         public int WMX3_SetHomePosition(int axis)
         {
             int rslt = 0;
-
+#if (false)
             if (wmx != null)
             {
                 switch (axis) {
@@ -787,13 +795,13 @@ namespace InjectorInspector
             {
                 rslt = 0;
             }
-
+#endif
             return rslt;
         }  //end of public int WMX3_SetHomePosition(int axis)
         //---------------------------------------------------------------------------------------
         public int WMX3_GetOutIO(ref byte[] pData, int addr, int size)
         {
-
+#if (false)
             if (wmx != null)
             {
                 // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
@@ -818,12 +826,13 @@ namespace InjectorInspector
             {
                 return 0;
             }
-
+#endif
+            return 0;
         }
         //---------------------------------------------------------------------------------------
         public int WMX3_GetInIO(ref byte[] pData, int addr, int size)
         {
-
+#if (false)
             if (wmx != null)
             {
                 // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
@@ -848,12 +857,13 @@ namespace InjectorInspector
             {
                 return 0;
             }
-
+#endif
+            return 0;
         }
         //---------------------------------------------------------------------------------------
         public int WMX3_SetIO(ref byte[] pData, int addr, int size)
         {
-
+#if (false)
             if (wmx != null)
             {
                 // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
@@ -878,11 +888,13 @@ namespace InjectorInspector
             {
                 return 0;
             }
+#endif
+            return 0;
         }
         //---------------------------------------------------------------------------------------
         public int WMX3_SetIOBit(int addrByte, int addrBit, byte bData)
         {
-
+#if (false)
             if (wmx != null)
             {
                 if (addrByte == 0)
@@ -898,11 +910,13 @@ namespace InjectorInspector
             {
                 return 0;
             }
-
+#endif
+            return 0;
         }
         //---------------------------------------------------------------------------------------
         public void WMX3_ClearAlarm()
         {
+#if (false)
             if (wmx != null)
             {
                 motion.AxisControl.ClearAmpAlarm((int)NUD_Motor_NO.Value);
@@ -911,12 +925,13 @@ namespace InjectorInspector
             {
                 return;
             }
+#endif
         }
         //---------------------------------------------------------------------------------------
         public int WMX3_IAI(addr_IAI aIJob, double dbInData)
         {  // start of public void WMX3_IAI(ref addr_IAI aIJob, ref double dbInData)
             int rslt = 0;
-
+#if (false)
             /*
             Byte 0 + 30 Bit4 SON(馬達ON):1    { 看Bit4: SV馬達ON訊號}
             Byte 0 + 30 Bit1 HOME
@@ -1017,14 +1032,14 @@ namespace InjectorInspector
                 default:
                     break;
             }
-
+#endif
             return rslt;
         }  // end of public void WMX3_IAI(ref addr_IAI aIJob, ref double dbInData)
         //---------------------------------------------------------------------------------------
         public int WMX3_JoDell3D掃描(addr_JODELL aIJob, double dbInData)
         {  // start of public int WMX3_JoDell3D掃描(addr_JODELL aIJob, double dbInData)
             int rslt = 0;
-
+#if (false)
             //故障復歸
             //讀取 JoDell3D掃描 資訊
             //byte[] aGetIAIalarm = new byte[2];
@@ -1171,14 +1186,14 @@ namespace InjectorInspector
                 default:
                     break;
             }
-
+#endif
             return rslt;
         }  // end of public int WMX3_JoDell3D掃描(addr_JODELL aIJob, double dbInData)
         //---------------------------------------------------------------------------------------
         public int WMX3_JoDell吸針嘴(addr_JODELL aIJob, double dbInData)
         {  // start of public int WMX3_JoDell吸針嘴(addr_JODELL aIJob, double dbInData)
             int rslt = 0;
-
+#if (false)
             //故障復歸
             //讀取 JoDell吸針嘴 資訊
             //byte[] aGetIAIalarm = new byte[2];
@@ -1325,14 +1340,14 @@ namespace InjectorInspector
                 default:
                     break;
             }
-
+#endif
             return rslt;
         }  // end of public int WMX3_JoDell吸針嘴(addr_JODELL aIJob, double dbInData)
         //---------------------------------------------------------------------------------------
         public int WMX3_JoDell植針嘴(addr_JODELL aIJob, double dbInData)
         {  // start of public int WMX3_JoDell植針嘴(addr_JODELL aIJob, double dbInData)
             int rslt = 0;
-
+#if (false)
             //故障復歸
             //讀取 JoDell植針嘴 資訊
             //byte[] aGetIAIalarm = new byte[2];
@@ -1479,7 +1494,7 @@ namespace InjectorInspector
                 default:
                     break;
             }
-
+#endif
             return rslt;
         }  // end of public int WMX3_JoDell植針嘴(addr_JODELL aIJob, double dbInData)
         //---------------------------------------------------------------------------------------
