@@ -99,12 +99,12 @@ namespace InjectorInspector
             }
 
         }
-        private void button2_Click(object sender, EventArgs e)
+        public void button2_Click(object sender, EventArgs e)
         {
             inspector1.SaveRecipe(8);
         }
         //---------------------------------------------------------------------------------------
-        private void button5_Click(object sender, EventArgs e)
+        public void button5_Click(object sender, EventArgs e)
         {
             inspector1.LoadRecipe(8);
         }
@@ -112,7 +112,7 @@ namespace InjectorInspector
         bool   b有看到校正孔         = false;
         double dbCameraCalibrationX = 0.0;
         double dbCameraCalibrationY = 0.0;
-        private void button3_Click(object sender, EventArgs e)
+        public void button3_Click(object sender, EventArgs e)
         {
             //植針孔位置校正攝影機取像
             Inspector.Vector3 pos;
@@ -127,7 +127,7 @@ namespace InjectorInspector
             label7.Text  = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
         }
         //---------------------------------------------------------------------------------------
-        private void tB_PointAB_Calculate(object sender, EventArgs e)
+        public void tB_PointAB_Calculate(object sender, EventArgs e)
         {
             System.Windows.Forms.TextBox CalculateDegreePoint = sender as System.Windows.Forms.TextBox;
 
@@ -177,7 +177,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void btn_ToPointAB(object sender, EventArgs e)
+        public void btn_ToPointAB(object sender, EventArgs e)
         {
             System.Windows.Forms.Button SetToPoint = sender as System.Windows.Forms.Button;
 
@@ -215,7 +215,7 @@ namespace InjectorInspector
         double dbPinHolePositionY = 0.0;
         int    iHoleIndex         = 0;
         int iPC = 0;
-        private void button7_Click(object sender, EventArgs e)
+        public void button7_Click(object sender, EventArgs e)
         {
             //找下一個要植針的ID
             if(iPC == 0) {
@@ -257,7 +257,7 @@ namespace InjectorInspector
         }
         //---------------------------------------------------------------------------------------
         bool bResume = false;
-        private void btn_Resume_Click(object sender, EventArgs e)
+        public void btn_Resume_Click(object sender, EventArgs e)
         {
             bResume = true;
         }
@@ -267,7 +267,7 @@ namespace InjectorInspector
         double dbPinX_tmrTakePinTick        = 0.0,
                dbPinY_tmrTakePinTick        = 0.0,
                dbPinR_tmrTakePinTick        = 0.0;
-        private void btn_取得PinInfo_Click(object sender, EventArgs e)
+        public void btn_取得PinInfo_Click(object sender, EventArgs e)
         {
             //吸料盤校正用
             PointF pos;
@@ -283,8 +283,8 @@ namespace InjectorInspector
             else
             {
                 success = inspector1.xCarb震動盤(out pos);
-                pos.X = (float)inspector1.nozzleX - pos.X;
-                pos.Y = (float)inspector1.nozzleY - pos.Y;
+                //pos.X = (float)inspector1.nozzleX - pos.X;
+                //pos.Y = (float)inspector1.nozzleY - pos.Y;
                 label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y);
             }
             //bool success = inspector1.xCarb震動盤(out pos);
@@ -1625,7 +1625,7 @@ namespace InjectorInspector
             //sw.Close();
         }
         //---------------------------------------------------------------------------------------
-        private void btn_manual_Click(object sender, EventArgs e)
+        public void btn_manual_Click(object sender, EventArgs e)
         {
             TestForm fmTestForm = new TestForm();
             fmTestForm.Show();
@@ -1633,22 +1633,22 @@ namespace InjectorInspector
             btn_manual.Enabled = false;
         }
         //---------------------------------------------------------------------------------------
-        private void btn_Connect_Click(object sender, EventArgs e)
+        public void btn_Connect_Click(object sender, EventArgs e)
         {
             clsServoControlWMX3.WMX3_establish_Commu();
         }
         //---------------------------------------------------------------------------------------
-        private void btn_Disconnect_Click(object sender, EventArgs e)
+        public void btn_Disconnect_Click(object sender, EventArgs e)
         {
             clsServoControlWMX3.WMX3_destroy_Commu();
         }
         //---------------------------------------------------------------------------------------
-        private void btn_AlarmRST_Click(object sender, EventArgs e)
+        public void btn_AlarmRST_Click(object sender, EventArgs e)
         {
             clsServoControlWMX3.WMX3_ClearAlarm();
         }
         //---------------------------------------------------------------------------------------
-        private void btnStop_Click(object sender, EventArgs e)
+        public void btnStop_Click(object sender, EventArgs e)
         {
             bool isOn = false;
 
@@ -1669,7 +1669,7 @@ namespace InjectorInspector
             clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_MotorOn, isOn?1.0:0.0);
         }
         //---------------------------------------------------------------------------------------
-        private void btnSetHome_Click(object sender, EventArgs e)
+        public void btnSetHome_Click(object sender, EventArgs e)
         {
             int rslt = 0;
             int axis = 0;
@@ -1795,8 +1795,8 @@ namespace InjectorInspector
     }  // end of public void en_Group_Click(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
         public WMX3軸定義 wmxId_RadioGroupChanged = WMX3軸定義.AXIS_START;
-        private void RadioGroupChanged(object sender, EventArgs e)
-        {  // start of private void RadioGroupChanged(object sender, EventArgs e)
+        public void RadioGroupChanged(object sender, EventArgs e)
+        {  // start of public void RadioGroupChanged(object sender, EventArgs e)
             // 將 sender 轉型為 RadioButton
             System.Windows.Forms.RadioButton selectedRadioButton = sender as System.Windows.Forms.RadioButton;
 
@@ -1862,10 +1862,10 @@ namespace InjectorInspector
                 txtABSpos.Text = "N/A";
             }
 
-        }  // end of private void RadioGroupChanged(object sender, EventArgs e)
+        }  // end of public void RadioGroupChanged(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
-        private void lbl_SetIO_Click(object sender, EventArgs e)
-        {  // start of private void lbl_SetIO_Click(object sender, EventArgs e)
+        public void lbl_SetIO_Click(object sender, EventArgs e)
+        {  // start of public void lbl_SetIO_Click(object sender, EventArgs e)
             // 將 sender 轉型為 Label
             System.Windows.Forms.Label SelectLabel = sender as System.Windows.Forms.Label;
 
@@ -1905,7 +1905,7 @@ namespace InjectorInspector
 
 
             }
-        }  // end of private void lbl_SetIO_Click(object sender, EventArgs e)
+        }  // end of public void lbl_SetIO_Click(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
         public void btn_adjust_JOG(object sender, EventArgs e)
         {  // start of public void btn_adjust_JOG(object sender, EventArgs e)
@@ -1954,8 +1954,8 @@ namespace InjectorInspector
         //讀取InputIO
         public byte[] pDataGetInIO = new byte[8];
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {  // start of private void timer1_Tick(object sender, EventArgs e)
+        public void timer1_Tick(object sender, EventArgs e)
+        {  // start of public void timer1_Tick(object sender, EventArgs e)
             //WMX3通訊狀態
             int getCommuStatus = clsServoControlWMX3.WMX3_check_Commu();
             if (getCommuStatus == 1) {
@@ -2224,7 +2224,7 @@ namespace InjectorInspector
                 lbl下右左門.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_下支架右側左門)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_下支架右側左門)  % 10)) != 0) ? Color.Green : Color.Red;
             }  // end of clsServoControlWMX3.WMX3_GetInIO(ref pDataGetInIO, (int)WMX3IO對照.pxeIO_Addr28, 8);
 
-        }  // end of private void timer1_Tick(object sender, EventArgs e)
+        }  // end of public void timer1_Tick(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
         //-------------------------------- Project Code implement -------------------------------
         //---------------------------------------------------------------------------------------
@@ -2245,7 +2245,7 @@ namespace InjectorInspector
                相4始 = { 0000, 0160, 0381, 0000 }, 相4終 = { 0500, 0318, 0464, 0000 }, 相4力 = { 0750, 1000, 1000, 0000 },
                倉始  = { 0000, 0000, 0000, 0010 }, 倉終  = { 0000, 0000, 0000, 0100 }, 倉力  = { 0000, 0000, 0000, 0440 };
         //---------------------------------------------------------------------------------------
-        private void lbl柔震index(object sender, EventArgs e)
+        public void lbl柔震index(object sender, EventArgs e)
         {
             System.Windows.Forms.Label SelectLabel = sender as System.Windows.Forms.Label;
             if (SelectLabel != null) {
@@ -2295,7 +2295,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void btnVibrationStop_Click(object sender, EventArgs e)
+        public void btnVibrationStop_Click(object sender, EventArgs e)
         {
             //Vibration
             clsVibration.apiEstablishTCPVibration();
@@ -2305,7 +2305,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void SB_VBLED_Scroll(object sender, ScrollEventArgs e)
+        public void SB_VBLED_Scroll(object sender, ScrollEventArgs e)
         {
             //Vibration LED
             clsVibration.apiEstablishTCPVibration(); {
@@ -2342,8 +2342,8 @@ namespace InjectorInspector
              bBuzzerWarningGreen  = false;
 
         //---------------------------------------------------------------------------------------
-        private void tmr_Buzzer_Tick(object sender, EventArgs e)
-        {  // start of private void tmr_Buzzer_Tick(object sender, EventArgs e)
+        public void tmr_Buzzer_Tick(object sender, EventArgs e)
+        {  // start of public void tmr_Buzzer_Tick(object sender, EventArgs e)
             int iWarningLEDSpeed = 0;
 
             switch (eWIndicatorSpeed) {
@@ -2408,7 +2408,7 @@ namespace InjectorInspector
                         }
                     } break;
             }  // end of switch (eWIndicatorSpeed) {
-        }  // end of private void tmr_Buzzer_Tick(object sender, EventArgs e)
+        }  // end of public void tmr_Buzzer_Tick(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
         //----------------------------- Warning Indicator implement -----------------------------
         //---------------------------------------------------------------------------------------
@@ -2417,7 +2417,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //----------------------------- Flow Valve Control implement ----------------------------
         //---------------------------------------------------------------------------------------
-        private void vcb流量閥_Scroll(object sender, ScrollEventArgs e)
+        public void vcb流量閥_Scroll(object sender, ScrollEventArgs e)
         {
             System.Windows.Forms.VScrollBar vcb流量閥 = sender as System.Windows.Forms.VScrollBar;
 
@@ -2554,12 +2554,12 @@ namespace InjectorInspector
         public const double dbNozzle安全原點R = 1.350;
 
         //---------------------------------------------------------------------------------------
-        private void btn_home_Click(object sender, EventArgs e)
+        public void btn_home_Click(object sender, EventArgs e)
         {
             bhome = true;
         }
         //---------------------------------------------------------------------------------------
-        private void tmr_Sequense_Tick(object sender, EventArgs e)
+        public void tmr_Sequense_Tick(object sender, EventArgs e)
         {
             int getrslt = 0;
             lbl_debug.Text = clsServoControlWMX3.WMX3_check_ServoOpState((int)WMX3軸定義.工作門, ref getrslt);
@@ -2878,6 +2878,8 @@ namespace InjectorInspector
                         xett_檢查工作門關閉,
                         xett_確定工作門關閉,
 
+                    xett_載盤真空閥啟用,
+
                     xett_取得柔震盤針資訊,
                         xett_柔震盤無針,
                             xett_柔震盤料倉震動,
@@ -3019,6 +3021,8 @@ namespace InjectorInspector
                                                                                xett_等待載盤XY再次移置拍照檢查位,
                                                                                xett_確認載盤XY再次移置拍照檢查位,
 
+                                                                               xett_檢查有無植針成功,
+
 
                 xett_檢測是否還需要取針,
                     xett_還需要取針,
@@ -3060,36 +3064,36 @@ namespace InjectorInspector
         public TimeSpan CycleTime;
 
         //---------------------------------------------------------------------------------------
-        private void btn_TakePin_Click(object sender, EventArgs e)
+        public void btn_TakePin_Click(object sender, EventArgs e)
         {
             bTakePin = true;
         }
         //---------------------------------------------------------------------------------------
-        private void btn上膛_Click(object sender, EventArgs e)
+        public void btn上膛_Click(object sender, EventArgs e)
         {
             bChambered = true;
         }
         //---------------------------------------------------------------------------------------
-        private void btn_tmrStop_Click(object sender, EventArgs e)
+        public void btn_tmrStop_Click(object sender, EventArgs e)
         {
             btmrStop = true;
         }
         //---------------------------------------------------------------------------------------
-        private void btn_tmrPause_Click(object sender, EventArgs e)
+        public void btn_tmrPause_Click(object sender, EventArgs e)
         {
             tmr_TakePin.Enabled = bPause;
             bPause = !bPause;
         }
         //---------------------------------------------------------------------------------------
-        private void btn_tmrClear_Click(object sender, EventArgs e)
+        public void btn_tmrClear_Click(object sender, EventArgs e)
         {
             bTakePin = false;
             bChambered = false;
             xeTmrTakePin = xe_tmr_takepin.xett_Empty;
         }
         //---------------------------------------------------------------------------------------
-        private void tmr_TakePin_Tick(object sender, EventArgs e)
-        {  // start of private void tmr_TakePin_Tick(object sender, EventArgs e)
+        public void tmr_TakePin_Tick(object sender, EventArgs e)
+        {  // start of public void tmr_TakePin_Tick(object sender, EventArgs e)
 
             lblLog.Text = xeTmrTakePin.ToString() + ", 柔震重試:" + iTakePinFinishedCNT2;
 
@@ -3129,7 +3133,12 @@ namespace InjectorInspector
                                 }
                             }
                             break;
-                        case xe_tmr_takepin.xett_確定工作門關閉:                                  xeTmrTakePin = xe_tmr_takepin.xett_取得柔震盤針資訊;  break;
+                        case xe_tmr_takepin.xett_確定工作門關閉:                                  xeTmrTakePin = xe_tmr_takepin.xett_載盤真空閥啟用;  break;
+
+                        case xe_tmr_takepin.xett_載盤真空閥啟用:
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_載盤真空閥) / 10, (int)(WMX3IO對照.pxeIO_載盤真空閥) % 10, 1);
+                            xeTmrTakePin = xe_tmr_takepin.xett_取得柔震盤針資訊;
+                            break;
 
                         case xe_tmr_takepin.xett_取得柔震盤針資訊:     
                             btn_取得PinInfo_Click(sender, e); 
@@ -3723,7 +3732,7 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_確認載盤移植直針孔相機補正位:                            xeTmrTakePin = xe_tmr_takepin.xett_載盤XY移置直針位;  break;
 
                                 case xe_tmr_takepin.xett_載盤XY移置直針位: {  
-                                    const double SetPinOffsetX = 1.821;
+                                    const double SetPinOffsetX = 1.821+0.35;
                                     const double SetPinOffsetY = 54.802;
 
                                     double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX + SetPinOffsetX;
@@ -3804,7 +3813,12 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_植針吹氣電磁閥關閉:       
                                     clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_植針吹氣)/10, (int)(WMX3IO對照.pxeIO_植針吹氣)%10, 0);
-                                    xeTmrTakePin = xe_tmr_takepin.xett_擺放座蓋板再次打開; 
+
+                                    if(bResume == true) {
+                                        bResume = false;
+                                        xeTmrTakePin = xe_tmr_takepin.xett_擺放座蓋板再次打開;
+                                    }
+
                                     break;
 
                                 case xe_tmr_takepin.xett_擺放座蓋板再次打開:      
@@ -3884,7 +3898,25 @@ namespace InjectorInspector
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認載盤XY再次移置拍照檢查位;
                                     }
                                     break;
-                                case xe_tmr_takepin.xett_確認載盤XY再次移置拍照檢查位:                  xeTmrTakePin = xe_tmr_takepin.xett_檢測是否還需要取針;  break;
+                                case xe_tmr_takepin.xett_確認載盤XY再次移置拍照檢查位:                  
+                                    xeTmrTakePin = xe_tmr_takepin.xett_檢查有無植針成功;  
+                                    break;
+
+                                case xe_tmr_takepin.xett_檢查有無植針成功:
+
+                                    button3_Click(sender, e); {
+                                        //取得校正攝影機校正參數
+                                        bool success = inspector1.xInspSocket植針後檢查();
+                                        label7.Text  = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
+
+                                        rtb_Status_AppendMessage(rtb_Status, $"植針 {(success ? "OK":"NG")}");
+                                    }
+
+                                    if(bResume == true) {
+                                        bResume = false;
+                                        xeTmrTakePin = xe_tmr_takepin.xett_檢測是否還需要取針;
+                                    }
+                                    break;
                     //-----------------------------------------------------------------------------------------------------------------------------------------------
                     case xe_tmr_takepin.xett_檢測是否還需要取針: {    
                         int 求出取料循環次數 = int.Parse(txt_取料循環.Text);
@@ -3946,7 +3978,7 @@ namespace InjectorInspector
                     xeTmrTakePin = xe_tmr_takepin.xett_Empty;  
                     break;
             }
-        }  // end of private void tmr_TakePin_Tick(object sender, EventArgs e)
+        }  // end of public void tmr_TakePin_Tick(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
         //-------------------------------- State Machine implement ------------------------------
         //---------------------------------------------------------------------------------------
@@ -3956,12 +3988,14 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------- 和尚小佛 --------------------------------------
         //---------------------------------------------------------------------------------------
-        private void tsmi_OpenFile_Click(object sender, EventArgs e)
+        public void tsmi_OpenFile_Click(object sender, EventArgs e)
         { 
             if (OpenFile())
             {
                 tsmi_SaveFile.Enabled = true;
                 btn_SaveFile.Enabled = true;
+
+                show_grp_BarcodeInfo(grp_BarcodeInfo);
 
                 find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
 
@@ -3969,12 +4003,12 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void tsmi_SaveFile_Click(object sender, EventArgs e)
+        public void tsmi_SaveFile_Click(object sender, EventArgs e)
         {
             Viewer.SaveFile();
         }
         //---------------------------------------------------------------------------------------
-        private void pic_Needles_Paint(object sender, PaintEventArgs e)
+        public void pic_Needles_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.ScaleTransform(ZoomFactor, -ZoomFactor);
             e.Graphics.TranslateTransform(Offset.X / ZoomFactor, Offset.Y / -ZoomFactor); // 拖曳圖片轉換座標
@@ -4062,7 +4096,7 @@ namespace InjectorInspector
             #endregion
         }
         //---------------------------------------------------------------------------------------
-        private void pic_Needles_MouseMove(object sender, MouseEventArgs e)
+        public void pic_Needles_MouseMove(object sender, MouseEventArgs e)
         {
             RealMousePos.X = (e.X - Offset.X) / ZoomFactor ;
             RealMousePos.Y = -(e.Y - Offset.Y) / ZoomFactor ;
@@ -4136,7 +4170,7 @@ namespace InjectorInspector
             pic_Needles.Refresh();
         }
         //---------------------------------------------------------------------------------------
-        private void pic_Needles_MouseDown(object sender, MouseEventArgs e)
+        public void pic_Needles_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -4177,7 +4211,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void pic_Needles_MouseUp(object sender, MouseEventArgs e)
+        public void pic_Needles_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -4197,7 +4231,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void pic_Needles_MouseWheel(object sender, MouseEventArgs e)
+        public void pic_Needles_MouseWheel(object sender, MouseEventArgs e)
         {
 
             // 滑鼠在 PictureBox 上的位置對應的真實座標（縮放前）
@@ -4227,7 +4261,7 @@ namespace InjectorInspector
             pic_Needles.Refresh();
         }
         //---------------------------------------------------------------------------------------
-        private void cms_pic_Needles_Opened(object sender, EventArgs e)
+        public void cms_pic_Needles_Opened(object sender, EventArgs e)
         {
             if (SelectedNeedles.Count != 0)
             {
@@ -4251,7 +4285,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void cms_pic_Needles_ItemClicked(object sender, EventArgs e)
+        public void cms_pic_Needles_ItemClicked(object sender, EventArgs e)
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
 
@@ -4295,7 +4329,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void grp_NeedleInfo_ChildControlChanged(object sender, EventArgs e)
+        public void grp_NeedleInfo_ChildControlChanged(object sender, EventArgs e)
         {
             if (FocusedNeedle != null)
             {
@@ -4360,7 +4394,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void grp_NeedleInfo_Search(object sender, KeyPressEventArgs e)
+        public void grp_NeedleInfo_Search(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
@@ -4373,7 +4407,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void chk_Display_CheckedChanged(object sender, EventArgs e)
+        public void chk_Display_CheckedChanged(object sender, EventArgs e)
         {
             if (chk_Display.Checked)
             {
@@ -4385,7 +4419,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void chk_Enable_CheckedChanged(object sender, EventArgs e)
+        public void chk_Enable_CheckedChanged(object sender, EventArgs e)
         {
             if (chk_Enable.Checked)
             {
@@ -4397,7 +4431,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void chk_Reserve1_CheckedChanged(object sender, EventArgs e)
+        public void chk_Reserve1_CheckedChanged(object sender, EventArgs e)
         {
             if (chk_Reserve1.Checked)
             {
@@ -4410,7 +4444,7 @@ namespace InjectorInspector
         }
         //-------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
-        private void grp_BarcodeInfo_ChildControlChanged(object sender, EventArgs e)
+        public void grp_BarcodeInfo_ChildControlChanged(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
 
@@ -4442,7 +4476,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void btn_OpenFile_Click(object sender, EventArgs e)
+        public void btn_OpenFile_Click(object sender, EventArgs e)
         {
             tsmi_SaveFile.Enabled = true;
             btn_SaveFile.Enabled = true;
@@ -4466,7 +4500,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private void btn_SaveFile_Click(object sender, EventArgs e)
+        public void btn_SaveFile_Click(object sender, EventArgs e)
         {
             // 使用 Newtonsoft.Json 進行物件序列化，並設定格式化輸出（會縮排顯示）
             string json = JsonConvert.SerializeObject(Json, Newtonsoft.Json.Formatting.Indented);
@@ -4490,7 +4524,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //-------------------------------------- 暫時或實驗中 ------------------------------------
         //---------------------------------------------------------------------------------------
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
             //inspector1.xInit();
         }
@@ -4507,18 +4541,18 @@ namespace InjectorInspector
     public class GlobalKeyboardHook
     {
         // 鍵盤掛勾的委派
-        private delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
-        private HookProc hookProc;
+        public delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
+        public HookProc hookProc;
 
         // 鍵盤掛勾句柄
-        private IntPtr hookID = IntPtr.Zero;
+        public IntPtr hookID = IntPtr.Zero;
 
         // 鍵盤事件
         public event EventHandler<KeyEventArgs> KeyUp;
 
         // 掛勾類型
-        private const int WH_KEYBOARD_LL = 13;
-        private const int WM_KEYUP = 0x0101;
+        public const int WH_KEYBOARD_LL = 13;
+        public const int WM_KEYUP = 0x0101;
 
         //---------------------------------------------------------------------------------------
         public GlobalKeyboardHook()
@@ -4532,7 +4566,7 @@ namespace InjectorInspector
             UnhookWindowsHookEx(hookID);
         }
         //---------------------------------------------------------------------------------------
-        private IntPtr SetHook(HookProc proc)
+        public IntPtr SetHook(HookProc proc)
         {
             using (var curProcess = Process.GetCurrentProcess())
             using (var curModule = curProcess.MainModule)
@@ -4541,7 +4575,7 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        public IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYUP)
             {
@@ -4557,17 +4591,17 @@ namespace InjectorInspector
         }
         //---------------------------------------------------------------------------------------
         [DllImport("user32.dll")]
-        private static extern IntPtr SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, uint dwThreadId);
+        public static extern IntPtr SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, uint dwThreadId);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
+        public static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
         [DllImport("user32.dll")]
-        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+        public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr GetModuleHandle(string lpModuleName);
+        public static extern IntPtr GetModuleHandle(string lpModuleName);
     }
     //---------------------------------------------------------------------------------------
 }  // end of namespace InjectorInspector

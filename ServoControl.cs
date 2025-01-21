@@ -403,14 +403,14 @@ namespace InjectorInspector
 
         //---------------------------------------------------------------------------------------
         //WMX3
-        private WMX3Api          wmx;
-        private CoreMotion       motion;
-        private CoreMotionStatus CmStatus;
-        private EngineStatus     EnStatus;
-        private Config.HomeParam AxisHomeParam;
-        private Stopwatch        stopWatch;
-        private AdvancedMotion   advmon;
-        private Io               io;
+        public WMX3Api          wmx;
+        public CoreMotion       motion;
+        public CoreMotionStatus CmStatus;
+        public EngineStatus     EnStatus;
+        public Config.HomeParam AxisHomeParam;
+        public Stopwatch        stopWatch;
+        public AdvancedMotion   advmon;
+        public Io               io;
         public static CoreMotionAxisStatus[] cmAxis = new CoreMotionAxisStatus[8];
         public System.Windows.Forms.NumericUpDown NUD_Motor_NO;
 

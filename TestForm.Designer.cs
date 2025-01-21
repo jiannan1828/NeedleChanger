@@ -5,7 +5,7 @@
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        public System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -26,7 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        public void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btn_Save = new System.Windows.Forms.Button();
@@ -83,8 +83,8 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button btn_Save;
-        private System.Windows.Forms.Button btn_run;
+        public System.Windows.Forms.DataGridView dataGridView1;
+        public System.Windows.Forms.Button btn_Save;
+        public System.Windows.Forms.Button btn_run;
     }
 }

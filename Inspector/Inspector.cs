@@ -303,17 +303,17 @@ namespace Inspector
             return outRegion;
         }
 
-        private void 入料CCD設定_DoubleClick(object sender, EventArgs e)
+        public void 入料CCD設定_DoubleClick(object sender, EventArgs e)
         {
             Insp料倉.CCD.SetParam();
         }
 
-        private void TrayCCD設定_DoubleClick(object sender, EventArgs e)
+        public void TrayCCD設定_DoubleClick(object sender, EventArgs e)
         {
             InspTray.CCD.SetParam();
         }
 
-        private void 吸嘴CCD設定_DoubleClick(object sender, EventArgs e)
+        public void 吸嘴CCD設定_DoubleClick(object sender, EventArgs e)
         {
             InspNozzle.CCD.SetParam();
         }
@@ -334,7 +334,7 @@ namespace Inspector
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
             InspNozzle.Teach();
         }
@@ -361,7 +361,7 @@ namespace Inspector
             }
         }
 
-        private void num_Pin長Min_ValueChanged(object sender, EventArgs e)
+        public void num_Pin長Min_ValueChanged(object sender, EventArgs e)
         {
             if (sender == num_Pin寬Min)
                 parameter.Pin寬度Min = (double)num_Pin寬Min.Value;
@@ -1723,10 +1723,22 @@ namespace Inspector
         public bool 植針後Check()
         {
             Vector3 pos;
+
             var success = !Insp(out pos);
-            if (success)   //已植針，找不到孔
-                return true;
-            success = (Math.Abs(pos.X) > 0.1) || (Math.Abs(pos.Y) > 0.1);
+            if (success) {
+                //找不到孔, 已植針
+                success = true;
+            } else { 
+                //找到孔, 做孔位置檢查
+                if( (Math.Abs(pos.X)>0.1) || (Math.Abs(pos.Y)>0.1) ) {
+                    //目標位置有針, 孔位置偏離中心0.1mm
+                    success = true;
+                } else { 
+                    //目標位置無針, 正中心有一個孔
+                    success = false;
+                }
+            }
+
             return success;
         }
         /// <summary>Socket盤校正初始化，會將分析資料輸出為像素位置</summary>

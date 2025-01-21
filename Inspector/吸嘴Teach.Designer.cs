@@ -5,7 +5,7 @@
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        public System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -26,7 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        public void InitializeComponent()
         {
             this.hWin = new HalconDotNet.HWindowControl();
             this.btn_建立特徵 = new System.Windows.Forms.Button();
@@ -111,10 +111,10 @@
 
         #endregion
 
-        private HalconDotNet.HWindowControl hWin;
-        private System.Windows.Forms.Button btn_建立特徵;
-        private System.Windows.Forms.Button btn_分析;
-        private System.Windows.Forms.Button btn_Accept;
-        private System.Windows.Forms.CheckBox ck_特徵為針頭;
+        public HalconDotNet.HWindowControl hWin;
+        public System.Windows.Forms.Button btn_建立特徵;
+        public System.Windows.Forms.Button btn_分析;
+        public System.Windows.Forms.Button btn_Accept;
+        public System.Windows.Forms.CheckBox ck_特徵為針頭;
     }
 }

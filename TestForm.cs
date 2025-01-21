@@ -381,7 +381,7 @@ namespace InjectorInspector
             }
         }
 
-        private void btn_run_Click(object sender, EventArgs e)
+        public void btn_run_Click(object sender, EventArgs e)
         {
             if(true) { 
                 // 獲取點擊的行和列

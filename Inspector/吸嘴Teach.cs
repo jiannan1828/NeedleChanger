@@ -41,7 +41,7 @@ namespace Inspector
             }
         }
 
-        private void 吸嘴Teach_Load(object sender, EventArgs e)
+        public void 吸嘴Teach_Load(object sender, EventArgs e)
         {
             helper = new HWindowHelper(hWin) { ShowResult = ShowResult };
             helper.Image = Image;
@@ -59,12 +59,12 @@ namespace Inspector
             }
         }
 
-        private void btn_分析_Click(object sender, EventArgs e)
+        public void btn_分析_Click(object sender, EventArgs e)
         {
             Find();
         }
 
-        private void btn_Accept_Click(object sender, EventArgs e)
+        public void btn_Accept_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
         }
@@ -86,7 +86,7 @@ namespace Inspector
             }
         }
 
-        private void btn_建立特徵_Click(object sender, EventArgs e)
+        public void btn_建立特徵_Click(object sender, EventArgs e)
         {
             helper.inShow = true;
             hWin.Focus();

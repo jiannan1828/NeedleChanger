@@ -5,7 +5,7 @@
         /// <summary> 
         /// 設計工具所需的變數。
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        public System.ComponentModel.IContainer components = null;
 
         /// <summary> 
         /// 清除任何使用中的資源。
@@ -26,7 +26,7 @@
         /// 此為設計工具支援所需的方法 - 請勿使用程式碼編輯器修改
         /// 這個方法的內容。
         /// </summary>
-        private void InitializeComponent()
+        public void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.Win1 = new HalconDotNet.HWindowControl();
@@ -486,33 +486,33 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private HalconDotNet.HWindowControl Win1;
-        private HalconDotNet.HWindowControl Win4;
-        private HalconDotNet.HWindowControl Win2;
-        private HalconDotNet.HWindowControl Win5;
-        private HalconDotNet.HWindowControl Win3;
-        private HalconDotNet.HWindowControl Win6;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        public System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        public HalconDotNet.HWindowControl Win1;
+        public HalconDotNet.HWindowControl Win4;
+        public HalconDotNet.HWindowControl Win2;
+        public HalconDotNet.HWindowControl Win5;
+        public HalconDotNet.HWindowControl Win3;
+        public HalconDotNet.HWindowControl Win6;
+        public System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Label label2;
+        public System.Windows.Forms.Label label3;
         public System.Windows.Forms.CheckBox ck_Measure;
-        private System.Windows.Forms.NumericUpDown num_Throshold;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.NumericUpDown num_Pin寬Max;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.NumericUpDown num_Pin寬Min;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.NumericUpDown num_Pin長Max;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown num_Pin長Min;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox ed_RecipeNo;
+        public System.Windows.Forms.NumericUpDown num_Throshold;
+        public System.Windows.Forms.Label label10;
+        public System.Windows.Forms.NumericUpDown num_Pin寬Max;
+        public System.Windows.Forms.Label label7;
+        public System.Windows.Forms.NumericUpDown num_Pin寬Min;
+        public System.Windows.Forms.Label label8;
+        public System.Windows.Forms.NumericUpDown num_Pin長Max;
+        public System.Windows.Forms.Label label6;
+        public System.Windows.Forms.NumericUpDown num_Pin長Min;
+        public System.Windows.Forms.Label label5;
+        public System.Windows.Forms.Label label4;
+        public System.Windows.Forms.TextBox ed_RecipeNo;
         public System.Windows.Forms.CheckBox ck_RealTray;
         public System.Windows.Forms.CheckBox ck_PinArea;
         public System.Windows.Forms.CheckBox ck_NuCarb;
-        private System.Windows.Forms.Button button1;
+        public System.Windows.Forms.Button button1;
         public System.Windows.Forms.CheckBox btn_二孔校正;
     }
 }

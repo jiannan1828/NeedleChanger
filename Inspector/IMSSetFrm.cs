@@ -32,7 +32,7 @@ namespace Camera
             }
         }
 
-        private void MVSAreaGESetFrm_Load(object sender, EventArgs e)
+        public void MVSAreaGESetFrm_Load(object sender, EventArgs e)
         {
             KeyList.Items.AddRange(ImageSource.AllDevice.Select(x => x.ModelName + ":" + x.Serial).ToArray());
             KeyList.Text = ccd.Param.Key;
@@ -54,7 +54,7 @@ namespace Camera
             ed_Dyy.Text = ccd.Param.vDy_Y.ToString("F7");
         }
 
-        private void btn_SaveConfig_Click(object sender, EventArgs e)
+        public void btn_SaveConfig_Click(object sender, EventArgs e)
         {
             Task.Factory.StartNew(() =>
             {
@@ -63,7 +63,7 @@ namespace Camera
             });
         }
 
-        private void btn_SaveParam_Click(object sender, EventArgs e)
+        public void btn_SaveParam_Click(object sender, EventArgs e)
         {
             Task.Factory.StartNew(() =>
             {
@@ -76,19 +76,19 @@ namespace Camera
             });
         }
 
-        private void btn_Close_Click(object sender, EventArgs e)
+        public void btn_Close_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void btn_Search_Click(object sender, EventArgs e)
+        public void btn_Search_Click(object sender, EventArgs e)
         {
             ccd.ListDevice(true);
             KeyList.Items.Clear();
             KeyList.Items.AddRange(ImageSource.AllDevice.Select(x => x.ModelName + ":" + x.Serial).ToArray());
         }
 
-        private void btn_Set_Click(object sender, EventArgs e)
+        public void btn_Set_Click(object sender, EventArgs e)
         {
             if (KeyList.Text != "")
             {
@@ -99,21 +99,21 @@ namespace Camera
             }
         }
 
-        private void GammaBar_Scroll(object sender, ScrollEventArgs e)
+        public void GammaBar_Scroll(object sender, ScrollEventArgs e)
         {
             ccd.Param.Gamma = GammaBar.Value / 10.0;
             ccd.Gamma = ccd.Param.Gamma;
             lb_Gamma.Text = ccd.Param.Gamma.ToString("F1");
         }
 
-        private void ExposureBar_Scroll(object sender, ScrollEventArgs e)
+        public void ExposureBar_Scroll(object sender, ScrollEventArgs e)
         {
             ccd.Param.Exposure = ExposureBar.Value;
             ccd.Exposure = ccd.Param.Exposure;
             lb_Exposure.Text = ccd.Param.Exposure.ToString("F0");
         }
 
-        private void ed_KeyPress(object sender, KeyPressEventArgs e)
+        public void ed_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar != '\r') return;
             double v = 0;
@@ -150,7 +150,7 @@ namespace Camera
             }
         }
 
-        private void ck_MirrorX_Click(object sender, EventArgs e)
+        public void ck_MirrorX_Click(object sender, EventArgs e)
         {
             Task.Factory.StartNew(() =>
             {
@@ -161,7 +161,7 @@ namespace Camera
             });
         }
 
-        private void ck_MirrorY_Click(object sender, EventArgs e)
+        public void ck_MirrorY_Click(object sender, EventArgs e)
         {
             Task.Factory.StartNew(() =>
             {
@@ -172,7 +172,7 @@ namespace Camera
             });
         }
 
-        private void ck_Binning_Click(object sender, EventArgs e)
+        public void ck_Binning_Click(object sender, EventArgs e)
         {
             Task.Factory.StartNew(() =>
             {
@@ -183,12 +183,12 @@ namespace Camera
             });
         }
 
-        private void cb_Rotate_DropDown(object sender, EventArgs e)
+        public void cb_Rotate_DropDown(object sender, EventArgs e)
         {
             PreRotate = cb_Rotate.Text;
         }
 
-        private void cb_Rotate_DropDownClosed(object sender, EventArgs e)
+        public void cb_Rotate_DropDownClosed(object sender, EventArgs e)
         {
             object dt = cb_Rotate.SelectedItem;
             if ((dt != null) && (PreRotate != dt.ToString()))

@@ -5,7 +5,7 @@
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        public System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -26,7 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        public void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
             this.KeyList = new System.Windows.Forms.ComboBox();
@@ -397,34 +397,34 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox KeyList;
-        private System.Windows.Forms.Button btn_Search;
-        private System.Windows.Forms.Button btn_Set;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.HScrollBar GammaBar;
-        private System.Windows.Forms.HScrollBar ExposureBar;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox ed_Speed;
-        private System.Windows.Forms.Label lb_Gamma;
-        private System.Windows.Forms.Label lb_Exposure;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox ed_ScaleX;
-        private System.Windows.Forms.TextBox ed_ScaleY;
-        private System.Windows.Forms.CheckBox ck_MirrorX;
-        private System.Windows.Forms.CheckBox ck_MirrorY;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox ed_Dxy;
-        private System.Windows.Forms.TextBox ed_Dxx;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox ed_Dyy;
-        private System.Windows.Forms.TextBox ed_Dyx;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button btn_SaveConfig;
-        private System.Windows.Forms.Button btn_Close;
-        private System.Windows.Forms.Button btn_SaveParam;
-        private System.Windows.Forms.CheckBox ck_Binning;
-        private System.Windows.Forms.ComboBox cb_Rotate;
+        public System.Windows.Forms.Label label1;
+        public System.Windows.Forms.ComboBox KeyList;
+        public System.Windows.Forms.Button btn_Search;
+        public System.Windows.Forms.Button btn_Set;
+        public System.Windows.Forms.Label label2;
+        public System.Windows.Forms.HScrollBar GammaBar;
+        public System.Windows.Forms.HScrollBar ExposureBar;
+        public System.Windows.Forms.Label label3;
+        public System.Windows.Forms.Label label4;
+        public System.Windows.Forms.TextBox ed_Speed;
+        public System.Windows.Forms.Label lb_Gamma;
+        public System.Windows.Forms.Label lb_Exposure;
+        public System.Windows.Forms.Label label7;
+        public System.Windows.Forms.TextBox ed_ScaleX;
+        public System.Windows.Forms.TextBox ed_ScaleY;
+        public System.Windows.Forms.CheckBox ck_MirrorX;
+        public System.Windows.Forms.CheckBox ck_MirrorY;
+        public System.Windows.Forms.Label label8;
+        public System.Windows.Forms.TextBox ed_Dxy;
+        public System.Windows.Forms.TextBox ed_Dxx;
+        public System.Windows.Forms.Label label9;
+        public System.Windows.Forms.TextBox ed_Dyy;
+        public System.Windows.Forms.TextBox ed_Dyx;
+        public System.Windows.Forms.Label label10;
+        public System.Windows.Forms.Button btn_SaveConfig;
+        public System.Windows.Forms.Button btn_Close;
+        public System.Windows.Forms.Button btn_SaveParam;
+        public System.Windows.Forms.CheckBox ck_Binning;
+        public System.Windows.Forms.ComboBox cb_Rotate;
     }
 }

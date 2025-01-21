@@ -12,8 +12,8 @@ namespace InjectorInspector
 {
     internal static class Viewer
     {
-        private static OpenFileDialog OpenDxfFileDialog = new OpenFileDialog();
-        private static SaveFileDialog SaveJsonFileDialog = new SaveFileDialog();
+        public static OpenFileDialog OpenDxfFileDialog = new OpenFileDialog();
+        public static SaveFileDialog SaveJsonFileDialog = new SaveFileDialog();
 
         public static DxfDocument DxfDoc = new DxfDocument();
         public static JSON Json = new JSON(); // 底下 JSON 不寫成靜態, HighlightedNeedle, FocusedNeedle會用到
@@ -47,14 +47,6 @@ namespace InjectorInspector
         public static bool IsDrag = false;
         public static PointF Drag_Start = new PointF(0, 0);
         public static PointF Drag_End = new PointF(0, 0);
-
-        public static string[] 跑馬燈文字 = {
-            "待機",
-            "運行中",
-            "例外狀況"
-        };
-        public static int 跑馬燈文字Index = 0;
-        public static int 跑馬燈X座標 = 0;
 
         /// <summary>
         /// 讀取 DXF 後儲存到這個物件, 後面會存成 JSON 檔
