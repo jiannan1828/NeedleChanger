@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using static InjectorInspector.Program;
 
 //---------------------------------------------------------------------------------------
-//JSON
+//Mission
 using System.IO;
 using System.Text.Json;
 using System.Reflection.Emit;
@@ -34,7 +34,7 @@ namespace InjectorInspector
         {
             this.Text = "TestForm_L=123";
 
-            //當表單開啟時，讀json檔案
+            //當表單開啟時，讀mission檔案
             if(true)
             {
                 // 初始化 apiJsonTestModeHandle，並指定檔案名稱
@@ -44,7 +44,7 @@ namespace InjectorInspector
                     apiHandler = new apiJsonTestModeHandle();
                 }
 
-                // 指定檔案名稱並初始化 JSON 文件
+                // 指定檔案名稱並初始化 json 文件
                 apiHandler.InitialJsonFile("SaveTestJason.json");
 
                 // 使用 apiJsonTestModeHandle 中的 JsonNeedleContentList 資料
@@ -112,8 +112,8 @@ namespace InjectorInspector
                     apiHandler = new apiJsonTestModeHandle();
                 }
 
-                // 指定檔案名稱並初始化 JSON 文件
-                apiHandler.InitialJsonFile("SaveTestJason.json");
+                // 指定檔案名稱並初始化 MissionInfo 文件
+                apiHandler.InitialJsonFile("SaveTestJason.mission");
 
                 // 初始化 10 筆資料
                 jsonContentList = new BindingList<JsonTestModeContent>();
@@ -167,12 +167,12 @@ namespace InjectorInspector
                 dataGridView1.Columns["strLabel"].DisplayIndex = 1;
             }
 
-            //Json讀寫測試, 保留
+            //Mission讀寫測試, 保留
             if (false)
             {
                 //Initial Needle Profile
                 var newNeedleContext = new apiJsonTestModeHandle();
-                newNeedleContext.InitialJsonFile("TestMode.json");
+                newNeedleContext.InitialJsonFile("TestMode.mission");
 
                 //Add new
                 JsonTestModeContent newTestContent = new JsonTestModeContent
@@ -195,11 +195,11 @@ namespace InjectorInspector
                 newNeedleContext.AddJsonContent(newTestContent2, true);
 
                 //Remove index
-                newNeedleContext.RemoveJsonContentByIndex(18);
+                newNeedleContext.RemoveMissionContentByIndex(18);
 
                 //Force read
-                JsonTestModeContent newTestContent5 = newNeedleContext.ReadJsonContentByIndex(87);
-                JsonTestModeContent newTestContent6 = newNeedleContext.ReadJsonContentByIndex(7878);
+                JsonTestModeContent newTestContent5 = newNeedleContext.ReadMissionContentByIndex(87);
+                JsonTestModeContent newTestContent6 = newNeedleContext.ReadMissionContentByIndex(7878);
             }
         }
 
@@ -221,10 +221,10 @@ namespace InjectorInspector
                 apiHandler.AddJsonContent(item, bForceWriteConflict: true); // true 表示會更新重複的項目
             }
 
-            // 儲存資料至 JSON 檔案
-            apiHandler.WriteDataToJsonFile();
+            // 儲存資料至 MissionInfo 檔案
+            apiHandler.WriteDataToMissionFile();
 
-           Console.WriteLine("資料已成功保存至 JSON 檔案！");
+           Console.WriteLine("資料已成功保存至 MissionInfo 檔案！");
         }
 
         public void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -512,12 +512,12 @@ namespace InjectorInspector
     {
         public List<JsonTestModeContent> JsonNeedleContentList { get; set; }
         public string FilePath { get; set; }
-        public string strFileName { get; set; }
+        public string OpenFileName { get; set; }
 
         public void InitialJsonFile(string strNameFile)
         {
             // 初始化列表和文件路徑
-            strFileName = strNameFile;
+            OpenFileName = strNameFile;
             JsonNeedleContentList = new List<JsonTestModeContent>();
             GenerateFilePath();
 
@@ -528,11 +528,11 @@ namespace InjectorInspector
                 {
                     var jsonString = File.ReadAllText(FilePath);
                     JsonNeedleContentList = JsonSerializer.Deserialize<List<JsonTestModeContent>>(jsonString) ?? new List<JsonTestModeContent>();
-                    Console.WriteLine("成功初始化 JSON 文件。");
+                    Console.WriteLine("成功初始化 Mission 文件。");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("讀取 JSON 文件時發生錯誤: " + ex.Message);
+                    Console.WriteLine("讀取 Mission 文件時發生錯誤: " + ex.Message);
                 }
             }
             else
@@ -543,7 +543,7 @@ namespace InjectorInspector
 
         public string GenerateFilePath()
         {
-            FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, strFileName);
+            FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, OpenFileName);
             return FilePath;
         }  //end of public string GenerateFilePath() {
         public void AddJsonContent(JsonTestModeContent newContent, bool bForceWriteConflict)
@@ -574,35 +574,35 @@ namespace InjectorInspector
                 }
             }
 
-            // 更新 JSON 文件
-            WriteDataToJsonFile();
+            // 更新 MissionInfo 文件
+            WriteDataToMissionFile();
         }  // end of public void AddJsonContent(JsonTestModeContent newContent, bool bForceWriteConflict)
 
 
-        public void WriteDataToJsonFile()
+        public void WriteDataToMissionFile()
         {
             try
             {
                 // 先排序並去重
                 SortAndRemoveDuplicates();
 
-                // 序列化列表為 JSON 字串
+                // 序列化列表為 MissionInfo 字串
                 string jsonString = JsonSerializer.Serialize(JsonNeedleContentList, new JsonSerializerOptions { WriteIndented = true });
 
                 // 輸出序列化結果到控制台，幫助調試
-                Console.WriteLine("更新後的 JSON 文件內容:\n" + jsonString);
+                Console.WriteLine("更新後的 MissionInfo 文件內容:\n" + jsonString);
 
-                // 寫入 JSON 字串到文件
+                // 寫入 MissionInfo 字串到文件
                 File.WriteAllText(FilePath, jsonString);
 
-                Console.WriteLine("成功寫入 JSON 文件。");
+                Console.WriteLine("成功寫入 MissionInfo 文件。");
             }
             catch (Exception ex)
             {
                 // 處理錯誤，例如記錄錯誤信息
-                Console.WriteLine("寫入 JSON 文件時發生錯誤: " + ex.Message);
+                Console.WriteLine("寫入 MissionInfo 文件時發生錯誤: " + ex.Message);
             }
-        }  //end of public void WriteDataToJsonFile() {
+        }  //end of public void WriteDataToMissionFile() {
         public void SortAndRemoveDuplicates()
         {
             if (JsonNeedleContentList == null || !JsonNeedleContentList.Any())
@@ -620,7 +620,7 @@ namespace InjectorInspector
 
             Console.WriteLine("排序並去重完成。");
         }  //end of public void SortAndRemoveDuplicates() {
-        public void RemoveJsonContentByIndex(uint u32Index)
+        public void RemoveMissionContentByIndex(uint u32Index)
         {
             if (JsonNeedleContentList == null || !JsonNeedleContentList.Any())
             {
@@ -634,7 +634,7 @@ namespace InjectorInspector
             if (removedCount > 0)
             {
                 // 如果有項目被刪除，則寫入更新後的列表到文件
-                WriteDataToJsonFile();
+                WriteDataToMissionFile();
                 Console.WriteLine($"成功刪除 {removedCount} 個 u32Index 為 {u32Index} 的項目。");
             }
             else
@@ -642,8 +642,8 @@ namespace InjectorInspector
                 // 如果未找到匹配的項目，顯示提示
                 Console.WriteLine($"未找到 u32Index 為 {u32Index} 的項目。");
             }
-        }  //end of public void RemoveJsonContentByIndex(uint u32Index)
-        public void UpdateJsonContentByIndex(uint u32Index, JsonTestModeContent updatedContent)
+        }  //end of public void RemoveMissionContentByIndex(uint u32Index)
+        public void UpdateMissionContentByIndex(uint u32Index, JsonTestModeContent updatedContent)
         {
             if (updatedContent == null)
             {
@@ -667,32 +667,32 @@ namespace InjectorInspector
                 existingContent.strNote = updatedContent.strNote;
 
                 // 更新後，重新寫入文件
-                WriteDataToJsonFile();
+                WriteDataToMissionFile();
                 Console.WriteLine($"成功更新 u32Index 為 {u32Index} 的項目。");
             }
             else
             {
                 Console.WriteLine($"找不到 u32Index 為 {u32Index} 的項目。");
             }
-        }  // end of public void UpdateJsonContentByIndex(uint u32Index, JsonTestModeContent updatedContent)
+        }  // end of public void UpdateMissionContentByIndex(uint u32Index, JsonTestModeContent updatedContent)
 
-        public JsonTestModeContent ReadJsonContentByIndex(uint u32Index)
+        public JsonTestModeContent ReadMissionContentByIndex(uint u32Index)
         {
             JsonTestModeContent jtmcRSLT = new JsonTestModeContent();
 
             try
             {
-                // 讀取 JSON 文件內容
+                // 讀取 MissionInfo 文件內容
                 string jsonString = File.Exists(FilePath) ? File.ReadAllText(FilePath) : string.Empty;
 
-                // 如果 JSON 字串不為空，則進行反序列化
+                // 如果 MissionInfo 字串不為空，則進行反序列化
                 if (!string.IsNullOrEmpty(jsonString))
                 {
-                    // 反序列化 JSON 字串為 List<JsonContent> 對象
-                    List<JsonTestModeContent> TestReadWriteJson = JsonSerializer.Deserialize<List<JsonTestModeContent>>(jsonString);
+                    // 反序列化 MissionInfo 字串為 List<MissionContent> 對象
+                    List<JsonTestModeContent> TestReadWriteMission = JsonSerializer.Deserialize<List<JsonTestModeContent>>(jsonString);
 
                     // 查找 u32_Index
-                    JsonTestModeContent GotNeedle = TestReadWriteJson?.FirstOrDefault(p => p.u32Index == u32Index);
+                    JsonTestModeContent GotNeedle = TestReadWriteMission?.FirstOrDefault(p => p.u32Index == u32Index);
 
                     if (GotNeedle != null)
                     {
@@ -722,11 +722,11 @@ namespace InjectorInspector
             catch (Exception ex)
             {
                 // 捕獲並輸出詳細的錯誤信息
-                Console.WriteLine("讀取 JSON 文件時發生錯誤: " + ex.Message);
+                Console.WriteLine("讀取 MissionInfo 文件時發生錯誤: " + ex.Message);
             }
 
             return jtmcRSLT;
-        }  //end of public JsonTestModeContent ReadJsonContentByIndex(uint u32Index)
+        }  //end of public JsonTestModeContent ReadMissionContentByIndex(uint u32Index)
 
     }  //end of public class apiJsonTestModeHandle
 }

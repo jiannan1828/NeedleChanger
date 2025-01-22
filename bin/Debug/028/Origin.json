@@ -1,5 +1,13 @@
 {
-  "Circles": [
+  "Barcode": {
+    "Barcode": null,
+    "短編號": null,
+    "客戶": null,
+    "型號": null,
+    "板全號": null,
+    "儲位": null
+  },
+  "Needles": [
     {
       "Index": 0,
       "Name": null,

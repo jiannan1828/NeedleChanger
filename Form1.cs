@@ -45,7 +45,7 @@ using System.Xml.Linq;
 using static InjectorInspector.Form1;
 
 //---------------------------------------------------------------------------------------
-//JSON
+//MissionInfo
 using System.IO;
 using System.Text.Json;
 using Newtonsoft.Json;
@@ -1571,7 +1571,13 @@ namespace InjectorInspector
 
                     if (BarcodeBuffer.Count > 0)
                     {
-                        btn_OpenFile_Click(sender, e);
+                        txt_Barcode.Text = new string(BarcodeBuffer.ToArray()).Trim(); 
+
+                        if (BarcodeList.Contains(txt_Barcode.Text)) 
+                        {
+                            btn_OpenFile_Click(sender, e);
+                        }
+
                         BarcodeBuffer.Clear();
                     }
                     break;
@@ -1608,6 +1614,8 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public void Form1_Load(object sender, EventArgs e)
         {
+            read_BarcodeList();
+
             //init vision
             inspector1.xInit();
             //Add the callback api from snapshot api
@@ -3997,7 +4005,7 @@ namespace InjectorInspector
 
                 show_grp_BarcodeInfo(grp_BarcodeInfo);
 
-                find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
+                find_Mission_Boundary(Mission, pic_Needles.Width, pic_Needles.Height);
 
                 pic_Needles.Refresh();
             }
@@ -4014,7 +4022,7 @@ namespace InjectorInspector
             e.Graphics.TranslateTransform(Offset.X / ZoomFactor, Offset.Y / -ZoomFactor); // 拖曳圖片轉換座標
 
             #region 畫出所有圓
-            foreach (var circle in Json.Needles)
+            foreach (var circle in Mission.Needles)
             {
                 Brush fillBrush;
 
@@ -4128,7 +4136,7 @@ namespace InjectorInspector
             }
 
 
-            foreach (var circle in Viewer.Json.Needles)
+            foreach (var circle in Viewer.Mission.Needles)
             {
                 // 计算鼠标位置与圆心的距离
                 Mouse2CircleDistance = Math.Sqrt(
@@ -4294,36 +4302,36 @@ namespace InjectorInspector
                 switch (item.Text)
                 {
                     case "植針":
-                        Json.Needles[circle.Index].Place = true;
+                        Mission.Needles[circle.Index].Place = true;
                         break;
 
                     case "取針":
-                        Json.Needles[circle.Index].Remove = true;
+                        Mission.Needles[circle.Index].Remove = true;
                         break;
 
                     case "置換":
-                        Json.Needles[circle.Index].Replace = true;
+                        Mission.Needles[circle.Index].Replace = true;
                         break;
 
                     case "顯示":
-                        Json.Needles[circle.Index].Display = true;
+                        Mission.Needles[circle.Index].Display = true;
                         break;
 
                     case "啟用":
-                        Json.Needles[circle.Index].Enable = true;
+                        Mission.Needles[circle.Index].Enable = true;
                         break;
 
                     case "保留":
-                        Json.Needles[circle.Index].Reserve1 = true;
+                        Mission.Needles[circle.Index].Reserve1 = true;
                         break;
 
                     case "清除":
-                        Json.Needles[circle.Index].Place    = false;
-                        Json.Needles[circle.Index].Remove   = false;
-                        Json.Needles[circle.Index].Replace  = false;
-                        Json.Needles[circle.Index].Display  = true;
-                        Json.Needles[circle.Index].Enable   = false;
-                        Json.Needles[circle.Index].Reserve1 = false;
+                        Mission.Needles[circle.Index].Place    = false;
+                        Mission.Needles[circle.Index].Remove   = false;
+                        Mission.Needles[circle.Index].Replace  = false;
+                        Mission.Needles[circle.Index].Display  = true;
+                        Mission.Needles[circle.Index].Enable   = false;
+                        Mission.Needles[circle.Index].Reserve1 = false;
                         break;
                 }
             }
@@ -4340,11 +4348,11 @@ namespace InjectorInspector
                         switch (textBox.Name)
                         {
                             case "txt_Name":
-                                Json.Needles[FocusedNeedle.Index].Name = txt_Name.Text;
+                                Mission.Needles[FocusedNeedle.Index].Name = txt_Name.Text;
                                 break;
 
                             case "txt_Id":
-                                Json.Needles[FocusedNeedle.Index].Id = txt_Id.Text;
+                                Mission.Needles[FocusedNeedle.Index].Id = txt_Id.Text;
                                 break;
                         }
                         break;
@@ -4354,16 +4362,16 @@ namespace InjectorInspector
                         switch (radioButton.Name)
                         {
                             case "rad_Place":
-                                Json.Needles[FocusedNeedle.Index].Place = rad_Place.Checked;
+                                Mission.Needles[FocusedNeedle.Index].Place = rad_Place.Checked;
                                 //dgv_Needles.Rows[FocusedNeedle.Index].Cells["Place"].Value = rad_Place.Checked;
                                 break;
 
                             case "rad_Remove":
-                                Json.Needles[FocusedNeedle.Index].Remove = rad_Remove.Checked;
+                                Mission.Needles[FocusedNeedle.Index].Remove = rad_Remove.Checked;
                                 break;
 
                             case "rad_Replace":
-                                Json.Needles[FocusedNeedle.Index].Replace = rad_Replace.Checked;
+                                Mission.Needles[FocusedNeedle.Index].Replace = rad_Replace.Checked;
                                 break;
                         }
 
@@ -4374,15 +4382,15 @@ namespace InjectorInspector
                         switch (checkBox.Name)
                         {
                             case "chk_Display":
-                                Json.Needles[FocusedNeedle.Index].Display = chk_Display.Checked;
+                                Mission.Needles[FocusedNeedle.Index].Display = chk_Display.Checked;
                                 break;
 
                             case "chk_Enable":
-                                Json.Needles[FocusedNeedle.Index].Enable = chk_Enable.Checked;
+                                Mission.Needles[FocusedNeedle.Index].Enable = chk_Enable.Checked;
                                 break;
 
                             case "chk_Reserve1":
-                                Json.Needles[FocusedNeedle.Index].Reserve1 = chk_Reserve1.Checked;
+                                Mission.Needles[FocusedNeedle.Index].Reserve1 = chk_Reserve1.Checked;
                                 break;
                         }
 
@@ -4451,27 +4459,27 @@ namespace InjectorInspector
             switch (textBox.Name)
             {
                 case "txt_Barcode":
-                    Json.Barcode.Barcode = txt_Barcode.Text;
+                    Mission.Barcode.Barcode = txt_Barcode.Text;
                     break;
 
                 case "txt_短編號":
-                    Json.Barcode.短編號 = txt_短編號.Text;
+                    Mission.Barcode.短編號 = txt_短編號.Text;
                     break;
 
                 case "txt_客戶":
-                    Json.Barcode.客戶 = txt_客戶.Text;
+                    Mission.Barcode.客戶 = txt_客戶.Text;
                     break;
 
                 case "txt_型號":
-                    Json.Barcode.型號 = txt_型號.Text;
+                    Mission.Barcode.型號 = txt_型號.Text;
                     break;
 
                 case "txt_板全號":
-                    Json.Barcode.板全號 = txt_板全號.Text;
+                    Mission.Barcode.板全號 = txt_板全號.Text;
                     break;
 
                 case "txt_儲位":
-                    Json.Barcode.儲位 = txt_儲位.Text;
+                    Mission.Barcode.儲位 = txt_儲位.Text;
                     break;
             }
         }
@@ -4481,35 +4489,35 @@ namespace InjectorInspector
             tsmi_SaveFile.Enabled = true;
             btn_SaveFile.Enabled = true;
 
-            strFileName = new string(BarcodeBuffer.ToArray()).Trim(); 
+            OpenFileName = txt_Barcode.Text.Trim();
             try
             {
-                Json = JsonConvert.DeserializeObject<JSON>(File.ReadAllText(@"028\" + strFileName + ".json"));
+                Mission = JsonConvert.DeserializeObject<MissionInfo>(File.ReadAllText(@"Info\" + OpenFileName + ".json"));
                 show_grp_BarcodeInfo(grp_BarcodeInfo);
 
-                //MessageBox.Show($"檔案 {@"028\" + txt_Barcode.Text + ".json"} 成功讀取！");
-                rtb_Status_AppendMessage(rtb_Status, $"檔案 {@"028\" + strFileName + ".json"} 成功讀取！");
+                //MessageBox.Show($"檔案 {@"028\" + txt_Barcode.Text + ".mission"} 成功讀取！");
+                rtb_Status_AppendMessage(rtb_Status, $"檔案 {@"Info\" + OpenFileName + ".json"} 成功讀取！");
 
-                find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
+                find_Mission_Boundary(Mission, pic_Needles.Width, pic_Needles.Height);
 
                 pic_Needles.Refresh();
             }
             catch (Exception ex)
             {
-                //MessageBox.Show($"讀取 Json 檔時發生錯誤: {ex.Message}");
+                //MessageBox.Show($"讀取 Mission 檔時發生錯誤: {ex.Message}");
             }
         }
         //---------------------------------------------------------------------------------------
         public void btn_SaveFile_Click(object sender, EventArgs e)
         {
-            // 使用 Newtonsoft.Json 進行物件序列化，並設定格式化輸出（會縮排顯示）
-            string json = JsonConvert.SerializeObject(Json, Newtonsoft.Json.Formatting.Indented);
-            // 使用 StreamWriter 儲存 Json 到選定的檔案
-            strFileName = txt_Barcode.Text + ".json";
+            // 使用 Newtonsoft.Mission 進行物件序列化，並設定格式化輸出（會縮排顯示）
+            string mission = JsonConvert.SerializeObject(Mission, Newtonsoft.Json.Formatting.Indented);
+            // 使用 StreamWriter 儲存 Mission 到選定的檔案
+            OpenFileName = txt_Barcode.Text + ".json";
 
-            using (StreamWriter writer = new StreamWriter(@"028\" + strFileName))
+            using (StreamWriter writer = new StreamWriter(@"Info\" + OpenFileName))
             {
-                writer.Write(json);
+                writer.Write(mission);
             }
 
             MessageBox.Show("檔案儲存成功！");

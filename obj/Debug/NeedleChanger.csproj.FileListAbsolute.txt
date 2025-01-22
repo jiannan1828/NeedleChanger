@@ -141,3 +141,7 @@ D:\NeedleChanger\Code\NeedleChanger\bin\Debug\System.Threading.Tasks.Extensions.
 D:\NeedleChanger\Code\NeedleChanger\obj\Debug\NeedleCh.FD94171B.Up2Date
 D:\NeedleChanger\Code\NeedleChanger\obj\Debug\京元植針機.exe
 D:\NeedleChanger\Code\NeedleChanger\obj\Debug\京元植針機.pdb
+D:\NeedleChanger\Code\NeedleChanger\bin\Debug\JsonConverter.Abstractions.dll
+D:\NeedleChanger\Code\NeedleChanger\bin\Debug\JsonConverter.Newtonsoft.Json.dll
+D:\NeedleChanger\Code\NeedleChanger\bin\Debug\Stef.Validation.dll
+D:\NeedleChanger\Code\NeedleChanger\bin\Debug\Newtonsoft.Json.xml

@@ -4,10 +4,6 @@ namespace InjectorInspector
 {
     partial class Form1
     {
-        /// <summary>
-        /// 設計工具所需的變數。
-        /// </summary>
-        public System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// 清除任何使用中的資源。
@@ -5461,6 +5457,7 @@ namespace InjectorInspector
         public CheckBox cB_料盤有料;
         public RichTextBox rtb_Status;
         public Timer tmrBarCodeScanner;
+        private System.ComponentModel.IContainer components;
     }
 }
 

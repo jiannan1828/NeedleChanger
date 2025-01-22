@@ -67,6 +67,12 @@
     <Reference Include="IOApi_CLRLib">
       <HintPath>C:\Program Files\SoftServo\WMX3\Lib\IOApi_CLRLib.dll</HintPath>
     </Reference>
+    <Reference Include="JsonConverter.Abstractions, Version=0.7.1.0, Culture=neutral, PublicKeyToken=7ba85365b500f2e2, processorArchitecture=MSIL">
+      <HintPath>packages\JsonConverter.Abstractions.0.7.1\lib\net461\JsonConverter.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="JsonConverter.Newtonsoft.Json, Version=0.7.1.0, Culture=neutral, PublicKeyToken=7ba85365b500f2e2, processorArchitecture=MSIL">
+      <HintPath>packages\JsonConverter.Newtonsoft.Json.0.7.1\lib\net45\JsonConverter.Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.9.0.1\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -82,6 +88,9 @@
     <Reference Include="SiSoCsInterface, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files\Basler\FramegrabberSDK\lib\SiSoCsInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="Stef.Validation, Version=0.1.1.0, Culture=neutral, PublicKeyToken=8f3400880c321038, processorArchitecture=MSIL">
+      <HintPath>packages\Stef.Validation.0.1.1\lib\net40\Stef.Validation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">

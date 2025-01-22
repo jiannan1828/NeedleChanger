@@ -1,11 +1,11 @@
 {
   "Barcode": {
-    "Barcode": null,
-    "短編號": null,
-    "客戶": null,
-    "型號": null,
-    "板全號": null,
-    "儲位": null
+    "Barcode": "Test123",
+    "短編號": "不知道",
+    "客戶": "中國探針",
+    "型號": "不知道",
+    "板全號": "不知道",
+    "儲位": "ghfdsahfjkdkjhlfdsak"
   },
   "Needles": [
     {

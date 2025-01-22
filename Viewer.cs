@@ -7,21 +7,25 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Xml;
 using System.Drawing;
+using static InjectorInspector.Viewer.MissionInfo;
 
 namespace InjectorInspector
 {
     internal static class Viewer
     {
-        public static OpenFileDialog OpenDxfFileDialog = new OpenFileDialog();
-        public static SaveFileDialog SaveJsonFileDialog = new SaveFileDialog();
+        public static List<string> BarcodeList { get; set; } = new List<string>();
+        public static OpenFileDialog OpenMissionFileDialog = new OpenFileDialog();
+        public static SaveFileDialog SaveMissionFileDialog = new SaveFileDialog();
 
         public static DxfDocument DxfDoc = new DxfDocument();
-        public static JSON Json = new JSON(); // 底下 JSON 不寫成靜態, HighlightedNeedle, FocusedNeedle會用到
+        public static MissionInfo Mission = new MissionInfo(); // 底下 MissionInfo 不寫成靜態, HighlightedNeedle, FocusedNeedle會用到
+        public static string OpenFileName = "";
 
-        public static JSON.NeedleInfo HighlightedNeedle = null;
-        public static JSON.NeedleInfo FocusedNeedle = null;
-        public static List<JSON.NeedleInfo> SelectedNeedles = new List<JSON.NeedleInfo>();
-        public static List<JSON.NeedleInfo> PlaceNeedles = new List<JSON.NeedleInfo>();
+
+        public static MissionInfo.NeedleInfo HighlightedNeedle = null;
+        public static MissionInfo.NeedleInfo FocusedNeedle = null;
+        public static List<MissionInfo.NeedleInfo> SelectedNeedles = new List<MissionInfo.NeedleInfo>();
+        public static List<MissionInfo.NeedleInfo> PlaceNeedles = new List<MissionInfo.NeedleInfo>();
 
         public static readonly Color DefaltNeedleColor = Color.ForestGreen;
         public static readonly Color HiddenNeedlesColor = Color.FromArgb(64, Color.ForestGreen);
@@ -29,7 +33,7 @@ namespace InjectorInspector
         public static readonly Color SelectedNeedlesColor = Color.MediumVioletRed;
         public static readonly Color PlaceNeedlesColor = Color.Red;
 
-        public static Boundary Json_Boundary = new Boundary();
+        public static Boundary Mission_Boundary = new Boundary();
         public static Boundary Drag_Boundary = new Boundary();
 
         public const float ScaleFactor = 10;
@@ -49,9 +53,9 @@ namespace InjectorInspector
         public static PointF Drag_End = new PointF(0, 0);
 
         /// <summary>
-        /// 讀取 DXF 後儲存到這個物件, 後面會存成 JSON 檔
+        /// 讀取 DXF 或 JSON 後儲存到這個物件, 後面會存成 Json 檔
         /// </summary>
-        public class JSON
+        public class MissionInfo
         {
             public BarcodeInfo Barcode { get; set; }
             public List<NeedleInfo> Needles { get; set; }
@@ -86,7 +90,7 @@ namespace InjectorInspector
                 public string Reserve5 { get; set; }
             }
 
-            public JSON()
+            public MissionInfo()
             {
                 Barcode = new BarcodeInfo();
                 Needles = new List<NeedleInfo>();
@@ -110,31 +114,31 @@ namespace InjectorInspector
         /// <summary>
         /// 計算 dxf 檔所有圓的邊界
         /// </summary>
-        /// <param name="Json">已讀取的 JSON 資料</param>
-        public static void find_Json_Boundary(JSON Json, int pic_Width, int pic_Height)
+        /// <param name="Mission">已讀取的 MissionInfo 資料</param>
+        public static void find_Mission_Boundary(MissionInfo Mission, int pic_Width, int pic_Height)
         {
             // 初始化邊界
-            Json_Boundary.minX = float.MaxValue;
-            Json_Boundary.minY = float.MaxValue;
-            Json_Boundary.maxX = float.MinValue;
-            Json_Boundary.maxY = float.MinValue;
+            Mission_Boundary.minX = float.MaxValue;
+            Mission_Boundary.minY = float.MaxValue;
+            Mission_Boundary.maxX = float.MinValue;
+            Mission_Boundary.maxY = float.MinValue;
 
             // 遍歷所有圓，更新邊界
-            foreach (var circle in Json.Needles)
+            foreach (var circle in Mission.Needles)
             {
-                Json_Boundary.minX = (float)Math.Min(Json_Boundary.minX, circle.X - circle.Diameter / 2 - 1);
-                Json_Boundary.minY = (float)Math.Min(Json_Boundary.minY, circle.Y - circle.Diameter / 2 - 1);
-                Json_Boundary.maxX = (float)Math.Max(Json_Boundary.maxX, circle.X + circle.Diameter / 2 + 1);
-                Json_Boundary.maxY = (float)Math.Max(Json_Boundary.maxY, circle.Y + circle.Diameter / 2 + 1);
+                Mission_Boundary.minX = (float)Math.Min(Mission_Boundary.minX, circle.X - circle.Diameter / 2 - 1);
+                Mission_Boundary.minY = (float)Math.Min(Mission_Boundary.minY, circle.Y - circle.Diameter / 2 - 1);
+                Mission_Boundary.maxX = (float)Math.Max(Mission_Boundary.maxX, circle.X + circle.Diameter / 2 + 1);
+                Mission_Boundary.maxY = (float)Math.Max(Mission_Boundary.maxY, circle.Y + circle.Diameter / 2 + 1);
             }
 
-            Json_Boundary.width = Json_Boundary.maxX - Json_Boundary.minX;
-            Json_Boundary.height = Json_Boundary.maxY - Json_Boundary.minY;
+            Mission_Boundary.width = Mission_Boundary.maxX - Mission_Boundary.minX;
+            Mission_Boundary.height = Mission_Boundary.maxY - Mission_Boundary.minY;
 
-            ZoomFactor = Math.Min(pic_Width / ScaleFactor / Json_Boundary.width, pic_Height / ScaleFactor / Json_Boundary.height);
+            ZoomFactor = Math.Min(pic_Width / ScaleFactor / Mission_Boundary.width, pic_Height / ScaleFactor / Mission_Boundary.height);
 
-            Offset.X = -Json_Boundary.minX * ScaleFactor * ZoomFactor;
-            Offset.Y = -Json_Boundary.maxY * ScaleFactor * -ZoomFactor;
+            Offset.X = -Mission_Boundary.minX * ScaleFactor * ZoomFactor;
+            Offset.Y = -Mission_Boundary.maxY * ScaleFactor * -ZoomFactor;
         }
 
         /// <summary>
@@ -159,7 +163,7 @@ namespace InjectorInspector
         {
             SelectedNeedles.Clear();
 
-            foreach (var circle in Json.Needles)
+            foreach (var circle in Mission.Needles)
             {
                 if (Drag_Boundary.minX < (circle.X - circle.Diameter / 2) * ScaleFactor &&
                     Drag_Boundary.minY < (circle.Y - circle.Diameter / 2) * ScaleFactor &&
@@ -180,7 +184,7 @@ namespace InjectorInspector
 
             PlaceNeedles.Clear();
 
-            foreach (var circle in Json.Needles)
+            foreach (var circle in Mission.Needles)
             {
                 if (circle.Place == true)
                 {
@@ -212,19 +216,19 @@ namespace InjectorInspector
         }
 
         /// <summary>
-        /// 將 DXF 檔中的資料轉成 JSON
+        /// 將 DXF 檔中的資料轉成 MissionInfo
         /// </summary>
         /// <param name="DxfDoc">要顯示的 DXF 檔案</param>
-        /// <param name="json">已轉換的 JSON 文件</param>
-        public static void TransformDxf2Json(DxfDocument DxfDoc, ref JSON json)
+        /// <param name="mission">已轉換的 MissionInfo 文件</param>
+        public static void TransformDxf2Mission(DxfDocument DxfDoc, ref MissionInfo mission)
         {
             int index = 0;
 
-            json.Needles.Clear(); // 清除上一次 load 的資料
+            mission.Needles.Clear(); // 清除上一次 load 的資料
 
             foreach (var circle in DxfDoc.Entities.Circles)
             {
-                json.Needles.Add(new JSON.NeedleInfo
+                mission.Needles.Add(new MissionInfo.NeedleInfo
                 {
                     Index = index,
                     X = circle.Center.X,
@@ -245,52 +249,51 @@ namespace InjectorInspector
         /// <summary>
         /// 從新排序座標由左至右、由上至下
         /// </summary>
-        /// <param name="json">已讀取的 JSON 資料</param>
-        public static void ResortPosition(ref JSON json)
+        /// <param name="mission">已讀取的 MissionInfo 資料</param>
+        public static void ResortPosition(ref MissionInfo mission)
         {
-            JSON resortedJson = new JSON();
+            MissionInfo resortedMission = new MissionInfo();
 
-            var resortedIndex = new (double XaddY, int fakeIndex)[json.Needles.Count];
+            var resortedIndex = new (double XaddY, int fakeIndex)[mission.Needles.Count];
 
-            for (int i = 0; i < json.Needles.Count; i++)
+            for (int i = 0; i < mission.Needles.Count; i++)
             {
-                resortedIndex[i] = (json.Needles[i].X - json.Needles[i].Y * 10000, json.Needles[i].Index);
+                resortedIndex[i] = (mission.Needles[i].X - mission.Needles[i].Y * 10000, mission.Needles[i].Index);
             }
 
             Array.Sort(resortedIndex, (prev, next) => prev.XaddY.CompareTo(next.XaddY)); // 由小排到大
 
-            for (int i = 0; i < json.Needles.Count; i++)
+            for (int i = 0; i < mission.Needles.Count; i++)
             {
-                resortedJson.Needles.Add(json.Needles[resortedIndex[i].fakeIndex]);
-                resortedJson.Needles[i].Index = i;
+                resortedMission.Needles.Add(mission.Needles[resortedIndex[i].fakeIndex]);
+                resortedMission.Needles[i].Index = i;
             }
 
-            json = resortedJson;
+            mission = resortedMission;
         }
 
         /// <summary>
-        /// 打開 DXF 或者 JSON 檔案
+        /// 打開 DXF 或者 MissionInfo 檔案
         /// </summary>
-        public static string strFileName = "";
         public static bool OpenFile()
         {
-            OpenDxfFileDialog.Filter = "JSON Files (*.json)|*.json|DXF Files (*.dxf)|*.dxf";
+            OpenMissionFileDialog.Filter = "Json Files (*.json)|*.json|DXF Files (*.dxf)|*.dxf";
             
-            if (OpenDxfFileDialog.ShowDialog() == DialogResult.OK)
+            if (OpenMissionFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (OpenDxfFileDialog.FilterIndex == 2) // 如果選擇 .dxf
+                if (OpenMissionFileDialog.FilterIndex == 2) // 如果選擇 .dxf
                 {
                     try
                     {
-                        DxfDoc = DxfDocument.Load(OpenDxfFileDialog.FileName);
-                        strFileName = OpenDxfFileDialog.FileName;
+                        DxfDoc = DxfDocument.Load(OpenMissionFileDialog.FileName);
+                        OpenFileName = OpenMissionFileDialog.FileName;
 
                         if (DxfDoc.Entities.Circles.Count() > 0)
                         {
-                            //MessageBox.Show($"檔案 {OpenDxfFileDialog.FileName} 成功讀取！");
+                            //MessageBox.Show($"檔案 {OpenMissionFileDialog.FileName} 成功讀取！");
 
-                            TransformDxf2Json(DxfDoc, ref Json);
-                            ResortPosition(ref Json);
+                            TransformDxf2Mission(DxfDoc, ref Mission);
+                            ResortPosition(ref Mission);
                             return true;
                         }
                         else
@@ -305,18 +308,18 @@ namespace InjectorInspector
                         return false;
                     }
                 }
-                else if (OpenDxfFileDialog.FilterIndex == 1) // 如果選擇 .json
+                else if (OpenMissionFileDialog.FilterIndex == 1) // 如果選擇 .mission
                 {
                     try
                     {
-                        Json = JsonConvert.DeserializeObject<JSON>(File.ReadAllText(OpenDxfFileDialog.FileName));
-                        strFileName = OpenDxfFileDialog.FileName;
-                        //MessageBox.Show($"檔案 {OpenDxfFileDialog.FileName} 成功讀取！");
+                        Mission = JsonConvert.DeserializeObject<MissionInfo>(File.ReadAllText(OpenMissionFileDialog.FileName));
+                        OpenFileName = OpenMissionFileDialog.FileName;
+                        //MessageBox.Show($"檔案 {OpenMissionFileDialog.FileName} 成功讀取！");
                         return true;
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"讀取 Json 檔時發生錯誤: {ex.Message}");
+                        MessageBox.Show($"讀取 Mission 檔時發生錯誤: {ex.Message}");
                         return false;
                     }
                 }
@@ -332,23 +335,23 @@ namespace InjectorInspector
         }
 
         /// <summary>
-        /// 儲存 JSON 檔案
+        /// 儲存 MissionInfo 檔案
         /// </summary>
         public static void SaveFile()
         {
-            SaveJsonFileDialog.Filter = "Json Files (*.json)|*.json";
+            SaveMissionFileDialog.Filter = "Json Files (*.json)|*.json";
 
-            SaveJsonFileDialog.FileName = Path.GetFileNameWithoutExtension(strFileName);
+            SaveMissionFileDialog.FileName = Path.GetFileNameWithoutExtension(OpenFileName);
 
-            if (SaveJsonFileDialog.ShowDialog() == DialogResult.OK)
+            if (SaveMissionFileDialog.ShowDialog() == DialogResult.OK)
             {
-                // 使用 Newtonsoft.Json 進行物件序列化，並設定格式化輸出（會縮排顯示）
-                string json = JsonConvert.SerializeObject(Json, Newtonsoft.Json.Formatting.Indented);
+                // 使用 Newtonsoft.Mission 進行物件序列化，並設定格式化輸出（會縮排顯示）
+                string mission = JsonConvert.SerializeObject(Mission, Newtonsoft.Json.Formatting.Indented);
 
-                // 使用 StreamWriter 儲存 Json 到選定的檔案
-                using (StreamWriter writer = new StreamWriter(SaveJsonFileDialog.FileName))
+                // 使用 StreamWriter 儲存 Mission 到選定的檔案
+                using (StreamWriter writer = new StreamWriter(SaveMissionFileDialog.FileName))
                 {
-                    writer.Write(json);
+                    writer.Write(mission);
                 }
 
                 //MessageBox.Show("檔案儲存成功！", "儲存成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -467,7 +470,7 @@ namespace InjectorInspector
             switch (textBoxType)
             {
                 case "txt_Index":
-                    foreach (var circle in Json.Needles)
+                    foreach (var circle in Mission.Needles)
                     {
                         if (circle.Index.ToString() == textBoxText)
                         {
@@ -477,7 +480,7 @@ namespace InjectorInspector
                     break;
 
                 case "txt_Name":
-                    foreach (var circle in Json.Needles)
+                    foreach (var circle in Mission.Needles)
                     {
                         if (circle.Name == textBoxText)
                         {
@@ -487,7 +490,7 @@ namespace InjectorInspector
                     break;
 
                 case "txt_Id":
-                    foreach (var circle in Json.Needles)
+                    foreach (var circle in Mission.Needles)
                     {
                         if (circle.Id == textBoxText)
                         {
@@ -515,22 +518,22 @@ namespace InjectorInspector
                         switch (textBox.Name)
                         {
                             case "txt_Barcode":
-                                textBox.Text = Json.Barcode.Barcode;
+                                textBox.Text = Mission.Barcode.Barcode;
                                 break;
                             case "txt_短編號":
-                                textBox.Text = Json.Barcode.短編號;
+                                textBox.Text = Mission.Barcode.短編號;
                                 break;
                             case "txt_客戶":
-                                textBox.Text = Json.Barcode.客戶;
+                                textBox.Text = Mission.Barcode.客戶;
                                 break;
                             case "txt_型號":
-                                textBox.Text = Json.Barcode.型號;
+                                textBox.Text = Mission.Barcode.型號;
                                 break;
                             case "txt_板全號":
-                                textBox.Text = Json.Barcode.板全號;
+                                textBox.Text = Mission.Barcode.板全號;
                                 break;
                             case "txt_儲位":
-                                textBox.Text = Json.Barcode.儲位;
+                                textBox.Text = Mission.Barcode.儲位;
                                 break;
                         }
 
@@ -559,6 +562,24 @@ namespace InjectorInspector
 
             // 滾動到最後一行
             rtb_Status.ScrollToCaret();
+        }
+
+        /// <summary>
+        /// 讀取 Barcode 清單
+        /// </summary>
+        public static void read_BarcodeList()
+        {
+            try
+            {
+                foreach (var line in File.ReadLines(@"Info\BarcodeList.txt"))
+                {
+                    BarcodeList.Add(line);
+                }
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"讀取文件時發生錯誤: {ex.Message}");
+            }
         }
     }
 }
