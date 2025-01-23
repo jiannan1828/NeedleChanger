@@ -274,6 +274,8 @@ namespace Inspector
         /// <summary>分析Socket盤，，傳入目前Socket軸位置(X / Y)，回覆針孔位置</summary>
         public bool xInspSocket(out Vector3 Loc) { return InspSocket.Insp(out Loc); }
 
+        public bool xInspSocket校正孔(out Vector3 Loc) { return InspSocket.校正孔尋找(out Loc); }
+
         public bool xInspSocket植針後檢查() { return InspSocket.植針後Check(); }
         /// <summary>Socket盤校正初始化，會將分析資料輸出為像素位置</summary>
         public void xCarbInitSocket() { InspSocket.CarbInit(); }
@@ -1622,9 +1624,10 @@ namespace Inspector
         internal ImageSource CCD;
         Inspector owner;
         bool first = true;
-        HTuple pX, pY;
+        HTuple pX, pY, CarbX, CarbY;
         int targetIndex = -1;
         Vector3 hole;
+        public Vector3 CarbP;
 
         public InspSocket區(Inspector sender, HWindowControl win)
         {
@@ -1657,6 +1660,11 @@ namespace Inspector
             {
                 Vector3 n;
                 var sel = Insp(out n);
+            });
+            menu.Items.Add("校正孔尋找", null, (sender, e) =>
+            {
+                Vector3 n;
+                var sel = 校正孔尋找(out n);
             });
             menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "Socket", "Socket"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
@@ -1720,6 +1728,42 @@ namespace Inspector
             return targetIndex >= 0;
         }
 
+        public bool 校正孔尋找(out Vector3 Loc)
+        {
+            var result = new Vector3();
+            helper.inShow = true;
+            bool success = false;
+            if (helper.ContainImage)
+            {
+                HObject temp, binArea, connArea, LimW, LimH, LimC;
+                HTuple W, H, usedThr, row, col, Radius, Dist;
+                HOperatorSet.CopyImage(helper.Image, out temp);
+                owner.WriteImage(temp, "Socket", "Socket");
+                HOperatorSet.GetImageSize(temp, out W, out H);
+                HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
+                HOperatorSet.Connection(binArea, out connArea);
+                double Cx = W.D / 2;
+                double Cy = H.D / 2;
+                HOperatorSet.SelectShape(connArea, out LimC, "outer_radius", "and", 5, 999999);
+                
+                HOperatorSet.SelectShape(LimC, out LimW, "row", "and", Cy - 200, Cy + 200);
+                HOperatorSet.AreaCenter(LimC, out Dist, out CarbY, out CarbX);
+                HOperatorSet.SelectShape(LimW, out LimH, "column", "and", Cx - 200, Cx + 200);
+                HOperatorSet.AreaCenter(LimH, out Dist, out CarbY, out CarbX);
+                if (CarbY.Length == 1)
+                {
+                    success = true;
+                    var P = CCD.GetReal(CarbX.D, CarbY.D, W, H);
+                    result = new Vector3() { X = P.X, Y = P.Y };
+                    CarbP = result;
+                }
+                owner.DisposeObj(temp, binArea, connArea, LimC, LimW, LimH);
+            }
+            Loc = result;
+            owner.BeginInvoke(new Action(helper.AdjustView));
+            return success;
+        }
+
         public bool 植針後Check()
         {
             Vector3 pos;
@@ -1763,6 +1807,18 @@ namespace Inspector
                 Win.HalconWindow.SetTposition((int)(pY.D + 300), 300);
                 Win.HalconWindow.WriteString(string.Format("X = {0:F3} , Y = {1:F3}", hole.X, hole.Y));
             }
+            if ((CarbX != null) && (CarbY != null) && (CarbX.Length == 1))
+            {
+                if (owner.ck_Socket校正孔.Checked)
+                {
+                    Win.HalconWindow.SetColor("orange");
+                    Win.HalconWindow.DispCross(CarbY, CarbX, 300, 0);
+                    Win.HalconWindow.SetTposition((int)(CarbY.D + 300), 300);
+                    Win.HalconWindow.WriteString(string.Format("X = {0:F3} , Y = {1:F3}", CarbP.X, CarbP.Y));
+                }
+            }
+
+
             HTuple W, H;
             if (image != null)
             {

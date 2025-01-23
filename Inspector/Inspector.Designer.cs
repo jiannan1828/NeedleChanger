@@ -56,6 +56,7 @@
             this.ck_NuCarb = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.btn_二孔校正 = new System.Windows.Forms.CheckBox();
+            this.ck_Socket校正孔 = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_Throshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin寬Max)).BeginInit();
@@ -447,10 +448,21 @@
             this.btn_二孔校正.Text = "二孔校正";
             this.btn_二孔校正.UseVisualStyleBackColor = true;
             // 
+            // ck_Socket校正孔
+            // 
+            this.ck_Socket校正孔.AutoSize = true;
+            this.ck_Socket校正孔.Location = new System.Drawing.Point(769, 86);
+            this.ck_Socket校正孔.Name = "ck_Socket校正孔";
+            this.ck_Socket校正孔.Size = new System.Drawing.Size(134, 23);
+            this.ck_Socket校正孔.TabIndex = 50;
+            this.ck_Socket校正孔.Text = "Socket校正孔";
+            this.ck_Socket校正孔.UseVisualStyleBackColor = true;
+            // 
             // Inspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.ck_Socket校正孔);
             this.Controls.Add(this.btn_二孔校正);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.ck_NuCarb);
@@ -514,5 +526,6 @@
         public System.Windows.Forms.CheckBox ck_NuCarb;
         public System.Windows.Forms.Button button1;
         public System.Windows.Forms.CheckBox btn_二孔校正;
+        public System.Windows.Forms.CheckBox ck_Socket校正孔;
     }
 }

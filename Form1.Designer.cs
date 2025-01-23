@@ -4,10 +4,6 @@ namespace InjectorInspector
 {
     partial class Form1
     {
-        /// <summary>
-        /// 設計工具所需的變數。
-        /// </summary>
-        public System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// 清除任何使用中的資源。
@@ -438,6 +434,10 @@ namespace InjectorInspector
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
             this.ttp_NeedleInfo = new System.Windows.Forms.ToolTip(this.components);
             this.tmrBarCodeScanner = new System.Windows.Forms.Timer(this.components);
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.btn_socket相機兩點定位 = new System.Windows.Forms.Button();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3260,6 +3260,10 @@ namespace InjectorInspector
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label16);
+            this.tabPage2.Controls.Add(this.label17);
+            this.tabPage2.Controls.Add(this.label18);
+            this.tabPage2.Controls.Add(this.btn_socket相機兩點定位);
             this.tabPage2.Controls.Add(this.cB_料盤有料);
             this.tabPage2.Controls.Add(this.cB_AlwaysResume);
             this.tabPage2.Controls.Add(this.lbl_PinIndex);
@@ -4947,6 +4951,43 @@ namespace InjectorInspector
             this.tmrBarCodeScanner.Interval = 10;
             this.tmrBarCodeScanner.Tick += new System.EventHandler(this.tmrBarCodeScanner_Tick);
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(912, 545);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(62, 19);
+            this.label16.TabIndex = 239;
+            this.label16.Text = "label16";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(912, 517);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(62, 19);
+            this.label17.TabIndex = 238;
+            this.label17.Text = "label17";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(912, 487);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(62, 19);
+            this.label18.TabIndex = 237;
+            this.label18.Text = "label18";
+            // 
+            // btn_socket相機兩點定位
+            // 
+            this.btn_socket相機兩點定位.Location = new System.Drawing.Point(916, 426);
+            this.btn_socket相機兩點定位.Name = "btn_socket相機兩點定位";
+            this.btn_socket相機兩點定位.Size = new System.Drawing.Size(200, 38);
+            this.btn_socket相機兩點定位.TabIndex = 236;
+            this.btn_socket相機兩點定位.Text = "socket相機兩點定位";
+            this.btn_socket相機兩點定位.UseVisualStyleBackColor = true;
+            this.btn_socket相機兩點定位.Click += new System.EventHandler(this.btn_socket相機兩點定位_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -5461,6 +5502,11 @@ namespace InjectorInspector
         public CheckBox cB_料盤有料;
         public RichTextBox rtb_Status;
         public Timer tmrBarCodeScanner;
+        public Label label16;
+        public Label label17;
+        public Label label18;
+        public Button btn_socket相機兩點定位;
+        private System.ComponentModel.IContainer components;
     }
 }
 

@@ -3732,8 +3732,8 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_確認載盤移植直針孔相機補正位:                            xeTmrTakePin = xe_tmr_takepin.xett_載盤XY移置直針位;  break;
 
                                 case xe_tmr_takepin.xett_載盤XY移置直針位: {  
-                                    const double SetPinOffsetX = 1.821+0.35;
-                                    const double SetPinOffsetY = 54.802;
+                                    const double SetPinOffsetX =  2.255;
+                                    const double SetPinOffsetY = 54.462;
 
                                     double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX + SetPinOffsetX;
                                     double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY + SetPinOffsetY;
@@ -3747,8 +3747,8 @@ namespace InjectorInspector
                                     double dbX = dbapiCarrierX(dbRead, 0);
                                     double dbY = dbapiCarrierY(dbRead, 0);
 
-                                    const double SetPinOffsetX = 1.821;
-                                    const double SetPinOffsetY = 54.802;
+                                    const double SetPinOffsetX =  2.255;
+                                    const double SetPinOffsetY = 54.462;
 
                                     double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX + SetPinOffsetX;
                                     double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY + SetPinOffsetY;
@@ -4527,6 +4527,13 @@ namespace InjectorInspector
         public void button1_Click(object sender, EventArgs e)
         {
             //inspector1.xInit();
+        }
+        //---------------------------------------------------------------------------------------
+        private void btn_socket相機兩點定位_Click(object sender, EventArgs e)
+        {
+            Vector3 pos;
+            bool success = inspector1.xInspSocket校正孔(out pos);
+            label16.Text = string.Format("Socket校正孔 = {0}, X = {1:F3} , Y = {2:F3}", success, pos.X, pos.Y);
         }
         //---------------------------------------------------------------------------------------
         //-------------------------------------- 暫時或實驗中 ------------------------------------
