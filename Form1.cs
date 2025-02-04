@@ -35,6 +35,9 @@ using static InjectorInspector.Vibration;
 using static InjectorInspector.ServoControl;
 
 //---------------------------------------------------------------------------------------
+using static InjectorInspector.Normal;
+
+//---------------------------------------------------------------------------------------
 //wmx3
 using WMX3ApiCLR;
 using static System.Windows.Forms.AxHost;
