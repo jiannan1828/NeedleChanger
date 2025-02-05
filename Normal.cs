@@ -33,22 +33,35 @@ namespace InjectorInspector
         //public static void Main(string[] args) {
         //    Normal calculate = new Normal();
         //
-        //    Normal.Point idealA = new Normal.Point(3, 12);
-        //    Normal.Point idealB = new Normal.Point(35, 26);
-        //    Normal.Point realA = new Normal.Point(1.49, 12.28);
-        //    Normal.Point realB = new Normal.Point(30.06, 31.59);
+        //    // 定義 PointA, PointB 的數據
+        //    Normal.Point idealA = new Normal.Point(387.62823,  93.82427);
+        //    Normal.Point idealB = new Normal.Point(419.62823, 107.82427);
+        //    Normal.Point realA  = new Normal.Point(145.680,   616.221  );
+        //    Normal.Point realB  = new Normal.Point(113.708,   602.094  );
         //
+        //    // 宣告 PointForward 和 PointBackward 變數
+        //    Normal.Point idealAForward  = new Normal.Point();
+        //    Normal.Point idealABackward = new Normal.Point();
+        //    Normal.Point realAForward   = new Normal.Point();
+        //    Normal.Point realABackward  = new Normal.Point();
+        //
+        //    // 呼叫計算並傳遞相應的點作為參數
+        //    CalculateAndPrintPlotData(idealA, idealB, out idealAForward, out idealABackward);
+        //    CalculateAndPrintPlotData(realA, realB, out realAForward, out realABackward);
+        //
+        //
+        //    // 計算PerspectiveTransform
         //    MX matrix = new MX();
         //
-        //    double[,] idealCoords = { { idealA.X, idealA.Y },
-        //                                  { 35, 40 },
-        //                                  { idealB.X, idealB.Y },
-        //                                  { 20, 5 } };
+        //    double[,] idealCoords = { { idealA.X,         idealA.Y },
+        //                              { idealAForward.X,  idealAForward.Y },
+        //                              { idealB.X,         idealB.Y },
+        //                              { idealABackward.X, idealABackward.Y } };
         //
-        //    double[,] realCoords = { { realA.X, realA.Y },
-        //                                 { 30, 40 },
-        //                                 { realB.X, realB.Y },
-        //                                 { 25, 5 } };
+        //    double[,] realCoords  = { { realA.X,         realA.Y },
+        //                              { realAForward.X,  realAForward.Y },
+        //                              { realB.X,         realB.Y },
+        //                              { realABackward.X, realABackward.Y } };
         //
         //    ComputePerspectiveTransform(idealCoords, realCoords, matrix);
         //
@@ -60,12 +73,14 @@ namespace InjectorInspector
         //        Console.WriteLine();
         //    }
         //
+        //
+        //    // 求得映射轉換座標
         //    double X_In = idealA.X,
         //           Y_In = idealA.Y;
         //    Normal.Point pMapping = MapToCoords(matrix, X_In, Y_In);
         //    Console.WriteLine($"輸入座標 ({idealA.X:F2}, {idealA.Y:F2}) 映射到真實座標 ({pMapping.X:F2}, {pMapping.Y:F2})");
         //}
-
+        //---------------------------------------------------------------------------------------
         public static void ComputePerspectiveTransform(double[,] idealCoords, double[,] realCoords, MX matrix) {
             double[,] A = new double[8, 8];
             double[] b = new double[8];
@@ -149,6 +164,28 @@ namespace InjectorInspector
             matrix.Matrix[2, 2] = 1.0;
         }
         //---------------------------------------------------------------------------------------
+        public static void CalculateAndPrintPlotData(Point PointA, Point PointB, out Point PointForward, out Point PointBackward)
+        {
+            // Midpoint for Point A B
+            Point MidPoint = new Point((PointA.X + PointB.X) / 2, (PointA.Y + PointB.Y) / 2);
+
+            // 計算 Point 線段的斜率
+            double PointSlope = (PointB.Y - PointA.Y) / (PointB.X - PointA.X);
+            double PointTheta = Math.Atan(PointSlope);
+
+            // 計算 Point 線段長度和半徑
+            double PointLength = Math.Sqrt(Math.Pow(PointB.X - PointA.X, 2) + Math.Pow(PointB.Y - PointA.Y, 2));
+            double PointRadius = PointLength / 2;
+
+            // 計算 Point 的 X, Y 偏移量
+            double PointXOffset = PointRadius * Math.Sin(PointTheta);
+            double PointYOffset = PointRadius * Math.Cos(PointTheta);
+
+            // 計算 Point Forward 和 Backward
+            PointForward = new Point(MidPoint.X + PointXOffset, MidPoint.Y - PointYOffset);
+            PointBackward = new Point(MidPoint.X - PointXOffset, MidPoint.Y + PointYOffset);
+        }
+        //---------------------------------------------------------------------------------------
         public static Point MapToCoords(MX matrix, double x, double y) {
             Point result = new Point();
 
@@ -178,7 +215,7 @@ namespace InjectorInspector
         //    double mappedValue = Map(inputValue, -1048576, 1048576, -500.000, 500.000);
         //    Console.WriteLine($"Mapped Value: {mappedValue}");
         //}
-
+        //---------------------------------------------------------------------------------------
         // 映射函數
         public double Map(int Input, int in_min, int in_max, double out_min, double out_max)
         {
