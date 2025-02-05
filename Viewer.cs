@@ -8,6 +8,9 @@ using System.Linq;
 using System.Xml;
 using System.Drawing;
 
+//4p Transform
+using static InjectorInspector.Normal;
+
 namespace InjectorInspector
 {
     internal static class Viewer
@@ -194,21 +197,17 @@ namespace InjectorInspector
         /// <summary>
         /// 找出需要植針圓的座標
         /// </summary>
-        public static void find_PlaceNeedle_Position(int iIndex, ref double dbX, ref double dbY)
+        public static void find_PlaceNeedle_Position(MX PerspectiveTransformMatrix, int iIndex, ref double dbX, ref double dbY)
         {
             search_grp_NeedleInfo("txt_Index", iIndex.ToString());
-            
 
-            double dbTargetX = FocusedNeedle.X * (-1);  //-396.62823254488018
-            double dbTargetY = FocusedNeedle.Y * (-1);  //-107.4742719089583
+            // 求得映射轉換座標
+            double X_In = FocusedNeedle.X,
+                   Y_In = FocusedNeedle.Y;
+            Normal.Point pMapping = MapToCoords(PerspectiveTransformMatrix, X_In, Y_In);
 
-            //Socket1, point0, x=136.816
-            //Socket1, point0, y=602.420
-            const double OffsetX = -533.4442325448801;  //136.816
-            const double OffsetY = -709.8942719089583;  //602.420
-
-            dbX = dbTargetX - OffsetX;  //136.816 = -396.62823254488018 - OffsetX, OffsetX = 533.4442325448801
-            dbY = dbTargetY - OffsetY;  //602.420 = -107.4742719089583  - OffsetY, OffsetY = 709.8942719089583
+            dbX = pMapping.X;
+            dbY = pMapping.Y;
         }
 
         /// <summary>

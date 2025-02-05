@@ -35,6 +35,7 @@ using static InjectorInspector.Vibration;
 using static InjectorInspector.ServoControl;
 
 //---------------------------------------------------------------------------------------
+//4p Transform
 using static InjectorInspector.Normal;
 
 //---------------------------------------------------------------------------------------
@@ -240,7 +241,7 @@ namespace InjectorInspector
                 //沒拿到
                 double dbX = 0.0, dbY = 0.0;
 
-                find_PlaceNeedle_Position(iHoleIndex, ref dbX, ref dbY);
+                find_PlaceNeedle_Position(PerspectiveTransformMatrix, iHoleIndex, ref dbX, ref dbY);
                 FocusedNeedle = PlaceNeedles[0];
                 show_grp_NeedleInfo(grp_NeedleInfo);
                 pic_Needles.Refresh();
@@ -3066,6 +3067,8 @@ namespace InjectorInspector
         public DateTime Curr_CycleTime;
         public TimeSpan CycleTime;
 
+        MX PerspectiveTransformMatrix = new MX();
+
         //---------------------------------------------------------------------------------------
         public void btn_TakePin_Click(object sender, EventArgs e)
         {
@@ -3075,6 +3078,44 @@ namespace InjectorInspector
         public void btn上膛_Click(object sender, EventArgs e)
         {
             bChambered = true;
+
+            {
+                Normal calculate = new Normal();
+
+                // 定義 PointA, PointB 的數據
+                Normal.Point idealA = new Normal.Point(387.62823, 93.82427);
+                Normal.Point idealB = new Normal.Point(419.62823, 107.82427);
+                Normal.Point realA = new Normal.Point(145.645, 616.278);
+                Normal.Point realB = new Normal.Point(113.674, 602.140);
+
+                // 宣告 PointForward 和 PointBackward 變數
+                Normal.Point idealAForward = new Normal.Point();
+                Normal.Point idealABackward = new Normal.Point();
+                Normal.Point realAForward = new Normal.Point();
+                Normal.Point realABackward = new Normal.Point();
+
+                // 呼叫計算並傳遞相應的點作為參數
+                CalculateAndPrintPlotData(idealA, idealB, out idealAForward, out idealABackward);
+                CalculateAndPrintPlotData(realA, realB, out realAForward, out realABackward);
+
+                // 計算PerspectiveTransform
+                double[,] idealCoords = { { idealA.X,         idealA.Y },
+                                          { idealAForward.X,  idealAForward.Y },
+                                          { idealB.X,         idealB.Y },
+                                          { idealABackward.X, idealABackward.Y } };
+
+                double[,] realCoords  = { { realA.X,         realA.Y },
+                                          { realABackward.X, realABackward.Y },
+                                          { realB.X,         realB.Y },
+                                          { realAForward.X,  realAForward.Y } };
+
+                ComputePerspectiveTransform(idealCoords, realCoords, PerspectiveTransformMatrix);
+
+                //// 求得映射轉換座標
+                //double X_In = idealA.X,
+                //       Y_In = idealA.Y;
+                //Normal.Point pMapping = MapToCoords(PerspectiveTransformMatrix, X_In, Y_In);
+            }
         }
         //---------------------------------------------------------------------------------------
         public void btn_tmrStop_Click(object sender, EventArgs e)
