@@ -3085,8 +3085,8 @@ namespace InjectorInspector
                 // 定義 PointA, PointB 的數據
                 Normal.Point idealA = new Normal.Point(387.62823, 93.82427);
                 Normal.Point idealB = new Normal.Point(419.62823, 107.82427);
-                Normal.Point realA = new Normal.Point(145.645, 616.278);
-                Normal.Point realB = new Normal.Point(113.674, 602.140);
+                Normal.Point realA = new Normal.Point(145.635, 616.217);
+                Normal.Point realB = new Normal.Point(113.659, 602.093);
 
                 // 宣告 PointForward 和 PointBackward 變數
                 Normal.Point idealAForward = new Normal.Point();
