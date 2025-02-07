@@ -273,6 +273,10 @@ namespace InjectorInspector
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.btn_socket相機兩點定位 = new System.Windows.Forms.Button();
             this.cB_料盤有料 = new System.Windows.Forms.CheckBox();
             this.cB_AlwaysResume = new System.Windows.Forms.CheckBox();
             this.lbl_PinIndex = new System.Windows.Forms.Label();
@@ -434,10 +438,7 @@ namespace InjectorInspector
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
             this.ttp_NeedleInfo = new System.Windows.Forms.ToolTip(this.components);
             this.tmrBarCodeScanner = new System.Windows.Forms.Timer(this.components);
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.btn_socket相機兩點定位 = new System.Windows.Forms.Button();
+            this.btn抽針 = new System.Windows.Forms.Button();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3260,6 +3261,7 @@ namespace InjectorInspector
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.btn抽針);
             this.tabPage2.Controls.Add(this.label16);
             this.tabPage2.Controls.Add(this.label17);
             this.tabPage2.Controls.Add(this.label18);
@@ -3316,6 +3318,43 @@ namespace InjectorInspector
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(912, 545);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(62, 19);
+            this.label16.TabIndex = 239;
+            this.label16.Text = "label16";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(912, 517);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(62, 19);
+            this.label17.TabIndex = 238;
+            this.label17.Text = "label17";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(912, 487);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(62, 19);
+            this.label18.TabIndex = 237;
+            this.label18.Text = "label18";
+            // 
+            // btn_socket相機兩點定位
+            // 
+            this.btn_socket相機兩點定位.Location = new System.Drawing.Point(916, 426);
+            this.btn_socket相機兩點定位.Name = "btn_socket相機兩點定位";
+            this.btn_socket相機兩點定位.Size = new System.Drawing.Size(200, 38);
+            this.btn_socket相機兩點定位.TabIndex = 236;
+            this.btn_socket相機兩點定位.Text = "socket相機兩點定位";
+            this.btn_socket相機兩點定位.UseVisualStyleBackColor = true;
+            this.btn_socket相機兩點定位.Click += new System.EventHandler(this.btn_socket相機兩點定位_Click);
             // 
             // cB_料盤有料
             // 
@@ -3441,9 +3480,9 @@ namespace InjectorInspector
             // 
             // btn_tmrClear
             // 
-            this.btn_tmrClear.Location = new System.Drawing.Point(380, 300);
+            this.btn_tmrClear.Location = new System.Drawing.Point(336, 300);
             this.btn_tmrClear.Name = "btn_tmrClear";
-            this.btn_tmrClear.Size = new System.Drawing.Size(165, 40);
+            this.btn_tmrClear.Size = new System.Drawing.Size(129, 40);
             this.btn_tmrClear.TabIndex = 222;
             this.btn_tmrClear.Text = "清除流程";
             this.btn_tmrClear.UseVisualStyleBackColor = true;
@@ -3506,9 +3545,9 @@ namespace InjectorInspector
             // 
             // btn_tmrPause
             // 
-            this.btn_tmrPause.Location = new System.Drawing.Point(380, 255);
+            this.btn_tmrPause.Location = new System.Drawing.Point(336, 255);
             this.btn_tmrPause.Name = "btn_tmrPause";
-            this.btn_tmrPause.Size = new System.Drawing.Size(165, 40);
+            this.btn_tmrPause.Size = new System.Drawing.Size(129, 40);
             this.btn_tmrPause.TabIndex = 215;
             this.btn_tmrPause.Text = "循環暫停";
             this.btn_tmrPause.UseVisualStyleBackColor = true;
@@ -3518,7 +3557,7 @@ namespace InjectorInspector
             // 
             this.btn_tmrStop.Location = new System.Drawing.Point(200, 255);
             this.btn_tmrStop.Name = "btn_tmrStop";
-            this.btn_tmrStop.Size = new System.Drawing.Size(165, 40);
+            this.btn_tmrStop.Size = new System.Drawing.Size(129, 40);
             this.btn_tmrStop.TabIndex = 214;
             this.btn_tmrStop.Text = "循環停止";
             this.btn_tmrStop.UseVisualStyleBackColor = true;
@@ -3526,9 +3565,9 @@ namespace InjectorInspector
             // 
             // btn上膛
             // 
-            this.btn上膛.Location = new System.Drawing.Point(380, 210);
+            this.btn上膛.Location = new System.Drawing.Point(336, 210);
             this.btn上膛.Name = "btn上膛";
-            this.btn上膛.Size = new System.Drawing.Size(165, 40);
+            this.btn上膛.Size = new System.Drawing.Size(129, 40);
             this.btn上膛.TabIndex = 213;
             this.btn上膛.Text = "上膛";
             this.btn上膛.UseVisualStyleBackColor = true;
@@ -3555,7 +3594,7 @@ namespace InjectorInspector
             // 
             this.btn_TakePin.Location = new System.Drawing.Point(200, 210);
             this.btn_TakePin.Name = "btn_TakePin";
-            this.btn_TakePin.Size = new System.Drawing.Size(165, 40);
+            this.btn_TakePin.Size = new System.Drawing.Size(129, 40);
             this.btn_TakePin.TabIndex = 30;
             this.btn_TakePin.Text = "取針丟棄";
             this.btn_TakePin.UseVisualStyleBackColor = true;
@@ -4951,42 +4990,15 @@ namespace InjectorInspector
             this.tmrBarCodeScanner.Interval = 10;
             this.tmrBarCodeScanner.Tick += new System.EventHandler(this.tmrBarCodeScanner_Tick);
             // 
-            // label16
+            // btn抽針
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(912, 545);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(62, 19);
-            this.label16.TabIndex = 239;
-            this.label16.Text = "label16";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(912, 517);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(62, 19);
-            this.label17.TabIndex = 238;
-            this.label17.Text = "label17";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(912, 487);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(62, 19);
-            this.label18.TabIndex = 237;
-            this.label18.Text = "label18";
-            // 
-            // btn_socket相機兩點定位
-            // 
-            this.btn_socket相機兩點定位.Location = new System.Drawing.Point(916, 426);
-            this.btn_socket相機兩點定位.Name = "btn_socket相機兩點定位";
-            this.btn_socket相機兩點定位.Size = new System.Drawing.Size(200, 38);
-            this.btn_socket相機兩點定位.TabIndex = 236;
-            this.btn_socket相機兩點定位.Text = "socket相機兩點定位";
-            this.btn_socket相機兩點定位.UseVisualStyleBackColor = true;
-            this.btn_socket相機兩點定位.Click += new System.EventHandler(this.btn_socket相機兩點定位_Click);
+            this.btn抽針.Location = new System.Drawing.Point(472, 210);
+            this.btn抽針.Name = "btn抽針";
+            this.btn抽針.Size = new System.Drawing.Size(129, 40);
+            this.btn抽針.TabIndex = 240;
+            this.btn抽針.Text = "抽針";
+            this.btn抽針.UseVisualStyleBackColor = true;
+            this.btn抽針.Click += new System.EventHandler(this.btn抽針_Click);
             // 
             // Form1
             // 
@@ -5507,6 +5519,7 @@ namespace InjectorInspector
         public Label label18;
         public Button btn_socket相機兩點定位;
         private System.ComponentModel.IContainer components;
+        public Button btn抽針;
     }
 }
 

@@ -2884,16 +2884,20 @@ namespace InjectorInspector
 
                     xett_載盤真空閥啟用,
 
-                    xett_取得柔震盤針資訊,
-                        xett_柔震盤無針,
-                            xett_柔震盤料倉震動,
-                                xett_等待柔震盤料倉震動2秒,
-                            xett_柔震盤上下震動,
-                                xett_等待柔震盤上下震動2秒,
-                            xett_柔震盤左右震動,
-                                xett_等待柔震盤左右震動2秒,
-                            xett_柔震盤散震震動,
-                                xett_等待柔震盤散震震動2秒,
+                    /* bTakePin */                                                                                                  /*  bRemove  */
+                    xett_Socket1真空閥啟用,                                                                                         xett_Socket1真空閥關掉,
+                    xett_Socket2真空閥啟用,                                                                                         xett_Socket2真空閥關掉,
+                                                                                                                                    
+                    xett_取得柔震盤針資訊,                                                                                          xett_NozzleZ縮回0保護,   
+                        xett_柔震盤無針,                                                                                            xett_NozzleXY回家,
+                            xett_柔震盤料倉震動,                                                                                    xett_Socket相機移至拍照位22,  
+                                xett_等待柔震盤料倉震動2秒,                                                                         xett_擺放座Z軸縮回, 
+                            xett_柔震盤上下震動,                                                                                    xett_3D掃描電動缸縮回,
+                                xett_等待柔震盤上下震動2秒,                                                                         xett_吸針嘴電動缸縮回,
+                            xett_柔震盤左右震動,                                                                                    xett_吸針接料盒就位,
+                                xett_等待柔震盤左右震動2秒,                                                                         xett_Nozzle電磁閥關閉,                                                                  
+                            xett_柔震盤散震震動,                                                                                    xett_植針座電磁閥關閉,
+                                xett_等待柔震盤散震震動2秒,                                                                         xett_以上11項,
                             xett_柔震盤停止,
                                 xett_等待柔震停止2秒,
                             xett_檢查柔震盤針資訊,
@@ -2937,8 +2941,8 @@ namespace InjectorInspector
                             xett_檢查NozzleZ是否在吐料高度,                    xett_檢查NozzleXYR是否移至上膛位,
                             xett_確認NozzleZ在吐料高度,                        xett_確認NozzleXYR移至上膛位,
 
-                            xett_Nozzle吸料停止,                               xett_擺放座蓋板打開,
-                            xett_Nozzle吐料開始,                               xett_檢查擺放座蓋板是否打開,  
+                            xett_Nozzle吐料開始,                               xett_擺放座蓋板打開,
+                            xett_Nozzle吸料停止,                               xett_檢查擺放座蓋板是否打開,  
                                                                                xett_擺放座蓋板打開等待1秒,
                             xett_Nozzle吐料等待,                               xett_確認擺放座蓋板打開,
                             xett_Nozzle吐料完成,
@@ -2957,10 +2961,9 @@ namespace InjectorInspector
                                                                                xett_擺放座開真空,
                                                                                xett_擺放座開真空等待1秒,
 
+                                                                               xett_吸嘴破真空,
                                                                                xett_Nozzle吸嘴關真空,
                                                                                xett_Nozzle吸嘴關真空等待1秒,
-
-                                                                               xett_吸嘴破真空,
                                                                                xett_吸嘴破真空等待1秒,
                                                                                xett_吸嘴破真空關閉,
 
@@ -2989,21 +2992,22 @@ namespace InjectorInspector
                                                                                xett_檢查載盤移植直針孔相機補正位,
                                                                                xett_確認載盤移植直針孔相機補正位,
 
-                                                                               xett_載盤XY移置直針位,
-                                                                               xett_檢查載盤XY是否移置直針位,
-                                                                               xett_確認載盤XY移置直針位,
+                                                                               /* bChambered */                                     /*  bRemove  */
+                                                                               xett_載盤XY移置直針位,                               xett_載盤XY移置抽料位,
+                                                                               xett_檢查載盤XY是否移置直針位,                       xett_檢查載盤XY是否移置抽料位,
+                                                                               xett_確認載盤XY移置直針位,                           xett_確認載盤XY移置抽料位,
 
-                                                                               xett_擺放座Z軸至植針位,
-                                                                               xett_檢查擺放座Z軸是否至植針位,
-                                                                               xett_確認擺放座Z軸至植針位,
+                                                                               xett_擺放座Z軸至植針位,                              xett_抽料Z軸至抽料位,
+                                                                               xett_檢查擺放座Z軸是否至植針位,                      xett_抽料Z軸是否至抽料位,
+                                                                               xett_確認擺放座Z軸至植針位,                          xett_抽料Z軸確認至抽料位,
 
-                                                                               xett_擺放座真空關閉,
-
-                                                                               xett_開啟流量閥1,
-                                                                               xett_開啟流量閥1等待1秒,
-
-                                                                               xett_植針吹氣電磁閥開啟,
+                                                                               xett_擺放座真空關閉,                                 xett_抽料電磁閥開啟,
+                                                                                                                                    xett_抽料電磁閥開啟等待1秒,
+                                                                               xett_植針吹氣電磁閥開啟,                             xett_抽料電磁閥關閉,
                                                                                xett_植針吹氣電磁閥開啟等待1秒,
+                                                                                                                                    xett_抽料Z軸回0,
+                                                                               xett_開啟流量閥1,                                    xett_抽料Z軸是否回0,
+                                                                               xett_開啟流量閥1等待1秒,                             xett_抽料Z軸確認回0,
 
                                                                                xett_植針吹氣電磁閥關閉,
 
@@ -3020,14 +3024,16 @@ namespace InjectorInspector
                                                                                xett_檢查擺放座Z軸是否再次至放料位,
                                                                                xett_確認擺放座Z軸再次至放料位,
 
+                                                                               /* bChambered */ /*+*/ /*  bRemove  */
                                                                                xett_載盤XY再次移置拍照檢查位,
                                                                                xett_檢查載盤XY是否再次移置拍照檢查位,
                                                                                xett_等待載盤XY再次移置拍照檢查位,
                                                                                xett_確認載盤XY再次移置拍照檢查位,
 
-                                                                               xett_檢查有無植針成功,
+                                                                               /* bChambered */                                     /*  bRemove  */
+                                                                               xett_檢查有無植針成功,                               xett_檢查有無抽針成功,
 
-
+                /* bTakePin */ /*+*/ /* bChambered */ /*+*/ /*  bRemove  */
                 xett_檢測是否還需要取針,
                     xett_還需要取針,
                         xett_重覆一開始的狀態,
@@ -3047,6 +3053,7 @@ namespace InjectorInspector
         public int  iTakePinFinishedCNT2 = 0;
         public bool bTakePin             = false;
         public bool bChambered           = false;
+        public bool bRemove              = false;
         public bool bPause               = false;
         public bool btmrStop             = false;
         public int  itmrStop             = 1;
@@ -3085,8 +3092,51 @@ namespace InjectorInspector
                 // 定義 PointA, PointB 的數據
                 Normal.Point idealA = new Normal.Point(387.62823, 93.82427);
                 Normal.Point idealB = new Normal.Point(419.62823, 107.82427);
-                Normal.Point realA = new Normal.Point(145.635, 616.217);
-                Normal.Point realB = new Normal.Point(113.659, 602.093);
+                Normal.Point realA = new Normal.Point(145.556, 616.323);
+                Normal.Point realB = new Normal.Point(113.584, 602.195);
+
+                // 宣告 PointForward 和 PointBackward 變數
+                Normal.Point idealAForward = new Normal.Point();
+                Normal.Point idealABackward = new Normal.Point();
+                Normal.Point realAForward = new Normal.Point();
+                Normal.Point realABackward = new Normal.Point();
+
+                // 呼叫計算並傳遞相應的點作為參數
+                CalculateAndPrintPlotData(idealA, idealB, out idealAForward, out idealABackward);
+                CalculateAndPrintPlotData(realA, realB, out realAForward, out realABackward);
+
+                // 計算PerspectiveTransform
+                double[,] idealCoords = { { idealA.X,         idealA.Y },
+                                          { idealAForward.X,  idealAForward.Y },
+                                          { idealB.X,         idealB.Y },
+                                          { idealABackward.X, idealABackward.Y } };
+
+                double[,] realCoords  = { { realA.X,         realA.Y },
+                                          { realABackward.X, realABackward.Y },
+                                          { realB.X,         realB.Y },
+                                          { realAForward.X,  realAForward.Y } };
+
+                ComputePerspectiveTransform(idealCoords, realCoords, PerspectiveTransformMatrix);
+
+                //// 求得映射轉換座標
+                //double X_In = idealA.X,
+                //       Y_In = idealA.Y;
+                //Normal.Point pMapping = MapToCoords(PerspectiveTransformMatrix, X_In, Y_In);
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        public void btn抽針_Click(object sender, EventArgs e)
+        {
+            bRemove = true;
+
+            {
+                Normal calculate = new Normal();
+
+                // 定義 PointA, PointB 的數據
+                Normal.Point idealA = new Normal.Point(387.62823, 93.82427);
+                Normal.Point idealB = new Normal.Point(419.62823, 107.82427);
+                Normal.Point realA = new Normal.Point(145.556, 616.323);
+                Normal.Point realB = new Normal.Point(113.584, 602.195);
 
                 // 宣告 PointForward 和 PointBackward 變數
                 Normal.Point idealAForward = new Normal.Point();
@@ -3147,7 +3197,7 @@ namespace InjectorInspector
 
             switch (xeTmrTakePin) {
                 case xe_tmr_takepin.xett_Empty:  
-                    if(bTakePin==true || bChambered==true) {
+                    if(bTakePin==true || bChambered==true || bRemove==true) {
                         int 求出取料循環次數 = int.Parse(txt_取料循環.Text);
                         if(求出取料循環次數>=1) { 
                             xeTmrTakePin = xe_tmr_takepin.xett_確定執行要取針;
@@ -3181,6 +3231,20 @@ namespace InjectorInspector
 
                         case xe_tmr_takepin.xett_載盤真空閥啟用:
                             clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_載盤真空閥) / 10, (int)(WMX3IO對照.pxeIO_載盤真空閥) % 10, 1);
+                            if(bRemove==true) {
+                                xeTmrTakePin = xe_tmr_takepin.xett_Socket1真空閥關掉;
+                            } else {
+                                xeTmrTakePin = xe_tmr_takepin.xett_Socket1真空閥啟用;
+                            }
+                            break;
+
+                        case xe_tmr_takepin.xett_Socket1真空閥啟用:
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Socket真空1) / 10, (int)(WMX3IO對照.pxeIO_Socket真空1) % 10, 1);
+                            xeTmrTakePin = xe_tmr_takepin.xett_Socket2真空閥啟用;
+                            break;
+
+                        case xe_tmr_takepin.xett_Socket2真空閥啟用:
+                            clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Socket真空2) / 10, (int)(WMX3IO對照.pxeIO_Socket真空2) % 10, 1);
                             xeTmrTakePin = xe_tmr_takepin.xett_取得柔震盤針資訊;
                             break;
 
@@ -3463,12 +3527,7 @@ namespace InjectorInspector
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認NozzleZ在吐料高度;
                                     }
                                 } break;
-                                case xe_tmr_takepin.xett_確認NozzleZ在吐料高度:            xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸料停止;  break;
-
-                                case xe_tmr_takepin.xett_Nozzle吸料停止:
-                                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)/10, (int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)%10, 1);
-                                    xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吐料開始;
-                                    break;
+                                case xe_tmr_takepin.xett_確認NozzleZ在吐料高度:            xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吐料開始;  break;
 
                                 case xe_tmr_takepin.xett_Nozzle吐料開始: {
 
@@ -3478,8 +3537,12 @@ namespace InjectorInspector
 
                                     clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴吸)/10,       (int)(WMX3IO對照.pxeIO_取料吸嘴吸)%10,       0);
 
-                                    xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吐料等待;
+                                    xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸料停止;
                                 } break;
+                                case xe_tmr_takepin.xett_Nozzle吸料停止:
+                                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)/10, (int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)%10, 1);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吐料等待;
+                                    break;
                                 case xe_tmr_takepin.xett_Nozzle吐料等待:            
                                     iTakePinFinishedCNT1++;
                                     if(iTakePinFinishedCNT1>=60) { 
@@ -3615,18 +3678,6 @@ namespace InjectorInspector
                                     iTakePinFinishedCNT1++;
                                     if(iTakePinFinishedCNT1>=20) { 
                                         iTakePinFinishedCNT1 = 0;
-                                        xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸嘴關真空; 
-                                    }
-                                    break;
-
-                                case xe_tmr_takepin.xett_Nozzle吸嘴關真空:              
-                                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)/10, (int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)%10, 1);
-                                    xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸嘴關真空等待1秒; 
-                                    break;
-                                case xe_tmr_takepin.xett_Nozzle吸嘴關真空等待1秒: 
-                                    iTakePinFinishedCNT1++;
-                                    if(iTakePinFinishedCNT1>=10) { 
-                                        iTakePinFinishedCNT1 = 0;
                                         xeTmrTakePin = xe_tmr_takepin.xett_吸嘴破真空; 
                                     }
                                     break;
@@ -3639,8 +3690,19 @@ namespace InjectorInspector
 
                                     clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴吸)/10,       (int)(WMX3IO對照.pxeIO_取料吸嘴吸)%10,       0);
 
-                                    xeTmrTakePin = xe_tmr_takepin.xett_吸嘴破真空等待1秒; 
+                                    xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸嘴關真空; 
                                 } break;
+                                case xe_tmr_takepin.xett_Nozzle吸嘴關真空:              
+                                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)/10, (int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)%10, 1);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸嘴關真空等待1秒; 
+                                    break;
+                                case xe_tmr_takepin.xett_Nozzle吸嘴關真空等待1秒: 
+                                    iTakePinFinishedCNT1++;
+                                    if(iTakePinFinishedCNT1>=10) { 
+                                        iTakePinFinishedCNT1 = 0;
+                                        xeTmrTakePin = xe_tmr_takepin.xett_吸嘴破真空等待1秒; 
+                                    }
+                                    break;
                                 case xe_tmr_takepin.xett_吸嘴破真空等待1秒:
                                     iTakePinFinishedCNT1++;
                                     if(iTakePinFinishedCNT1>=60) { 
@@ -3819,7 +3881,19 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_擺放座真空關閉:    
                                     clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_擺放座吸真空)/10, (int)(WMX3IO對照.pxeIO_擺放座吸真空)%10, 0);
-                                    xeTmrTakePin = xe_tmr_takepin.xett_開啟流量閥1;
+                                    xeTmrTakePin = xe_tmr_takepin.xett_植針吹氣電磁閥開啟;
+                                    break;
+
+                                case xe_tmr_takepin.xett_植針吹氣電磁閥開啟:       
+                                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_植針吹氣)/10, (int)(WMX3IO對照.pxeIO_植針吹氣)%10, 1);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_植針吹氣電磁閥開啟等待1秒; 
+                                    break;
+                                case xe_tmr_takepin.xett_植針吹氣電磁閥開啟等待1秒:  
+                                    iTakePinFinishedCNT1++;
+                                    if(iTakePinFinishedCNT1>=20) { 
+                                        iTakePinFinishedCNT1 = 0;
+                                        xeTmrTakePin = xe_tmr_takepin.xett_開啟流量閥1; 
+                                    }
                                     break;
 
                                 case xe_tmr_takepin.xett_開啟流量閥1: {
@@ -3839,21 +3913,9 @@ namespace InjectorInspector
                                         ScrollEventArgs xe = null;
                                         vcb流量閥_Scroll(vcb_植針吹氣流量閥, xe);
 
-                                        xeTmrTakePin = xe_tmr_takepin.xett_植針吹氣電磁閥開啟; 
-                                    }
-                                } break;
-
-                                case xe_tmr_takepin.xett_植針吹氣電磁閥開啟:       
-                                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_植針吹氣)/10, (int)(WMX3IO對照.pxeIO_植針吹氣)%10, 1);
-                                    xeTmrTakePin = xe_tmr_takepin.xett_植針吹氣電磁閥開啟等待1秒; 
-                                    break;
-                                case xe_tmr_takepin.xett_植針吹氣電磁閥開啟等待1秒:  
-                                    iTakePinFinishedCNT1++;
-                                    if(iTakePinFinishedCNT1>=20) { 
-                                        iTakePinFinishedCNT1 = 0;
                                         xeTmrTakePin = xe_tmr_takepin.xett_植針吹氣電磁閥關閉; 
                                     }
-                                    break;
+                                } break;
 
                                 case xe_tmr_takepin.xett_植針吹氣電磁閥關閉:       
                                     clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_植針吹氣)/10, (int)(WMX3IO對照.pxeIO_植針吹氣)%10, 0);
@@ -3962,6 +4024,152 @@ namespace InjectorInspector
                                     }
                                     break;
                     //-----------------------------------------------------------------------------------------------------------------------------------------------
+                    /*  bRemove  */
+                    case xe_tmr_takepin.xett_Socket1真空閥關掉: {
+                        clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Socket真空1) / 10, (int)(WMX3IO對照.pxeIO_Socket真空1) % 10, 0);
+                        xeTmrTakePin = xe_tmr_takepin.xett_Socket2真空閥關掉;
+                    } break;
+                    case xe_tmr_takepin.xett_Socket2真空閥關掉: {
+                        clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Socket真空2) / 10, (int)(WMX3IO對照.pxeIO_Socket真空2) % 10, 0);
+                        xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ縮回0保護;
+                    } break;
+                    case xe_tmr_takepin.xett_NozzleZ縮回0保護: {
+                        dbapiNozzleZ(0,                  40*8); 
+                        xeTmrTakePin = xe_tmr_takepin.xett_NozzleXY回家;
+                    } break;
+                    case xe_tmr_takepin.xett_NozzleXY回家: {
+                        double dbGetZ_1 = dbapiNozzleZ(dbRead, 0);
+                        if(dbGetZ_1 <= 0.1) { 
+                            dbapiNozzleX(dbNozzle安全原點X, 500*1);  
+                            dbapiNozzleY(dbNozzle安全原點Y, 100*1);      
+                            dbapiNozzleR(dbNozzle安全原點R, 360*8);  
+                            xeTmrTakePin = xe_tmr_takepin.xett_Socket相機移至拍照位22;
+                        }
+                    } break;
+                    case xe_tmr_takepin.xett_Socket相機移至拍照位22: {
+                        dbapiIAI(22.0);
+                        xeTmrTakePin = xe_tmr_takepin.xett_擺放座Z軸縮回;
+                    } break;
+                    case xe_tmr_takepin.xett_擺放座Z軸縮回: {
+                        dbapiSetZ(12, 33);
+                        xeTmrTakePin = xe_tmr_takepin.xett_3D掃描電動缸縮回;
+                    } break;
+                    case xe_tmr_takepin.xett_3D掃描電動缸縮回: {
+                         dbapJoDell3D掃描(10);
+                        xeTmrTakePin = xe_tmr_takepin.xett_吸針嘴電動缸縮回;
+                    } break;
+                    case xe_tmr_takepin.xett_吸針嘴電動缸縮回: {
+                        dbapJoDell吸針嘴(10);
+                        xeTmrTakePin = xe_tmr_takepin.xett_吸針接料盒就位;
+                    } break;
+                    case xe_tmr_takepin.xett_吸針接料盒就位: {
+                        clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_接料區氣桿)       / 10, (int)(WMX3IO對照.pxeIO_接料區氣桿)       % 10, 1);
+                        clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_收料區缸)         / 10, (int)(WMX3IO對照.pxeIO_收料區缸)         % 10, 0);
+                        xeTmrTakePin = xe_tmr_takepin.xett_Nozzle電磁閥關閉;
+                    } break;
+                    case xe_tmr_takepin.xett_Nozzle電磁閥關閉: {
+                        vcb_吸嘴破真空流量閥.Value = 100-0;
+                        ScrollEventArgs xe = null;
+                        vcb流量閥_Scroll(vcb_吸嘴破真空流量閥, xe);
+
+                        clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴吸)/10,       (int)(WMX3IO對照.pxeIO_取料吸嘴吸)%10,       0);
+                        clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)/10, (int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)%10, 0);
+                        xeTmrTakePin = xe_tmr_takepin.xett_植針座電磁閥關閉;
+                    } break;         
+                    case xe_tmr_takepin.xett_植針座電磁閥關閉: {
+                        vcb_植針吹氣流量閥.Value = 100-0;
+                        ScrollEventArgs xe = null;
+                        vcb流量閥_Scroll(vcb_植針吹氣流量閥, xe);
+
+                        clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_擺放座蓋板)/10, (int)(WMX3IO對照.pxeIO_擺放座蓋板)%10, 0);
+                        clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_擺放座吸真空)/10, (int)(WMX3IO對照.pxeIO_擺放座吸真空)%10, 0);
+                        clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_植針吹氣)/10, (int)(WMX3IO對照.pxeIO_植針吹氣)%10, 0);
+                        xeTmrTakePin = xe_tmr_takepin.xett_以上11項;
+                    } break;
+                    case xe_tmr_takepin.xett_以上11項: {
+                        xeTmrTakePin = xe_tmr_takepin.xett_載盤XY移置抽料位;
+                    } break;
+                    case xe_tmr_takepin.xett_載盤XY移置抽料位: {
+                        const double SetPinOffsetX =  2.796;
+                        const double SetPinOffsetY =-49.011;
+
+                        button7_Click(sender, e);
+
+                        double dbTargetX = dbPinHolePositionX + SetPinOffsetX;
+                        double dbTargetY = dbPinHolePositionY + SetPinOffsetY;
+
+                        dbapiCarrierX(dbTargetX, 190*0.8);
+                        dbapiCarrierY(dbTargetY, 800*0.8);
+
+                        dbapiIAI(22.0);
+
+                        xeTmrTakePin = xe_tmr_takepin.xett_檢查載盤XY是否移置抽料位;
+                    } break;
+                    case xe_tmr_takepin.xett_檢查載盤XY是否移置抽料位: {
+                        double dbX = dbapiCarrierX(dbRead, 0);
+                        double dbY = dbapiCarrierY(dbRead, 0);
+
+                        const double SetPinOffsetX =  2.796;
+                        const double SetPinOffsetY =-49.011;
+
+                        double dbTargetX = dbPinHolePositionX + SetPinOffsetX;
+                        double dbTargetY = dbPinHolePositionY + SetPinOffsetY;
+                        if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
+                            (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
+
+                            xeTmrTakePin = xe_tmr_takepin.xett_確認載盤XY移置抽料位;
+                        }
+                    } break;
+                    case xe_tmr_takepin.xett_確認載盤XY移置抽料位: {
+                        xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸至抽料位;
+                    } break;
+                    case xe_tmr_takepin.xett_抽料Z軸至抽料位: {
+                        dbapJoDell吸針嘴(14.8);
+                        xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸是否至抽料位;
+                    } break;
+                    case xe_tmr_takepin.xett_抽料Z軸是否至抽料位: {
+                        double dbZ = dbapJoDell吸針嘴(dbRead);
+                        double dbTargetZ = 14.8;
+                        if( (dbTargetZ*0.99 <= dbZ && dbZ <= dbTargetZ*1.01) ) { 
+                            xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸確認至抽料位;
+                        }
+                    } break;
+                    case xe_tmr_takepin.xett_抽料Z軸確認至抽料位: {
+                        xeTmrTakePin = xe_tmr_takepin.xett_抽料電磁閥開啟;
+                    } break;
+                    case xe_tmr_takepin.xett_抽料電磁閥開啟: {
+                        clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_吸料真空電磁閥)   / 10, (int)(WMX3IO對照.pxeIO_吸料真空電磁閥)   % 10, 1);
+                        xeTmrTakePin = xe_tmr_takepin.xett_抽料電磁閥開啟等待1秒;
+                    } break;
+                    case xe_tmr_takepin.xett_抽料電磁閥開啟等待1秒: {
+                        iTakePinFinishedCNT1++;
+                        if(iTakePinFinishedCNT1>=20) { 
+                            iTakePinFinishedCNT1 = 0;
+                            xeTmrTakePin = xe_tmr_takepin.xett_抽料電磁閥關閉; 
+                        }
+                    } break;
+                    case xe_tmr_takepin.xett_抽料電磁閥關閉: {
+                        clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_吸料真空電磁閥)   / 10, (int)(WMX3IO對照.pxeIO_吸料真空電磁閥)   % 10, 0);
+                        xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸回0; 
+                    } break;
+                    case xe_tmr_takepin.xett_抽料Z軸回0: {
+                        dbapJoDell吸針嘴(10);
+                        xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸是否回0; 
+                    } break;
+                    case xe_tmr_takepin.xett_抽料Z軸是否回0: {
+                        double dbZ = dbapJoDell吸針嘴(dbRead);
+                        double dbTargetZ = 10;
+                        if( (dbTargetZ*0.99 <= dbZ && dbZ <= dbTargetZ*1.01) ) { 
+                            xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸確認回0;
+                        }
+                    } break;
+                    case xe_tmr_takepin.xett_抽料Z軸確認回0: {
+                        xeTmrTakePin = xe_tmr_takepin.xett_檢查有無抽針成功;
+                    } break;
+                    case xe_tmr_takepin.xett_檢查有無抽針成功: {
+                        xeTmrTakePin = xe_tmr_takepin.xett_檢測是否還需要取針;
+                    } break;
+                    //-----------------------------------------------------------------------------------------------------------------------------------------------                                    
                     case xe_tmr_takepin.xett_檢測是否還需要取針: {    
                         int 求出取料循環次數 = int.Parse(txt_取料循環.Text);
                         求出取料循環次數--;
@@ -4012,10 +4220,9 @@ namespace InjectorInspector
                             case xe_tmr_takepin.xett_確認NozzleXYR在安全位置:              xeTmrTakePin = xe_tmr_takepin.xett_取針結束;  break;
 
                     case xe_tmr_takepin.xett_取針結束:
-                        
-
                         bTakePin   = false; 
                         bChambered = false;
+                        bRemove    = false;
                         xeTmrTakePin = xe_tmr_takepin.xett_Empty;  
                         break;
                 case xe_tmr_takepin.xett_End:           
