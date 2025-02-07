@@ -1725,7 +1725,7 @@ namespace Inspector
             }
             Loc = result;
             owner.BeginInvoke(new Action(helper.AdjustView));
-            return targetIndex >= 0;
+            return ((targetIndex >= 0) && (Math.Abs( result.X) < 0.2) && (Math.Abs(result.Y) < 0.2)) ;
         }
 
         public bool 校正孔尋找(out Vector3 Loc)
