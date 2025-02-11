@@ -3153,8 +3153,8 @@ namespace InjectorInspector
                 // 定義 PointA, PointB 的數據
                 Normal.Point idealA = new Normal.Point(387.62823, 93.82427);
                 Normal.Point idealB = new Normal.Point(419.62823, 107.82427);
-                Normal.Point realA = new Normal.Point(145.556, 616.323);
-                Normal.Point realB = new Normal.Point(113.584, 602.195);
+                Normal.Point realA = new Normal.Point(145.481, 616.42);
+                Normal.Point realB = new Normal.Point(113.511, 602.293);
 
                 // 宣告 PointForward 和 PointBackward 變數
                 Normal.Point idealAForward = new Normal.Point();
@@ -3196,8 +3196,8 @@ namespace InjectorInspector
                 // 定義 PointA, PointB 的數據
                 Normal.Point idealA = new Normal.Point(387.62823, 93.82427);
                 Normal.Point idealB = new Normal.Point(419.62823, 107.82427);
-                Normal.Point realA = new Normal.Point(145.556, 616.323);
-                Normal.Point realB = new Normal.Point(113.584, 602.195);
+                Normal.Point realA = new Normal.Point(145.481, 616.42);
+                Normal.Point realB = new Normal.Point(113.511, 602.293);
 
                 // 宣告 PointForward 和 PointBackward 變數
                 Normal.Point idealAForward = new Normal.Point();
@@ -4394,17 +4394,29 @@ namespace InjectorInspector
                     (float)(2 * circle.Diameter / 2 * ScaleFactor)
                 );
 
-                if (circle.Display == false) // 隱藏圓
+                if (circle.Display == false) // 隱藏
                 {
                     fillBrush = new SolidBrush(HiddenNeedlesColor);
+                }
+                else if (circle.Disable == true) // 禁用
+                {
+                    fillBrush = new SolidBrush(EnableNeedlesColor);
+                }
+                else if (circle.Reserve1 == true) // 保留1
+                {
+                    fillBrush = new SolidBrush(Reserve1NeedlesColor);
                 }
                 else if (circle.Place == true) // 植針圓
                 {
                     fillBrush= new SolidBrush(PlaceNeedlesColor);
                 }
-                else if (circle.Remove == true) // 植針圓
+                else if (circle.Remove == true) // 取針圓
                 {
                     fillBrush = new SolidBrush(RemoveNeedlesColor);
+                }
+                else if (circle.Replace == true) // 換針圓
+                {
+                    fillBrush = new SolidBrush(ReplaceNeedlesColor);
                 }
                 else // 預設圓
                 {
@@ -4549,6 +4561,27 @@ namespace InjectorInspector
             {
                 switch (Control.ModifierKeys)
                 {
+                    case Keys.Control:
+
+                        PrevMousePos = e.Location;
+
+                        if (HighlightedNeedle != null)
+                        {
+                            FocusedNeedle = HighlightedNeedle;
+
+                            SelectedNeedles.Add(HighlightedNeedle);
+
+                            clear_grp_NeedleInfo(grp_NeedleInfo);
+                        }
+                        else
+                        {
+                            FocusedNeedle = null;
+
+                            clear_grp_NeedleInfo(grp_NeedleInfo);
+                        }
+
+                        break;
+
                     case Keys.Shift:
 
                         clear_grp_NeedleInfo(grp_NeedleInfo);
@@ -4690,8 +4723,8 @@ namespace InjectorInspector
                         Json.Needles[circle.Index].Display = true;
                         break;
 
-                    case "啟用":
-                        Json.Needles[circle.Index].Enable = true;
+                    case "禁用":
+                        Json.Needles[circle.Index].Disable = true;
                         break;
 
                     case "保留":
@@ -4703,7 +4736,7 @@ namespace InjectorInspector
                         Json.Needles[circle.Index].Remove   = false;
                         Json.Needles[circle.Index].Replace  = false;
                         Json.Needles[circle.Index].Display  = true;
-                        Json.Needles[circle.Index].Enable   = false;
+                        Json.Needles[circle.Index].Disable   = false;
                         Json.Needles[circle.Index].Reserve1 = false;
 
                         show_grp_NeedleInfo(grp_NeedleInfo);
@@ -4715,7 +4748,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public void grp_NeedleInfo_ChildControlChanged(object sender, EventArgs e)
         {
-            if (FocusedNeedle != null)
+            if (SelectedNeedles.Count() != 0)
             {
                 switch (sender)
                 {
@@ -4738,16 +4771,24 @@ namespace InjectorInspector
                         switch (radioButton.Name)
                         {
                             case "rad_Place":
-                                Json.Needles[FocusedNeedle.Index].Place = rad_Place.Checked;
-                                //dgv_Needles.Rows[FocusedNeedle.Index].Cells["Place"].Value = rad_Place.Checked;
-                                break;
+                                foreach (var SelectedNeedle in SelectedNeedles)
+                                {
+                                    Json.Needles[SelectedNeedle.Index].Place = rad_Place.Checked;
+                                }
+                            break;
 
                             case "rad_Remove":
-                                Json.Needles[FocusedNeedle.Index].Remove = rad_Remove.Checked;
-                                break;
+                                foreach (var SelectedNeedle in SelectedNeedles)
+                                {
+                                    Json.Needles[SelectedNeedle.Index].Remove = rad_Remove.Checked;
+                                }
+                            break;
 
                             case "rad_Replace":
-                                Json.Needles[FocusedNeedle.Index].Replace = rad_Replace.Checked;
+                                foreach (var SelectedNeedle in SelectedNeedles)
+                                {
+                                    Json.Needles[SelectedNeedle.Index].Replace = rad_Replace.Checked;
+                                }
                                 break;
                         }
 
@@ -4758,15 +4799,32 @@ namespace InjectorInspector
                         switch (checkBox.Name)
                         {
                             case "chk_Display":
-                                Json.Needles[FocusedNeedle.Index].Display = chk_Display.Checked;
+                                foreach (var SelectedNeedle in SelectedNeedles)
+                                {
+                                    Json.Needles[SelectedNeedle.Index].Display = chk_Display.Checked;
+                                }
                                 break;
 
-                            case "chk_Enable":
-                                Json.Needles[FocusedNeedle.Index].Enable = chk_Enable.Checked;
+                            case "chk_Disable":
+                                foreach (var SelectedNeedle in SelectedNeedles)
+                                {
+                                    Json.Needles[SelectedNeedle.Index].Disable = chk_Disable.Checked;
+
+                                    chk_Reserve1.Checked = false;
+                                    Json.Needles[SelectedNeedle.Index].Reserve1 = false;
+                                }
+                                
                                 break;
 
                             case "chk_Reserve1":
-                                Json.Needles[FocusedNeedle.Index].Reserve1 = chk_Reserve1.Checked;
+                                foreach (var SelectedNeedle in SelectedNeedles)
+                                {
+                                    Json.Needles[SelectedNeedle.Index].Reserve1 = chk_Reserve1.Checked;
+
+                                    chk_Disable.Checked = false;
+                                    Json.Needles[SelectedNeedle.Index].Disable = false;
+                                }
+                               
                                 break;
                         }
                         break;
@@ -4775,12 +4833,15 @@ namespace InjectorInspector
                         switch (button.Name)
                         {
                             case "btn_Reset":
-                                Json.Needles[FocusedNeedle.Index].Place = false;
-                                Json.Needles[FocusedNeedle.Index].Remove = false;
-                                Json.Needles[FocusedNeedle.Index].Replace = false;
-                                Json.Needles[FocusedNeedle.Index].Display = true;
-                                Json.Needles[FocusedNeedle.Index].Enable = false;
-                                Json.Needles[FocusedNeedle.Index].Reserve1 = false;
+                                foreach (var SelectedNeedle in SelectedNeedles)
+                                {
+                                    Json.Needles[SelectedNeedle.Index].Place = false;
+                                    Json.Needles[SelectedNeedle.Index].Remove = false;
+                                    Json.Needles[SelectedNeedle.Index].Replace = false;
+                                    Json.Needles[SelectedNeedle.Index].Display = true;
+                                    Json.Needles[SelectedNeedle.Index].Disable = false;
+                                    Json.Needles[SelectedNeedle.Index].Reserve1 = false;
+                                }
 
                                 show_grp_NeedleInfo(grp_NeedleInfo);
 
@@ -4819,15 +4880,15 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
-        public void chk_Enable_CheckedChanged(object sender, EventArgs e)
+        public void chk_Disable_CheckedChanged(object sender, EventArgs e)
         {
-            if (chk_Enable.Checked)
+            if (chk_Disable.Checked)
             {
-                chk_Enable.BackColor = Color.Red;
+                chk_Disable.BackColor = Color.Red;
             }
             else
             {
-                chk_Enable.BackColor = SystemColors.Control;
+                chk_Disable.BackColor = SystemColors.Control;
             }
         }
         //---------------------------------------------------------------------------------------

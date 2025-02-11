@@ -342,7 +342,7 @@ namespace InjectorInspector
             this.rad_Place = new System.Windows.Forms.RadioButton();
             this.lbl_Index = new System.Windows.Forms.Label();
             this.txt_Index = new System.Windows.Forms.TextBox();
-            this.chk_Enable = new System.Windows.Forms.CheckBox();
+            this.chk_Disable = new System.Windows.Forms.CheckBox();
             this.chk_Display = new System.Windows.Forms.CheckBox();
             this.txt_Diameter = new System.Windows.Forms.TextBox();
             this.lbl_Diameter = new System.Windows.Forms.Label();
@@ -435,12 +435,12 @@ namespace InjectorInspector
             this.tsm_File = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_OpenFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_SaveFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmi_CloseFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
             this.ttp_NeedleInfo = new System.Windows.Forms.ToolTip(this.components);
             this.tmrBarCodeScanner = new System.Windows.Forms.Timer(this.components);
-            this.tsmi_CloseFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -3911,7 +3911,7 @@ namespace InjectorInspector
             this.grp_NeedleInfo.Controls.Add(this.rad_Place);
             this.grp_NeedleInfo.Controls.Add(this.lbl_Index);
             this.grp_NeedleInfo.Controls.Add(this.txt_Index);
-            this.grp_NeedleInfo.Controls.Add(this.chk_Enable);
+            this.grp_NeedleInfo.Controls.Add(this.chk_Disable);
             this.grp_NeedleInfo.Controls.Add(this.chk_Display);
             this.grp_NeedleInfo.Controls.Add(this.txt_Diameter);
             this.grp_NeedleInfo.Controls.Add(this.lbl_Diameter);
@@ -4027,19 +4027,19 @@ namespace InjectorInspector
             this.txt_Index.Size = new System.Drawing.Size(85, 28);
             this.txt_Index.TabIndex = 23;
             // 
-            // chk_Enable
+            // chk_Disable
             // 
-            this.chk_Enable.Appearance = System.Windows.Forms.Appearance.Button;
-            this.chk_Enable.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.chk_Enable.Location = new System.Drawing.Point(451, 41);
-            this.chk_Enable.Margin = new System.Windows.Forms.Padding(2);
-            this.chk_Enable.Name = "chk_Enable";
-            this.chk_Enable.Size = new System.Drawing.Size(60, 23);
-            this.chk_Enable.TabIndex = 21;
-            this.chk_Enable.Text = "啟用";
-            this.chk_Enable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.chk_Enable.UseVisualStyleBackColor = true;
-            this.chk_Enable.CheckedChanged += new System.EventHandler(this.chk_Enable_CheckedChanged);
+            this.chk_Disable.Appearance = System.Windows.Forms.Appearance.Button;
+            this.chk_Disable.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.chk_Disable.Location = new System.Drawing.Point(451, 41);
+            this.chk_Disable.Margin = new System.Windows.Forms.Padding(2);
+            this.chk_Disable.Name = "chk_Disable";
+            this.chk_Disable.Size = new System.Drawing.Size(60, 23);
+            this.chk_Disable.TabIndex = 21;
+            this.chk_Disable.Text = "禁用";
+            this.chk_Disable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chk_Disable.UseVisualStyleBackColor = true;
+            this.chk_Disable.CheckedChanged += new System.EventHandler(this.chk_Disable_CheckedChanged);
             // 
             // chk_Display
             // 
@@ -4240,7 +4240,7 @@ namespace InjectorInspector
             this.tsmi_Enable.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tsmi_Enable.Name = "tsmi_Enable";
             this.tsmi_Enable.Size = new System.Drawing.Size(114, 22);
-            this.tsmi_Enable.Text = "啟用";
+            this.tsmi_Enable.Text = "禁用";
             // 
             // tsmi_Reset
             // 
@@ -4980,7 +4980,7 @@ namespace InjectorInspector
             // tsmi_OpenFile
             // 
             this.tsmi_OpenFile.Name = "tsmi_OpenFile";
-            this.tsmi_OpenFile.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_OpenFile.Size = new System.Drawing.Size(114, 22);
             this.tsmi_OpenFile.Text = "開啟";
             this.tsmi_OpenFile.Click += new System.EventHandler(this.tsmi_OpenFile_Click);
             // 
@@ -4988,9 +4988,16 @@ namespace InjectorInspector
             // 
             this.tsmi_SaveFile.Enabled = false;
             this.tsmi_SaveFile.Name = "tsmi_SaveFile";
-            this.tsmi_SaveFile.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_SaveFile.Size = new System.Drawing.Size(114, 22);
             this.tsmi_SaveFile.Text = "儲存";
             this.tsmi_SaveFile.Click += new System.EventHandler(this.tsmi_SaveFile_Click);
+            // 
+            // tsmi_CloseFile
+            // 
+            this.tsmi_CloseFile.Name = "tsmi_CloseFile";
+            this.tsmi_CloseFile.Size = new System.Drawing.Size(114, 22);
+            this.tsmi_CloseFile.Text = "關閉";
+            this.tsmi_CloseFile.Click += new System.EventHandler(this.tsmi_CloseFile_Click);
             // 
             // tmr_Sequense
             // 
@@ -5014,13 +5021,6 @@ namespace InjectorInspector
             this.tmrBarCodeScanner.Enabled = true;
             this.tmrBarCodeScanner.Interval = 10;
             this.tmrBarCodeScanner.Tick += new System.EventHandler(this.tmrBarCodeScanner_Tick);
-            // 
-            // tsmi_CloseFile
-            // 
-            this.tsmi_CloseFile.Name = "tsmi_CloseFile";
-            this.tsmi_CloseFile.Size = new System.Drawing.Size(180, 22);
-            this.tsmi_CloseFile.Text = "關閉";
-            this.tsmi_CloseFile.Click += new System.EventHandler(this.tsmi_CloseFile_Click);
             // 
             // Form1
             // 
@@ -5095,7 +5095,7 @@ namespace InjectorInspector
                         break;
 
                     case CheckBox checkBox:
-                        checkBox.CheckedChanged += grp_NeedleInfo_ChildControlChanged;
+                        checkBox.Click += grp_NeedleInfo_ChildControlChanged;
                         break;
 
                     case Button button:
@@ -5490,7 +5490,7 @@ namespace InjectorInspector
         public System.Windows.Forms.RadioButton rad_Place;
         public System.Windows.Forms.Label lbl_Index;
         public System.Windows.Forms.TextBox txt_Index;
-        public System.Windows.Forms.CheckBox chk_Enable;
+        public System.Windows.Forms.CheckBox chk_Disable;
         public System.Windows.Forms.CheckBox chk_Display;
         public System.Windows.Forms.TextBox txt_Diameter;
         public System.Windows.Forms.Label lbl_Diameter;

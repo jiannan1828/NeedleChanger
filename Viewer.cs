@@ -29,10 +29,13 @@ namespace InjectorInspector
 
         public static readonly Color DefaltNeedleColor = Color.ForestGreen;
         public static readonly Color HiddenNeedlesColor = Color.FromArgb(64, Color.ForestGreen);
-        public static readonly Color FocusedNeedleColor = Color.Goldenrod;
+        public static readonly Color EnableNeedlesColor = Color.Black;
+        public static readonly Color Reserve1NeedlesColor = Color.Gray;
+        public static readonly Color FocusedNeedleColor = Color.MediumVioletRed;
         public static readonly Color SelectedNeedlesColor = Color.MediumVioletRed;
         public static readonly Color PlaceNeedlesColor = Color.Red;
         public static readonly Color RemoveNeedlesColor = Color.Blue;
+        public static readonly Color ReplaceNeedlesColor = Color.Goldenrod;
 
         public static Boundary Json_Boundary = new Boundary();
         public static Boundary Drag_Boundary = new Boundary();
@@ -83,7 +86,7 @@ namespace InjectorInspector
                 public bool   Remove   { get; set; }
                 public bool   Replace  { get; set; }
                 public bool   Display  { get; set; }
-                public bool   Enable   { get; set; }
+                public bool   Disable   { get; set; }
                 public bool   Reserve1 { get; set; }
                 public string Reserve2 { get; set; }
                 public string Reserve3 { get; set; }
@@ -257,7 +260,7 @@ namespace InjectorInspector
                     Remove = false,
                     Replace = false,
                     Display = true, // 顯示預設為 true
-                    Enable = false
+                    Disable = false 
                 });
 
                 index++;
@@ -439,8 +442,8 @@ namespace InjectorInspector
                                 case "chk_Display":
                                     checkBox.Checked = FocusedNeedle.Display;
                                     break;
-                                case "chk_Enable":
-                                    checkBox.Checked = FocusedNeedle.Enable;
+                                case "chk_Disable":
+                                    checkBox.Checked = FocusedNeedle.Disable;
                                     break;
                                 case "chk_Reserve1":
                                     checkBox.Checked = FocusedNeedle.Reserve1;
