@@ -194,37 +194,37 @@
   {
     "strLabel": "\u8F09\u76E4X\u8EF8",
     "u32Index": 33,
-    "dbPosition": 92.241,
+    "dbPosition": 91.947999999999993,
     "strNote": "\u6821\u6B63\u8F09\u76E4\u5C0F\u5B54\u4F4D"
   },
   {
     "strLabel": "\u8F09\u76E4Y\u8EF8",
     "u32Index": 34,
-    "dbPosition": 609.12,
+    "dbPosition": 609.34699999999998,
     "strNote": "\u6821\u6B63\u8F09\u76E4\u5C0F\u5B54\u4F4D"
   },
   {
     "strLabel": "\u8F09\u76E4X\u8EF8",
     "u32Index": 35,
-    "dbPosition": 145.63499999999999,
+    "dbPosition": 145.48099999999999,
     "strNote": "Socket\u5B9A\u4F4D\u5B54Ax"
   },
   {
     "strLabel": "\u8F09\u76E4Y\u8EF8",
     "u32Index": 36,
-    "dbPosition": 616.21699999999998,
+    "dbPosition": 616.41999999999996,
     "strNote": "Socket\u5B9A\u4F4D\u5B54Ay"
   },
   {
     "strLabel": "\u8F09\u76E4X\u8EF8",
     "u32Index": 37,
-    "dbPosition": 113.65900000000001,
+    "dbPosition": 113.511,
     "strNote": "Socket\u5B9A\u4F4D\u5B54Bx"
   },
   {
     "strLabel": "\u8F09\u76E4Y\u8EF8",
     "u32Index": 38,
-    "dbPosition": 602.09299999999996,
+    "dbPosition": 602.29300000000001,
     "strNote": "Socket\u5B9A\u4F4D\u5B54By"
   }
 ]

@@ -3153,8 +3153,8 @@ namespace InjectorInspector
                 // 定義 PointA, PointB 的數據
                 Normal.Point idealA = new Normal.Point(387.62823, 93.82427);
                 Normal.Point idealB = new Normal.Point(419.62823, 107.82427);
-                Normal.Point realA = new Normal.Point(145.481, 616.42);
-                Normal.Point realB = new Normal.Point(113.511, 602.293);
+                Normal.Point realA = new Normal.Point(145.471, 616.43);
+                Normal.Point realB = new Normal.Point(113.493, 602.309);
 
                 // 宣告 PointForward 和 PointBackward 變數
                 Normal.Point idealAForward = new Normal.Point();
@@ -3196,8 +3196,8 @@ namespace InjectorInspector
                 // 定義 PointA, PointB 的數據
                 Normal.Point idealA = new Normal.Point(387.62823, 93.82427);
                 Normal.Point idealB = new Normal.Point(419.62823, 107.82427);
-                Normal.Point realA = new Normal.Point(145.481, 616.42);
-                Normal.Point realB = new Normal.Point(113.511, 602.293);
+                Normal.Point realA = new Normal.Point(145.471, 616.43);
+                Normal.Point realB = new Normal.Point(113.493, 602.309);
 
                 // 宣告 PointForward 和 PointBackward 變數
                 Normal.Point idealAForward = new Normal.Point();
@@ -3925,8 +3925,8 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_確認載盤移植直針孔相機補正位:                            xeTmrTakePin = xe_tmr_takepin.xett_載盤XY移置直針位;  break;
 
                                 case xe_tmr_takepin.xett_載盤XY移置直針位: {  
-                                    const double SetPinOffsetX =  2.255;
-                                    const double SetPinOffsetY = 54.462;
+                                    const double SetPinOffsetX = 2.463;
+                                    const double SetPinOffsetY = 54.276;
 
                                     double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX + SetPinOffsetX;
                                     double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY + SetPinOffsetY;
@@ -3940,8 +3940,8 @@ namespace InjectorInspector
                                     double dbX = dbapiCarrierX(dbRead, 0);
                                     double dbY = dbapiCarrierY(dbRead, 0);
 
-                                    const double SetPinOffsetX =  2.255;
-                                    const double SetPinOffsetY = 54.462;
+                                    const double SetPinOffsetX = 2.463;
+                                    const double SetPinOffsetY = 54.276;
 
                                     double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX + SetPinOffsetX;
                                     double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY + SetPinOffsetY;
