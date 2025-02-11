@@ -3273,7 +3273,8 @@ namespace InjectorInspector
                                 } else if(bChambered == true || bRemove == true) {
                                     //讀DXF
                                     btn_取得目標座標_Click(sender, e);
-
+                                    iPC = 0;
+                                    iRC = 0;
                                     if(bChambered == true || bRemove == true) {
                                         //讀DXF確定有資料
                                     } else {  //if(bChambered == false && bRemove == false) {
@@ -3850,7 +3851,6 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_取得植針目標座標: {
                                     btn_取得目標座標_Click(sender, e);
-
                                     if(bChambered == false) { 
                                         //沒針種
                                         //要回home跟保護位
@@ -4267,8 +4267,14 @@ namespace InjectorInspector
                         int 求出取料循環次數 = int.Parse(txt_取料循環.Text);
                         求出取料循環次數--;
                         txt_取料循環.Text = 求出取料循環次數.ToString();
-                        if(求出取料循環次數>=1 && btmrStop==false) { 
-                            xeTmrTakePin = xe_tmr_takepin.xett_還需要取針;  
+
+                        if(求出取料循環次數>=1 && btmrStop==false) {  
+                            if(iPC == 0 && iRC == 0) {
+                                btmrStop = false;
+                                xeTmrTakePin = xe_tmr_takepin.xett_回Home保護;
+                            } else {
+                                xeTmrTakePin = xe_tmr_takepin.xett_還需要取針;
+                            }
                         } else {
                             btmrStop = false;
                             xeTmrTakePin = xe_tmr_takepin.xett_不需要取針;
