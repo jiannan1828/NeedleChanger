@@ -218,46 +218,100 @@ namespace InjectorInspector
         double dbPinHolePositionX = 0.0;
         double dbPinHolePositionY = 0.0;
         int    iHoleIndex         = 0;
-        int iPC = 0;
-        public void button7_Click(object sender, EventArgs e)
+        int    iPC = 0, iRC = 0;
+        public void btn_取得目標座標_Click(object sender, EventArgs e)
         {
-            //找下一個要植針的ID
-            if(iPC == 0) {
-                iPC = find_PlaceNeedles();
+            if (bRemove == true) {
+                //找下一個要抽針的ID
+                bChambered = false;
+                bTakePin = false;
+                iPC = 0;
+                if (iRC == 0) {
+                    iRC = find_RemoveNeedles();
+                }
+
+                try {
+                    iHoleIndex = RemoveNeedles[0].Index;  // 嘗試訪問索引 0 的元素
+                } catch (Exception ex) {
+                    // 捕捉其他類型的異常
+                    Console.WriteLine("發生錯誤：" + ex.Message);
+                    iHoleIndex = -1;
+                }
+
+                //取得目前抽針ID的位置
+                if (iHoleIndex == -1) {
+                    //沒拿到
+                    bRemove = false;
+                } else if (iHoleIndex >= 0) {
+                    //有拿到
+                    double dbX = 0.0, dbY = 0.0;
+
+                    find_Needle_Position(PerspectiveTransformMatrix, iHoleIndex, ref dbX, ref dbY);
+                    FocusedNeedle = RemoveNeedles[0];
+                    show_grp_NeedleInfo(grp_NeedleInfo);
+                    pic_Needles.Refresh();
+
+                    txt_HoldIndex.Text = iHoleIndex.ToString();
+
+                    dbPinHolePositionX = dbX;
+                    dbPinHolePositionY = dbY;
+
+                    label14.Text = dbX.ToString();
+                    label15.Text = dbY.ToString();
+
+                    //刪除目前的抽針ID
+                    RemoveNeedles.RemoveAt(0);
+                    iRC = RemoveNeedles.Count();
+                }
+            } else 
+            
+            if (bChambered == true) {
+                //找下一個要植針的ID
+                bRemove = false;
+                bTakePin = false;
+                iRC = 0;
+                if (iPC == 0) {
+                    iPC = find_PlaceNeedles();
+                }
+
+                try {
+                    iHoleIndex = PlaceNeedles[0].Index;  // 嘗試訪問索引 0 的元素
+                } catch (Exception ex) {
+                    // 捕捉其他類型的異常
+                    Console.WriteLine("發生錯誤：" + ex.Message);
+                    iHoleIndex = -1;
+                }
+
+                //取得目前植針ID的位置
+                if (iHoleIndex == -1) {
+                    //沒拿到
+                    bChambered = false;
+                } else if (iHoleIndex >= 0) {
+                    //有拿到
+                    double dbX = 0.0, dbY = 0.0;
+
+                    find_Needle_Position(PerspectiveTransformMatrix, iHoleIndex, ref dbX, ref dbY);
+                    FocusedNeedle = PlaceNeedles[0];
+                    show_grp_NeedleInfo(grp_NeedleInfo);
+                    pic_Needles.Refresh();
+
+                    txt_HoldIndex.Text = iHoleIndex.ToString();
+
+                    dbPinHolePositionX = dbX;
+                    dbPinHolePositionY = dbY;
+
+                    label14.Text = dbX.ToString();
+                    label15.Text = dbY.ToString();
+
+                    //刪除目前的植針ID
+                    PlaceNeedles.RemoveAt(0);
+                    iPC = PlaceNeedles.Count();
+                }
+            } else 
+            
+            if (bTakePin == true) {
+
             }
-
-            try {
-                iHoleIndex = PlaceNeedles[0].Index;  // 嘗試訪問索引 0 的元素
-            } catch (Exception ex) {
-                // 捕捉其他類型的異常
-                Console.WriteLine("發生錯誤：" + ex.Message);
-                iHoleIndex = -1;
-            }
-
-            //取得目前植針ID的位置
-            if(iHoleIndex == -1) { 
-                //沒拿到
-            } else if (iHoleIndex >= 0) {
-                //沒拿到
-                double dbX = 0.0, dbY = 0.0;
-
-                find_PlaceNeedle_Position(PerspectiveTransformMatrix, iHoleIndex, ref dbX, ref dbY);
-                FocusedNeedle = PlaceNeedles[0];
-                show_grp_NeedleInfo(grp_NeedleInfo);
-                pic_Needles.Refresh();
-
-                txt_HoldIndex.Text = iHoleIndex.ToString();
-
-                dbPinHolePositionX = dbX;
-                dbPinHolePositionY = dbY;
-
-                label14.Text = dbX.ToString();
-                label15.Text = dbY.ToString();
-            }
-
-            //刪除目前的植針ID
-            PlaceNeedles.RemoveAt(0);
-            iPC = PlaceNeedles.Count();
         }
         //---------------------------------------------------------------------------------------
         bool bResume = false;
@@ -2550,7 +2604,8 @@ namespace InjectorInspector
         public xe_tmr_sequense xeTmrSequense = xe_tmr_sequense.xets_empty;
 
         public int ihomeFinishedCNT = 0;
-        public bool bhome = false;
+        public bool bhome    = false;
+        public bool bGotHome = false;
 
         public const double dbNozzle安全原點X = 242;
         public const double dbNozzle安全原點Y = 28;
@@ -2560,7 +2615,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public void btn_home_Click(object sender, EventArgs e)
         {
-            bhome = true;
+            bhome    = true;
         }
         //---------------------------------------------------------------------------------------
         public void tmr_Sequense_Tick(object sender, EventArgs e)
@@ -2856,6 +2911,9 @@ namespace InjectorInspector
                 case xe_tmr_sequense.xets_home_end:
                     dbapiNozzleR(dbNozzle安全原點R, 36);  Thread.Sleep(10);
                     dbapiGate(0, 580/4);                  Thread.Sleep(10);
+
+                    bGotHome = true;
+
                     xeTmrSequense = xe_tmr_sequense.xets_end;
                     break;
 
@@ -2866,8 +2924,9 @@ namespace InjectorInspector
                     btn_home.Text = "Home";
 
                     if(bhome == true) {
+                        bhome    = false;
+                        bGotHome = false;
                         xeTmrSequense = xe_tmr_sequense.xets_home_start;
-                        bhome = false;
                     }
                     break;
             }
@@ -3045,6 +3104,8 @@ namespace InjectorInspector
 
                 xett_取針結束,
 
+                xett_回Home保護,
+
             xett_End,
         };
         public xe_tmr_takepin xeTmrTakePin = xe_tmr_takepin.xett_Empty;
@@ -3198,13 +3259,31 @@ namespace InjectorInspector
             switch (xeTmrTakePin) {
                 case xe_tmr_takepin.xett_Empty:  
                     if(bTakePin==true || bChambered==true || bRemove==true) {
+                        
                         int 求出取料循環次數 = int.Parse(txt_取料循環.Text);
-                        if(求出取料循環次數>=1) { 
-                            xeTmrTakePin = xe_tmr_takepin.xett_確定執行要取針;
-                        } else {
-                            xeTmrTakePin = xe_tmr_takepin.xett_取針結束;
-                        }
-                    }
+                            if(求出取料循環次數>=1) { 
+                                xeTmrTakePin = xe_tmr_takepin.xett_確定執行要取針;
+                            } else {
+                                xeTmrTakePin = xe_tmr_takepin.xett_取針結束;
+                            }
+
+                            if(求出取料循環次數>=1) {
+                                if (bTakePin == true) { 
+                        
+                                } else if(bChambered == true || bRemove == true) {
+                                    //讀DXF
+                                    btn_取得目標座標_Click(sender, e);
+
+                                    if(bChambered == true || bRemove == true) {
+                                        //讀DXF確定有資料
+                                    } else {  //if(bChambered == false && bRemove == false) {
+                                        //讀DXF確定沒資料
+                                        xeTmrTakePin = xe_tmr_takepin.xett_取針結束;
+                                    }
+                                }
+                            }
+
+                    }  // end of if(bTakePin==true || bChambered==true || bRemove==true) {
                     break;
 
                     case xe_tmr_takepin.xett_確定執行要取針:                               xeTmrTakePin = xe_tmr_takepin.xett_關工作門;  break;
@@ -3770,8 +3849,16 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_確認擺放座蓋板關閉:                                     xeTmrTakePin = xe_tmr_takepin.xett_取得植針目標座標;  break;
 
                                 case xe_tmr_takepin.xett_取得植針目標座標: {
-                                    button7_Click(sender, e);
-                                    xeTmrTakePin = xe_tmr_takepin.xett_載盤XY移置拍照檢查位;
+                                    btn_取得目標座標_Click(sender, e);
+
+                                    if(bChambered == false) { 
+                                        //沒針種
+                                        //要回home跟保護位
+                                        xeTmrTakePin = xe_tmr_takepin.xett_回Home保護;
+                                    } else {
+                                        //有針種
+                                        xeTmrTakePin = xe_tmr_takepin.xett_載盤XY移置拍照檢查位;
+                                    }
                                 } break;
 
                                 case xe_tmr_takepin.xett_載盤XY移置拍照檢查位: { 
@@ -4093,17 +4180,23 @@ namespace InjectorInspector
                         const double SetPinOffsetX =  2.796;
                         const double SetPinOffsetY =-49.011;
 
-                        button7_Click(sender, e);
+                        btn_取得目標座標_Click(sender, e);
+                        if(bRemove == false) {
+                            //沒針抽
+                            //要回home跟保護位
+                            xeTmrTakePin = xe_tmr_takepin.xett_回Home保護;
+                        } else {
+                            //有針抽
+                            double dbTargetX = dbPinHolePositionX + SetPinOffsetX;
+                            double dbTargetY = dbPinHolePositionY + SetPinOffsetY;
 
-                        double dbTargetX = dbPinHolePositionX + SetPinOffsetX;
-                        double dbTargetY = dbPinHolePositionY + SetPinOffsetY;
+                            dbapiCarrierX(dbTargetX, 190 * 0.8);
+                            dbapiCarrierY(dbTargetY, 800 * 0.8);
 
-                        dbapiCarrierX(dbTargetX, 190*0.8);
-                        dbapiCarrierY(dbTargetY, 800*0.8);
+                            dbapiIAI(22.0);
 
-                        dbapiIAI(22.0);
-
-                        xeTmrTakePin = xe_tmr_takepin.xett_檢查載盤XY是否移置抽料位;
+                            xeTmrTakePin = xe_tmr_takepin.xett_檢查載盤XY是否移置抽料位;
+                        }
                     } break;
                     case xe_tmr_takepin.xett_檢查載盤XY是否移置抽料位: {
                         double dbX = dbapiCarrierX(dbRead, 0);
@@ -4225,6 +4318,17 @@ namespace InjectorInspector
                         bRemove    = false;
                         xeTmrTakePin = xe_tmr_takepin.xett_Empty;  
                         break;
+
+                    case xe_tmr_takepin.xett_回Home保護:
+                        bTakePin   = false; 
+                        bChambered = false;
+                        bRemove    = false;
+
+                        bhome      = true;
+
+                        xeTmrTakePin = xe_tmr_takepin.xett_Empty; 
+                        break;
+
                 case xe_tmr_takepin.xett_End:           
                     xeTmrTakePin = xe_tmr_takepin.xett_Empty;  
                     break;
@@ -4259,6 +4363,14 @@ namespace InjectorInspector
             Viewer.SaveFile();
         }
         //---------------------------------------------------------------------------------------
+        private void tsmi_CloseFile_Click(object sender, EventArgs e)
+        {
+            Viewer.CloseFile();
+
+            clear_grp_NeedleInfo(grp_NeedleInfo);
+            pic_Needles.Refresh();
+        }
+        //---------------------------------------------------------------------------------------
         public void pic_Needles_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.ScaleTransform(ZoomFactor, -ZoomFactor);
@@ -4283,6 +4395,10 @@ namespace InjectorInspector
                 else if (circle.Place == true) // 植針圓
                 {
                     fillBrush= new SolidBrush(PlaceNeedlesColor);
+                }
+                else if (circle.Remove == true) // 植針圓
+                {
+                    fillBrush = new SolidBrush(RemoveNeedlesColor);
                 }
                 else // 預設圓
                 {
@@ -4449,6 +4565,8 @@ namespace InjectorInspector
                         {
                             FocusedNeedle = HighlightedNeedle;
 
+                            SelectedNeedles.Add(HighlightedNeedle);
+
                             show_grp_NeedleInfo(grp_NeedleInfo);
                         }
                         else
@@ -4545,14 +4663,20 @@ namespace InjectorInspector
                 switch (item.Text)
                 {
                     case "植針":
-                        Json.Needles[circle.Index].Place = true;
+                        Json.Needles[circle.Index].Place   = true;
+                        Json.Needles[circle.Index].Remove  = false;
+                        Json.Needles[circle.Index].Replace = false;
                         break;
 
                     case "取針":
-                        Json.Needles[circle.Index].Remove = true;
+                        Json.Needles[circle.Index].Place   = false;
+                        Json.Needles[circle.Index].Remove  = true;
+                        Json.Needles[circle.Index].Replace = false;
                         break;
 
                     case "置換":
+                        Json.Needles[circle.Index].Place   = false;
+                        Json.Needles[circle.Index].Remove  = false;
                         Json.Needles[circle.Index].Replace = true;
                         break;
 
@@ -4575,6 +4699,9 @@ namespace InjectorInspector
                         Json.Needles[circle.Index].Display  = true;
                         Json.Needles[circle.Index].Enable   = false;
                         Json.Needles[circle.Index].Reserve1 = false;
+
+                        show_grp_NeedleInfo(grp_NeedleInfo);
+
                         break;
                 }
             }
@@ -4636,7 +4763,23 @@ namespace InjectorInspector
                                 Json.Needles[FocusedNeedle.Index].Reserve1 = chk_Reserve1.Checked;
                                 break;
                         }
+                        break;
 
+                    case Button button:
+                        switch (button.Name)
+                        {
+                            case "btn_Reset":
+                                Json.Needles[FocusedNeedle.Index].Place = false;
+                                Json.Needles[FocusedNeedle.Index].Remove = false;
+                                Json.Needles[FocusedNeedle.Index].Replace = false;
+                                Json.Needles[FocusedNeedle.Index].Display = true;
+                                Json.Needles[FocusedNeedle.Index].Enable = false;
+                                Json.Needles[FocusedNeedle.Index].Reserve1 = false;
+
+                                show_grp_NeedleInfo(grp_NeedleInfo);
+
+                                break;
+                        }
                         break;
 
                     default:

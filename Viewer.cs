@@ -25,12 +25,14 @@ namespace InjectorInspector
         public static JSON.NeedleInfo FocusedNeedle = null;
         public static List<JSON.NeedleInfo> SelectedNeedles = new List<JSON.NeedleInfo>();
         public static List<JSON.NeedleInfo> PlaceNeedles = new List<JSON.NeedleInfo>();
+        public static List<JSON.NeedleInfo> RemoveNeedles = new List<JSON.NeedleInfo>();
 
         public static readonly Color DefaltNeedleColor = Color.ForestGreen;
         public static readonly Color HiddenNeedlesColor = Color.FromArgb(64, Color.ForestGreen);
         public static readonly Color FocusedNeedleColor = Color.Goldenrod;
         public static readonly Color SelectedNeedlesColor = Color.MediumVioletRed;
         public static readonly Color PlaceNeedlesColor = Color.Red;
+        public static readonly Color RemoveNeedlesColor = Color.Blue;
 
         public static Boundary Json_Boundary = new Boundary();
         public static Boundary Drag_Boundary = new Boundary();
@@ -175,6 +177,26 @@ namespace InjectorInspector
         }
 
         /// <summary>
+        /// 找出需要取針的圓
+        /// </summary>
+        public static int find_RemoveNeedles()
+        {
+            int irsltCount = 0;
+
+            RemoveNeedles.Clear();
+
+            foreach (var circle in Json.Needles)
+            {
+                if (circle.Remove == true)
+                {
+                    RemoveNeedles.Add(circle);
+                }
+            }
+
+            return irsltCount = RemoveNeedles.Count();
+        }
+
+        /// <summary>
         /// 找出需要植針的圓
         /// </summary>
         public static int find_PlaceNeedles()
@@ -195,9 +217,9 @@ namespace InjectorInspector
         }
 
         /// <summary>
-        /// 找出需要植針圓的座標
+        /// 找出需要處理的圓的座標
         /// </summary>
-        public static void find_PlaceNeedle_Position(MX PerspectiveTransformMatrix, int iIndex, ref double dbX, ref double dbY)
+        public static void find_Needle_Position(MX PerspectiveTransformMatrix, int iIndex, ref double dbX, ref double dbY)
         {
             search_grp_NeedleInfo("txt_Index", iIndex.ToString());
 
@@ -209,6 +231,7 @@ namespace InjectorInspector
             dbX = pMapping.X;
             dbY = pMapping.Y;
         }
+
 
         /// <summary>
         /// 將 DXF 檔中的資料轉成 JSON
@@ -355,6 +378,20 @@ namespace InjectorInspector
         }
 
         /// <summary>
+        /// 關閉檔案
+        /// </summary>
+        public static void CloseFile()
+        {
+            DxfDoc = new DxfDocument();
+            Json = new JSON();
+            HighlightedNeedle = null;
+            FocusedNeedle = null;
+            SelectedNeedles.Clear();
+            PlaceNeedles.Clear();
+            RemoveNeedles.Clear();
+        }
+
+        /// <summary>
         /// 在 groupbox 中顯示植針資訊
         /// </summary>
         /// <param name="grp_NeedleInfo">植針資訊的 Groupbox</param>
@@ -362,69 +399,72 @@ namespace InjectorInspector
         /// <returns>無回傳值</returns>
         public static void show_grp_NeedleInfo(GroupBox grp_NeedleInfo)
         {
-            foreach (Control control in grp_NeedleInfo.Controls)
+            if(FocusedNeedle != null)
             {
-                switch (control)
+                foreach (Control control in grp_NeedleInfo.Controls)
                 {
-                    case TextBox textBox:
+                    switch (control)
+                    {
+                        case TextBox textBox:
 
-                        switch (textBox.Name)
-                        {
-                            case "txt_Index":
-                                textBox.Text = (FocusedNeedle.Index).ToString();
-                                break;
-                            case "txt_Name":
-                                textBox.Text = FocusedNeedle.Name;
-                                break;
-                            case "txt_Id":
-                                textBox.Text = FocusedNeedle.Id;
-                                break;
-                            case "txt_PosX":
-                                textBox.Text = (FocusedNeedle.X).ToString("F3");
-                                break;
-                            case "txt_PosY":
-                                textBox.Text = (FocusedNeedle.Y).ToString("F3");
-                                break;
-                            case "txt_Diameter":
-                                textBox.Text = (FocusedNeedle.Diameter).ToString("F3");
-                                break;
-                        }
+                            switch (textBox.Name)
+                            {
+                                case "txt_Index":
+                                    textBox.Text = (FocusedNeedle.Index).ToString();
+                                    break;
+                                case "txt_Name":
+                                    textBox.Text = FocusedNeedle.Name;
+                                    break;
+                                case "txt_Id":
+                                    textBox.Text = FocusedNeedle.Id;
+                                    break;
+                                case "txt_PosX":
+                                    textBox.Text = (FocusedNeedle.X).ToString("F3");
+                                    break;
+                                case "txt_PosY":
+                                    textBox.Text = (FocusedNeedle.Y).ToString("F3");
+                                    break;
+                                case "txt_Diameter":
+                                    textBox.Text = (FocusedNeedle.Diameter).ToString("F3");
+                                    break;
+                            }
 
-                        break;
+                            break;
 
-                    case CheckBox checkBox:
+                        case CheckBox checkBox:
 
-                        switch (checkBox.Name)
-                        {
-                            
-                            case "chk_Display":
-                                checkBox.Checked = FocusedNeedle.Display;
-                                break;
-                            case "chk_Enable":
-                                checkBox.Checked = FocusedNeedle.Enable;
-                                break;
-                            case "chk_Reserve1":
-                                checkBox.Checked = FocusedNeedle.Reserve1;
-                                break;
-                        }
+                            switch (checkBox.Name)
+                            {
 
-                        break;
+                                case "chk_Display":
+                                    checkBox.Checked = FocusedNeedle.Display;
+                                    break;
+                                case "chk_Enable":
+                                    checkBox.Checked = FocusedNeedle.Enable;
+                                    break;
+                                case "chk_Reserve1":
+                                    checkBox.Checked = FocusedNeedle.Reserve1;
+                                    break;
+                            }
 
-                    case RadioButton radioButton:
+                            break;
 
-                        switch (radioButton.Name)
-                        {
-                            case "rad_Place":
-                                radioButton.Checked = FocusedNeedle.Place;
-                                break;
-                            case "rad_Remove":
-                                radioButton.Checked = FocusedNeedle.Remove;
-                                break;
-                            case "rad_Replace":
-                                radioButton.Checked = FocusedNeedle.Replace;
-                                break;
-                        }
-                        break;
+                        case RadioButton radioButton:
+
+                            switch (radioButton.Name)
+                            {
+                                case "rad_Place":
+                                    radioButton.Checked = FocusedNeedle.Place;
+                                    break;
+                                case "rad_Remove":
+                                    radioButton.Checked = FocusedNeedle.Remove;
+                                    break;
+                                case "rad_Replace":
+                                    radioButton.Checked = FocusedNeedle.Replace;
+                                    break;
+                            }
+                            break;
+                    }
                 }
             }
         }
