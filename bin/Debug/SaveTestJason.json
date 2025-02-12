@@ -206,25 +206,25 @@
   {
     "strLabel": "\u8F09\u76E4X\u8EF8",
     "u32Index": 35,
-    "dbPosition": 145.48099999999999,
+    "dbPosition": 145.465,
     "strNote": "Socket\u5B9A\u4F4D\u5B54Ax"
   },
   {
     "strLabel": "\u8F09\u76E4Y\u8EF8",
     "u32Index": 36,
-    "dbPosition": 616.41999999999996,
+    "dbPosition": 616.44500000000005,
     "strNote": "Socket\u5B9A\u4F4D\u5B54Ay"
   },
   {
     "strLabel": "\u8F09\u76E4X\u8EF8",
     "u32Index": 37,
-    "dbPosition": 113.511,
+    "dbPosition": 113.486,
     "strNote": "Socket\u5B9A\u4F4D\u5B54Bx"
   },
   {
     "strLabel": "\u8F09\u76E4Y\u8EF8",
     "u32Index": 38,
-    "dbPosition": 602.29300000000001,
+    "dbPosition": 602.32100000000003,
     "strNote": "Socket\u5B9A\u4F4D\u5B54By"
   }
 ]

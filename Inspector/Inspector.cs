@@ -187,9 +187,13 @@ namespace Inspector
                 num_Pin長Min.Value = (decimal)parameter.Pin長度Min;
                 num_Pin長Max.Value = (decimal)parameter.Pin長度Max;
                 num_Throshold.Value = (int)parameter.TrayThreshold;
+                ed_針頭長.Text = parameter.針頭長度.ToString("F2");
+                ed_針頭寬.Text = parameter.針頭寬度.ToString("F2");
+                ed_針尾長.Text = parameter.針尾長度.ToString("F2");
+                ed_針尾寬.Text = parameter.針尾寬度.ToString("F2");
                 string dPath2 = string.Format("{0}\\Recipe\\{1}.model", System.Windows.Forms.Application.StartupPath, Num);
-                if (File.Exists(dPath2))
-                    HOperatorSet.ReadShapeModel(dPath2, out InspNozzle.model);
+                //if (File.Exists(dPath2))
+                //    HOperatorSet.ReadShapeModel(dPath2, out InspNozzle.model);
             }
         }
 
@@ -207,8 +211,8 @@ namespace Inspector
                     if (!Directory.Exists(dDir))
                         Directory.CreateDirectory(dDir);
                     File.WriteAllBytes(dPath, SerializeXML(parameter));
-                    if (InspNozzle.model != null)
-                        HOperatorSet.WriteShapeModel(InspNozzle.model, dPath2);
+                    //if (InspNozzle.model != null)
+                    //    HOperatorSet.WriteShapeModel(InspNozzle.model, dPath2);
                 }
                 catch { }
             }
@@ -339,6 +343,25 @@ namespace Inspector
         public void button1_Click(object sender, EventArgs e)
         {
             InspNozzle.Teach();
+        }
+
+        private void ed_針頭長_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            switch (((TextBox)sender).Name)
+            {
+                case "ed_針頭長":
+                    double.TryParse(((TextBox)sender).Text, out parameter.針頭長度);
+                    break;
+                case "ed_針頭寬":
+                    double.TryParse(((TextBox)sender).Text, out parameter.針頭寬度);
+                    break;
+                case "ed_針尾長":
+                    double.TryParse(((TextBox)sender).Text, out parameter.針尾長度);
+                    break;
+                case "ed_針尾寬":
+                    double.TryParse(((TextBox)sender).Text, out parameter.針尾寬度);
+                    break;
+            }
         }
 
         internal void WriteImage(HObject img, string subDirectory, string title)
@@ -579,6 +602,10 @@ namespace Inspector
         public double Pin長度Max = 70;
         public double Pin相鄰距離 = 40;
         public bool 下視覺特徵為針頭 = false;
+        public double 針頭長度 = 0.5;
+        public double 針頭寬度 = 0.11;
+        public double 針尾長度 = 0.5;
+        public double 針尾寬度 = 0.09;
     }
     #endregion
 
@@ -1273,7 +1300,7 @@ namespace Inspector
         Inspector owner;
         bool first = true, InspOK = false;
         HTuple P1x, P1y, P2x, P2y;
-        HObject PinArea;
+        HObject PinArea, dTop, dBot;
         public HTuple model;
         /// <summary> 針目前角度 </summary>
         public double PinDeg = 0;
@@ -1324,6 +1351,8 @@ namespace Inspector
             menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "吸嘴", "吸嘴"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
+            menu.Items.Add("Stop CCD", null, (sender, e) => { CCD.TriggerMode = "Stop"; });
+            menu.Items.Add("Start CCD", null, (sender, e) => { CCD.TriggerMode = "FRONT_GPI_0"; });
             menu.Opening += onMenu1Opening;
         }
 
@@ -1341,6 +1370,12 @@ namespace Inspector
             targetθ = 0;
             if (helper.ContainImage)
             {
+                if ((owner.parameter.針頭長度 < 0.01) || (owner.parameter.針頭寬度 < 0.01) || (owner.parameter.針尾長度 < 0.01) || (owner.parameter.針尾寬度 < 0.01))
+                {
+                    owner.parameter.針頭長度 = owner.parameter.針尾長度 = 0.5;
+                    owner.parameter.針頭寬度 = 0.11;
+                    owner.parameter.針尾寬度 = 0.09;
+                }
                 HObject temp;
                 HTuple W, H, Cnt, darea, dAngle, dScore;
                 HOperatorSet.CopyImage(helper.Image, out temp);
@@ -1352,25 +1387,44 @@ namespace Inspector
                 double HMax = owner.parameter.Pin長度Max / CCD.Param.ScaleX / 2.0;
                 PinArea = GetNozzleArea(temp, 70, WMin, WMax, HMin, HMax);
                 RegionNozzle = FilterPin(PinArea, WMin, WMax, HMin, HMax);
-                if ((RegionNozzle.CountObj() == 1) && (model != null))
+                if ((RegionNozzle.CountObj() == 1))
                     try
                     {
-                        HObject reduces;
+                        HObject reduces, rcTop,rcBot;
+                        HTuple row1, row2, col1, col2, phi1, phi2, row, col, L1, L2, L3, L4, TRow, TCol, BRow, BCol;
                         HOperatorSet.ReduceDomain(temp, RegionNozzle, out reduces);
                         HOperatorSet.AreaCenter(RegionNozzle, out darea, out P1y, out P1x);
-                        if ((model != null) && (model.Length > 0))
-                            HOperatorSet.FindShapeModel(reduces,model, -0.39, 0.79, 0.5, 1, 0.5, "least_squares", 0, 0.9, out P2y, out P2x, out dAngle, out dScore);
-                        //var reduces = temp.ReduceDomain(RegionNozzle);
-                        //HTuple dAngle, dScore;
-                        //RegionNozzle.AreaCenter(out P1y, out P1x);
-                        //model.FindShapeModel(reduces, -0.39, 0.79, 0.7, 1, 0.5, "least_squares", 0, 0.9, out P2y, out P2x, out dAngle, out dScore);
+                        HOperatorSet.SmallestRectangle1(RegionNozzle, out row1, out col1, out row2, out col2);
+
+                        double LenMin = Math.Min(owner.parameter.針尾長度, owner.parameter.針頭長度) * 0.75;
+                        double dLen = LenMin / CCD.Param.ScaleX;
+                        HOperatorSet.GenRectangle1(out rcTop, row1, col1, row1.D + dLen, col2);
+                        HOperatorSet.Intersection(RegionNozzle, rcTop, out dTop);
+                        HOperatorSet.SmallestRectangle2(dTop, out TRow, out TCol, out phi1, out L1, out L2);
+                        HOperatorSet.GenRectangle1(out rcBot, row2.D - dLen, col1, row2.D, col2);
+                        HOperatorSet.Intersection(RegionNozzle, rcBot, out dBot);
+                        HOperatorSet.SmallestRectangle2(dBot, out BRow, out BCol, out phi1, out L3, out L4);
+                        owner.WriteLog(string.Format("Top = {0:F2} , Bot = {1:F2} , Len = {2:F2}", L2.D * CCD.Param.ScaleX * 2, L4.D * CCD.Param.ScaleX * 2, (row2.D - row1.D) * CCD.Param.ScaleX));
+                        bool same1 = L2.D > L4.D;
+                        int PinS = (int)(owner.parameter.針頭寬度 * 100);
+                        int PinE = (int)(owner.parameter.針尾寬度 * 100);
+                        bool same2 = PinS > PinE;
+                        if (PinS != PinE)
+                        {
+                            P2x = (same1 == same2) ? TCol : BCol;
+                            P2y = (same1 == same2) ? TRow : BRow;
+                        }
+
+
+                        //if ((model != null) && (model.Length > 0))
+                        //    HOperatorSet.FindShapeModel(reduces,model, -0.39, 0.79, 0.5, 1, 0.5, "least_squares", 0, 0.9, out P2y, out P2x, out dAngle, out dScore);
                         success = (P1x.Length == 1) && (P2y != null) && (P2y.Length == 1);
                         if (success)
                         {
                             HOperatorSet.AngleLx(P1y, P1x, P2y, P2x, out dAngle);
                             var dAngle1 = dAngle.TupleDeg();
-                            if (!owner.parameter.下視覺特徵為針頭)
-                                dAngle1 = dAngle1.D + 180;
+                            //if (!owner.parameter.下視覺特徵為針頭)
+                            //    dAngle1 = dAngle1.D + 180;
                             owner.PinDeg = PinDeg = targetθ = dAngle1;
                         }
                         owner.DisposeObj(reduces);
@@ -1561,8 +1615,25 @@ namespace Inspector
             }
             if (PinArea != null)
             {
+                HTuple row, col, phi, L1, L2;
                 Win.HalconWindow.SetColor("green");
                 HOperatorSet.DispRegion(PinArea, Win.HalconWindow);
+                if (dTop != null)
+                {
+                    Win.HalconWindow.SetColor("orange");
+                    HOperatorSet.DispRegion(dTop, Win.HalconWindow);
+                    HOperatorSet.SmallestRectangle2(dTop, out row, out col, out phi, out L1, out L2);
+                    Win.HalconWindow.SetTposition((int)row.D, (int)col.D + 80);
+                    Win.HalconWindow.WriteString(string.Format("寬度 = {0:F2}", L2.D * CCD.Param.ScaleX * 2));
+                }
+                if (dBot != null)
+                {
+                    Win.HalconWindow.SetColor("orange");
+                    HOperatorSet.DispRegion(dBot, Win.HalconWindow);
+                    HOperatorSet.SmallestRectangle2(dBot, out row, out col, out phi, out L1, out L2);
+                    Win.HalconWindow.SetTposition((int)row.D, (int)col.D + 80);
+                    Win.HalconWindow.WriteString(string.Format("寬度 = {0:F2}", L2.D * CCD.Param.ScaleX * 2));
+                }
             }
             if ((P1x != null) && (P2x != null) && (P1x.Length == 1) && (P2x.Length == 1))
             {
@@ -1695,12 +1766,14 @@ namespace Inspector
                 HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
                 HOperatorSet.Connection(binArea, out connArea);
                 HOperatorSet.SelectShape(connArea, out SelArea, "circularity", "and", 0.9, 1);
-                HOperatorSet.SelectShape(SelArea, out OutArea, "outer_radius", "and", 20, 200);
+                HOperatorSet.SelectShape(SelArea, out OutArea, "outer_radius", "and", 20, 180);
                 //HOperatorSet.SelectShapeStd(OutArea, out MaxArea, "max_area", 70);
                 HOperatorSet.SmallestCircle(OutArea, out row, out col, out Radius);
                 if (row.Length > 0)
                 {
-                HOperatorSet.SelectShape(OutArea, out CirArea, "outer_radius", "and", Radius.D - 2, Radius.D + 2);
+                    HOperatorSet.SelectShape(OutArea, out CirArea, "row", "and", H / 2.0 - 50, H / 2.0 + 50);
+                    HOperatorSet.AreaCenter(OutArea, out usedThr, out row, out col);
+                    //HOperatorSet.SelectShape(OutArea, out CirArea, "outer_radius", "and", Radius.D - 2, Radius.D + 2);
                 HOperatorSet.SmallestCircle(CirArea, out row, out col, out Radius);
                 double smallDist = 999999;
                 

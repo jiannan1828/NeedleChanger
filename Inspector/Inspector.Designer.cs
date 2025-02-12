@@ -57,6 +57,14 @@
             this.button1 = new System.Windows.Forms.Button();
             this.btn_二孔校正 = new System.Windows.Forms.CheckBox();
             this.ck_Socket校正孔 = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.ed_針頭長 = new System.Windows.Forms.TextBox();
+            this.ed_針頭寬 = new System.Windows.Forms.TextBox();
+            this.ed_針尾長 = new System.Windows.Forms.TextBox();
+            this.ed_針尾寬 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_Throshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin寬Max)).BeginInit();
@@ -458,10 +466,86 @@
             this.ck_Socket校正孔.Text = "Socket校正孔";
             this.ck_Socket校正孔.UseVisualStyleBackColor = true;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(942, 6);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(85, 19);
+            this.label9.TabIndex = 51;
+            this.label9.Text = "針頭長：";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(942, 37);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(85, 19);
+            this.label11.TabIndex = 52;
+            this.label11.Text = "針頭寬：";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(942, 68);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(85, 19);
+            this.label12.TabIndex = 53;
+            this.label12.Text = "針尾長：";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(942, 96);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(85, 19);
+            this.label13.TabIndex = 54;
+            this.label13.Text = "針尾寬：";
+            // 
+            // ed_針頭長
+            // 
+            this.ed_針頭長.Location = new System.Drawing.Point(1033, 0);
+            this.ed_針頭長.Name = "ed_針頭長";
+            this.ed_針頭長.Size = new System.Drawing.Size(60, 30);
+            this.ed_針頭長.TabIndex = 55;
+            this.ed_針頭長.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ed_針頭長_KeyPress);
+            // 
+            // ed_針頭寬
+            // 
+            this.ed_針頭寬.Location = new System.Drawing.Point(1033, 31);
+            this.ed_針頭寬.Name = "ed_針頭寬";
+            this.ed_針頭寬.Size = new System.Drawing.Size(60, 30);
+            this.ed_針頭寬.TabIndex = 56;
+            this.ed_針頭寬.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ed_針頭長_KeyPress);
+            // 
+            // ed_針尾長
+            // 
+            this.ed_針尾長.Location = new System.Drawing.Point(1033, 62);
+            this.ed_針尾長.Name = "ed_針尾長";
+            this.ed_針尾長.Size = new System.Drawing.Size(60, 30);
+            this.ed_針尾長.TabIndex = 57;
+            this.ed_針尾長.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ed_針頭長_KeyPress);
+            // 
+            // ed_針尾寬
+            // 
+            this.ed_針尾寬.Location = new System.Drawing.Point(1033, 93);
+            this.ed_針尾寬.Name = "ed_針尾寬";
+            this.ed_針尾寬.Size = new System.Drawing.Size(60, 30);
+            this.ed_針尾寬.TabIndex = 58;
+            this.ed_針尾寬.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ed_針頭長_KeyPress);
+            // 
             // Inspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.ed_針尾寬);
+            this.Controls.Add(this.ed_針尾長);
+            this.Controls.Add(this.ed_針頭寬);
+            this.Controls.Add(this.ed_針頭長);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.ck_Socket校正孔);
             this.Controls.Add(this.btn_二孔校正);
             this.Controls.Add(this.button1);
@@ -527,5 +611,13 @@
         public System.Windows.Forms.Button button1;
         public System.Windows.Forms.CheckBox btn_二孔校正;
         public System.Windows.Forms.CheckBox ck_Socket校正孔;
+        public System.Windows.Forms.Label label9;
+        public System.Windows.Forms.Label label11;
+        public System.Windows.Forms.Label label12;
+        public System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox ed_針頭長;
+        private System.Windows.Forms.TextBox ed_針頭寬;
+        private System.Windows.Forms.TextBox ed_針尾長;
+        private System.Windows.Forms.TextBox ed_針尾寬;
     }
 }

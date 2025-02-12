@@ -3121,7 +3121,7 @@ namespace InjectorInspector
         public const double db取料Nozzle中心點X = 49.93;
         public const double db取料Nozzle中心點Y = 49.81;
         public const double db取料Nozzle中心點Z = 26;
-        public const double db取料Nozzle中心點R = 1.34;
+        public const double db取料Nozzle中心點R = 1.34+0.7;
 
         public const double db下視覺取像X_Start = 105;
         public const double db下視覺取像X_END   = 243.000;
@@ -3153,8 +3153,8 @@ namespace InjectorInspector
                 // 定義 PointA, PointB 的數據
                 Normal.Point idealA = new Normal.Point(387.62823, 93.82427);
                 Normal.Point idealB = new Normal.Point(419.62823, 107.82427);
-                Normal.Point realA = new Normal.Point(145.471, 616.43);
-                Normal.Point realB = new Normal.Point(113.493, 602.309);
+                Normal.Point realA = new Normal.Point(145.465, 616.445);
+                Normal.Point realB = new Normal.Point(113.486, 602.321);
 
                 // 宣告 PointForward 和 PointBackward 變數
                 Normal.Point idealAForward = new Normal.Point();
@@ -3196,8 +3196,8 @@ namespace InjectorInspector
                 // 定義 PointA, PointB 的數據
                 Normal.Point idealA = new Normal.Point(387.62823, 93.82427);
                 Normal.Point idealB = new Normal.Point(419.62823, 107.82427);
-                Normal.Point realA = new Normal.Point(145.471, 616.43);
-                Normal.Point realB = new Normal.Point(113.493, 602.309);
+                Normal.Point realA = new Normal.Point(145.465, 616.445);
+                Normal.Point realB = new Normal.Point(113.486, 602.321);
 
                 // 宣告 PointForward 和 PointBackward 變數
                 Normal.Point idealAForward = new Normal.Point();
@@ -4268,17 +4268,28 @@ namespace InjectorInspector
                         求出取料循環次數--;
                         txt_取料循環.Text = 求出取料循環次數.ToString();
 
-                        if(求出取料循環次數>=1 && btmrStop==false) {  
-                            if(iPC == 0 && iRC == 0) {
-                                btmrStop = false;
-                                xeTmrTakePin = xe_tmr_takepin.xett_回Home保護;
-                            } else {
+                        if(bTakePin == true) { 
+                            if(求出取料循環次數>=1) {  
                                 xeTmrTakePin = xe_tmr_takepin.xett_還需要取針;
+                            } else {
+                                bTakePin = false;
+                                btmrStop = false;
+                                xeTmrTakePin = xe_tmr_takepin.xett_不需要取針;
                             }
-                        } else {
-                            btmrStop = false;
-                            xeTmrTakePin = xe_tmr_takepin.xett_不需要取針;
-                        }
+                        } else { 
+                            if(求出取料循環次數>=1 && btmrStop==false) {  
+                                if(iPC == 0 && iRC == 0) {
+                                    btmrStop = false;
+                                    xeTmrTakePin = xe_tmr_takepin.xett_回Home保護;
+                                } else {
+                                    xeTmrTakePin = xe_tmr_takepin.xett_還需要取針;
+                                }
+                            } else {
+                                btmrStop = false;
+                                xeTmrTakePin = xe_tmr_takepin.xett_不需要取針;
+                            }
+                        }  // end of if(bTakePin == true) { 
+
                     } break;
                         case xe_tmr_takepin.xett_還需要取針:
                             Curr_CycleTime = DateTime.Now; //20241230 4xuan added

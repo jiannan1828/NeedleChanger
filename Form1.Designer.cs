@@ -324,7 +324,6 @@ namespace InjectorInspector
             this.btn_AlarmRST = new System.Windows.Forms.Button();
             this.btn_Connect = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -3793,7 +3792,6 @@ namespace InjectorInspector
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.inspector1);
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
@@ -3802,16 +3800,6 @@ namespace InjectorInspector
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1062, 24);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(83, 83);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
             // 
             // inspector1
             // 
@@ -5336,7 +5324,6 @@ namespace InjectorInspector
         public System.Windows.Forms.Button btn_AlarmRST;
         public System.Windows.Forms.Button btn_Connect;
         public System.Windows.Forms.TabPage tabPage1;
-        public System.Windows.Forms.Button button1;
         public Inspector.Inspector inspector1;
         public System.Windows.Forms.TabControl tabControl1;
         public System.Windows.Forms.Label lbl_IAI_Convert;
