@@ -60,6 +60,8 @@ using static InjectorInspector.Viewer;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 //using static System.Windows.Forms.VisualStyles.VisualStyleElement;  //會自動長出 要手動刪掉
 using System.Runtime.InteropServices;
+using static WMX3ApiCLR.Config;
+using static WMX3ApiCLR.Motion;
 
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
@@ -4391,6 +4393,19 @@ namespace InjectorInspector
                     break;
             }
         }  // end of public void tmr_TakePin_Tick(object sender, EventArgs e)
+
+        private void btn_BlendedMotion_Click(object sender, EventArgs e)
+        {
+            // 返回測試原點 (100, 25)
+            dbapiNozzleX(100, 50); Thread.Sleep(10);
+            dbapiNozzleY(25, 10); Thread.Sleep(10);
+
+            clsServoControlWMX3.WMX3_Pivot_BlendingMotion(3, 400, 25, 50, 200, 200, 50);//第一段運動
+            clsServoControlWMX3.WMX3_Pivot_BlendingMotion(7, 400, 75, 25, 200, 200, 25);//第二段運動
+            clsServoControlWMX3.WMX3_Pivot_BlendingMotion(3, 100, 75, 50, 200, 200, 50);//第三段運動
+            clsServoControlWMX3.WMX3_Pivot_BlendingMotion(7, 100, 25, 25, 200, 200, 25);//第四段運動
+        }
+
         //---------------------------------------------------------------------------------------
         //-------------------------------- State Machine implement ------------------------------
         //---------------------------------------------------------------------------------------

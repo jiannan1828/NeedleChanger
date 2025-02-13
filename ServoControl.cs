@@ -19,6 +19,7 @@ using System.Data;
 using System.Threading;
 using static WMX3ApiCLR.Config;
 using System.Net.NetworkInformation;
+using static WMX3ApiCLR.Motion;
 
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
@@ -414,6 +415,10 @@ namespace InjectorInspector
         public static CoreMotionAxisStatus[] cmAxis = new CoreMotionAxisStatus[8];
         public System.Windows.Forms.NumericUpDown NUD_Motor_NO;
 
+        public LinearIntplCommand lin;
+        public Trigger trig; // 觸發條件
+        public WaitCondition wait; // 等待條件
+        public MotionParam mparam; // 運動參數
         //---------------------------------------------------------------------------------------
         public ServoControl()
         {  // 建構子，初始化物件
@@ -445,6 +450,36 @@ namespace InjectorInspector
             if (stopWatch == null)          stopWatch = new Stopwatch();
             if (advmon == null)                advmon = new AdvancedMotion();
             if (io == null)                        io = new Io();
+
+            if (lin == null)                      lin = new LinearIntplCommand();
+            if (trig == null)                     trig = new Trigger();
+            if (wait == null)                     wait = new WaitCondition();
+            if (mparam == null)                 mparam = new MotionParam();
+
+            #region 平滑過度參數設置
+            // X軸的運動參數設置
+            motion.Config.GetMotionParam(3, ref mparam); // 取得當前軸的運動參數
+            mparam.LinearIntplOverrideType = LinearIntplOverrideType.Blending; // 啟用 Blending 模式
+            motion.Config.SetMotionParam(3, mparam); // 設定運動參數
+
+            // Y軸的運動參數設置
+            motion.Config.GetMotionParam(7, ref mparam);
+            mparam.LinearIntplOverrideType = LinearIntplOverrideType.Blending;
+            motion.Config.SetMotionParam(7, mparam);
+
+            // 設定線性插補運動的參數 (雙軸聯動)
+            lin.AxisCount = 2;
+            lin.Axis[0] = 3;
+            lin.Axis[1] = 7;
+            lin.Profile.Type = ProfileType.Trapezoidal; // 設定運動 Profile (速度曲線) 為梯形 (Trapezoidal)
+
+            trig.TriggerType = TriggerType.RemainingDistance; // 觸發類型：剩餘距離
+
+            wait.WaitConditionType = WaitConditionType.MotionStartedOverrideReady; // 等待類型 : 運動開始且馬達參數可複寫時
+            wait.AxisCount = 2;
+            wait.Axis[0] = 3;
+            wait.Axis[1] = 7;
+            #endregion
         }
         //---------------------------------------------------------------------------------------
         public void KillWMX3Handle()
@@ -652,7 +687,7 @@ namespace InjectorInspector
 
             return rslt;
         }  //end of int WMX3_check_ServoOnOff(int axis)
-           //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
         public string WMX3_check_ServoOpState(int axis, ref int iOpState)
         {
             if (wmx != null) {
@@ -750,6 +785,45 @@ namespace InjectorInspector
             return rslt;
         }  //end of public void WMX3_Pivot(int pivot, int speed, int accel, int daccel)
         //---------------------------------------------------------------------------------------
+        public int WMX3_Pivot_BlendingMotion(int axis, int pivotX, int pivotY, int speed, int accel, int daccel, int remainingDistance)
+        {
+            
+
+            int rslt = 0;
+
+            if (wmx != null)
+            {
+                trig.TriggerAxis = axis; // 設定觸發的軸
+                trig.TriggerValue = remainingDistance; 
+
+                lin.Profile.Velocity = speed; // 速度
+                lin.Profile.Acc = accel; // 加速度
+                lin.Profile.Dec = daccel; // 減速度
+                lin.MaxAcc[0] = accel;
+                lin.MaxDec[0] = daccel;
+                lin.MaxVelocity[0] = speed;
+                lin.Target[0] = pivotX; // X 軸目標位置
+                lin.Target[1] = pivotY; // Y 軸目標位置
+
+                var ret = motion.Motion.StartLinearIntplPos(lin, trig);
+
+                string retStr = CoreMotion.ErrorToString(ret);
+                Console.WriteLine($"Error StartLinearIntplPos(0)\nErrorCode [0x{ret:X}]\n{retStr}");
+
+                //Thread.Sleep(10); // 稍微延遲，確保平滑運動
+                //motion.Motion.Wait(wait); // 等完動作
+
+                rslt = 1;
+            }
+            else
+            {
+                rslt = 0;
+            }
+
+            return rslt;
+        }
+        //---------------------------------------------------------------------------------------
+
         public int WMX3_SetHomePosition(int axis)
         {
             int rslt = 0;

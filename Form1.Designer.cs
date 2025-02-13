@@ -445,6 +445,7 @@ namespace InjectorInspector
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
             this.ttp_NeedleInfo = new System.Windows.Forms.ToolTip(this.components);
             this.tmrBarCodeScanner = new System.Windows.Forms.Timer(this.components);
+            this.btn_BlendedMotion = new System.Windows.Forms.Button();
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -478,6 +479,7 @@ namespace InjectorInspector
             // 
             // tabJob
             // 
+            this.tabJob.Controls.Add(this.btn_BlendedMotion);
             this.tabJob.Controls.Add(this.btn_置換);
             this.tabJob.Controls.Add(this.btn_取針);
             this.tabJob.Controls.Add(this.btn_植針);
@@ -5075,6 +5077,17 @@ namespace InjectorInspector
             this.tmrBarCodeScanner.Interval = 10;
             this.tmrBarCodeScanner.Tick += new System.EventHandler(this.tmrBarCodeScanner_Tick);
             // 
+            // btn_BlendedMotion
+            // 
+            this.btn_BlendedMotion.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_BlendedMotion.Location = new System.Drawing.Point(25, 372);
+            this.btn_BlendedMotion.Name = "btn_BlendedMotion";
+            this.btn_BlendedMotion.Size = new System.Drawing.Size(111, 23);
+            this.btn_BlendedMotion.TabIndex = 233;
+            this.btn_BlendedMotion.Text = "平滑過度測試";
+            this.btn_BlendedMotion.UseVisualStyleBackColor = true;
+            this.btn_BlendedMotion.Click += new System.EventHandler(this.btn_BlendedMotion_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -5604,6 +5617,7 @@ namespace InjectorInspector
         public Button btn_拋料;
         public Button btn_參數;
         public Button btn_置換;
+        public Button btn_BlendedMotion;
     }
 }
 
