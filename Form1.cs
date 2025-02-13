@@ -1691,6 +1691,46 @@ namespace InjectorInspector
             btn_manual.Enabled = false;
         }
         //---------------------------------------------------------------------------------------
+        private void btn_參數_Click(object sender, EventArgs e)
+        {
+            ParameterForm fmParameterForm = new ParameterForm();
+            fmParameterForm.Show();
+
+            btn_參數.Enabled = false;
+        }
+        //---------------------------------------------------------------------------------------
+        private void btn_植針_Click(object sender, EventArgs e)
+        {
+            PlaceForm fmPlaceForm = new PlaceForm();
+            fmPlaceForm.Show();
+
+            btn_植針.Enabled = false;
+        }
+        //---------------------------------------------------------------------------------------
+        private void btn_取針_Click(object sender, EventArgs e)
+        {
+            RemoveForm fmRemoveForm = new RemoveForm();
+            fmRemoveForm.Show();
+
+            btn_取針.Enabled = false;
+        }
+        //---------------------------------------------------------------------------------------
+        private void btn_置換_Click(object sender, EventArgs e)
+        {
+            ReplaceForm fmReplaceForm = new ReplaceForm();
+            fmReplaceForm.Show();
+
+            btn_置換.Enabled = false;
+        }
+        //---------------------------------------------------------------------------------------
+        private void btn_拋料_Click(object sender, EventArgs e)
+        {
+            TakePinForm fmTakePinForm = new TakePinForm();
+            fmTakePinForm.Show();
+
+            btn_拋料.Enabled = false;
+        }
+        //---------------------------------------------------------------------------------------
         public void btn_Connect_Click(object sender, EventArgs e)
         {
             clsServoControlWMX3.WMX3_establish_Commu();

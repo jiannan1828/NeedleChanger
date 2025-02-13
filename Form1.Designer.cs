@@ -29,6 +29,11 @@ namespace InjectorInspector
             this.components = new System.ComponentModel.Container();
             this.tmr_ReadWMX3 = new System.Windows.Forms.Timer(this.components);
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.btn_置換 = new System.Windows.Forms.Button();
+            this.btn_取針 = new System.Windows.Forms.Button();
+            this.btn_植針 = new System.Windows.Forms.Button();
+            this.btn_拋料 = new System.Windows.Forms.Button();
+            this.btn_參數 = new System.Windows.Forms.Button();
             this.lbl_吸嘴破真空流量閥 = new System.Windows.Forms.Label();
             this.vcb_吸嘴破真空流量閥 = new System.Windows.Forms.VScrollBar();
             this.button5 = new System.Windows.Forms.Button();
@@ -473,6 +478,11 @@ namespace InjectorInspector
             // 
             // tabJob
             // 
+            this.tabJob.Controls.Add(this.btn_置換);
+            this.tabJob.Controls.Add(this.btn_取針);
+            this.tabJob.Controls.Add(this.btn_植針);
+            this.tabJob.Controls.Add(this.btn_拋料);
+            this.tabJob.Controls.Add(this.btn_參數);
             this.tabJob.Controls.Add(this.lbl_吸嘴破真空流量閥);
             this.tabJob.Controls.Add(this.vcb_吸嘴破真空流量閥);
             this.tabJob.Controls.Add(this.button5);
@@ -628,6 +638,61 @@ namespace InjectorInspector
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
             // 
+            // btn_置換
+            // 
+            this.btn_置換.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_置換.Location = new System.Drawing.Point(534, 427);
+            this.btn_置換.Name = "btn_置換";
+            this.btn_置換.Size = new System.Drawing.Size(75, 23);
+            this.btn_置換.TabIndex = 232;
+            this.btn_置換.Text = "btn_置換";
+            this.btn_置換.UseVisualStyleBackColor = true;
+            this.btn_置換.Click += new System.EventHandler(this.btn_置換_Click);
+            // 
+            // btn_取針
+            // 
+            this.btn_取針.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_取針.Location = new System.Drawing.Point(534, 398);
+            this.btn_取針.Name = "btn_取針";
+            this.btn_取針.Size = new System.Drawing.Size(75, 23);
+            this.btn_取針.TabIndex = 230;
+            this.btn_取針.Text = "btn_取針";
+            this.btn_取針.UseVisualStyleBackColor = true;
+            this.btn_取針.Click += new System.EventHandler(this.btn_取針_Click);
+            // 
+            // btn_植針
+            // 
+            this.btn_植針.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_植針.Location = new System.Drawing.Point(453, 398);
+            this.btn_植針.Name = "btn_植針";
+            this.btn_植針.Size = new System.Drawing.Size(75, 23);
+            this.btn_植針.TabIndex = 228;
+            this.btn_植針.Text = "btn_植針";
+            this.btn_植針.UseVisualStyleBackColor = true;
+            this.btn_植針.Click += new System.EventHandler(this.btn_植針_Click);
+            // 
+            // btn_拋料
+            // 
+            this.btn_拋料.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_拋料.Location = new System.Drawing.Point(453, 427);
+            this.btn_拋料.Name = "btn_拋料";
+            this.btn_拋料.Size = new System.Drawing.Size(75, 23);
+            this.btn_拋料.TabIndex = 226;
+            this.btn_拋料.Text = "btn_拋料";
+            this.btn_拋料.UseVisualStyleBackColor = true;
+            this.btn_拋料.Click += new System.EventHandler(this.btn_拋料_Click);
+            // 
+            // btn_參數
+            // 
+            this.btn_參數.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_參數.Location = new System.Drawing.Point(368, 427);
+            this.btn_參數.Name = "btn_參數";
+            this.btn_參數.Size = new System.Drawing.Size(75, 23);
+            this.btn_參數.TabIndex = 225;
+            this.btn_參數.Text = "btn_參數";
+            this.btn_參數.UseVisualStyleBackColor = true;
+            this.btn_參數.Click += new System.EventHandler(this.btn_參數_Click);
+            // 
             // lbl_吸嘴破真空流量閥
             // 
             this.lbl_吸嘴破真空流量閥.AutoSize = true;
@@ -651,7 +716,7 @@ namespace InjectorInspector
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(685, 387);
+            this.button5.Location = new System.Drawing.Point(703, 372);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 220;
@@ -660,7 +725,7 @@ namespace InjectorInspector
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(685, 326);
+            this.button2.Location = new System.Drawing.Point(703, 343);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 219;
@@ -670,7 +735,7 @@ namespace InjectorInspector
             // btn_manual
             // 
             this.btn_manual.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.btn_manual.Location = new System.Drawing.Point(368, 408);
+            this.btn_manual.Location = new System.Drawing.Point(368, 398);
             this.btn_manual.Name = "btn_manual";
             this.btn_manual.Size = new System.Drawing.Size(75, 23);
             this.btn_manual.TabIndex = 218;
@@ -750,7 +815,7 @@ namespace InjectorInspector
             // lbl_debug
             // 
             this.lbl_debug.AutoSize = true;
-            this.lbl_debug.Location = new System.Drawing.Point(792, 357);
+            this.lbl_debug.Location = new System.Drawing.Point(784, 354);
             this.lbl_debug.Name = "lbl_debug";
             this.lbl_debug.Size = new System.Drawing.Size(81, 19);
             this.lbl_debug.TabIndex = 211;
@@ -5534,6 +5599,11 @@ namespace InjectorInspector
         public Button btn抽針;
         public Button btn_Reset;
         private ToolStripMenuItem tsmi_CloseFile;
+        public Button btn_取針;
+        public Button btn_植針;
+        public Button btn_拋料;
+        public Button btn_參數;
+        public Button btn_置換;
     }
 }
 
