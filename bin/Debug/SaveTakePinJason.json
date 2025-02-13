@@ -1,0 +1,32 @@
+[
+  {
+    "strLabel": "\u5438\u5634X\u8EF8",
+    "u32Index": 0,
+    "dbPosition": 11,
+    "strNote": "123"
+  },
+  {
+    "strLabel": "\u5438\u5634Y\u8EF8",
+    "u32Index": 1,
+    "dbPosition": 22,
+    "strNote": "234"
+  },
+  {
+    "strLabel": "\u5438\u5634Z\u8EF8",
+    "u32Index": 2,
+    "dbPosition": 33,
+    "strNote": "345"
+  },
+  {
+    "strLabel": "\u5438\u5634R\u8EF8",
+    "u32Index": 3,
+    "dbPosition": 44,
+    "strNote": "456"
+  },
+  {
+    "strLabel": "\u8F09\u76E4X\u8EF8",
+    "u32Index": 4,
+    "dbPosition": 55,
+    "strNote": "567"
+  }
+]
