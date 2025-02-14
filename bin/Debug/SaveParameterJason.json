@@ -1,32 +1,57 @@
 [
   {
     "u32Index": 0,
-    "dbPosition": 11,
-    "strNote": "123"
+    "dbPosition": 140.86099999999999,
+    "strNote": "020\u5DE6Socket\u5DE6\u5B9A\u4F4D\u9EDEAx"
   },
   {
     "u32Index": 1,
-    "dbPosition": 22,
-    "strNote": "234"
+    "dbPosition": 609.73299999999995,
+    "strNote": "020\u5DE6Socket\u5DE6\u5B9A\u4F4D\u9EDEAy"
   },
   {
     "u32Index": 2,
-    "dbPosition": 33,
-    "strNote": "345"
+    "dbPosition": 117.84999999999999,
+    "strNote": "020\u5DE6Socket\u53F3\u5B9A\u4F4D\u9EDEBx"
+  },
+  {
+    "u32Index": 3,
+    "dbPosition": 609.71500000000003,
+    "strNote": "020\u5DE6Socket\u53F3\u5B9A\u4F4D\u9EDEBy"
+  },
+  {
+    "u32Index": 4,
+    "dbPosition": 129.483,
+    "strNote": "020\u5DE6Socket\u4E0A\u5B9A\u4F4D\u9EDECx"
+  },
+  {
+    "u32Index": 5,
+    "dbPosition": 597.89499999999998,
+    "strNote": "020\u5DE6Socket\u4E0A\u5B9A\u4F4D\u9EDECy"
+  },
+  {
+    "u32Index": 6,
+    "dbPosition": 129.447,
+    "strNote": "020\u5DE6Socket\u4E0B\u5B9A\u4F4D\u9EDEDx"
+  },
+  {
+    "u32Index": 7,
+    "dbPosition": 620.91899999999998,
+    "strNote": "020\u5DE6Socket\u4E0B\u5B9A\u4F4D\u9EDEDy"
+  },
+  {
+    "u32Index": 8,
+    "dbPosition": 0,
+    "strNote": "020\\020-\u5DE6\u5074-\u5DE6\u53F3\u5B9A\u4F4D\u5B54.json"
+  },
+  {
+    "u32Index": 9,
+    "dbPosition": 0,
+    "strNote": "020-\u5DE6\u5074-\u5DE6\u53F3\u5B9A\u4F4D\u5B54.json \u5DE6\u5B9A\u4F4D\u5B54index"
   },
   {
     "u32Index": 10,
-    "dbPosition": 44,
-    "strNote": "456"
-  },
-  {
-    "u32Index": 20,
-    "dbPosition": 55,
-    "strNote": "567"
-  },
-  {
-    "u32Index": 30,
-    "dbPosition": 66,
-    "strNote": "678"
+    "dbPosition": 1,
+    "strNote": "020-\u5DE6\u5074-\u5DE6\u53F3\u5B9A\u4F4D\u5B54.json \u53F3\u5B9A\u4F4D\u5B54index"
   }
 ]
