@@ -3187,14 +3187,31 @@ namespace InjectorInspector
         {
             bChambered = true;
 
+            //Get Real Pxy
+            double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+            double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+            double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+            double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+            //Get Ideal Pxy
+            double idlpAx = 0, idlpAy = 0, idlpBx = 0, idlpBy = 0;
+
+            string Cal2pFileName = apiParaReadStr("SaveParameterJason.json", 8);
+            int PointLeft  = (int)apiParaReadIndex("SaveParameterJason.json", 9);
+            int PointRight = (int)apiParaReadIndex("SaveParameterJason.json", 10);
+
+            apiReadNeedleInfo(Cal2pFileName, PointLeft,  ref idlpAx, ref idlpAy);
+            apiReadNeedleInfo(Cal2pFileName, PointRight, ref idlpBx, ref idlpBy);
+
+            //Calculate Cal 2p
             {
                 Normal calculate = new Normal();
 
                 // 定義 PointA, PointB 的數據
-                Normal.Point idealA = new Normal.Point(387.62823, 93.82427);
-                Normal.Point idealB = new Normal.Point(419.62823, 107.82427);
-                Normal.Point realA = new Normal.Point(145.465, 616.445);
-                Normal.Point realB = new Normal.Point(113.486, 602.321);
+                Normal.Point idealA = new Normal.Point(idlpAx, idlpAy);
+                Normal.Point idealB = new Normal.Point(idlpBx, idlpBy);
+                Normal.Point realA = new Normal.Point(rlAx, rlAy);
+                Normal.Point realB = new Normal.Point(rlBx, rlBy);
 
                 // 宣告 PointForward 和 PointBackward 變數
                 Normal.Point idealAForward = new Normal.Point();
@@ -3230,14 +3247,31 @@ namespace InjectorInspector
         {
             bRemove = true;
 
+            //Get Real Pxy
+            double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+            double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+            double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+            double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+            //Get Ideal Pxy
+            double idlpAx = 0, idlpAy = 0, idlpBx = 0, idlpBy = 0;
+
+            string Cal2pFileName = apiParaReadStr("SaveParameterJason.json", 8);
+            int PointLeft = (int)apiParaReadIndex("SaveParameterJason.json", 9);
+            int PointRight = (int)apiParaReadIndex("SaveParameterJason.json", 10);
+
+            apiReadNeedleInfo(Cal2pFileName, PointLeft, ref idlpAx, ref idlpAy);
+            apiReadNeedleInfo(Cal2pFileName, PointRight, ref idlpBx, ref idlpBy);
+
+            //Calculate Cal 2p
             {
                 Normal calculate = new Normal();
 
                 // 定義 PointA, PointB 的數據
-                Normal.Point idealA = new Normal.Point(387.62823, 93.82427);
-                Normal.Point idealB = new Normal.Point(419.62823, 107.82427);
-                Normal.Point realA = new Normal.Point(145.465, 616.445);
-                Normal.Point realB = new Normal.Point(113.486, 602.321);
+                Normal.Point idealA = new Normal.Point(idlpAx, idlpAy);
+                Normal.Point idealB = new Normal.Point(idlpBx, idlpBy);
+                Normal.Point realA = new Normal.Point(rlAx, rlAy);
+                Normal.Point realB = new Normal.Point(rlBx, rlBy);
 
                 // 宣告 PointForward 和 PointBackward 變數
                 Normal.Point idealAForward = new Normal.Point();
@@ -5046,6 +5080,55 @@ namespace InjectorInspector
             Vector3 pos;
             bool success = inspector1.xInspSocket校正孔(out pos);
             label16.Text = string.Format("Socket校正孔 = {0}, X = {1:F3} , Y = {2:F3}", success, pos.X, pos.Y);
+        }
+        //---------------------------------------------------------------------------------------
+        double apiParaReadIndex(string filename, int index) {
+            double rslt = 0.0;
+
+            // 在 Form 類中創建 apiJsonParameterHandle 的實例
+            apiJsonParameterHandle handJson = new apiJsonParameterHandle();
+
+            // 初始化 apiJsonParameterHandle，並指定檔案名稱
+            handJson.InitialJsonFile(filename);
+
+            // 使用 apiJsonParameterHandle 中的 JsonNeedleContentList 資料
+            BindingList<JsonParameterContent> jsonContentList = new BindingList<JsonParameterContent>(handJson.JsonNeedleContentList);
+
+            // 根據索引讀取資料
+            rslt = jsonContentList[index].dbPosition;
+
+            return rslt;
+        }
+        //---------------------------------------------------------------------------------------
+        string apiParaReadStr(string filename, int index) {
+            string rslt;
+
+            // 在 Form 類中創建 apiJsonParameterHandle 的實例
+            apiJsonParameterHandle handJson = new apiJsonParameterHandle();
+
+            // 初始化 apiJsonParameterHandle，並指定檔案名稱
+            handJson.InitialJsonFile(filename);
+
+            // 使用 apiJsonParameterHandle 中的 JsonNeedleContentList 資料
+            BindingList<JsonParameterContent> jsonContentList = new BindingList<JsonParameterContent>(handJson.JsonNeedleContentList);
+
+            // 根據索引讀取資料
+            rslt = jsonContentList[index].strNote;
+
+            return rslt;
+        }
+        //---------------------------------------------------------------------------------------
+        void apiReadNeedleInfo(string filename, int Index, ref double dbX, ref double dbY) {
+            JSON temp = new JSON();
+
+            try {
+                temp = JsonConvert.DeserializeObject<JSON>(File.ReadAllText(filename));
+            } catch (Exception ex) {
+                MessageBox.Show($"讀取 Json 檔時發生錯誤: {ex.Message}");
+            }
+
+            dbX = temp.Needles[Index].X;
+            dbY = temp.Needles[Index].Y;
         }
         //---------------------------------------------------------------------------------------
         //-------------------------------------- 暫時或實驗中 ------------------------------------
