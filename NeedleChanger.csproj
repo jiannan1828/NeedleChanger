@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>InjectorInspector</RootNamespace>
     <AssemblyName>京元植針機</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -53,6 +53,9 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AdvancedMotionApi_CLRLib">
       <HintPath>C:\Program Files\SoftServo\WMX3\Lib\AdvancedMotionApi_CLRLib.dll</HintPath>
@@ -67,15 +70,11 @@
     <Reference Include="IOApi_CLRLib">
       <HintPath>C:\Program Files\SoftServo\WMX3\Lib\IOApi_CLRLib.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.9.0.2\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="netDxf, Version=2023.11.10.0, Culture=neutral, PublicKeyToken=618c63290969e781, processorArchitecture=MSIL">
       <HintPath>packages\netDxf.2023.11.10\lib\net48\netDxf.dll</HintPath>
-    </Reference>
-    <Reference Include="netDxf.netstandard, Version=3.0.1.0, Culture=neutral, PublicKeyToken=618c63290969e781, processorArchitecture=MSIL">
-      <HintPath>packages\netDxf.netstandard.3.0.1\lib\net48\netDxf.netstandard.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -89,9 +88,8 @@
       <HintPath>packages\System.Buffers.4.6.0\lib\net462\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
-    <Reference Include="System.IO.Pipelines, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+    <Reference Include="System.IO.Pipelines, Version=9.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.IO.Pipelines.9.0.2\lib\net462\System.IO.Pipelines.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Memory.4.6.0\lib\net462\System.Memory.dll</HintPath>
@@ -103,9 +101,8 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.1.0\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="System.Text.Encodings.Web, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+    <Reference Include="System.Text.Encodings.Web, Version=9.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Text.Encodings.Web.9.0.2\lib\net462\System.Text.Encodings.Web.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Text.Json, Version=9.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Text.Json.9.0.2\lib\net462\System.Text.Json.dll</HintPath>
@@ -238,5 +235,31 @@
     copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\IOApi_CLRLib.dll" "$(TargetDir)"
     copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\WMX3Api_CLRLib.dll" "$(TargetDir)"
 )</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>del /f /q "$(TargetDir)\Microsoft.Bcl.AsyncInterfaces.dll"
+del /f /q "$(TargetDir)\Microsoft.Bcl.AsyncInterfaces.xml"
+del /f /q "$(TargetDir)\Newtonsoft.Json.dll"
+del /f /q "$(TargetDir)\Newtonsoft.Json.xml"
+del /f /q "$(TargetDir)\System.Buffers.dll"
+del /f /q "$(TargetDir)\System.Buffers.xml"
+del /f /q "$(TargetDir)\System.IO.Pipelines.dll"
+del /f /q "$(TargetDir)\System.IO.Pipelines.xml"
+del /f /q "$(TargetDir)\System.Memory.dll"
+del /f /q "$(TargetDir)\System.Memory.xml"
+del /f /q "$(TargetDir)\System.Numerics.Vectors.dll"
+del /f /q "$(TargetDir)\System.Numerics.Vectors.xml"
+del /f /q "$(TargetDir)\System.Runtime.CompilerServices.Unsafe.dll"
+del /f /q "$(TargetDir)\System.Runtime.CompilerServices.Unsafe.xml"
+del /f /q "$(TargetDir)\System.Text.Encodings.Web.dll"
+del /f /q "$(TargetDir)\System.Text.Encodings.Web.xml"
+del /f /q "$(TargetDir)\System.Text.Json.dll"
+del /f /q "$(TargetDir)\System.Text.Json.xml"
+del /f /q "$(TargetDir)\System.Threading.Tasks.Extensions.dll"
+del /f /q "$(TargetDir)\System.Threading.Tasks.Extensions.xml"
+del /f /q "$(TargetDir)\System.ValueTuple.dll"
+del /f /q "$(TargetDir)\System.ValueTuple.xml"
+del /f /q "$(TargetDir)\netDxf.dll"
+del /f /q "$(TargetDir)\netDxf.xml"</PreBuildEvent>
   </PropertyGroup>
 </Project>

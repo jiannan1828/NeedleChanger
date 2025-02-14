@@ -159,3 +159,4 @@ D:\NeedleChanger\Code\NeedleChanger\Inspector\obj\Debug\Inspector.csproj.Up2Date
 D:\NeedleChanger\Code\NeedleChanger\Inspector\obj\Debug\Inspector.dll
 D:\NeedleChanger\Code\NeedleChanger\Inspector\obj\Debug\Inspector.pdb
 D:\NeedleChanger\Code\NeedleChanger\Inspector\obj\Debug\Inspector.吸嘴Teach.resources
+D:\NeedleChanger\Code\NeedleChanger\Inspector\bin\Debug\netDxf.netstandard.dll
