@@ -234,7 +234,10 @@
     copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\IMDll.dll" "$(TargetDir)"
     copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\IOApi_CLRLib.dll" "$(TargetDir)"
     copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\WMX3Api_CLRLib.dll" "$(TargetDir)"
-)</PostBuildEvent>
+)
+
+REM 編譯完後刪除 packages 資料夾
+rd /s /q "$(ProjectDir)packages"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>del /f /q "$(TargetDir)\Microsoft.Bcl.AsyncInterfaces.dll"
