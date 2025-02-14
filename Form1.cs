@@ -2046,6 +2046,21 @@ namespace InjectorInspector
             txtABSpos.Text = result.ToString("F3");
         }  // end of public void btn_adjust_JOG(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
+        private void btn_plus_minus_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.Button ptrBtn = sender as System.Windows.Forms.Button;
+
+            double result = double.Parse(txtABSpos.Text);
+            double dbdiff = double.Parse(edit_diff_value.Text);
+
+            if (ptrBtn == btn_plus ) {
+                txtABSpos.Text = (result + dbdiff).ToString("F3");
+            } else if (ptrBtn == btn_minus) {
+                txtABSpos.Text = (result - dbdiff).ToString("F3");
+            }
+            edit_diff_value.Text = 0.0.ToString("F3");
+        }
+        //---------------------------------------------------------------------------------------
         //讀取OutputIO
         public byte[] pDataGetOutIO = new byte[4];
 

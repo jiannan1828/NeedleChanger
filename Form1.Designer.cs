@@ -29,6 +29,9 @@ namespace InjectorInspector
             this.components = new System.ComponentModel.Container();
             this.tmr_ReadWMX3 = new System.Windows.Forms.Timer(this.components);
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.btn_minus = new System.Windows.Forms.Button();
+            this.btn_plus = new System.Windows.Forms.Button();
+            this.edit_diff_value = new System.Windows.Forms.TextBox();
             this.btn_置換 = new System.Windows.Forms.Button();
             this.btn_取針 = new System.Windows.Forms.Button();
             this.btn_植針 = new System.Windows.Forms.Button();
@@ -478,6 +481,9 @@ namespace InjectorInspector
             // 
             // tabJob
             // 
+            this.tabJob.Controls.Add(this.btn_minus);
+            this.tabJob.Controls.Add(this.btn_plus);
+            this.tabJob.Controls.Add(this.edit_diff_value);
             this.tabJob.Controls.Add(this.btn_置換);
             this.tabJob.Controls.Add(this.btn_取針);
             this.tabJob.Controls.Add(this.btn_植針);
@@ -637,6 +643,37 @@ namespace InjectorInspector
             this.tabJob.TabIndex = 2;
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
+            // 
+            // btn_minus
+            // 
+            this.btn_minus.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_minus.Location = new System.Drawing.Point(34, 401);
+            this.btn_minus.Name = "btn_minus";
+            this.btn_minus.Size = new System.Drawing.Size(34, 23);
+            this.btn_minus.TabIndex = 235;
+            this.btn_minus.Text = "-";
+            this.btn_minus.UseVisualStyleBackColor = true;
+            this.btn_minus.Click += new System.EventHandler(this.btn_plus_minus_Click);
+            // 
+            // btn_plus
+            // 
+            this.btn_plus.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.btn_plus.Location = new System.Drawing.Point(34, 377);
+            this.btn_plus.Name = "btn_plus";
+            this.btn_plus.Size = new System.Drawing.Size(34, 23);
+            this.btn_plus.TabIndex = 234;
+            this.btn_plus.Text = "+";
+            this.btn_plus.UseVisualStyleBackColor = true;
+            this.btn_plus.Click += new System.EventHandler(this.btn_plus_minus_Click);
+            // 
+            // edit_diff_value
+            // 
+            this.edit_diff_value.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.edit_diff_value.Location = new System.Drawing.Point(74, 389);
+            this.edit_diff_value.Name = "edit_diff_value";
+            this.edit_diff_value.Size = new System.Drawing.Size(59, 23);
+            this.edit_diff_value.TabIndex = 233;
+            this.edit_diff_value.Text = "0.0";
             // 
             // btn_置換
             // 
@@ -5604,6 +5641,9 @@ namespace InjectorInspector
         public Button btn_拋料;
         public Button btn_參數;
         public Button btn_置換;
+        public Button btn_minus;
+        public Button btn_plus;
+        public TextBox edit_diff_value;
     }
 }
 
