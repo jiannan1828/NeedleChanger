@@ -1,0 +1,48 @@
+{
+  "Barcode": {
+    "Barcode": null,
+    "短編號": null,
+    "客戶": null,
+    "型號": null,
+    "板全號": null,
+    "儲位": null
+  },
+  "Needles": [
+    {
+      "Index": 0,
+      "Name": null,
+      "Id": null,
+      "X": 114.0006309202977,
+      "Y": 107.49969159149239,
+      "Diameter": 2.02000000000001,
+      "Place": false,
+      "Remove": false,
+      "Replace": false,
+      "Display": true,
+      "Disable": false,
+      "Reserve1": false,
+      "Reserve2": null,
+      "Reserve3": null,
+      "Reserve4": null,
+      "Reserve5": null
+    },
+    {
+      "Index": 1,
+      "Name": null,
+      "Id": null,
+      "X": 137.00063092029771,
+      "Y": 107.49969159149239,
+      "Diameter": 2.02000000000001,
+      "Place": false,
+      "Remove": false,
+      "Replace": false,
+      "Display": true,
+      "Disable": false,
+      "Reserve1": false,
+      "Reserve2": null,
+      "Reserve3": null,
+      "Reserve4": null,
+      "Reserve5": null
+    }
+  ]
+}
