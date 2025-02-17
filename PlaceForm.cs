@@ -95,8 +95,11 @@ namespace InjectorInspector
                 // 設定 DataGridView 的 DataError 事件處理
                 dataGridView1.DataError += DataGridView1_DataError;
 
+                //Note資料寬度為400
+                dataGridView1.Columns["strNote"].Width = 400;
+
                 // 設定 CellDoubleClick 事件來捕獲雙擊格子的操作
-                if(false)dataGridView1.CellClick += DataGridView1_CellClick;
+                if (false)dataGridView1.CellClick += DataGridView1_CellClick;
             }
         }
 

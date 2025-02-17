@@ -38,8 +38,8 @@
   {
     "strLabel": "Socket\u6AA2\u6E2C",
     "u32Index": 7,
-    "dbPosition": 22,
-    "strNote": "\u8F09\u76E4\u4F4D"
+    "dbPosition": 16.5,
+    "strNote": "\u5C0D\u7126\u8F09\u76E4\u6700\u9AD8\u9762"
   },
   {
     "strLabel": "\u8F09\u76E4X\u8EF8",
@@ -194,13 +194,13 @@
   {
     "strLabel": "\u8F09\u76E4X\u8EF8",
     "u32Index": 33,
-    "dbPosition": 91.465999999999994,
+    "dbPosition": 91.459999999999994,
     "strNote": "socket\u76F8\u6A5F\u6821\u6B63\u8F09\u76E4\u5C0F\u5B54\u4F4D"
   },
   {
     "strLabel": "\u8F09\u76E4Y\u8EF8",
     "u32Index": 34,
-    "dbPosition": 610.68700000000001,
+    "dbPosition": 610.66700000000003,
     "strNote": "socket\u76F8\u6A5F\u6821\u6B63\u8F09\u76E4\u5C0F\u5B54\u4F4D"
   },
   {
@@ -230,25 +230,25 @@
   {
     "strLabel": "\u8F09\u76E4X\u8EF8",
     "u32Index": 39,
-    "dbPosition": 140.82900000000001,
+    "dbPosition": 140.56399999999999,
     "strNote": "020\u5DE6Socket\u5DE6\u5B9A\u4F4D\u9EDEAx"
   },
   {
     "strLabel": "\u8F09\u76E4Y\u8EF8",
     "u32Index": 40,
-    "dbPosition": 609.75300000000004,
+    "dbPosition": 610.73800000000006,
     "strNote": "020\u5DE6Socket\u5DE6\u5B9A\u4F4D\u9EDEAy"
   },
   {
     "strLabel": "\u8F09\u76E4X\u8EF8",
     "u32Index": 41,
-    "dbPosition": 117.818,
+    "dbPosition": 117.55,
     "strNote": "020\u5DE6Socket\u53F3\u5B9A\u4F4D\u9EDEBx"
   },
   {
     "strLabel": "\u8F09\u76E4Y\u8EF8",
     "u32Index": 42,
-    "dbPosition": 609.71900000000005,
+    "dbPosition": 610.70699999999999,
     "strNote": "020\u5DE6Socket\u53F3\u5B9A\u4F4D\u9EDEBy"
   },
   {
@@ -266,25 +266,25 @@
   {
     "strLabel": "\u8F09\u76E4X\u8EF8",
     "u32Index": 45,
-    "dbPosition": 94.408000000000001,
+    "dbPosition": 94.406999999999996,
     "strNote": "\u690D\u91DD\u5634\u76F8\u6A5F\u6821\u6B63\u8F09\u76E4\u5C0F\u5B54\u4F4D"
   },
   {
     "strLabel": "\u8F09\u76E4Y\u8EF8",
     "u32Index": 46,
-    "dbPosition": 663.63699999999994,
+    "dbPosition": 663.60900000000004,
     "strNote": "\u690D\u91DD\u5634\u76F8\u6A5F\u6821\u6B63\u8F09\u76E4\u5C0F\u5B54\u4F4D"
   },
   {
     "strLabel": "\u8F09\u76E4X\u8EF8",
     "u32Index": 47,
-    "dbPosition": 94.825000000000003,
+    "dbPosition": 94.840000000000003,
     "strNote": "\u5438\u91DD\u5634\u76F8\u6A5F\u6821\u6B63\u8F09\u76E4\u5C0F\u5B54\u4F4D"
   },
   {
     "strLabel": "\u8F09\u76E4Y\u8EF8",
     "u32Index": 48,
-    "dbPosition": 560.27599999999995,
+    "dbPosition": 560.25099999999998,
     "strNote": "\u5438\u91DD\u5634\u76F8\u6A5F\u6821\u6B63\u8F09\u76E4\u5C0F\u5B54\u4F4D"
   }
 ]

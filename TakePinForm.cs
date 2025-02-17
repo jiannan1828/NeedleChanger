@@ -92,6 +92,9 @@ namespace InjectorInspector
                 // 將 strLabel 欄位移至第二格
                 dataGridView1.Columns["strLabel"].DisplayIndex = 1;
 
+                //Note資料寬度為400
+                dataGridView1.Columns["strNote"].Width = 400;
+
                 // 設定 DataGridView 的 DataError 事件處理
                 dataGridView1.DataError += DataGridView1_DataError;
 

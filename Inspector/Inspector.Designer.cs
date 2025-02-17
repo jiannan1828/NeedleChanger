@@ -65,6 +65,7 @@
             this.ed_針頭寬 = new System.Windows.Forms.TextBox();
             this.ed_針尾長 = new System.Windows.Forms.TextBox();
             this.ed_針尾寬 = new System.Windows.Forms.TextBox();
+            this.ck_Socket孔 = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_Throshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin寬Max)).BeginInit();
@@ -438,9 +439,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(546, 53);
+            this.button1.Location = new System.Drawing.Point(511, 46);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(158, 37);
+            this.button1.Size = new System.Drawing.Size(102, 57);
             this.button1.TabIndex = 48;
             this.button1.Text = "下視覺建立特徵";
             this.button1.UseVisualStyleBackColor = true;
@@ -534,10 +535,21 @@
             this.ed_針尾寬.TabIndex = 58;
             this.ed_針尾寬.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ed_針頭長_KeyPress);
             // 
+            // ck_Socket孔
+            // 
+            this.ck_Socket孔.AutoSize = true;
+            this.ck_Socket孔.Location = new System.Drawing.Point(629, 86);
+            this.ck_Socket孔.Name = "ck_Socket孔";
+            this.ck_Socket孔.Size = new System.Drawing.Size(96, 23);
+            this.ck_Socket孔.TabIndex = 59;
+            this.ck_Socket孔.Text = "Socket孔";
+            this.ck_Socket孔.UseVisualStyleBackColor = true;
+            // 
             // Inspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.ck_Socket孔);
             this.Controls.Add(this.ed_針尾寬);
             this.Controls.Add(this.ed_針尾長);
             this.Controls.Add(this.ed_針頭寬);
@@ -619,5 +631,6 @@
         private System.Windows.Forms.TextBox ed_針頭寬;
         private System.Windows.Forms.TextBox ed_針尾長;
         private System.Windows.Forms.TextBox ed_針尾寬;
+        public System.Windows.Forms.CheckBox ck_Socket孔;
     }
 }

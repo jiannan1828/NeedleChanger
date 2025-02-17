@@ -1,22 +1,22 @@
 [
   {
     "u32Index": 0,
-    "dbPosition": 140.82900000000001,
+    "dbPosition": 140.56,
     "strNote": "020\u5DE6Socket\u5DE6\u5B9A\u4F4D\u9EDEAx"
   },
   {
     "u32Index": 1,
-    "dbPosition": 609.75300000000004,
+    "dbPosition": 610.73500000000001,
     "strNote": "020\u5DE6Socket\u5DE6\u5B9A\u4F4D\u9EDEAy"
   },
   {
     "u32Index": 2,
-    "dbPosition": 117.818,
+    "dbPosition": 117.547,
     "strNote": "020\u5DE6Socket\u53F3\u5B9A\u4F4D\u9EDEBx"
   },
   {
     "u32Index": 3,
-    "dbPosition": 609.71900000000005,
+    "dbPosition": 610.70699999999999,
     "strNote": "020\u5DE6Socket\u53F3\u5B9A\u4F4D\u9EDEBy"
   },
   {
@@ -66,22 +66,77 @@
   },
   {
     "u32Index": 13,
-    "dbPosition": 2.9420000000000002,
+    "dbPosition": 2.9470000000000001,
     "strNote": "Socket\u76F8\u6A5F\u81F3\u690D\u91DD\u5634\u5DEE\u503CX"
   },
   {
     "u32Index": 14,
-    "dbPosition": 52.950000000000003,
+    "dbPosition": 52.942,
     "strNote": "Socket\u76F8\u6A5F\u81F3\u690D\u91DD\u5634\u5DEE\u503CY"
   },
   {
     "u32Index": 15,
-    "dbPosition": 3.359,
+    "dbPosition": 3.3799999999999999,
     "strNote": "Socket\u76F8\u6A5F\u81F3\u62BD\u91DD\u5634\u5DEE\u503CX"
   },
   {
     "u32Index": 16,
-    "dbPosition": -50.411000000000001,
+    "dbPosition": -50.415999999999997,
     "strNote": "Socket\u76F8\u6A5F\u81F3\u62BD\u91DD\u5634\u5DEE\u503CY"
+  },
+  {
+    "u32Index": 17,
+    "dbPosition": 16.5,
+    "strNote": "Socket\u76F8\u6A5FZ\u8EF8\u6AA2\u6E2C\u8F09\u76E4\u9AD8\u5EA6"
+  },
+  {
+    "u32Index": 18,
+    "dbPosition": 0.80000000000000004,
+    "strNote": "020\u91DD Socket\u91DD\u5B54 \u771F\u5713\u76F8\u4F3C\u5EA6"
+  },
+  {
+    "u32Index": 19,
+    "dbPosition": 0.14999999999999999,
+    "strNote": "020\u91DD \u91DD\u982D\u9577"
+  },
+  {
+    "u32Index": 20,
+    "dbPosition": 0.5,
+    "strNote": "020\u91DD \u91DD\u982D\u5BEC"
+  },
+  {
+    "u32Index": 21,
+    "dbPosition": 0.089999999999999997,
+    "strNote": "020\u91DD \u91DD\u5C3E\u9577"
+  },
+  {
+    "u32Index": 22,
+    "dbPosition": 0.5,
+    "strNote": "020\u91DD \u91DD\u5C3E\u5BEC"
+  },
+  {
+    "u32Index": 23,
+    "dbPosition": 3.6000000000000001,
+    "strNote": "020\u91DD \u91DD\u9577Max"
+  },
+  {
+    "u32Index": 24,
+    "dbPosition": 3,
+    "strNote": "020\u91DD \u91DD\u9577Min"
+  },
+  {
+    "u32Index": 25,
+    "dbPosition": 0,
+    "strNote": "020\u91DD \u91DD\u5BECMax"
+  },
+  {
+    "u32Index": 26,
+    "dbPosition": 0,
+    "strNote": "020\u91DD \u91DD\u5BECMin"
+  },
+  {
+    "u32Index": 27,
+    "dbPosition": 0,
+    "strNote": "020\u91DD \u91DD\u95A5\u503C"
   }
 ]

@@ -1664,12 +1664,43 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
+        double dbapiCallbackSendParameter(string GetPara)
+        {
+            double rsult = 0.0;
+
+                   if (GetPara == "NeedleCircleParameter") {  //Socket針孔 真圓相似度
+                rsult = apiParaReadIndex("SaveParameterJason.json", 18);
+            } else if (GetPara == "NeedleHeadLength") {  //針頭長
+                rsult = apiParaReadIndex("SaveParameterJason.json", 19);
+            } else if (GetPara == "NeedleHeadWidth") {  //針頭寬
+                rsult = apiParaReadIndex("SaveParameterJason.json", 20);
+            } else if (GetPara == "NeedleTailLength") {  //針尾長
+                rsult = apiParaReadIndex("SaveParameterJason.json", 21);
+            } else if (GetPara == "NeedleTailWidth") {  //針尾寬
+                rsult = apiParaReadIndex("SaveParameterJason.json", 22);
+            } else if (GetPara == "NeedleLengthMax") {  //針長Max
+                rsult = apiParaReadIndex("SaveParameterJason.json", 23);
+            } else if (GetPara == "NeedleLengthMin") {  //針長Min
+                rsult = apiParaReadIndex("SaveParameterJason.json", 24);
+            } else if (GetPara == "NeedleWidthMax") {  //針寬Max
+                rsult = apiParaReadIndex("SaveParameterJason.json", 25);
+            } else if (GetPara == "NeedleWidthMin") {  //針寬Min
+                rsult = apiParaReadIndex("SaveParameterJason.json", 26);
+            } else if (GetPara == "NeedleThreshold") {  //閥值
+                rsult = apiParaReadIndex("SaveParameterJason.json", 27);
+            }
+
+            return rsult;
+        }
+        //---------------------------------------------------------------------------------------
         public void Form1_Load(object sender, EventArgs e)
         {
-            //init vision
-            inspector1.xInit();
             //Add the callback api from snapshot api
             inspector1.on下視覺 = apiCallBackTest;
+            inspector1.getParam = dbapiCallbackSendParameter;
+
+            //init vision
+            inspector1.xInit();
 
             //先跳到第2頁
             int iAimToPageIndex = 4-1;
@@ -2825,7 +2856,7 @@ namespace InjectorInspector
                     dbapiIAI(10);          Thread.Sleep(10);
 
                     dbapJoDell3D掃描(10);  Thread.Sleep(10);
-                    dbapJoDell吸針嘴(10);  Thread.Sleep(10);
+                    dbapJoDell吸針嘴( 5);  Thread.Sleep(10);
                     dbapJoDell植針嘴(10);  Thread.Sleep(10);
                     xeTmrSequense = xe_tmr_sequense.xets_home_StartXYHome_01;
                     break;
@@ -3957,7 +3988,10 @@ namespace InjectorInspector
                                     dbapiCarrierX(dbTargetX, 190*0.8);
                                     dbapiCarrierY(dbTargetY, 800*0.8);
 
-                                    dbapiIAI(22.0);
+                                    double dbSocketCamera; {
+                                        dbSocketCamera = apiParaReadIndex("SaveParameterJason.json", 17);
+                                        dbapiIAI(dbSocketCamera);
+                                    }
 
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢查載盤XY是否移置拍照檢查位;
                                 } break;
@@ -4014,8 +4048,10 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_確認載盤移植直針孔相機補正位:                            xeTmrTakePin = xe_tmr_takepin.xett_載盤XY移置直針位;  break;
 
                                 case xe_tmr_takepin.xett_載盤XY移置直針位: {  
-                                    const double SetPinOffsetX = 2.463;
-                                    const double SetPinOffsetY = 54.276;
+                                    double SetPinOffsetX, SetPinOffsetY; {
+                                        SetPinOffsetX = apiParaReadIndex("SaveParameterJason.json", 13);
+                                        SetPinOffsetY = apiParaReadIndex("SaveParameterJason.json", 14);
+                                    }
 
                                     double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX + SetPinOffsetX;
                                     double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY + SetPinOffsetY;
@@ -4026,11 +4062,13 @@ namespace InjectorInspector
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢查載盤XY是否移置直針位;
                                 } break;
                                 case xe_tmr_takepin.xett_檢查載盤XY是否移置直針位: {
+                                    double SetPinOffsetX, SetPinOffsetY; {
+                                        SetPinOffsetX = apiParaReadIndex("SaveParameterJason.json", 13);
+                                        SetPinOffsetY = apiParaReadIndex("SaveParameterJason.json", 14);
+                                    }
+
                                     double dbX = dbapiCarrierX(dbRead, 0);
                                     double dbY = dbapiCarrierY(dbRead, 0);
-
-                                    const double SetPinOffsetX = 2.463;
-                                    const double SetPinOffsetY = 54.276;
 
                                     double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX + SetPinOffsetX;
                                     double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY + SetPinOffsetY;
@@ -4042,14 +4080,20 @@ namespace InjectorInspector
                                 } break;
                                 case xe_tmr_takepin.xett_確認載盤XY移置直針位:                                  xeTmrTakePin = xe_tmr_takepin.xett_擺放座Z軸至植針位;  break;
 
-                                case xe_tmr_takepin.xett_擺放座Z軸至植針位:   
-                                    dbapiSetZ(26, 33);
+                                case xe_tmr_takepin.xett_擺放座Z軸至植針位: {   
+                                    double SetPlacePinZHight; {
+                                        SetPlacePinZHight = apiParaReadIndex("SaveParameterJason.json", 11);
+                                        dbapiSetZ(SetPlacePinZHight, 33);
+                                    }
+
                                     xeTmrTakePin = xe_tmr_takepin.xett_檢查擺放座Z軸是否至植針位;
-                                    break;
+                                } break;
                                 case xe_tmr_takepin.xett_檢查擺放座Z軸是否至植針位: {
                                     double dbZ = dbapiSetZ(dbRead, 0);
-                                    double dbTargetZ = 26;
-                                    if( (dbTargetZ*0.99 <= dbZ && dbZ <= dbTargetZ*1.01) ) { 
+                                    double SetPlacePinZHight; {
+                                        SetPlacePinZHight = apiParaReadIndex("SaveParameterJason.json", 11);
+                                    }
+                                    if( (SetPlacePinZHight * 0.99 <= dbZ && dbZ <= SetPlacePinZHight * 1.01) ) { 
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認擺放座Z軸至植針位;
                                     }
                                 } break;
@@ -4223,7 +4267,11 @@ namespace InjectorInspector
                         }
                     } break;
                     case xe_tmr_takepin.xett_Socket相機移至拍照位22: {
-                        dbapiIAI(22.0);
+                        double dbSocketCamera; {
+                            dbSocketCamera = apiParaReadIndex("SaveParameterJason.json", 17);
+                            dbapiIAI(dbSocketCamera);
+                        }
+
                         xeTmrTakePin = xe_tmr_takepin.xett_擺放座Z軸縮回;
                     } break;
                     case xe_tmr_takepin.xett_擺放座Z軸縮回: {
@@ -4266,8 +4314,10 @@ namespace InjectorInspector
                         xeTmrTakePin = xe_tmr_takepin.xett_載盤XY移置抽料位;
                     } break;
                     case xe_tmr_takepin.xett_載盤XY移置抽料位: {
-                        const double SetPinOffsetX =  2.796;
-                        const double SetPinOffsetY =-49.011;
+                        double SetPinOffsetX, SetPinOffsetY; {
+                            SetPinOffsetX = apiParaReadIndex("SaveParameterJason.json", 15);
+                            SetPinOffsetY = apiParaReadIndex("SaveParameterJason.json", 16);
+                        }
 
                         btn_取得目標座標_Click(sender, e);
                         if(bRemove == false) {
@@ -4282,17 +4332,22 @@ namespace InjectorInspector
                             dbapiCarrierX(dbTargetX, 190 * 0.8);
                             dbapiCarrierY(dbTargetY, 800 * 0.8);
 
-                            dbapiIAI(22.0);
+                            double dbSocketCamera; {
+                                dbSocketCamera = apiParaReadIndex("SaveParameterJason.json", 17);
+                                dbapiIAI(dbSocketCamera);
+                            }
 
                             xeTmrTakePin = xe_tmr_takepin.xett_檢查載盤XY是否移置抽料位;
                         }
                     } break;
                     case xe_tmr_takepin.xett_檢查載盤XY是否移置抽料位: {
+                        double SetPinOffsetX, SetPinOffsetY; {
+                            SetPinOffsetX = apiParaReadIndex("SaveParameterJason.json", 15);
+                            SetPinOffsetY = apiParaReadIndex("SaveParameterJason.json", 16);
+                        }
+
                         double dbX = dbapiCarrierX(dbRead, 0);
                         double dbY = dbapiCarrierY(dbRead, 0);
-
-                        const double SetPinOffsetX =  2.796;
-                        const double SetPinOffsetY =-49.011;
 
                         double dbTargetX = dbPinHolePositionX + SetPinOffsetX;
                         double dbTargetY = dbPinHolePositionY + SetPinOffsetY;
@@ -4306,13 +4361,21 @@ namespace InjectorInspector
                         xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸至抽料位;
                     } break;
                     case xe_tmr_takepin.xett_抽料Z軸至抽料位: {
-                        dbapJoDell吸針嘴(14.8);
+                        double RemovePinZHight; {
+                            RemovePinZHight = apiParaReadIndex("SaveParameterJason.json", 12);
+                            dbapJoDell吸針嘴(RemovePinZHight);
+                        }
+
                         xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸是否至抽料位;
                     } break;
                     case xe_tmr_takepin.xett_抽料Z軸是否至抽料位: {
                         double dbZ = dbapJoDell吸針嘴(dbRead);
-                        double dbTargetZ = 14.8;
-                        if( (dbTargetZ*0.99 <= dbZ && dbZ <= dbTargetZ*1.01) ) { 
+
+                        double RemovePinZHight; {
+                            RemovePinZHight = apiParaReadIndex("SaveParameterJason.json", 12);
+                        }
+
+                        if( (RemovePinZHight * 0.99 <= dbZ && dbZ <= RemovePinZHight * 1.01) ) { 
                             xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸確認至抽料位;
                         }
                     } break;

@@ -59,6 +59,9 @@ namespace InjectorInspector
                 dataGridView1.AllowUserToDeleteRows = true;  // 允許刪除行
                 dataGridView1.ReadOnly = false;            // 允許編輯資料
 
+                //Note資料寬度為400
+                dataGridView1.Columns["strNote"].Width = 400;
+
                 // 設定 DataGridView 的 DataError 事件處理
                 dataGridView1.DataError += DataGridView1_DataError;
 

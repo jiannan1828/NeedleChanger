@@ -49,6 +49,7 @@ namespace Inspector
         /// <summary> 吸嘴分析結果成功 </summary>
         public bool InspectOK = false;
         public Action on下視覺;
+        public Func<string, double> getParam;
 
         public int lights = 120;
 
@@ -182,6 +183,10 @@ namespace Inspector
                 string dPath = string.Format("{0}\\Recipe\\{1}.XML", System.Windows.Forms.Application.StartupPath, Num);
                 if (File.Exists(dPath))
                     parameter = DeSerializeXML<InspParameter>(File.ReadAllBytes(dPath));
+
+                Read吸嘴參數();
+                ReadTray參數();
+
                 num_Pin寬Min.Value = (decimal)parameter.Pin寬度Min;
                 num_Pin寬Max.Value = (decimal)parameter.Pin寬度Max;
                 num_Pin長Min.Value = (decimal)parameter.Pin長度Min;
@@ -194,6 +199,57 @@ namespace Inspector
                 string dPath2 = string.Format("{0}\\Recipe\\{1}.model", System.Windows.Forms.Application.StartupPath, Num);
                 //if (File.Exists(dPath2))
                 //    HOperatorSet.ReadShapeModel(dPath2, out InspNozzle.model);
+            }
+        }
+
+        internal void Read吸嘴參數()
+        {
+            double V = getParam("NeedleHeadLength");  //針頭長
+            if (Math.Abs(V) > 0.01) { 
+                parameter.針頭長度 = V;
+            }
+
+            V = getParam("NeedleHeadWidth");  //針頭寬
+            if (Math.Abs(V) > 0.01) { 
+                parameter.針頭寬度 = V;
+            }
+
+            V = getParam("NeedleTailLength");  //針尾長
+            if (Math.Abs(V) > 0.01) { 
+                parameter.針尾長度 = V;
+            }
+
+            V = getParam("NeedleTailWidth");  //針尾寬
+            if (Math.Abs(V) > 0.01) { 
+                parameter.針尾寬度 = V;
+            }
+        }
+
+        internal void ReadTray參數()
+        {
+            double V = getParam("NeedleLengthMax");  //針長Max
+            if (Math.Abs(V) > 0.01) { 
+                parameter.Pin長度Max = V;
+            }
+
+            V = getParam("NeedleLengthMin");  //針長Min
+            if (Math.Abs(V) > 0.01) { 
+                parameter.Pin長度Min = V;
+            }
+
+            V = getParam("NeedleWidthMax");  //針寬Max
+            if (Math.Abs(V) > 0.01) { 
+                parameter.Pin寬度Max = V;
+            }
+
+            V = getParam("NeedleWidthMin");  //針寬Min
+            if (Math.Abs(V) > 0.01) { 
+                parameter.Pin寬度Min = V;
+            }
+
+            V = getParam("NeedleThreshold");  //閥值
+            if (Math.Abs(V) > 0.01) { 
+                parameter.TrayThreshold = (int)V;
             }
         }
 
@@ -1080,6 +1136,7 @@ namespace Inspector
             target = new List<Vector3>();
             if (helper.ContainImage)
             {
+                owner.ReadTray參數();
                 HObject temp, SelectedRegions, SelectPins;
                 HTuple threshold, W, H, phi, L1, L2, deg;
                 HOperatorSet.CopyImage(helper.Image, out temp);
@@ -1370,6 +1427,7 @@ namespace Inspector
             targetθ = 0;
             if (helper.ContainImage)
             {
+                owner.Read吸嘴參數();
                 if ((owner.parameter.針頭長度 < 0.01) || (owner.parameter.針頭寬度 < 0.01) || (owner.parameter.針尾長度 < 0.01) || (owner.parameter.針尾寬度 < 0.01))
                 {
                     owner.parameter.針頭長度 = owner.parameter.針尾長度 = 0.5;
@@ -1758,6 +1816,7 @@ namespace Inspector
             targetIndex = -1;
             if (helper.ContainImage)
             {
+                double NeedleCircleParameter = owner.getParam("NeedleCircleParameter");
                 HObject temp, binArea, connArea, SelArea, OutArea, MaxArea, CirArea;
                 HTuple W, H, usedThr, row, col, Radius, Dist;
                 HOperatorSet.CopyImage(helper.Image, out temp);
@@ -1765,13 +1824,14 @@ namespace Inspector
                 HOperatorSet.GetImageSize(temp, out W, out H);
                 HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
                 HOperatorSet.Connection(binArea, out connArea);
-                HOperatorSet.SelectShape(connArea, out SelArea, "circularity", "and", 0.9, 1);
+                HOperatorSet.SelectShape(connArea, out SelArea, "circularity", "and", NeedleCircleParameter, 1);
                 HOperatorSet.SelectShape(SelArea, out OutArea, "outer_radius", "and", 20, 180);
                 //HOperatorSet.SelectShapeStd(OutArea, out MaxArea, "max_area", 70);
                 HOperatorSet.SmallestCircle(OutArea, out row, out col, out Radius);
                 if (row.Length > 0)
                 {
                     HOperatorSet.SelectShape(OutArea, out CirArea, "row", "and", H / 2.0 - 50, H / 2.0 + 50);
+                    HOperatorSet.SelectShape(CirArea, out CirArea, "column", "and", W / 2.0 - 50, W / 2.0 + 50);
                     HOperatorSet.AreaCenter(OutArea, out usedThr, out row, out col);
                     //HOperatorSet.SelectShape(OutArea, out CirArea, "outer_radius", "and", Radius.D - 2, Radius.D + 2);
                 HOperatorSet.SmallestCircle(CirArea, out row, out col, out Radius);
@@ -1876,9 +1936,12 @@ namespace Inspector
             Win.HalconWindow.SetColor("orange");
             if ((targetIndex >= 0) && (pX != null) && (pY != null))
             {
-                Win.HalconWindow.DispCross(pY, pX, 300, 0);
-                Win.HalconWindow.SetTposition((int)(pY.D + 300), 300);
-                Win.HalconWindow.WriteString(string.Format("X = {0:F3} , Y = {1:F3}", hole.X, hole.Y));
+                if (owner.ck_Socket孔.Checked)
+                {
+                    Win.HalconWindow.DispCross(pY, pX, 300, 0);
+                    Win.HalconWindow.SetTposition((int)(pY.D + 300), 300);
+                    Win.HalconWindow.WriteString(string.Format("X = {0:F3} , Y = {1:F3}", hole.X, hole.Y));
+                }
             }
             if ((CarbX != null) && (CarbY != null) && (CarbX.Length == 1))
             {
