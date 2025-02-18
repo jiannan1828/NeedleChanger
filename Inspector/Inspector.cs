@@ -32,7 +32,7 @@ namespace Inspector
         Insp料倉區 Insp料倉;
         InspTray區 InspTray;
         public Insp吸嘴區 InspNozzle;
-        InspSocket區 InspSocket;
+        public InspSocket區 InspSocket;
         InspCCD5區 Insp夾爪CCD;
         InspCCD6區 Insp吸針孔;
         Exlite OPT;

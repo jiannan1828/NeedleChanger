@@ -219,6 +219,11 @@ namespace InjectorInspector
             return irsltCount = PlaceNeedles.Count();
         }
 
+        public static int get_NeedleCount()
+        {
+            return Json.Needles.Count();
+        }
+
         /// <summary>
         /// 找出需要處理的圓的座標
         /// </summary>

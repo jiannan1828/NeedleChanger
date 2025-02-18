@@ -227,7 +227,7 @@ namespace InjectorInspector
             // 儲存資料至 JSON 檔案
             apiHandler.WriteDataToJsonFile();
 
-           Console.WriteLine("資料已成功保存至 JSON 檔案！");
+            Console.WriteLine("資料已成功保存至 JSON 檔案！");
         }
 
         public void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)

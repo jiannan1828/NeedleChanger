@@ -281,6 +281,7 @@ namespace InjectorInspector
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lbl_2pCalibraLog = new System.Windows.Forms.Label();
             this.btn_兩點校正 = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.btn抽針 = new System.Windows.Forms.Button();
@@ -445,11 +446,12 @@ namespace InjectorInspector
             this.tsmi_OpenFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_SaveFile = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_CloseFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.tmr_Sequense = new System.Windows.Forms.Timer(this.components);
+            this.tmr_Home = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
             this.ttp_NeedleInfo = new System.Windows.Forms.ToolTip(this.components);
             this.tmrBarCodeScanner = new System.Windows.Forms.Timer(this.components);
+            this.tmr_2p_Calibration = new System.Windows.Forms.Timer(this.components);
             this.tabJob.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -479,7 +481,7 @@ namespace InjectorInspector
             // 
             this.tmr_ReadWMX3.Enabled = true;
             this.tmr_ReadWMX3.Interval = 125;
-            this.tmr_ReadWMX3.Tick += new System.EventHandler(this.timer1_Tick);
+            this.tmr_ReadWMX3.Tick += new System.EventHandler(this.tmr_ReadWMX3_Tick);
             // 
             // tabJob
             // 
@@ -3366,6 +3368,7 @@ namespace InjectorInspector
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.lbl_2pCalibraLog);
             this.tabPage2.Controls.Add(this.btn_兩點校正);
             this.tabPage2.Controls.Add(this.label19);
             this.tabPage2.Controls.Add(this.btn抽針);
@@ -3425,6 +3428,15 @@ namespace InjectorInspector
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // lbl_2pCalibraLog
+            // 
+            this.lbl_2pCalibraLog.AutoSize = true;
+            this.lbl_2pCalibraLog.Location = new System.Drawing.Point(26, 743);
+            this.lbl_2pCalibraLog.Name = "lbl_2pCalibraLog";
+            this.lbl_2pCalibraLog.Size = new System.Drawing.Size(137, 19);
+            this.lbl_2pCalibraLog.TabIndex = 243;
+            this.lbl_2pCalibraLog.Text = "lbl_2pCalibraLog";
             // 
             // btn_兩點校正
             // 
@@ -5094,7 +5106,7 @@ namespace InjectorInspector
             // tsmi_OpenFile
             // 
             this.tsmi_OpenFile.Name = "tsmi_OpenFile";
-            this.tsmi_OpenFile.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_OpenFile.Size = new System.Drawing.Size(114, 22);
             this.tsmi_OpenFile.Text = "開啟";
             this.tsmi_OpenFile.Click += new System.EventHandler(this.tsmi_OpenFile_Click);
             // 
@@ -5102,21 +5114,21 @@ namespace InjectorInspector
             // 
             this.tsmi_SaveFile.Enabled = false;
             this.tsmi_SaveFile.Name = "tsmi_SaveFile";
-            this.tsmi_SaveFile.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_SaveFile.Size = new System.Drawing.Size(114, 22);
             this.tsmi_SaveFile.Text = "儲存";
             this.tsmi_SaveFile.Click += new System.EventHandler(this.tsmi_SaveFile_Click);
             // 
             // tsmi_CloseFile
             // 
             this.tsmi_CloseFile.Name = "tsmi_CloseFile";
-            this.tsmi_CloseFile.Size = new System.Drawing.Size(180, 22);
+            this.tsmi_CloseFile.Size = new System.Drawing.Size(114, 22);
             this.tsmi_CloseFile.Text = "關閉";
             this.tsmi_CloseFile.Click += new System.EventHandler(this.tsmi_CloseFile_Click);
             // 
-            // tmr_Sequense
+            // tmr_Home
             // 
-            this.tmr_Sequense.Enabled = true;
-            this.tmr_Sequense.Tick += new System.EventHandler(this.tmr_Sequense_Tick);
+            this.tmr_Home.Enabled = true;
+            this.tmr_Home.Tick += new System.EventHandler(this.tmr_Home_Tick);
             // 
             // tmr_TakePin
             // 
@@ -5135,6 +5147,11 @@ namespace InjectorInspector
             this.tmrBarCodeScanner.Enabled = true;
             this.tmrBarCodeScanner.Interval = 10;
             this.tmrBarCodeScanner.Tick += new System.EventHandler(this.tmrBarCodeScanner_Tick);
+            // 
+            // tmr_2p_Calibration
+            // 
+            this.tmr_2p_Calibration.Enabled = true;
+            this.tmr_2p_Calibration.Tick += new System.EventHandler(this.tmr_2p_Calibration_Tick);
             // 
             // Form1
             // 
@@ -5494,7 +5511,7 @@ namespace InjectorInspector
         public System.Windows.Forms.Button btn_minus_d01;
         public System.Windows.Forms.Button btn_plus_d01;
         public System.Windows.Forms.TabPage tabPage3;
-        public System.Windows.Forms.Timer tmr_Sequense;
+        public System.Windows.Forms.Timer tmr_Home;
         public System.Windows.Forms.Button btn_Socket孔檢查;
         public System.Windows.Forms.Label label6;
         public System.Windows.Forms.Label label7;
@@ -5670,6 +5687,8 @@ namespace InjectorInspector
         public TextBox edit_diff_value;
         public Label label19;
         public Button btn_兩點校正;
+        public Timer tmr_2p_Calibration;
+        public Label lbl_2pCalibraLog;
     }
 }
 
