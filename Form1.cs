@@ -116,7 +116,7 @@ namespace InjectorInspector
         bool   b有看到校正孔         = false;
         double dbCameraCalibrationX = 0.0;
         double dbCameraCalibrationY = 0.0;
-        public void button3_Click(object sender, EventArgs e)
+        public void btn_Socket孔檢查_Click(object sender, EventArgs e)
         {
             //植針孔位置校正攝影機取像
             Inspector.Vector3 pos;
@@ -129,7 +129,10 @@ namespace InjectorInspector
             //取得校正攝影機校正參數
             success      = inspector1.xInspSocket植針後檢查();
             label7.Text  = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
-
+        }
+        //---------------------------------------------------------------------------------------
+        private void btn_植針嘴檢查_Click(object sender, EventArgs e)
+        {
             //植針嘴有無堵料, 無:ok, 有:ng
             Inspector.Vector3 pos2;
             bool success2 = inspector1.xInsp夾爪(out pos2);   //夾爪針孔偵測 回傳:OK/NG 及找到孔的位置
@@ -4024,7 +4027,7 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_確認載盤XY移置拍照檢查位:                                xeTmrTakePin = xe_tmr_takepin.xett_載盤移植直針孔相機補正位;  break;
 
                                 case xe_tmr_takepin.xett_載盤移植直針孔相機補正位: {  
-                                    button3_Click(sender, e);
+                                    btn_Socket孔檢查_Click(sender, e);
 
                                     double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX;
                                     double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY;
@@ -4234,7 +4237,7 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_檢查有無植針成功:
 
-                                    button3_Click(sender, e); {
+                                    btn_Socket孔檢查_Click(sender, e); {
                                         //取得校正攝影機校正參數
                                         bool success = inspector1.xInspSocket植針後檢查();
                                         label7.Text  = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
@@ -4507,6 +4510,20 @@ namespace InjectorInspector
                     break;
             }
         }  // end of public void tmr_TakePin_Tick(object sender, EventArgs e)
+        //---------------------------------------------------------------------------------------
+        private void btn_兩點校正_Click(object sender, EventArgs e)
+        {
+            if (OpenFile()) {
+                tsmi_SaveFile.Enabled = true;
+                btn_SaveFile.Enabled  = true;
+
+                show_grp_BarcodeInfo(grp_BarcodeInfo);
+
+                find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
+
+                pic_Needles.Refresh();
+            }
+        }
         //---------------------------------------------------------------------------------------
         //-------------------------------- State Machine implement ------------------------------
         //---------------------------------------------------------------------------------------
