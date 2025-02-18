@@ -230,25 +230,25 @@
   {
     "strLabel": "\u8F09\u76E4X\u8EF8",
     "u32Index": 39,
-    "dbPosition": 140.57599999999999,
+    "dbPosition": 140.50800000000001,
     "strNote": "020\u5DE6Socket\u5DE6\u5B9A\u4F4D\u9EDEAx"
   },
   {
     "strLabel": "\u8F09\u76E4Y\u8EF8",
     "u32Index": 40,
-    "dbPosition": 610.71299999999997,
+    "dbPosition": 610.77200000000005,
     "strNote": "020\u5DE6Socket\u5DE6\u5B9A\u4F4D\u9EDEAy"
   },
   {
     "strLabel": "\u8F09\u76E4X\u8EF8",
     "u32Index": 41,
-    "dbPosition": 117.562,
+    "dbPosition": 117.502,
     "strNote": "020\u5DE6Socket\u53F3\u5B9A\u4F4D\u9EDEBx"
   },
   {
     "strLabel": "\u8F09\u76E4Y\u8EF8",
     "u32Index": 42,
-    "dbPosition": 610.68100000000004,
+    "dbPosition": 610.73900000000003,
     "strNote": "020\u5DE6Socket\u53F3\u5B9A\u4F4D\u9EDEBy"
   },
   {
