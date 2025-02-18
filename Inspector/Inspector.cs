@@ -140,7 +140,7 @@ namespace Inspector
             Insp吸針孔 = new InspCCD6區(this, Win4);
             OPT = new Exlite(2);
             OPT.Open("COM1", 1);
-            OPT.Lights[0] = 120;
+            OPT.Lights[0] = 110;
             Task.Factory.StartNew(Scan);
             System.Windows.Forms.Application.ApplicationExit += onExit;
             timer1.Tick += onTick1;

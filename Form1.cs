@@ -129,6 +129,10 @@ namespace InjectorInspector
             //取得校正攝影機校正參數
             success      = inspector1.xInspSocket植針後檢查();
             label7.Text  = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
+
+            //植針嘴有無堵料, 無:ok, 有:ng
+            Inspector.Vector3 pos2;
+            bool success2 = inspector1.xInsp夾爪(out pos2);   //夾爪針孔偵測 回傳:OK/NG 及找到孔的位置
         }
         //---------------------------------------------------------------------------------------
         public void tB_PointAB_Calculate(object sender, EventArgs e)
