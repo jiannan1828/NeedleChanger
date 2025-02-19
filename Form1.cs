@@ -3919,7 +3919,7 @@ namespace InjectorInspector
                                 } break;
                                 case xe_tmr_takepin.xett_等待載盤XY移置拍照檢查位:
                                     iTakePinFinishedCNT1++;
-                                    if(iTakePinFinishedCNT1>=10) { 
+                                    if(iTakePinFinishedCNT1>=20) { 
                                         iTakePinFinishedCNT1 = 0;
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認載盤XY移置拍照檢查位;
                                     }
@@ -4664,6 +4664,8 @@ namespace InjectorInspector
 
                     if(bResume==true) {
                         bResume = false;
+
+                        u32Delaycnt = 0;
                         xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_等待移動至_校正第1點;
                     }
                 } break;
@@ -4682,9 +4684,14 @@ namespace InjectorInspector
                     if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
                         (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
 
-                        if(bResume==true) { 
-                            bResume = false;
-                            xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動至_校正第1點;
+                        u32Delaycnt++;
+                        if(u32Delaycnt>=10) { 
+                            u32Delaycnt = 0;
+
+                            if(bResume==true) { 
+                                bResume = false;
+                                xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動至_校正第1點;
+                            }
                         }
                     }
                 } break;
@@ -4738,9 +4745,14 @@ namespace InjectorInspector
                     if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
                         (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
 
-                        if(bResume==true) { 
-                            bResume = false;
-                            xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動補正_校正第1點;
+                        u32Delaycnt++;
+                        if(u32Delaycnt>=10) { 
+                            u32Delaycnt = 0;
+
+                            if(bResume==true) { 
+                                bResume = false;
+                                xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動補正_校正第1點;
+                            }
                         }
                     }
                 } break;
@@ -4780,9 +4792,14 @@ namespace InjectorInspector
                     if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
                         (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
 
-                        if(bResume==true) { 
-                            bResume = false;
-                            xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動至_校正第2點;
+                        u32Delaycnt++;
+                        if(u32Delaycnt>=10) { 
+                            u32Delaycnt = 0;
+
+                            if(bResume==true) { 
+                                bResume = false;
+                                xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動至_校正第2點;
+                            }
                         }
                     }
                 } break;
@@ -4836,9 +4853,14 @@ namespace InjectorInspector
                     if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
                         (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
 
-                        if(bResume==true) { 
-                            bResume = false;
-                            xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動補正_校正第2點;
+                        u32Delaycnt++;
+                        if(u32Delaycnt>=10) { 
+                            u32Delaycnt = 0;
+
+                            if(bResume==true) { 
+                                bResume = false;
+                                xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動補正_校正第2點;
+                            }
                         }
                     }
                 } break;
