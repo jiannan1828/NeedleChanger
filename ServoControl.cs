@@ -398,7 +398,10 @@ namespace InjectorInspector
 
         //---------------------------------------------------------------------------------------
         //WMX3軸定義
-        public const double dbRead = 9916777216.99;
+        public const double dbRead           = 9916777216.99;
+        public const double dbCheckArrived   = 9916777254.87;
+        public const double dbAxisMoveOk     = 9916777294.78;
+        public const double dbAxisMoveNg     = 9916777209.87;
         public const double dbAxisRGearRatio = 36000;
 
         //---------------------------------------------------------------------------------------

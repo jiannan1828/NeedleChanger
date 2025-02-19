@@ -361,19 +361,19 @@ namespace InjectorInspector
                                 } 
                                 break;
                             case "3D掃描":
-                                form1.dbapJoDell3D掃描(Convert.ToDouble(rowValues[1]));
+                                form1.dbapiJoDell3D掃描(Convert.ToDouble(rowValues[1]));
                                 if (form1.select_JoDell3D掃描.Checked == true) {
                                     form1.txtABSpos.Text = rowValues[1].ToString();
                                 } 
                                 break;
                             case "吸針嘴":
-                                form1.dbapJoDell吸針嘴(Convert.ToDouble(rowValues[1]));
+                                form1.dbapiJoDell吸針嘴(Convert.ToDouble(rowValues[1]));
                                 if (form1.select_JoDell吸針嘴.Checked == true) {
                                     form1.txtABSpos.Text = rowValues[1].ToString();
                                 } 
                                 break;
                             case "植針嘴":
-                                form1.dbapJoDell植針嘴(Convert.ToDouble(rowValues[1]));
+                                form1.dbapiJoDell植針嘴(Convert.ToDouble(rowValues[1]));
                                 if (form1.select_JoDell植針嘴.Checked == true) {
                                     form1.txtABSpos.Text = rowValues[1].ToString();
                                 }
@@ -473,19 +473,19 @@ namespace InjectorInspector
                             } 
                             break;
                         case "3D掃描":
-                            form1.dbapJoDell3D掃描(Convert.ToDouble(rowValues[1]));
+                            form1.dbapiJoDell3D掃描(Convert.ToDouble(rowValues[1]));
                             if (form1.select_JoDell3D掃描.Checked == true) {
                                 form1.txtABSpos.Text = rowValues[1].ToString();
                             } 
                             break;
                         case "吸針嘴":
-                            form1.dbapJoDell吸針嘴(Convert.ToDouble(rowValues[1]));
+                            form1.dbapiJoDell吸針嘴(Convert.ToDouble(rowValues[1]));
                             if (form1.select_JoDell吸針嘴.Checked == true) {
                                 form1.txtABSpos.Text = rowValues[1].ToString();
                             } 
                             break;
                         case "植針嘴":
-                            form1.dbapJoDell植針嘴(Convert.ToDouble(rowValues[1]));
+                            form1.dbapiJoDell植針嘴(Convert.ToDouble(rowValues[1]));
                             if (form1.select_JoDell植針嘴.Checked == true) {
                                 form1.txtABSpos.Text = rowValues[1].ToString();
                             }

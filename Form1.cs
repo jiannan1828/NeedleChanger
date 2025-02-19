@@ -90,6 +90,7 @@ namespace InjectorInspector
         public bool dbNozzleDegInverse = false;
         public void apiCallBackTest()
         {
+            //Vision Callback Function test
             cntcallback++;
             this.Text = cntcallback.ToString() + "  " + inspector1.InspNozzle.CCD.GrabCount.ToString();
 
@@ -103,13 +104,80 @@ namespace InjectorInspector
             }
 
         }
+        //---------------------------------------------------------------------------------------
+        void apiParaWriteIndex(string filename, int index, double dbValue)
+        {
+            // 在 Form 類中創建 apiJsonParameterHandle 的實例
+            apiJsonParameterHandle handJson = new apiJsonParameterHandle();
+
+            // 初始化 apiJsonParameterHandle，並指定檔案名稱
+            handJson.InitialJsonFile(filename);
+
+            // 使用 apiJsonParameterHandle 中的 JsonNeedleContentList 資料
+            BindingList<JsonParameterContent> jsonContentList = new BindingList<JsonParameterContent>(handJson.JsonNeedleContentList);
+
+            // 根據索引讀取資料
+            jsonContentList[index].dbPosition = dbValue;
+        }
+        //---------------------------------------------------------------------------------------
+        double apiParaReadIndex(string filename, int index) {
+            double rslt = 0.0;
+
+            // 在 Form 類中創建 apiJsonParameterHandle 的實例
+            apiJsonParameterHandle handJson = new apiJsonParameterHandle();
+
+            // 初始化 apiJsonParameterHandle，並指定檔案名稱
+            handJson.InitialJsonFile(filename);
+
+            // 使用 apiJsonParameterHandle 中的 JsonNeedleContentList 資料
+            BindingList<JsonParameterContent> jsonContentList = new BindingList<JsonParameterContent>(handJson.JsonNeedleContentList);
+
+            // 根據索引讀取資料
+            rslt = jsonContentList[index].dbPosition;
+
+            return rslt;
+        }
+        //---------------------------------------------------------------------------------------
+        string apiParaReadStr(string filename, int index) {
+            string rslt;
+
+            // 在 Form 類中創建 apiJsonParameterHandle 的實例
+            apiJsonParameterHandle handJson = new apiJsonParameterHandle();
+
+            // 初始化 apiJsonParameterHandle，並指定檔案名稱
+            handJson.InitialJsonFile(filename);
+
+            // 使用 apiJsonParameterHandle 中的 JsonNeedleContentList 資料
+            BindingList<JsonParameterContent> jsonContentList = new BindingList<JsonParameterContent>(handJson.JsonNeedleContentList);
+
+            // 根據索引讀取資料
+            rslt = jsonContentList[index].strNote;
+
+            return rslt;
+        }
+        //---------------------------------------------------------------------------------------
+        void apiReadNeedleInfo(string filename, int Index, ref double dbX, ref double dbY) {
+            JSON temp = new JSON();
+
+            try {
+                temp = JsonConvert.DeserializeObject<JSON>(File.ReadAllText(filename));
+            } catch (Exception ex) {
+                MessageBox.Show($"讀取 Json 檔時發生錯誤: {ex.Message}");
+            }
+
+            dbX = temp.Needles[Index].X;
+            dbY = temp.Needles[Index].Y;
+        }
+        //---------------------------------------------------------------------------------------
         public void button2_Click(object sender, EventArgs e)
         {
+            //Save Vision Recipe
             inspector1.SaveRecipe(8);
         }
         //---------------------------------------------------------------------------------------
         public void button5_Click(object sender, EventArgs e)
         {
+            //Read Vision Recipe
             inspector1.LoadRecipe(8);
         }
         //---------------------------------------------------------------------------------------
@@ -394,6 +462,34 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //------------------------ Xavier Call, Control the Servo machine -----------------------
         //---------------------------------------------------------------------------------------
+        public double dbTargetDelayCNT01 = 0.0;
+        public double dbapiDelayCNT01(double dbDelayCNT) 
+        {
+            if(dbTargetDelayCNT01>0) { 
+                dbTargetDelayCNT01--;
+            }
+
+            switch(dbDelayCNT) {
+                case dbRead:
+                    break;
+
+                case dbCheckArrived: {
+                    if(dbTargetDelayCNT01==0) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
+
+                default: {
+                    dbTargetDelayCNT01 = dbDelayCNT;
+                } break;
+            }
+
+            return dbTargetDelayCNT01;
+        }  // end of public double dbapiDelayCNT01(double dbDelayCNT) 
+        //---------------------------------------------------------------------------------------
+        public double dbTargetPositionNozzleX = 0.0;
         public double dbapiNozzleX(double dbIncreaseNozzleX, double dbTargetSpeed)  //NozzleX
         {
             Normal calculate = new Normal();
@@ -404,7 +500,7 @@ namespace InjectorInspector
                 const double Sum    = 500000;
                 const double dbSpdF =  Sum / Maxdb;
 
-            double dbRstNozzleX = 0.0;
+            double dbRstNozzleX     = 0.0;
 
             {  // start of 吸嘴X軸 讀取與顯示
                 int    rslt     = 0;
@@ -457,34 +553,48 @@ namespace InjectorInspector
 
             }  // end of 吸嘴X軸 讀取與顯示
 
-            if (dbIncreaseNozzleX == dbRead) {
+            //Function Classification
+            switch(dbIncreaseNozzleX) {
+                case dbRead:
+                    break;
 
-            } else {  //吸嘴X軸 變更位置
-                //伸長量overflow保護
-                if( Mindb<=dbIncreaseNozzleX && dbIncreaseNozzleX<=Maxdb ) {
+                case dbCheckArrived: {
+                    if( dbTargetPositionNozzleX*0.99 <= dbRstNozzleX && 
+                                                        dbRstNozzleX <= dbTargetPositionNozzleX*1.01 ) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
 
-                } else if( dbIncreaseNozzleX<=Mindb ) {
-                    dbIncreaseNozzleX = (int)Mindb;
-                } else if( Maxdb<=dbIncreaseNozzleX ) {
-                    dbIncreaseNozzleX = (int)Maxdb;
-                }
+                default: {  //吸嘴X軸 變更位置
+                    //伸長量overflow保護
+                    if( Mindb<=dbIncreaseNozzleX && dbIncreaseNozzleX<=Maxdb ) {
 
-                // 取得欲變更的的浮點數
-                int fChangeNozzleX = calculate.Map(dbIncreaseNozzleX, Maxdb, Mindb, MaxRAW, MinRAW);
+                    } else if( dbIncreaseNozzleX<=Mindb ) {
+                        dbIncreaseNozzleX = (int)Mindb;
+                    } else if( Maxdb<=dbIncreaseNozzleX ) {
+                        dbIncreaseNozzleX = (int)Maxdb;
+                    }
 
-                //執行移動吸嘴
-                int axis     = (int)WMX3軸定義.吸嘴X軸;
-                int position = fChangeNozzleX;
-                int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                int accel    = speed * 2;
-                int daccel   = speed * 2;
-                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    // 取得欲變更的的浮點數
+                    int fChangeNozzleX      = calculate.Map(dbIncreaseNozzleX, Maxdb, Mindb, MaxRAW, MinRAW);
+                    dbTargetPositionNozzleX = dbIncreaseNozzleX;
 
-            }  // end of if (dbIncreaseNozzleX == dbRead) {
+                    //執行移動吸嘴
+                    int axis     = (int)WMX3軸定義.吸嘴X軸;
+                    int position = fChangeNozzleX;
+                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
+                    int accel    = speed;
+                    int daccel   = speed;
+                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                } break;
+            }
 
             return dbRstNozzleX;
         }  // end of public double dbapiNozzleX(double dbIncreaseNozzleX)  //NozzleX
         //---------------------------------------------------------------------------------------
+        public double dbTargetPositionNozzleY = 0.0;
         public double dbapiNozzleY(double dbIncreaseNozzleY, double dbTargetSpeed)  //NozzleY
         {
             Normal calculate = new Normal();
@@ -495,7 +605,7 @@ namespace InjectorInspector
                 const double Sum    =  10000;
                 const double dbSpdF =  Sum / Maxdb;
 
-            double dbRstNozzleY = 0.0;
+            double dbRstNozzleY     = 0.0;
 
             {  // start of 吸嘴Y軸 讀取與顯示
                 int    rslt     = 0;
@@ -548,34 +658,48 @@ namespace InjectorInspector
 
             }  // end of 吸嘴Y軸 讀取與顯示
 
-            if (dbIncreaseNozzleY == dbRead) {
+            //Function Classification
+            switch(dbIncreaseNozzleY) {
+                case dbRead:
+                    break;
 
-            } else {  //吸嘴X軸 變更位置
-                //伸長量overflow保護
-                if( Mindb<=dbIncreaseNozzleY && dbIncreaseNozzleY<=Maxdb ) {
+                case dbCheckArrived: {
+                    if( dbTargetPositionNozzleY*0.99 <= dbRstNozzleY && 
+                                                        dbRstNozzleY <= dbTargetPositionNozzleY*1.01 ) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
 
-                } else if( dbIncreaseNozzleY<=Mindb ) {
-                    dbIncreaseNozzleY = (int)Mindb;
-                } else if( Maxdb<=dbIncreaseNozzleY ) {
-                    dbIncreaseNozzleY = (int)Maxdb;
-                }
+                default: {  //吸嘴Y軸 變更位置
+                    //伸長量overflow保護
+                    if( Mindb<=dbIncreaseNozzleY && dbIncreaseNozzleY<=Maxdb ) {
 
-                // 取得欲變更的的浮點數
-                int fChangeNozzleY = calculate.Map(dbIncreaseNozzleY, Maxdb, Mindb, MaxRAW, MinRAW);
+                    } else if( dbIncreaseNozzleY<=Mindb ) {
+                        dbIncreaseNozzleY = (int)Mindb;
+                    } else if( Maxdb<=dbIncreaseNozzleY ) {
+                        dbIncreaseNozzleY = (int)Maxdb;
+                    }
 
-                //執行移動吸嘴
-                int axis     = (int)WMX3軸定義.吸嘴Y軸;
-                int position = fChangeNozzleY;
-                int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                int accel    = speed * 2;
-                int daccel   = speed * 2;
-                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    // 取得欲變更的的浮點數
+                    int fChangeNozzleY      = calculate.Map(dbIncreaseNozzleY, Maxdb, Mindb, MaxRAW, MinRAW);
+                    dbTargetPositionNozzleY = dbIncreaseNozzleY;
 
-            }  // end of if (dbIncreaseNozzleY == dbRead) {
+                    //執行移動吸嘴
+                    int axis     = (int)WMX3軸定義.吸嘴Y軸;
+                    int position = fChangeNozzleY;
+                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
+                    int accel    = speed;
+                    int daccel   = speed;
+                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                } break;
+            }
 
             return dbRstNozzleY;
         }  // end of public double dbapiNozzleY(double dbIncreaseNozzleY)  //NozzleY
         //---------------------------------------------------------------------------------------
+        public double dbTargetPositionNozzleZ = 0.0;
         public double dbapiNozzleZ(double dbIncreaseNozzleZ, double dbTargetSpeed)  //NozzleZ
         {
             Normal calculate = new Normal();
@@ -586,8 +710,8 @@ namespace InjectorInspector
                 const double Sum    =  40000;
                 const double dbSpdF =  Sum / Maxdb;
 
-            double dbRstNozzleZ = 0.0;
-
+            double dbRstNozzleZ     = 0.0;
+            
             {  // start of 吸嘴Z軸 讀取與顯示
                 int    rslt     = 0;
                 string position = "";
@@ -639,34 +763,48 @@ namespace InjectorInspector
 
             }  // end of 吸嘴Z軸 讀取與顯示
 
-            if (dbIncreaseNozzleZ == dbRead) {
+            //Function Classification
+            switch(dbIncreaseNozzleZ) {
+                case dbRead:
+                    break;
 
-            } else {  //吸嘴Z軸 變更位置
-                //伸長量overflow保護
-                if( Mindb<=dbIncreaseNozzleZ && dbIncreaseNozzleZ<=Maxdb ) {
+                case dbCheckArrived: {
+                    if( dbTargetPositionNozzleZ*0.99 <= dbRstNozzleZ && 
+                                                        dbRstNozzleZ <= dbTargetPositionNozzleZ*1.01 ) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
 
-                } else if( dbIncreaseNozzleZ<=Mindb ) {
-                    dbIncreaseNozzleZ = (int)Mindb;
-                } else if ( Maxdb<=dbIncreaseNozzleZ ) {
-                    dbIncreaseNozzleZ = (int)Maxdb;
-                }
+                default: {  //吸嘴Z軸 變更位置
+                    //伸長量overflow保護
+                    if( Mindb<=dbIncreaseNozzleZ && dbIncreaseNozzleZ<=Maxdb ) {
 
-                // 取得欲變更的的浮點數
-                int fChangeNozzleZ = calculate.Map(dbIncreaseNozzleZ, Maxdb, Mindb, MaxRAW, MinRAW);
+                    } else if( dbIncreaseNozzleZ<=Mindb ) {
+                        dbIncreaseNozzleZ = (int)Mindb;
+                    } else if ( Maxdb<=dbIncreaseNozzleZ ) {
+                        dbIncreaseNozzleZ = (int)Maxdb;
+                    }
 
-                //執行伸縮吸嘴
-                int axis     = (int)WMX3軸定義.吸嘴Z軸;
-                int position = fChangeNozzleZ;
-                int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                int accel    = speed * 2;
-                int daccel   = speed * 2;
-                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    // 取得欲變更的的浮點數
+                    int fChangeNozzleZ      = calculate.Map(dbIncreaseNozzleZ, Maxdb, Mindb, MaxRAW, MinRAW);
+                    dbTargetPositionNozzleZ = dbIncreaseNozzleZ;
 
-            }  // end of if (dbIncreaseNozzleZ == dbRead) {
+                    //執行伸縮吸嘴
+                    int axis     = (int)WMX3軸定義.吸嘴Z軸;
+                    int position = fChangeNozzleZ;
+                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
+                    int accel    = speed;
+                    int daccel   = speed;
+                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                } break;
+            }
 
             return dbRstNozzleZ;
         }  // end of public double dbapiNozzleZ(double dbIncreaseNozzleZ)  //NozzleZ
         //---------------------------------------------------------------------------------------
+        public double dbTargetPositionNozzleR = 0.0;
         public double dbapiNozzleR(double dbIncreaseNozzleR, double dbTargetSpeed)  //NozzleR
         {
             Normal calculate = new Normal();
@@ -677,7 +815,7 @@ namespace InjectorInspector
                 const double Sum    =  36000;
                 const double dbSpdF =  Sum / Maxdb;
 
-            double dbRstNozzleR = 0.0;
+            double dbRstNozzleR     = 0.0;
 
             {  // start of 吸嘴R軸 讀取與顯示
                 int    rslt     = 0;
@@ -702,10 +840,8 @@ namespace InjectorInspector
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    //overflow
-                    while (dbGet >= 360.0) {
-                        dbGet -= 360.0;
-                    }
+                    while (dbGet >= 360.0) { dbGet -= 360.0; }  //overflow
+                    while (dbGet <    0.0) { dbGet += 360.0; }  //overflow
                     lbl_吸嘴R軸_Convert.Text = dbGet.ToString("F3");
 
                     //轉回原始數值
@@ -734,46 +870,63 @@ namespace InjectorInspector
 
             }  // end of 吸嘴R軸 讀取與顯示
 
-            if (dbIncreaseNozzleR == dbRead) {
+            //Function Classification
+            switch(dbIncreaseNozzleR) {
+                case dbRead:
+                    break;
 
-            } else {  //吸嘴R軸 變更位置
-                //伸長量overflow保護
+                case dbCheckArrived: {
+                    if( dbTargetPositionNozzleR*0.99 <= dbRstNozzleR && 
+                                                        dbRstNozzleR <= dbTargetPositionNozzleR*1.01 ) { 
+                        return dbAxisMoveOk;
+                    } else 
+                    if( dbTargetPositionNozzleR*1.01 <= dbRstNozzleR && 
+                                                        dbRstNozzleR <= dbTargetPositionNozzleR*0.99 ) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
 
-                //if( Mindb<=dbIncreaseNozzleR && dbIncreaseNozzleR<=Maxdb ) {
-                //
-                //} else if( dbIncreaseNozzleR<=Mindb ) {
-                //    dbIncreaseNozzleR = (int)Mindb;
-                //} else if( Maxdb<= dbIncreaseNozzleR) {
-                //    dbIncreaseNozzleR = (int)Maxdb;
-                //}
+                default: {  //吸嘴R軸 變更位置
+                    //伸長量overflow保護
+                    //if( Mindb<=dbIncreaseNozzleR && dbIncreaseNozzleR<=Maxdb ) {
+                    //
+                    //} else if( dbIncreaseNozzleR<=Mindb ) {
+                    //    dbIncreaseNozzleR = (int)Mindb;
+                    //} else if( Maxdb<= dbIncreaseNozzleR) {
+                    //    dbIncreaseNozzleR = (int)Maxdb;
+                    //}
 
-                // 取得欲變更的的浮點數
-                int fChangeNozzleR = calculate.Map(dbIncreaseNozzleR, Maxdb, Mindb, MaxRAW, MinRAW);
+                    // 取得欲變更的的浮點數
+                    int fChangeNozzleR = calculate.Map(dbIncreaseNozzleR, Maxdb, Mindb, MaxRAW, MinRAW);
+                    dbTargetPositionNozzleR = dbIncreaseNozzleR;
 
-                //執行旋轉吸嘴
-                int axis     = (int)WMX3軸定義.吸嘴R軸;
-                int position = fChangeNozzleR;
-                int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                int accel    = speed * 2;
-                int daccel   = speed * 2;
-                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
-
-            }  // end of if (dbIncreaseNozzleR == dbRead) {
+                    //執行旋轉吸嘴
+                    int axis     = (int)WMX3軸定義.吸嘴R軸;
+                    int position = fChangeNozzleR;
+                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
+                    int accel    = speed;
+                    int daccel   = speed;
+                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                } break;
+            }
 
             return dbRstNozzleR;
         }  // end of public double dbapiNozzleR(double dbIncreaseNozzleR)  //NozzleR
         //---------------------------------------------------------------------------------------
+        public double dbTargetPositionCarrierX = 0.0;
         public double dbapiCarrierX(double dbIncreaseCarrierX, double dbTargetSpeed)  //CarrierX
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =  190000;
+                const int    MaxRAW = 190000;
                 const int    MinRAW =      0;
                 const double Maxdb  =  190.0;
                 const double Mindb  =    0.0;
-                const double Sum    =  190000;
+                const double Sum    = 190000;
                 const double dbSpdF =  Sum / Maxdb;
 
-            double dbRstCarrierX = 0.0;
+            double dbRstCarrierX    = 0.0;
 
             {  // start of 載盤X軸 讀取與顯示
                 int    rslt     = 0;
@@ -826,34 +979,48 @@ namespace InjectorInspector
 
             }  // end of 載盤X軸 讀取與顯示
 
-            if (dbIncreaseCarrierX == dbRead) {
+            //Function Classification
+            switch(dbIncreaseCarrierX) {
+                case dbRead:
+                    break;
 
-            } else {  //載盤X軸 變更位置
-                //伸長量overflow保護
-                if( Mindb<=dbIncreaseCarrierX && dbIncreaseCarrierX<=Maxdb ) {
+                case dbCheckArrived: {
+                    if( dbTargetPositionCarrierX*0.99 <= dbRstCarrierX && 
+                                                         dbRstCarrierX <= dbTargetPositionCarrierX*1.01 ) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
 
-                } else if( dbIncreaseCarrierX<=Mindb ) {
-                    dbIncreaseCarrierX = (int)Mindb;
-                } else if( Maxdb<=dbIncreaseCarrierX ) {
-                    dbIncreaseCarrierX = (int)Maxdb;
-                }
+                default: {  //載盤X軸 變更位置
+                    //伸長量overflow保護
+                    if( Mindb<=dbIncreaseCarrierX && dbIncreaseCarrierX<=Maxdb ) {
 
-                // 取得欲變更的的浮點數
-                int fChangeCarrierX = calculate.Map(dbIncreaseCarrierX, Maxdb, Mindb, MaxRAW, MinRAW);
+                    } else if( dbIncreaseCarrierX<=Mindb ) {
+                        dbIncreaseCarrierX = (int)Mindb;
+                    } else if( Maxdb<=dbIncreaseCarrierX ) {
+                        dbIncreaseCarrierX = (int)Maxdb;
+                    }
 
-                //執行移動載盤
-                int axis     = (int)WMX3軸定義.載盤X軸;
-                int position = fChangeCarrierX;
-                int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                int accel    = speed * 2;
-                int daccel   = speed * 2;
-                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    // 取得欲變更的的浮點數
+                    int fChangeCarrierX = calculate.Map(dbIncreaseCarrierX, Maxdb, Mindb, MaxRAW, MinRAW);
+                    dbTargetPositionCarrierX = dbIncreaseCarrierX;
 
-            }  // end of if (dbIncreaseCarrierX == dbRead) {
+                    //執行移動載盤
+                    int axis     = (int)WMX3軸定義.載盤X軸;
+                    int position = fChangeCarrierX;
+                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
+                    int accel    = speed;
+                    int daccel   = speed;
+                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                } break;
+            }
 
             return dbRstCarrierX;
         }  // end of public double dbapiCarrierX(double dbIncreaseCarrierX)  //CarrierX
         //---------------------------------------------------------------------------------------
+        public double dbTargetPositionCarrierY = 0.0;
         public double dbapiCarrierY(double dbIncreaseCarrierY, double dbTargetSpeed)  //CarrierY
         {
             Normal calculate = new Normal();
@@ -864,7 +1031,7 @@ namespace InjectorInspector
                 const double Sum    = 800000;
                 const double dbSpdF =  Sum / Maxdb;
 
-            double dbRstCarrierY = 0.0;
+            double dbRstCarrierY    = 0.0;
 
             {  // start of 載盤Y軸 讀取與顯示
                 int    rslt     = 0;
@@ -917,34 +1084,48 @@ namespace InjectorInspector
 
             }  // end of 載盤Y軸 讀取與顯示
 
-            if (dbIncreaseCarrierY == dbRead) {
+            //Function Classification
+            switch(dbIncreaseCarrierY) {
+                case dbRead:
+                    break;
 
-            } else {  //載盤Y軸 變更位置
-                //伸長量overflow保護
-                if( Mindb<=dbIncreaseCarrierY && dbIncreaseCarrierY<=Maxdb ) {
+                case dbCheckArrived: {
+                    if( dbTargetPositionCarrierY*0.99 <= dbRstCarrierY && 
+                                                         dbRstCarrierY <= dbTargetPositionCarrierY*1.01 ) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
 
-                } else if( dbIncreaseCarrierY<=Mindb ) {
-                    dbIncreaseCarrierY = (int)Mindb;
-                } else if( Maxdb<=dbIncreaseCarrierY ) {
-                    dbIncreaseCarrierY = (int)Maxdb;
-                }
+                default: {  //載盤Y軸 變更位置
+                    //伸長量overflow保護
+                    if( Mindb<=dbIncreaseCarrierY && dbIncreaseCarrierY<=Maxdb ) {
 
-                // 取得欲變更的的浮點數
-                int fChangeCarrierY = calculate.Map(dbIncreaseCarrierY, Maxdb, Mindb, MaxRAW, MinRAW);
+                    } else if( dbIncreaseCarrierY<=Mindb ) {
+                        dbIncreaseCarrierY = (int)Mindb;
+                    } else if( Maxdb<=dbIncreaseCarrierY ) {
+                        dbIncreaseCarrierY = (int)Maxdb;
+                    }
 
-                //執行移動載盤
-                int axis     = (int)WMX3軸定義.載盤Y軸;
-                int position = fChangeCarrierY;
-                int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                int accel    = speed * 2;
-                int daccel   = speed * 2;
-                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    // 取得欲變更的的浮點數
+                    int fChangeCarrierY      = calculate.Map(dbIncreaseCarrierY, Maxdb, Mindb, MaxRAW, MinRAW);
+                    dbTargetPositionCarrierY = dbIncreaseCarrierY;
 
-            }  // end of if (dbIncreaseCarrierY == dbRead) {
+                    //執行移動載盤
+                    int axis     = (int)WMX3軸定義.載盤Y軸;
+                    int position = fChangeCarrierY;
+                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
+                    int accel    = speed;
+                    int daccel   = speed;
+                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                } break;
+            }
 
             return dbRstCarrierY;
         }  // end of public double dbapiCarrierY(double dbIncreaseCarrierY)  //CarrierY
         //---------------------------------------------------------------------------------------
+        public double dbTargetPositionSetZ = 0.0;
         public double dbapiSetZ(double dbIncreaseSetZ, double dbTargetSpeed)  //SetZ
         {
             Normal calculate = new Normal();
@@ -955,7 +1136,7 @@ namespace InjectorInspector
                 const double Sum    =   3300;
                 const double dbSpdF =  Sum / Maxdb;
 
-            double dbRstSetZ = 0.0;
+            double dbRstSetZ        = 0.0;
 
             {  // start of 植針Z軸 讀取與顯示
                 int    rslt     = 0;
@@ -1008,34 +1189,48 @@ namespace InjectorInspector
 
             }  // end of 植針Z軸 讀取與顯示
 
-            if (dbIncreaseSetZ == dbRead) {
+            //Function Classification
+            switch(dbIncreaseSetZ) {
+                case dbRead:
+                    break;
 
-            } else {  //植針Z軸 變更位置
-                //伸長量overflow保護
-                if( Mindb<=dbIncreaseSetZ && dbIncreaseSetZ<=Maxdb ) {
+                case dbCheckArrived: {
+                    if( dbTargetPositionSetZ*0.99 <= dbRstSetZ && 
+                                                     dbRstSetZ <= dbTargetPositionSetZ*1.01 ) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
 
-                } else if( dbIncreaseSetZ<=Mindb ) {
-                    dbIncreaseSetZ = (int)Mindb;
-                } else if( Maxdb<=dbIncreaseSetZ ) {
-                    dbIncreaseSetZ = (int)Maxdb;
-                }
+                default: {  //植針Z軸 變更位置
+                    //伸長量overflow保護
+                    if( Mindb<=dbIncreaseSetZ && dbIncreaseSetZ<=Maxdb ) {
 
-                // 取得欲變更的的浮點數
-                int fChangeSetZ = calculate.Map(dbIncreaseSetZ, Maxdb, Mindb, MaxRAW, MinRAW);
+                    } else if( dbIncreaseSetZ<=Mindb ) {
+                        dbIncreaseSetZ = (int)Mindb;
+                    } else if( Maxdb<=dbIncreaseSetZ ) {
+                        dbIncreaseSetZ = (int)Maxdb;
+                    }
 
-                //執行移動植針Z軸
-                int axis     = (int)WMX3軸定義.植針Z軸;
-                int position = fChangeSetZ;
-                int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                int accel    = speed * 2;
-                int daccel   = speed * 2;
-                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    // 取得欲變更的的浮點數
+                    int fChangeSetZ      = calculate.Map(dbIncreaseSetZ, Maxdb, Mindb, MaxRAW, MinRAW);
+                    dbTargetPositionSetZ = dbIncreaseSetZ;
 
-            }  // end of if (dbIncreaseSetZ == dbRead) {
+                    //執行移動植針Z軸
+                    int axis     = (int)WMX3軸定義.植針Z軸;
+                    int position = fChangeSetZ;
+                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
+                    int accel    = speed;
+                    int daccel   = speed;
+                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                } break;
+            }
 
             return dbRstSetZ;
         }  // end of public double dbapiSetZ(double dbIncreaseSetZ)  //SetZ
         //---------------------------------------------------------------------------------------
+        public double dbTargetPositionSetR = 0.0;
         public double dbapiSetR(double dbIncreaseSetR, double dbTargetSpeed)  //SetR
         {
             Normal calculate = new Normal();
@@ -1046,7 +1241,7 @@ namespace InjectorInspector
                 const double Sum    = 360000;
                 const double dbSpdF =  Sum / Maxdb;
 
-            double dbRstSetR = 0.0;
+            double dbRstSetR        = 0.0;
 
             {  // start of 植針R軸 讀取與顯示
                 int    rslt     = 0;
@@ -1099,34 +1294,48 @@ namespace InjectorInspector
 
             }  // end of 植針R軸 讀取與顯示
 
-            if (dbIncreaseSetR == dbRead) {
+            //Function Classification
+            switch(dbIncreaseSetR) {
+                case dbRead:
+                    break;
 
-            } else {  //植針R軸 變更位置
-                //伸長量overflow保護
-                if( Mindb<=dbIncreaseSetR && dbIncreaseSetR<=Maxdb ) {
+                case dbCheckArrived: {
+                    if( dbTargetPositionSetR*0.99 <= dbRstSetR && 
+                                                     dbRstSetR <= dbTargetPositionSetR*1.01 ) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
 
-                } else if( dbIncreaseSetR<=Mindb ) {
-                    dbIncreaseSetR = (int)Mindb;
-                } else if( Maxdb<=dbIncreaseSetR ) {
-                    dbIncreaseSetR = (int)Maxdb;
-                }
+                default: {  //植針R軸 變更位置
+                    //伸長量overflow保護
+                    if( Mindb<=dbIncreaseSetR && dbIncreaseSetR<=Maxdb ) {
 
-                // 取得欲變更的的浮點數
-                int fChangeSetR = calculate.Map(dbIncreaseSetR, Maxdb, Mindb, MaxRAW, MinRAW);
+                    } else if( dbIncreaseSetR<=Mindb ) {
+                        dbIncreaseSetR = (int)Mindb;
+                    } else if( Maxdb<=dbIncreaseSetR ) {
+                        dbIncreaseSetR = (int)Maxdb;
+                    }
 
-                //執行移動植針R軸
-                int axis     = (int)WMX3軸定義.植針R軸;
-                int position = fChangeSetR;
-                int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                int accel    = speed * 2;
-                int daccel   = speed * 2;
-                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    // 取得欲變更的的浮點數
+                    int fChangeSetR      = calculate.Map(dbIncreaseSetR, Maxdb, Mindb, MaxRAW, MinRAW);
+                    dbTargetPositionSetR = dbIncreaseSetR;
 
-            }  // end of if (dbIncreaseSetR == dbRead) {
+                    //執行移動植針R軸
+                    int axis     = (int)WMX3軸定義.植針R軸;
+                    int position = fChangeSetR;
+                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
+                    int accel    = speed;
+                    int daccel   = speed;
+                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                } break;
+            }
 
             return dbRstSetR;
         }  // end of public double dbapiSetR(double dbIncreaseSetR)  //SetR
         //---------------------------------------------------------------------------------------
+        public double dbTargetPositionGate = 0.0;
         public double dbapiGate(double dbIncreaseGate, double dbTargetSpeed)  //Gate
         {
             Normal calculate = new Normal();
@@ -1137,7 +1346,7 @@ namespace InjectorInspector
                 const double Sum    =  58000;
                 const double dbSpdF =  Sum / Maxdb;
 
-            double dbRstGate = 0.0;
+            double dbRstGate        = 0.0;
 
             {  // start of 工作門 讀取與顯示
                 int    rslt     = 0;
@@ -1190,35 +1399,49 @@ namespace InjectorInspector
 
             }  // end of 工作門 讀取與顯示
 
-            if (dbIncreaseGate == dbRead) {
+            //Function Classification
+            switch(dbIncreaseGate) {
+                case dbRead:
+                    break;
 
-            } else {  //工作門 變更位置
-                //伸長量overflow保護
-                if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
+                case dbCheckArrived: {
+                    if( dbTargetPositionGate*0.99 <= dbRstGate && 
+                                                     dbRstGate <= dbTargetPositionGate*1.01 ) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
 
-                } else if( dbIncreaseGate<=Mindb ) {
-                    dbIncreaseGate = (int)Mindb;
-                } else if( Maxdb<=dbIncreaseGate ) {
-                    dbIncreaseGate = (int)Maxdb;
-                }
+                default: {  //工作門 變更位置
+                    //伸長量overflow保護
+                    if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
 
-                // 取得欲變更的的浮點數
-                int fChangeGate = calculate.Map(dbIncreaseGate, Maxdb, Mindb, MaxRAW, MinRAW);
+                    } else if( dbIncreaseGate<=Mindb ) {
+                        dbIncreaseGate = (int)Mindb;
+                    } else if( Maxdb<=dbIncreaseGate ) {
+                        dbIncreaseGate = (int)Maxdb;
+                    }
 
-                //執行移動工作門
-                int axis     = (int)WMX3軸定義.工作門;
-                int position = fChangeGate;
-                int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                int accel    = speed * 2;
-                int daccel   = speed * 2;
-                clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    // 取得欲變更的的浮點數
+                    int fChangeGate = calculate.Map(dbIncreaseGate, Maxdb, Mindb, MaxRAW, MinRAW);
+                    dbTargetPositionGate = dbIncreaseGate;
 
-            }  // end of if (dbIncreaseGate == dbRead) {
+                    //執行移動工作門
+                    int axis     = (int)WMX3軸定義.工作門;
+                    int position = fChangeGate;
+                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
+                    int accel    = speed;
+                    int daccel   = speed;
+                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                } break;
+            }
 
             return dbRstGate;
         }  // end of public double dbapiGate(double dbIncreaseGate)  //Gate
         //---------------------------------------------------------------------------------------
-        public double dbapiIAI(double dbIncreaseGate)  //IAI
+        public double dbTargetPositionIAI = 0.0;
+        public double dbapiIAI(double dbIncreaseIAI)  //IAI
         {
             Normal calculate = new Normal();
                 const int    MaxRAW =   3000;
@@ -1228,7 +1451,7 @@ namespace InjectorInspector
                 const double Sum    =   3000;
                 const double dbSpdF =  Sum / Maxdb;
 
-            double dbRstIAI = 0.0;
+            double dbRstIAI         = 0.0;
 
             {  // start of Socket定位攝影機軸 讀取與顯示
                 int    rslt     = 0;
@@ -1287,31 +1510,45 @@ namespace InjectorInspector
 
             }  // end of Socket定位攝影機軸 讀取與顯示
 
-            if (dbIncreaseGate == dbRead) {
+            //Function Classification
+            switch(dbIncreaseIAI) {
+                case dbRead:
+                    break;
 
-            } else {  //IAI 變更位置
-                //伸長量overflow保護
-                if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
+                case dbCheckArrived: {
+                    if( dbTargetPositionIAI*0.99 <= dbRstIAI && 
+                                                    dbRstIAI <= dbTargetPositionIAI*1.01 ) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
 
-                } else if( dbIncreaseGate<=Mindb ) {
-                    dbIncreaseGate = (int)Mindb;
-                } else if( Maxdb<=dbIncreaseGate ) {
-                    dbIncreaseGate = (int)Maxdb;
-                }
+                default: {  //IAI 變更位置
+                    //伸長量overflow保護
+                    if( Mindb<=dbIncreaseIAI && dbIncreaseIAI<=Maxdb ) {
 
-                // 取得欲變更的的浮點數
-                double fChangeGate = calculate.Map(dbIncreaseGate, (double)Maxdb, (double)Mindb, (double)Maxdb, (double)Mindb);
+                    } else if( dbIncreaseIAI<=Mindb ) {
+                        dbIncreaseIAI = (int)Mindb;
+                    } else if( Maxdb<=dbIncreaseIAI ) {
+                        dbIncreaseIAI = (int)Maxdb;
+                    }
 
-                clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 1);
+                    // 取得欲變更的的浮點數
+                    double fChangeGate = calculate.Map(dbIncreaseIAI, (double)Maxdb, (double)Mindb, (double)Maxdb, (double)Mindb);
 
-                //執行移動工作門
-                clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GoToPosition, fChangeGate);
+                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 1);
+
+                    //執行移動工作門
+                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GoToPosition, fChangeGate);
+                } break;
             }
 
             return dbRstIAI;
-        }  // end of public double dbapiGate(double dbIncreaseGate)  //IAI
+        }  // end of public double dbapiIAI(double dbIncreaseIAI)  //IAI
         //---------------------------------------------------------------------------------------
-        public double dbapJoDell3D掃描(double dbIncreaseGate)  //JoDell3D掃描
+        public double dbTargetPositionJoDell3D掃描 = 0.0;
+        public double dbapiJoDell3D掃描(double dbIncreaseJoDell3D)  //JoDell3D掃描
         {
             Normal calculate = new Normal();
                 const int    MaxRAW =   3000;
@@ -1383,29 +1620,43 @@ namespace InjectorInspector
 
             }  // end of JoDell3D掃描 讀取與顯示
 
-            if (dbIncreaseGate == dbRead) {
+            //Function Classification
+            switch(dbIncreaseJoDell3D) {
+                case dbRead:
+                    break;
 
-            } else {  //3D掃描 變更位置
-                //伸長量overflow保護
-                if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
+                case dbCheckArrived: {
+                    if( dbTargetPositionJoDell3D掃描*0.99 <= dbRstJoDell3D掃描 && 
+                                                             dbRstJoDell3D掃描 <= dbTargetPositionJoDell3D掃描*1.01 ) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
 
-                } else if( dbIncreaseGate<=Mindb ) {
-                    dbIncreaseGate = (int)Mindb;
-                } else if( Maxdb<=dbIncreaseGate ) {
-                    dbIncreaseGate = (int)Maxdb;
-                }
+                default: {  //3D掃描 變更位置
+                    //伸長量overflow保護
+                    if( Mindb<=dbIncreaseJoDell3D && dbIncreaseJoDell3D<=Maxdb ) {
 
-                // 取得欲變更的的浮點數
-                double fChangeGate = calculate.Map(dbIncreaseGate, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
+                    } else if( dbIncreaseJoDell3D<=Mindb ) {
+                        dbIncreaseJoDell3D = (int)Mindb;
+                    } else if( Maxdb<=dbIncreaseJoDell3D ) {
+                        dbIncreaseJoDell3D = (int)Maxdb;
+                    }
 
-                //執行移動JoDell3D掃描
-                clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
+                    // 取得欲變更的的浮點數
+                    double fChangeGate = calculate.Map(dbIncreaseJoDell3D, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
+
+                    //執行移動JoDell3D掃描
+                    clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
+                } break;
             }
 
             return dbRstJoDell3D掃描;
-        }  // end of public double dbapJoDell3D掃描(double dbIncreaseGate)  //JoDell3D掃描
+        }  // end of public double dbapiJoDell3D掃描(double dbIncreaseJoDell3D)  //JoDell3D掃描
         //---------------------------------------------------------------------------------------
-        public double dbapJoDell吸針嘴(double dbIncreaseGate)  //JoDell吸針嘴
+        public double dbTargetPositionJoDell吸針嘴 = 0.0;
+        public double dbapiJoDell吸針嘴(double dbIncreaseJoDell吸針嘴)  //JoDell吸針嘴
         {
             Normal calculate = new Normal();
                 const int    MaxRAW =   3000;
@@ -1477,29 +1728,43 @@ namespace InjectorInspector
 
             }  // end of JoDell吸針嘴 讀取與顯示
 
-            if (dbIncreaseGate == dbRead) {
+            //Function Classification
+            switch(dbIncreaseJoDell吸針嘴) {
+                case dbRead:
+                    break;
 
-            } else {  //吸針嘴 變更位置
-                //伸長量overflow保護
-                if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
+                case dbCheckArrived: {
+                    if( dbTargetPositionJoDell吸針嘴*0.99 <= dbRstJoDell吸針嘴 && 
+                                                             dbRstJoDell吸針嘴 <= dbTargetPositionJoDell吸針嘴*1.01 ) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
 
-                } else if( dbIncreaseGate<=Mindb ) {
-                    dbIncreaseGate = (int)Mindb;
-                } else if( Maxdb<=dbIncreaseGate ) {
-                    dbIncreaseGate = (int)Maxdb;
-                }
+                default: {  //3D掃描 變更位置
+                    //伸長量overflow保護
+                    if( Mindb<=dbIncreaseJoDell吸針嘴 && dbIncreaseJoDell吸針嘴<=Maxdb ) {
 
-                // 取得欲變更的的浮點數
-                double fChangeGate = calculate.Map(dbIncreaseGate, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
+                    } else if( dbIncreaseJoDell吸針嘴<=Mindb ) {
+                        dbIncreaseJoDell吸針嘴 = (int)Mindb;
+                    } else if( Maxdb<=dbIncreaseJoDell吸針嘴 ) {
+                        dbIncreaseJoDell吸針嘴 = (int)Maxdb;
+                    }
 
-                //執行移動JoDell吸針嘴
-                clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
+                    // 取得欲變更的的浮點數
+                    double fChangeGate = calculate.Map(dbIncreaseJoDell吸針嘴, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
+
+                    //執行移動JoDell吸針嘴
+                    clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
+                } break;
             }
 
             return dbRstJoDell吸針嘴;
-        }  // end of public double dbapJoDell吸針嘴(double dbIncreaseGate)  //JoDell吸針嘴
+        }  // end of public double dbapiJoDell吸針嘴(double dbIncreaseJoDell吸針嘴)  //JoDell吸針嘴
         //---------------------------------------------------------------------------------------
-        public double dbapJoDell植針嘴(double dbIncreaseGate)  //JoDell植針嘴
+        public double dbTargetPositionJoDell植針嘴 = 0.0;
+        public double dbapiJoDell植針嘴(double dbIncreaseJoDell植針嘴)  //JoDell植針嘴
         {
             Normal calculate = new Normal();
                 const int    MaxRAW =   5000;
@@ -1571,27 +1836,40 @@ namespace InjectorInspector
 
             }  // end of JoDell植針嘴 讀取與顯示
 
-            if (dbIncreaseGate == dbRead) {
+            //Function Classification
+            switch(dbIncreaseJoDell植針嘴) {
+                case dbRead:
+                    break;
 
-            } else {  //植針嘴 變更位置
-                //伸長量overflow保護
-                if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
+                case dbCheckArrived: {
+                    if( dbTargetPositionJoDell植針嘴*0.99 <= dbRstJoDell植針嘴 && 
+                                                             dbRstJoDell植針嘴 <= dbTargetPositionJoDell植針嘴*1.01 ) { 
+                        return dbAxisMoveOk;
+                    } else {
+                        return dbAxisMoveNg;
+                    }
+                } break;
 
-                } else if( dbIncreaseGate<=Mindb ) {
-                    dbIncreaseGate = (int)Mindb;
-                } else if( Maxdb<=dbIncreaseGate ) {
-                    dbIncreaseGate = (int)Maxdb;
-                }
+                default: {  //植針嘴 變更位置
+                    //伸長量overflow保護
+                    if( Mindb<=dbIncreaseJoDell植針嘴 && dbIncreaseJoDell植針嘴<=Maxdb ) {
 
-                // 取得欲變更的的浮點數
-                double fChangeGate = calculate.Map(dbIncreaseGate, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
+                    } else if( dbIncreaseJoDell植針嘴<=Mindb ) {
+                        dbIncreaseJoDell植針嘴 = (int)Mindb;
+                    } else if( Maxdb<=dbIncreaseJoDell植針嘴 ) {
+                        dbIncreaseJoDell植針嘴 = (int)Maxdb;
+                    }
 
-                //執行移動JoDell植針嘴
-                clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
+                    // 取得欲變更的的浮點數
+                    double fChangeGate = calculate.Map(dbIncreaseJoDell植針嘴, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
+
+                    //執行移動JoDell植針嘴
+                    clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
+                } break;
             }
 
             return dbRstJoDell植針嘴;
-        }  // end of public double dbapJoDell植針嘴(double dbIncreaseGate)  //JoDell植針嘴
+        }  // end of public double dbapiJoDell植針嘴(double dbIncreaseJoDell植針嘴)  //JoDell植針嘴
         //---------------------------------------------------------------------------------------
         //------------------------ Xavier Call, Control the Servo machine -----------------------
         //---------------------------------------------------------------------------------------
@@ -1629,13 +1907,11 @@ namespace InjectorInspector
         const int i計時300ms_Define = 30;
         public void Gkh_KeyUp(object sender, KeyEventArgs e)
         {
-            switch(e.KeyCode)
-            {
+            switch(e.KeyCode) {
                 case Keys.Enter:
                     i計時300ms = 0;
 
-                    if (BarcodeBuffer.Count > 0)
-                    {
+                    if (BarcodeBuffer.Count > 0) {
                         btn_OpenFile_Click(sender, e);
                         BarcodeBuffer.Clear();
                     }
@@ -1643,8 +1919,7 @@ namespace InjectorInspector
 
                 default:
                     // 判斷輸入字為: 0~9 或 'a'~'z' 或 'A'~'Z'
-                    if (Char.IsLetter((char)e.KeyCode) || Char.IsDigit((char)e.KeyCode) || (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9))
-                    {
+                    if (Char.IsLetter((char)e.KeyCode) || Char.IsDigit((char)e.KeyCode) || (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9)) {
                         BarcodeBuffer.Add((char)e.KeyCode);  // 將有效的字符添加到緩衝區
                         i計時300ms = i計時300ms_Define;
                     }
@@ -1654,18 +1929,14 @@ namespace InjectorInspector
 
         public void tmrBarCodeScanner_Tick(object sender, EventArgs e)
         {
-            if (i計時300ms > 0)
-            {
+            if (i計時300ms > 0) {
                 i計時300ms--;
-
             }
 
-            if (i計時300ms == 0)
-            {
+            if (i計時300ms == 0) {
                 i計時300ms = 0;
 
-                if (BarcodeBuffer.Count > 0)
-                {
+                if (BarcodeBuffer.Count > 0) {
                     BarcodeBuffer.Clear();
                 }
             }
@@ -1817,29 +2088,25 @@ namespace InjectorInspector
 
             axis = (int)WMX3軸定義.吸嘴X軸;
             rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1)
-            {
+            if (rslt == 1) {
                 clsServoControlWMX3.WMX3_SetHomePosition(axis);
             }
 
             axis = (int)WMX3軸定義.吸嘴Y軸;
             rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1)
-            {
+            if (rslt == 1) {
                 clsServoControlWMX3.WMX3_SetHomePosition(axis);
             }
 
             axis = (int)WMX3軸定義.吸嘴Z軸;
             rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1)
-            {
+            if (rslt == 1) {
                 clsServoControlWMX3.WMX3_SetHomePosition(axis);
             }
 
             axis = (int)WMX3軸定義.吸嘴R軸;
             rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1)
-            {
+            if (rslt == 1) {
                 clsServoControlWMX3.WMX3_SetHomePosition(axis);
             }
         }
@@ -1941,7 +2208,7 @@ namespace InjectorInspector
 
             //辨識選擇之軸
             if (selectedRadioButton != null && selectedRadioButton.Checked == true) {
-                if (selectedRadioButton == select_吸嘴X軸) {
+                       if (selectedRadioButton == select_吸嘴X軸) {
                     wmxId_RadioGroupChanged = WMX3軸定義.吸嘴X軸;
                 } else if (selectedRadioButton == select_吸嘴Y軸) {
                     wmxId_RadioGroupChanged = WMX3軸定義.吸嘴Y軸;
@@ -1971,7 +2238,7 @@ namespace InjectorInspector
             }
 
             //複製選擇之軸
-            if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴X軸) {
+                   if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴X軸) {
                 txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴X軸.Text).ToString("F3"));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴Y軸) {
                 txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Y軸.Text).ToString("F3"));
@@ -2078,9 +2345,9 @@ namespace InjectorInspector
                     case WMX3軸定義.植針R軸:         if(enGC_植針R軸       == true) { dbapiSetR(       result, 360);   } break;
                     case WMX3軸定義.工作門:          if(enGC_工作門        == true) { dbapiGate(       result, 580/4); } break;
                     case WMX3軸定義.IAISocket孔檢測: if(enGC_IAI           == true) { dbapiIAI(        result);        } break;
-                    case WMX3軸定義.JoDell3D掃描:    if(enGC_JoDell3D掃描  == true) { dbapJoDell3D掃描(result);        } break;
-                    case WMX3軸定義.JoDell吸針嘴:    if(enGC_JoDell吸針嘴  == true) { dbapJoDell吸針嘴(result);        } break;
-                    case WMX3軸定義.JoDell植針嘴:    if(enGC_JoDell植針嘴  == true) { dbapJoDell植針嘴(result);        } break;
+                    case WMX3軸定義.JoDell3D掃描:    if(enGC_JoDell3D掃描  == true) { dbapiJoDell3D掃描(result);       } break;
+                    case WMX3軸定義.JoDell吸針嘴:    if(enGC_JoDell吸針嘴  == true) { dbapiJoDell吸針嘴(result);       } break;
+                    case WMX3軸定義.JoDell植針嘴:    if(enGC_JoDell植針嘴  == true) { dbapiJoDell植針嘴(result);       } break;
                 }
             }
 
@@ -2140,9 +2407,9 @@ namespace InjectorInspector
 
                 dbapiIAI(dbState);
 
-                dbapJoDell3D掃描(dbState);
-                dbapJoDell吸針嘴(dbState);
-                dbapJoDell植針嘴(dbState);
+                dbapiJoDell3D掃描(dbState);
+                dbapiJoDell吸針嘴(dbState);
+                dbapiJoDell植針嘴(dbState);
             }  // end of double dbState = dbRead;
 
             //讀取 Yaskawa OutputIO
@@ -2174,13 +2441,13 @@ namespace InjectorInspector
                 lbl取料吸嘴破新.BackColor = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_取料吸嘴破真空新) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)  % 10)) != 0) ? Color.Green : Color.Red;
                 lbl艙內燈.BackColor       = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_LIGHT)            / 10)] & (1 << (int)(WMX3IO對照.pxeIO_LIGHT)             % 10)) != 0) ? Color.Green : Color.Red;
 
-                lbl右按鈕綠燈.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_面板右按鈕綠燈) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_面板右按鈕綠燈)  % 10)) != 0) ? Color.Green : Color.Red;
-                lbl紅燈.BackColor         = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_機台紅燈)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_機台紅燈)        % 10)) != 0) ? Color.Green : Color.Red;
-                lbl中按鈕綠燈.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_面板中按鈕綠燈) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_面板中按鈕綠燈)  % 10)) != 0) ? Color.Green : Color.Red;
-                lbl黃燈.BackColor         = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_機台黃燈)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_機台黃燈)        % 10)) != 0) ? Color.Green : Color.Red;
-                lbl左按鈕紅燈.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_面板左按鈕紅燈) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_面板左按鈕紅燈)  % 10)) != 0) ? Color.Green : Color.Red;
-                lbl綠燈.BackColor         = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_機台綠燈)       / 10)] & (1 << (int)(WMX3IO對照.pxeIO_機台綠燈)        % 10)) != 0) ? Color.Green : Color.Red;
-                lblBuzzer.BackColor       = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_Buzzer)         / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Buzzer)          % 10)) != 0) ? Color.Green : Color.Red;
+                lbl右按鈕綠燈.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_面板右按鈕綠燈)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_面板右按鈕綠燈)    % 10)) != 0) ? Color.Green : Color.Red;
+                lbl紅燈.BackColor         = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_機台紅燈)         / 10)] & (1 << (int)(WMX3IO對照.pxeIO_機台紅燈)          % 10)) != 0) ? Color.Green : Color.Red;
+                lbl中按鈕綠燈.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_面板中按鈕綠燈)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_面板中按鈕綠燈)    % 10)) != 0) ? Color.Green : Color.Red;
+                lbl黃燈.BackColor         = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_機台黃燈)         / 10)] & (1 << (int)(WMX3IO對照.pxeIO_機台黃燈)          % 10)) != 0) ? Color.Green : Color.Red;
+                lbl左按鈕紅燈.BackColor   = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_面板左按鈕紅燈)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_面板左按鈕紅燈)    % 10)) != 0) ? Color.Green : Color.Red;
+                lbl綠燈.BackColor         = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_機台綠燈)         / 10)] & (1 << (int)(WMX3IO對照.pxeIO_機台綠燈)          % 10)) != 0) ? Color.Green : Color.Red;
+                lblBuzzer.BackColor       = ((pDataGetOutIO[((int)(WMX3IO對照.pxeIO_Buzzer)           / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Buzzer)            % 10)) != 0) ? Color.Green : Color.Red;
             }  // end of clsServoControlWMX3.WMX3_GetOutIO(ref pDataGetOutIO, (int)WMX3IO對照.pxeIO_Addr4, 4);
 
             //讀取 Yaskawa InputIO
@@ -2201,158 +2468,19 @@ namespace InjectorInspector
                 lbl載盤空1.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤真空檢1)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤真空檢1)     % 10)) != 0) ? Color.Green : Color.Red;
                 lblsk2空1.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_Socket2真空檢1)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket2真空檢1)  % 10)) != 0) ? Color.Green : Color.Red;
                 lbl載盤空2.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_載盤真空檢2)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_載盤真空檢2)     % 10)) != 0) ? Color.Green : Color.Red;
-#if (false)
-                if(lbl載盤空2.BackColor == Color.Red) {
-                    //關
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_LIGHT) / 10, (int)(WMX3IO對照.pxeIO_LIGHT) % 10, 1);
-                }
-                if (lbl載盤空2.BackColor == Color.Green) {
-                    //開
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_LIGHT) / 10, (int)(WMX3IO對照.pxeIO_LIGHT) % 10, 0);
-                }
-
-                if(lbl載盤空1.BackColor == Color.Red) {
-                    //關
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Buzzer) / 10, (int)(WMX3IO對照.pxeIO_Buzzer) % 10, 0);
-                }
-                if (lbl載盤空1.BackColor == Color.Green) {
-                    //開
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Buzzer) / 10, (int)(WMX3IO對照.pxeIO_Buzzer) % 10, 1);
-                }
-#endif
                 lblsk2空2.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_Socket2真空檢2)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket2真空檢2)  % 10)) != 0) ? Color.Green : Color.Red;
                 lblsk1空1.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_Socket1真空檢1)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket1真空檢1)  % 10)) != 0) ? Color.Green : Color.Red;
                 lbl擺放空1.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_擺放座真空檢1)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座真空檢1)   % 10)) != 0) ? Color.Green : Color.Red;
                 lblsk1空2.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_Socket1真空檢2)  / 10)] & (1 << (int)(WMX3IO對照.pxeIO_Socket1真空檢2)  % 10)) != 0) ? Color.Green : Color.Red;
-#if (false)
-                if(lblsk2空2.BackColor == Color.Red) {
-                    //關
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_LIGHT) / 10, (int)(WMX3IO對照.pxeIO_LIGHT) % 10, 1);
-                }
-                if (lblsk2空2.BackColor == Color.Green) {
-                    //開
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_LIGHT) / 10, (int)(WMX3IO對照.pxeIO_LIGHT) % 10, 0);
-                }
-
-                if(lblsk2空1.BackColor == Color.Red) {
-                    //關
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Buzzer) / 10, (int)(WMX3IO對照.pxeIO_Buzzer) % 10, 0);
-                }
-                if (lblsk2空1.BackColor == Color.Green) {
-                    //開
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Buzzer) / 10, (int)(WMX3IO對照.pxeIO_Buzzer) % 10, 1);
-                }
-#endif
-#if (false)
-                if(lblsk1空2.BackColor == Color.Red) {
-                    //關
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_LIGHT) / 10, (int)(WMX3IO對照.pxeIO_LIGHT) % 10, 1);
-                }
-                if (lblsk1空2.BackColor == Color.Green) {
-                    //開
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_LIGHT) / 10, (int)(WMX3IO對照.pxeIO_LIGHT) % 10, 0);
-                }
-
-                if(lblsk1空1.BackColor == Color.Red) {
-                    //關
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Buzzer) / 10, (int)(WMX3IO對照.pxeIO_Buzzer) % 10, 0);
-                }
-                if (lblsk1空1.BackColor == Color.Green) {
-                    //開
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_Buzzer) / 10, (int)(WMX3IO對照.pxeIO_Buzzer) % 10, 1);
-                }
-#endif
                 lbl擺放空2.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_擺放座真空檢2)   / 10)] & (1 << (int)(WMX3IO對照.pxeIO_擺放座真空檢2)   % 10)) != 0) ? Color.Green : Color.Red;
-#if (false)
-                if(lbl擺放空2.BackColor == Color.Red) {
-                    //關
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_LIGHT) / 10, (int)(WMX3IO對照.pxeIO_LIGHT) % 10, 1);
-                }
-                if (lbl擺放空2.BackColor == Color.Green) {
-                    //開
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_LIGHT) / 10, (int)(WMX3IO對照.pxeIO_LIGHT) % 10, 0);
-                }
 
-                if(lbl擺放空1.BackColor == Color.Red) { 
-                    //關
-                    //Vibration LED
-                    SB_VBLED.Value = 5;
-                    clsVibration.apiEstablishTCPVibration(); {
-                        clsVibration.u32LED_Level = (uint)SB_VBLED.Value;
-                        clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
-                        lblVBLED.Text = "Light:" + (uint)SB_VBLED.Value;
-                    }
-                }
-                if (lbl擺放空1.BackColor == Color.Green) {
-                    //開
-                    //Vibration LED
-                    SB_VBLED.Value = 50;
-                    clsVibration.apiEstablishTCPVibration(); {
-                        clsVibration.u32LED_Level = (uint)SB_VBLED.Value;
-                        clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
-                        lblVBLED.Text = "Light:" + (uint)SB_VBLED.Value;
-                    }
-                }
-#endif
                 lbl吸嘴空1.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_吸嘴真空檢1)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸嘴真空檢1)     % 10)) != 0) ? Color.Green : Color.Red;
                 lbl吸嘴空2.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_吸嘴真空檢2)     / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸嘴真空檢2)     % 10)) != 0) ? Color.Green : Color.Red;
-#if (false)
-                if(lbl吸嘴空2.BackColor == Color.Red) {
-                    //關
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_LIGHT) / 10, (int)(WMX3IO對照.pxeIO_LIGHT) % 10, 1);
-                }
-                if (lbl吸嘴空2.BackColor == Color.Green) {
-                    //開
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_LIGHT) / 10, (int)(WMX3IO對照.pxeIO_LIGHT) % 10, 0);
-                }
-
-                if(lbl吸嘴空1.BackColor == Color.Red) { 
-                    //關
-                    //Vibration LED
-                    SB_VBLED.Value = 5;
-                    clsVibration.apiEstablishTCPVibration(); {
-                        clsVibration.u32LED_Level = (uint)SB_VBLED.Value;
-                        clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
-                        lblVBLED.Text = "Light:" + (uint)SB_VBLED.Value;
-                    }
-                }
-                if (lbl吸嘴空1.BackColor == Color.Green) {
-                    //開
-                    //Vibration LED
-                    SB_VBLED.Value = 50;
-                    clsVibration.apiEstablishTCPVibration(); {
-                        clsVibration.u32LED_Level = (uint)SB_VBLED.Value;
-                        clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
-                        lblVBLED.Text = "Light:" + (uint)SB_VBLED.Value;
-                    }
-                }
-#endif
                 lbl取料ng盒.BackColor   = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_取料NG收料盒)    / 10)] & (1 << (int)(WMX3IO對照.pxeIO_取料NG收料盒)    % 10)) != 0) ? Color.Green : Color.Red;
                 lbl兩點壓1.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_兩點組合壓力檢1) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_兩點組合壓力檢1) % 10)) != 0) ? Color.Green : Color.Red;
                 lbl堵料盒.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_堵料收料盒)      / 10)] & (1 << (int)(WMX3IO對照.pxeIO_堵料收料盒)      % 10)) != 0) ? Color.Green : Color.Red;
                 lbl兩點壓2.BackColor    = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_兩點組合壓力檢2) / 10)] & (1 << (int)(WMX3IO對照.pxeIO_兩點組合壓力檢2) % 10)) != 0) ? Color.Green : Color.Red;
                 lbl吸料盒.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_吸料收料盒)      / 10)] & (1 << (int)(WMX3IO對照.pxeIO_吸料收料盒)      % 10)) != 0) ? Color.Green : Color.Red;
-#if (false)
-                //右
-                if(lbl兩點壓2.BackColor == Color.Red) {
-                    //關
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台紅燈)       / 10, (int)(WMX3IO對照.pxeIO_機台紅燈)       % 10, 0);
-                }
-                if (lbl兩點壓2.BackColor == Color.Green) {
-                    //開
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台紅燈)       / 10, (int)(WMX3IO對照.pxeIO_機台紅燈)       % 10, 1);
-                }
-
-                //左
-                if(lbl兩點壓1.BackColor == Color.Red) {
-                    //關
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台綠燈)       / 10, (int)(WMX3IO對照.pxeIO_機台綠燈)       % 10, 0);
-                }
-                if (lbl兩點壓1.BackColor == Color.Green) {
-                    //開
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + (int)(WMX3IO對照.pxeIO_機台綠燈)       / 10, (int)(WMX3IO對照.pxeIO_機台綠燈)       % 10, 1);
-                }
-#endif
 
                 lbl復歸鈕.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_復歸按鈕)        / 10)] & (1 << (int)(WMX3IO對照.pxeIO_復歸按鈕)        % 10)) != 0) ? Color.Green : Color.Red;
                 lbl啟動鈕.BackColor     = ((pDataGetInIO[((int)(WMX3IO對照.pxeIO_啟動按鈕)        / 10)] & (1 << (int)(WMX3IO對照.pxeIO_啟動按鈕)        % 10)) != 0) ? Color.Green : Color.Red;
@@ -2452,8 +2580,7 @@ namespace InjectorInspector
         public void btnVibrationStop_Click(object sender, EventArgs e)
         {
             //Vibration
-            clsVibration.apiEstablishTCPVibration();
-            {
+            clsVibration.apiEstablishTCPVibration(); {
                 uint bRunning = 0;
                 clsVibration.Px1_SendCMD(xe_U15_CMD.xeUC_TestMode_FunctionOn, bRunning);
             }
@@ -2725,9 +2852,9 @@ namespace InjectorInspector
 
                     //Workaround for prevent Z Collide
                     clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, false);  Thread.Sleep(200);
-                    dbapJoDell3D掃描(10);                                                 Thread.Sleep(10);
-                    dbapJoDell吸針嘴(5);                                                  Thread.Sleep(10);
-                    dbapJoDell植針嘴(10);                                                 Thread.Sleep(10);
+                    dbapiJoDell3D掃描(10);                                                Thread.Sleep(10);
+                    dbapiJoDell吸針嘴(5);                                                 Thread.Sleep(10);
+                    dbapiJoDell植針嘴(10);                                                Thread.Sleep(10);
                     dbapiSetZ(15, 33);                                                    Thread.Sleep(200);
 
                     //Disable All
@@ -2872,9 +2999,9 @@ namespace InjectorInspector
                 case xe_tmr_home.xets_home_EndZR電動缸Home:
                     dbapiIAI(10);          Thread.Sleep(10);
 
-                    dbapJoDell3D掃描(10);  Thread.Sleep(10);
-                    dbapJoDell吸針嘴( 5);  Thread.Sleep(10);
-                    dbapJoDell植針嘴(10);  Thread.Sleep(10);
+                    dbapiJoDell3D掃描(10);  Thread.Sleep(10);
+                    dbapiJoDell吸針嘴( 5);  Thread.Sleep(10);
+                    dbapiJoDell植針嘴(10);  Thread.Sleep(10);
                     xeTmrHome = xe_tmr_home.xets_home_StartXYHome_01;
                     break;
 
@@ -4186,11 +4313,11 @@ namespace InjectorInspector
                         xeTmrTakePin = xe_tmr_takepin.xett_3D掃描電動缸縮回;
                     } break;
                     case xe_tmr_takepin.xett_3D掃描電動缸縮回: {
-                         dbapJoDell3D掃描(10);
+                         dbapiJoDell3D掃描(10);
                         xeTmrTakePin = xe_tmr_takepin.xett_吸針嘴電動缸縮回;
                     } break;
                     case xe_tmr_takepin.xett_吸針嘴電動缸縮回: {
-                        dbapJoDell吸針嘴(10);
+                        dbapiJoDell吸針嘴(10);
                         xeTmrTakePin = xe_tmr_takepin.xett_吸針接料盒就位;
                     } break;
                     case xe_tmr_takepin.xett_吸針接料盒就位: {
@@ -4270,13 +4397,13 @@ namespace InjectorInspector
                     case xe_tmr_takepin.xett_抽料Z軸至抽料位: {
                         double RemovePinZHight; {
                             RemovePinZHight = apiParaReadIndex("SaveParameterJason.json", 12);
-                            dbapJoDell吸針嘴(RemovePinZHight);
+                            dbapiJoDell吸針嘴(RemovePinZHight);
                         }
 
                         xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸是否至抽料位;
                     } break;
                     case xe_tmr_takepin.xett_抽料Z軸是否至抽料位: {
-                        double dbZ = dbapJoDell吸針嘴(dbRead);
+                        double dbZ = dbapiJoDell吸針嘴(dbRead);
 
                         double RemovePinZHight; {
                             RemovePinZHight = apiParaReadIndex("SaveParameterJason.json", 12);
@@ -4305,11 +4432,11 @@ namespace InjectorInspector
                         xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸回0; 
                     } break;
                     case xe_tmr_takepin.xett_抽料Z軸回0: {
-                        dbapJoDell吸針嘴(10);
+                        dbapiJoDell吸針嘴(10);
                         xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸是否回0; 
                     } break;
                     case xe_tmr_takepin.xett_抽料Z軸是否回0: {
-                        double dbZ = dbapJoDell吸針嘴(dbRead);
+                        double dbZ = dbapiJoDell吸針嘴(dbRead);
                         double dbTargetZ = 10;
                         if( (dbTargetZ*0.99 <= dbZ && dbZ <= dbTargetZ*1.01) ) { 
                             xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸確認回0;
@@ -5599,71 +5726,6 @@ namespace InjectorInspector
 
             dbCameraCalibrationX = pos.X;
             dbCameraCalibrationY = pos.Y;
-        }
-        //---------------------------------------------------------------------------------------
-        void apiParaWriteIndex(string filename, int index, double dbValue)
-        {
-            // 在 Form 類中創建 apiJsonParameterHandle 的實例
-            apiJsonParameterHandle handJson = new apiJsonParameterHandle();
-
-            // 初始化 apiJsonParameterHandle，並指定檔案名稱
-            handJson.InitialJsonFile(filename);
-
-            // 使用 apiJsonParameterHandle 中的 JsonNeedleContentList 資料
-            BindingList<JsonParameterContent> jsonContentList = new BindingList<JsonParameterContent>(handJson.JsonNeedleContentList);
-
-            // 根據索引讀取資料
-            jsonContentList[index].dbPosition = dbValue;
-
-        }
-        //---------------------------------------------------------------------------------------
-        double apiParaReadIndex(string filename, int index) {
-            double rslt = 0.0;
-
-            // 在 Form 類中創建 apiJsonParameterHandle 的實例
-            apiJsonParameterHandle handJson = new apiJsonParameterHandle();
-
-            // 初始化 apiJsonParameterHandle，並指定檔案名稱
-            handJson.InitialJsonFile(filename);
-
-            // 使用 apiJsonParameterHandle 中的 JsonNeedleContentList 資料
-            BindingList<JsonParameterContent> jsonContentList = new BindingList<JsonParameterContent>(handJson.JsonNeedleContentList);
-
-            // 根據索引讀取資料
-            rslt = jsonContentList[index].dbPosition;
-
-            return rslt;
-        }
-        //---------------------------------------------------------------------------------------
-        string apiParaReadStr(string filename, int index) {
-            string rslt;
-
-            // 在 Form 類中創建 apiJsonParameterHandle 的實例
-            apiJsonParameterHandle handJson = new apiJsonParameterHandle();
-
-            // 初始化 apiJsonParameterHandle，並指定檔案名稱
-            handJson.InitialJsonFile(filename);
-
-            // 使用 apiJsonParameterHandle 中的 JsonNeedleContentList 資料
-            BindingList<JsonParameterContent> jsonContentList = new BindingList<JsonParameterContent>(handJson.JsonNeedleContentList);
-
-            // 根據索引讀取資料
-            rslt = jsonContentList[index].strNote;
-
-            return rslt;
-        }
-        //---------------------------------------------------------------------------------------
-        void apiReadNeedleInfo(string filename, int Index, ref double dbX, ref double dbY) {
-            JSON temp = new JSON();
-
-            try {
-                temp = JsonConvert.DeserializeObject<JSON>(File.ReadAllText(filename));
-            } catch (Exception ex) {
-                MessageBox.Show($"讀取 Json 檔時發生錯誤: {ex.Message}");
-            }
-
-            dbX = temp.Needles[Index].X;
-            dbY = temp.Needles[Index].Y;
         }
         //---------------------------------------------------------------------------------------
         //-------------------------------------- 暫時或實驗中 ------------------------------------
