@@ -193,6 +193,7 @@ namespace InjectorInspector
             pxeIO_下支架右側右門  = 74,  //4 下支架右側右門
             pxeIO_NA75            = 75,  //5 未知
             pxeIO_下支架右側左門  = 76,  //6 下支架右側左門
+            pxeIO_NA76            = 77,  //7 未知
         pxeIO_Addr_In_END,
     }  // end of public enum WMX3IO對照
 
