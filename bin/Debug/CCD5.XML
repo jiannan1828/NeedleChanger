@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ParamDefine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Key>DMK 33GX273:40424146</Key>
-  <Gamma>1</Gamma>
+  <Gamma>0.4</Gamma>
   <Exposure>20374</Exposure>
   <SpeedRate>0</SpeedRate>
   <MirrorX>false</MirrorX>

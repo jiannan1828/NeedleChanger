@@ -2268,8 +2268,8 @@ namespace InjectorInspector
                     }
 
                     // 取得欲變更的的浮點數
-                    double fChangeGate = calculate.Map(dbTargetPositionJoDell植針嘴, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
-                    dbTargetPositionJoDell植針嘴 = dbTargetPositionJoDell植針嘴;
+                    double fChangeGate = calculate.Map(dbIncreaseJoDell植針嘴, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
+                    dbTargetPositionJoDell植針嘴 = dbIncreaseJoDell植針嘴;
 
                     //執行移動JoDell植針嘴
                     clsServoControlWMX3.WMX3_JoDell植針嘴(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
@@ -4911,7 +4911,7 @@ namespace InjectorInspector
                                 } break;
 
                                 case xe_tmr_takepin.xett_判斷未堵料:                                   
-                                    xeTmrTakePin = xe_tmr_takepin.xett_判斷堵料;                            
+                                    xeTmrTakePin = xe_tmr_takepin.xett_檢測是否還需要取針;                            
                                     break;
 
                                 case xe_tmr_takepin.xett_判斷堵料:                                     xeTmrTakePin = xe_tmr_takepin.xett_SetR移至植針位;                      break;
@@ -5238,7 +5238,7 @@ namespace InjectorInspector
                                 }
                             } else {
                                 btmrStop = false;
-                                xeTmrTakePin = xe_tmr_takepin.xett_不需要取針;
+                                xeTmrTakePin = xe_tmr_takepin.xett_回Home保護;
                             }
                         }  // end of if(bTakePin == true) { 
 
