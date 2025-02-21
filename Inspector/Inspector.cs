@@ -1437,7 +1437,7 @@ namespace Inspector
                 HObject temp;
                 HTuple W, H, Cnt, darea, dAngle, dScore;
                 HOperatorSet.CopyImage(helper.Image, out temp);
-                owner.WriteImage(temp, "吸嘴", "吸嘴");
+               
                 HOperatorSet.GetImageSize(temp, out W, out H);
                 double WMin = owner.parameter.Pin寬度Min / CCD.Param.ScaleX / 2.0;
                 double WMax = owner.parameter.Pin寬度Max / CCD.Param.ScaleX / 2.0;
@@ -1499,6 +1499,7 @@ namespace Inspector
                 //else
                 //    success = false;
                 SaveResult(temp, success);
+                owner.WriteImage(temp, "吸嘴", "吸嘴");
                 owner.DisposeObj(temp);
                 owner.InspectOK = InspectOK = success;
                 owner.Inspected = Inspected = true;
@@ -1975,7 +1976,7 @@ namespace Inspector
 
     #endregion
 
-    #region 夾爪CCD
+    #region 植針嘴CCD
     public class InspCCD5區
     {
         HWindowHelper helper;
@@ -2048,15 +2049,15 @@ namespace Inspector
                 HOperatorSet.GetImageSize(temp, out W, out H);
                 HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
                 HOperatorSet.Connection(binArea, out connArea);
-                HOperatorSet.SelectShape(connArea, out SelArea, "circularity", "and", 0.6, 1);
-                HOperatorSet.SelectShape(SelArea, out OutArea, "outer_radius", "and", 20, 200);
+                HOperatorSet.SelectShape(connArea, out SelArea, "circularity", "and", 0.4, 1);
+                HOperatorSet.SelectShape(SelArea, out OutArea, "outer_radius", "and", 20, 500);
                 if (OutArea.CountObj() == 1)
                 {
                     HOperatorSet.ShapeTrans(OutArea, out CirArea, "outer_circle");
                     HOperatorSet.AreaCenter(OutArea, out area1, out row, out col);
                     HOperatorSet.AreaCenter(CirArea, out area2, out row, out col);
                     double percent = area1.D / area2.D;
-                    if (percent > 0.75)
+                    //if (percent > 0.75)
                     {
                         result.X = pX = col.D;
                         result.Y = pY = row.D;
