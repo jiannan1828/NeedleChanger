@@ -45,7 +45,7 @@ namespace InjectorInspector
                 }
 
                 // 指定檔案名稱並初始化 JSON 文件
-                apiHandler.InitialJsonFile("SaveParameterJason.json");
+                apiHandler.InitialJsonFile(Form1.ParameterPath + "\\SaveParameterJason.json");
 
                 // 使用 apiJsonParameterHandle 中的 JsonNeedleContentList 資料
                 jsonContentList = new BindingList<JsonParameterContent>(apiHandler.JsonNeedleContentList);

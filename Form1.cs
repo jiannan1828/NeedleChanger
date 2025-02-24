@@ -2379,27 +2379,27 @@ namespace InjectorInspector
             double rsult = 0.0;
 
                    if (GetPara == "NeedleCircleParameter") {  //Socket針孔 真圓相似度
-                rsult = apiParaReadIndex("SaveParameterJason.json", 18);
+                rsult = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 18);
             } else if (GetPara == "NeedleHeadLength") {  //針頭長
-                rsult = apiParaReadIndex("SaveParameterJason.json", 19);
+                rsult = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 19);
             } else if (GetPara == "NeedleHeadWidth") {  //針頭寬
-                rsult = apiParaReadIndex("SaveParameterJason.json", 20);
+                rsult = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 20);
             } else if (GetPara == "NeedleTailLength") {  //針尾長
-                rsult = apiParaReadIndex("SaveParameterJason.json", 21);
+                rsult = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 21);
             } else if (GetPara == "NeedleTailWidth") {  //針尾寬
-                rsult = apiParaReadIndex("SaveParameterJason.json", 22);
+                rsult = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 22);
             } else if (GetPara == "NeedleLengthMax") {  //針長Max
-                rsult = apiParaReadIndex("SaveParameterJason.json", 23);
+                rsult = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 23);
             } else if (GetPara == "NeedleLengthMin") {  //針長Min
-                rsult = apiParaReadIndex("SaveParameterJason.json", 24);
+                rsult = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 24);
             } else if (GetPara == "NeedleWidthMax") {  //針寬Max
-                rsult = apiParaReadIndex("SaveParameterJason.json", 25);
+                rsult = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 25);
             } else if (GetPara == "NeedleWidthMin") {  //針寬Min
-                rsult = apiParaReadIndex("SaveParameterJason.json", 26);
+                rsult = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 26);
             } else if (GetPara == "NeedleThreshold") {  //閥值
-                rsult = apiParaReadIndex("SaveParameterJason.json", 27);
+                rsult = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 27);
             } else if (GetPara == "SetNozzleCircularity") {  //堵嘴 植針孔閥值
-                rsult = apiParaReadIndex("SaveParameterJason.json", 37);
+                rsult = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 37);
             }
 
             return rsult;
@@ -2434,9 +2434,36 @@ namespace InjectorInspector
             btn_manual.Enabled = false;
         }
         //---------------------------------------------------------------------------------------
+        public static string ParameterPath;
         ParameterForm fmParameterFormHandle;
         public void btn_參數_Click(object sender, EventArgs e)
         {
+            //取得目標資料夾路徑
+            if(true) { 
+                // 創建 FolderBrowserDialog 實例
+                FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+
+                // 取得應用程式當前執行目錄
+                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+                // 設定資料夾選擇器的預設路徑為執行目錄
+                folderDialog.SelectedPath = baseDirectory;
+
+                // 顯示對話框，並檢查使用者是否選擇了資料夾
+                if (folderDialog.ShowDialog() == DialogResult.OK) {
+                    // 取得選擇的資料夾路徑
+                    string selectedFolderPath = folderDialog.SelectedPath;
+
+                    // 用 Replace 去除掉 baseDirectory 部分，剩下的就是相對路徑
+                    ParameterPath = selectedFolderPath.Replace(baseDirectory, "");
+
+                    // 輸出結果
+                    Console.WriteLine("相對路徑是: " + ParameterPath);
+                } else {
+                    Console.WriteLine("使用者未選擇資料夾");
+                }
+            }
+
             ParameterForm fmParameterForm = new ParameterForm();
             fmParameterForm.Show();
 
@@ -4516,7 +4543,7 @@ namespace InjectorInspector
                                     dbapiCarrierY(dbTargetY, 800*0.8);
 
                                     double dbSocketCamera; {
-                                        dbSocketCamera = apiParaReadIndex("SaveParameterJason.json", 17);
+                                        dbSocketCamera = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 17);
                                         dbapiIAI(dbSocketCamera);
                                     }
 
@@ -4585,8 +4612,8 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_載盤XY移置直針位: {  
                                     double SetPinOffsetX, SetPinOffsetY; {
-                                        SetPinOffsetX = apiParaReadIndex("SaveParameterJason.json", 13);
-                                        SetPinOffsetY = apiParaReadIndex("SaveParameterJason.json", 14);
+                                        SetPinOffsetX = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 13);
+                                        SetPinOffsetY = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 14);
                                     }
 
                                     double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX + SetPinOffsetX;
@@ -4599,8 +4626,8 @@ namespace InjectorInspector
                                 } break;
                                 case xe_tmr_takepin.xett_檢查載盤XY是否移置直針位: {
                                     double SetPinOffsetX, SetPinOffsetY; {
-                                        SetPinOffsetX = apiParaReadIndex("SaveParameterJason.json", 13);
-                                        SetPinOffsetY = apiParaReadIndex("SaveParameterJason.json", 14);
+                                        SetPinOffsetX = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 13);
+                                        SetPinOffsetY = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 14);
                                     }
 
                                     double dbX = dbapiCarrierX(dbRead, 0);
@@ -4618,7 +4645,7 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_擺放座Z軸至植針位: {   
                                     double SetPlacePinZHight; {
-                                        SetPlacePinZHight = apiParaReadIndex("SaveParameterJason.json", 11);
+                                        SetPlacePinZHight = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 11);
                                         dbapiSetZ(SetPlacePinZHight, 33);
                                     }
 
@@ -4627,7 +4654,7 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_檢查擺放座Z軸是否至植針位: {
                                     double dbZ = dbapiSetZ(dbRead, 0);
                                     double SetPlacePinZHight; {
-                                        SetPlacePinZHight = apiParaReadIndex("SaveParameterJason.json", 11);
+                                        SetPlacePinZHight = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 11);
                                     }
                                     if( (SetPlacePinZHight * 0.99 <= dbZ && dbZ <= SetPlacePinZHight * 1.01) ) { 
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認擺放座Z軸至植針位;
@@ -4735,7 +4762,7 @@ namespace InjectorInspector
                                     bool success = false;
 
                                     double dbSetNeedleStatus; {
-                                        dbSetNeedleStatus = apiParaReadIndex("SaveParameterJason.json", 36);
+                                        dbSetNeedleStatus = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 36);
                                     }
                                     switch(dbSetNeedleStatus) { 
                                         case 0: //強制判斷植針ng
@@ -4848,8 +4875,8 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_載盤XY移置堵料檢查位: {
                                     double CheckCarryX, CheckCarryY; {
-                                        CheckCarryX = apiParaReadIndex("SaveParameterJason.json", 28);
-                                        CheckCarryY = apiParaReadIndex("SaveParameterJason.json", 29);
+                                        CheckCarryX = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 28);
+                                        CheckCarryY = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 29);
                                     }
                                     dbapiCarrierX(CheckCarryX, 190*0.8);
                                     dbapiCarrierY(CheckCarryY, 800*0.8);
@@ -4870,7 +4897,7 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_檢查堵料相機移至檢查堵料孔高度: {
                                     double CheckCameraZ; {
-                                        CheckCameraZ = apiParaReadIndex("SaveParameterJason.json", 32);
+                                        CheckCameraZ = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 32);
                                     }
                                     dbapiJoDell植針嘴(CheckCameraZ);
                                     xeTmrTakePin = xe_tmr_takepin.xett_等待檢查堵料相機移至檢查堵料孔高度;  
@@ -4907,7 +4934,7 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_SetR移至檢查堵料孔檢查位: {
                                     double CheckSetR; {
-                                        CheckSetR = apiParaReadIndex("SaveParameterJason.json", 30);
+                                        CheckSetR = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 30);
                                     }
                                     dbapiSetR(CheckSetR, 360);
                                     xeTmrTakePin = xe_tmr_takepin.xett_等待SetR移至檢查堵料孔檢查位;        
@@ -4926,7 +4953,7 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_SetZ移至檢查堵料孔高度: {                       
                                     double CheckSetZ; {
-                                        CheckSetZ = apiParaReadIndex("SaveParameterJason.json", 31);
+                                        CheckSetZ = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 31);
                                     }
                                     dbapiSetZ(CheckSetZ, 33);
                                     xeTmrTakePin = xe_tmr_takepin.xett_等待SetZ移至檢查堵料孔高度;          
@@ -4947,7 +4974,7 @@ namespace InjectorInspector
                                     bool success = false;
 
                                     double dbSetPinStatus; {
-                                        dbSetPinStatus = apiParaReadIndex("SaveParameterJason.json", 33);
+                                        dbSetPinStatus = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 33);
                                     }
                                     switch(dbSetPinStatus) { 
                                         case 0: //強制判斷堵孔
@@ -5017,7 +5044,7 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_載盤Y移置堵料收料位: {
                                     double MakeClearCarryY; {
-                                        MakeClearCarryY = apiParaReadIndex("SaveParameterJason.json", 34);
+                                        MakeClearCarryY = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 34);
                                     }
                                     dbapiCarrierY(MakeClearCarryY, 800*0.8);
                                     xeTmrTakePin = xe_tmr_takepin.xett_等待載盤Y移置堵料收料位;             
@@ -5036,7 +5063,7 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_SetZ移置堵料收料位: {
                                     double MakeClearSetZ; {
-                                        MakeClearSetZ = apiParaReadIndex("SaveParameterJason.json", 35);
+                                        MakeClearSetZ = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 35);
                                     }
                                     dbapiSetZ(MakeClearSetZ, 33);
                                     xeTmrTakePin = xe_tmr_takepin.xett_等待SetZ移置堵料收料位;
@@ -5136,7 +5163,7 @@ namespace InjectorInspector
                     } break;
                     case xe_tmr_takepin.xett_Socket相機移至拍照位22: {
                         double dbSocketCamera; {
-                            dbSocketCamera = apiParaReadIndex("SaveParameterJason.json", 17);
+                            dbSocketCamera = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 17);
                             dbapiIAI(dbSocketCamera);
                         }
 
@@ -5183,8 +5210,8 @@ namespace InjectorInspector
                     } break;
                     case xe_tmr_takepin.xett_載盤XY移置抽料位: {
                         double SetPinOffsetX, SetPinOffsetY; {
-                            SetPinOffsetX = apiParaReadIndex("SaveParameterJason.json", 15);
-                            SetPinOffsetY = apiParaReadIndex("SaveParameterJason.json", 16);
+                            SetPinOffsetX = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 15);
+                            SetPinOffsetY = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 16);
                         }
 
                         btn_取得目標座標_Click(sender, e);
@@ -5201,7 +5228,7 @@ namespace InjectorInspector
                             dbapiCarrierY(dbTargetY, 800 * 0.8);
 
                             double dbSocketCamera; {
-                                dbSocketCamera = apiParaReadIndex("SaveParameterJason.json", 17);
+                                dbSocketCamera = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 17);
                                 dbapiIAI(dbSocketCamera);
                             }
 
@@ -5210,8 +5237,8 @@ namespace InjectorInspector
                     } break;
                     case xe_tmr_takepin.xett_檢查載盤XY是否移置抽料位: {
                         double SetPinOffsetX, SetPinOffsetY; {
-                            SetPinOffsetX = apiParaReadIndex("SaveParameterJason.json", 15);
-                            SetPinOffsetY = apiParaReadIndex("SaveParameterJason.json", 16);
+                            SetPinOffsetX = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 15);
+                            SetPinOffsetY = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 16);
                         }
 
                         double dbX = dbapiCarrierX(dbRead, 0);
@@ -5230,7 +5257,7 @@ namespace InjectorInspector
                     } break;
                     case xe_tmr_takepin.xett_抽料Z軸至抽料位: {
                         double RemovePinZHight; {
-                            RemovePinZHight = apiParaReadIndex("SaveParameterJason.json", 12);
+                            RemovePinZHight = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 12);
                             dbapiJoDell吸針嘴(RemovePinZHight);
                         }
 
@@ -5240,7 +5267,7 @@ namespace InjectorInspector
                         double dbZ = dbapiJoDell吸針嘴(dbRead);
 
                         double RemovePinZHight; {
-                            RemovePinZHight = apiParaReadIndex("SaveParameterJason.json", 12);
+                            RemovePinZHight = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 12);
                         }
 
                         if( (RemovePinZHight * 0.99 <= dbZ && dbZ <= RemovePinZHight * 1.01) ) { 
@@ -5545,7 +5572,7 @@ namespace InjectorInspector
                     break;
                 case xe_tmr_2pCalibration.xet2C_Socket_Camera_To_CapturePosition: {   
                     double dbSocketCamera; {
-                        dbSocketCamera = apiParaReadIndex("SaveParameterJason.json", 17);
+                        dbSocketCamera = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 17);
                         dbapiIAI(dbSocketCamera);
                     }
 
@@ -5553,7 +5580,7 @@ namespace InjectorInspector
                 } break;
                 case xe_tmr_2pCalibration.xet2C_Socket_Camera_To_CapturePosition_ok: {
                     double dbSocketCamera; {
-                        dbSocketCamera = apiParaReadIndex("SaveParameterJason.json", 17);
+                        dbSocketCamera = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 17);
                     }
 
                     double dbIAIHeight = dbapiIAI(dbRead);
@@ -5598,10 +5625,10 @@ namespace InjectorInspector
                     break;
                 case xe_tmr_2pCalibration.xet2C_移動至_校正第1點: {   
                     //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+                    double rlAx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 3);
 
                     double dbTargetX = rlAx;
                     double dbTargetY = rlAy;
@@ -5617,10 +5644,10 @@ namespace InjectorInspector
                 } break;
                 case xe_tmr_2pCalibration.xet2C_等待移動至_校正第1點: {
                     //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+                    double rlAx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 3);
 
                     double dbTargetX = rlAx;
                     double dbTargetY = rlAy;
@@ -5657,10 +5684,10 @@ namespace InjectorInspector
                 } break;
                 case xe_tmr_2pCalibration.xet2C_移動補正_校正第1點: {
                     //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+                    double rlAx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 3);
 
                     double dbTargetX = rlAx - dbCameraCalibrationX;
                     double dbTargetY = rlAy + dbCameraCalibrationY;
@@ -5678,10 +5705,10 @@ namespace InjectorInspector
                 } break;
                 case xe_tmr_2pCalibration.xet2C_等待移動補正_校正第1點: {
                     //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+                    double rlAx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 3);
 
                     double dbTargetX = rlAx + dbCameraCalibrationX;
                     double dbTargetY = rlAy + dbCameraCalibrationY;
@@ -5708,10 +5735,10 @@ namespace InjectorInspector
 
                 case xe_tmr_2pCalibration.xet2C_移動至_校正第2點: {  
                     //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+                    double rlAx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 3);
 
                     double dbTargetX = rlBx;
                     double dbTargetY = rlBy;
@@ -5725,10 +5752,10 @@ namespace InjectorInspector
                 } break;
                 case xe_tmr_2pCalibration.xet2C_等待移動至_校正第2點: {
                     //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+                    double rlAx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 3);
 
                     double dbTargetX = rlBx;
                     double dbTargetY = rlBy;
@@ -5765,10 +5792,10 @@ namespace InjectorInspector
                     break;
                 case xe_tmr_2pCalibration.xet2C_移動補正_校正第2點: {
                     //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+                    double rlAx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 3);
 
                     double dbTargetX = rlBx - dbCameraCalibrationX;
                     double dbTargetY = rlBy + dbCameraCalibrationY;
@@ -5786,10 +5813,10 @@ namespace InjectorInspector
                 } break;
                 case xe_tmr_2pCalibration.xet2C_等待移動補正_校正第2點: {
                     //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+                    double rlAx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 3);
 
                     double dbTargetX = rlBx + dbCameraCalibrationX;
                     double dbTargetY = rlBy + dbCameraCalibrationY;
@@ -5823,17 +5850,17 @@ namespace InjectorInspector
                     break;
                 case xe_tmr_2pCalibration.xet2C_完成進行校正參數調整: {
                     //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+                    double rlAx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 3);
 
                     //Get Ideal Pxy
                     double idlpAx = 0, idlpAy = 0, idlpBx = 0, idlpBy = 0;
 
-                    string Cal2pFileName = apiParaReadStr("SaveParameterJason.json", 8);
-                    int PointLeft  = (int)apiParaReadIndex("SaveParameterJason.json", 9);
-                    int PointRight = (int)apiParaReadIndex("SaveParameterJason.json", 10);
+                    string Cal2pFileName = apiParaReadStr(ParameterPath + "\\SaveParameterJason.json", 8);
+                    int PointLeft  = (int)apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 9);
+                    int PointRight = (int)apiParaReadIndex(ParameterPath + "\\SaveParameterJason.json", 10);
 
                     apiReadNeedleInfo(Cal2pFileName, PointLeft,  ref idlpAx, ref idlpAy);
                     apiReadNeedleInfo(Cal2pFileName, PointRight, ref idlpBx, ref idlpBy);
