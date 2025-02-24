@@ -57,6 +57,7 @@ namespace Inspector
         public double 移載X, 移載Y;
         public int 缺料警告數量 = 10;
         public bool 下視覺正向 = true;
+        public int PinCount = 0;
 
         int GetDWord(int Index)
         {
@@ -225,6 +226,14 @@ namespace Inspector
             }
         }
 
+        internal void Read夾爪參數()
+        {
+            double V = getParam("SetNozzleCircularity");  //針頭長
+            if (Math.Abs(V) > 0.01)
+            {
+                parameter.夾爪真圓度 = V;
+            }
+        }
         internal void ReadTray參數()
         {
             double V = getParam("NeedleLengthMax");  //針長Max
@@ -662,6 +671,7 @@ namespace Inspector
         public double 針頭寬度 = 0.11;
         public double 針尾長度 = 0.5;
         public double 針尾寬度 = 0.09;
+        public double 夾爪真圓度 = 0.4;
     }
     #endregion
 
@@ -1420,11 +1430,13 @@ namespace Inspector
             items.First(x => x.Text == "分析吸嘴").Visible = owner.DebugMode;
             items.First(x => x.Text == "Set CCD Parameter").Visible = owner.xEngineer;
         }
+
         /// <summary>分析吸嘴，傳入目前吸附位置(X / Y / θ)，輸出針位置，無料 / 重疊時回覆 false</summary>
         public bool Insp(out double targetθ)
         {
             bool success = false;
             targetθ = 0;
+            owner.PinCount = 0;
             if (helper.ContainImage)
             {
                 owner.Read吸嘴參數();
@@ -1444,6 +1456,8 @@ namespace Inspector
                 double HMin = owner.parameter.Pin長度Min / CCD.Param.ScaleX / 2.0;
                 double HMax = owner.parameter.Pin長度Max / CCD.Param.ScaleX / 2.0;
                 PinArea = GetNozzleArea(temp, 70, WMin, WMax, HMin, HMax);
+                //if (PinArea.CountObj() > 0)
+                //    owner.PinCount = 2;
                 RegionNozzle = FilterPin(PinArea, WMin, WMax, HMin, HMax);
                 if ((RegionNozzle.CountObj() == 1))
                     try
@@ -1484,6 +1498,7 @@ namespace Inspector
                             //if (!owner.parameter.下視覺特徵為針頭)
                             //    dAngle1 = dAngle1.D + 180;
                             owner.PinDeg = PinDeg = targetθ = dAngle1;
+                            owner.PinCount = 1;
                         }
                         owner.DisposeObj(reduces);
                     }
@@ -1536,8 +1551,20 @@ namespace Inspector
         {
             HObject union, LimH, LimW;
             HOperatorSet.Union1(pin, out union);
+            var allpin = union.CountObj();
             HOperatorSet.SelectShape(union,out LimH, "rect2_len1", "and", HMin, HMax);
+            var pinh = LimH.CountObj();
             HOperatorSet.SelectShape(LimH,out LimW, "rect2_len2", "and", WMin, WMax);
+            var pinw = LimW.CountObj();
+            var minarea = ((HMin + HMax) / 2) * ((WMin + WMax) / 2) * 2;
+            if (allpin > 0)
+            {
+                HTuple area, row,col;
+                HOperatorSet.AreaCenter(union, out area, out row, out col);
+                owner.PinCount = (int)Math.Round(area.D / minarea, MidpointRounding.AwayFromZero);
+            }
+            else
+                owner.PinCount = 0;
             //var union = pin.Union1();
             //var LimH = union.SelectShape("rect2_len1", "and", HMin, HMax);
             //var LimW = LimH.SelectShape("rect2_len2", "and", WMin, WMax);
@@ -1988,6 +2015,7 @@ namespace Inspector
         HTuple pX, pY;
         int targetIndex = -1;
         Vector3 hole;
+        HTuple circularity = 1;
 
         public InspCCD5區(Inspector sender, HWindowControl win)
         {
@@ -2042,6 +2070,7 @@ namespace Inspector
             targetIndex = -1;
             if (helper.ContainImage)
             {
+                owner.Read夾爪參數();
                 HObject temp, binArea, connArea, SelArea, OutArea, MaxArea, CirArea;
                 HTuple W, H, usedThr, row, col, Radius, Dist, area1, area2;
                 HOperatorSet.CopyImage(helper.Image, out temp);
@@ -2049,8 +2078,10 @@ namespace Inspector
                 HOperatorSet.GetImageSize(temp, out W, out H);
                 HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
                 HOperatorSet.Connection(binArea, out connArea);
-                HOperatorSet.SelectShape(connArea, out SelArea, "circularity", "and", 0.4, 1);
+                HOperatorSet.SelectShape(connArea, out SelArea, "circularity", "and", owner.parameter.夾爪真圓度, 1);
+                
                 HOperatorSet.SelectShape(SelArea, out OutArea, "outer_radius", "and", 20, 500);
+                HOperatorSet.Circularity(OutArea, out circularity);
                 if (OutArea.CountObj() == 1)
                 {
                     HOperatorSet.ShapeTrans(OutArea, out CirArea, "outer_circle");
@@ -2082,8 +2113,8 @@ namespace Inspector
             if ((targetIndex >= 0) && (pX != null) && (pY != null))
             {
                 Win.HalconWindow.DispCross(pY, pX, 300, 0);
-                Win.HalconWindow.SetTposition((int)(pY.D + 300), 300);
-                Win.HalconWindow.WriteString(string.Format("X = {0:F3} , Y = {1:F3}", hole.X, hole.Y));
+                Win.HalconWindow.SetTposition((int)(pY.D + 300), 100);
+                Win.HalconWindow.WriteString(string.Format("X = {0:F3} , Y = {1:F3} 真圓度 = {2:F2}", hole.X, hole.Y, circularity.D));
             }
             HTuple W, H;
             if (image != null)

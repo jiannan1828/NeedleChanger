@@ -96,22 +96,45 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //------------------------------ Test function with Vision ------------------------------
         //---------------------------------------------------------------------------------------
-        public bool dbNozzleDegInverse = false;
+        enum eDownVisionRsult {
+            eDVR_Null,
+            eDVR_Get_1Pin_ok_Normal,
+            eDVR_Get_1Pin_ok_Inverse,
+            eDVR_Get_0Pin_ng,
+            eDVR_Get_1Pin_ng,
+            eDVR_Get_2Pin_ng,
+            eDVR_NG,
+        };
+        eDownVisionRsult eDVR_Rsult = eDownVisionRsult.eDVR_Null;
         public void apiCallBackTest()
         {
             //Vision Callback Function test
             cntcallback++;
             this.Text = cntcallback.ToString() + "  " + inspector1.InspNozzle.CCD.GrabCount.ToString();
 
-            dbNozzleDegInverse = false;
-            if (inspector1.InspectOK == true && inspector1.Inspected == true) {
-                label10.Text = inspector1.PinDeg.ToString();
-                if(inspector1.PinDeg < 0) {
-                    dbNozzleDegInverse = true;
-                }
-                inspector1.InspectOK = false;
-            }
+            eDVR_Rsult = eDownVisionRsult.eDVR_Null;
+                if (inspector1.InspectOK == true && inspector1.Inspected == true) {
+                    label10.Text = inspector1.PinDeg.ToString();
 
+                    const int torence_deg = 2;
+                    if(90.0-torence_deg <= Math.Abs(inspector1.PinDeg) &&
+                                           Math.Abs(inspector1.PinDeg) <= 90.0+torence_deg) { 
+                        if(inspector1.PinDeg < 0) {
+                            eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ok_Inverse;
+                        } else {
+                            eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ok_Normal;
+                        }
+                    } else { 
+                        eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ng;
+                    }
+                } else {  //if(inspector1.InspectOK == false) {
+                    switch(inspector1.PinCount) {
+                        case 0:   eDVR_Rsult = eDownVisionRsult.eDVR_Get_0Pin_ng;  break;
+                        case 1:   eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ng;  break;
+                        case 2:   eDVR_Rsult = eDownVisionRsult.eDVR_Get_2Pin_ng;  break;
+                        default:  eDVR_Rsult = eDownVisionRsult.eDVR_NG;           break;
+                    }
+                }
         }
         //---------------------------------------------------------------------------------------
         void apiParaWriteIndex(string filename, int index, double dbValue)
@@ -213,6 +236,7 @@ namespace InjectorInspector
             //植針嘴有無堵料, 無:ok, 有:ng
             Inspector.Vector3 pos2;
             bool success2 = inspector1.xInsp夾爪(out pos2);   //夾爪針孔偵測 回傳:OK/NG 及找到孔的位置
+            label21.Text = success2.ToString();
         }
         //---------------------------------------------------------------------------------------
         public void tB_PointAB_Calculate(object sender, EventArgs e)
@@ -2374,6 +2398,8 @@ namespace InjectorInspector
                 rsult = apiParaReadIndex("SaveParameterJason.json", 26);
             } else if (GetPara == "NeedleThreshold") {  //閥值
                 rsult = apiParaReadIndex("SaveParameterJason.json", 27);
+            } else if (GetPara == "SetNozzleCircularity") {  //堵嘴 植針孔閥值
+                rsult = apiParaReadIndex("SaveParameterJason.json", 37);
             }
 
             return rsult;
@@ -4125,6 +4151,7 @@ namespace InjectorInspector
                                     if(bTakePin == true || bChambered == true) { 
                                         b吸嘴吸 = true;
                                     }
+ 
                                     digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴吸, b吸嘴吸);
                                     xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸料等待;
                                 } break;
@@ -4138,7 +4165,11 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_NozzleZ檢查是否縮回0: 
                                     double dbGetZ = dbapiNozzleZ(dbRead, 0);
                                     if(dbGetZ<=0.1) { 
-                                        xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ縮為0完成;
+
+                                        if(bResume == true) {
+                                            bResume = false;
+                                            xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ縮為0完成;
+                                        }
                                     }
                                     break;
                                 case xe_tmr_takepin.xett_NozzleZ縮為0完成:                 xeTmrTakePin = xe_tmr_takepin.xett_移至飛拍起始位置;  break;
@@ -4171,12 +4202,16 @@ namespace InjectorInspector
                                     }
                                     break;
                                 case xe_tmr_takepin.xett_確定飛拍移動完成: {
-                        
+                       
                                     double dbTargetNozzleR = 0.0;
-                                    if(dbNozzleDegInverse) { 
-                                        dbTargetNozzleR = db取料Nozzle中心點R + 90 + 180;
-                                    } else { 
-                                        dbTargetNozzleR = db取料Nozzle中心點R + 90;
+                                    switch(eDVR_Rsult) {
+                                        case eDownVisionRsult.eDVR_Null:                   break;
+                                        case eDownVisionRsult.eDVR_Get_1Pin_ok_Normal:   dbTargetNozzleR = db取料Nozzle中心點R + 90;        break;
+                                        case eDownVisionRsult.eDVR_Get_1Pin_ok_Inverse:  dbTargetNozzleR = db取料Nozzle中心點R + 90 + 180;  break;
+                                        case eDownVisionRsult.eDVR_Get_0Pin_ng:            break;
+                                        case eDownVisionRsult.eDVR_Get_1Pin_ng:            break;
+                                        case eDownVisionRsult.eDVR_Get_2Pin_ng:            break;
+                                        case eDownVisionRsult.eDVR_NG:                     break;
                                     }
                                     dbapiNozzleR(dbTargetNozzleR, 360*4);
 
@@ -4196,7 +4231,20 @@ namespace InjectorInspector
                                     if(bTakePin == true) { 
                                         xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ下降至吐料高度; 
                                     } else if(bChambered == true) { 
-                                        xeTmrTakePin = xe_tmr_takepin.xett_NozzleXYR移至上膛位;
+                                        switch(eDVR_Rsult) {
+                                            case eDownVisionRsult.eDVR_Get_1Pin_ok_Normal:     
+                                            case eDownVisionRsult.eDVR_Get_1Pin_ok_Inverse:
+                                                xeTmrTakePin = xe_tmr_takepin.xett_NozzleXYR移至上膛位;
+                                                break;
+
+                                            case eDownVisionRsult.eDVR_Null:
+                                            case eDownVisionRsult.eDVR_Get_0Pin_ng:
+                                            case eDownVisionRsult.eDVR_Get_1Pin_ng: 
+                                            case eDownVisionRsult.eDVR_Get_2Pin_ng: 
+                                            case eDownVisionRsult.eDVR_NG:
+                                                xeTmrTakePin = xe_tmr_takepin.xett_NozzleZ下降至吐料高度;
+                                                break;
+                                        }
                                     }
                                     break;
 
@@ -4262,10 +4310,17 @@ namespace InjectorInspector
                                 /* bChambered */
                                 case xe_tmr_takepin.xett_NozzleXYR移至上膛位: {    
                                     double dbTargetNozzleR = 0.0;
-                                    if(dbNozzleDegInverse) { 
-                                        dbTargetNozzleR = db取料Nozzle中心點R + 90 + 180;
-                                    } else { 
-                                        dbTargetNozzleR = db取料Nozzle中心點R + 90;
+                                    switch(eDVR_Rsult) {
+                                        case eDownVisionRsult.eDVR_Get_1Pin_ok_Normal:   dbTargetNozzleR = db取料Nozzle中心點R + 90;        break;
+                                        case eDownVisionRsult.eDVR_Get_1Pin_ok_Inverse:  dbTargetNozzleR = db取料Nozzle中心點R + 90 + 180;  break;
+
+                                        case eDownVisionRsult.eDVR_Null: 
+                                        case eDownVisionRsult.eDVR_Get_0Pin_ng:
+                                        case eDownVisionRsult.eDVR_Get_1Pin_ng: 
+                                        case eDownVisionRsult.eDVR_Get_2Pin_ng:  
+                                        case eDownVisionRsult.eDVR_NG:
+                                            //錯誤
+                                            return;
                                     }
 
                                     dbapiNozzleX(495,             500*2);
@@ -4500,7 +4555,16 @@ namespace InjectorInspector
                                     dbapiCarrierX(dbTargetX, 190*0.8);
                                     dbapiCarrierY(dbTargetY, 800*0.8);
 
-                                    xeTmrTakePin = xe_tmr_takepin.xett_檢查載盤移植直針孔相機補正位;  
+                                    if(b有看到校正孔 == true) { 
+                                        xeTmrTakePin = xe_tmr_takepin.xett_檢查載盤移植直針孔相機補正位;  
+                                    } else { 
+                                        if (iPC == 0 && iRC == 0) {
+                                            btmrStop = false;
+                                            xeTmrTakePin = xe_tmr_takepin.xett_回Home保護;
+                                        } else {
+                                            xeTmrTakePin = xe_tmr_takepin.xett_取得植針目標座標;
+                                        }
+                                    }
                                 } break;
                                 case xe_tmr_takepin.xett_檢查載盤移植直針孔相機補正位: {    
                                     double dbX = dbapiCarrierX(dbRead, 0);
@@ -4895,7 +4959,11 @@ namespace InjectorInspector
                                             break;
 
                                         case 2: { //依照視覺判斷
-                                            success = true;
+                                            //btn_植針嘴檢查_Click(sender, e);
+
+                                            //植針嘴有無堵料, 無:ok, 有:ng
+                                            Inspector.Vector3 pos2;
+                                            success = inspector1.xInsp夾爪(out pos2);   //夾爪針孔偵測 回傳:OK/NG 及找到孔的位置
                                         } break;
                                     }  // end of switch(dbSetPinStatus) { 
 
@@ -5230,7 +5298,10 @@ namespace InjectorInspector
                             }
                         } else { 
                             if(求出取料循環次數>=1 && btmrStop==false) {  
-                                if(iPC == 0 && iRC == 0) {
+                                if(eDVR_Rsult != eDownVisionRsult.eDVR_Null) {
+                                    eDVR_Rsult = eDownVisionRsult.eDVR_Null;
+                                    xeTmrTakePin = xe_tmr_takepin.xett_還需要取針;
+                                } else if (iPC == 0 && iRC == 0) {
                                     btmrStop = false;
                                     xeTmrTakePin = xe_tmr_takepin.xett_回Home保護;
                                 } else {
@@ -6464,6 +6535,13 @@ namespace InjectorInspector
         public void button1_Click(object sender, EventArgs e)
         {
             //inspector1.xInit();
+        }
+        //---------------------------------------------------------------------------------------
+        private void cB_AlwaysResume_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cB_AlwaysResume.Checked == false) {
+                bResume = false;
+            }
         }
         //---------------------------------------------------------------------------------------
         private void btn_socket相機兩點定位_Click(object sender, EventArgs e)

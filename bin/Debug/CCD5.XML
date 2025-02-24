@@ -2,7 +2,7 @@
 <ParamDefine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Key>DMK 33GX273:40424146</Key>
   <Gamma>0.4</Gamma>
-  <Exposure>20374</Exposure>
+  <Exposure>29501</Exposure>
   <SpeedRate>0</SpeedRate>
   <MirrorX>false</MirrorX>
   <MirrorY>false</MirrorY>
