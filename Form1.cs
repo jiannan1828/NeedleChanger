@@ -3493,8 +3493,13 @@ namespace InjectorInspector
 
                 case xe_tmr_home.xets_home_StartSetZR_02:
                     dbapiSetZ(15, 33*2);       Thread.Sleep(10);  //tmr_Home_Tick
-                    dbapiSetR(268.08, 360*2);  Thread.Sleep(10);  //tmr_Home_Tick
-                    xeTmrHome = xe_tmr_home.xets_home_CheckSetZR;
+                    double dbSetR放料位; {
+                        dbSetR放料位 = apiParaReadIndex("SaveParameterJason.json", 44);
+                    }
+                    if(indicateRead((int)WMX3IO對照.pxeIO_NA56) == HIGH) { 
+                        dbapiSetR(dbSetR放料位, 360*2);  Thread.Sleep(10);  //tmr_Home_Tick
+                        xeTmrHome = xe_tmr_home.xets_home_CheckSetZR;
+                    }
                     break;
 
                 case xe_tmr_home.xets_home_CheckSetZR:
@@ -4364,14 +4369,21 @@ namespace InjectorInspector
                                     break;
                                 case xe_tmr_takepin.xett_確認擺放座蓋板打開:                                    xeTmrTakePin = xe_tmr_takepin.xett_擺放座R軸至放料位;  break;
                              
-                                case xe_tmr_takepin.xett_擺放座R軸至放料位:  
-                                    dbapiSetR(268.08, 360*2);
-                                    xeTmrTakePin = xe_tmr_takepin.xett_檢查擺放座R軸是否至放料位;
-                                    break;
+                                case xe_tmr_takepin.xett_擺放座R軸至放料位: {  
+                                    double dbSetR放料位; {
+                                        dbSetR放料位 = apiParaReadIndex("SaveParameterJason.json", 44);
+                                    }
+                                    if(indicateRead((int)WMX3IO對照.pxeIO_NA56) == HIGH) { 
+                                        dbapiSetR(dbSetR放料位, 360*2);
+                                        xeTmrTakePin = xe_tmr_takepin.xett_檢查擺放座R軸是否至放料位;
+                                    }
+                                } break;
                                 case xe_tmr_takepin.xett_檢查擺放座R軸是否至放料位: {
                                     double dbR = dbapiSetR(dbRead, 0);
-                                    double dbTargetR = 268.08;
-                                    if( (dbTargetR * 0.99 <= dbR && dbR <= dbTargetR * 1.01) ) { 
+                                    double dbSetR放料位; {
+                                        dbSetR放料位 = apiParaReadIndex("SaveParameterJason.json", 44);
+                                    }
+                                    if( (dbSetR放料位 * 0.99 <= dbR && dbR <= dbSetR放料位 * 1.01) ) { 
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認擺放座R軸至放料位;
                                     }
                                 } break;
@@ -4472,14 +4484,21 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_確認Nozzle回至0點保護位:                              xeTmrTakePin = xe_tmr_takepin.xett_擺放座R軸至植針位;  break;
 
                                 //槍管task
-                                case xe_tmr_takepin.xett_擺放座R軸至植針位:    
-                                    dbapiSetR(178.08, 360*2);
-                                    xeTmrTakePin = xe_tmr_takepin.xett_檢查擺放座R軸是否至植針位;
-                                    break;
+                                case xe_tmr_takepin.xett_擺放座R軸至植針位: { 
+                                    double dbSetR植針位; {
+                                        dbSetR植針位 = apiParaReadIndex("SaveParameterJason.json", 43);
+                                    }
+                                    if(indicateRead((int)WMX3IO對照.pxeIO_NA56) == HIGH) { 
+                                        dbapiSetR(dbSetR植針位, 360*2);
+                                        xeTmrTakePin = xe_tmr_takepin.xett_檢查擺放座R軸是否至植針位;
+                                    }
+                                } break;
                                 case xe_tmr_takepin.xett_檢查擺放座R軸是否至植針位: {
                                     double dbR = dbapiSetR(dbRead, 0);
-                                    double dbTargetR = 178.08;
-                                    if( (dbTargetR * 0.99 <= dbR && dbR <= dbTargetR * 1.01) ) { 
+                                    double dbSetR植針位; {
+                                        dbSetR植針位 = apiParaReadIndex("SaveParameterJason.json", 43);
+                                    }
+                                    if( (dbSetR植針位 * 0.99 <= dbR && dbR <= dbSetR植針位 * 1.01) ) { 
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認擺放座R軸至植針位;
                                     }
                                 } break;
@@ -4542,7 +4561,7 @@ namespace InjectorInspector
                                         if(bResume == true) {
                                             bResume = false;
 
-                                            dbapiDelayCNT01(2);
+                                            dbapiDelayCNT01(5);
                                             xeTmrTakePin = xe_tmr_takepin.xett_等待載盤XY移置拍照檢查位;
                                         }
                                     }
@@ -4794,14 +4813,21 @@ namespace InjectorInspector
                                     break;
                                 case xe_tmr_takepin.xett_確認擺放座蓋板再次打開:                      xeTmrTakePin = xe_tmr_takepin.xett_擺放座R軸再次至放料位;  break;
 
-                                case xe_tmr_takepin.xett_擺放座R軸再次至放料位:   
-                                    dbapiSetR(268.08, 360*2);
-                                    xeTmrTakePin = xe_tmr_takepin.xett_檢查擺放座R軸是否再次至放料位;
-                                    break;
+                                case xe_tmr_takepin.xett_擺放座R軸再次至放料位: {  
+                                    double dbSetR放料位; {
+                                        dbSetR放料位 = apiParaReadIndex("SaveParameterJason.json", 44);
+                                    }
+                                    if(indicateRead((int)WMX3IO對照.pxeIO_NA56) == HIGH) { 
+                                        dbapiSetR(dbSetR放料位, 360*2);
+                                        xeTmrTakePin = xe_tmr_takepin.xett_檢查擺放座R軸是否再次至放料位;
+                                    }
+                                } break;
                                 case xe_tmr_takepin.xett_檢查擺放座R軸是否再次至放料位: {
                                     double dbR = dbapiSetR(dbRead, 0);
-                                    double dbTargetR = 268.08;
-                                    if( (dbTargetR * 0.99 <= dbR && dbR <= dbTargetR * 1.01) ) { 
+                                    double dbSetR放料位; {
+                                        dbSetR放料位 = apiParaReadIndex("SaveParameterJason.json", 44);
+                                    }
+                                    if( (dbSetR放料位 * 0.99 <= dbR && dbR <= dbSetR放料位 * 1.01) ) { 
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認擺放座R軸再次至放料位;
                                     }
                                 } break;
@@ -4912,8 +4938,10 @@ namespace InjectorInspector
                                     double CheckSetR; {
                                         CheckSetR = apiParaReadIndex("SaveParameterJason.json", 30);
                                     }
-                                    dbapiSetR(CheckSetR, 360*2);
-                                    xeTmrTakePin = xe_tmr_takepin.xett_等待SetR移至檢查堵料孔檢查位;        
+                                    if(indicateRead((int)WMX3IO對照.pxeIO_NA56) == HIGH) { 
+                                        dbapiSetR(CheckSetR, 360*2);
+                                        xeTmrTakePin = xe_tmr_takepin.xett_等待SetR移至檢查堵料孔檢查位;  
+                                    }
                                 } break;
                                 case xe_tmr_takepin.xett_等待SetR移至檢查堵料孔檢查位: 
                                     if( (dbapiSetR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -4987,8 +5015,13 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_判斷堵料:                                     xeTmrTakePin = xe_tmr_takepin.xett_SetR移至植針位;                      break;
                                 case xe_tmr_takepin.xett_SetR移至植針位: {
-                                    dbapiSetR(178.08, 360*2);
-                                    xeTmrTakePin = xe_tmr_takepin.xett_等待SetR移至植針位;                  
+                                    double dbSetR植針位; {
+                                        dbSetR植針位 = apiParaReadIndex("SaveParameterJason.json", 43);
+                                    }
+                                    if(indicateRead((int)WMX3IO對照.pxeIO_NA56) == HIGH) { 
+                                        dbapiSetR(dbSetR植針位, 360*2);
+                                        xeTmrTakePin = xe_tmr_takepin.xett_等待SetR移至植針位; 
+                                    }
                                 } break;
                                 case xe_tmr_takepin.xett_等待SetR移至植針位: {
                                     if( (dbapiSetR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -5076,7 +5109,7 @@ namespace InjectorInspector
 
                                 case xe_tmr_takepin.xett_堵料吹氣電磁閥打開: {
                                     digitalWrite((int)WMX3IO對照.pxeIO_堵料吹氣, HIGH);
-                                    dbapiDelayCNT01(2);
+                                    dbapiDelayCNT01(10);
                                     xeTmrTakePin = xe_tmr_takepin.xett_等待堵料吹氣電磁閥打開; 
                                 } break;
                                 case xe_tmr_takepin.xett_等待堵料吹氣電磁閥打開: {
@@ -5254,16 +5287,20 @@ namespace InjectorInspector
                     } break;
                     case xe_tmr_takepin.xett_抽料電磁閥開啟: {
                         digitalWrite((int)WMX3IO對照.pxeIO_吸料真空電磁閥, HIGH);
-                        dbapiDelayCNT01(2);
+                        dbapiDelayCNT01(10);
                         xeTmrTakePin = xe_tmr_takepin.xett_抽料電磁閥開啟等待1秒;
                     } break;
                     case xe_tmr_takepin.xett_抽料電磁閥開啟等待1秒: {
                         if( (dbapiDelayCNT01(dbCheckArrived) == dbAxisMoveOk) ) { 
-                            xeTmrTakePin = xe_tmr_takepin.xett_抽料電磁閥關閉; 
+                            if (bResume==true) {
+                                bResume = false;
+                                xeTmrTakePin = xe_tmr_takepin.xett_抽料電磁閥關閉; 
+                            }
                         } 
                     } break;
                     case xe_tmr_takepin.xett_抽料電磁閥關閉: {
                         digitalWrite((int)WMX3IO對照.pxeIO_吸料真空電磁閥, LOW);
+                        dbapiDelayCNT01(8);
                         xeTmrTakePin = xe_tmr_takepin.xett_抽料Z軸回0; 
                     } break;
                     case xe_tmr_takepin.xett_抽料Z軸回0: {
