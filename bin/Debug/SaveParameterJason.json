@@ -1,22 +1,22 @@
 [
   {
     "u32Index": 0,
-    "dbPosition": 145.01359999938077,
+    "dbPosition": 146.52295671838522,
     "strNote": "028\u5DE6Socket\u5DE6\u5B9A\u4F4D\u9EDEAx"
   },
   {
     "u32Index": 1,
-    "dbPosition": 617.72882887164269,
+    "dbPosition": 615.95170713287541,
     "strNote": "028\u5DE6Socket\u5DE6\u5B9A\u4F4D\u9EDEAy"
   },
   {
     "u32Index": 2,
-    "dbPosition": 113.02290208141581,
+    "dbPosition": 114.53941755150258,
     "strNote": "028\u5DE6Socket\u53F3\u5B9A\u4F4D\u9EDEBx"
   },
   {
     "u32Index": 3,
-    "dbPosition": 603.60675671611421,
+    "dbPosition": 601.83315148866359,
     "strNote": "028\u5DE6Socket\u53F3\u5B9A\u4F4D\u9EDEBy"
   },
   {
@@ -66,22 +66,22 @@
   },
   {
     "u32Index": 13,
-    "dbPosition": 2.9470000000000001,
+    "dbPosition": 1.3859999999999999,
     "strNote": "Socket\u76F8\u6A5F\u81F3\u690D\u91DD\u5634\u5DEE\u503CX"
   },
   {
     "u32Index": 14,
-    "dbPosition": 52.942,
+    "dbPosition": 54.710000000000001,
     "strNote": "Socket\u76F8\u6A5F\u81F3\u690D\u91DD\u5634\u5DEE\u503CY"
   },
   {
     "u32Index": 15,
-    "dbPosition": 3.3799999999999999,
+    "dbPosition": 1.865,
     "strNote": "Socket\u76F8\u6A5F\u81F3\u62BD\u91DD\u5634\u5DEE\u503CX"
   },
   {
     "u32Index": 16,
-    "dbPosition": -50.439999999999998,
+    "dbPosition": -48.634999999999998,
     "strNote": "Socket\u76F8\u6A5F\u81F3\u62BD\u91DD\u5634\u5DEE\u503CY"
   },
   {
@@ -186,7 +186,32 @@
   },
   {
     "u32Index": 37,
-    "dbPosition": 0.68000000000000005,
+    "dbPosition": 0.59999999999999998,
     "strNote": "\u5835\u5B54\u690D\u91DD\u5634\u771F\u5713\u5EA6\u5224\u65B7\u95A5\u503C"
+  },
+  {
+    "u32Index": 38,
+    "dbPosition": 36.600000000000001,
+    "strNote": "NozzleZ\u4E0B\u964D\u7F6E\u653E\u6599\u4F4D"
+  },
+  {
+    "u32Index": 39,
+    "dbPosition": 2500,
+    "strNote": "\u79FB\u52D5\u901F\u5EA6-\u53D6\u6599\u5438\u5634NozzleX"
+  },
+  {
+    "u32Index": 40,
+    "dbPosition": 2500,
+    "strNote": "\u79FB\u52D5\u901F\u5EA6-\u53D6\u6599\u5438\u5634NozzleY"
+  },
+  {
+    "u32Index": 41,
+    "dbPosition": 2500,
+    "strNote": "\u79FB\u52D5\u901F\u5EA6-\u53D6\u6599\u5438\u5634NozzleZ"
+  },
+  {
+    "u32Index": 42,
+    "dbPosition": 2500,
+    "strNote": "\u79FB\u52D5\u901F\u5EA6-\u53D6\u6599\u5438\u5634NozzleR"
   }
 ]

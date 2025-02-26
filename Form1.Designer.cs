@@ -397,6 +397,7 @@ namespace InjectorInspector
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.lbl_讀取計數 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.lbl_2pCalibraLog = new System.Windows.Forms.Label();
             this.btn_兩點校正 = new System.Windows.Forms.Button();
@@ -523,7 +524,7 @@ namespace InjectorInspector
             this.tsmi_Replace.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tsmi_Replace.Name = "tsmi_Replace";
             this.tsmi_Replace.Size = new System.Drawing.Size(114, 22);
-            this.tsmi_Replace.Text = "置換";
+            this.tsmi_Replace.Text = "保留";
             // 
             // tsmi_Display
             // 
@@ -531,7 +532,7 @@ namespace InjectorInspector
             this.tsmi_Display.Font = new System.Drawing.Font("標楷體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.tsmi_Display.Name = "tsmi_Display";
             this.tsmi_Display.Size = new System.Drawing.Size(114, 22);
-            this.tsmi_Display.Text = "顯示";
+            this.tsmi_Display.Text = "保留";
             // 
             // tsmi_Enable
             // 
@@ -4576,6 +4577,7 @@ namespace InjectorInspector
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.lbl_讀取計數);
             this.tabPage2.Controls.Add(this.label21);
             this.tabPage2.Controls.Add(this.lbl_2pCalibraLog);
             this.tabPage2.Controls.Add(this.btn_兩點校正);
@@ -4637,6 +4639,15 @@ namespace InjectorInspector
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // lbl_讀取計數
+            // 
+            this.lbl_讀取計數.AutoSize = true;
+            this.lbl_讀取計數.Location = new System.Drawing.Point(26, 258);
+            this.lbl_讀取計數.Name = "lbl_讀取計數";
+            this.lbl_讀取計數.Size = new System.Drawing.Size(113, 19);
+            this.lbl_讀取計數.TabIndex = 245;
+            this.lbl_讀取計數.Text = "lbl_讀取計數";
             // 
             // label21
             // 
@@ -5717,6 +5728,7 @@ namespace InjectorInspector
         public Inspector.Inspector inspector1;
         public TabControl tabControl1;
         public Label label21;
+        public Label lbl_讀取計數;
     }
 }
 
