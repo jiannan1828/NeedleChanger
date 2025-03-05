@@ -3672,19 +3672,22 @@ namespace InjectorInspector
                             xett_確認在吐料位,
 
                             /* bTakePin */                                     /* bChambered */
-                            xett_NozzleZ下降至吐料高度,                        xett_NozzleXYR移至上膛位,
-                            xett_檢查NozzleZ是否在吐料高度,                    xett_檢查NozzleXYR是否移至上膛位,
-                            xett_確認NozzleZ在吐料高度,                        xett_確認NozzleXYR移至上膛位,
-
-                            xett_Nozzle吐料開始,                               xett_擺放座蓋板打開,
-                            xett_Nozzle吸料停止,                               xett_檢查擺放座蓋板是否打開,  
+                            xett_NozzleZ下降至吐料高度,                        xett_擺放座開真空,
+                            xett_檢查NozzleZ是否在吐料高度,                    xett_擺放座開真空等待1秒,
+                            xett_確認NozzleZ在吐料高度,                        
+                                                                               xett_NozzleXYR移至上膛位,
+                            xett_Nozzle吐料開始,                               xett_檢查NozzleXYR是否移至上膛位,
+                            xett_Nozzle吸料停止,                               xett_確認NozzleXYR移至上膛位,
+                                                                               
+                            xett_Nozzle吐料等待,                               xett_擺放座蓋板打開,
+                            xett_Nozzle吐料完成,                               xett_檢查擺放座蓋板是否打開,  
                                                                                xett_擺放座蓋板打開等待1秒,
-                            xett_Nozzle吐料等待,                               xett_確認擺放座蓋板打開,
-                            xett_Nozzle吐料完成,
-                                                                               xett_擺放座R軸至放料位,
-                            xett_NozzleZ退回安全高度0,                         xett_檢查擺放座R軸是否至放料位,
-                            xett_檢查NozzleZ是否退回安全高度0,                 xett_確認擺放座R軸至放料位,
-                            xett_確定NozzleZ已退回安全高度0,
+                            xett_NozzleZ退回安全高度0,                         xett_確認擺放座蓋板打開,
+                            xett_檢查NozzleZ是否退回安全高度0,                 
+                            xett_確定NozzleZ已退回安全高度0,                   xett_擺放座R軸至放料位,
+                                                                               xett_檢查擺放座R軸是否至放料位,
+                                                                               xett_確認擺放座R軸至放料位,
+
                                                                                xett_擺放座Z軸至放料位,
                                                                                xett_檢查擺放座Z軸是否至放料位,
                                                                                xett_確認擺放座Z軸至放料位,
@@ -3692,9 +3695,6 @@ namespace InjectorInspector
                                                                                xett_NozzleZ下降至上膛位,
                                                                                xett_檢查NozzleZ是否下降至上膛位,
                                                                                xett_確認NozzleZ下降至上膛位,
-
-                                                                               xett_擺放座開真空,
-                                                                               xett_擺放座開真空等待1秒,
 
                                                                                xett_吸嘴破真空,
                                                                                xett_Nozzle吸嘴關真空,
@@ -4248,7 +4248,7 @@ namespace InjectorInspector
                                         switch(eDVR_Rsult) {
                                             case eDownVisionRsult.eDVR_Get_1Pin_ok_Normal:     
                                             case eDownVisionRsult.eDVR_Get_1Pin_ok_Inverse:
-                                                xeTmrTakePin = xe_tmr_takepin.xett_NozzleXYR移至上膛位;
+                                                xeTmrTakePin = xe_tmr_takepin.xett_擺放座開真空;
                                                 break;
 
                                             case eDownVisionRsult.eDVR_Null:
@@ -4317,6 +4317,14 @@ namespace InjectorInspector
                                 case xe_tmr_takepin.xett_確定NozzleZ已退回安全高度0:                xeTmrTakePin = xe_tmr_takepin.xett_檢測是否還需要取針;  break;
                     //-----------------------------------------------------------------------------------------------------------------------------------------------
                                 /* bChambered */
+                                case xe_tmr_takepin.xett_擺放座開真空:    
+                                    digitalWrite((int)WMX3IO對照.pxeIO_擺放座吸真空, HIGH);
+                                    xeTmrTakePin = xe_tmr_takepin.xett_擺放座開真空等待1秒;
+                                    break;
+                                case xe_tmr_takepin.xett_擺放座開真空等待1秒:    
+                                    xeTmrTakePin = xe_tmr_takepin.xett_NozzleXYR移至上膛位; 
+                                    break;
+
                                 case xe_tmr_takepin.xett_NozzleXYR移至上膛位: {    
                                     double dbTargetNozzleR = 0.0;
                                     switch(eDVR_Rsult) {
@@ -4419,18 +4427,7 @@ namespace InjectorInspector
                                         xeTmrTakePin = xe_tmr_takepin.xett_確認NozzleZ下降至上膛位;
                                     }
                                 } break;
-                                case xe_tmr_takepin.xett_確認NozzleZ下降至上膛位:                              xeTmrTakePin = xe_tmr_takepin.xett_擺放座開真空;  break;
-                              
-                                case xe_tmr_takepin.xett_擺放座開真空:    
-                                    digitalWrite((int)WMX3IO對照.pxeIO_擺放座吸真空, HIGH);
-                                    dbapiDelayCNT01(2);
-                                    xeTmrTakePin = xe_tmr_takepin.xett_擺放座開真空等待1秒;
-                                    break;
-                                case xe_tmr_takepin.xett_擺放座開真空等待1秒:    
-                                    if( (dbapiDelayCNT01(dbCheckArrived) == dbAxisMoveOk) ) { 
-                                        xeTmrTakePin = xe_tmr_takepin.xett_吸嘴破真空; 
-                                    }   
-                                    break;
+                                case xe_tmr_takepin.xett_確認NozzleZ下降至上膛位:                              xeTmrTakePin = xe_tmr_takepin.xett_吸嘴破真空;  break;
 
                                 case xe_tmr_takepin.xett_吸嘴破真空: {
 
@@ -4444,7 +4441,7 @@ namespace InjectorInspector
                                 } break;
                                 case xe_tmr_takepin.xett_Nozzle吸嘴關真空:              
                                     digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, HIGH);
-                                    dbapiDelayCNT01(18);
+                                    dbapiDelayCNT01(12);
                                     xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸嘴關真空等待1秒; 
                                     break;
                                 case xe_tmr_takepin.xett_Nozzle吸嘴關真空等待1秒: 
@@ -4823,13 +4820,9 @@ namespace InjectorInspector
                                     }
                                 } break;
                                 case xe_tmr_takepin.xett_檢查擺放座R軸是否再次至放料位: {
-                                    double dbR = dbapiSetR(dbRead, 0);
-                                    double dbSetR放料位; {
-                                        dbSetR放料位 = apiParaReadIndex("SaveParameterJason.json", 44);
-                                    }
-                                    if( (dbSetR放料位 * 0.99 <= dbR && dbR <= dbSetR放料位 * 1.01) ) { 
-                                        xeTmrTakePin = xe_tmr_takepin.xett_確認擺放座R軸再次至放料位;
-                                    }
+                                    if( (dbapiSetR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                        xeTmrTakePin = xe_tmr_takepin.xett_確認擺放座R軸再次至放料位;  
+                                    }   
                                 } break;
                                 case xe_tmr_takepin.xett_確認擺放座R軸再次至放料位:                    xeTmrTakePin = xe_tmr_takepin.xett_檢測是否還需要取針;  break;
                 //-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -5356,7 +5349,8 @@ namespace InjectorInspector
                     } break;
                         case xe_tmr_takepin.xett_還需要取針:
                             Curr_CycleTime = DateTime.Now; //20241230 4xuan added
-                            CycleTime = Curr_CycleTime - Prev_CycleTime;
+                            CycleTime = TimeSpan.FromMilliseconds((Curr_CycleTime - Prev_CycleTime).TotalMilliseconds / 60);
+                            CycleTime += TimeSpan.FromMilliseconds(4500); // 增加 1 毫秒
                             Prev_CycleTime = DateTime.Now;
 
                             lbl_CycleTime.Text = "循環時間 : " + CycleTime.ToString(@"ss\.fff");
