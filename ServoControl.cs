@@ -19,6 +19,7 @@ using System.Data;
 using System.Threading;
 using static WMX3ApiCLR.Config;
 using System.Net.NetworkInformation;
+using static WMX3ApiCLR.Motion;
 
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
@@ -427,6 +428,116 @@ namespace InjectorInspector
         }
         //---------------------------------------------------------------------------------------
 
+
+
+
+
+
+        public void TEST()
+        {
+            LinearIntplCommand lin = new LinearIntplCommand();
+            Trigger trig = new Trigger();
+            WaitCondition wait = new WaitCondition();
+            MotionParam mpara = new MotionParam();
+
+            for (int i = 0; i <= 3; i++) {
+                motion.Config.GetMotionParam(i, ref mpara);
+                mpara.LinearIntplOverrideType = LinearIntplOverrideType.Blending;
+                motion.Config.SetMotionParam(i, mpara);
+            }
+
+            // Set interpolation command parameters
+            lin.AxisCount = 4;
+            lin.Axis[0] = 0;
+            lin.Axis[1] = 1;
+            lin.Axis[2] = 2;
+            lin.Axis[3] = 3;
+
+            lin.Profile.Type = ProfileType.Trapezoidal;
+            lin.Profile.Velocity = 10000;
+            lin.Profile.Acc = 100000;
+            lin.Profile.Dec = 100000;
+
+            // Set trigger parameters (trigger at 2000 remaining distance)
+            trig.TriggerAxis = 0;
+            trig.TriggerType = TriggerType.RemainingDistance;
+            trig.TriggerValue = 10000;
+
+            // Set wait condition parameters
+            wait.WaitConditionType = WaitConditionType.MotionStartedOverrideReady;
+            wait.AxisCount = 4;
+            wait.Axis[0] = 0;
+            wait.Axis[1] = 1;
+            wait.Axis[2] = 2;
+            wait.Axis[3] = 3;
+
+            // Execute linear interpolation to position (100000, 0, 0, 0)
+            lin.Target[0] = 100000;
+            lin.Target[1] = 0;
+            lin.Target[2] = 0;
+            lin.Target[3] = 0;
+
+            var ret = motion.Motion.StartLinearIntplPos(lin);
+            if (ret != ErrorCode.None) {        string retStr = CoreMotion.ErrorToString(ret);
+                Console.WriteLine($"Error StartLinearIntplPos(0)\nErrorCode [0x{ret:X}]\n{retStr}");
+                return;
+            }
+
+            Thread.Sleep(10);
+
+            // Execute trigger linear interpolation to position (100000, 100000, 0, 0)
+            lin.Profile.Velocity = 20000;
+            lin.Target[0] = 100000;
+            lin.Target[1] = 100000;
+            lin.Target[2] = 0;
+            lin.Target[3] = 0;
+
+            ret = motion.Motion.StartLinearIntplPos(lin, trig);
+            if (ret != ErrorCode.None) {
+                string retStr = CoreMotion.ErrorToString(ret);
+                Console.WriteLine($"Error StartLinearIntplPos(1)\nErrorCode [0x{ret:X}]\n{retStr}");
+                return;
+            }
+
+            // Wait until trigger motion executes
+            motion.Motion.Wait(wait);
+
+            // Execute trigger linear interpolation to position (100000, 100000, 100000, 0)
+            lin.Profile.Velocity = 30000;
+            lin.Target[0] = 100000;
+            lin.Target[1] = 100000;
+            lin.Target[2] = 100000;
+            lin.Target[3] = 0;
+
+            ret = motion.Motion.StartLinearIntplPos(lin, trig);
+            if (ret != ErrorCode.None) {
+                string retStr = CoreMotion.ErrorToString(ret);
+                Console.WriteLine($"Error StartLinearIntplPos(2)\nErrorCode [0x{ret:X}]\n{retStr}");
+                return;
+            }
+
+            // Wait until trigger motion executes
+            motion.Motion.Wait(wait);
+
+            // Execute trigger linear interpolation to position (100000, 100000, 100000, 100000)
+            lin.Profile.Velocity = 40000;
+            lin.Target[0] = 100000;
+            lin.Target[1] = 100000;
+            lin.Target[2] = 100000;
+            lin.Target[3] = 100000;
+            ret = motion.Motion.StartLinearIntplPos(lin, trig);
+            if (ret != ErrorCode.None) {
+                string retStr = CoreMotion.ErrorToString(ret);
+                Console.WriteLine($"Error StartLinearIntplPos(3)\nErrorCode [0x{ret:X}]\n{retStr}");
+                return;
+            }
+        }
+
+
+
+
+
+
         /// <summary>
         /// ServoMotor WMX3 Control API
         /// </summary>
@@ -439,13 +550,13 @@ namespace InjectorInspector
 
             // 僅在初始化時進行一次賦值，避免重複初始化
             if (wmx == null)                      wmx = new WMX3Api();
-            if (motion == null)                motion = new CoreMotion();
+            if (motion == null)                motion = new CoreMotion(wmx);
             if (CmStatus == null)            CmStatus = new CoreMotionStatus();
             if (EnStatus == null)            EnStatus = new EngineStatus();
             if (AxisHomeParam == null)  AxisHomeParam = new Config.HomeParam();
             if (stopWatch == null)          stopWatch = new Stopwatch();
-            if (advmon == null)                advmon = new AdvancedMotion();
-            if (io == null)                        io = new Io();
+            if (advmon == null)                advmon = new AdvancedMotion(wmx);
+            if (io == null)                        io = new Io(wmx);
         }
         //---------------------------------------------------------------------------------------
         public void KillWMX3Handle()
@@ -573,11 +684,12 @@ namespace InjectorInspector
         public int WMX3_check_Commu()
         {
             int rslt = 0;
+            int rst = 0;
 
             if (wmx != null)
             {
                 //讀取當前通訊狀態
-                motion.GetStatus(ref CmStatus);
+                rst = motion.GetStatus(ref CmStatus);
 
                 switch (CmStatus.EngineState)
                 {
@@ -904,9 +1016,12 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public void WMX3_ClearAlarm()
         {
+            int ret = 0;
+
             if (wmx != null)
             {
-                motion.AxisControl.ClearAmpAlarm((int)NUD_Motor_NO.Value);
+                //motion.AxisControl.ClearAmpAlarm((int)NUD_Motor_NO.Value);
+                ret = motion.AxisControl.ClearAmpAlarm(7);
             }
             else
             {

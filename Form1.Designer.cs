@@ -455,6 +455,7 @@ namespace InjectorInspector
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.button1 = new System.Windows.Forms.Button();
             this.cms_pic_Needles.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.grp_NeedleInfo.SuspendLayout();
@@ -4577,6 +4578,7 @@ namespace InjectorInspector
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.lbl_讀取計數);
             this.tabPage2.Controls.Add(this.label21);
             this.tabPage2.Controls.Add(this.lbl_2pCalibraLog);
@@ -5190,6 +5192,16 @@ namespace InjectorInspector
             this.tabControl1.Size = new System.Drawing.Size(1236, 825);
             this.tabControl1.TabIndex = 2;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(567, 608);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(196, 55);
+            this.button1.TabIndex = 246;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -5729,6 +5741,7 @@ namespace InjectorInspector
         public TabControl tabControl1;
         public Label label21;
         public Label lbl_讀取計數;
+        private Button button1;
     }
 }
 

@@ -2776,7 +2776,7 @@ namespace InjectorInspector
                     case WMX3軸定義.吸嘴Y軸:         if(enGC_吸嘴Y軸       == true) { dbapiNozzleY(    result, 100);   } break;
                     case WMX3軸定義.吸嘴Z軸:         if(enGC_吸嘴Z軸       == true) { dbapiNozzleZ(    result,  20);   } break;
                     case WMX3軸定義.吸嘴R軸:         if(enGC_吸嘴R軸       == true) { dbapiNozzleR(    result,  70);   } break;
-                    case WMX3軸定義.載盤X軸:         if(enGC_載盤X軸       == true) { dbapiCarrierX(   result, 190);   } break;
+                    case WMX3軸定義.載盤X軸:         if(enGC_載盤X軸       == true) { dbapiCarrierX(   result,  10);   } break;
                     case WMX3軸定義.載盤Y軸:         if(enGC_載盤Y軸       == true) { dbapiCarrierY(   result, 800);   } break;
                     case WMX3軸定義.植針Z軸:         if(enGC_植針Z軸       == true) { dbapiSetZ(       result, 33);    } break;
                     case WMX3軸定義.植針R軸:         if(enGC_植針R軸       == true) { dbapiSetR(       result, 360);   } break;
@@ -6542,6 +6542,60 @@ namespace InjectorInspector
                 //MessageBox.Show($"讀取 Json 檔時發生錯誤: {ex.Message}");
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            clsServoControlWMX3.TEST();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //---------------------------------------------------------------------------------------
         public void btn_SaveFile_Click(object sender, EventArgs e)
         {
