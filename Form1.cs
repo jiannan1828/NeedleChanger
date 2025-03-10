@@ -2489,7 +2489,19 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public void btn_AlarmRST_Click(object sender, EventArgs e)
         {
-            clsServoControlWMX3.WMX3_ClearAlarm();
+            int i;
+            for(i=0; i<20; i++) { 
+                clsServoControlWMX3.WMX3_ClearAlarm(0);
+                clsServoControlWMX3.WMX3_ClearAlarm(1);
+            }
+
+                clsServoControlWMX3.WMX3_ClearAlarm(2);
+                clsServoControlWMX3.WMX3_ClearAlarm(3);
+                clsServoControlWMX3.WMX3_ClearAlarm(4);
+                clsServoControlWMX3.WMX3_ClearAlarm(5);
+                clsServoControlWMX3.WMX3_ClearAlarm(6);
+                clsServoControlWMX3.WMX3_ClearAlarm(7);
+                clsServoControlWMX3.WMX3_ClearAlarm(8);
         }
         //---------------------------------------------------------------------------------------
         public void btnStop_Click(object sender, EventArgs e)

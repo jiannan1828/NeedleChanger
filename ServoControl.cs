@@ -439,13 +439,13 @@ namespace InjectorInspector
 
             // 僅在初始化時進行一次賦值，避免重複初始化
             if (wmx == null)                      wmx = new WMX3Api();
-            if (motion == null)                motion = new CoreMotion();
+            if (motion == null)                motion = new CoreMotion(wmx);
             if (CmStatus == null)            CmStatus = new CoreMotionStatus();
             if (EnStatus == null)            EnStatus = new EngineStatus();
             if (AxisHomeParam == null)  AxisHomeParam = new Config.HomeParam();
             if (stopWatch == null)          stopWatch = new Stopwatch();
-            if (advmon == null)                advmon = new AdvancedMotion();
-            if (io == null)                        io = new Io();
+            if (advmon == null)                advmon = new AdvancedMotion(wmx);
+            if (io == null)                        io = new Io(wmx);
         }
         //---------------------------------------------------------------------------------------
         public void KillWMX3Handle()
@@ -573,14 +573,13 @@ namespace InjectorInspector
         public int WMX3_check_Commu()
         {
             int rslt = 0;
+            int rst = 0;
 
-            if (wmx != null)
-            {
+            if (wmx != null) {
                 //讀取當前通訊狀態
-                motion.GetStatus(ref CmStatus);
+                rst = motion.GetStatus(ref CmStatus);
 
-                switch (CmStatus.EngineState)
-                {
+                switch (CmStatus.EngineState) {
                     default:
                     case EngineState.Running:
                         rslt = 0;
@@ -590,9 +589,7 @@ namespace InjectorInspector
                         rslt = 1;
                         break;
                 }
-            }
-            else
-            {
+            } else {
                 rslt = 0;
             }
 
@@ -603,19 +600,15 @@ namespace InjectorInspector
         {
             int newStatus = bOn?1:0;
 
-            if (wmx != null)
-            {
+            if (wmx != null) {
                  //啟動伺服
                 int ret = motion.AxisControl.SetServoOn(axis, newStatus);
 
-                if (ret != 0)
-                {
+                if (ret != 0) {
                     string ers = CoreMotion.ErrorToString(ret);
                     MessageBox.Show($"{ers}");
                 }
-            }
-            else
-            {
+            } else {
                 return;
             }
 
@@ -625,16 +618,12 @@ namespace InjectorInspector
         {
             int rslt = 0;
 
-            if (wmx != null)
-            { 
+            if (wmx != null) { 
                 //讀取SV ON狀態
                 CoreMotionAxisStatus cmAxis = CmStatus.AxesStatus[axis];
-                if (cmAxis.ServoOn == true)
-                {
+                if (cmAxis.ServoOn == true) {
                     rslt = 1;
-                }
-                else
-                {
+                } else {
                     rslt = 0;
                 }
 
@@ -645,9 +634,7 @@ namespace InjectorInspector
                 position = Profile.Substring(0, Math.Min(Profile.Length, 12));
                 speed = cmAxis.ActualVelocity.ToString();
                 //AcTqr0.Text = cmAxis.ActualTorque.ToString();
-            } 
-            else
-            {
+            } else {
                 rslt = 0;
             }
 
@@ -719,8 +706,7 @@ namespace InjectorInspector
         {
             int rslt = 0;
 
-            if (wmx != null)
-            {
+            if (wmx != null) {
                 //位置控制設定
                 int ret1 = motion.AxisControl.SetAxisCommandMode(0, AxisCommandMode.Position);
 
@@ -737,14 +723,11 @@ namespace InjectorInspector
                 //啟動POS運轉
                 rslt = motion.Motion.StartPos(pos);
 
-                if (rslt != 0)
-                {
+                if (rslt != 0) {
                     string ers = CoreMotion.ErrorToString(rslt);  //如果無法通訊則報錯誤給使用者
                     //   textBox12.Text += "軸" + textBox3.Text + ":" + ers + "\r\n";
                 }
-            }
-            else
-            { 
+            } else { 
                 rslt = 0;
             }
 
@@ -755,8 +738,7 @@ namespace InjectorInspector
         {
             int rslt = 0;
 
-            if (wmx != null)
-            {
+            if (wmx != null) {
                 switch (axis) {
                     case 0:
                     case 1:
@@ -783,9 +765,7 @@ namespace InjectorInspector
                         rslt = motion.Home.StartHome(axis);
                         break;
                 }
-            }
-            else
-            {
+            } else {
                 rslt = 0;
             }
 
@@ -795,17 +775,14 @@ namespace InjectorInspector
         public int WMX3_GetOutIO(ref byte[] pData, int addr, int size)
         {
 
-            if (wmx != null)
-            {
+            if (wmx != null) {
                 // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
-                if (pData == null || addr == 0 || size == 0 || pData.Length < size)
-                {
+                if (pData == null || addr == 0 || size == 0 || pData.Length < size) {
                     return 0;  // 錯誤長度
                 }
 
                 // 讀取 OutputIO
-                for (int cnt = 0; cnt < size; cnt++)
-                {
+                for (int cnt = 0; cnt < size; cnt++) {
                     byte[] pDataGet = new byte[1];
 
                     // 從指定地址讀取資料並填充到 pData
@@ -814,9 +791,7 @@ namespace InjectorInspector
                 }
 
                 return 1;  // 成功返回 1
-            }
-            else
-            {
+            } else {
                 return 0;
             }
 
@@ -825,17 +800,14 @@ namespace InjectorInspector
         public int WMX3_GetInIO(ref byte[] pData, int addr, int size)
         {
 
-            if (wmx != null)
-            {
+            if (wmx != null) {
                 // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
-                if (pData == null || addr == 0 || size == 0 || pData.Length < size)
-                {
+                if (pData == null || addr == 0 || size == 0 || pData.Length < size) {
                     return 0;  // 錯誤長度
                 }
 
                 // 讀取 InputIO
-                for (int cnt = 0; cnt < size; cnt++)
-                {
+                for (int cnt = 0; cnt < size; cnt++) {
                     byte[] pDataGet = new byte[1];
 
                     // 從指定地址讀取資料並填充到 pData
@@ -844,9 +816,7 @@ namespace InjectorInspector
                 }
 
                 return 1;  // 成功返回 1
-            }
-            else
-            {
+            } else {
                 return 0;
             }
 
@@ -855,17 +825,14 @@ namespace InjectorInspector
         public int WMX3_SetIO(ref byte[] pData, int addr, int size)
         {
 
-            if (wmx != null)
-            {
+            if (wmx != null) {
                 // 如果傳入的 pData 為 null 或大小小於 size，則初始化 pData
-                if (pData == null || size == 0 || pData.Length < size)
-                {
+                if (pData == null || size == 0 || pData.Length < size) {
                     return 0;  // 錯誤長度
                 }
 
                 // 讀取 InputIO
-                for (int cnt = 0; cnt < size; cnt++)
-                {
+                for (int cnt = 0; cnt < size; cnt++) {
                     byte[] pDataGet = new byte[1];
 
                     // 從指定地址寫入資料
@@ -874,9 +841,7 @@ namespace InjectorInspector
                 }
 
                 return 1;  // 成功返回 1
-            }
-            else
-            {
+            } else {
                 return 0;
             }
         }
@@ -884,32 +849,27 @@ namespace InjectorInspector
         public int WMX3_SetIOBit(int addrByte, int addrBit, byte bData)
         {
 
-            if (wmx != null)
-            {
-                if (addrByte == 0)
-                {
+            if (wmx != null) {
+                if (addrByte == 0) {
                     return 0;  // 錯誤位置
                 }
 
                 io.SetOutBit(addrByte, addrBit, bData);
 
                 return 1;  // 成功返回 1
-            }
-            else
-            {
+            } else {
                 return 0;
             }
 
         }
         //---------------------------------------------------------------------------------------
-        public void WMX3_ClearAlarm()
+        public void WMX3_ClearAlarm(int iAxis)
         {
-            if (wmx != null)
-            {
-                motion.AxisControl.ClearAmpAlarm((int)NUD_Motor_NO.Value);
-            }
-            else
-            {
+            int ret = 0;
+
+            if(wmx != null) {
+                ret = motion.AxisControl.ClearAmpAlarm(iAxis);
+            } else {
                 return;
             }
         }
@@ -965,8 +925,7 @@ namespace InjectorInspector
             WMX3_SetIO(ref aIAIAcceleration, (int)(addr_IAI.pxeaI_SetAcceleration2Bytes) / 10, 2);  //運轉加速
             WMX3_SetIO(ref aIAIAcceleration, (int)(addr_IAI.pxeaI_SetDeceleration2Bytes) / 10, 2);  //運轉減速
 
-            switch (aIJob)
-            {
+            switch (aIJob) {
                 case addr_IAI.pxeaI_BrakeOff:
                     WMX3_SetIOBit((int)(addr_IAI.pxeaI_SetDisableBrake) / 10, (int)(addr_IAI.pxeaI_SetDisableBrake) % 10, (dbInData>0)? (byte)1: (byte)0 );
                     break;
