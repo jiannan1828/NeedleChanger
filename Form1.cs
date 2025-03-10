@@ -6591,6 +6591,11 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            clsServoControlWMX3.Trajectory(4);
+        }
+        //---------------------------------------------------------------------------------------
         private void btn_socket相機兩點定位_Click(object sender, EventArgs e)
         {
             Vector3 pos;
