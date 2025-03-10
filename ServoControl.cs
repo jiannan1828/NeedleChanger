@@ -19,6 +19,7 @@ using System.Data;
 using System.Threading;
 using static WMX3ApiCLR.Config;
 using System.Net.NetworkInformation;
+using static WMX3ApiCLR.Motion;
 
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
@@ -1442,6 +1443,117 @@ namespace InjectorInspector
 
             return rslt;
         }  // end of public int WMX3_JoDell植針嘴(addr_JODELL aIJob, double dbInData)
+        //---------------------------------------------------------------------------------------
+        public void Trajectory(int iAxisCNT) {
+                 
+            //Step 0, Initial
+                MotionParam mpara = new MotionParam();
+                    for (int i = 0; i < iAxisCNT; i++) {
+                        motion.Config.GetMotionParam(i, ref mpara);
+                        mpara.LinearIntplOverrideType = LinearIntplOverrideType.Blending;
+                        motion.Config.SetMotionParam(i, mpara);
+                    }
+
+                // Set interpolation command parameters
+                LinearIntplCommand lin = new LinearIntplCommand();
+                    lin.Profile.Type = ProfileType.Trapezoidal;
+                    lin.AxisCount = (uint)iAxisCNT;
+                        lin.Axis[0] = 0;
+                        lin.Axis[1] = 1;
+                        lin.Axis[2] = 2;
+                        lin.Axis[3] = 3;
+
+                // Set trigger parameters (trigger at 2000 remaining distance)
+                Trigger trig = new Trigger();
+                    trig.TriggerAxis  = 0;
+                    trig.TriggerType  = TriggerType.RemainingDistance;
+                    trig.TriggerValue = 10000;
+
+                // Set wait condition parameters
+                WaitCondition wait = new WaitCondition();
+                    wait.WaitConditionType = WaitConditionType.MotionStartedOverrideReady;
+                    wait.AxisCount         = (int)iAxisCNT;
+                        wait.Axis[0]   = 0;
+                        wait.Axis[1]   = 1;
+                        wait.Axis[2]   = 2;
+                        wait.Axis[3]   = 3;
+
+            //Step 1
+                // Execute linear interpolation to position (100000, 0, 0, 0)
+                lin.Profile.Velocity =  10000;
+                lin.Profile.Acc      = lin.Profile.Velocity / 10;
+                lin.Profile.Dec      = lin.Profile.Acc;
+                lin.Target[0] = 100000;
+                lin.Target[1] =  20000;
+                lin.Target[2] =  40000;
+                lin.Target[3] =  60000;
+                    var ret = motion.Motion.StartLinearIntplPos(lin);
+                        if(ret != ErrorCode.None) {
+                            string retStr = CoreMotion.ErrorToString(ret);
+                            Console.WriteLine($"Error StartLinearIntplPos(0)\nErrorCode [0x{ret:X}]\n{retStr}");
+                            return;
+                        }
+
+            //Step 2
+                // Wait until trigger motion executes
+                Thread.Sleep(10);
+                motion.Motion.Wait(wait);
+
+                // Execute trigger linear interpolation to position (100000, 100000, 0, 0)
+                lin.Profile.Velocity =  10000;
+                lin.Profile.Acc      = lin.Profile.Velocity / 10;
+                lin.Profile.Dec      = lin.Profile.Acc;
+                lin.Target[0] = 100000;
+                lin.Target[1] = 100000;
+                lin.Target[2] =  20000;
+                lin.Target[3] =  40000;
+                    ret = motion.Motion.StartLinearIntplPos(lin, trig);
+                        if(ret != ErrorCode.None) {
+                            string retStr = CoreMotion.ErrorToString(ret);
+                            Console.WriteLine($"Error StartLinearIntplPos(1)\nErrorCode [0x{ret:X}]\n{retStr}");
+                            return;
+                        }
+
+            //Step 3
+                // Wait until trigger motion executes
+                Thread.Sleep(10);
+                motion.Motion.Wait(wait);
+
+                // Execute trigger linear interpolation to position (100000, 100000, 100000, 0)
+                lin.Profile.Velocity =  10000;
+                lin.Profile.Acc      = lin.Profile.Velocity / 10;
+                lin.Profile.Dec      = lin.Profile.Acc;
+                lin.Target[0] = 100000;
+                lin.Target[1] = 100000;
+                lin.Target[2] = 100000;
+                lin.Target[3] =  20000;
+                    ret = motion.Motion.StartLinearIntplPos(lin, trig);
+                        if(ret != ErrorCode.None) {
+                            string retStr = CoreMotion.ErrorToString(ret);
+                            Console.WriteLine($"Error StartLinearIntplPos(2)\nErrorCode [0x{ret:X}]\n{retStr}");
+                            return;
+                        }
+
+            //Step 4
+                // Wait until trigger motion executes
+                Thread.Sleep(10);
+                motion.Motion.Wait(wait);
+
+                // Execute trigger linear interpolation to position (100000, 100000, 100000, 100000)
+                lin.Profile.Velocity =  10000;
+                lin.Profile.Acc      = lin.Profile.Velocity / 10;
+                lin.Profile.Dec      = lin.Profile.Acc;
+                lin.Target[0] = 100000;
+                lin.Target[1] = 100000;
+                lin.Target[2] = 100000;
+                lin.Target[3] = 100000;
+                    ret = motion.Motion.StartLinearIntplPos(lin, trig);
+                        if(ret != ErrorCode.None) {
+                            string retStr = CoreMotion.ErrorToString(ret);
+                            Console.WriteLine($"Error StartLinearIntplPos(3)\nErrorCode [0x{ret:X}]\n{retStr}");
+                            return;
+                        }
+        }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
     }  // end of internal class ServoControl
