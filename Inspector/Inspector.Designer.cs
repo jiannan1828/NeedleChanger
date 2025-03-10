@@ -248,6 +248,11 @@
             // num_Pin寬Max
             // 
             this.num_Pin寬Max.DecimalPlaces = 2;
+            this.num_Pin寬Max.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
             this.num_Pin寬Max.Location = new System.Drawing.Point(299, 75);
             this.num_Pin寬Max.Maximum = new decimal(new int[] {
             9999,
@@ -286,7 +291,7 @@
             5,
             0,
             0,
-            65536});
+            131072});
             this.num_Pin寬Min.Location = new System.Drawing.Point(193, 75);
             this.num_Pin寬Min.Maximum = new decimal(new int[] {
             9999,
@@ -321,6 +326,11 @@
             // num_Pin長Max
             // 
             this.num_Pin長Max.DecimalPlaces = 2;
+            this.num_Pin長Max.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            131072});
             this.num_Pin長Max.Location = new System.Drawing.Point(299, 39);
             this.num_Pin長Max.Maximum = new decimal(new int[] {
             9999,
@@ -359,7 +369,7 @@
             5,
             0,
             0,
-            65536});
+            131072});
             this.num_Pin長Min.Location = new System.Drawing.Point(193, 39);
             this.num_Pin長Min.Maximum = new decimal(new int[] {
             9999,

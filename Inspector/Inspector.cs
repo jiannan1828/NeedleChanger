@@ -431,6 +431,7 @@ namespace Inspector
 
         internal void WriteImage(HObject img, string subDirectory, string title)
         {
+            //return;
             try
             {
                 string FolderDirection;
@@ -447,6 +448,22 @@ namespace Inspector
                 HOperatorSet.WriteImage(img, "jpeg 70", 0, FName);
             }
             catch(Exception ex)
+            {
+            }
+        }
+
+        internal void WriteImageNorm(HObject img, string subDirectory, string title)
+        {
+            return;
+            try
+            {
+                string FName = string.Format("D:\\Images\\{0:yyyyMMdd}\\{1}\\{0:HHmmssff}-{2}.JPG", DateTime.Now, subDirectory, title);
+                string FDir = Path.GetDirectoryName(FName);
+                if (!Directory.Exists(FDir))
+                    Directory.CreateDirectory(FDir);
+                HOperatorSet.WriteImage(img, "jpeg 70", 0, FName);
+            }
+            catch (Exception ex)
             {
             }
         }
