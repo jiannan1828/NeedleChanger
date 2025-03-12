@@ -62,6 +62,10 @@ using static System.Runtime.CompilerServices.RuntimeHelpers;
 using System.Runtime.InteropServices;
 
 //---------------------------------------------------------------------------------------
+//3D 掃描器
+using ReceiveSurface;
+
+//---------------------------------------------------------------------------------------
 namespace InjectorInspector
 {
     //---------------------------------------------------------------------------------------
@@ -2400,6 +2404,20 @@ namespace InjectorInspector
                 rsult = apiParaReadIndex("SaveParameterJason.json", 27);
             } else if (GetPara == "SetNozzleCircularity") {  //堵嘴 植針孔閥值
                 rsult = apiParaReadIndex("SaveParameterJason.json", 37);
+            } else if (GetPara == "ObjectWidthToleranceCondition") {      //視覺:物件寬度誤差限制
+                rsult = apiParaReadIndex("SaveParameterJason.json", 47);
+            } else if (GetPara == "ObjectLengthToleranceCondition") {     //視覺:物件長度誤差限制
+                rsult = apiParaReadIndex("SaveParameterJason.json", 48);
+            } else if (GetPara == "ObjectLength2DetectionCondition") {    //視覺:物件長度偵測Len2
+                rsult = apiParaReadIndex("SaveParameterJason.json", 49);
+            } else if (GetPara == "ObjectLengthAmpDetectionCondition") {  //視覺:物件長度偵測Amp
+                rsult = apiParaReadIndex("SaveParameterJason.json", 50);
+            } else if (GetPara == "SocketAreaMin") {  //視覺:Socket面積限制小
+                rsult = apiParaReadIndex("SaveParameterJason.json", 51);
+            } else if (GetPara == "SocketAreaMax") {  //視覺:Socket面積限制大
+                rsult = apiParaReadIndex("SaveParameterJason.json", 52);
+            } else if (GetPara == "SocketDist") {  //視覺:Socket距離限制
+                rsult = apiParaReadIndex("SaveParameterJason.json", 53);
             }
 
             return rsult;

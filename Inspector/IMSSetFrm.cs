@@ -32,7 +32,7 @@ namespace Camera
             }
         }
 
-        public void MVSAreaGESetFrm_Load(object sender, EventArgs e)
+        private void MVSAreaGESetFrm_Load(object sender, EventArgs e)
         {
             KeyList.Items.AddRange(ImageSource.AllDevice.Select(x => x.ModelName + ":" + x.Serial).ToArray());
             KeyList.Text = ccd.Param.Key;
@@ -40,6 +40,8 @@ namespace Camera
             lb_Gamma.Text = ccd.Param.Gamma.ToString("F1");
             ExposureBar.Value = (int)ccd.Param.Exposure;
             lb_Exposure.Text = ccd.Param.Exposure.ToString("F0");
+            BlackBar.Value = (int)ccd.Param.Black;
+            lb_Black.Text = ccd.Param.Black.ToString("F0");
             ed_Speed.Text = ccd.Param.SpeedRate.ToString("F1");
             cb_Rotate.Text = ccd.Param.ImageRotate.ToString("F0");
             ck_MirrorX.Checked = ccd.Param.MirrorX;
@@ -54,7 +56,7 @@ namespace Camera
             ed_Dyy.Text = ccd.Param.vDy_Y.ToString("F7");
         }
 
-        public void btn_SaveConfig_Click(object sender, EventArgs e)
+        private void btn_SaveConfig_Click(object sender, EventArgs e)
         {
             Task.Factory.StartNew(() =>
             {
@@ -63,32 +65,29 @@ namespace Camera
             });
         }
 
-        public void btn_SaveParam_Click(object sender, EventArgs e)
+        private void btn_SaveParam_Click(object sender, EventArgs e)
         {
-            Task.Factory.StartNew(() =>
-            {
-                Thread.Sleep(100);
-                try
-                {
-                    this.BeginInvoke(new Action<string>(ccd.SaveParam), "");
-                }
-                catch { }
-            });
+            ccd.SaveParam();
+            //Task.Factory.StartNew(() =>
+            //{
+            //    Thread.Sleep(100);
+            //    this.BeginInvoke(new Action<string>(ccd.SaveParam), "");
+            //});
         }
 
-        public void btn_Close_Click(object sender, EventArgs e)
+        private void btn_Close_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        public void btn_Search_Click(object sender, EventArgs e)
+        private void btn_Search_Click(object sender, EventArgs e)
         {
             ccd.ListDevice(true);
             KeyList.Items.Clear();
             KeyList.Items.AddRange(ImageSource.AllDevice.Select(x => x.ModelName + ":" + x.Serial).ToArray());
         }
 
-        public void btn_Set_Click(object sender, EventArgs e)
+        private void btn_Set_Click(object sender, EventArgs e)
         {
             if (KeyList.Text != "")
             {
@@ -99,21 +98,28 @@ namespace Camera
             }
         }
 
-        public void GammaBar_Scroll(object sender, ScrollEventArgs e)
+        private void GammaBar_Scroll(object sender, ScrollEventArgs e)
         {
             ccd.Param.Gamma = GammaBar.Value / 10.0;
             ccd.Gamma = ccd.Param.Gamma;
             lb_Gamma.Text = ccd.Param.Gamma.ToString("F1");
         }
 
-        public void ExposureBar_Scroll(object sender, ScrollEventArgs e)
+        private void ExposureBar_Scroll(object sender, ScrollEventArgs e)
         {
             ccd.Param.Exposure = ExposureBar.Value;
             ccd.Exposure = ccd.Param.Exposure;
             lb_Exposure.Text = ccd.Param.Exposure.ToString("F0");
         }
 
-        public void ed_KeyPress(object sender, KeyPressEventArgs e)
+        private void BlackBar_Scroll(object sender, ScrollEventArgs e)
+        {
+            ccd.Param.Black = BlackBar.Value;
+            ccd.BlackLevel = ccd.Param.Black;
+            lb_Black.Text = ccd.Param.Black.ToString("F0");
+        }
+
+        private void ed_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar != '\r') return;
             double v = 0;
@@ -150,7 +156,7 @@ namespace Camera
             }
         }
 
-        public void ck_MirrorX_Click(object sender, EventArgs e)
+        private void ck_MirrorX_Click(object sender, EventArgs e)
         {
             Task.Factory.StartNew(() =>
             {
@@ -161,7 +167,7 @@ namespace Camera
             });
         }
 
-        public void ck_MirrorY_Click(object sender, EventArgs e)
+        private void ck_MirrorY_Click(object sender, EventArgs e)
         {
             Task.Factory.StartNew(() =>
             {
@@ -172,7 +178,7 @@ namespace Camera
             });
         }
 
-        public void ck_Binning_Click(object sender, EventArgs e)
+        private void ck_Binning_Click(object sender, EventArgs e)
         {
             Task.Factory.StartNew(() =>
             {
@@ -183,12 +189,12 @@ namespace Camera
             });
         }
 
-        public void cb_Rotate_DropDown(object sender, EventArgs e)
+        private void cb_Rotate_DropDown(object sender, EventArgs e)
         {
             PreRotate = cb_Rotate.Text;
         }
 
-        public void cb_Rotate_DropDownClosed(object sender, EventArgs e)
+        private void cb_Rotate_DropDownClosed(object sender, EventArgs e)
         {
             object dt = cb_Rotate.SelectedItem;
             if ((dt != null) && (PreRotate != dt.ToString()))
@@ -198,6 +204,7 @@ namespace Camera
                     ccd.Param.ImageRotate = v;
             }
         }
+
     }
 
     #region ImageSource CCD Control For ICdotnet4
@@ -231,7 +238,7 @@ namespace Camera
         }
         #endregion
 
-        Grabber grabber;
+        internal Grabber grabber;
         QueueSink sink;
         List<ImageBuffer> Buf;
         PixelFormat pixelFormat;
@@ -474,6 +481,7 @@ namespace Camera
             Exposure = Param.Exposure;
             GammaEnable = true;
             Gamma = Param.Gamma;
+            BlackLevel = Param.Black;
             MirrorX = Param.MirrorX;
             MirrorY = Param.MirrorY;
             Binning = Param.Binning;
@@ -651,6 +659,28 @@ namespace Camera
                 }
             }
         }
+
+        public double BlackLevel
+        {
+            get
+            {
+                if (!isConnected)
+                    return Param.Black;
+                return (float)grabber.DevicePropertyMap.GetValueDouble("BlackLevel");
+            }
+            set
+            {
+                if (isConnected)
+                {
+                    var dProp = (PropFloat)grabber.DevicePropertyMap.All.FirstOrDefault(x => x.Name == "BlackLevel");
+                    if (dProp != null)
+                    {
+                        double V = Math.Min(Math.Max(value, dProp.Minimum), dProp.Maximum);
+                        grabber.DevicePropertyMap.SetValue(PropId.BlackLevel, V);
+                    }
+                }
+            }
+        }
         /// <summary>臨時變更GammaEnable</summary>
         public bool GammaEnable
         {
@@ -813,6 +843,7 @@ namespace Camera
             public double Gamma = 1;
             public double Exposure = 5000;
             public double SpeedRate = 0;
+            public double Black = 0;
             public bool MirrorX = false;
             public bool MirrorY = false;
             public bool Binning = false;

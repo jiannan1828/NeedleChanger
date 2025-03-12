@@ -223,5 +223,50 @@
     "u32Index": 44,
     "dbPosition": 269,
     "strNote": "\u690D\u91DDR\u8EF8-\u653E\u6599\u4F4D"
+  },
+  {
+    "u32Index": 45,
+    "dbPosition": 410,
+    "strNote": "\u8F09\u76E4Y for 3D scanner"
+  },
+  {
+    "u32Index": 46,
+    "dbPosition": 15,
+    "strNote": "\u76F8\u6A5FZ for 3D scanner"
+  },
+  {
+    "u32Index": 47,
+    "dbPosition": 0.01,
+    "strNote": "\u8996\u89BA:\u7269\u4EF6\u5BEC\u5EA6\u8AA4\u5DEE\u9650\u5236"
+  },
+  {
+    "u32Index": 48,
+    "dbPosition": 0.029999999999999999,
+    "strNote": "\u8996\u89BA:\u7269\u4EF6\u9577\u5EA6\u8AA4\u5DEE\u9650\u5236"
+  },
+  {
+    "u32Index": 49,
+    "dbPosition": 22,
+    "strNote": "\u8996\u89BA:\u7269\u4EF6\u9577\u5EA6\u5075\u6E2CLen2"
+  },
+  {
+    "u32Index": 50,
+    "dbPosition": 34,
+    "strNote": "\u8996\u89BA:\u7269\u4EF6\u9577\u5EA6\u5075\u6E2CAmp"
+  },
+  {
+    "u32Index": 51,
+    "dbPosition": 5000,
+    "strNote": "Socket\u9762\u7A4D\u9650\u5236\u5C0F"
+  },
+  {
+    "u32Index": 52,
+    "dbPosition": 5200,
+    "strNote": "Socket\u9762\u7A4D\u9650\u5236\u5927"
+  },
+  {
+    "u32Index": 53,
+    "dbPosition": 0.20000000000000001,
+    "strNote": "Socket\u8DDD\u96E2\u9650\u5236"
   }
 ]

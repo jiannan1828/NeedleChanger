@@ -24,17 +24,17 @@ using System.Collections;
 using System.Drawing.Imaging;
 
 
-static class Constants
-{
-    public const string SENSOR_IP = "192.168.1.10"; // IP of the sensor used for sensor connection GoSystem_FindSensorByIpAddress() call.
-
-    public const uint WEB_PORT = 8081;  // Using non-default web port number
-    public const uint RECEIVE_DATA_TIMEOUT_USEC = 30000000; // 30 sec
-
-}
-
 namespace ReceiveSurface
 {
+    static class Constants
+    {
+        public const string SENSOR_IP = "192.168.1.10"; // IP of the sensor used for sensor connection GoSystem_FindSensorByIpAddress() call.
+
+        public const uint WEB_PORT = 8081;  // Using non-default web port number
+        public const uint RECEIVE_DATA_TIMEOUT_USEC = 30000000; // 30 sec
+
+    }
+
     public class DataContext
     {
         public double xResolution;
@@ -62,7 +62,7 @@ namespace ReceiveSurface
     }
     class ReceiveSurface
     {
-        static int Main(string[] args)
+        static int MainTest(string[] args)
         {
             try
             {

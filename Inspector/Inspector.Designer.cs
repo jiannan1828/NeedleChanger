@@ -66,12 +66,18 @@
             this.ed_針尾長 = new System.Windows.Forms.TextBox();
             this.ed_針尾寬 = new System.Windows.Forms.TextBox();
             this.ck_Socket孔 = new System.Windows.Forms.CheckBox();
+            this.num_Len2 = new System.Windows.Forms.NumericUpDown();
+            this.label14 = new System.Windows.Forms.Label();
+            this.num_Amp = new System.Windows.Forms.NumericUpDown();
+            this.label15 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_Throshold)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin寬Max)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin寬Min)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin長Max)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin長Min)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_Len2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_Amp)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -210,7 +216,7 @@
             // ck_Measure
             // 
             this.ck_Measure.AutoSize = true;
-            this.ck_Measure.Location = new System.Drawing.Point(415, 67);
+            this.ck_Measure.Location = new System.Drawing.Point(335, 62);
             this.ck_Measure.Name = "ck_Measure";
             this.ck_Measure.Size = new System.Drawing.Size(90, 23);
             this.ck_Measure.TabIndex = 42;
@@ -219,7 +225,7 @@
             // 
             // num_Throshold
             // 
-            this.num_Throshold.Location = new System.Drawing.Point(546, 3);
+            this.num_Throshold.Location = new System.Drawing.Point(614, 3);
             this.num_Throshold.Maximum = new decimal(new int[] {
             255,
             0,
@@ -239,7 +245,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(469, 11);
+            this.label10.Location = new System.Drawing.Point(537, 11);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(66, 19);
             this.label10.TabIndex = 40;
@@ -253,7 +259,7 @@
             0,
             0,
             131072});
-            this.num_Pin寬Max.Location = new System.Drawing.Point(299, 75);
+            this.num_Pin寬Max.Location = new System.Drawing.Point(232, 73);
             this.num_Pin寬Max.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -278,7 +284,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(274, 81);
+            this.label7.Location = new System.Drawing.Point(207, 79);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(19, 19);
             this.label7.TabIndex = 33;
@@ -292,7 +298,7 @@
             0,
             0,
             131072});
-            this.num_Pin寬Min.Location = new System.Drawing.Point(193, 75);
+            this.num_Pin寬Min.Location = new System.Drawing.Point(126, 73);
             this.num_Pin寬Min.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -317,7 +323,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(116, 83);
+            this.label8.Location = new System.Drawing.Point(49, 81);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(71, 19);
             this.label8.TabIndex = 31;
@@ -331,7 +337,7 @@
             0,
             0,
             131072});
-            this.num_Pin長Max.Location = new System.Drawing.Point(299, 39);
+            this.num_Pin長Max.Location = new System.Drawing.Point(232, 37);
             this.num_Pin長Max.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -356,7 +362,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(274, 45);
+            this.label6.Location = new System.Drawing.Point(207, 43);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(19, 19);
             this.label6.TabIndex = 29;
@@ -370,7 +376,7 @@
             0,
             0,
             131072});
-            this.num_Pin長Min.Location = new System.Drawing.Point(193, 39);
+            this.num_Pin長Min.Location = new System.Drawing.Point(126, 37);
             this.num_Pin長Min.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -395,7 +401,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(116, 47);
+            this.label5.Location = new System.Drawing.Point(49, 45);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 19);
             this.label5.TabIndex = 27;
@@ -404,7 +410,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(82, 8);
+            this.label4.Location = new System.Drawing.Point(15, 6);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(105, 19);
             this.label4.TabIndex = 26;
@@ -412,7 +418,7 @@
             // 
             // ed_RecipeNo
             // 
-            this.ed_RecipeNo.Location = new System.Drawing.Point(193, 3);
+            this.ed_RecipeNo.Location = new System.Drawing.Point(126, 1);
             this.ed_RecipeNo.Name = "ed_RecipeNo";
             this.ed_RecipeNo.Size = new System.Drawing.Size(48, 30);
             this.ed_RecipeNo.TabIndex = 25;
@@ -421,7 +427,7 @@
             // ck_RealTray
             // 
             this.ck_RealTray.AutoSize = true;
-            this.ck_RealTray.Location = new System.Drawing.Point(95, 48);
+            this.ck_RealTray.Location = new System.Drawing.Point(28, 46);
             this.ck_RealTray.Name = "ck_RealTray";
             this.ck_RealTray.Size = new System.Drawing.Size(15, 14);
             this.ck_RealTray.TabIndex = 44;
@@ -449,12 +455,13 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(511, 46);
+            this.button1.Location = new System.Drawing.Point(335, 85);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(102, 57);
+            this.button1.Size = new System.Drawing.Size(160, 18);
             this.button1.TabIndex = 48;
             this.button1.Text = "下視覺建立特徵";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // btn_二孔校正
@@ -548,17 +555,77 @@
             // ck_Socket孔
             // 
             this.ck_Socket孔.AutoSize = true;
-            this.ck_Socket孔.Location = new System.Drawing.Point(629, 86);
+            this.ck_Socket孔.Location = new System.Drawing.Point(335, 33);
             this.ck_Socket孔.Name = "ck_Socket孔";
             this.ck_Socket孔.Size = new System.Drawing.Size(96, 23);
             this.ck_Socket孔.TabIndex = 59;
             this.ck_Socket孔.Text = "Socket孔";
             this.ck_Socket孔.UseVisualStyleBackColor = true;
             // 
+            // num_Len2
+            // 
+            this.num_Len2.Location = new System.Drawing.Point(614, 35);
+            this.num_Len2.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.num_Len2.Name = "num_Len2";
+            this.num_Len2.Size = new System.Drawing.Size(75, 30);
+            this.num_Len2.TabIndex = 61;
+            this.num_Len2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.num_Len2.Value = new decimal(new int[] {
+            17,
+            0,
+            0,
+            0});
+            this.num_Len2.ValueChanged += new System.EventHandler(this.num_Pin長Min_ValueChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(537, 43);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(65, 19);
+            this.label14.TabIndex = 60;
+            this.label14.Text = "Len2：";
+            // 
+            // num_Amp
+            // 
+            this.num_Amp.Location = new System.Drawing.Point(614, 68);
+            this.num_Amp.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.num_Amp.Name = "num_Amp";
+            this.num_Amp.Size = new System.Drawing.Size(75, 30);
+            this.num_Amp.TabIndex = 63;
+            this.num_Amp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.num_Amp.Value = new decimal(new int[] {
+            34,
+            0,
+            0,
+            0});
+            this.num_Amp.ValueChanged += new System.EventHandler(this.num_Pin長Min_ValueChanged);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(537, 76);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(64, 19);
+            this.label15.TabIndex = 62;
+            this.label15.Text = "Amp：";
+            // 
             // Inspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.num_Amp);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.num_Len2);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.ck_Socket孔);
             this.Controls.Add(this.ed_針尾寬);
             this.Controls.Add(this.ed_針尾長);
@@ -597,6 +664,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin寬Min)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin長Max)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Pin長Min)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_Len2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_Amp)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -642,5 +711,9 @@
         private System.Windows.Forms.TextBox ed_針尾長;
         private System.Windows.Forms.TextBox ed_針尾寬;
         public System.Windows.Forms.CheckBox ck_Socket孔;
+        public System.Windows.Forms.NumericUpDown num_Len2;
+        public System.Windows.Forms.Label label14;
+        public System.Windows.Forms.NumericUpDown num_Amp;
+        public System.Windows.Forms.Label label15;
     }
 }

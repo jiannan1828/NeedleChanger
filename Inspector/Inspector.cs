@@ -193,6 +193,8 @@ namespace Inspector
                 num_Pin長Min.Value = (decimal)parameter.Pin長度Min;
                 num_Pin長Max.Value = (decimal)parameter.Pin長度Max;
                 num_Throshold.Value = (int)parameter.TrayThreshold;
+                num_Len2.Value = (decimal)parameter.吸嘴偵測寬;
+                num_Amp.Value = (decimal)parameter.吸嘴偵測Amp;
                 ed_針頭長.Text = parameter.針頭長度.ToString("F2");
                 ed_針頭寬.Text = parameter.針頭寬度.ToString("F2");
                 ed_針尾長.Text = parameter.針尾長度.ToString("F2");
@@ -224,6 +226,30 @@ namespace Inspector
             if (Math.Abs(V) > 0.01) { 
                 parameter.針尾寬度 = V;
             }
+
+            V = getParam("ObjectWidthToleranceCondition");  // 物件寬度誤差限制
+            if (Math.Abs(V) > 0.001)
+            {
+                parameter.吸嘴寬度誤差限制 = V;
+            }
+
+            V = getParam("ObjectLengthToleranceCondition");  //物件長度誤差限制
+            if (Math.Abs(V) > 0.001)
+            {
+                parameter.吸嘴長度誤差限制 = V;
+            }
+
+            V = getParam("ObjectLength2DetectionCondition");  //物件長度偵測Len2
+            if (Math.Abs(V) > 0.01)
+            {
+                parameter.吸嘴偵測寬 = V;
+            }
+
+            V = getParam("ObjectLengthAmpDetectionCondition");  //物件長度偵測Amp
+            if (Math.Abs(V) > 0.01)
+            {
+                parameter.吸嘴偵測Amp = V;
+            }
         }
 
         internal void Read夾爪參數()
@@ -234,6 +260,7 @@ namespace Inspector
                 parameter.夾爪真圓度 = V;
             }
         }
+
         internal void ReadTray參數()
         {
             double V = getParam("NeedleLengthMax");  //針長Max
@@ -259,6 +286,27 @@ namespace Inspector
             V = getParam("NeedleThreshold");  //閥值
             if (Math.Abs(V) > 0.01) { 
                 parameter.TrayThreshold = (int)V;
+            }
+        }
+
+        internal void ReadSocket參數()
+        {
+            double V = getParam("SocketAreaMin");  //Socket面積限制小
+            if (Math.Abs(V) > 0.01)
+            {
+                parameter.SocketAreaMin = V;
+            }
+
+            V = getParam("SocketAreaMax");  //Socket面積限制大
+            if (Math.Abs(V) > 0.01)
+            {
+                parameter.SocketAreaMax = V;
+            }
+
+            V = getParam("SocketDist");  //Socket距離限制
+            if (Math.Abs(V) > 0.01)
+            {
+                parameter.SocketDist = V;
             }
         }
 
@@ -431,17 +479,20 @@ namespace Inspector
 
         internal void WriteImage(HObject img, string subDirectory, string title)
         {
-            //return;
             try
             {
                 string FolderDirection;
-                if(PinDeg >= 0) {
-                    FolderDirection = "正向";
-                } else {
-                    FolderDirection = "反向";
-                }
+                //if(PinDeg >= 0) {
+                //    FolderDirection = "正向";
+                //} else {
+                //    FolderDirection = "反向";
+                //}
+                if (下視覺正向)
+                    FolderDirection = "吸嘴正掃";
+                else
+                    FolderDirection = "吸嘴反掃";
 
-                string FName = string.Format("D:\\Images\\{0:yyyyMMdd}\\{1}\\{4}\\{0:HHmmssff}-{2},{3}.JPG", DateTime.Now, subDirectory, title, PinDeg, FolderDirection);
+                string FName = string.Format("D:\\Images\\{0:yyyyMMdd}\\{4}\\{1}\\{0:HHmmssff}-{2},{3}.JPG", DateTime.Now, subDirectory, title, PinDeg, FolderDirection);
                 string FDir = Path.GetDirectoryName(FName);
                 if (!Directory.Exists(FDir))
                     Directory.CreateDirectory(FDir);
@@ -454,7 +505,6 @@ namespace Inspector
 
         internal void WriteImageNorm(HObject img, string subDirectory, string title)
         {
-            return;
             try
             {
                 string FName = string.Format("D:\\Images\\{0:yyyyMMdd}\\{1}\\{0:HHmmssff}-{2}.JPG", DateTime.Now, subDirectory, title);
@@ -480,6 +530,10 @@ namespace Inspector
                 parameter.Pin長度Max = (double)num_Pin長Max.Value;
             if (sender == num_Throshold)
                 parameter.TrayThreshold = (int)num_Throshold.Value;
+            if (sender == num_Len2)
+                parameter.吸嘴偵測寬 = (double)num_Len2.Value;
+            if (sender == num_Amp)
+                parameter.吸嘴偵測Amp = (double)num_Amp.Value;
         }
     }
 
@@ -562,12 +616,16 @@ namespace Inspector
         public void doResult()
         {
             hWin.SuspendLayout();
-            hWin.HalconWindow.ClearWindow();
-            float dBottom = Math.Max(view.Top + 1, view.Bottom - 1);
-            float dRight = Math.Max(view.Right + 1, view.Right - 1);
-            hWin.HalconWindow.SetPart(view.Top, view.Left, dBottom, dRight);
-            if (ContainImage)
-                ShowResult?.Invoke(hWin, Image);
+            try
+            {
+                hWin.HalconWindow.ClearWindow();
+                float dBottom = Math.Max(view.Top + 1, view.Bottom - 1);
+                float dRight = Math.Max(view.Right + 1, view.Right - 1);
+                hWin.HalconWindow.SetPart(view.Top, view.Left, dBottom, dRight);
+                if (ContainImage)
+                    ShowResult?.Invoke(hWin, Image);
+            }
+            catch { }
             hWin.ResumeLayout();
             inShow = false;
         }
@@ -610,6 +668,8 @@ namespace Inspector
         {
             HTuple ImW, ImH;
             HOperatorSet.GetImageSize(Image, out ImW, out ImH);
+            if (ImW.Length == 0)
+                return;
             ImgWidth = ImW;
             ImgHeight = ImH;
             double dW = hWin.Width / 1.0 / ImgWidth;
@@ -689,6 +749,13 @@ namespace Inspector
         public double 針尾長度 = 0.5;
         public double 針尾寬度 = 0.09;
         public double 夾爪真圓度 = 0.4;
+        public double 吸嘴寬度誤差限制 = 0.05;
+        public double 吸嘴長度誤差限制 = 0.05;
+        public double 吸嘴偵測寬 = 22;
+        public double 吸嘴偵測Amp = 33;
+        public double SocketAreaMin = 80;
+        public double SocketAreaMax = 9999;
+        public double SocketDist = 0.2;
     }
     #endregion
 
@@ -729,7 +796,7 @@ namespace Inspector
             helper.hWin.ContextMenuStrip = menu;
             menu.Items.Add("LoadImage", null, (sender, e) => { helper.LoadImage(); });
             menu.Items.Add("分析入料盤", null, (sender, e) => { Insp(); });
-            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "料倉", "料倉"); });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImageNorm(helper.Image, "料倉", "料倉"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
             menu.Opening += onMenu1Opening;
@@ -750,8 +817,8 @@ namespace Inspector
             HOperatorSet.Connection(thRegion, out connRegion);
             HOperatorSet.FillUp(connRegion, out fillRegion);
             HOperatorSet.Union1(fillRegion, out unionRegion);
-            HOperatorSet.OpeningRectangle1(unionRegion, out openRegion, 1500, 600);
-            HOperatorSet.ErosionRectangle1(openRegion, out erRegion, 500, 1050);
+            HOperatorSet.OpeningRectangle1(unionRegion, out openRegion, 100, 100);
+            HOperatorSet.ErosionRectangle1(openRegion, out erRegion, 100, 100);
             owner.DisposeObj(thRegion, connRegion, fillRegion, unionRegion, openRegion);
             return erRegion;
         }
@@ -761,11 +828,11 @@ namespace Inspector
             HObject lightRegion, pinArea, conn, LimW, LimH, uniArea;
             HOperatorSet.Threshold(image, out lightRegion, 30, 255);
             HOperatorSet.Intersection(lightRegion, checkarea, out pinArea);
-            double w = owner.parameter.Pin寬度Min / CCD.Param.ScaleX / 2.0;
-            double h = owner.parameter.Pin長度Min / CCD.Param.ScaleX / 2.0;
+            double w = owner.parameter.Pin寬度Min / CCD.Param.ScaleX / 2.0 * 0.5;
+            double h = owner.parameter.Pin長度Min / CCD.Param.ScaleX / 2.0 * 0.3;
             HOperatorSet.Connection(pinArea, out conn);
             HOperatorSet.SelectShape(conn, out LimW, "rect2_len2", "and", w, 9999999);
-            HOperatorSet.SelectShape(LimW, out LimH, "rect2_len1", "and", h, 1000);
+            HOperatorSet.SelectShape(LimW, out LimH, "rect2_len1", "and", h, 3000);
             HOperatorSet.Union1(LimH, out uniArea);
             owner.DisposeObj(lightRegion, pinArea, conn, LimW, LimH);
             return uniArea;
@@ -779,6 +846,7 @@ namespace Inspector
             double h = (owner.parameter.Pin長度Max + owner.parameter.Pin長度Min) * 0.4;
             double One = w * h / CCD.Param.ScaleX / CCD.Param.ScaleX;
             double V = (area.Length > 0) ? area.D / One : 0;
+            owner.WriteLog(string.Format("料倉針數 = {0:F0}", V));
             var result = V > owner.缺料警告數量;
             return result;
         }
@@ -793,7 +861,7 @@ namespace Inspector
                 HObject temp;
                 HTuple threshold, W, H, row, col, area;
                 HOperatorSet.CopyImage(helper.Image, out temp);
-                owner.WriteImage(temp, "料倉", "料倉");
+                owner.WriteImageNorm(temp, "料倉", "料倉");
                 HOperatorSet.GetImageSize(temp, out W, out H);
                 CheckRegion = BlockArea(temp);
                 binregion = GetAllPin(temp, CheckRegion);
@@ -814,17 +882,17 @@ namespace Inspector
             if (success)
             {
                 HOperatorSet.PaintRegion(binregion, mix1, out mix2, new HTuple(0, 255, 0), "fill"); //green
-                owner.WriteImage(mix2, "料倉", "料倉Find");
+                owner.WriteImageNorm(mix2, "料倉", "料倉Find");
             }
             else
             {
                 if ((binregion != null) && (binregion.CountObj() == 1))
                 {
                     HOperatorSet.PaintRegion(binregion, mix1, out mix2, new HTuple(255, 0, 0), "fill"); //red
-                    owner.WriteImage(mix2, "料倉", "料倉Find");
+                    owner.WriteImageNorm(mix2, "料倉", "料倉Find");
                 }
                 else
-                    owner.WriteImage(mix1, "料倉", "料倉Find");
+                    owner.WriteImageNorm(mix1, "料倉", "料倉Find");
             }
 
             owner.DisposeObj(mix1, mix2);
@@ -944,7 +1012,7 @@ namespace Inspector
                 //HOperatorSet.AngleLx(校正點一.Y, 校正點一.X, 校正點二.Y, 校正點二.X, out CarbDeg);
                 CarbDeg = nDeg;
             });
-            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "料盤", "料盤"); });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImageNorm(helper.Image, "料盤", "料盤"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
             menu.Items.Add("Save Recipe Default", null, (sender, e) => { owner.SaveRecipe(0); });
@@ -1126,7 +1194,7 @@ namespace Inspector
             return deg.TupleRad();
         }
 
-        void MeasurePin(HObject image, HObject pin, HTuple W, HTuple H, out HTuple row, out HTuple col, out HTuple phi)
+        void MeasurePin(HObject image, HObject pin, HTuple W, HTuple H, out HTuple row, out HTuple col, out HTuple phi, ref string Msg)
         {
             HObject outPin, SelPin;
             HTuple L1, L2, amp, dist;
@@ -1148,6 +1216,7 @@ namespace Inspector
                         r.Append(rTemp);
                         c.Append(cTemp);
                     }
+                    //Msg = Msg + string.Format("\r\n\t\t 長 = {0:F2} 寬 = {1:F2}", L1[i].D * CCD.Param.ScaleX, L2[i].D * CCD.Param.ScaleX);
                     phi[i] = CheckDirection(rTemp, cTemp, phi[i], dist, ref rDir, ref cDir);
                     HOperatorSet.CloseMeasure(measure);
                 }
@@ -1163,11 +1232,12 @@ namespace Inspector
             target = new List<Vector3>();
             if (helper.ContainImage)
             {
+                string Msg = "分析料盤";
                 owner.ReadTray參數();
                 HObject temp, SelectedRegions, SelectPins;
-                HTuple threshold, W, H, phi, L1, L2, deg;
+                HTuple threshold, W, H, phi, L1, L2, deg, r, c;
                 HOperatorSet.CopyImage(helper.Image, out temp);
-                owner.WriteImage(temp, "料盤", "料盤");
+                owner.WriteImageNorm(temp, "料盤", "料盤");
                 HOperatorSet.GetImageSize(temp, out W, out H);
 
                 WhiteArea = GetWhiteArea(temp);
@@ -1180,11 +1250,14 @@ namespace Inspector
                 PinArea = RemoveNear(NormalPin, AllPin, WhiteArea);
                 SaveResult(temp, WhiteArea, PinArea, RegionTray);
                 owner.DisposeObj(AllPin, NormalPin);
+                HOperatorSet.SmallestRectangle2(PinArea, out r, out c, out phi, out L1, out L2);
+                for (int i = 0; i < L1.Length; i++)
+                    Msg = Msg + string.Format("\r\n\t\t 長 = {0:F2} 寬 = {1:F2}", L1[i].D * CCD.Param.ScaleX * 2, L2[i].D * CCD.Param.ScaleX * 2);
 
                 //SelectedRegions = GetPinNoOverlap(temp, out PinArea);
                 //SelectPins = owner.RemoveBorder(SelectedRegions, W, H);
                 //RegionTray = RemoveNear(temp, SelectPins, PinArea);
-                MeasurePin(temp, RegionTray, W, H, out rowTray, out colTray, out phi);
+                MeasurePin(temp, RegionTray, W, H, out rowTray, out colTray, out phi, ref Msg);
                 if (phi.Length > 0)
                 {
                     deg = phi.TupleDeg();
@@ -1194,6 +1267,7 @@ namespace Inspector
                         target.Add(new Vector3() { X = P.X, Y = P.Y, θ = -deg[i].D });
                     }
                     //owner.WriteImage(temp, "料盤", "料盤");
+                    owner.WriteLog(Msg);
                 }
                 owner.DisposeObj(temp, AllPin, NormalPin);
             }
@@ -1210,16 +1284,10 @@ namespace Inspector
             if (blocked != null)
             {
                 HOperatorSet.PaintRegion(blocked, mix2, out mix3, new HTuple(255, 165, 0), "margin");
-                owner.WriteImage(mix3, "料盤", "料盤Find");
+                owner.WriteImageNorm(mix3, "料盤", "料盤Find");
             }
             else
-                owner.WriteImage(mix2, "料盤", "料盤Find");
-            //orange
-            //HOperatorSet.PaintRegion(CheckRegion, imgColor, out mix1, new HTuple(255, 165, 0), "margin");   //orange
-            //if (success)
-            //    HOperatorSet.PaintRegion(binregion, mix1, out mix2, new HTuple(0, 255, 0), "fill"); //green
-            //else
-            //    HOperatorSet.PaintRegion(binregion, mix1, out mix2, new HTuple(255, 0, 0), "fill"); //red
+                owner.WriteImageNorm(mix2, "料盤", "料盤Find");
 
             owner.DisposeObj(mix1, mix2, mix3);
         }
@@ -1383,7 +1451,7 @@ namespace Inspector
         public SisoFGArea CCD;
         Inspector owner;
         bool first = true, InspOK = false;
-        HTuple P1x, P1y, P2x, P2y;
+        HTuple P1x, P1y, P2x, P2y, TotalL1, TotalL2;
         HObject PinArea, dTop, dBot;
         public HTuple model;
         /// <summary> 針目前角度 </summary>
@@ -1393,7 +1461,8 @@ namespace Inspector
         public bool Inspected = false;
         /// <summary> 分析結果成功 </summary>
         public bool InspectOK = false;
-        
+        string TMsg = "", BMsg = "";
+
         public Insp吸嘴區(Inspector sender, HWindowControl win)
         {
             owner = sender;
@@ -1432,7 +1501,7 @@ namespace Inspector
                 double target;
                 Insp(out target);
             });
-            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "吸嘴", "吸嘴"); });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImageNorm(helper.Image, "吸嘴", "吸嘴"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
             menu.Items.Add("Stop CCD", null, (sender, e) => { CCD.TriggerMode = "Stop"; });
@@ -1448,8 +1517,209 @@ namespace Inspector
             items.First(x => x.Text == "Set CCD Parameter").Visible = owner.xEngineer;
         }
 
-        /// <summary>分析吸嘴，傳入目前吸附位置(X / Y / θ)，輸出針位置，無料 / 重疊時回覆 false</summary>
+        void Read參數()
+        {
+            owner.Read吸嘴參數();
+            owner.ReadTray參數();
+            if ((owner.parameter.針頭長度 < 0.001) || (owner.parameter.針頭寬度 < 0.001) || (owner.parameter.針尾長度 < 0.001) || (owner.parameter.針尾寬度 < 0.001))
+            {
+                owner.parameter.針頭長度 = owner.parameter.針尾長度 = 0.5;
+                owner.parameter.針頭寬度 = 0.11;
+                owner.parameter.針尾寬度 = 0.09;
+            }
+        }
+
+        void PreProcess(out HObject images, out HTuple width, out HTuple height, out double WMin, out double WMax, out double HMin, out double HMax, ref string Msg)
+        {
+            HOperatorSet.CopyImage(helper.Image, out images);
+            HOperatorSet.GetImageSize(images, out width, out height);
+            WMin = owner.parameter.Pin寬度Min / CCD.Param.ScaleX / 2.0;
+            WMax = owner.parameter.Pin寬度Max / CCD.Param.ScaleX / 2.0;
+            HMin = owner.parameter.Pin長度Min / CCD.Param.ScaleX / 2.0;
+            HMax = owner.parameter.Pin長度Max / CCD.Param.ScaleX / 2.0;
+            Msg = Msg + string.Format("\r\n\t\t 寬Min={0:F2} 寬Max={1:F2} 長Min={2:F2} 長Max={3:F2}", owner.parameter.Pin寬度Min, owner.parameter.Pin寬度Max, owner.parameter.Pin長度Min, owner.parameter.Pin長度Max);
+        }
+
+        void 分析整支中心(HObject images, out HTuple row1, out HTuple col1, out HTuple row2, out HTuple col2)
+        {
+            HObject reduces;
+            HTuple darea;
+            HOperatorSet.ReduceDomain(images, RegionNozzle, out reduces);
+            HOperatorSet.AreaCenter(RegionNozzle, out darea, out P1y, out P1x);
+            HOperatorSet.SmallestRectangle1(RegionNozzle, out row1, out col1, out row2, out col2);
+            owner.DisposeObj(reduces);
+        }
+
+        void 分析寬度(HTuple row1, HTuple col1, HTuple row2, HTuple col2, out HObject rcOut, out HTuple row, out HTuple col, out HTuple L1, out HTuple L2, out HTuple phi)
+        {
+            HObject rc;
+            HOperatorSet.GenRectangle1(out rc, row1, col1, row2, col2);
+            HOperatorSet.Intersection(RegionNozzle, rc, out rcOut);
+            HTuple dPhi, dL1, dL2, d90;
+            double deg;
+            d90 = 90.0;
+            d90 = d90.TupleRad();
+            HOperatorSet.SmallestRectangle2(rcOut, out row, out col, out dPhi, out dL1, out dL2);
+            deg = dPhi.TupleDeg().D;
+            if ((Math.Abs(deg) - 90) < 30)  //仲向
+            {
+                L1 = dL1;
+                L2 = dL2;
+                phi = dPhi;
+            }
+            else
+            {
+                L1 = dL2;
+                L2 = dL1;
+                phi = (dPhi.D > 0) ? dPhi.D - d90.D : dPhi.D + d90.D;
+            }
+            owner.DisposeObj(rc);
+        }
+
+        bool 寬度判斷(HTuple 上寬, HTuple 下寬, HTuple TRow, HTuple TCol, HTuple BRow, HTuple BCol, ref HTuple dAngle, ref string Msg, out bool 相同寬度條件)
+        {
+            bool success = false;
+            bool same1 = 上寬.D > 下寬.D;
+            int PinS = (int)(owner.parameter.針頭寬度 * 1000);
+            int PinE = (int)(owner.parameter.針尾寬度 * 1000);
+            bool same2 = PinS > PinE;
+            相同寬度條件 = (PinS == PinE);
+            if (PinS != PinE)
+            {
+                P2x = (same1 == same2) ? TCol : BCol;
+                P2y = (same1 == same2) ? TRow : BRow;
+                double tWid = 上寬.D * 2 * CCD.Param.ScaleX;
+                double bWid = 下寬.D * 2 * CCD.Param.ScaleX;
+                TMsg = string.Format("上寬 = {0:F3}", tWid);
+                BMsg = string.Format("下寬 = {0:F3}", bWid);
+                HTuple phi;
+                HOperatorSet.AngleLx(P1y, P1x, P2y, P2x, out phi);
+                dAngle = phi.TupleDeg();
+                Msg = Msg + string.Format("\r\n\t\t 針頭寬 = {0:F3} 針尾寬 = {1:F3} {2} {3} 針角度 = {4:F1}", owner.parameter.針頭寬度, owner.parameter.針尾寬度, TMsg, BMsg, dAngle.D);
+                if (Math.Abs(tWid - bWid) <= owner.parameter.吸嘴寬度誤差限制)
+                {
+                    success = false;
+                    Msg = Msg + "\r\n\t\t 寬度誤差過小，判斷失敗";
+                }
+                else
+                    success = true;
+            }
+            return success;
+        }
+
+        PointF[] 分析長度(HObject images, HTuple W, HTuple H, HTuple row, HTuple col, HTuple phi, HTuple ROI_L1, HTuple ROI_L2, HTuple Amp, ref HObject outRC)
+        {
+            HTuple dMes, outR, outC, outAmp, outDist;
+            PointF[] rst = new PointF[0];
+            try
+            {
+                HOperatorSet.GenMeasureRectangle2(row, col, phi, ROI_L1, ROI_L2, W, H, "nearest_neighbor", out dMes);
+                HOperatorSet.MeasurePos(images, dMes, 2.5, Amp, "all", "all", out outR, out outC, out outAmp, out outDist);
+                HOperatorSet.CloseMeasure(dMes);
+                HOperatorSet.GenCrossContourXld(out outRC, outR, outC, 80, 0);
+                PointF[] N = outR.DArr.Zip(outC.DArr, (r, c) => new PointF((float)c, (float)r)).ToArray();
+                rst = N.OrderBy((a) => a.Y).ToArray();
+            }
+            catch { }
+            return rst;
+        }
+
+        bool 長度判斷(HObject images, HTuple W, HTuple H, HTuple TRow, HTuple TCol, HTuple phi1, HTuple BRow, HTuple BCol, HTuple phi2, ref HTuple dAngle, ref string Msg)
+        {
+            double LenMax = Math.Max(owner.parameter.針頭長度, owner.parameter.針尾長度) * 1.5;
+            double LenPix = LenMax / CCD.Param.ScaleX;
+            double Len2 = owner.parameter.吸嘴偵測寬;
+            double amp = owner.parameter.吸嘴偵測Amp;
+            var TArr = 分析長度(images, W, H, TRow, TCol, phi1, LenPix, Len2, amp, ref dTop);
+            var T1 = TArr.Where(a => a.Y < TRow.D).ToArray();
+            var T2 = TArr.Where(a => a.Y > TRow.D).ToArray();
+            var BArr = 分析長度(images, W, H, BRow, BCol, phi2, LenPix, Len2, amp, ref dBot);
+            var B1 = BArr.Where(a => a.Y < BRow.D).ToArray();
+            var B2 = BArr.Where(a => a.Y > BRow.D).ToArray();
+            bool success = (T1.Length > 0) && (T2.Length > 0) && (B1.Length > 0) && (B2.Length > 0);
+            if (success)
+            {
+                HTuple TLen, BLen;
+                HOperatorSet.DistancePp(T1.First().Y, T1.First().X, T2.First().Y, T2.First().X, out TLen);
+                HTuple tx = T2.First().X;
+                HTuple ty = T2.First().Y;
+                HOperatorSet.DistancePp(B1.Last().Y, B1.Last().X, B2.Last().Y, B2.Last().X, out BLen);
+                HTuple bx = B1.Last().X;
+                HTuple by = B1.Last().Y;
+                double 上長 = TLen.D * CCD.Param.ScaleX;
+                double 下長 = BLen.D * CCD.Param.ScaleX;
+                TMsg = string.Format("上長 = {0:F3}", 上長);
+                BMsg = string.Format("下長 = {0:F3}", 下長);
+                bool same1 = 上長 > 下長;
+                bool same2 = owner.parameter.針頭長度 > owner.parameter.針尾長度;
+                P2x = (same1 == same2) ? tx : bx;
+                P2y = (same1 == same2) ? ty : by;
+                HTuple phi;
+                HOperatorSet.AngleLx(P1y, P1x, P2y, P2x, out phi);
+                dAngle = phi.TupleDeg();
+                Msg = Msg + string.Format("\r\n\t\t 針頭長 = {0:F3} 針尾長 = {1:F3} {2} {3} 針角度 = {4:F1}", owner.parameter.針頭長度, owner.parameter.針尾長度, TMsg, BMsg, dAngle.D);
+                if (Math.Abs(上長- 下長) <= owner.parameter.吸嘴長度誤差限制)
+                {
+                    success = false;
+                    Msg = Msg + "\r\n\t\t 長度誤差過小，判斷失敗";
+                }
+            }
+            return success;
+        }
+
         public bool Insp(out double targetθ)
+        {
+            bool success = false;
+            targetθ = 0;
+            owner.PinCount = 0;
+            string Msg = "分析吸嘴";
+            if (helper.ContainImage)
+            {
+                Read參數();
+                HObject temp;
+                double WMin, WMax, HMin, HMax;
+                HTuple W, H, dAngle = null;
+                TMsg = BMsg = "";
+                PreProcess(out temp, out W, out H, out WMin, out WMax, out HMin, out HMax, ref Msg);
+                PinArea = GetNozzleArea(temp, 70, WMin, WMax, HMin, HMax, ref Msg);
+                RegionNozzle = FilterPin(PinArea, WMin, WMax, HMin, HMax);
+                if ((RegionNozzle.CountObj() == 1))
+                    try
+                    {
+                        HObject reduces, rcTop, rcBot;
+                        HTuple row1, row2, col1, col2, phi1, phi2, row, col, L1, L2, L3, L4, TRow, TCol, BRow, BCol;
+                        分析整支中心(temp, out row1, out col1, out row2, out col2);
+                        double LenMin = Math.Min(owner.parameter.針尾長度, owner.parameter.針頭長度) * 0.75;
+                        double dLen = LenMin / CCD.Param.ScaleX;
+                        分析寬度(row1, col1, row1.D + dLen, col2, out dTop, out TRow, out TCol, out L1, out L2, out phi1);
+                        分析寬度(row2.D - dLen, col1, row2.D, col2, out dBot, out BRow, out BCol, out L3, out L4, out phi2);
+                        bool 相同寬度條件 = false;
+                        success = 寬度判斷(L2, L4, TRow, TCol, BRow, BCol, ref dAngle, ref Msg, out 相同寬度條件);
+                        if (相同寬度條件)
+                            success = success || 長度判斷(temp, W, H, TRow, TCol, phi1, BRow, BCol, phi2, ref dAngle, ref Msg);
+                        if (success)
+                        {
+                            HOperatorSet.AngleLx(P1y, P1x, P2y, P2x, out dAngle);
+                            var dAngle1 = dAngle.TupleDeg();
+                            owner.PinDeg = PinDeg = targetθ = dAngle1;
+                            owner.PinCount = 1;
+                        }
+                    }
+                    catch (Exception ex) { }
+                owner.WriteLog(Msg);
+                SaveResult(temp, W, H, success);
+                owner.WriteImageNorm(temp, "吸嘴", "吸嘴");
+                owner.DisposeObj(temp);
+                owner.InspectOK = InspectOK = success;
+                owner.Inspected = Inspected = true;
+            }
+            owner.BeginInvoke(new Action(Show));
+            InspOK = success;
+            return success;
+        }
+
+        /// <summary>分析吸嘴，傳入目前吸附位置(X / Y / θ)，輸出針位置，無料 / 重疊時回覆 false</summary>
+        public bool Insp250214(out double targetθ)
         {
             bool success = false;
             targetθ = 0;
@@ -1472,7 +1742,7 @@ namespace Inspector
                 double WMax = owner.parameter.Pin寬度Max / CCD.Param.ScaleX / 2.0;
                 double HMin = owner.parameter.Pin長度Min / CCD.Param.ScaleX / 2.0;
                 double HMax = owner.parameter.Pin長度Max / CCD.Param.ScaleX / 2.0;
-                PinArea = GetNozzleArea(temp, 70, WMin, WMax, HMin, HMax);
+                PinArea = GetNozzleArea250214(temp, 70, WMin, WMax, HMin, HMax);
                 //if (PinArea.CountObj() > 0)
                 //    owner.PinCount = 2;
                 RegionNozzle = FilterPin(PinArea, WMin, WMax, HMin, HMax);
@@ -1530,8 +1800,8 @@ namespace Inspector
                 //}
                 //else
                 //    success = false;
-                SaveResult(temp, success);
-                owner.WriteImage(temp, "吸嘴", "吸嘴");
+                SaveResult250214(temp, success);
+                owner.WriteImageNorm(temp, "吸嘴", "吸嘴");
                 owner.DisposeObj(temp);
                 owner.InspectOK = InspectOK = success;
                 owner.Inspected = Inspected = true;
@@ -1541,7 +1811,30 @@ namespace Inspector
             return success;
         }
 
-        HObject GetNozzleArea(HObject image, double threshold, double WMin, double WMax, double HMin, double HMax)
+        HObject GetNozzleArea(HObject image, double threshold, double WMin, double WMax, double HMin, double HMax, ref string Msg)
+        {
+            HObject Border, region, RegionUnion, RegionClosing, ConnectedRegions, LimH, LimW, NozzleArea;
+            HOperatorSet.ThresholdSubPix(image, out Border, threshold);
+            HOperatorSet.GenRegionContourXld(Border, out region, "filled");
+            HOperatorSet.Union1(region, out RegionUnion);
+            HOperatorSet.ClosingRectangle1(RegionUnion, out RegionClosing, 5, (int)WMax);
+            HOperatorSet.Connection(RegionClosing, out ConnectedRegions);
+            HOperatorSet.SelectShape(ConnectedRegions, out LimH, "rect2_len1", "and", HMin, 99999);
+            HOperatorSet.SelectShape(LimH, out LimW, "rect2_len2", "and", WMin, 99999);
+            HOperatorSet.ClosingCircle(LimW, out NozzleArea, WMax);
+            HTuple row, col, L1, L2, phi;
+            HOperatorSet.SmallestRectangle2(NozzleArea, out row, out col, out phi, out L1, out L2);
+            if (L1.Length > 0)
+            {
+                TotalL1 = L1.D * 2 * CCD.Param.ScaleX;
+                TotalL2 = L2.D * 2 * CCD.Param.ScaleX;
+                Msg = Msg + string.Format("\r\n\t\t 總長 = {0:F2} 總寬 = {1:F2}", TotalL1.D, TotalL2.D);
+            }
+            owner.DisposeObj(Border, region, RegionUnion, RegionClosing, ConnectedRegions, LimH, LimW);
+            return NozzleArea;
+        }
+
+        HObject GetNozzleArea250214(HObject image, double threshold, double WMin, double WMax, double HMin, double HMax)
         {
             HObject Border, region, RegionUnion, RegionClosing, ConnectedRegions, LimH, LimW, NozzleArea;
             HOperatorSet.ThresholdSubPix(image, out Border, threshold);
@@ -1589,8 +1882,55 @@ namespace Inspector
             return LimW;
         }
 
+        void SaveResult(HObject img, HTuple W, HTuple H, bool success)
+        {
+            string dir = (owner.PinDeg >= 0) ? "吸嘴正向" : "吸嘴反向";
+            using (var win = new HWindow(0, 0, W, H, 0, "buffer", ""))
+            {
+                try
+                {
+                    win.SetPart(0, 0, H.D - 1, W.D - 1);
+                    img.DispObj(win);
+                    win.SetDraw("margin");
+                    win.SetColor((success) ? "green" : "red");
+                    if (PinArea != null)
+                        PinArea.DispObj(win);
+                    if ((TotalL1 != null) && (TotalL1.Length == 1))
+                    {
+                        string Msg = string.Format("總長 = {0:F2} 總寬 = {1:F2}", TotalL1.D, TotalL2.D);
+                        win.SetTposition(0, 50);
+                        win.WriteString(Msg);
+                    }
+                    dTop.DispObj(win);
+                    dBot.DispObj(win);
 
-        void SaveResult(HObject img, bool success)
+                    HTuple row, col, area;
+                    HOperatorSet.AreaCenter(PinArea, out area, out row, out col);
+                    win.SetTposition((int)row.D - 80, (int)col.D + 80);
+                    win.WriteString(TMsg);
+                    win.SetTposition((int)row.D, (int)col.D + 80);
+                    win.WriteString(BMsg);
+                    if (success)
+                    {
+                        win.SetTposition((int)row.D + 80, (int)col.D + 80);
+                        win.WriteString(string.Format("針角度 = {0:F1}", owner.PinDeg));
+                        win.SetColor("orange");
+                        win.SetLineWidth(2);
+                        win.DispArrow(P1y, P1x, P2y, P2x, 5);
+                    }
+                }
+                catch { }
+                finally
+                {
+                    if (success)
+                        owner.WriteImage(win.DumpWindowImage(), dir, "吸嘴-OK");
+                    else
+                        owner.WriteImage(win.DumpWindowImage(), dir, "吸嘴-NG");
+                }
+            }
+        }
+
+        void SaveResult250214(HObject img, bool success)
         {
             string dir = (owner.下視覺正向) ? "吸嘴正向" : "吸嘴反向";
             if (success)
@@ -1714,6 +2054,53 @@ namespace Inspector
             if (InspOK && (P1x != null) && (P1x.Length > 0))
             {
                 Win.HalconWindow.SetColor("green");
+                HOperatorSet.DispArrow(Win.HalconWindow, P1y, P1x, P2y, P2x, 5);
+            }
+            if (PinArea != null)
+            {
+                HTuple row, col, phi, L1, L2;
+                Win.HalconWindow.SetColor((InspectOK) ? "green" : "red");
+                HOperatorSet.DispRegion(PinArea, Win.HalconWindow);
+                if (dTop != null)
+                {
+                    Win.HalconWindow.SetColor("orange");
+                    dTop.DispObj(Win.HalconWindow);
+                    Win.HalconWindow.SetTposition((int)P1y.D - 120, (int)P1x.D + 80);
+                    Win.HalconWindow.WriteString(TMsg);
+                }
+                if (dBot != null)
+                {
+                    Win.HalconWindow.SetColor("orange");
+                    dBot.DispObj(Win.HalconWindow);
+                    Win.HalconWindow.SetTposition((int)P1y.D + 120, (int)P1x.D + 80);
+                    Win.HalconWindow.WriteString(BMsg);
+                }
+            }
+            if ((P1x != null) && (P2x != null) && (P1x.Length == 1) && (P2x.Length == 1))
+            {
+                Win.HalconWindow.SetTposition((int)P1y.D, (int)P1x.D + 50);
+                string Msg = (InspOK) ? string.Format("針角度={0:F1}", PinDeg) : "NG";
+                Win.HalconWindow.WriteString(Msg);
+            }
+
+            if ((TotalL1 != null) && (TotalL1.Length == 1))
+            {
+                string Msg = string.Format("總長 = {0:F3} 總寬 = {1:F3}", TotalL1.D, TotalL2.D);
+                Win.HalconWindow.SetTposition(0, 50);
+                Win.HalconWindow.WriteString(Msg);
+            }
+        }
+
+        void ShowResult250214(HWindowControl Win, HObject image)
+        {
+            HOperatorSet.ClearWindow(Win.HalconWindow);
+            HOperatorSet.DispImage(image, Win.HalconWindow);
+            Win.HalconWindow.SetLineWidth(2);
+            Win.HalconWindow.SetColor("orange");
+            Win.HalconWindow.SetDraw("margin");
+            if (InspOK && (P1x != null) && (P1x.Length > 0))
+            {
+                Win.HalconWindow.SetColor("green");
                 HOperatorSet.DispArrow(Win.HalconWindow, P1y, P1x, P2y, P2x, 12);
             }
             if (PinArea != null)
@@ -1747,12 +2134,6 @@ namespace Inspector
                 Win.HalconWindow.WriteString(Msg);
                 //Win.HalconWindow.WriteString(string.Format("θ = {0:F2}", PinDeg));
             }
-
-            //Win.HalconWindow.SetTposition(60, 250);
-            //var SSS = Win.HalconWindow.GetFont();
-            ////Win.HalconWindow.SetFont("default-normal-24");
-            //string Msg = (InspOK) ? string.Format("針角度={0:F1}", PinDeg) : "NG";
-            //Win.HalconWindow.WriteString(Msg);
         }
 
         public void Show()
@@ -1840,9 +2221,11 @@ namespace Inspector
                 Vector3 n;
                 var sel = 校正孔尋找(out n);
             });
-            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "Socket", "Socket"); });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImageNorm(helper.Image, "Socket", "Socket"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
+            menu.Items.Add("Stop Grab", null, (sender, e) => { CCD.TriggerMode = "Stop"; });
+            menu.Items.Add("Start Grab", null, (sender, e) => { CCD.TriggerMode = "FreeRun"; });
             menu.Opening += onMenu1Opening;
         }
 
@@ -1859,51 +2242,109 @@ namespace Inspector
             var result = new Vector3();
             helper.inShow = true;
             targetIndex = -1;
+            string Msg = "";
             if (helper.ContainImage)
             {
-                double NeedleCircleParameter = owner.getParam("NeedleCircleParameter");
+                owner.ReadSocket參數();
+                //double NeedleCircleParameter = owner.getParam("NeedleCircleParameter");
                 HObject temp, binArea, connArea, SelArea, OutArea, MaxArea, CirArea;
-                HTuple W, H, usedThr, row, col, Radius, Dist;
+                HTuple W, H, usedThr, row, col, Radius, Dist, bArea, brow, bcol;
                 HOperatorSet.CopyImage(helper.Image, out temp);
-                owner.WriteImage(temp, "Socket", "Socket");
+                owner.WriteImageNorm(temp, "Socket", "Socket");
                 HOperatorSet.GetImageSize(temp, out W, out H);
                 HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
                 HOperatorSet.Connection(binArea, out connArea);
-                HOperatorSet.SelectShape(connArea, out SelArea, "circularity", "and", NeedleCircleParameter, 1);
-                HOperatorSet.SelectShape(SelArea, out OutArea, "outer_radius", "and", 20, 180);
-                //HOperatorSet.SelectShapeStd(OutArea, out MaxArea, "max_area", 70);
+                //HOperatorSet.SelectShape(connArea, out SelArea, "circularity", "and", NeedleCircleParameter, 1);
+                //HOperatorSet.SelectShape(SelArea, out OutArea, "outer_radius", "and", 20, 180);
+                HOperatorSet.SelectShape(connArea, out OutArea, "area", "and", owner.parameter.SocketAreaMin, owner.parameter.SocketAreaMax);
+                Msg = string.Format("Socket分析 限制條件： 面積小 {0:F0} - {1:F0}，最遠距離 0.2", owner.parameter.SocketAreaMin, owner.parameter.SocketAreaMax);
                 HOperatorSet.SmallestCircle(OutArea, out row, out col, out Radius);
+                HOperatorSet.AreaCenter(OutArea, out bArea, out brow, out bcol);
+                Msg = Msg + string.Format("\r\n\t\t 檢測到 {0} 個物件", row.Length);
                 if (row.Length > 0)
                 {
-                    HOperatorSet.SelectShape(OutArea, out CirArea, "row", "and", H / 2.0 - 50, H / 2.0 + 50);
-                    HOperatorSet.SelectShape(CirArea, out CirArea, "column", "and", W / 2.0 - 50, W / 2.0 + 50);
-                    HOperatorSet.AreaCenter(OutArea, out usedThr, out row, out col);
-                    //HOperatorSet.SelectShape(OutArea, out CirArea, "outer_radius", "and", Radius.D - 2, Radius.D + 2);
-                HOperatorSet.SmallestCircle(CirArea, out row, out col, out Radius);
-                double smallDist = 999999;
-                
-                for(int i = 0; i < row.Length; i++)
-                {
-                    HOperatorSet.DistancePp(row[i], col[i], H.D / 2.0, W.D / 2.0, out Dist);
-                    if (Dist.D < smallDist)
+                    HOperatorSet.DistancePp(row, col, Enumerable.Repeat(H.D / 2.0, row.Length).ToArray(), Enumerable.Repeat(W.D / 2.0, row.Length).ToArray(), out Dist);
+                    var DistMin = Dist.DArr.Min();
+                    int tempIndex = Array.IndexOf(Dist.DArr, DistMin);
+                    double targetDist = DistMin * CCD.Param.ScaleX;
+                    Msg = Msg + string.Format("，最小距離 = {0:F3}，面積 = {1:F0}", targetDist, bArea[tempIndex].D);
+                    if (targetDist <= owner.parameter.SocketDist)
                     {
-                        smallDist = Dist.D;
-                        result.X = pX = col[i].D;
-                        result.Y = pY = row[i].D;
-                        targetIndex = i;
+                        targetIndex = tempIndex;
+                        result.X = pX = row[targetIndex];
+                        result.Y = pY = col[targetIndex];
+                        result = CCD.GetReal(result.X, result.Y, W, H);
+                        result.X = -result.X;
+                        Msg = Msg + "，成功";
+                        hole = result;
                     }
+                    else
+                        Msg = Msg + "，失敗，距離超過限制";
                 }
-                if (targetIndex >= 0)
-                {
-                    result = CCD.GetReal(result.X, result.Y, W, H);
-                    result.X = -result.X;
-                    hole = result;
-                }
-                }
+                owner.WriteLog(Msg);
+                SaveResult(temp, OutArea, targetIndex, W, H);
+                //HOperatorSet.SmallestCircle(OutArea, out row, out col, out Radius);
+                //if (row.Length > 0)
+                //{
+                //    HOperatorSet.SelectShape(OutArea, out CirArea, "row", "and", H / 2.0 - 50, H / 2.0 + 50);
+                //    HOperatorSet.SelectShape(CirArea, out CirArea, "column", "and", W / 2.0 - 50, W / 2.0 + 50);
+                //    HOperatorSet.AreaCenter(OutArea, out bArea, out row, out col);
+                //    HOperatorSet.SmallestCircle(CirArea, out row, out col, out Radius);
+                //    double smallDist = 999999;
+
+                //    for (int i = 0; i < row.Length; i++)
+                //    {
+                //        HOperatorSet.DistancePp(row[i], col[i], H.D / 2.0, W.D / 2.0, out Dist);
+                //        if (Dist.D < smallDist)
+                //        {
+                //            smallDist = Dist.D;
+                //            result.X = pX = col[i].D;
+                //            result.Y = pY = row[i].D;
+                //            Msg = string.Format("Socket面積 = {0:F0}", bArea[i].D);
+                //            targetIndex = i;
+                //        }
+                //    }
+                //    if (targetIndex >= 0)
+                //    {
+                //        result = CCD.GetReal(result.X, result.Y, W, H);
+                //        result.X = -result.X;
+                //        Msg = Msg + string.Format("\r\n\t\t 中心X = {0:F1} 中心Y = {1:F1}", result.X, result.Y);
+                //        hole = result;
+                //        owner.WriteLog(Msg);
+                //    }
+                //}
             }
             Loc = result;
             owner.BeginInvoke(new Action(helper.AdjustView));
             return ((targetIndex >= 0) && (Math.Abs( result.X) < 0.2) && (Math.Abs(result.Y) < 0.2)) ;
+        }
+
+        void SaveResult(HObject img, HObject region, int index, HTuple W, HTuple H)
+        {
+            try
+            {
+                using (var win = new HWindow(0, 0, W, H, 0, "buffer", ""))
+                {
+                    win.SetPart(0, 0, H.D - 1, W.D - 1);
+                    img.DispObj(win);
+                    win.SetDraw("margin");
+                    win.SetLineWidth(2);
+                    win.SetColor("red");
+                    region.DispObj(win);
+                    if (index >= 0)
+                    {
+                        HObject Obj;
+                        HOperatorSet.SelectObj(region, out Obj, index + 1);
+                        win.SetColor("green");
+                        Obj.DispObj(win);
+                    }
+                    if (index >= 0)
+                        owner.WriteImageNorm(win.DumpWindowImage(), "SocketFind", "Socket-OK");
+                    else
+                        owner.WriteImageNorm(win.DumpWindowImage(), "SocketFind", "Socket-NG");
+                }
+            }
+            catch { }
         }
 
         public bool 校正孔尋找(out Vector3 Loc)
@@ -1916,7 +2357,7 @@ namespace Inspector
                 HObject temp, binArea, connArea, LimW, LimH, LimC;
                 HTuple W, H, usedThr, row, col, Radius, Dist;
                 HOperatorSet.CopyImage(helper.Image, out temp);
-                owner.WriteImage(temp, "Socket", "Socket");
+                owner.WriteImageNorm(temp, "Socket", "Socket");
                 HOperatorSet.GetImageSize(temp, out W, out H);
                 HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
                 HOperatorSet.Connection(binArea, out connArea);
@@ -2066,7 +2507,7 @@ namespace Inspector
                 Vector3 n;
                 var sel = Insp(out n);
             });
-            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "夾爪", "夾爪"); });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImageNorm(helper.Image, "夾爪", "夾爪"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
             menu.Opening += onMenu1Opening;
@@ -2091,7 +2532,7 @@ namespace Inspector
                 HObject temp, binArea, connArea, SelArea, OutArea, MaxArea, CirArea;
                 HTuple W, H, usedThr, row, col, Radius, Dist, area1, area2;
                 HOperatorSet.CopyImage(helper.Image, out temp);
-                owner.WriteImage(temp, "針孔校正", "針孔校正");
+                owner.WriteImageNorm(temp, "針孔校正", "針孔校正");
                 HOperatorSet.GetImageSize(temp, out W, out H);
                 HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
                 HOperatorSet.Connection(binArea, out connArea);
@@ -2198,7 +2639,7 @@ namespace Inspector
                 Vector3 n;
                 var sel = Insp(out n);
             });
-            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImage(helper.Image, "針孔校正", "針孔校正"); });
+            menu.Items.Add("Save Image", null, (sender, e) => { owner.WriteImageNorm(helper.Image, "針孔校正", "針孔校正"); });
             menu.Items.Add("Set CCD Parameter", null, (sender, e) => { CCD.SetParam(); });
             menu.Items.Add("FullView", null, (sender, e) => { helper.AdjustView(); });
             menu.Opening += onMenu1Opening;
@@ -2222,7 +2663,7 @@ namespace Inspector
                 HObject temp, binArea, connArea, SelArea, OutArea, MaxArea, CirArea;
                 HTuple W, H, usedThr, row, col, Radius, Dist;
                 HOperatorSet.CopyImage(helper.Image, out temp);
-                owner.WriteImage(temp, "針孔校正", "針孔校正");
+                owner.WriteImageNorm(temp, "針孔校正", "針孔校正");
                 HOperatorSet.GetImageSize(temp, out W, out H);
                 HOperatorSet.BinaryThreshold(temp, out binArea, "max_separability", "light", out usedThr);
                 HOperatorSet.Connection(binArea, out connArea);

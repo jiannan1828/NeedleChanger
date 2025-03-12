@@ -5,7 +5,7 @@
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        public System.ComponentModel.IContainer components = null;
+        private System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -26,7 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        public void InitializeComponent()
+        private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
             this.KeyList = new System.Windows.Forms.ComboBox();
@@ -57,6 +57,9 @@
             this.btn_SaveParam = new System.Windows.Forms.Button();
             this.ck_Binning = new System.Windows.Forms.CheckBox();
             this.cb_Rotate = new System.Windows.Forms.ComboBox();
+            this.lb_Black = new System.Windows.Forms.Label();
+            this.BlackBar = new System.Windows.Forms.HScrollBar();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -99,7 +102,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 65);
+            this.label2.Location = new System.Drawing.Point(46, 65);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(93, 21);
             this.label2.TabIndex = 4;
@@ -108,10 +111,10 @@
             // GammaBar
             // 
             this.GammaBar.LargeChange = 2;
-            this.GammaBar.Location = new System.Drawing.Point(122, 57);
-            this.GammaBar.Maximum = 40;
+            this.GammaBar.Location = new System.Drawing.Point(128, 57);
+            this.GammaBar.Maximum = 50;
             this.GammaBar.Name = "GammaBar";
-            this.GammaBar.Size = new System.Drawing.Size(413, 36);
+            this.GammaBar.Size = new System.Drawing.Size(407, 36);
             this.GammaBar.TabIndex = 5;
             this.GammaBar.Value = 10;
             this.GammaBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.GammaBar_Scroll);
@@ -119,11 +122,11 @@
             // ExposureBar
             // 
             this.ExposureBar.LargeChange = 500;
-            this.ExposureBar.Location = new System.Drawing.Point(122, 102);
+            this.ExposureBar.Location = new System.Drawing.Point(128, 102);
             this.ExposureBar.Maximum = 30000;
             this.ExposureBar.Minimum = 1;
             this.ExposureBar.Name = "ExposureBar";
-            this.ExposureBar.Size = new System.Drawing.Size(413, 36);
+            this.ExposureBar.Size = new System.Drawing.Size(407, 36);
             this.ExposureBar.SmallChange = 50;
             this.ExposureBar.TabIndex = 7;
             this.ExposureBar.Value = 200;
@@ -132,7 +135,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 110);
+            this.label3.Location = new System.Drawing.Point(32, 109);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(107, 21);
             this.label3.TabIndex = 6;
@@ -141,7 +144,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(39, 147);
+            this.label4.Location = new System.Drawing.Point(40, 203);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(80, 21);
             this.label4.TabIndex = 8;
@@ -149,7 +152,7 @@
             // 
             // ed_Speed
             // 
-            this.ed_Speed.Location = new System.Drawing.Point(122, 141);
+            this.ed_Speed.Location = new System.Drawing.Point(123, 197);
             this.ed_Speed.Name = "ed_Speed";
             this.ed_Speed.Size = new System.Drawing.Size(102, 33);
             this.ed_Speed.TabIndex = 9;
@@ -177,7 +180,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(320, 147);
+            this.label7.Location = new System.Drawing.Point(321, 203);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(74, 21);
             this.label7.TabIndex = 12;
@@ -185,7 +188,7 @@
             // 
             // ed_ScaleX
             // 
-            this.ed_ScaleX.Location = new System.Drawing.Point(397, 141);
+            this.ed_ScaleX.Location = new System.Drawing.Point(398, 197);
             this.ed_ScaleX.Name = "ed_ScaleX";
             this.ed_ScaleX.Size = new System.Drawing.Size(102, 33);
             this.ed_ScaleX.TabIndex = 13;
@@ -195,7 +198,7 @@
             // 
             // ed_ScaleY
             // 
-            this.ed_ScaleY.Location = new System.Drawing.Point(505, 141);
+            this.ed_ScaleY.Location = new System.Drawing.Point(506, 197);
             this.ed_ScaleY.Name = "ed_ScaleY";
             this.ed_ScaleY.Size = new System.Drawing.Size(102, 33);
             this.ed_ScaleY.TabIndex = 14;
@@ -206,7 +209,7 @@
             // ck_MirrorX
             // 
             this.ck_MirrorX.AutoSize = true;
-            this.ck_MirrorX.Location = new System.Drawing.Point(22, 224);
+            this.ck_MirrorX.Location = new System.Drawing.Point(23, 280);
             this.ck_MirrorX.Name = "ck_MirrorX";
             this.ck_MirrorX.Size = new System.Drawing.Size(97, 25);
             this.ck_MirrorX.TabIndex = 15;
@@ -217,7 +220,7 @@
             // ck_MirrorY
             // 
             this.ck_MirrorY.AutoSize = true;
-            this.ck_MirrorY.Location = new System.Drawing.Point(127, 224);
+            this.ck_MirrorY.Location = new System.Drawing.Point(128, 280);
             this.ck_MirrorY.Name = "ck_MirrorY";
             this.ck_MirrorY.Size = new System.Drawing.Size(97, 25);
             this.ck_MirrorY.TabIndex = 16;
@@ -228,7 +231,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(39, 186);
+            this.label8.Location = new System.Drawing.Point(40, 242);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(82, 21);
             this.label8.TabIndex = 17;
@@ -236,7 +239,7 @@
             // 
             // ed_Dxy
             // 
-            this.ed_Dxy.Location = new System.Drawing.Point(505, 180);
+            this.ed_Dxy.Location = new System.Drawing.Point(506, 236);
             this.ed_Dxy.Name = "ed_Dxy";
             this.ed_Dxy.Size = new System.Drawing.Size(102, 33);
             this.ed_Dxy.TabIndex = 21;
@@ -246,7 +249,7 @@
             // 
             // ed_Dxx
             // 
-            this.ed_Dxx.Location = new System.Drawing.Point(397, 180);
+            this.ed_Dxx.Location = new System.Drawing.Point(398, 236);
             this.ed_Dxx.Name = "ed_Dxx";
             this.ed_Dxx.Size = new System.Drawing.Size(102, 33);
             this.ed_Dxx.TabIndex = 20;
@@ -257,7 +260,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(336, 186);
+            this.label9.Location = new System.Drawing.Point(337, 242);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(55, 21);
             this.label9.TabIndex = 19;
@@ -265,7 +268,7 @@
             // 
             // ed_Dyy
             // 
-            this.ed_Dyy.Location = new System.Drawing.Point(505, 219);
+            this.ed_Dyy.Location = new System.Drawing.Point(506, 275);
             this.ed_Dyy.Name = "ed_Dyy";
             this.ed_Dyy.Size = new System.Drawing.Size(102, 33);
             this.ed_Dyy.TabIndex = 24;
@@ -275,7 +278,7 @@
             // 
             // ed_Dyx
             // 
-            this.ed_Dyx.Location = new System.Drawing.Point(397, 219);
+            this.ed_Dyx.Location = new System.Drawing.Point(398, 275);
             this.ed_Dyx.Name = "ed_Dyx";
             this.ed_Dyx.Size = new System.Drawing.Size(102, 33);
             this.ed_Dyx.TabIndex = 23;
@@ -286,7 +289,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(336, 225);
+            this.label10.Location = new System.Drawing.Point(337, 281);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(55, 21);
             this.label10.TabIndex = 22;
@@ -294,7 +297,7 @@
             // 
             // btn_SaveConfig
             // 
-            this.btn_SaveConfig.Location = new System.Drawing.Point(22, 283);
+            this.btn_SaveConfig.Location = new System.Drawing.Point(23, 339);
             this.btn_SaveConfig.Name = "btn_SaveConfig";
             this.btn_SaveConfig.Size = new System.Drawing.Size(128, 59);
             this.btn_SaveConfig.TabIndex = 25;
@@ -304,7 +307,7 @@
             // 
             // btn_Close
             // 
-            this.btn_Close.Location = new System.Drawing.Point(479, 283);
+            this.btn_Close.Location = new System.Drawing.Point(480, 339);
             this.btn_Close.Name = "btn_Close";
             this.btn_Close.Size = new System.Drawing.Size(128, 59);
             this.btn_Close.TabIndex = 26;
@@ -314,7 +317,7 @@
             // 
             // btn_SaveParam
             // 
-            this.btn_SaveParam.Location = new System.Drawing.Point(156, 283);
+            this.btn_SaveParam.Location = new System.Drawing.Point(157, 339);
             this.btn_SaveParam.Name = "btn_SaveParam";
             this.btn_SaveParam.Size = new System.Drawing.Size(128, 59);
             this.btn_SaveParam.TabIndex = 27;
@@ -325,7 +328,7 @@
             // ck_Binning
             // 
             this.ck_Binning.AutoSize = true;
-            this.ck_Binning.Location = new System.Drawing.Point(22, 252);
+            this.ck_Binning.Location = new System.Drawing.Point(23, 308);
             this.ck_Binning.Name = "ck_Binning";
             this.ck_Binning.Size = new System.Drawing.Size(92, 25);
             this.ck_Binning.TabIndex = 28;
@@ -341,18 +344,50 @@
             "90",
             "180",
             "270"});
-            this.cb_Rotate.Location = new System.Drawing.Point(122, 183);
+            this.cb_Rotate.Location = new System.Drawing.Point(123, 239);
             this.cb_Rotate.Name = "cb_Rotate";
             this.cb_Rotate.Size = new System.Drawing.Size(102, 29);
             this.cb_Rotate.TabIndex = 29;
             this.cb_Rotate.DropDown += new System.EventHandler(this.cb_Rotate_DropDown);
             this.cb_Rotate.DropDownClosed += new System.EventHandler(this.cb_Rotate_DropDownClosed);
             // 
+            // lb_Black
+            // 
+            this.lb_Black.Location = new System.Drawing.Point(538, 156);
+            this.lb_Black.Name = "lb_Black";
+            this.lb_Black.Size = new System.Drawing.Size(70, 20);
+            this.lb_Black.TabIndex = 32;
+            this.lb_Black.Text = "5000";
+            this.lb_Black.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // BlackBar
+            // 
+            this.BlackBar.LargeChange = 5;
+            this.BlackBar.Location = new System.Drawing.Point(128, 148);
+            this.BlackBar.Maximum = 4096;
+            this.BlackBar.Name = "BlackBar";
+            this.BlackBar.Size = new System.Drawing.Size(407, 36);
+            this.BlackBar.SmallChange = 5;
+            this.BlackBar.TabIndex = 31;
+            this.BlackBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.BlackBar_Scroll);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 156);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(127, 21);
+            this.label6.TabIndex = 30;
+            this.label6.Text = "Black Level：";
+            // 
             // IMSSetFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(625, 352);
+            this.ClientSize = new System.Drawing.Size(625, 406);
+            this.Controls.Add(this.lb_Black);
+            this.Controls.Add(this.BlackBar);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.cb_Rotate);
             this.Controls.Add(this.ck_Binning);
             this.Controls.Add(this.btn_SaveParam);
@@ -397,34 +432,37 @@
 
         #endregion
 
-        public System.Windows.Forms.Label label1;
-        public System.Windows.Forms.ComboBox KeyList;
-        public System.Windows.Forms.Button btn_Search;
-        public System.Windows.Forms.Button btn_Set;
-        public System.Windows.Forms.Label label2;
-        public System.Windows.Forms.HScrollBar GammaBar;
-        public System.Windows.Forms.HScrollBar ExposureBar;
-        public System.Windows.Forms.Label label3;
-        public System.Windows.Forms.Label label4;
-        public System.Windows.Forms.TextBox ed_Speed;
-        public System.Windows.Forms.Label lb_Gamma;
-        public System.Windows.Forms.Label lb_Exposure;
-        public System.Windows.Forms.Label label7;
-        public System.Windows.Forms.TextBox ed_ScaleX;
-        public System.Windows.Forms.TextBox ed_ScaleY;
-        public System.Windows.Forms.CheckBox ck_MirrorX;
-        public System.Windows.Forms.CheckBox ck_MirrorY;
-        public System.Windows.Forms.Label label8;
-        public System.Windows.Forms.TextBox ed_Dxy;
-        public System.Windows.Forms.TextBox ed_Dxx;
-        public System.Windows.Forms.Label label9;
-        public System.Windows.Forms.TextBox ed_Dyy;
-        public System.Windows.Forms.TextBox ed_Dyx;
-        public System.Windows.Forms.Label label10;
-        public System.Windows.Forms.Button btn_SaveConfig;
-        public System.Windows.Forms.Button btn_Close;
-        public System.Windows.Forms.Button btn_SaveParam;
-        public System.Windows.Forms.CheckBox ck_Binning;
-        public System.Windows.Forms.ComboBox cb_Rotate;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox KeyList;
+        private System.Windows.Forms.Button btn_Search;
+        private System.Windows.Forms.Button btn_Set;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.HScrollBar GammaBar;
+        private System.Windows.Forms.HScrollBar ExposureBar;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox ed_Speed;
+        private System.Windows.Forms.Label lb_Gamma;
+        private System.Windows.Forms.Label lb_Exposure;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox ed_ScaleX;
+        private System.Windows.Forms.TextBox ed_ScaleY;
+        private System.Windows.Forms.CheckBox ck_MirrorX;
+        private System.Windows.Forms.CheckBox ck_MirrorY;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox ed_Dxy;
+        private System.Windows.Forms.TextBox ed_Dxx;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox ed_Dyy;
+        private System.Windows.Forms.TextBox ed_Dyx;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btn_SaveConfig;
+        private System.Windows.Forms.Button btn_Close;
+        private System.Windows.Forms.Button btn_SaveParam;
+        private System.Windows.Forms.CheckBox ck_Binning;
+        private System.Windows.Forms.ComboBox cb_Rotate;
+        private System.Windows.Forms.Label lb_Black;
+        private System.Windows.Forms.HScrollBar BlackBar;
+        private System.Windows.Forms.Label label6;
     }
 }
