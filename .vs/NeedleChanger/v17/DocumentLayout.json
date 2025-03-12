@@ -7,7 +7,7 @@
       "RelativeMoniker": "D:0:0:{4BC7AEFA-BA94-44EC-A1A8-C74A42E0A155}|NeedleChanger.csproj|solutionrelative:receivesurface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|d:\\needlechanger\\code\\needlechanger\\inspector\\inspector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|D:\\NeedleChanger\\Code\\NeedleChanger\\inspector\\inspector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0CC9E3B9-D31B-45F0-B75B-787CF027AECA}|Inspector\\Inspector.csproj|solutionrelative:inspector\\inspector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -56,7 +56,7 @@
               "RelativeDocumentMoniker": "ReceiveSurface.cs",
               "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\ReceiveSurface.cs",
               "RelativeToolTip": "ReceiveSurface.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-12T12:30:35.257Z",
               "EditorCaption": ""
@@ -94,8 +94,7 @@
               "ToolTip": "D:\\NeedleChanger\\Code\\NeedleChanger\\Inspector\\Inspector.cs [Design]",
               "RelativeToolTip": "Inspector\\Inspector.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T06:40:39.786Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-03-11T06:40:39.786Z"
             },
             {
               "$type": "Document",
@@ -107,8 +106,7 @@
               "RelativeToolTip": "Inspector\\Inspector.cs",
               "ViewState": "AgIAAOwBAAAAAAAAAAAAAKsDAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T03:02:52.342Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-11T03:02:52.342Z"
             },
             {
               "$type": "Document",

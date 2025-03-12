@@ -146,5 +146,3 @@ D:\NeedleChanger\Code\NeedleChanger\bin\Debug\System.Text.Encodings.Web.xml
 D:\NeedleChanger\Code\NeedleChanger\bin\Debug\System.ValueTuple.xml
 D:\NeedleChanger\Code\NeedleChanger\bin\Debug\GoSdkNet.dll
 D:\NeedleChanger\Code\NeedleChanger\bin\Debug\kApiNet.dll
-D:\NeedleChanger\Code\NeedleChanger\bin\Debug\GoSdkNet.pdb
-D:\NeedleChanger\Code\NeedleChanger\bin\Debug\GoSdkNet.xml

@@ -63,9 +63,8 @@
     <Reference Include="CoreMotionApi_CLRLib">
       <HintPath>C:\Program Files\SoftServo\WMX3\Lib\CoreMotionApi_CLRLib.dll</HintPath>
     </Reference>
-    <Reference Include="GoSdkNet, Version=1.0.8752.28012, Culture=neutral, PublicKeyToken=3e18828f1dab5c8c, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\3D掃描儀\14400-6.3.7.2_SOFTWARE_GO_SDK\GO_SDK\bin\win64\GoSdkNet.dll</HintPath>
+    <Reference Include="GoSdkNet">
+      <HintPath>lmi\GoSdkNet.dll</HintPath>
     </Reference>
     <Reference Include="halcondotnetxl, Version=18.11.4.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -74,9 +73,8 @@
     <Reference Include="IOApi_CLRLib">
       <HintPath>C:\Program Files\SoftServo\WMX3\Lib\IOApi_CLRLib.dll</HintPath>
     </Reference>
-    <Reference Include="kApiNet, Version=1.0.8741.20783, Culture=neutral, PublicKeyToken=aed51b4e56ae495f, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\3D掃描儀\14400-6.3.7.2_SOFTWARE_GO_SDK\GO_SDK\bin\win64\kApiNet.dll</HintPath>
+    <Reference Include="kApiNet">
+      <HintPath>lmi\kApiNet.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.9.0.2\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -230,12 +228,14 @@
         copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\x86\IMDll.dll" "$(TargetDir)"
         copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\x86\IOApi_CLRLib.dll" "$(TargetDir)"
         copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\x86\WMX3Api_CLRLib.dll" "$(TargetDir)"
+        xcopy /y /e /i "$(ProjectDir)\lmi\*.*" "$(TargetDir)\"
     ) else (
         copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\AdvancedMotionApi_CLRLib.dll" "$(TargetDir)"
         copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\CoreMotionApi_CLRLib.dll" "$(TargetDir)"
         copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\IMDll.dll" "$(TargetDir)"
         copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\IOApi_CLRLib.dll" "$(TargetDir)"
         copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\WMX3Api_CLRLib.dll" "$(TargetDir)"
+        xcopy /y /e /i "$(ProjectDir)\lmi\*.*" "$(TargetDir)\"
     )
 ) else if "$(PlatformName)" == "x64" (
     copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\AdvancedMotionApi_CLRLib.dll" "$(TargetDir)"
@@ -243,6 +243,7 @@
     copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\IMDll.dll" "$(TargetDir)"
     copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\IOApi_CLRLib.dll" "$(TargetDir)"
     copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\WMX3Api_CLRLib.dll" "$(TargetDir)"
+    xcopy /y /e /i "$(ProjectDir)\lmi\*.*" "$(TargetDir)\"
 )
 
 REM 編譯完後刪除 packages 資料夾
@@ -272,6 +273,123 @@ del /f /q "$(TargetDir)\System.Threading.Tasks.Extensions.xml"
 del /f /q "$(TargetDir)\System.ValueTuple.dll"
 del /f /q "$(TargetDir)\System.ValueTuple.xml"
 del /f /q "$(TargetDir)\netDxf.dll"
-del /f /q "$(TargetDir)\netDxf.xml"</PreBuildEvent>
+del /f /q "$(TargetDir)\netDxf.xml"
+del /f /q "$(TargetDir)\api-ms-win-core-console-l1-1-0.dll"                      
+del /f /q "$(TargetDir)\api-ms-win-core-console-l1-2-0.dll"                      
+del /f /q "$(TargetDir)\api-ms-win-core-datetime-l1-1-0.dll"                     
+del /f /q "$(TargetDir)\api-ms-win-core-debug-l1-1-0.dll"                        
+del /f /q "$(TargetDir)\api-ms-win-core-errorhandling-l1-1-0.dll"                
+del /f /q "$(TargetDir)\api-ms-win-core-file-l1-1-0.dll"                         
+del /f /q "$(TargetDir)\api-ms-win-core-file-l1-2-0.dll"                         
+del /f /q "$(TargetDir)\api-ms-win-core-file-l2-1-0.dll"                         
+del /f /q "$(TargetDir)\api-ms-win-core-handle-l1-1-0.dll"                       
+del /f /q "$(TargetDir)\api-ms-win-core-heap-l1-1-0.dll"                         
+del /f /q "$(TargetDir)\api-ms-win-core-interlocked-l1-1-0.dll"                  
+del /f /q "$(TargetDir)\api-ms-win-core-libraryloader-l1-1-0.dll"                
+del /f /q "$(TargetDir)\api-ms-win-core-localization-l1-2-0.dll"                 
+del /f /q "$(TargetDir)\api-ms-win-core-memory-l1-1-0.dll"                       
+del /f /q "$(TargetDir)\api-ms-win-core-namedpipe-l1-1-0.dll"                    
+del /f /q "$(TargetDir)\api-ms-win-core-processenvironment-l1-1-0.dll"           
+del /f /q "$(TargetDir)\api-ms-win-core-processthreads-l1-1-0.dll"               
+del /f /q "$(TargetDir)\api-ms-win-core-processthreads-l1-1-1.dll"               
+del /f /q "$(TargetDir)\api-ms-win-core-profile-l1-1-0.dll"                      
+del /f /q "$(TargetDir)\api-ms-win-core-rtlsupport-l1-1-0.dll"                   
+del /f /q "$(TargetDir)\api-ms-win-core-string-l1-1-0.dll"                       
+del /f /q "$(TargetDir)\api-ms-win-core-synch-l1-1-0.dll"                        
+del /f /q "$(TargetDir)\api-ms-win-core-synch-l1-2-0.dll"                        
+del /f /q "$(TargetDir)\api-ms-win-core-sysinfo-l1-1-0.dll"                      
+del /f /q "$(TargetDir)\api-ms-win-core-timezone-l1-1-0.dll"                     
+del /f /q "$(TargetDir)\api-ms-win-core-util-l1-1-0.dll"                         
+del /f /q "$(TargetDir)\api-ms-win-crt-conio-l1-1-0.dll"                         
+del /f /q "$(TargetDir)\api-ms-win-crt-convert-l1-1-0.dll"                       
+del /f /q "$(TargetDir)\api-ms-win-crt-environment-l1-1-0.dll"                   
+del /f /q "$(TargetDir)\api-ms-win-crt-filesystem-l1-1-0.dll"                    
+del /f /q "$(TargetDir)\api-ms-win-crt-heap-l1-1-0.dll"                          
+del /f /q "$(TargetDir)\api-ms-win-crt-locale-l1-1-0.dll"                        
+del /f /q "$(TargetDir)\api-ms-win-crt-math-l1-1-0.dll"                          
+del /f /q "$(TargetDir)\api-ms-win-crt-multibyte-l1-1-0.dll"                     
+del /f /q "$(TargetDir)\api-ms-win-crt-private-l1-1-0.dll"                       
+del /f /q "$(TargetDir)\api-ms-win-crt-process-l1-1-0.dll"                       
+del /f /q "$(TargetDir)\api-ms-win-crt-runtime-l1-1-0.dll"                       
+del /f /q "$(TargetDir)\api-ms-win-crt-stdio-l1-1-0.dll"                         
+del /f /q "$(TargetDir)\api-ms-win-crt-string-l1-1-0.dll"                        
+del /f /q "$(TargetDir)\api-ms-win-crt-time-l1-1-0.dll"                          
+del /f /q "$(TargetDir)\api-ms-win-crt-utility-l1-1-0.dll"                       
+del /f /q "$(TargetDir)\cbw64.dll"                                               
+del /f /q "$(TargetDir)\concrt140.dll"                                           
+del /f /q "$(TargetDir)\cudart64_102.dll"                                        
+del /f /q "$(TargetDir)\freetype.dll"                                            
+del /f /q "$(TargetDir)\Gdk.dll"                                                 
+del /f /q "$(TargetDir)\GdkAppMeshBoundingBox.dll"                               
+del /f /q "$(TargetDir)\GdkAppMeshPlane.dll"                                     
+del /f /q "$(TargetDir)\GdkAppMeshProjection.dll"                                
+del /f /q "$(TargetDir)\GdkAppMeshTemplateMatching.dll"                          
+del /f /q "$(TargetDir)\GdkAppProfileClosedArea.dll"                             
+del /f /q "$(TargetDir)\GdkAppProfileFilter.dll"                                
+del /f /q "$(TargetDir)\GdkAppProfileMask.dll"                                  
+del /f /q "$(TargetDir)\GdkAppProfileTransform.dll"                             
+del /f /q "$(TargetDir)\GdkAppProfileXLine.dll"                                 
+del /f /q "$(TargetDir)\GdkAppRawProfileMatching.dll"                           
+del /f /q "$(TargetDir)\GdkAppSurfaceAlignRing.dll"                             
+del /f /q "$(TargetDir)\GdkAppSurfaceAlignWide.dll"                             
+del /f /q "$(TargetDir)\GdkAppSurfaceBlob.dll"                                  
+del /f /q "$(TargetDir)\GdkAppSurfaceBoundingBoxAdvanced.dll"                   
+del /f /q "$(TargetDir)\GdkAppSurfaceCylinder.dll"                              
+del /f /q "$(TargetDir)\GdkAppSurfaceFeatureMask.dll"                           
+del /f /q "$(TargetDir)\GdkAppSurfaceMergeWide.dll"                             
+del /f /q "$(TargetDir)\GdkAppSurfaceMesh.dll"                                  
+del /f /q "$(TargetDir)\GdkAppSurfaceOcr.dll"                                   
+del /f /q "$(TargetDir)\GdkAppSurfacePatternMatching.dll"                       
+del /f /q "$(TargetDir)\GdkAppSurfacePlaneAdvanced.dll"                         
+del /f /q "$(TargetDir)\GdkAppSurfaceSphere.dll"                                
+del /f /q "$(TargetDir)\gdkappve.dll"                                           
+del /f /q "$(TargetDir)\GdkElementLib.dll"                                      
+del /f /q "$(TargetDir)\GdkHelperLib.dll"                                       
+del /f /q "$(TargetDir)\GdkIconvLib.dll"                                        
+del /f /q "$(TargetDir)\GdkTopoGeomIO.dll"                                      
+del /f /q "$(TargetDir)\GdkTopoGeomLib.dll"                                     
+del /f /q "$(TargetDir)\GdkVisionLib.dll"                                       
+del /f /q "$(TargetDir)\GdkZbarLib.dll"                                         
+del /f /q "$(TargetDir)\GoApi.dll"                                              
+del /f /q "$(TargetDir)\GoCommon.dll"                                           
+del /f /q "$(TargetDir)\GoPipe.dll"                                             
+del /f /q "$(TargetDir)\GoPlugin.dll"                                           
+del /f /q "$(TargetDir)\GoSdk.dll"                                              
+del /f /q "$(TargetDir)\GoSdkNet.dll"                                           
+del /f /q "$(TargetDir)\GoSensor.dll"                                           
+del /f /q "$(TargetDir)\GoSensorApp.dll"                                        
+del /f /q "$(TargetDir)\GoSensorAppLib.dll"                                     
+del /f /q "$(TargetDir)\GoTools.dll"                                            
+del /f /q "$(TargetDir)\GoVision.dll"                                           
+del /f /q "$(TargetDir)\GoXLogger.dll"                                          
+del /f /q "$(TargetDir)\kApi.dll"                                               
+del /f /q "$(TargetDir)\kApiNet.dll"                                            
+del /f /q "$(TargetDir)\kDevice.dll"                                            
+del /f /q "$(TargetDir)\kFactoryApi.dll"                                        
+del /f /q "$(TargetDir)\kFireSync.dll"                                          
+del /f /q "$(TargetDir)\kHardwareVirtual.dll"                                   
+del /f /q "$(TargetDir)\kVision.dll"                                            
+del /f /q "$(TargetDir)\mfc140u.dll"                                            
+del /f /q "$(TargetDir)\mfcm140u.dll"                                           
+del /f /q "$(TargetDir)\msvcp140.dll"                                           
+del /f /q "$(TargetDir)\MXIO.dll"                                               
+del /f /q "$(TargetDir)\opencv_core320.dll"                                     
+del /f /q "$(TargetDir)\opencv_flann320.dll"                                    
+del /f /q "$(TargetDir)\opencv_imgproc320.dll"                                  
+del /f /q "$(TargetDir)\opencv_photo320.dll"                                    
+del /f /q "$(TargetDir)\pvt.cppan.demo.danbloomberg.leptonica-1.78.0.dll"       
+del /f /q "$(TargetDir)\pvt.cppan.demo.jpeg-9.2.0.dll"                          
+del /f /q "$(TargetDir)\pvt.cppan.demo.madler.zlib-1.2.11.dll"                  
+del /f /q "$(TargetDir)\pvt.cppan.demo.openjpeg.openjp2-2.3.0.dll"              
+del /f /q "$(TargetDir)\pvt.cppan.demo.png-1.6.35.dll"                          
+del /f /q "$(TargetDir)\pvt.cppan.demo.tiff-4.0.9.dll"                          
+del /f /q "$(TargetDir)\pvt.cppan.demo.webp-0.6.1.dll"                          
+del /f /q "$(TargetDir)\pvt.cppan.demo.xz_utils.lzma-5.2.4.dll"                 
+del /f /q "$(TargetDir)\tesseract41.dll"                                        
+del /f /q "$(TargetDir)\ucrtbase.dll"                                           
+del /f /q "$(TargetDir)\vccorlib140.dll"                                        
+del /f /q "$(TargetDir)\vcruntime140.dll"                                       
+del /f /q "$(TargetDir)\vcruntime140_1.dll"                                     
+</PreBuildEvent>
   </PropertyGroup>
 </Project>
