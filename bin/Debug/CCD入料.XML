@@ -1,15 +1,16 @@
 <?xml version="1.0"?>
 <ParamDefine xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Key>DMK 33GJ003e:40424151</Key>
-  <Gamma>1</Gamma>
-  <Exposure>29501</Exposure>
+  <Gamma>2.6</Gamma>
+  <Exposure>26601</Exposure>
   <SpeedRate>10</SpeedRate>
+  <Black>414</Black>
   <MirrorX>false</MirrorX>
   <MirrorY>false</MirrorY>
   <Binning>false</Binning>
   <ImageRotate>0</ImageRotate>
-  <ScaleX>0.03</ScaleX>
-  <ScaleY>0.03</ScaleY>
+  <ScaleX>0.0484027105517909</ScaleX>
+  <ScaleY>0.0484027105517909</ScaleY>
   <vDx_X>1</vDx_X>
   <vDx_Y>0</vDx_Y>
   <vDy_X>0</vDy_X>
