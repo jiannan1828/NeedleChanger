@@ -6600,7 +6600,7 @@ namespace InjectorInspector
 
         #region 暫時或實驗中
         //---------------------------------------------------------------------------------------
-        //-------------------------------------- 暫時或實驗中 ------------------------------------
+        //------------------------------------- 暫時或實驗中 ------------------------------------
         //---------------------------------------------------------------------------------------
         public void button1_Click(object sender, EventArgs e)
         {
@@ -6624,7 +6624,20 @@ namespace InjectorInspector
             dbCameraCalibrationY = pos.Y;
         }
         //---------------------------------------------------------------------------------------
-        //-------------------------------------- 暫時或實驗中 ------------------------------------
+        private void tmr_TaskFlow_Tick(object sender, EventArgs e)
+        {
+
+            Xavier_Engine();
+
+            if (false) { 
+                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR01);
+                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp1_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR02);
+                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp4_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR01);
+                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp3_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR02);
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        //------------------------------------- 暫時或實驗中 ------------------------------------
         //---------------------------------------------------------------------------------------
         #endregion
 
@@ -6633,13 +6646,224 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //-------------------------------- Xavier TaskFlow Engine -------------------------------
         //---------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public enum xeXavier_FlowTaskISR {
+            xeXFTI_tp1_ISR = 0x01,
+            xeXFTI_tp2_ISR = 0x02,
+            xeXFTI_tp3_ISR = 0x04,
+            xeXFTI_tp4_ISR = 0x08,
+        }
+
+        public enum xeXavier_FlowTask_ISR_ID {
+            xeFTII_ISR01 = 0,
+            xeFTII_ISR02,
+        }
+
+        public struct B8Bits {
+            public byte TIFByte;
+
+            public struct BitFields {
+                public bool bit0;
+                public bool bit1;
+                public bool bit2;
+                public bool bit3;
+                public bool bit4;
+                public bool bit5;
+                public bool bit6;
+                public bool bit7;
+            }
+
+            public BitFields bits {
+                get {
+                    return new BitFields {
+                        bit0 = (TIFByte & 0x01) != 0,
+                        bit1 = (TIFByte & 0x02) != 0,
+                        bit2 = (TIFByte & 0x04) != 0,
+                        bit3 = (TIFByte & 0x08) != 0,
+                        bit4 = (TIFByte & 0x10) != 0,
+                        bit5 = (TIFByte & 0x20) != 0,
+                        bit6 = (TIFByte & 0x40) != 0,
+                        bit7 = (TIFByte & 0x80) != 0
+                    };
+                } // end of get
+                set {
+                    TIFByte = (byte)(
+                        (value.bit0 ? 0x01 : 0) |
+                        (value.bit1 ? 0x02 : 0) |
+                        (value.bit2 ? 0x04 : 0) |
+                        (value.bit3 ? 0x08 : 0) |
+                        (value.bit4 ? 0x10 : 0) |
+                        (value.bit5 ? 0x20 : 0) |
+                        (value.bit6 ? 0x40 : 0) |
+                        (value.bit7 ? 0x80 : 0)
+                    );
+                }  // end of set
+            }  // end of public BitFields bits
+        }  // end of public struct BitFields
+
+        B8Bits TaskISRFlag = new B8Bits();
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        #region XavierTaskFlowEngine
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_Task_Eng_Debugprintf(string message) {
+            // Add debug print logic, e.g., console output
+            Console.WriteLine(message);
+        }
+        //---------------------------------------------------------------------------------------
+        public void Xavier_Engine() {
+        
+            var tempBits = TaskISRFlag.bits;
             
+                if(tempBits.bit0 == true) {
+                    Xavier_TASK1();  
+                } else 
+                
+                if(tempBits.bit1 == true) {
+                    Xavier_TASK2();  
+                } else 
+                
+                if(tempBits.bit2 == true) {
+                    Xavier_TASK3();  
+                } else 
+                
+                if(tempBits.bit3 == true) {
+                    Xavier_TASK4();  
+                } else 
+                
+                {
+                    Xavier_TASK1();
+                    Xavier_TASK2();
+                    Xavier_TASK3();
+                    Xavier_TASK4();
+                }
+        
+        }
+        //---------------------------------------------------------------------------------------
+        public void Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR CallTask, xeXavier_FlowTask_ISR_ID isrID) {
+        
+            var tempBits = TaskISRFlag.bits;
+                switch(CallTask) {
+                    case xeXavier_FlowTaskISR.xeXFTI_tp1_ISR:
+                        if(tempBits.bit0 == false) {  //force to tp1_ISR_START
+                            tempBits.bit0 = true;
+                            switch(isrID) {
+                                case xeXavier_FlowTask_ISR_ID.xeFTII_ISR01:  Task1CallJob((byte)xeXavier_T1_Job.tp1_ISR01_START);  break;
+                                case xeXavier_FlowTask_ISR_ID.xeFTII_ISR02:  Task1CallJob((byte)xeXavier_T1_Job.tp1_ISR02_START);  break;
+                            }
+                            Xavier_Task_Eng_Debugprintf("Set ISR");
+                        }
+                        break;
+                    
+                    case xeXavier_FlowTaskISR.xeXFTI_tp2_ISR:
+                        if(tempBits.bit1 == false) {  //force to tp2_ISR_START
+                            tempBits.bit1 = true;
+                            switch(isrID) {
+                                case xeXavier_FlowTask_ISR_ID.xeFTII_ISR01:  Task2CallJob((byte)xeXavier_T2_Job.tp2_ISR01_START);  break;
+                                case xeXavier_FlowTask_ISR_ID.xeFTII_ISR02:  Task2CallJob((byte)xeXavier_T2_Job.tp2_ISR02_START);  break;
+                            }
+                            Xavier_Task_Eng_Debugprintf("Set ISR");
+                        }
+                        break;
+                    
+                    case xeXavier_FlowTaskISR.xeXFTI_tp3_ISR:
+                        if(tempBits.bit2 == false) {  //force to tp3_ISR_START
+                            tempBits.bit2 = true;
+                            switch(isrID) {
+                                case xeXavier_FlowTask_ISR_ID.xeFTII_ISR01:  Task3CallJob((byte)xeXavier_T3_Job.tp3_ISR01_START);  break;
+                                case xeXavier_FlowTask_ISR_ID.xeFTII_ISR02:  Task3CallJob((byte)xeXavier_T3_Job.tp3_ISR02_START);  break;
+                            }
+                            Xavier_Task_Eng_Debugprintf("Set ISR");
+                        }
+                        break;
+                    
+                    case xeXavier_FlowTaskISR.xeXFTI_tp4_ISR:
+                        if(tempBits.bit3 == false) {  //force to tp4_ISR_START
+                            tempBits.bit3 = true;
+                            switch(isrID) {
+                                case xeXavier_FlowTask_ISR_ID.xeFTII_ISR01:  Task4CallJob((byte)xeXavier_T4_Job.tp4_ISR01_START);  break;
+                                case xeXavier_FlowTask_ISR_ID.xeFTII_ISR02:  Task4CallJob((byte)xeXavier_T4_Job.tp4_ISR02_START);  break;
+                            }
+                            Xavier_Task_Eng_Debugprintf("Set ISR");
+                        }
+                        break;
+                    
+                    default:
+                        tempBits.bit0 = false;
+                        tempBits.bit1 = false;
+                        tempBits.bit2 = false;
+                        tempBits.bit3 = false;
+                        Xavier_Task_Eng_Debugprintf("Set Other ISR, will clear");
+                        break;
+                }
+            TaskISRFlag.bits = tempBits;
+            
+                Xavier_Task_Eng_Debugprintf(string.Format(":{0:X2}\r\n", TaskISRFlag.TIFByte));
+        }
+        //---------------------------------------------------------------------------------------
+        public void Xavier_ResumeTaskInterrupt(char CallTask) {
+
+            var tempBits = TaskISRFlag.bits;
+                switch(CallTask) {
+                    case (char)0x01:
+                        if(tempBits.bit0 == true) {  //force to tp1_ISR_START
+                            tempBits.bit0 = false;
+                            Xavier_Task_Eng_Debugprintf("Res ISR");
+                        }
+                        break;
+                
+                    case (char)0x02:
+                        if(tempBits.bit1 == true) {  //force to tp2_ISR_START
+                            tempBits.bit1 = false;
+                            Xavier_Task_Eng_Debugprintf("Res ISR");
+                        }
+                        break;
+                
+                    case (char)0x04:
+                        if(tempBits.bit2 == true) {  //force to tp3_ISR_START
+                            tempBits.bit2 = false;
+                            Xavier_Task_Eng_Debugprintf("Res ISR");
+                        }
+                        break;
+                    
+                    case (char)0x08:
+                        if(tempBits.bit3 == true) {  //force to tp4_ISR_START
+                            tempBits.bit3 = false;
+                            Xavier_Task_Eng_Debugprintf("Res ISR");
+                        }
+                        break;
+                
+                    default:
+                        tempBits.bit0 = false;
+                        tempBits.bit1 = false;
+                        tempBits.bit2 = false;
+                        tempBits.bit3 = false;
+                        Xavier_Task_Eng_Debugprintf("Res Other ISR, will clear");
+                        break;
+                }
+            TaskISRFlag.bits = tempBits;
+        
+                Xavier_Task_Eng_Debugprintf(string.Format(":{0:X2}\r\n", TaskISRFlag.TIFByte));
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        #endregion
+
+        #region XavierTaskFlowEngine_T1
+        //---------------------------------------------------------------------------------------
+        //------------------------------- XavierTaskFlowEngine_T1 -------------------------------
+        //---------------------------------------------------------------------------------------
+
         // ----------Global Variables----------
         public static uint Xavier_T1_dC_decdelayCNT  = 0;
         public static byte Xavier_T1_dC_GetInJob     = 0;
         public static byte Xavier_Task1_p_ret        = 0;
-        public static byte Xavier_Task1_ISR_JT_retmp = (byte)xeXavier_T1_Job.tp1_ISR_START;
-        public static uint Xavier_Task1_ISR_CT_retmp = (uint)xeXavier_T1_Job.tp1_ISR_START;
+        public static byte Xavier_Task1_ISR_JT_retmp = (byte)xeXavier_T1_Job.tp1_ISR01_START;
+        public static uint Xavier_Task1_ISR_CT_retmp = (uint)xeXavier_T1_Job.tp1_ISR01_START;
 
         // ----------Enumerations----------
         public enum xeXavier_T1_proc {
@@ -6652,13 +6876,18 @@ namespace InjectorInspector
 
         public enum xeXavier_T1_Job {
             tp1Empty = 0,
-            
             tp1Init,
-            tp1_ISR_START,
-            tp1_ISR_STEP1,
-            tp1_ISR_STEP2,
-            tp1_ISR_END,
+            
+            tp1_ISR01_START,
+            tp1_ISR01_STEP1,
+            tp1_ISR01_STEP2,
+            tp1_ISR01_END,
 
+            tp1_ISR02_START,
+            tp1_ISR02_STEP1,
+            tp1_ISR02_STEP2,
+            tp1_ISR02_END,
+            
             tp1Idle,
             tp1START,
             tp1STEP1,
@@ -6671,8 +6900,8 @@ namespace InjectorInspector
         }
 
         // ----------Methods----------
-        /*----------------------------------------------------------------------------*/
-        /*----------------------------------------------------------------------------*/
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
         public void Xavier_TASK1() {
             byte priTASK = 0;
             Xavier_T1_delayCase(xeXavier_T1_proc.pt1deExcute, (uint)xeXavier_T1_Job.tp1Empty, (byte)xeXavier_T1_Job.tp1Empty);
@@ -6680,35 +6909,62 @@ namespace InjectorInspector
 
             switch (priTASK) {
                 case (byte)xeXavier_T1_Job.tp1Empty:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15000, (byte)xeXavier_T1_Job.tp1Init);
-                    Xavier_Debugprintf("tp1Empty\r\n");
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1Init);
+                    Xavier_Task1_Debugprintf("tp1Empty\r\n");
                     break;
 
                 case (byte)xeXavier_T1_Job.tp1Init:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15000, (byte)xeXavier_T1_Job.tp1START);
-                    Xavier_Debugprintf("tp1Init\r\n");
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1START);
+                    Xavier_Task1_Debugprintf("tp1Init\r\n");
                     break;
 
                 //======ISR Job======
-                case (byte)xeXavier_T1_Job.tp1_ISR_START:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5000, (byte)xeXavier_T1_Job.tp1_ISR_STEP1);
-                    Xavier_Debugprintf("tp1_ISR_START\r\n");
+                case (byte)xeXavier_T1_Job.tp1_ISR01_START:
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5, (byte)xeXavier_T1_Job.tp1_ISR01_STEP1);
+                    Xavier_Task1_Debugprintf("tp1_ISR01_START\r\n");
                     break;
 
-                case (byte)xeXavier_T1_Job.tp1_ISR_STEP1:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5000, (byte)xeXavier_T1_Job.tp1_ISR_STEP2);
-                    Xavier_Debugprintf("tp1_ISR_STEP1\r\n");
+                case (byte)xeXavier_T1_Job.tp1_ISR01_STEP1:
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5, (byte)xeXavier_T1_Job.tp1_ISR01_STEP2);
+                    Xavier_Task1_Debugprintf("tp1_ISR01_STEP1\r\n");
                     break;
 
-                case (byte)xeXavier_T1_Job.tp1_ISR_STEP2:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5000, (byte)xeXavier_T1_Job.tp1_ISR_END);
-                    Xavier_Debugprintf("tp1_ISR_STEP2\r\n");
+                case (byte)xeXavier_T1_Job.tp1_ISR01_STEP2:
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5, (byte)xeXavier_T1_Job.tp1_ISR01_END);
+                    Xavier_Task1_Debugprintf("tp1_ISR01_STEP2\r\n");
                     break;
 
-                case (byte)xeXavier_T1_Job.tp1_ISR_END:
+                case (byte)xeXavier_T1_Job.tp1_ISR01_END:
+                    //Xavier_Task1_ISR_CNTTmp(xeXavier_T1_proc.pt1SET, 15);
+                    //Xavier_Task1_ISR_JobTmp(xeXavier_T1_proc.pt1SET, (byte)xeXavier_T1_Job.tp1STEP2);
+                    
                     Task1ResumeJob();
-                    Xavier_ResumeTaskInterrupt(8);
-                    Xavier_Debugprintf("tp1_ISR_end\r\n");
+                    Xavier_ResumeTaskInterrupt((char)1);
+                    Xavier_Task1_Debugprintf("tp1_ISR01_end\r\n");
+                    break;
+                //======ISR Job======
+                case (byte)xeXavier_T1_Job.tp1_ISR02_START:
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5, (byte)xeXavier_T1_Job.tp1_ISR02_STEP1);
+                    Xavier_Task1_Debugprintf("tp1_ISR02_START\r\n");
+                    break;
+
+                case (byte)xeXavier_T1_Job.tp1_ISR02_STEP1:
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5, (byte)xeXavier_T1_Job.tp1_ISR02_STEP2);
+                    Xavier_Task1_Debugprintf("tp1_ISR02_STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T1_Job.tp1_ISR02_STEP2:
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5, (byte)xeXavier_T1_Job.tp1_ISR02_END);
+                    Xavier_Task1_Debugprintf("tp1_ISR02_STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T1_Job.tp1_ISR02_END:
+                    //Xavier_Task1_ISR_CNTTmp(xeXavier_T1_proc.pt1SET, 15);
+                    //Xavier_Task1_ISR_JobTmp(xeXavier_T1_proc.pt1SET, (byte)xeXavier_T1_Job.tp1STEP5);
+                    
+                    Task1ResumeJob();
+                    Xavier_ResumeTaskInterrupt((char)1);
+                    Xavier_Task1_Debugprintf("tp1_ISR02_end\r\n");
                     break;
                 //======ISR Job======
                 
@@ -6716,29 +6972,43 @@ namespace InjectorInspector
                     break;
 
                 case (byte)xeXavier_T1_Job.tp1START:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15000, (byte)xeXavier_T1_Job.tp1START);
-                    Xavier_Debugprintf("tp1START\r\n");
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1START);
+                    Xavier_Task1_Debugprintf("tp1START\r\n");
                     break;
 
                 case (byte)xeXavier_T1_Job.tp1STEP1:
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP1);
+                    Xavier_Task1_Debugprintf("tp1STEP1\r\n");
                     break;
 
                 case (byte)xeXavier_T1_Job.tp1STEP2:
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP2);
+                    Xavier_Task1_Debugprintf("tp1STEP2\r\n");
                     break;
 
                 case (byte)xeXavier_T1_Job.tp1STEP3:
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP3);
+                    Xavier_Task1_Debugprintf("tp1STEP3\r\n");
                     break;
 
                 case (byte)xeXavier_T1_Job.tp1STEP4:
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP4);
+                    Xavier_Task1_Debugprintf("tp1STEP4\r\n");
                     break;
 
                 case (byte)xeXavier_T1_Job.tp1STEP5:
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP5);
+                    Xavier_Task1_Debugprintf("tp1STEP5\r\n");
                     break;
 
                 case (byte)xeXavier_T1_Job.tp1STEP6:
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP6);
+                    Xavier_Task1_Debugprintf("tp1STEP6\r\n");
                     break;
 
                 case (byte)xeXavier_T1_Job.tp1STEP7:
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP7);
+                    Xavier_Task1_Debugprintf("tp1STEP1\r\n");
                     break;
 
                 default:
@@ -6747,8 +7017,8 @@ namespace InjectorInspector
 
             Xavier_Task1_proc(xeXavier_T1_proc.pt1SET, (byte)xeXavier_T1_Job.tp1Idle);
         }
-        /*----------------------------------------------------------------------------*/
-        /*----------------------------------------------------------------------------*/
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
         public void Xavier_T1_delayCase(xeXavier_T1_proc deJob, uint delayCNT, byte excuteJob) {
             switch (deJob) {
                 case xeXavier_T1_proc.pt1SET:
@@ -6785,7 +7055,7 @@ namespace InjectorInspector
                     break;
             }
         }
-        /*----------------------------------------------------------------------------*/
+        //---------------------------------------------------------------------------------------
         public byte Xavier_Task1_proc(xeXavier_T1_proc rtFun, byte ptValue) {
             switch (rtFun) {
                 case xeXavier_T1_proc.pt1SET:
@@ -6798,15 +7068,19 @@ namespace InjectorInspector
 
             return Xavier_Task1_p_ret;
         }
-        /*----------------------------------------------------------------------------*/
+        //---------------------------------------------------------------------------------------
         public void Task1CallJob(byte excuteJob) {
             Xavier_T1_delayCase(xeXavier_T1_proc.pt1Interrupt, 0, excuteJob);
         }
-        /*----------------------------------------------------------------------------*/
+        //---------------------------------------------------------------------------------------
+        public void Task1CallJobWithDelay(byte excuteJob, uint delayCNT) {
+            Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, delayCNT, excuteJob);
+        }
+        //---------------------------------------------------------------------------------------
         public void Task1ResumeJob() {
             Xavier_T1_delayCase(xeXavier_T1_proc.pt1ResISR, 0, 0);
         }
-        /*----------------------------------------------------------------------------*/
+        //---------------------------------------------------------------------------------------
         public byte Xavier_Task1_ISR_JobTmp(xeXavier_T1_proc rtFun, byte ptValue) {
             switch (rtFun) {
                 case xeXavier_T1_proc.pt1SET:
@@ -6819,7 +7093,7 @@ namespace InjectorInspector
 
             return Xavier_Task1_ISR_JT_retmp;
         }
-        /*----------------------------------------------------------------------------*/
+        //---------------------------------------------------------------------------------------
         public uint Xavier_Task1_ISR_CNTTmp(xeXavier_T1_proc rtFun, uint ptValue) {
             switch (rtFun) {
                 case xeXavier_T1_proc.pt1SET:
@@ -6832,29 +7106,849 @@ namespace InjectorInspector
 
             return Xavier_Task1_ISR_CT_retmp;
         }
-        /*----------------------------------------------------------------------------*/
-        /*----------------------------------------------------------------------------*/
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
 
         // ----------Debug Method----------
-        /*----------------------------------------------------------------------------*/
-        /*----------------------------------------------------------------------------*/
-        public void Xavier_Debugprintf(string message) {
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_Task1_Debugprintf(string message) {
             // Add debug print logic, e.g., console output
             Console.WriteLine(message);
         }
-        /*----------------------------------------------------------------------------*/
-        public void Xavier_ResumeTaskInterrupt(int interrupt) {
-            // Implement interrupt resume logic if necessary
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------
+        //------------------------------- XavierTaskFlowEngine_T1 -------------------------------
+        //---------------------------------------------------------------------------------------
+        #endregion
+
+
+
+        #region XavierTaskFlowEngine_T2
+        //---------------------------------------------------------------------------------------
+        //------------------------------- XavierTaskFlowEngine_T2 -------------------------------
+        //---------------------------------------------------------------------------------------
+
+        // ----------Global Variables----------
+        public static uint Xavier_T2_dC_decdelayCNT  = 0;
+        public static byte Xavier_T2_dC_GetInJob     = 0;
+        public static byte Xavier_Task2_p_ret        = 0;
+        public static byte Xavier_Task2_ISR_JT_retmp = (byte)xeXavier_T2_Job.tp2_ISR01_START;
+        public static uint Xavier_Task2_ISR_CT_retmp = (uint)xeXavier_T2_Job.tp2_ISR01_START;
+
+        // ----------Enumerations----------
+        public enum xeXavier_T2_proc {
+            pt2SET = 1,
+            pt2GET,
+            pt2Interrupt,
+            pt2ResISR,
+            pt2deExcute,
         }
-        /*----------------------------------------------------------------------------*/
-        /*----------------------------------------------------------------------------*/
+
+        public enum xeXavier_T2_Job {
+            tp2Empty = 0,
+            tp2Init,
+            
+            tp2_ISR01_START,
+            tp2_ISR01_STEP1,
+            tp2_ISR01_STEP2,
+            tp2_ISR01_END,
+
+            tp2_ISR02_START,
+            tp2_ISR02_STEP1,
+            tp2_ISR02_STEP2,
+            tp2_ISR02_END,
+            
+            tp2Idle,
+            tp2START,
+            tp2STEP1,
+            tp2STEP2,
+            tp2STEP3,
+            tp2STEP4,
+            tp2STEP5,
+            tp2STEP6,
+            tp2STEP7,
+        }
+
+        // ----------Methods----------
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_TASK2() {
+            byte priTASK = 0;
+            Xavier_T2_delayCase(xeXavier_T2_proc.pt2deExcute, (uint)xeXavier_T2_Job.tp2Empty, (byte)xeXavier_T2_Job.tp2Empty);
+            priTASK = Xavier_Task2_proc(xeXavier_T2_proc.pt2GET, 0);
+
+            switch (priTASK) {
+                case (byte)xeXavier_T2_Job.tp2Empty:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2Init);
+                    Xavier_Task2_Debugprintf("tp2Empty\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2Init:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2START);
+                    Xavier_Task2_Debugprintf("tp2Init\r\n");
+                    break;
+
+                //======ISR Job======
+                case (byte)xeXavier_T2_Job.tp2_ISR01_START:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, (byte)xeXavier_T2_Job.tp2_ISR01_STEP1);
+                    Xavier_Task2_Debugprintf("tp2_ISR01_START\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2_ISR01_STEP1:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, (byte)xeXavier_T2_Job.tp2_ISR01_STEP2);
+                    Xavier_Task2_Debugprintf("tp2_ISR01_STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2_ISR01_STEP2:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, (byte)xeXavier_T2_Job.tp2_ISR01_END);
+                    Xavier_Task2_Debugprintf("tp2_ISR01_STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2_ISR01_END:
+                    //Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2SET, 15);
+                    //Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc.pt2SET, (byte)xeXavier_T2_Job.tp2STEP2);
+                    
+                    Task2ResumeJob();
+                    Xavier_ResumeTaskInterrupt((char)2);
+                    Xavier_Task2_Debugprintf("tp2_ISR01_end\r\n");
+                    break;
+                //======ISR Job======
+                case (byte)xeXavier_T2_Job.tp2_ISR02_START:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, (byte)xeXavier_T2_Job.tp2_ISR02_STEP1);
+                    Xavier_Task2_Debugprintf("tp2_ISR02_START\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2_ISR02_STEP1:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, (byte)xeXavier_T2_Job.tp2_ISR02_STEP2);
+                    Xavier_Task2_Debugprintf("tp2_ISR02_STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2_ISR02_STEP2:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, (byte)xeXavier_T2_Job.tp2_ISR02_END);
+                    Xavier_Task2_Debugprintf("tp2_ISR02_STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2_ISR02_END:
+                    //Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2SET, 15);
+                    //Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc.pt2SET, (byte)xeXavier_T2_Job.tp2STEP5);
+                    
+                    Task2ResumeJob();
+                    Xavier_ResumeTaskInterrupt((char)2);
+                    Xavier_Task2_Debugprintf("tp2_ISR02_end\r\n");
+                    break;
+                //======ISR Job======
+                
+                case (byte)xeXavier_T2_Job.tp2Idle:  //reserve
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2START:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2START);
+                    Xavier_Task2_Debugprintf("tp2START\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2STEP1:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP1);
+                    Xavier_Task2_Debugprintf("tp2STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2STEP2:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP2);
+                    Xavier_Task2_Debugprintf("tp2STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2STEP3:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP3);
+                    Xavier_Task2_Debugprintf("tp2STEP3\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2STEP4:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP4);
+                    Xavier_Task2_Debugprintf("tp2STEP4\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2STEP5:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP5);
+                    Xavier_Task2_Debugprintf("tp2STEP5\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2STEP6:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP6);
+                    Xavier_Task2_Debugprintf("tp2STEP6\r\n");
+                    break;
+
+                case (byte)xeXavier_T2_Job.tp2STEP7:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP7);
+                    Xavier_Task2_Debugprintf("tp2STEP1\r\n");
+                    break;
+
+                default:
+                    break;
+            }
+
+            Xavier_Task2_proc(xeXavier_T2_proc.pt2SET, (byte)xeXavier_T2_Job.tp2Idle);
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_T2_delayCase(xeXavier_T2_proc deJob, uint delayCNT, byte excuteJob) {
+            switch (deJob) {
+                case xeXavier_T2_proc.pt2SET:
+                    Xavier_T2_dC_decdelayCNT = delayCNT + 2;
+                    Xavier_T2_dC_GetInJob = excuteJob;
+                    break;
+
+                case xeXavier_T2_proc.pt2Interrupt:
+                    if (Xavier_T2_dC_GetInJob != excuteJob) {
+                        Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2SET, Xavier_T2_dC_decdelayCNT);
+                        Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc.pt2SET, Xavier_T2_dC_GetInJob);
+
+                        Xavier_T2_dC_GetInJob = excuteJob;
+                        Xavier_T2_dC_decdelayCNT = 2;  // equal to excute pt2deExcute to get Xavier_Task2_proc(pt2SET,GetInJob);
+                    }
+                    break;
+
+                case xeXavier_T2_proc.pt2ResISR:
+                    Xavier_T2_dC_decdelayCNT = Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2GET, Xavier_T2_dC_GetInJob) + 2;
+                    Xavier_T2_dC_GetInJob = Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc.pt2GET, Xavier_T2_dC_GetInJob);
+
+                    Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2SET, 2);
+                    Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc.pt2SET, (byte)xeXavier_T2_Job.tp2Empty);
+                    break;
+
+                case xeXavier_T2_proc.pt2deExcute:
+                    if (Xavier_T2_dC_decdelayCNT > 0) {
+                        Xavier_T2_dC_decdelayCNT--;
+                    }
+
+                    if (Xavier_T2_dC_decdelayCNT == 1) {
+                        Xavier_Task2_proc(xeXavier_T2_proc.pt2SET, Xavier_T2_dC_GetInJob);
+                    }
+                    break;
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        public byte Xavier_Task2_proc(xeXavier_T2_proc rtFun, byte ptValue) {
+            switch (rtFun) {
+                case xeXavier_T2_proc.pt2SET:
+                    Xavier_Task2_p_ret = ptValue;
+                    break;
+
+                case xeXavier_T2_proc.pt2GET:
+                    break;
+            }
+
+            return Xavier_Task2_p_ret;
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task2CallJob(byte excuteJob) {
+            Xavier_T2_delayCase(xeXavier_T2_proc.pt2Interrupt, 0, excuteJob);
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task2CallJobWithDelay(byte excuteJob, uint delayCNT) {
+            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, delayCNT, excuteJob);
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task2ResumeJob() {
+            Xavier_T2_delayCase(xeXavier_T2_proc.pt2ResISR, 0, 0);
+        }
+        //---------------------------------------------------------------------------------------
+        public byte Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc rtFun, byte ptValue) {
+            switch (rtFun) {
+                case xeXavier_T2_proc.pt2SET:
+                    Xavier_Task2_ISR_JT_retmp = ptValue;
+                    break;
+
+                case xeXavier_T2_proc.pt2GET:
+                    break;
+            }
+
+            return Xavier_Task2_ISR_JT_retmp;
+        }
+        //---------------------------------------------------------------------------------------
+        public uint Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc rtFun, uint ptValue) {
+            switch (rtFun) {
+                case xeXavier_T2_proc.pt2SET:
+                    Xavier_Task2_ISR_CT_retmp = ptValue;
+                    break;
+
+                case xeXavier_T2_proc.pt2GET:
+                    break;
+            }
+
+            return Xavier_Task2_ISR_CT_retmp;
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        // ----------Debug Method----------
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_Task2_Debugprintf(string message) {
+            // Add debug print logic, e.g., console output
+            Console.WriteLine(message);
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------
+        //------------------------------- XavierTaskFlowEngine_T2 -------------------------------
+        //---------------------------------------------------------------------------------------
+        #endregion
+
+
+
+        #region XavierTaskFlowEngine_T3
+        //---------------------------------------------------------------------------------------
+        //------------------------------- XavierTaskFlowEngine_T3 -------------------------------
+        //---------------------------------------------------------------------------------------
+
+        // ----------Global Variables----------
+        public static uint Xavier_T3_dC_decdelayCNT  = 0;
+        public static byte Xavier_T3_dC_GetInJob     = 0;
+        public static byte Xavier_Task3_p_ret        = 0;
+        public static byte Xavier_Task3_ISR_JT_retmp = (byte)xeXavier_T3_Job.tp3_ISR01_START;
+        public static uint Xavier_Task3_ISR_CT_retmp = (uint)xeXavier_T3_Job.tp3_ISR01_START;
+
+        // ----------Enumerations----------
+        public enum xeXavier_T3_proc {
+            pt3SET = 1,
+            pt3GET,
+            pt3Interrupt,
+            pt3ResISR,
+            pt3deExcute,
+        }
+
+        public enum xeXavier_T3_Job {
+            tp3Empty = 0,
+            tp3Init,
+            
+            tp3_ISR01_START,
+            tp3_ISR01_STEP1,
+            tp3_ISR01_STEP2,
+            tp3_ISR01_END,
+
+            tp3_ISR02_START,
+            tp3_ISR02_STEP1,
+            tp3_ISR02_STEP2,
+            tp3_ISR02_END,
+            
+            tp3Idle,
+            tp3START,
+            tp3STEP1,
+            tp3STEP2,
+            tp3STEP3,
+            tp3STEP4,
+            tp3STEP5,
+            tp3STEP6,
+            tp3STEP7,
+        }
+
+        // ----------Methods----------
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_TASK3() {
+            byte priTASK = 0;
+            Xavier_T3_delayCase(xeXavier_T3_proc.pt3deExcute, (uint)xeXavier_T3_Job.tp3Empty, (byte)xeXavier_T3_Job.tp3Empty);
+            priTASK = Xavier_Task3_proc(xeXavier_T3_proc.pt3GET, 0);
+
+            switch (priTASK) {
+                case (byte)xeXavier_T3_Job.tp3Empty:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3Init);
+                    Xavier_Task3_Debugprintf("tp3Empty\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3Init:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3START);
+                    Xavier_Task3_Debugprintf("tp3Init\r\n");
+                    break;
+
+                //======ISR Job======
+                case (byte)xeXavier_T3_Job.tp3_ISR01_START:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 5, (byte)xeXavier_T3_Job.tp3_ISR01_STEP1);
+                    Xavier_Task3_Debugprintf("tp3_ISR01_START\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3_ISR01_STEP1:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 5, (byte)xeXavier_T3_Job.tp3_ISR01_STEP2);
+                    Xavier_Task3_Debugprintf("tp3_ISR01_STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3_ISR01_STEP2:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 5, (byte)xeXavier_T3_Job.tp3_ISR01_END);
+                    Xavier_Task3_Debugprintf("tp3_ISR01_STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3_ISR01_END:
+                    //Xavier_Task3_ISR_CNTTmp(xeXavier_T3_proc.pt3SET, 15);
+                    //Xavier_Task3_ISR_JobTmp(xeXavier_T3_proc.pt3SET, (byte)xeXavier_T3_Job.tp3STEP2);
+                    
+                    Task3ResumeJob();
+                    Xavier_ResumeTaskInterrupt((char)4);
+                    Xavier_Task3_Debugprintf("tp3_ISR01_end\r\n");
+                    break;
+                //======ISR Job======
+                case (byte)xeXavier_T3_Job.tp3_ISR02_START:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 5, (byte)xeXavier_T3_Job.tp3_ISR02_STEP1);
+                    Xavier_Task3_Debugprintf("tp3_ISR02_START\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3_ISR02_STEP1:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 5, (byte)xeXavier_T3_Job.tp3_ISR02_STEP2);
+                    Xavier_Task3_Debugprintf("tp3_ISR02_STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3_ISR02_STEP2:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 5, (byte)xeXavier_T3_Job.tp3_ISR02_END);
+                    Xavier_Task3_Debugprintf("tp3_ISR02_STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3_ISR02_END:
+                    //Xavier_Task3_ISR_CNTTmp(xeXavier_T3_proc.pt3SET, 15);
+                    //Xavier_Task3_ISR_JobTmp(xeXavier_T3_proc.pt3SET, (byte)xeXavier_T3_Job.tp3STEP5);
+                    
+                    Task3ResumeJob();
+                    Xavier_ResumeTaskInterrupt((char)4);
+                    Xavier_Task3_Debugprintf("tp3_ISR02_end\r\n");
+                    break;
+                //======ISR Job======
+                
+                case (byte)xeXavier_T3_Job.tp3Idle:  //reserve
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3START:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3START);
+                    Xavier_Task3_Debugprintf("tp3START\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3STEP1:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP1);
+                    Xavier_Task3_Debugprintf("tp3STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3STEP2:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP2);
+                    Xavier_Task3_Debugprintf("tp3STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3STEP3:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP3);
+                    Xavier_Task3_Debugprintf("tp3STEP3\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3STEP4:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP4);
+                    Xavier_Task3_Debugprintf("tp3STEP4\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3STEP5:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP5);
+                    Xavier_Task3_Debugprintf("tp3STEP5\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3STEP6:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP6);
+                    Xavier_Task3_Debugprintf("tp3STEP6\r\n");
+                    break;
+
+                case (byte)xeXavier_T3_Job.tp3STEP7:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP7);
+                    Xavier_Task3_Debugprintf("tp3STEP1\r\n");
+                    break;
+
+                default:
+                    break;
+            }
+
+            Xavier_Task3_proc(xeXavier_T3_proc.pt3SET, (byte)xeXavier_T3_Job.tp3Idle);
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_T3_delayCase(xeXavier_T3_proc deJob, uint delayCNT, byte excuteJob) {
+            switch (deJob) {
+                case xeXavier_T3_proc.pt3SET:
+                    Xavier_T3_dC_decdelayCNT = delayCNT + 2;
+                    Xavier_T3_dC_GetInJob = excuteJob;
+                    break;
+
+                case xeXavier_T3_proc.pt3Interrupt:
+                    if (Xavier_T3_dC_GetInJob != excuteJob) {
+                        Xavier_Task3_ISR_CNTTmp(xeXavier_T3_proc.pt3SET, Xavier_T3_dC_decdelayCNT);
+                        Xavier_Task3_ISR_JobTmp(xeXavier_T3_proc.pt3SET, Xavier_T3_dC_GetInJob);
+
+                        Xavier_T3_dC_GetInJob = excuteJob;
+                        Xavier_T3_dC_decdelayCNT = 2;  // equal to excute pt3deExcute to get Xavier_Task3_proc(pt3SET,GetInJob);
+                    }
+                    break;
+
+                case xeXavier_T3_proc.pt3ResISR:
+                    Xavier_T3_dC_decdelayCNT = Xavier_Task3_ISR_CNTTmp(xeXavier_T3_proc.pt3GET, Xavier_T3_dC_GetInJob) + 2;
+                    Xavier_T3_dC_GetInJob = Xavier_Task3_ISR_JobTmp(xeXavier_T3_proc.pt3GET, Xavier_T3_dC_GetInJob);
+
+                    Xavier_Task3_ISR_CNTTmp(xeXavier_T3_proc.pt3SET, 2);
+                    Xavier_Task3_ISR_JobTmp(xeXavier_T3_proc.pt3SET, (byte)xeXavier_T3_Job.tp3Empty);
+                    break;
+
+                case xeXavier_T3_proc.pt3deExcute:
+                    if (Xavier_T3_dC_decdelayCNT > 0) {
+                        Xavier_T3_dC_decdelayCNT--;
+                    }
+
+                    if (Xavier_T3_dC_decdelayCNT == 1) {
+                        Xavier_Task3_proc(xeXavier_T3_proc.pt3SET, Xavier_T3_dC_GetInJob);
+                    }
+                    break;
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        public byte Xavier_Task3_proc(xeXavier_T3_proc rtFun, byte ptValue) {
+            switch (rtFun) {
+                case xeXavier_T3_proc.pt3SET:
+                    Xavier_Task3_p_ret = ptValue;
+                    break;
+
+                case xeXavier_T3_proc.pt3GET:
+                    break;
+            }
+
+            return Xavier_Task3_p_ret;
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task3CallJob(byte excuteJob) {
+            Xavier_T3_delayCase(xeXavier_T3_proc.pt3Interrupt, 0, excuteJob);
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task3CallJobWithDelay(byte excuteJob, uint delayCNT) {
+            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, delayCNT, excuteJob);
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task3ResumeJob() {
+            Xavier_T3_delayCase(xeXavier_T3_proc.pt3ResISR, 0, 0);
+        }
+        //---------------------------------------------------------------------------------------
+        public byte Xavier_Task3_ISR_JobTmp(xeXavier_T3_proc rtFun, byte ptValue) {
+            switch (rtFun) {
+                case xeXavier_T3_proc.pt3SET:
+                    Xavier_Task3_ISR_JT_retmp = ptValue;
+                    break;
+
+                case xeXavier_T3_proc.pt3GET:
+                    break;
+            }
+
+            return Xavier_Task3_ISR_JT_retmp;
+        }
+        //---------------------------------------------------------------------------------------
+        public uint Xavier_Task3_ISR_CNTTmp(xeXavier_T3_proc rtFun, uint ptValue) {
+            switch (rtFun) {
+                case xeXavier_T3_proc.pt3SET:
+                    Xavier_Task3_ISR_CT_retmp = ptValue;
+                    break;
+
+                case xeXavier_T3_proc.pt3GET:
+                    break;
+            }
+
+            return Xavier_Task3_ISR_CT_retmp;
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        // ----------Debug Method----------
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_Task3_Debugprintf(string message) {
+            // Add debug print logic, e.g., console output
+            Console.WriteLine(message);
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------
+        //------------------------------- XavierTaskFlowEngine_T3 -------------------------------
+        //---------------------------------------------------------------------------------------
+        #endregion
+
+
+
+        #region XavierTaskFlowEngine_T4
+        //---------------------------------------------------------------------------------------
+        //------------------------------- XavierTaskFlowEngine_T4 -------------------------------
+        //---------------------------------------------------------------------------------------
+
+        // ----------Global Variables----------
+        public static uint Xavier_T4_dC_decdelayCNT  = 0;
+        public static byte Xavier_T4_dC_GetInJob     = 0;
+        public static byte Xavier_Task4_p_ret        = 0;
+        public static byte Xavier_Task4_ISR_JT_retmp = (byte)xeXavier_T4_Job.tp4_ISR01_START;
+        public static uint Xavier_Task4_ISR_CT_retmp = (uint)xeXavier_T4_Job.tp4_ISR01_START;
+
+        // ----------Enumerations----------
+        public enum xeXavier_T4_proc {
+            pt4SET = 1,
+            pt4GET,
+            pt4Interrupt,
+            pt4ResISR,
+            pt4deExcute,
+        }
+
+        public enum xeXavier_T4_Job {
+            tp4Empty = 0,
+            tp4Init,
+            
+            tp4_ISR01_START,
+            tp4_ISR01_STEP1,
+            tp4_ISR01_STEP2,
+            tp4_ISR01_END,
+
+            tp4_ISR02_START,
+            tp4_ISR02_STEP1,
+            tp4_ISR02_STEP2,
+            tp4_ISR02_END,
+            
+            tp4Idle,
+            tp4START,
+            tp4STEP1,
+            tp4STEP2,
+            tp4STEP3,
+            tp4STEP4,
+            tp4STEP5,
+            tp4STEP6,
+            tp4STEP7,
+        }
+
+        // ----------Methods----------
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_TASK4() {
+            byte priTASK = 0;
+            Xavier_T4_delayCase(xeXavier_T4_proc.pt4deExcute, (uint)xeXavier_T4_Job.tp4Empty, (byte)xeXavier_T4_Job.tp4Empty);
+            priTASK = Xavier_Task4_proc(xeXavier_T4_proc.pt4GET, 0);
+
+            switch (priTASK) {
+                case (byte)xeXavier_T4_Job.tp4Empty:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4Init);
+                    Xavier_Task4_Debugprintf("tp4Empty\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4Init:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4START);
+                    Xavier_Task4_Debugprintf("tp4Init\r\n");
+                    break;
+
+                //======ISR Job======
+                case (byte)xeXavier_T4_Job.tp4_ISR01_START:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 5, (byte)xeXavier_T4_Job.tp4_ISR01_STEP1);
+                    Xavier_Task4_Debugprintf("tp4_ISR01_START\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4_ISR01_STEP1:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 5, (byte)xeXavier_T4_Job.tp4_ISR01_STEP2);
+                    Xavier_Task4_Debugprintf("tp4_ISR01_STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4_ISR01_STEP2:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 5, (byte)xeXavier_T4_Job.tp4_ISR01_END);
+                    Xavier_Task4_Debugprintf("tp4_ISR01_STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4_ISR01_END:
+                    //Xavier_Task4_ISR_CNTTmp(xeXavier_T4_proc.pt4SET, 15);
+                    //Xavier_Task4_ISR_JobTmp(xeXavier_T4_proc.pt4SET, (byte)xeXavier_T4_Job.tp4STEP2);
+                    
+                    Task4ResumeJob();
+                    Xavier_ResumeTaskInterrupt((char)8);
+                    Xavier_Task4_Debugprintf("tp4_ISR01_end\r\n");
+                    break;
+                //======ISR Job======
+                case (byte)xeXavier_T4_Job.tp4_ISR02_START:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 5, (byte)xeXavier_T4_Job.tp4_ISR02_STEP1);
+                    Xavier_Task4_Debugprintf("tp4_ISR02_START\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4_ISR02_STEP1:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 5, (byte)xeXavier_T4_Job.tp4_ISR02_STEP2);
+                    Xavier_Task4_Debugprintf("tp4_ISR02_STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4_ISR02_STEP2:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 5, (byte)xeXavier_T4_Job.tp4_ISR02_END);
+                    Xavier_Task4_Debugprintf("tp4_ISR02_STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4_ISR02_END:
+                    //Xavier_Task4_ISR_CNTTmp(xeXavier_T4_proc.pt4SET, 15);
+                    //Xavier_Task4_ISR_JobTmp(xeXavier_T4_proc.pt4SET, (byte)xeXavier_T4_Job.tp4STEP5);
+                    
+                    Task4ResumeJob();
+                    Xavier_ResumeTaskInterrupt((char)8);
+                    Xavier_Task4_Debugprintf("tp4_ISR02_end\r\n");
+                    break;
+                //======ISR Job======
+                
+                case (byte)xeXavier_T4_Job.tp4Idle:  //reserve
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4START:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4START);
+                    Xavier_Task4_Debugprintf("tp4START\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4STEP1:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP1);
+                    Xavier_Task4_Debugprintf("tp4STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4STEP2:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP2);
+                    Xavier_Task4_Debugprintf("tp4STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4STEP3:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP3);
+                    Xavier_Task4_Debugprintf("tp4STEP3\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4STEP4:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP4);
+                    Xavier_Task4_Debugprintf("tp4STEP4\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4STEP5:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP5);
+                    Xavier_Task4_Debugprintf("tp4STEP5\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4STEP6:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP6);
+                    Xavier_Task4_Debugprintf("tp4STEP6\r\n");
+                    break;
+
+                case (byte)xeXavier_T4_Job.tp4STEP7:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP7);
+                    Xavier_Task4_Debugprintf("tp4STEP1\r\n");
+                    break;
+
+                default:
+                    break;
+            }
+
+            Xavier_Task4_proc(xeXavier_T4_proc.pt4SET, (byte)xeXavier_T4_Job.tp4Idle);
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_T4_delayCase(xeXavier_T4_proc deJob, uint delayCNT, byte excuteJob) {
+            switch (deJob) {
+                case xeXavier_T4_proc.pt4SET:
+                    Xavier_T4_dC_decdelayCNT = delayCNT + 2;
+                    Xavier_T4_dC_GetInJob = excuteJob;
+                    break;
+
+                case xeXavier_T4_proc.pt4Interrupt:
+                    if (Xavier_T4_dC_GetInJob != excuteJob) {
+                        Xavier_Task4_ISR_CNTTmp(xeXavier_T4_proc.pt4SET, Xavier_T4_dC_decdelayCNT);
+                        Xavier_Task4_ISR_JobTmp(xeXavier_T4_proc.pt4SET, Xavier_T4_dC_GetInJob);
+
+                        Xavier_T4_dC_GetInJob = excuteJob;
+                        Xavier_T4_dC_decdelayCNT = 2;  // equal to excute pt4deExcute to get Xavier_Task4_proc(pt4SET,GetInJob);
+                    }
+                    break;
+
+                case xeXavier_T4_proc.pt4ResISR:
+                    Xavier_T4_dC_decdelayCNT = Xavier_Task4_ISR_CNTTmp(xeXavier_T4_proc.pt4GET, Xavier_T4_dC_GetInJob) + 2;
+                    Xavier_T4_dC_GetInJob = Xavier_Task4_ISR_JobTmp(xeXavier_T4_proc.pt4GET, Xavier_T4_dC_GetInJob);
+
+                    Xavier_Task4_ISR_CNTTmp(xeXavier_T4_proc.pt4SET, 2);
+                    Xavier_Task4_ISR_JobTmp(xeXavier_T4_proc.pt4SET, (byte)xeXavier_T4_Job.tp4Empty);
+                    break;
+
+                case xeXavier_T4_proc.pt4deExcute:
+                    if (Xavier_T4_dC_decdelayCNT > 0) {
+                        Xavier_T4_dC_decdelayCNT--;
+                    }
+
+                    if (Xavier_T4_dC_decdelayCNT == 1) {
+                        Xavier_Task4_proc(xeXavier_T4_proc.pt4SET, Xavier_T4_dC_GetInJob);
+                    }
+                    break;
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        public byte Xavier_Task4_proc(xeXavier_T4_proc rtFun, byte ptValue) {
+            switch (rtFun) {
+                case xeXavier_T4_proc.pt4SET:
+                    Xavier_Task4_p_ret = ptValue;
+                    break;
+
+                case xeXavier_T4_proc.pt4GET:
+                    break;
+            }
+
+            return Xavier_Task4_p_ret;
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task4CallJob(byte excuteJob) {
+            Xavier_T4_delayCase(xeXavier_T4_proc.pt4Interrupt, 0, excuteJob);
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task4CallJobWithDelay(byte excuteJob, uint delayCNT) {
+            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, delayCNT, excuteJob);
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task4ResumeJob() {
+            Xavier_T4_delayCase(xeXavier_T4_proc.pt4ResISR, 0, 0);
+        }
+        //---------------------------------------------------------------------------------------
+        public byte Xavier_Task4_ISR_JobTmp(xeXavier_T4_proc rtFun, byte ptValue) {
+            switch (rtFun) {
+                case xeXavier_T4_proc.pt4SET:
+                    Xavier_Task4_ISR_JT_retmp = ptValue;
+                    break;
+
+                case xeXavier_T4_proc.pt4GET:
+                    break;
+            }
+
+            return Xavier_Task4_ISR_JT_retmp;
+        }
+        //---------------------------------------------------------------------------------------
+        public uint Xavier_Task4_ISR_CNTTmp(xeXavier_T4_proc rtFun, uint ptValue) {
+            switch (rtFun) {
+                case xeXavier_T4_proc.pt4SET:
+                    Xavier_Task4_ISR_CT_retmp = ptValue;
+                    break;
+
+                case xeXavier_T4_proc.pt4GET:
+                    break;
+            }
+
+            return Xavier_Task4_ISR_CT_retmp;
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        // ----------Debug Method----------
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_Task4_Debugprintf(string message) {
+            // Add debug print logic, e.g., console output
+            Console.WriteLine(message);
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------
+        //------------------------------- XavierTaskFlowEngine_T4 -------------------------------
+        //---------------------------------------------------------------------------------------
+        #endregion
 
         //---------------------------------------------------------------------------------------
         //-------------------------------- Xavier TaskFlow Engine -------------------------------
         //---------------------------------------------------------------------------------------
         #endregion
-        
-        
+
+
     }  // end of public partial class Form1 : Form
     //---------------------------------------------------------------------------------------
 

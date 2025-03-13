@@ -455,6 +455,7 @@ namespace InjectorInspector
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tmr_TaskFlow = new System.Windows.Forms.Timer(this.components);
             this.cms_pic_Needles.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.grp_NeedleInfo.SuspendLayout();
@@ -5190,6 +5191,12 @@ namespace InjectorInspector
             this.tabControl1.Size = new System.Drawing.Size(1236, 825);
             this.tabControl1.TabIndex = 2;
             // 
+            // tmr_TaskFlow
+            // 
+            this.tmr_TaskFlow.Enabled = true;
+            this.tmr_TaskFlow.Interval = 10;
+            this.tmr_TaskFlow.Tick += new System.EventHandler(this.tmr_TaskFlow_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -5729,6 +5736,7 @@ namespace InjectorInspector
         public TabControl tabControl1;
         public Label label21;
         public Label lbl_讀取計數;
+        private Timer tmr_TaskFlow;
     }
 }
 
