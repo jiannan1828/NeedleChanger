@@ -6760,38 +6760,51 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
 
-        #region XavierTaskFlowEngine
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
-        public void Xavier_Task_Eng_Debugprintf(string message) {
-            // Add debug print logic, e.g., console output
-            Console.WriteLine(message);
-        }
-        //---------------------------------------------------------------------------------------
-        public void Xavier_Engine() {
-            var tempBits = TaskISRFlag.bits;
-                if(tempBits.bit0 == true) {
-                    Xavier_TASK1();  
-                } else 
-                if(tempBits.bit1 == true) {
-                    Xavier_TASK2();  
-                } else 
-                if(tempBits.bit2 == true) {
-                    Xavier_TASK3();  
-                } else 
-                if(tempBits.bit3 == true) {
-                    Xavier_TASK4();  
-                } else 
-                {
-                    Xavier_TASK1();  //面板按鈕以及指示燈
-                    Xavier_TASK2();  //吸嘴軸組
-                    Xavier_TASK3();  //植針軸組
-                    Xavier_TASK4();  //電動缸組_含抽針
-                    Xavier_TASK5();  //載盤組
-                    Xavier_TASK6();  //IO檢查_工作門_檔案組
-                }
+        //Home Flag
+        public bool btp2Home_告知植針軸組可以進行復歸動作                = false;
+        public bool btp2Home_告知吸嘴軸組已回home完畢                    = false;
+        public bool btp3Home_告知載盤組_植針軸組無干涉                   = false;
+        public bool btp3Home_告知植針軸組已回home完畢                    = false;
+        public bool btp4Home_告知載盤組_電動缸無干涉                     = false;
+        public bool btp4Home_告知電動缸組已回home完畢                    = false;
+        public bool btp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作 = false;
+        public bool btp5Home_告知載盤組已回home完畢                      = false;
+
+        public bool btp6Home_告知工作門已關閉                            = false;
+
+        public bool btp6Home_告知系統回home完畢                          = false;
 
 /* 回home動作
+ 
+                tp3Home_確認植針軸組可以進行復歸動作_從_tp2Home_告知植針軸組可以進行復歸動作,
+                tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢,
+                tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉,
+                tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢,
+                tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉,
+                tp6Home_確認電動缸組回home完畢_從_tp4Home_告知電動缸組已回home完畢,
+                tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作,
+                tp6Home_確認載盤組回home完畢_從_tp5Home_告知載盤組已回home完畢,
+
+                tp2Home_確認吸嘴軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
+                tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
+                tp4Home_確認電動缸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
+                tp5Home_確認載盤組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
+
+                tp2Home_告知植針軸組可以進行復歸動作
+                tp2Home_告知吸嘴軸組已回home完畢,
+                tp3Home_告知載盤組_植針軸組無干涉,
+                tp3Home_告知植針軸組已回home完畢,
+                tp4Home_告知載盤組_電動缸無干涉,
+                tp4Home_告知電動缸組已回home完畢,
+                tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作,
+                tp5Home_告知載盤組已回home完畢,
+
+                tp6Home_告知工作門已關閉,
+
+                tp6Home_告知系統回home完畢,
+
             //吸嘴軸組
             tp2HomeSTART,
                 tp2Home_確認吸嘴軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
@@ -6840,6 +6853,39 @@ namespace InjectorInspector
                 tp6Home_告知系統回home完畢,
                 tp6Home_工作門開啟,
 */
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        #region XavierTaskFlowEngine
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_Task_Eng_Debugprintf(string message) {
+            // Add debug print logic, e.g., console output
+            Console.WriteLine(message);
+        }
+        //---------------------------------------------------------------------------------------
+        public void Xavier_Engine() {
+            var tempBits = TaskISRFlag.bits;
+                if(tempBits.bit0 == true) {
+                    Xavier_TASK1();  
+                } else 
+                if(tempBits.bit1 == true) {
+                    Xavier_TASK2();  
+                } else 
+                if(tempBits.bit2 == true) {
+                    Xavier_TASK3();  
+                } else 
+                if(tempBits.bit3 == true) {
+                    Xavier_TASK4();  
+                } else 
+                {
+                    Xavier_TASK1();  //面板按鈕以及指示燈
+                    Xavier_TASK2();  //吸嘴軸組
+                    Xavier_TASK3();  //植針軸組
+                    Xavier_TASK4();  //電動缸組_含抽針
+                    Xavier_TASK5();  //載盤組
+                    Xavier_TASK6();  //IO檢查_工作門_檔案組
+                }
 
         }
         //---------------------------------------------------------------------------------------
