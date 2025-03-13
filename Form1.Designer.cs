@@ -38,7 +38,6 @@ namespace InjectorInspector
             this.tsmi_Reserve1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tmr_Home = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
-            this.tmr_Warning = new System.Windows.Forms.Timer(this.components);
             this.ttp_NeedleInfo = new System.Windows.Forms.ToolTip(this.components);
             this.tmrBarCodeScanner = new System.Windows.Forms.Timer(this.components);
             this.tmr_2p_Calibration = new System.Windows.Forms.Timer(this.components);
@@ -559,20 +558,12 @@ namespace InjectorInspector
             // 
             // tmr_Home
             // 
-            this.tmr_Home.Enabled = true;
             this.tmr_Home.Tick += new System.EventHandler(this.tmr_Home_Tick);
             // 
             // tmr_TakePin
             // 
-            this.tmr_TakePin.Enabled = true;
             this.tmr_TakePin.Interval = 5;
             this.tmr_TakePin.Tick += new System.EventHandler(this.tmr_TakePin_Tick);
-            // 
-            // tmr_Warning
-            // 
-            this.tmr_Warning.Enabled = true;
-            this.tmr_Warning.Interval = 300;
-            this.tmr_Warning.Tick += new System.EventHandler(this.tmr_Buzzer_Tick);
             // 
             // tmrBarCodeScanner
             // 
@@ -5310,7 +5301,6 @@ namespace InjectorInspector
         public System.Windows.Forms.Timer tmr_ReadWMX3;
         public System.Windows.Forms.Timer tmr_Home;
         public System.Windows.Forms.Timer tmr_TakePin;
-        public System.Windows.Forms.Timer tmr_Warning;
         public ContextMenuStrip cms_pic_Needles;
         public ToolStripMenuItem tsmi_Place;
         public ToolStripMenuItem tsmi_Remove;

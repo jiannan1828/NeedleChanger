@@ -2836,10 +2836,11 @@ namespace InjectorInspector
             edit_diff_value.Text = 0.0.ToString("F3");
         }
         //---------------------------------------------------------------------------------------
+        int getCommuStatus = 0;
         public void tmr_ReadWMX3_Tick(object sender, EventArgs e)
         {  // start of public void tmr_ReadWMX3_Tick(object sender, EventArgs e)
             //WMX3通訊狀態
-            int getCommuStatus = clsServoControlWMX3.WMX3_check_Commu();
+            getCommuStatus = clsServoControlWMX3.WMX3_check_Commu();
             if (getCommuStatus == 1) {
                 label1.Text = "連線中";
                 label1.ForeColor = Color.Red;
@@ -3078,101 +3079,6 @@ namespace InjectorInspector
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------- Vibration implement --------------------------------
-        //---------------------------------------------------------------------------------------
-
-
-        //---------------------------------------------------------------------------------------
-        //----------------------------- Warning Indicator implement -----------------------------
-        //---------------------------------------------------------------------------------------
-        enum eWarningSpeed {
-            xeeWS_Disable,
-
-            xeeWS_RedLowSpeed,
-            xeeWS_RedHighSpeed,
-
-            xeeWS_YellowLowSpeed,
-            xeeWS_YellowHighSpeed,
-
-            xeeWS_GreenLowSpeed,
-            xeeWS_GreenHighSpeed,
-        }; 
-        eWarningSpeed eWIndicatorSpeed = eWarningSpeed.xeeWS_Disable;
-
-        int iWarningLEDCnt        = 0;
-        bool bBuzzerWarningRed    = false,
-             bBuzzerWarningYellow = false,
-             bBuzzerWarningGreen  = false;
-
-        //---------------------------------------------------------------------------------------
-        public void tmr_Buzzer_Tick(object sender, EventArgs e)
-        {  // start of public void tmr_Buzzer_Tick(object sender, EventArgs e)
-            int iWarningLEDSpeed = 0;
-
-            switch (eWIndicatorSpeed) {
-                case eWarningSpeed.xeeWS_Disable:
-                    iWarningLEDCnt = 0;
-                    break;
-
-                case eWarningSpeed.xeeWS_RedLowSpeed:   iWarningLEDSpeed = 5;  goto lbl_WarningRED;
-                case eWarningSpeed.xeeWS_RedHighSpeed:  iWarningLEDSpeed = 2;  goto lbl_WarningRED;
-                    lbl_WarningRED: {
-                        iWarningLEDCnt++;
-                        if(iWarningLEDCnt>=iWarningLEDSpeed) {
-                            iWarningLEDCnt = 0;
-
-                            bBuzzerWarningRed = !bBuzzerWarningRed;
-                        }
-
-                        if (bBuzzerWarningRed == false) {
-                            digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, LOW);
-                            digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, LOW);
-                            digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, LOW);
-                        } else {
-                            digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, HIGH);
-                        }
-                    } break;
-
-                case eWarningSpeed.xeeWS_YellowLowSpeed:   iWarningLEDSpeed = 5;  goto lbl_WarningYellow;
-                case eWarningSpeed.xeeWS_YellowHighSpeed:  iWarningLEDSpeed = 2;  goto lbl_WarningYellow; 
-                    lbl_WarningYellow: {
-                        iWarningLEDCnt++;
-                        if(iWarningLEDCnt>=iWarningLEDSpeed) {
-                            iWarningLEDCnt = 0;
-
-                            bBuzzerWarningYellow = !bBuzzerWarningYellow;
-                        }
-
-                        if (bBuzzerWarningYellow == false) {
-                            digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, LOW);
-                            digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, LOW);
-                            digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, LOW);
-                        } else {
-                            digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, HIGH);
-                        }
-                    } break;
-
-                case eWarningSpeed.xeeWS_GreenLowSpeed:   iWarningLEDSpeed = 5;  goto lbl_WarningGreen;
-                case eWarningSpeed.xeeWS_GreenHighSpeed:  iWarningLEDSpeed = 2;  goto lbl_WarningGreen; 
-                    lbl_WarningGreen: {
-                        iWarningLEDCnt++;
-                        if(iWarningLEDCnt>=iWarningLEDSpeed) {
-                            iWarningLEDCnt = 0;
-
-                            bBuzzerWarningGreen = !bBuzzerWarningGreen;
-                        }
-
-                        if (bBuzzerWarningGreen == false) {
-                            digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, LOW);
-                            digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, LOW);
-                            digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, LOW);
-                        } else {
-                            digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, HIGH);
-                        }
-                    } break;
-            }  // end of switch (eWIndicatorSpeed) {
-        }  // end of public void tmr_Buzzer_Tick(object sender, EventArgs e)
-        //---------------------------------------------------------------------------------------
-        //----------------------------- Warning Indicator implement -----------------------------
         //---------------------------------------------------------------------------------------
 
 
@@ -6607,14 +6513,14 @@ namespace InjectorInspector
             //inspector1.xInit();
         }
         //---------------------------------------------------------------------------------------
-        private void cB_AlwaysResume_CheckedChanged(object sender, EventArgs e)
+        public void cB_AlwaysResume_CheckedChanged(object sender, EventArgs e)
         {
             if (cB_AlwaysResume.Checked == false) {
                 bResume = false;
             }
         }
         //---------------------------------------------------------------------------------------
-        private void btn_socket相機兩點定位_Click(object sender, EventArgs e)
+        public void btn_socket相機兩點定位_Click(object sender, EventArgs e)
         {
             Vector3 pos;
             bool success = inspector1.xInspSocket校正孔(out pos);
@@ -6624,7 +6530,7 @@ namespace InjectorInspector
             dbCameraCalibrationY = pos.Y;
         }
         //---------------------------------------------------------------------------------------
-        private void tmr_TaskFlow_Tick(object sender, EventArgs e)
+        public void tmr_TaskFlow_Tick(object sender, EventArgs e)
         {
 
             Xavier_Engine();
@@ -6635,6 +6541,144 @@ namespace InjectorInspector
                 Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp4_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR01);
                 Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp3_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR02);
             }
+        }
+        //---------------------------------------------------------------------------------------
+        public enum xeXavier_Indicator {
+            xeXI_讀_狀態,
+                xeXI_狀態_運行,
+                xeXI_狀態_停止,
+                xeXI_狀態_急停,
+
+            xeXI_讀_事件,
+            xeXI_事件_空,
+                xeXI_事件_復歸,
+                xeXI_事件_暫停,
+                xeXI_事件_異常,
+        }
+        xeXavier_Indicator xeXI_Status = xeXavier_Indicator.xeXI_狀態_停止;
+        xeXavier_Indicator xeXI_Event  = xeXavier_Indicator.xeXI_事件_空;
+        bool apiIndicator_InternalBTN = false;
+
+        public xeXavier_Indicator apiIndicator(xeXavier_Indicator eEventID) {
+            xeXavier_Indicator result = xeXavier_Indicator.xeXI_狀態_停止;
+
+            if (getCommuStatus == 1) {
+                //Communication success
+            } else {
+                //Communication fail
+                apiIndicator_InternalBTN = true; {
+                    xeXI_Status = xeXavier_Indicator.xeXI_狀態_停止;
+                    xeXI_Event  = xeXavier_Indicator.xeXI_事件_空;
+                } apiIndicator_InternalBTN = false;
+
+                return result;
+            }
+
+            //Check Real Button on Machine
+            if(apiIndicator_InternalBTN == false) { 
+                bool bBtnEmergencyStop = !indicateRead((int)WMX3IO對照.pxeIO_緊急停止按鈕);
+                if(bBtnEmergencyStop == true) {
+                    //Emergency Stop
+                    apiIndicator_InternalBTN = true; {
+                        apiIndicator(xeXavier_Indicator.xeXI_狀態_急停);
+                    } apiIndicator_InternalBTN = false;
+                } else {
+                    //Not Emergency Status
+
+                    //Event
+                    bool bBtnPause = false;
+                    bool bBtnError = false;
+                    if(bBtnError == true) {
+                        apiIndicator_InternalBTN = true; {
+                            apiIndicator(xeXavier_Indicator.xeXI_事件_異常);
+                        } apiIndicator_InternalBTN = false;
+                    } else
+                    if(bBtnPause == true) {
+                        apiIndicator_InternalBTN = true; {
+                            apiIndicator(xeXavier_Indicator.xeXI_事件_暫停);
+                        } apiIndicator_InternalBTN = false;
+                    } else { 
+                        bool bBtnStop = indicateRead((int)WMX3IO對照.pxeIO_停止按鈕);
+                        if(bBtnStop == true) {
+                            apiIndicator_InternalBTN = true; {
+                                apiIndicator(xeXavier_Indicator.xeXI_狀態_停止);
+                            } apiIndicator_InternalBTN = false;
+                        } else
+                        if( xeXI_Event  == xeXavier_Indicator.xeXI_事件_空   && 
+                            xeXI_Status == xeXavier_Indicator.xeXI_狀態_停止 ) {
+                            //Normal Status
+                            bool bBtnHome  = indicateRead((int)WMX3IO對照.pxeIO_復歸按鈕);
+                            bool bBtnStart = indicateRead((int)WMX3IO對照.pxeIO_啟動按鈕);
+
+                            if(bBtnHome == true) {
+                                apiIndicator_InternalBTN = true; {
+                                    apiIndicator(xeXavier_Indicator.xeXI_事件_復歸);
+                                } apiIndicator_InternalBTN = false;
+                            } else 
+                            if(bBtnStart == true) {
+                                apiIndicator_InternalBTN = true; {
+                                    apiIndicator(xeXavier_Indicator.xeXI_狀態_運行);
+                                } apiIndicator_InternalBTN = false;
+                            }
+                        }
+                    }
+                }
+
+                apiIndicator_InternalBTN = true; {
+                    xeXavier_Indicator rslt = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
+                    if(rslt == xeXavier_Indicator.xeXI_事件_空) { 
+                        rslt = apiIndicator(xeXavier_Indicator.xeXI_讀_狀態);
+                    }
+                    switch(rslt) {
+                        case xeXavier_Indicator.xeXI_狀態_運行: 
+                            digitalWrite((int)WMX3IO對照.pxeIO_面板左按鈕紅燈, LOW);
+                            digitalWrite((int)WMX3IO對照.pxeIO_面板中按鈕綠燈, HIGH);
+                            digitalWrite((int)WMX3IO對照.pxeIO_面板右按鈕綠燈, LOW);
+                            eWIndicatorSpeed = eWarningSpeed.xeeWS_狀態_運行;
+                            break;
+                        case xeXavier_Indicator.xeXI_狀態_停止:
+                            digitalWrite((int)WMX3IO對照.pxeIO_面板左按鈕紅燈, HIGH);
+                            digitalWrite((int)WMX3IO對照.pxeIO_面板中按鈕綠燈, LOW);
+                            digitalWrite((int)WMX3IO對照.pxeIO_面板右按鈕綠燈, LOW);
+                            eWIndicatorSpeed = eWarningSpeed.xeeWS_狀態_停止;
+                            break;
+                        case xeXavier_Indicator.xeXI_狀態_急停:    
+                            digitalWrite((int)WMX3IO對照.pxeIO_面板左按鈕紅燈, LOW);
+                            digitalWrite((int)WMX3IO對照.pxeIO_面板中按鈕綠燈, LOW);
+                            digitalWrite((int)WMX3IO對照.pxeIO_面板右按鈕綠燈, LOW);
+                            eWIndicatorSpeed = eWarningSpeed.xeeWS_狀態_急停;
+                            break;
+
+                        case xeXavier_Indicator.xeXI_事件_復歸:    
+                            digitalWrite((int)WMX3IO對照.pxeIO_面板左按鈕紅燈, LOW);
+                            digitalWrite((int)WMX3IO對照.pxeIO_面板中按鈕綠燈, LOW);
+                            digitalWrite((int)WMX3IO對照.pxeIO_面板右按鈕綠燈, HIGH);
+                            eWIndicatorSpeed = eWarningSpeed.xeeWS_事件_復歸;
+                            break;
+                        case xeXavier_Indicator.xeXI_事件_暫停:    break;
+                        case xeXavier_Indicator.xeXI_事件_異常:    break;
+                    }
+                } apiIndicator_InternalBTN = false;
+            }  // end of if(apiIndicator_InternalBTN == false) { 
+
+            switch (eEventID) {
+                case xeXavier_Indicator.xeXI_讀_狀態:
+                    result = xeXI_Status;
+                    break;
+                case xeXavier_Indicator.xeXI_狀態_運行: xeXI_Status = xeXavier_Indicator.xeXI_狀態_運行;                                                 break;
+                case xeXavier_Indicator.xeXI_狀態_停止: xeXI_Status = xeXavier_Indicator.xeXI_狀態_停止; xeXI_Event = xeXavier_Indicator.xeXI_事件_空;   break;
+                case xeXavier_Indicator.xeXI_狀態_急停: xeXI_Status = xeXavier_Indicator.xeXI_狀態_急停; xeXI_Event = xeXavier_Indicator.xeXI_事件_空;   break;
+
+                case xeXavier_Indicator.xeXI_讀_事件:
+                    result = xeXI_Event;
+                    break;
+                case xeXavier_Indicator.xeXI_事件_空:   xeXI_Event = xeXavier_Indicator.xeXI_事件_空;                                                    break;
+                case xeXavier_Indicator.xeXI_事件_復歸: xeXI_Event = xeXavier_Indicator.xeXI_事件_復歸; xeXI_Status = xeXavier_Indicator.xeXI_狀態_停止; break;
+                case xeXavier_Indicator.xeXI_事件_暫停: xeXI_Event = xeXavier_Indicator.xeXI_事件_暫停;                                                  break;
+                case xeXavier_Indicator.xeXI_事件_異常: xeXI_Event = xeXavier_Indicator.xeXI_事件_異常; xeXI_Status = xeXavier_Indicator.xeXI_狀態_停止; break;
+            }
+
+            return result;
         }
         //---------------------------------------------------------------------------------------
         //------------------------------------- 暫時或實驗中 ------------------------------------
@@ -6805,32 +6849,32 @@ namespace InjectorInspector
                 Xavier_Task_Eng_Debugprintf(string.Format(":{0:X2}\r\n", TaskISRFlag.TIFByte));
         }
         //---------------------------------------------------------------------------------------
-        public void Xavier_ResumeTaskInterrupt(char CallTask) {
+        public void Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR CallTask) {
 
             var tempBits = TaskISRFlag.bits;
                 switch(CallTask) {
-                    case (char)0x01:
+                    case xeXavier_FlowTaskISR.xeXFTI_tp1_ISR:
                         if(tempBits.bit0 == true) {  //force to tp1_ISR_START
                             tempBits.bit0 = false;
                             Xavier_Task_Eng_Debugprintf("Res ISR");
                         }
                         break;
                 
-                    case (char)0x02:
+                    case xeXavier_FlowTaskISR.xeXFTI_tp2_ISR:
                         if(tempBits.bit1 == true) {  //force to tp2_ISR_START
                             tempBits.bit1 = false;
                             Xavier_Task_Eng_Debugprintf("Res ISR");
                         }
                         break;
                 
-                    case (char)0x04:
+                    case xeXavier_FlowTaskISR.xeXFTI_tp3_ISR:
                         if(tempBits.bit2 == true) {  //force to tp3_ISR_START
                             tempBits.bit2 = false;
                             Xavier_Task_Eng_Debugprintf("Res ISR");
                         }
                         break;
                     
-                    case (char)0x08:
+                    case xeXavier_FlowTaskISR.xeXFTI_tp4_ISR:
                         if(tempBits.bit3 == true) {  //force to tp4_ISR_START
                             tempBits.bit3 = false;
                             Xavier_Task_Eng_Debugprintf("Res ISR");
@@ -6899,6 +6943,37 @@ namespace InjectorInspector
             tp1STEP7,
         }
 
+        // --------- Local Variables ----------
+        enum eWarningSpeed {
+            xeeWS_Disable,
+
+            xeeWS_RedConstant,
+            xeeWS_RedLowSpeed,
+            xeeWS_RedHighSpeed,
+
+            xeeWS_YellowConstant,
+            xeeWS_YellowLowSpeed,
+            xeeWS_YellowHighSpeed,
+
+            xeeWS_GreenConstant,
+            xeeWS_GreenLowSpeed,
+            xeeWS_GreenHighSpeed,
+
+            xeeWS_事件_復歸 = xeeWS_GreenLowSpeed,   //綠閃
+            xeeWS_事件_暫停 = xeeWS_YellowLowSpeed,  //黃閃
+            xeeWS_事件_異常 = xeeWS_RedLowSpeed,     //紅閃
+
+            xeeWS_狀態_運行 = xeeWS_GreenConstant,   //綠
+            xeeWS_狀態_停止 = xeeWS_YellowConstant,  //黃
+            xeeWS_狀態_急停 = xeeWS_RedConstant,     //紅
+        }; 
+        eWarningSpeed eWIndicatorSpeed = eWarningSpeed.xeeWS_狀態_停止;
+
+        int iWarningLEDCnt  = 0;
+        bool bWarningRed    = false,
+             bWarningYellow = false,
+             bWarningGreen  = false;
+
         // ----------Methods----------
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -6939,7 +7014,7 @@ namespace InjectorInspector
                     //Xavier_Task1_ISR_JobTmp(xeXavier_T1_proc.pt1SET, (byte)xeXavier_T1_Job.tp1STEP2);
                     
                     Task1ResumeJob();
-                    Xavier_ResumeTaskInterrupt((char)1);
+                    Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp1_ISR);
                     Xavier_Task1_Debugprintf("tp1_ISR01_end\r\n");
                     break;
                 //======ISR Job======
@@ -6963,7 +7038,7 @@ namespace InjectorInspector
                     //Xavier_Task1_ISR_JobTmp(xeXavier_T1_proc.pt1SET, (byte)xeXavier_T1_Job.tp1STEP5);
                     
                     Task1ResumeJob();
-                    Xavier_ResumeTaskInterrupt((char)1);
+                    Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp1_ISR);
                     Xavier_Task1_Debugprintf("tp1_ISR02_end\r\n");
                     break;
                 //======ISR Job======
@@ -6971,43 +7046,135 @@ namespace InjectorInspector
                 case (byte)xeXavier_T1_Job.tp1Idle:  //reserve
                     break;
 
-                case (byte)xeXavier_T1_Job.tp1START:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1START);
+                case (byte)xeXavier_T1_Job.tp1START: {
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, (byte)xeXavier_T1_Job.tp1STEP1);
                     Xavier_Task1_Debugprintf("tp1START\r\n");
-                    break;
+                } break;
 
                 case (byte)xeXavier_T1_Job.tp1STEP1:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP1);
+                    apiIndicator(xeXavier_Indicator.xeXI_讀_狀態);
+
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, (byte)xeXavier_T1_Job.tp1STEP2);
                     Xavier_Task1_Debugprintf("tp1STEP1\r\n");
                     break;
 
-                case (byte)xeXavier_T1_Job.tp1STEP2:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP2);
+                case (byte)xeXavier_T1_Job.tp1STEP2: {
+
+                    int iWarningLEDSpeed = 0;
+                    switch (eWIndicatorSpeed) {
+                        case eWarningSpeed.xeeWS_Disable:
+                            iWarningLEDCnt = 0;
+                            digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, LOW);
+                            digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, LOW);
+                            digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, LOW);
+                            break;
+
+                        case eWarningSpeed.xeeWS_RedConstant:
+                            digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, HIGH);
+                            digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, LOW);
+                            digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, LOW);
+                            break;
+                        case eWarningSpeed.xeeWS_YellowConstant:
+                            digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, LOW);
+                            digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, HIGH);
+                            digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, LOW);
+                            break;
+                        case eWarningSpeed.xeeWS_GreenConstant:
+                            digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, LOW);
+                            digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, LOW);
+                            digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, HIGH);
+                            break;
+
+                        case eWarningSpeed.xeeWS_RedLowSpeed:   iWarningLEDSpeed = 3;  goto lbl_WarningRED;
+                        case eWarningSpeed.xeeWS_RedHighSpeed:  iWarningLEDSpeed = 1;  goto lbl_WarningRED;
+                            lbl_WarningRED: {
+                                iWarningLEDCnt++;
+                                if(iWarningLEDCnt>=iWarningLEDSpeed) {
+                                    iWarningLEDCnt = 0;
+
+                                    bWarningRed = !bWarningRed;
+                                }
+
+                                if (bWarningRed == false) {
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, LOW);
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, LOW);
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, LOW);
+                                } else {
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, HIGH);
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, LOW);
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, LOW);
+                                }
+                            } break;
+
+                        case eWarningSpeed.xeeWS_YellowLowSpeed:   iWarningLEDSpeed = 3;  goto lbl_WarningYellow;
+                        case eWarningSpeed.xeeWS_YellowHighSpeed:  iWarningLEDSpeed = 1;  goto lbl_WarningYellow; 
+                            lbl_WarningYellow: {
+                                iWarningLEDCnt++;
+                                if(iWarningLEDCnt>=iWarningLEDSpeed) {
+                                    iWarningLEDCnt = 0;
+
+                                    bWarningYellow = !bWarningYellow;
+                                }
+
+                                if (bWarningYellow == false) {
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, LOW);
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, LOW);
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, LOW);
+                                } else {
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, LOW);
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, HIGH);
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, LOW);
+                                }
+                            } break;
+
+                        case eWarningSpeed.xeeWS_GreenLowSpeed:   iWarningLEDSpeed = 3;  goto lbl_WarningGreen;
+                        case eWarningSpeed.xeeWS_GreenHighSpeed:  iWarningLEDSpeed = 1;  goto lbl_WarningGreen; 
+                            lbl_WarningGreen: {
+                                iWarningLEDCnt++;
+                                if(iWarningLEDCnt>=iWarningLEDSpeed) {
+                                    iWarningLEDCnt = 0;
+
+                                    bWarningGreen = !bWarningGreen;
+                                }
+
+                                if (bWarningGreen == false) {
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, LOW);
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, LOW);
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, LOW);
+                                } else {
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台紅燈, LOW);
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台黃燈, LOW);
+                                    digitalWrite((int)WMX3IO對照.pxeIO_機台綠燈, HIGH);
+                                }
+                            } break;
+                    }  // end of switch (eWIndicatorSpeed) {
+
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, (byte)xeXavier_T1_Job.tp1STEP3);
                     Xavier_Task1_Debugprintf("tp1STEP2\r\n");
-                    break;
+                } break;
 
                 case (byte)xeXavier_T1_Job.tp1STEP3:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP3);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, (byte)xeXavier_T1_Job.tp1STEP4);
                     Xavier_Task1_Debugprintf("tp1STEP3\r\n");
                     break;
 
                 case (byte)xeXavier_T1_Job.tp1STEP4:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP4);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, (byte)xeXavier_T1_Job.tp1STEP5);
                     Xavier_Task1_Debugprintf("tp1STEP4\r\n");
                     break;
 
                 case (byte)xeXavier_T1_Job.tp1STEP5:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP5);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, (byte)xeXavier_T1_Job.tp1STEP6);
                     Xavier_Task1_Debugprintf("tp1STEP5\r\n");
                     break;
 
                 case (byte)xeXavier_T1_Job.tp1STEP6:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP6);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, (byte)xeXavier_T1_Job.tp1STEP7);
                     Xavier_Task1_Debugprintf("tp1STEP6\r\n");
                     break;
 
                 case (byte)xeXavier_T1_Job.tp1STEP7:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, (byte)xeXavier_T1_Job.tp1STEP7);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, (byte)xeXavier_T1_Job.tp1STEP1);
                     Xavier_Task1_Debugprintf("tp1STEP1\r\n");
                     break;
 
@@ -7212,7 +7379,7 @@ namespace InjectorInspector
                     //Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc.pt2SET, (byte)xeXavier_T2_Job.tp2STEP2);
                     
                     Task2ResumeJob();
-                    Xavier_ResumeTaskInterrupt((char)2);
+                    Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR);
                     Xavier_Task2_Debugprintf("tp2_ISR01_end\r\n");
                     break;
                 //======ISR Job======
@@ -7236,7 +7403,7 @@ namespace InjectorInspector
                     //Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc.pt2SET, (byte)xeXavier_T2_Job.tp2STEP5);
                     
                     Task2ResumeJob();
-                    Xavier_ResumeTaskInterrupt((char)2);
+                    Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR);
                     Xavier_Task2_Debugprintf("tp2_ISR02_end\r\n");
                     break;
                 //======ISR Job======
@@ -7485,7 +7652,7 @@ namespace InjectorInspector
                     //Xavier_Task3_ISR_JobTmp(xeXavier_T3_proc.pt3SET, (byte)xeXavier_T3_Job.tp3STEP2);
                     
                     Task3ResumeJob();
-                    Xavier_ResumeTaskInterrupt((char)4);
+                    Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp3_ISR);
                     Xavier_Task3_Debugprintf("tp3_ISR01_end\r\n");
                     break;
                 //======ISR Job======
@@ -7509,7 +7676,7 @@ namespace InjectorInspector
                     //Xavier_Task3_ISR_JobTmp(xeXavier_T3_proc.pt3SET, (byte)xeXavier_T3_Job.tp3STEP5);
                     
                     Task3ResumeJob();
-                    Xavier_ResumeTaskInterrupt((char)4);
+                    Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp3_ISR);
                     Xavier_Task3_Debugprintf("tp3_ISR02_end\r\n");
                     break;
                 //======ISR Job======
@@ -7758,7 +7925,7 @@ namespace InjectorInspector
                     //Xavier_Task4_ISR_JobTmp(xeXavier_T4_proc.pt4SET, (byte)xeXavier_T4_Job.tp4STEP2);
                     
                     Task4ResumeJob();
-                    Xavier_ResumeTaskInterrupt((char)8);
+                    Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp4_ISR);
                     Xavier_Task4_Debugprintf("tp4_ISR01_end\r\n");
                     break;
                 //======ISR Job======
@@ -7782,7 +7949,7 @@ namespace InjectorInspector
                     //Xavier_Task4_ISR_JobTmp(xeXavier_T4_proc.pt4SET, (byte)xeXavier_T4_Job.tp4STEP5);
                     
                     Task4ResumeJob();
-                    Xavier_ResumeTaskInterrupt((char)8);
+                    Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp4_ISR);
                     Xavier_Task4_Debugprintf("tp4_ISR02_end\r\n");
                     break;
                 //======ISR Job======
