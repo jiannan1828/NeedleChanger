@@ -1901,8 +1901,10 @@ namespace Inspector
                         win.SetTposition(0, 50);
                         win.WriteString(Msg);
                     }
-                    dTop.DispObj(win);
-                    dBot.DispObj(win);
+                    if ((dTop != null) && (dTop.CountObj() > 0))
+                        dTop.DispObj(win);
+                    if ((dBot != null) && (dBot.CountObj() > 0))
+                        dBot.DispObj(win);
 
                     HTuple row, col, area;
                     HOperatorSet.AreaCenter(PinArea, out area, out row, out col);

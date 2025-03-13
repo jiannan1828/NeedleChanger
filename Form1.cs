@@ -4192,7 +4192,12 @@ namespace InjectorInspector
                                         b吸嘴吸 = true;
                                     }
  
-                                    digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴吸, b吸嘴吸);
+                                    if(cB_料盤有料.Checked == true) { 
+                                        //如果勾選永遠有料, 不吸
+                                    } else { 
+                                        digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴吸, b吸嘴吸);
+                                    }
+                                    
                                     xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸料等待;
                                 } break;
                                 case xe_tmr_takepin.xett_Nozzle吸料等待:                   xeTmrTakePin = xe_tmr_takepin.xett_Nozzle吸料完成;  break;
@@ -5352,7 +5357,7 @@ namespace InjectorInspector
                         lbl_讀取計數.Text = 求出取料循環次數.ToString();
 
                         if(bTakePin == true) { 
-                            if(求出取料循環次數>=1) {  
+                            if(求出取料循環次數>=1 && btmrStop==false) {  
                                 xeTmrTakePin = xe_tmr_takepin.xett_還需要取針;
                             } else {
                                 bTakePin = false;
@@ -5379,12 +5384,12 @@ namespace InjectorInspector
                     } break;
                         case xe_tmr_takepin.xett_還需要取針:
                             Curr_CycleTime = DateTime.Now; //20241230 4xuan added
-                            CycleTime = TimeSpan.FromMilliseconds((Curr_CycleTime - Prev_CycleTime).TotalMilliseconds / 60);
-                            CycleTime += TimeSpan.FromMilliseconds(4500); // 增加 1 毫秒
+                            CycleTime = Curr_CycleTime - Prev_CycleTime;
                             Prev_CycleTime = DateTime.Now;
 
                             lbl_CycleTime.Text = "循環時間 : " + CycleTime.ToString(@"ss\.fff");
-                            xeTmrTakePin = xe_tmr_takepin.xett_重覆一開始的狀態;  break;
+                            xeTmrTakePin = xe_tmr_takepin.xett_重覆一開始的狀態;  
+                            break;
 
                             case xe_tmr_takepin.xett_重覆一開始的狀態:                     xeTmrTakePin = xe_tmr_takepin.xett_確定執行要取針;  break;
 
