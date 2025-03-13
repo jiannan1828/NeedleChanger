@@ -3225,7 +3225,8 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public void btn_home_Click(object sender, EventArgs e)
         {
-            bhome    = true;
+            //bhome    = true;
+            apiIndicator(xeXavier_Indicator.xeXI_事件_復歸);
         }
         //---------------------------------------------------------------------------------------
         public void tmr_Home_Tick(object sender, EventArgs e)
@@ -6543,6 +6544,14 @@ namespace InjectorInspector
             }
         }
         //---------------------------------------------------------------------------------------
+        public enum xeXavier_RunType {
+            xeXRT_無,
+            xeXRT_植針,
+            xeXRT_抽針,
+            xeXRT_取針丟棄,
+        }
+        xeXavier_RunType xeXavierRunType = xeXavier_RunType.xeXRT_無;
+
         public enum xeXavier_Indicator {
             xeXI_讀_狀態,
                 xeXI_狀態_運行,
@@ -6760,32 +6769,78 @@ namespace InjectorInspector
         }
         //---------------------------------------------------------------------------------------
         public void Xavier_Engine() {
-        
             var tempBits = TaskISRFlag.bits;
-            
                 if(tempBits.bit0 == true) {
                     Xavier_TASK1();  
                 } else 
-                
                 if(tempBits.bit1 == true) {
                     Xavier_TASK2();  
                 } else 
-                
                 if(tempBits.bit2 == true) {
                     Xavier_TASK3();  
                 } else 
-                
                 if(tempBits.bit3 == true) {
                     Xavier_TASK4();  
                 } else 
-                
                 {
-                    Xavier_TASK1();
-                    Xavier_TASK2();
-                    Xavier_TASK3();
-                    Xavier_TASK4();
+                    Xavier_TASK1();  //面板按鈕以及指示燈
+                    Xavier_TASK2();  //吸嘴軸組
+                    Xavier_TASK3();  //植針軸組
+                    Xavier_TASK4();  //電動缸組_含抽針
+                    Xavier_TASK5();  //載盤組
+                    Xavier_TASK6();  //IO檢查_工作門_檔案組
                 }
-        
+
+/* 回home動作
+            //吸嘴軸組
+            tp2HomeSTART,
+                tp2Home_確認吸嘴軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
+                tp2Home_吸嘴Z縮回0,
+                tp2Home_告知植針軸組可以進行復歸動作,
+                tp2Home_吸嘴XYR回home,
+                tp2Home_吸嘴Z回home,
+                tp2Home_告知吸嘴軸組已回home完畢,
+
+            //植針軸組
+            tp3HomeSTART,
+                tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
+                tp3Home_確認植針軸組可以進行復歸動作_從_tp2Home_告知植針軸組可以進行復歸動作,
+                tp3Home_放開堵料吹氣電磁閥_並植針嘴Z回放料位,
+                tp3Home_告知載盤組_植針軸組無干涉,
+                tp3Home_植針嘴R回放料位,
+                tp3Home_告知植針軸組已回home完畢,
+
+            //電動缸組_含抽針
+            tp4HomeSTART,
+                tp4Home_確認電動缸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
+                tp4Home_電動缸組_抽針嘴_3D掃描_回安全位,
+                tp4Home_告知載盤組_電動缸無干涉,
+                tp4Home_電動缸組_IAI相機_植針相機_回home,
+                tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作,
+                tp4Home_電動缸組_抽針嘴_3D掃描_回home,
+                tp4Home_告知電動缸組已回home完畢,
+
+            //載盤組
+            tp5HomeSTART,
+                tp5Home_確認載盤組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
+                tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉,
+                tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉,
+                tp5Home_載盤組XY復歸,
+                tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作,
+                tp5Home_告知載盤組已回home完畢,
+
+            //IO檢查_工作門_檔案組
+            tp6HomeSTART,
+                tp6Home_工作門關閉,
+                tp6Home_告知工作門已關閉,
+                tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢,
+                tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢,
+                tp6Home_確認電動缸組回home完畢_從_tp4Home_告知電動缸組已回home完畢,
+                tp6Home_確認載盤組回home完畢_從_tp5Home_告知載盤組已回home完畢,
+                tp6Home_告知系統回home完畢,
+                tp6Home_工作門開啟,
+*/
+
         }
         //---------------------------------------------------------------------------------------
         public void Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR CallTask, xeXavier_FlowTask_ISR_ID isrID) {
@@ -6977,7 +7032,7 @@ namespace InjectorInspector
         // ----------Methods----------
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
-        public void Xavier_TASK1() {
+        public void Xavier_TASK1() {  //面板按鈕以及指示燈
             byte priTASK = 0;
             Xavier_T1_delayCase(xeXavier_T1_proc.pt1deExcute, (uint)xeXavier_T1_Job.tp1Empty, (byte)xeXavier_T1_Job.tp1Empty);
             priTASK = Xavier_Task1_proc(xeXavier_T1_proc.pt1GET, 0);
@@ -7199,7 +7254,7 @@ namespace InjectorInspector
                         Xavier_Task1_ISR_JobTmp(xeXavier_T1_proc.pt1SET, Xavier_T1_dC_GetInJob);
 
                         Xavier_T1_dC_GetInJob = excuteJob;
-                        Xavier_T1_dC_decdelayCNT = 2;  // equal to excute pt2deExcute to get Xavier_Task2_proc(pt2SET,GetInJob);
+                        Xavier_T1_dC_decdelayCNT = 2;  // equal to excute pt1deExcute to get Xavier_Task1_proc(pt1SET,GetInJob);
                     }
                     break;
 
@@ -7329,20 +7384,28 @@ namespace InjectorInspector
             tp2_ISR02_END,
             
             tp2Idle,
-            tp2START,
-            tp2STEP1,
-            tp2STEP2,
-            tp2STEP3,
-            tp2STEP4,
-            tp2STEP5,
-            tp2STEP6,
-            tp2STEP7,
+            tp2START,  //判斷動作種類
+
+            //吸嘴軸組
+            tp2HomeSTART,
+                tp2Home_確認吸嘴軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
+                tp2Home_吸嘴Z縮回0,
+                tp2Home_告知植針軸組可以進行復歸動作,
+                tp2Home_吸嘴XYR回home,
+                tp2Home_吸嘴Z回home,
+                tp2Home_告知吸嘴軸組已回home完畢,
+
+            tp2TakeAndDiscardSTART,
+
+            tp2InsertSTART,
+
+            tp2RemoveSTART,
         }
 
         // ----------Methods----------
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
-        public void Xavier_TASK2() {
+        public void Xavier_TASK2() {  //吸嘴軸組
             byte priTASK = 0;
             Xavier_T2_delayCase(xeXavier_T2_proc.pt2deExcute, (uint)xeXavier_T2_Job.tp2Empty, (byte)xeXavier_T2_Job.tp2Empty);
             priTASK = Xavier_Task2_proc(xeXavier_T2_proc.pt2GET, 0);
@@ -7416,39 +7479,24 @@ namespace InjectorInspector
                     Xavier_Task2_Debugprintf("tp2START\r\n");
                     break;
 
-                case (byte)xeXavier_T2_Job.tp2STEP1:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP1);
-                    Xavier_Task2_Debugprintf("tp2STEP1\r\n");
+                case (byte)xeXavier_T2_Job.tp2HomeSTART:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2HomeSTART);
+                    Xavier_Task2_Debugprintf("tp2HomeSTART\r\n");
                     break;
 
-                case (byte)xeXavier_T2_Job.tp2STEP2:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP2);
-                    Xavier_Task2_Debugprintf("tp2STEP2\r\n");
+                case (byte)xeXavier_T2_Job.tp2TakeAndDiscardSTART:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2TakeAndDiscardSTART);
+                    Xavier_Task2_Debugprintf("tp2TakeAndDiscardSTART\r\n");
                     break;
 
-                case (byte)xeXavier_T2_Job.tp2STEP3:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP3);
-                    Xavier_Task2_Debugprintf("tp2STEP3\r\n");
+                case (byte)xeXavier_T2_Job.tp2InsertSTART:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2InsertSTART);
+                    Xavier_Task2_Debugprintf("tp2InsertSTART\r\n");
                     break;
 
-                case (byte)xeXavier_T2_Job.tp2STEP4:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP4);
-                    Xavier_Task2_Debugprintf("tp2STEP4\r\n");
-                    break;
-
-                case (byte)xeXavier_T2_Job.tp2STEP5:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP5);
-                    Xavier_Task2_Debugprintf("tp2STEP5\r\n");
-                    break;
-
-                case (byte)xeXavier_T2_Job.tp2STEP6:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP6);
-                    Xavier_Task2_Debugprintf("tp2STEP6\r\n");
-                    break;
-
-                case (byte)xeXavier_T2_Job.tp2STEP7:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2STEP7);
-                    Xavier_Task2_Debugprintf("tp2STEP1\r\n");
+                case (byte)xeXavier_T2_Job.tp2RemoveSTART:
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, (byte)xeXavier_T2_Job.tp2RemoveSTART);
+                    Xavier_Task2_Debugprintf("tp2RemoveSTART\r\n");
                     break;
 
                 default:
@@ -7602,20 +7650,28 @@ namespace InjectorInspector
             tp3_ISR02_END,
             
             tp3Idle,
-            tp3START,
-            tp3STEP1,
-            tp3STEP2,
-            tp3STEP3,
-            tp3STEP4,
-            tp3STEP5,
-            tp3STEP6,
-            tp3STEP7,
+            tp3START,  //判斷動作種類
+
+            //植針軸組
+            tp3HomeSTART,
+                tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
+                tp3Home_確認植針軸組可以進行復歸動作_從_tp2Home_告知植針軸組可以進行復歸動作,
+                tp3Home_放開堵料吹氣電磁閥_並植針嘴Z回放料位,
+                tp3Home_告知載盤組_植針軸組無干涉,
+                tp3Home_植針嘴R回放料位,
+                tp3Home_告知植針軸組已回home完畢,
+
+            tp3TakeAndDiscardSTART,
+
+            tp3InsertSTART,
+
+            tp3RemoveSTART,
         }
 
         // ----------Methods----------
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
-        public void Xavier_TASK3() {
+        public void Xavier_TASK3() {  //植針軸組
             byte priTASK = 0;
             Xavier_T3_delayCase(xeXavier_T3_proc.pt3deExcute, (uint)xeXavier_T3_Job.tp3Empty, (byte)xeXavier_T3_Job.tp3Empty);
             priTASK = Xavier_Task3_proc(xeXavier_T3_proc.pt3GET, 0);
@@ -7689,39 +7745,24 @@ namespace InjectorInspector
                     Xavier_Task3_Debugprintf("tp3START\r\n");
                     break;
 
-                case (byte)xeXavier_T3_Job.tp3STEP1:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP1);
-                    Xavier_Task3_Debugprintf("tp3STEP1\r\n");
+                case (byte)xeXavier_T3_Job.tp3HomeSTART:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3HomeSTART);
+                    Xavier_Task3_Debugprintf("tp3HomeSTART\r\n");
                     break;
 
-                case (byte)xeXavier_T3_Job.tp3STEP2:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP2);
-                    Xavier_Task3_Debugprintf("tp3STEP2\r\n");
+                case (byte)xeXavier_T3_Job.tp3TakeAndDiscardSTART:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3TakeAndDiscardSTART);
+                    Xavier_Task3_Debugprintf("tp3TakeAndDiscardSTART\r\n");
                     break;
 
-                case (byte)xeXavier_T3_Job.tp3STEP3:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP3);
-                    Xavier_Task3_Debugprintf("tp3STEP3\r\n");
+                case (byte)xeXavier_T3_Job.tp3InsertSTART:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3InsertSTART);
+                    Xavier_Task3_Debugprintf("tp3InsertSTART\r\n");
                     break;
 
-                case (byte)xeXavier_T3_Job.tp3STEP4:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP4);
-                    Xavier_Task3_Debugprintf("tp3STEP4\r\n");
-                    break;
-
-                case (byte)xeXavier_T3_Job.tp3STEP5:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP5);
-                    Xavier_Task3_Debugprintf("tp3STEP5\r\n");
-                    break;
-
-                case (byte)xeXavier_T3_Job.tp3STEP6:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP6);
-                    Xavier_Task3_Debugprintf("tp3STEP6\r\n");
-                    break;
-
-                case (byte)xeXavier_T3_Job.tp3STEP7:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3STEP7);
-                    Xavier_Task3_Debugprintf("tp3STEP1\r\n");
+                case (byte)xeXavier_T3_Job.tp3RemoveSTART:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, (byte)xeXavier_T3_Job.tp3RemoveSTART);
+                    Xavier_Task3_Debugprintf("tp3RemoveSTART\r\n");
                     break;
 
                 default:
@@ -7875,20 +7916,29 @@ namespace InjectorInspector
             tp4_ISR02_END,
             
             tp4Idle,
-            tp4START,
-            tp4STEP1,
-            tp4STEP2,
-            tp4STEP3,
-            tp4STEP4,
-            tp4STEP5,
-            tp4STEP6,
-            tp4STEP7,
+            tp4START,  //判斷動作種類
+
+            //電動缸組_含抽針
+            tp4HomeSTART,
+                tp4Home_確認電動缸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
+                tp4Home_電動缸組_抽針嘴_3D掃描_回安全位,
+                tp4Home_告知載盤組_電動缸無干涉,
+                tp4Home_電動缸組_IAI相機_植針相機_回home,
+                tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作,
+                tp4Home_電動缸組_抽針嘴_3D掃描_回home,
+                tp4Home_告知電動缸組已回home完畢,
+
+            tp4TakeAndDiscardSTART,
+
+            tp4InsertSTART,
+
+            tp4RemoveSTART,
         }
 
         // ----------Methods----------
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
-        public void Xavier_TASK4() {
+        public void Xavier_TASK4() {  //電動缸組_含抽針
             byte priTASK = 0;
             Xavier_T4_delayCase(xeXavier_T4_proc.pt4deExcute, (uint)xeXavier_T4_Job.tp4Empty, (byte)xeXavier_T4_Job.tp4Empty);
             priTASK = Xavier_Task4_proc(xeXavier_T4_proc.pt4GET, 0);
@@ -7962,39 +8012,24 @@ namespace InjectorInspector
                     Xavier_Task4_Debugprintf("tp4START\r\n");
                     break;
 
-                case (byte)xeXavier_T4_Job.tp4STEP1:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP1);
-                    Xavier_Task4_Debugprintf("tp4STEP1\r\n");
+                case (byte)xeXavier_T4_Job.tp4HomeSTART:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4HomeSTART);
+                    Xavier_Task4_Debugprintf("tp4HomeSTART\r\n");
                     break;
 
-                case (byte)xeXavier_T4_Job.tp4STEP2:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP2);
-                    Xavier_Task4_Debugprintf("tp4STEP2\r\n");
+                case (byte)xeXavier_T4_Job.tp4TakeAndDiscardSTART:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4TakeAndDiscardSTART);
+                    Xavier_Task4_Debugprintf("tp4TakeAndDiscardSTART\r\n");
                     break;
 
-                case (byte)xeXavier_T4_Job.tp4STEP3:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP3);
-                    Xavier_Task4_Debugprintf("tp4STEP3\r\n");
+                case (byte)xeXavier_T4_Job.tp4InsertSTART:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4InsertSTART);
+                    Xavier_Task4_Debugprintf("tp4InsertSTART\r\n");
                     break;
 
-                case (byte)xeXavier_T4_Job.tp4STEP4:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP4);
-                    Xavier_Task4_Debugprintf("tp4STEP4\r\n");
-                    break;
-
-                case (byte)xeXavier_T4_Job.tp4STEP5:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP5);
-                    Xavier_Task4_Debugprintf("tp4STEP5\r\n");
-                    break;
-
-                case (byte)xeXavier_T4_Job.tp4STEP6:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP6);
-                    Xavier_Task4_Debugprintf("tp4STEP6\r\n");
-                    break;
-
-                case (byte)xeXavier_T4_Job.tp4STEP7:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4STEP7);
-                    Xavier_Task4_Debugprintf("tp4STEP1\r\n");
+                case (byte)xeXavier_T4_Job.tp4RemoveSTART:
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, (byte)xeXavier_T4_Job.tp4RemoveSTART);
+                    Xavier_Task4_Debugprintf("tp4RemoveSTART\r\n");
                     break;
 
                 default:
@@ -8109,6 +8144,542 @@ namespace InjectorInspector
         //------------------------------- XavierTaskFlowEngine_T4 -------------------------------
         //---------------------------------------------------------------------------------------
         #endregion
+
+
+
+        #region XavierTaskFlowEngine_T5
+        //---------------------------------------------------------------------------------------
+        //------------------------------- XavierTaskFlowEngine_T5 -------------------------------
+        //---------------------------------------------------------------------------------------
+
+        // ----------Global Variables----------
+        public static uint Xavier_T5_dC_decdelayCNT  = 0;
+        public static byte Xavier_T5_dC_GetInJob     = 0;
+        public static byte Xavier_Task5_p_ret        = 0;
+        public static byte Xavier_Task5_ISR_JT_retmp = (byte)xeXavier_T5_Job.tp5_ISR01_START;
+        public static uint Xavier_Task5_ISR_CT_retmp = (uint)xeXavier_T5_Job.tp5_ISR01_START;
+
+        // ----------Enumerations----------
+        public enum xeXavier_T5_proc {
+            pT5SET = 1,
+            pT5GET,
+            pT5Interrupt,
+            pT5ResISR,
+            pT5deExcute,
+        }
+
+        public enum xeXavier_T5_Job {
+            tp5Empty = 0,
+            tp5Init,
+            
+            tp5_ISR01_START,
+            tp5_ISR01_STEP1,
+            tp5_ISR01_STEP2,
+            tp5_ISR01_END,
+
+            tp5_ISR02_START,
+            tp5_ISR02_STEP1,
+            tp5_ISR02_STEP2,
+            tp5_ISR02_END,
+            
+            tp5Idle,
+            tp5START,  //判斷動作種類
+
+            //載盤組
+            tp5HomeSTART,
+                tp5Home_確認載盤組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
+                tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉,
+                tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉,
+                tp5Home_載盤組XY復歸,
+                tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作,
+                tp5Home_告知載盤組已回home完畢,
+
+            tp5TakeAndDiscardSTART,
+
+            tp5InsertSTART,
+
+            tp5RemoveSTART,
+        }
+
+        // ----------Methods----------
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_TASK5() {  //載盤組
+            byte priTASK = 0;
+            Xavier_T5_delayCase(xeXavier_T5_proc.pT5deExcute, (uint)xeXavier_T5_Job.tp5Empty, (byte)xeXavier_T5_Job.tp5Empty);
+            priTASK = Xavier_Task5_proc(xeXavier_T5_proc.pT5GET, 0);
+
+            switch (priTASK) {
+                case (byte)xeXavier_T5_Job.tp5Empty:
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, (byte)xeXavier_T5_Job.tp5Init);
+                    Xavier_Task5_Debugprintf("tp5Empty\r\n");
+                    break;
+
+                case (byte)xeXavier_T5_Job.tp5Init:
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, (byte)xeXavier_T5_Job.tp5START);
+                    Xavier_Task5_Debugprintf("tp5Init\r\n");
+                    break;
+
+                //======ISR Job======
+                case (byte)xeXavier_T5_Job.tp5_ISR01_START:
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 5, (byte)xeXavier_T5_Job.tp5_ISR01_STEP1);
+                    Xavier_Task5_Debugprintf("tp5_ISR01_START\r\n");
+                    break;
+
+                case (byte)xeXavier_T5_Job.tp5_ISR01_STEP1:
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 5, (byte)xeXavier_T5_Job.tp5_ISR01_STEP2);
+                    Xavier_Task5_Debugprintf("tp5_ISR01_STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T5_Job.tp5_ISR01_STEP2:
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 5, (byte)xeXavier_T5_Job.tp5_ISR01_END);
+                    Xavier_Task5_Debugprintf("tp5_ISR01_STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T5_Job.tp5_ISR01_END:
+                    //Xavier_Task5_ISR_CNTTmp(xeXavier_T5_proc.pT5SET, 15);
+                    //Xavier_Task5_ISR_JobTmp(xeXavier_T5_proc.pT5SET, (byte)xeXavier_T5_Job.tp5STEP2);
+                    
+                    Task5ResumeJob();
+                    //Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp5_ISR);  //尚未加入此TASK ISR
+                    Xavier_Task5_Debugprintf("tp5_ISR01_end\r\n");
+                    break;
+                //======ISR Job======
+                case (byte)xeXavier_T5_Job.tp5_ISR02_START:
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 5, (byte)xeXavier_T5_Job.tp5_ISR02_STEP1);
+                    Xavier_Task5_Debugprintf("tp5_ISR02_START\r\n");
+                    break;
+
+                case (byte)xeXavier_T5_Job.tp5_ISR02_STEP1:
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 5, (byte)xeXavier_T5_Job.tp5_ISR02_STEP2);
+                    Xavier_Task5_Debugprintf("tp5_ISR02_STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T5_Job.tp5_ISR02_STEP2:
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 5, (byte)xeXavier_T5_Job.tp5_ISR02_END);
+                    Xavier_Task5_Debugprintf("tp5_ISR02_STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T5_Job.tp5_ISR02_END:
+                    //Xavier_Task5_ISR_CNTTmp(xeXavier_T5_proc.pT5SET, 15);
+                    //Xavier_Task5_ISR_JobTmp(xeXavier_T5_proc.pT5SET, (byte)xeXavier_T5_Job.tp5STEP5);
+                    
+                    Task5ResumeJob();
+                    //Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp5_ISR);  //尚未加入此TASK ISR
+                    Xavier_Task5_Debugprintf("tp5_ISR02_end\r\n");
+                    break;
+                //======ISR Job======
+                
+                case (byte)xeXavier_T5_Job.tp5Idle:  //reserve
+                    break;
+
+                case (byte)xeXavier_T5_Job.tp5START:
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, (byte)xeXavier_T5_Job.tp5START);
+                    Xavier_Task5_Debugprintf("tp5START\r\n");
+                    break;
+
+                case (byte)xeXavier_T5_Job.tp5HomeSTART:
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, (byte)xeXavier_T5_Job.tp5HomeSTART);
+                    Xavier_Task5_Debugprintf("tp5HomeSTART\r\n");
+                    break;
+
+                case (byte)xeXavier_T5_Job.tp5TakeAndDiscardSTART:
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, (byte)xeXavier_T5_Job.tp5TakeAndDiscardSTART);
+                    Xavier_Task5_Debugprintf("tp5TakeAndDiscardSTART\r\n");
+                    break;
+
+                case (byte)xeXavier_T5_Job.tp5InsertSTART:
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, (byte)xeXavier_T5_Job.tp5InsertSTART);
+                    Xavier_Task5_Debugprintf("tp5InsertSTART\r\n");
+                    break;
+
+                case (byte)xeXavier_T5_Job.tp5RemoveSTART:
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, (byte)xeXavier_T5_Job.tp5RemoveSTART);
+                    Xavier_Task5_Debugprintf("tp5RemoveSTART\r\n");
+                    break;
+
+                default:
+                    break;
+            }
+
+            Xavier_Task5_proc(xeXavier_T5_proc.pT5SET, (byte)xeXavier_T5_Job.tp5Idle);
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_T5_delayCase(xeXavier_T5_proc deJob, uint delayCNT, byte excuteJob) {
+            switch (deJob) {
+                case xeXavier_T5_proc.pT5SET:
+                    Xavier_T5_dC_decdelayCNT = delayCNT + 2;
+                    Xavier_T5_dC_GetInJob = excuteJob;
+                    break;
+
+                case xeXavier_T5_proc.pT5Interrupt:
+                    if (Xavier_T5_dC_GetInJob != excuteJob) {
+                        Xavier_Task5_ISR_CNTTmp(xeXavier_T5_proc.pT5SET, Xavier_T5_dC_decdelayCNT);
+                        Xavier_Task5_ISR_JobTmp(xeXavier_T5_proc.pT5SET, Xavier_T5_dC_GetInJob);
+
+                        Xavier_T5_dC_GetInJob = excuteJob;
+                        Xavier_T5_dC_decdelayCNT = 2;  // equal to excute pT5deExcute to get Xavier_Task5_proc(pT5SET,GetInJob);
+                    }
+                    break;
+
+                case xeXavier_T5_proc.pT5ResISR:
+                    Xavier_T5_dC_decdelayCNT = Xavier_Task5_ISR_CNTTmp(xeXavier_T5_proc.pT5GET, Xavier_T5_dC_GetInJob) + 2;
+                    Xavier_T5_dC_GetInJob = Xavier_Task5_ISR_JobTmp(xeXavier_T5_proc.pT5GET, Xavier_T5_dC_GetInJob);
+
+                    Xavier_Task5_ISR_CNTTmp(xeXavier_T5_proc.pT5SET, 2);
+                    Xavier_Task5_ISR_JobTmp(xeXavier_T5_proc.pT5SET, (byte)xeXavier_T5_Job.tp5Empty);
+                    break;
+
+                case xeXavier_T5_proc.pT5deExcute:
+                    if (Xavier_T5_dC_decdelayCNT > 0) {
+                        Xavier_T5_dC_decdelayCNT--;
+                    }
+
+                    if (Xavier_T5_dC_decdelayCNT == 1) {
+                        Xavier_Task5_proc(xeXavier_T5_proc.pT5SET, Xavier_T5_dC_GetInJob);
+                    }
+                    break;
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        public byte Xavier_Task5_proc(xeXavier_T5_proc rtFun, byte ptValue) {
+            switch (rtFun) {
+                case xeXavier_T5_proc.pT5SET:
+                    Xavier_Task5_p_ret = ptValue;
+                    break;
+
+                case xeXavier_T5_proc.pT5GET:
+                    break;
+            }
+
+            return Xavier_Task5_p_ret;
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task5CallJob(byte excuteJob) {
+            Xavier_T5_delayCase(xeXavier_T5_proc.pT5Interrupt, 0, excuteJob);
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task5CallJobWithDelay(byte excuteJob, uint delayCNT) {
+            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, delayCNT, excuteJob);
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task5ResumeJob() {
+            Xavier_T5_delayCase(xeXavier_T5_proc.pT5ResISR, 0, 0);
+        }
+        //---------------------------------------------------------------------------------------
+        public byte Xavier_Task5_ISR_JobTmp(xeXavier_T5_proc rtFun, byte ptValue) {
+            switch (rtFun) {
+                case xeXavier_T5_proc.pT5SET:
+                    Xavier_Task5_ISR_JT_retmp = ptValue;
+                    break;
+
+                case xeXavier_T5_proc.pT5GET:
+                    break;
+            }
+
+            return Xavier_Task5_ISR_JT_retmp;
+        }
+        //---------------------------------------------------------------------------------------
+        public uint Xavier_Task5_ISR_CNTTmp(xeXavier_T5_proc rtFun, uint ptValue) {
+            switch (rtFun) {
+                case xeXavier_T5_proc.pT5SET:
+                    Xavier_Task5_ISR_CT_retmp = ptValue;
+                    break;
+
+                case xeXavier_T5_proc.pT5GET:
+                    break;
+            }
+
+            return Xavier_Task5_ISR_CT_retmp;
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        // ----------Debug Method----------
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_Task5_Debugprintf(string message) {
+            // Add debug print logic, e.g., console output
+            Console.WriteLine(message);
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------
+        //------------------------------- XavierTaskFlowEngine_T5 -------------------------------
+        //---------------------------------------------------------------------------------------
+        #endregion
+
+
+
+        #region XavierTaskFlowEngine_T6
+        //---------------------------------------------------------------------------------------
+        //------------------------------- XavierTaskFlowEngine_T6 -------------------------------
+        //---------------------------------------------------------------------------------------
+
+        // ----------Global Variables----------
+        public static uint Xavier_T6_dC_decdelayCNT  = 0;
+        public static byte Xavier_T6_dC_GetInJob     = 0;
+        public static byte Xavier_Task6_p_ret        = 0;
+        public static byte Xavier_Task6_ISR_JT_retmp = (byte)xeXavier_T6_Job.tp6_ISR01_START;
+        public static uint Xavier_Task6_ISR_CT_retmp = (uint)xeXavier_T6_Job.tp6_ISR01_START;
+
+        // ----------Enumerations----------
+        public enum xeXavier_T6_proc {
+            pT6SET = 1,
+            pT6GET,
+            pT6Interrupt,
+            pT6ResISR,
+            pT6deExcute,
+        }
+
+        public enum xeXavier_T6_Job {
+            tp6Empty = 0,
+            tp6Init,
+            
+            tp6_ISR01_START,
+            tp6_ISR01_STEP1,
+            tp6_ISR01_STEP2,
+            tp6_ISR01_END,
+
+            tp6_ISR02_START,
+            tp6_ISR02_STEP1,
+            tp6_ISR02_STEP2,
+            tp6_ISR02_END,
+            
+            tp6Idle,
+            tp6START,  //判斷動作種類
+
+            //IO檢查_工作門_檔案組
+            tp6HomeSTART,
+                tp6Home_工作門關閉,
+                tp6Home_告知工作門已關閉,
+                tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢,
+                tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢,
+                tp6Home_確認電動缸組回home完畢_從_tp4Home_告知電動缸組已回home完畢,
+                tp6Home_確認載盤組回home完畢_從_tp5Home_告知載盤組已回home完畢,
+                tp6Home_告知系統回home完畢,
+                tp6Home_工作門開啟,
+
+            tp6TakeAndDiscardSTART,
+
+            tp6InsertSTART,
+
+            tp6RemoveSTART,
+        }
+
+        // ----------Methods----------
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_TASK6() {  //IO檢查_工作門_檔案組
+            byte priTASK = 0;
+            Xavier_T6_delayCase(xeXavier_T6_proc.pT6deExcute, (uint)xeXavier_T6_Job.tp6Empty, (byte)xeXavier_T6_Job.tp6Empty);
+            priTASK = Xavier_Task6_proc(xeXavier_T6_proc.pT6GET, 0);
+
+            switch (priTASK) {
+                case (byte)xeXavier_T6_Job.tp6Empty:
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, (byte)xeXavier_T6_Job.tp6Init);
+                    Xavier_Task6_Debugprintf("tp6Empty\r\n");
+                    break;
+
+                case (byte)xeXavier_T6_Job.tp6Init:
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, (byte)xeXavier_T6_Job.tp6START);
+                    Xavier_Task6_Debugprintf("tp6Init\r\n");
+                    break;
+
+                //======ISR Job======
+                case (byte)xeXavier_T6_Job.tp6_ISR01_START:
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 5, (byte)xeXavier_T6_Job.tp6_ISR01_STEP1);
+                    Xavier_Task6_Debugprintf("tp6_ISR01_START\r\n");
+                    break;
+
+                case (byte)xeXavier_T6_Job.tp6_ISR01_STEP1:
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 5, (byte)xeXavier_T6_Job.tp6_ISR01_STEP2);
+                    Xavier_Task6_Debugprintf("tp6_ISR01_STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T6_Job.tp6_ISR01_STEP2:
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 5, (byte)xeXavier_T6_Job.tp6_ISR01_END);
+                    Xavier_Task6_Debugprintf("tp6_ISR01_STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T6_Job.tp6_ISR01_END:
+                    //Xavier_Task6_ISR_CNTTmp(xeXavier_T6_proc.pT6SET, 15);
+                    //Xavier_Task6_ISR_JobTmp(xeXavier_T6_proc.pT6SET, (byte)xeXavier_T6_Job.tp6STEP2);
+                    
+                    Task6ResumeJob();
+                    //Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp6_ISR);  //尚未加入此TASK ISR
+                    Xavier_Task6_Debugprintf("tp6_ISR01_end\r\n");
+                    break;
+                //======ISR Job======
+                case (byte)xeXavier_T6_Job.tp6_ISR02_START:
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 5, (byte)xeXavier_T6_Job.tp6_ISR02_STEP1);
+                    Xavier_Task6_Debugprintf("tp6_ISR02_START\r\n");
+                    break;
+
+                case (byte)xeXavier_T6_Job.tp6_ISR02_STEP1:
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 5, (byte)xeXavier_T6_Job.tp6_ISR02_STEP2);
+                    Xavier_Task6_Debugprintf("tp6_ISR02_STEP1\r\n");
+                    break;
+
+                case (byte)xeXavier_T6_Job.tp6_ISR02_STEP2:
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 5, (byte)xeXavier_T6_Job.tp6_ISR02_END);
+                    Xavier_Task6_Debugprintf("tp6_ISR02_STEP2\r\n");
+                    break;
+
+                case (byte)xeXavier_T6_Job.tp6_ISR02_END:
+                    //Xavier_Task6_ISR_CNTTmp(xeXavier_T6_proc.pT6SET, 15);
+                    //Xavier_Task6_ISR_JobTmp(xeXavier_T6_proc.pT6SET, (byte)xeXavier_T6_Job.tp6STEP5);
+                    
+                    Task6ResumeJob();
+                    //Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp6_ISR);  //尚未加入此TASK ISR
+                    Xavier_Task6_Debugprintf("tp6_ISR02_end\r\n");
+                    break;
+                //======ISR Job======
+                
+                case (byte)xeXavier_T6_Job.tp6Idle:  //reserve
+                    break;
+
+                case (byte)xeXavier_T6_Job.tp6START:
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, (byte)xeXavier_T6_Job.tp6START);
+                    Xavier_Task6_Debugprintf("tp6START\r\n");
+                    break;
+
+                case (byte)xeXavier_T6_Job.tp6HomeSTART:
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, (byte)xeXavier_T6_Job.tp6HomeSTART);
+                    Xavier_Task6_Debugprintf("tp6HomeSTART\r\n");
+                    break;
+
+                case (byte)xeXavier_T6_Job.tp6TakeAndDiscardSTART:
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, (byte)xeXavier_T6_Job.tp6TakeAndDiscardSTART);
+                    Xavier_Task6_Debugprintf("tp6TakeAndDiscardSTART\r\n");
+                    break;
+
+                case (byte)xeXavier_T6_Job.tp6InsertSTART:
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, (byte)xeXavier_T6_Job.tp6InsertSTART);
+                    Xavier_Task6_Debugprintf("tp6InsertSTART\r\n");
+                    break;
+
+                case (byte)xeXavier_T6_Job.tp6RemoveSTART:
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, (byte)xeXavier_T6_Job.tp6RemoveSTART);
+                    Xavier_Task6_Debugprintf("tp6RemoveSTART\r\n");
+                    break;
+
+                default:
+                    break;
+            }
+
+            Xavier_Task6_proc(xeXavier_T6_proc.pT6SET, (byte)xeXavier_T6_Job.tp6Idle);
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_T6_delayCase(xeXavier_T6_proc deJob, uint delayCNT, byte excuteJob) {
+            switch (deJob) {
+                case xeXavier_T6_proc.pT6SET:
+                    Xavier_T6_dC_decdelayCNT = delayCNT + 2;
+                    Xavier_T6_dC_GetInJob = excuteJob;
+                    break;
+
+                case xeXavier_T6_proc.pT6Interrupt:
+                    if (Xavier_T6_dC_GetInJob != excuteJob) {
+                        Xavier_Task6_ISR_CNTTmp(xeXavier_T6_proc.pT6SET, Xavier_T6_dC_decdelayCNT);
+                        Xavier_Task6_ISR_JobTmp(xeXavier_T6_proc.pT6SET, Xavier_T6_dC_GetInJob);
+
+                        Xavier_T6_dC_GetInJob = excuteJob;
+                        Xavier_T6_dC_decdelayCNT = 2;  // equal to excute pT6deExcute to get Xavier_Task6_proc(pT6SET,GetInJob);
+                    }
+                    break;
+
+                case xeXavier_T6_proc.pT6ResISR:
+                    Xavier_T6_dC_decdelayCNT = Xavier_Task6_ISR_CNTTmp(xeXavier_T6_proc.pT6GET, Xavier_T6_dC_GetInJob) + 2;
+                    Xavier_T6_dC_GetInJob = Xavier_Task6_ISR_JobTmp(xeXavier_T6_proc.pT6GET, Xavier_T6_dC_GetInJob);
+
+                    Xavier_Task6_ISR_CNTTmp(xeXavier_T6_proc.pT6SET, 2);
+                    Xavier_Task6_ISR_JobTmp(xeXavier_T6_proc.pT6SET, (byte)xeXavier_T6_Job.tp6Empty);
+                    break;
+
+                case xeXavier_T6_proc.pT6deExcute:
+                    if (Xavier_T6_dC_decdelayCNT > 0) {
+                        Xavier_T6_dC_decdelayCNT--;
+                    }
+
+                    if (Xavier_T6_dC_decdelayCNT == 1) {
+                        Xavier_Task6_proc(xeXavier_T6_proc.pT6SET, Xavier_T6_dC_GetInJob);
+                    }
+                    break;
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        public byte Xavier_Task6_proc(xeXavier_T6_proc rtFun, byte ptValue) {
+            switch (rtFun) {
+                case xeXavier_T6_proc.pT6SET:
+                    Xavier_Task6_p_ret = ptValue;
+                    break;
+
+                case xeXavier_T6_proc.pT6GET:
+                    break;
+            }
+
+            return Xavier_Task6_p_ret;
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task6CallJob(byte excuteJob) {
+            Xavier_T6_delayCase(xeXavier_T6_proc.pT6Interrupt, 0, excuteJob);
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task6CallJobWithDelay(byte excuteJob, uint delayCNT) {
+            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, delayCNT, excuteJob);
+        }
+        //---------------------------------------------------------------------------------------
+        public void Task6ResumeJob() {
+            Xavier_T6_delayCase(xeXavier_T6_proc.pT6ResISR, 0, 0);
+        }
+        //---------------------------------------------------------------------------------------
+        public byte Xavier_Task6_ISR_JobTmp(xeXavier_T6_proc rtFun, byte ptValue) {
+            switch (rtFun) {
+                case xeXavier_T6_proc.pT6SET:
+                    Xavier_Task6_ISR_JT_retmp = ptValue;
+                    break;
+
+                case xeXavier_T6_proc.pT6GET:
+                    break;
+            }
+
+            return Xavier_Task6_ISR_JT_retmp;
+        }
+        //---------------------------------------------------------------------------------------
+        public uint Xavier_Task6_ISR_CNTTmp(xeXavier_T6_proc rtFun, uint ptValue) {
+            switch (rtFun) {
+                case xeXavier_T6_proc.pT6SET:
+                    Xavier_Task6_ISR_CT_retmp = ptValue;
+                    break;
+
+                case xeXavier_T6_proc.pT6GET:
+                    break;
+            }
+
+            return Xavier_Task6_ISR_CT_retmp;
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        // ----------Debug Method----------
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        public void Xavier_Task6_Debugprintf(string message) {
+            // Add debug print logic, e.g., console output
+            Console.WriteLine(message);
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------
+        //------------------------------- XavierTaskFlowEngine_T6 -------------------------------
+        //---------------------------------------------------------------------------------------
+        #endregion
+
+
 
         //---------------------------------------------------------------------------------------
         //-------------------------------- Xavier TaskFlow Engine -------------------------------
