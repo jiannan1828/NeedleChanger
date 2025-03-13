@@ -8587,15 +8587,93 @@ namespace InjectorInspector
                 case xeXavier_T6_Job.tp6Idle:  //reserve
                     break;
 
-                case xeXavier_T6_Job.tp6START:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);
+                case xeXavier_T6_Job.tp6START: {  //判斷動作種類
+
+                    xeXavier_Indicator rslt = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
+                    if(rslt == xeXavier_Indicator.xeXI_事件_復歸) { 
+                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6HomeSTART);
+                    } else { 
+                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);                        
+                    }
+
                     Xavier_Task6_Debugprintf("tp6START\r\n");
-                    break;
+                } break;
 
                 case xeXavier_T6_Job.tp6HomeSTART:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6HomeSTART);
+                    btp2Home_告知植針軸組可以進行復歸動作                = false;
+                    btp2Home_告知吸嘴軸組已回home完畢                    = true;
+                    btp3Home_告知載盤組_植針軸組無干涉                   = false;
+                    btp3Home_告知植針軸組已回home完畢                    = true;
+                    btp4Home_告知載盤組_電動缸無干涉                     = false;
+                    btp4Home_告知電動缸組已回home完畢                    = true;
+                    btp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作 = false;
+                    btp5Home_告知載盤組已回home完畢                      = true;
+
+                    btp6Home_告知工作門已關閉                            = false;
+
+                    btp6Home_告知系統回home完畢                          = false;
+
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_工作門關閉);
                     Xavier_Task6_Debugprintf("tp6HomeSTART\r\n");
                     break;
+                    case xeXavier_T6_Job.tp6Home_工作門關閉:
+                        dbapiGate(580, 580/4);
+                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_告知工作門已關閉);
+                        Xavier_Task6_Debugprintf("tp6Home_工作門關閉\r\n");
+                        break;
+                    case xeXavier_T6_Job.tp6Home_告知工作門已關閉:
+                        if(dbapiGate(dbCheckArrived, 0) == dbAxisMoveOk) {
+                            btp6Home_告知工作門已關閉 = true;
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢);
+                        } else { 
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_告知工作門已關閉);
+                        }
+                        Xavier_Task6_Debugprintf("tp6Home_告知工作門已關閉\r\n");
+                        break;
+                    case xeXavier_T6_Job.tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢:
+                        if(btp2Home_告知吸嘴軸組已回home完畢 == true) { 
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢);
+                        } else { 
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢);
+                        }
+                        Xavier_Task6_Debugprintf("tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢\r\n");
+                        break;
+                    case xeXavier_T6_Job.tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢:
+                        if(btp3Home_告知植針軸組已回home完畢 == true) { 
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認電動缸組回home完畢_從_tp4Home_告知電動缸組已回home完畢);
+                        } else { 
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢);
+                        }
+                        Xavier_Task6_Debugprintf("tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢\r\n");
+                        break;
+                    case xeXavier_T6_Job.tp6Home_確認電動缸組回home完畢_從_tp4Home_告知電動缸組已回home完畢:
+                        if(btp4Home_告知電動缸組已回home完畢 == true) { 
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認載盤組回home完畢_從_tp5Home_告知載盤組已回home完畢);
+                        } else { 
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認電動缸組回home完畢_從_tp4Home_告知電動缸組已回home完畢);
+                        }
+                        Xavier_Task6_Debugprintf("tp6Home_確認電動缸組回home完畢_從_tp4Home_告知電動缸組已回home完畢\r\n");
+                        break;
+                    case xeXavier_T6_Job.tp6Home_確認載盤組回home完畢_從_tp5Home_告知載盤組已回home完畢:
+                        if(btp5Home_告知載盤組已回home完畢 == true) { 
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_告知系統回home完畢);
+                        } else { 
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認載盤組回home完畢_從_tp5Home_告知載盤組已回home完畢);
+                        }
+                        Xavier_Task6_Debugprintf("tp6Home_確認載盤組回home完畢_從_tp5Home_告知載盤組已回home完畢\r\n");
+                        break;
+                    case xeXavier_T6_Job.tp6Home_告知系統回home完畢:
+                        btp6Home_告知系統回home完畢 = true;
+                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_工作門開啟);
+                        Xavier_Task6_Debugprintf("tp6Home_告知系統回home完畢\r\n");
+                        break;
+                    case xeXavier_T6_Job.tp6Home_工作門開啟:
+                        dbapiGate(0, 580/4);
+                        apiIndicator(xeXavier_Indicator.xeXI_狀態_停止);
+                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);
+                        Xavier_Task6_Debugprintf("tp6Home_工作門開啟\r\n");
+                        break;
+
 
                 case xeXavier_T6_Job.tp6TakeAndDiscardSTART:
                     Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6TakeAndDiscardSTART);
