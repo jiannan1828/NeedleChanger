@@ -8640,14 +8640,82 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T5_Job.tp5START:  //判斷動作種類
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5START);
+                    { 
+                        xeXavier_Indicator rslt = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
+                        if(rslt == xeXavier_Indicator.xeXI_事件_復歸) {
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5HomeSTART);
+                        } else {
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5START);
+                        }
+                    }
                     Xavier_Task5_Debugprintf("tp5START\r\n");
                     break;
 
                 case xeXavier_T5_Job.tp5HomeSTART:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5HomeSTART);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
                     Xavier_Task5_Debugprintf("tp5HomeSTART\r\n");
                     break;
+                    case xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp6Home_告知工作門已關閉:
+                        if(btp6Home_告知工作門已關閉 == true) { 
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉);
+                        } else { 
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
+                        }
+                        Xavier_Task5_Debugprintf("tp5Home_確認載盤組可以進行復歸動作_從_tp6Home_告知工作門已關閉\r\n");
+                        break;
+                    case xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉:
+                        if(btp6Home_告知工作門已關閉 == true) { 
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉);
+                        } else { 
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉);
+                        }
+                        Xavier_Task5_Debugprintf("tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉\r\n");
+                        break;
+                    case xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉:
+                        if(btp6Home_告知工作門已關閉 == true) { 
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_載盤組XY復歸);
+
+                            en_載盤X軸.Checked = true;
+                            en_載盤Y軸.Checked = true;
+                            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, true);
+                            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, true);
+                        } else { 
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉);
+                        }
+                        Xavier_Task5_Debugprintf("tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉\r\n");
+                        break;
+                    case xeXavier_T5_Job.tp5Home_載盤組XY復歸:
+                        {
+                            dbapiCarrierX(95, 190*0.2);  //tmr_Home_Tick
+                            dbapiCarrierY(10, 800*0.2);  //tmr_Home_Tick
+                            if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
+                                (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作);
+                            } else { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_載盤組XY復歸);
+                            }
+                        }
+                        Xavier_Task5_Debugprintf("tp5Home_載盤組XY復歸\r\n");
+                        break;
+                    case xeXavier_T5_Job.tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作:
+                        {
+                            btp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作 = true;
+                        }
+                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_告知載盤組已回home完畢);
+                        Xavier_Task5_Debugprintf("tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作\r\n");
+                        break;
+                    case xeXavier_T5_Job.tp5Home_告知載盤組已回home完畢:
+                        {
+                            btp5Home_告知載盤組已回home完畢 = true;
+
+                            if (btp6Home_告知系統回home完畢 == true) { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5START);
+                            } else { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_告知載盤組已回home完畢);
+                            }
+                        }
+                        Xavier_Task5_Debugprintf("tp5Home_告知載盤組已回home完畢\r\n");
+                        break;
 
                 case xeXavier_T5_Job.tp5TakeAndDiscardSTART:
                     Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5TakeAndDiscardSTART);
@@ -8926,12 +8994,9 @@ namespace InjectorInspector
                         btp3Home_告知植針軸組已回home完畢                    = false;
                         btp4Home_告知載盤組_電動缸無干涉                     = false;
                         btp4Home_告知電動缸組已回home完畢                    = false;
-
                         btp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作 = false;
-                        btp5Home_告知載盤組已回home完畢                      = true;
-
+                        btp5Home_告知載盤組已回home完畢                      = false;
                         btp6Home_告知工作門已關閉                            = false;
-
                         btp6Home_告知系統回home完畢                          = false;
 
                         en_工作門.Checked = true;
@@ -8943,6 +9008,7 @@ namespace InjectorInspector
                     case xeXavier_T6_Job.tp6Home_工作門關閉:
                         { 
                             dbapiGate(580, 580/4);
+                            digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, HIGH);
                         }
                         Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_告知工作門已關閉);
                         Xavier_Task6_Debugprintf("tp6Home_工作門關閉\r\n");
@@ -8951,6 +9017,7 @@ namespace InjectorInspector
                         {
                             if(dbapiGate(dbCheckArrived, 0) == dbAxisMoveOk) {
                                 btp6Home_告知工作門已關閉 = true;
+                                digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, LOW);
                                 Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢);
                             } else { 
                                 Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_告知工作門已關閉);
@@ -9001,6 +9068,8 @@ namespace InjectorInspector
                     case xeXavier_T6_Job.tp6Home_告知系統回home完畢:
                         {
                             btp6Home_告知系統回home完畢 = true;
+
+                            digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, HIGH);
                         }
                         Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_工作門開啟);
                         Xavier_Task6_Debugprintf("tp6Home_告知系統回home完畢\r\n");
@@ -9008,6 +9077,7 @@ namespace InjectorInspector
                     case xeXavier_T6_Job.tp6Home_工作門開啟:
                         {
                             dbapiGate(0, 580/4);
+                            digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, LOW);
                             apiIndicator(xeXavier_Indicator.xeXI_狀態_停止);
                         }
                         Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);
