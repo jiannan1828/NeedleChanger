@@ -144,6 +144,28 @@ namespace InjectorInspector
             this.tsmi_CloseFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miniToolStrip = new System.Windows.Forms.MenuStrip();
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.FlowTask_Debug = new System.Windows.Forms.GroupBox();
+            this.lbldbg_Task_Info = new System.Windows.Forms.Label();
+            this.lbldbg_Task_ID = new System.Windows.Forms.Label();
+            this.lbldbg_Task_Title = new System.Windows.Forms.Label();
+            this.lbldbg_Task6_Info = new System.Windows.Forms.Label();
+            this.lbldbg_Task6_ID = new System.Windows.Forms.Label();
+            this.lbldbg_Task6_Title = new System.Windows.Forms.Label();
+            this.lbldbg_Task5_Info = new System.Windows.Forms.Label();
+            this.lbldbg_Task5_ID = new System.Windows.Forms.Label();
+            this.lbldbg_Task5_Title = new System.Windows.Forms.Label();
+            this.lbldbg_Task4_Info = new System.Windows.Forms.Label();
+            this.lbldbg_Task4_ID = new System.Windows.Forms.Label();
+            this.lbldbg_Task4_Title = new System.Windows.Forms.Label();
+            this.lbldbg_Task3_Info = new System.Windows.Forms.Label();
+            this.lbldbg_Task3_ID = new System.Windows.Forms.Label();
+            this.lbldbg_Task3_Title = new System.Windows.Forms.Label();
+            this.lbldbg_Task2_Info = new System.Windows.Forms.Label();
+            this.lbldbg_Task2_ID = new System.Windows.Forms.Label();
+            this.lbldbg_Task2_Title = new System.Windows.Forms.Label();
+            this.lbldbg_Task1_Info = new System.Windows.Forms.Label();
+            this.lbldbg_Task1_ID = new System.Windows.Forms.Label();
+            this.lbldbg_Task1_Title = new System.Windows.Forms.Label();
             this.btn_minus = new System.Windows.Forms.Button();
             this.btn_plus = new System.Windows.Forms.Button();
             this.edit_diff_value = new System.Windows.Forms.TextBox();
@@ -193,15 +215,15 @@ namespace InjectorInspector
             this.lbl_spd_JoDell3D掃描 = new System.Windows.Forms.Label();
             this.lbl_spd_JoDell3D掃描_lbl = new System.Windows.Forms.Label();
             this.select_JoDell3D掃描 = new System.Windows.Forms.RadioButton();
-            this.lbl_JoDell植針嘴_Convert = new System.Windows.Forms.Label();
-            this.lbl_JoDell植針嘴_Back = new System.Windows.Forms.Label();
-            this.lbl_JoDell植針嘴_RAW = new System.Windows.Forms.Label();
-            this.en_JoDell植針嘴 = new System.Windows.Forms.CheckBox();
-            this.lbl_acpos_JoDell植針嘴 = new System.Windows.Forms.Label();
-            this.lbl_acpos_JoDell植針嘴_lbl = new System.Windows.Forms.Label();
-            this.lbl_spd_JoDell植針嘴 = new System.Windows.Forms.Label();
-            this.lbl_spd_JoDell植針嘴_lbl = new System.Windows.Forms.Label();
-            this.select_JoDell植針嘴 = new System.Windows.Forms.RadioButton();
+            this.lbl_JoDell植針嘴相機_Convert = new System.Windows.Forms.Label();
+            this.lbl_JoDell植針嘴相機_Back = new System.Windows.Forms.Label();
+            this.lbl_JoDell植針嘴相機_RAW = new System.Windows.Forms.Label();
+            this.en_JoDell植針嘴相機 = new System.Windows.Forms.CheckBox();
+            this.lbl_acpos_JoDell植針嘴相機 = new System.Windows.Forms.Label();
+            this.lbl_acpos_JoDell植針嘴相機_lbl = new System.Windows.Forms.Label();
+            this.lbl_spd_JoDell植針嘴相機 = new System.Windows.Forms.Label();
+            this.lbl_spd_JoDell植針嘴相機_lbl = new System.Windows.Forms.Label();
+            this.select_JoDell植針嘴相機 = new System.Windows.Forms.RadioButton();
             this.lbl_IAI_Convert = new System.Windows.Forms.Label();
             this.lbl_IAI_Back = new System.Windows.Forms.Label();
             this.lbl_IAI_RAW = new System.Windows.Forms.Label();
@@ -262,9 +284,9 @@ namespace InjectorInspector
             this.lbl上右右門 = new System.Windows.Forms.Label();
             this.lbl上左右門 = new System.Windows.Forms.Label();
             this.lbl_NA_19 = new System.Windows.Forms.Label();
-            this.lbl_NA_18 = new System.Windows.Forms.Label();
+            this.lbl_堵料桿出 = new System.Windows.Forms.Label();
             this.lbl_NA_17 = new System.Windows.Forms.Label();
-            this.lbl_NA_16 = new System.Windows.Forms.Label();
+            this.lbl_堵料桿進 = new System.Windows.Forms.Label();
             this.lbl_NA_15 = new System.Windows.Forms.Label();
             this.lbl_擺放座關 = new System.Windows.Forms.Label();
             this.lbl_NA_13 = new System.Windows.Forms.Label();
@@ -473,6 +495,7 @@ namespace InjectorInspector
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.ms_Viewer.SuspendLayout();
             this.tabJob.SuspendLayout();
+            this.FlowTask_Debug.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -1686,6 +1709,7 @@ namespace InjectorInspector
             // 
             // tabJob
             // 
+            this.tabJob.Controls.Add(this.FlowTask_Debug);
             this.tabJob.Controls.Add(this.btn_minus);
             this.tabJob.Controls.Add(this.btn_plus);
             this.tabJob.Controls.Add(this.edit_diff_value);
@@ -1735,15 +1759,15 @@ namespace InjectorInspector
             this.tabJob.Controls.Add(this.lbl_spd_JoDell3D掃描);
             this.tabJob.Controls.Add(this.lbl_spd_JoDell3D掃描_lbl);
             this.tabJob.Controls.Add(this.select_JoDell3D掃描);
-            this.tabJob.Controls.Add(this.lbl_JoDell植針嘴_Convert);
-            this.tabJob.Controls.Add(this.lbl_JoDell植針嘴_Back);
-            this.tabJob.Controls.Add(this.lbl_JoDell植針嘴_RAW);
-            this.tabJob.Controls.Add(this.en_JoDell植針嘴);
-            this.tabJob.Controls.Add(this.lbl_acpos_JoDell植針嘴);
-            this.tabJob.Controls.Add(this.lbl_acpos_JoDell植針嘴_lbl);
-            this.tabJob.Controls.Add(this.lbl_spd_JoDell植針嘴);
-            this.tabJob.Controls.Add(this.lbl_spd_JoDell植針嘴_lbl);
-            this.tabJob.Controls.Add(this.select_JoDell植針嘴);
+            this.tabJob.Controls.Add(this.lbl_JoDell植針嘴相機_Convert);
+            this.tabJob.Controls.Add(this.lbl_JoDell植針嘴相機_Back);
+            this.tabJob.Controls.Add(this.lbl_JoDell植針嘴相機_RAW);
+            this.tabJob.Controls.Add(this.en_JoDell植針嘴相機);
+            this.tabJob.Controls.Add(this.lbl_acpos_JoDell植針嘴相機);
+            this.tabJob.Controls.Add(this.lbl_acpos_JoDell植針嘴相機_lbl);
+            this.tabJob.Controls.Add(this.lbl_spd_JoDell植針嘴相機);
+            this.tabJob.Controls.Add(this.lbl_spd_JoDell植針嘴相機_lbl);
+            this.tabJob.Controls.Add(this.select_JoDell植針嘴相機);
             this.tabJob.Controls.Add(this.lbl_IAI_Convert);
             this.tabJob.Controls.Add(this.lbl_IAI_Back);
             this.tabJob.Controls.Add(this.lbl_IAI_RAW);
@@ -1848,6 +1872,246 @@ namespace InjectorInspector
             this.tabJob.TabIndex = 2;
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
+            // 
+            // FlowTask_Debug
+            // 
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task_Info);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task_ID);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task_Title);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task6_Info);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task6_ID);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task6_Title);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task5_Info);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task5_ID);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task5_Title);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task4_Info);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task4_ID);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task4_Title);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task3_Info);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task3_ID);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task3_Title);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task2_Info);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task2_ID);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task2_Title);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task1_Info);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task1_ID);
+            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task1_Title);
+            this.FlowTask_Debug.Location = new System.Drawing.Point(25, 680);
+            this.FlowTask_Debug.Name = "FlowTask_Debug";
+            this.FlowTask_Debug.Size = new System.Drawing.Size(1115, 80);
+            this.FlowTask_Debug.TabIndex = 236;
+            this.FlowTask_Debug.TabStop = false;
+            this.FlowTask_Debug.Text = "FlowTask_Debug";
+            // 
+            // lbldbg_Task_Info
+            // 
+            this.lbldbg_Task_Info.AutoSize = true;
+            this.lbldbg_Task_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task_Info.Location = new System.Drawing.Point(15, 55);
+            this.lbldbg_Task_Info.Name = "lbldbg_Task_Info";
+            this.lbldbg_Task_Info.Size = new System.Drawing.Size(92, 13);
+            this.lbldbg_Task_Info.TabIndex = 181;
+            this.lbldbg_Task_Info.Text = "lbldbg_Task_Info";
+            // 
+            // lbldbg_Task_ID
+            // 
+            this.lbldbg_Task_ID.AutoSize = true;
+            this.lbldbg_Task_ID.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task_ID.Location = new System.Drawing.Point(15, 40);
+            this.lbldbg_Task_ID.Name = "lbldbg_Task_ID";
+            this.lbldbg_Task_ID.Size = new System.Drawing.Size(85, 13);
+            this.lbldbg_Task_ID.TabIndex = 180;
+            this.lbldbg_Task_ID.Text = "lbldbg_Task_ID";
+            // 
+            // lbldbg_Task_Title
+            // 
+            this.lbldbg_Task_Title.AutoSize = true;
+            this.lbldbg_Task_Title.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task_Title.Location = new System.Drawing.Point(15, 25);
+            this.lbldbg_Task_Title.Name = "lbldbg_Task_Title";
+            this.lbldbg_Task_Title.Size = new System.Drawing.Size(93, 13);
+            this.lbldbg_Task_Title.TabIndex = 179;
+            this.lbldbg_Task_Title.Text = "lbldbg_Task_Title";
+            // 
+            // lbldbg_Task6_Info
+            // 
+            this.lbldbg_Task6_Info.AutoSize = true;
+            this.lbldbg_Task6_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task6_Info.Location = new System.Drawing.Point(915, 55);
+            this.lbldbg_Task6_Info.Name = "lbldbg_Task6_Info";
+            this.lbldbg_Task6_Info.Size = new System.Drawing.Size(98, 13);
+            this.lbldbg_Task6_Info.TabIndex = 178;
+            this.lbldbg_Task6_Info.Text = "lbldbg_Task6_Info";
+            // 
+            // lbldbg_Task6_ID
+            // 
+            this.lbldbg_Task6_ID.AutoSize = true;
+            this.lbldbg_Task6_ID.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task6_ID.Location = new System.Drawing.Point(915, 40);
+            this.lbldbg_Task6_ID.Name = "lbldbg_Task6_ID";
+            this.lbldbg_Task6_ID.Size = new System.Drawing.Size(91, 13);
+            this.lbldbg_Task6_ID.TabIndex = 177;
+            this.lbldbg_Task6_ID.Text = "lbldbg_Task6_ID";
+            // 
+            // lbldbg_Task6_Title
+            // 
+            this.lbldbg_Task6_Title.AutoSize = true;
+            this.lbldbg_Task6_Title.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task6_Title.Location = new System.Drawing.Point(915, 25);
+            this.lbldbg_Task6_Title.Name = "lbldbg_Task6_Title";
+            this.lbldbg_Task6_Title.Size = new System.Drawing.Size(99, 13);
+            this.lbldbg_Task6_Title.TabIndex = 176;
+            this.lbldbg_Task6_Title.Text = "lbldbg_Task6_Title";
+            // 
+            // lbldbg_Task5_Info
+            // 
+            this.lbldbg_Task5_Info.AutoSize = true;
+            this.lbldbg_Task5_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task5_Info.Location = new System.Drawing.Point(765, 55);
+            this.lbldbg_Task5_Info.Name = "lbldbg_Task5_Info";
+            this.lbldbg_Task5_Info.Size = new System.Drawing.Size(98, 13);
+            this.lbldbg_Task5_Info.TabIndex = 175;
+            this.lbldbg_Task5_Info.Text = "lbldbg_Task5_Info";
+            // 
+            // lbldbg_Task5_ID
+            // 
+            this.lbldbg_Task5_ID.AutoSize = true;
+            this.lbldbg_Task5_ID.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task5_ID.Location = new System.Drawing.Point(765, 40);
+            this.lbldbg_Task5_ID.Name = "lbldbg_Task5_ID";
+            this.lbldbg_Task5_ID.Size = new System.Drawing.Size(91, 13);
+            this.lbldbg_Task5_ID.TabIndex = 174;
+            this.lbldbg_Task5_ID.Text = "lbldbg_Task5_ID";
+            // 
+            // lbldbg_Task5_Title
+            // 
+            this.lbldbg_Task5_Title.AutoSize = true;
+            this.lbldbg_Task5_Title.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task5_Title.Location = new System.Drawing.Point(765, 25);
+            this.lbldbg_Task5_Title.Name = "lbldbg_Task5_Title";
+            this.lbldbg_Task5_Title.Size = new System.Drawing.Size(99, 13);
+            this.lbldbg_Task5_Title.TabIndex = 173;
+            this.lbldbg_Task5_Title.Text = "lbldbg_Task5_Title";
+            // 
+            // lbldbg_Task4_Info
+            // 
+            this.lbldbg_Task4_Info.AutoSize = true;
+            this.lbldbg_Task4_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task4_Info.Location = new System.Drawing.Point(615, 55);
+            this.lbldbg_Task4_Info.Name = "lbldbg_Task4_Info";
+            this.lbldbg_Task4_Info.Size = new System.Drawing.Size(98, 13);
+            this.lbldbg_Task4_Info.TabIndex = 172;
+            this.lbldbg_Task4_Info.Text = "lbldbg_Task4_Info";
+            // 
+            // lbldbg_Task4_ID
+            // 
+            this.lbldbg_Task4_ID.AutoSize = true;
+            this.lbldbg_Task4_ID.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task4_ID.Location = new System.Drawing.Point(615, 40);
+            this.lbldbg_Task4_ID.Name = "lbldbg_Task4_ID";
+            this.lbldbg_Task4_ID.Size = new System.Drawing.Size(91, 13);
+            this.lbldbg_Task4_ID.TabIndex = 171;
+            this.lbldbg_Task4_ID.Text = "lbldbg_Task4_ID";
+            // 
+            // lbldbg_Task4_Title
+            // 
+            this.lbldbg_Task4_Title.AutoSize = true;
+            this.lbldbg_Task4_Title.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task4_Title.Location = new System.Drawing.Point(615, 25);
+            this.lbldbg_Task4_Title.Name = "lbldbg_Task4_Title";
+            this.lbldbg_Task4_Title.Size = new System.Drawing.Size(99, 13);
+            this.lbldbg_Task4_Title.TabIndex = 170;
+            this.lbldbg_Task4_Title.Text = "lbldbg_Task4_Title";
+            // 
+            // lbldbg_Task3_Info
+            // 
+            this.lbldbg_Task3_Info.AutoSize = true;
+            this.lbldbg_Task3_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task3_Info.Location = new System.Drawing.Point(465, 55);
+            this.lbldbg_Task3_Info.Name = "lbldbg_Task3_Info";
+            this.lbldbg_Task3_Info.Size = new System.Drawing.Size(98, 13);
+            this.lbldbg_Task3_Info.TabIndex = 169;
+            this.lbldbg_Task3_Info.Text = "lbldbg_Task3_Info";
+            // 
+            // lbldbg_Task3_ID
+            // 
+            this.lbldbg_Task3_ID.AutoSize = true;
+            this.lbldbg_Task3_ID.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task3_ID.Location = new System.Drawing.Point(465, 40);
+            this.lbldbg_Task3_ID.Name = "lbldbg_Task3_ID";
+            this.lbldbg_Task3_ID.Size = new System.Drawing.Size(91, 13);
+            this.lbldbg_Task3_ID.TabIndex = 168;
+            this.lbldbg_Task3_ID.Text = "lbldbg_Task3_ID";
+            // 
+            // lbldbg_Task3_Title
+            // 
+            this.lbldbg_Task3_Title.AutoSize = true;
+            this.lbldbg_Task3_Title.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task3_Title.Location = new System.Drawing.Point(465, 25);
+            this.lbldbg_Task3_Title.Name = "lbldbg_Task3_Title";
+            this.lbldbg_Task3_Title.Size = new System.Drawing.Size(99, 13);
+            this.lbldbg_Task3_Title.TabIndex = 167;
+            this.lbldbg_Task3_Title.Text = "lbldbg_Task3_Title";
+            // 
+            // lbldbg_Task2_Info
+            // 
+            this.lbldbg_Task2_Info.AutoSize = true;
+            this.lbldbg_Task2_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task2_Info.Location = new System.Drawing.Point(315, 55);
+            this.lbldbg_Task2_Info.Name = "lbldbg_Task2_Info";
+            this.lbldbg_Task2_Info.Size = new System.Drawing.Size(98, 13);
+            this.lbldbg_Task2_Info.TabIndex = 166;
+            this.lbldbg_Task2_Info.Text = "lbldbg_Task2_Info";
+            // 
+            // lbldbg_Task2_ID
+            // 
+            this.lbldbg_Task2_ID.AutoSize = true;
+            this.lbldbg_Task2_ID.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task2_ID.Location = new System.Drawing.Point(315, 40);
+            this.lbldbg_Task2_ID.Name = "lbldbg_Task2_ID";
+            this.lbldbg_Task2_ID.Size = new System.Drawing.Size(91, 13);
+            this.lbldbg_Task2_ID.TabIndex = 165;
+            this.lbldbg_Task2_ID.Text = "lbldbg_Task2_ID";
+            // 
+            // lbldbg_Task2_Title
+            // 
+            this.lbldbg_Task2_Title.AutoSize = true;
+            this.lbldbg_Task2_Title.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task2_Title.Location = new System.Drawing.Point(315, 25);
+            this.lbldbg_Task2_Title.Name = "lbldbg_Task2_Title";
+            this.lbldbg_Task2_Title.Size = new System.Drawing.Size(99, 13);
+            this.lbldbg_Task2_Title.TabIndex = 164;
+            this.lbldbg_Task2_Title.Text = "lbldbg_Task2_Title";
+            // 
+            // lbldbg_Task1_Info
+            // 
+            this.lbldbg_Task1_Info.AutoSize = true;
+            this.lbldbg_Task1_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task1_Info.Location = new System.Drawing.Point(165, 55);
+            this.lbldbg_Task1_Info.Name = "lbldbg_Task1_Info";
+            this.lbldbg_Task1_Info.Size = new System.Drawing.Size(98, 13);
+            this.lbldbg_Task1_Info.TabIndex = 163;
+            this.lbldbg_Task1_Info.Text = "lbldbg_Task1_Info";
+            // 
+            // lbldbg_Task1_ID
+            // 
+            this.lbldbg_Task1_ID.AutoSize = true;
+            this.lbldbg_Task1_ID.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task1_ID.Location = new System.Drawing.Point(165, 40);
+            this.lbldbg_Task1_ID.Name = "lbldbg_Task1_ID";
+            this.lbldbg_Task1_ID.Size = new System.Drawing.Size(91, 13);
+            this.lbldbg_Task1_ID.TabIndex = 162;
+            this.lbldbg_Task1_ID.Text = "lbldbg_Task1_ID";
+            // 
+            // lbldbg_Task1_Title
+            // 
+            this.lbldbg_Task1_Title.AutoSize = true;
+            this.lbldbg_Task1_Title.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task1_Title.Location = new System.Drawing.Point(165, 25);
+            this.lbldbg_Task1_Title.Name = "lbldbg_Task1_Title";
+            this.lbldbg_Task1_Title.Size = new System.Drawing.Size(99, 13);
+            this.lbldbg_Task1_Title.TabIndex = 161;
+            this.lbldbg_Task1_Title.Text = "lbldbg_Task1_Title";
             // 
             // btn_minus
             // 
@@ -2369,99 +2633,99 @@ namespace InjectorInspector
             this.select_JoDell3D掃描.UseVisualStyleBackColor = true;
             this.select_JoDell3D掃描.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
-            // lbl_JoDell植針嘴_Convert
+            // lbl_JoDell植針嘴相機_Convert
             // 
-            this.lbl_JoDell植針嘴_Convert.AutoSize = true;
-            this.lbl_JoDell植針嘴_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell植針嘴_Convert.Location = new System.Drawing.Point(590, 265);
-            this.lbl_JoDell植針嘴_Convert.Name = "lbl_JoDell植針嘴_Convert";
-            this.lbl_JoDell植針嘴_Convert.Size = new System.Drawing.Size(139, 13);
-            this.lbl_JoDell植針嘴_Convert.TabIndex = 179;
-            this.lbl_JoDell植針嘴_Convert.Text = "lbl_JoDell植針嘴_Convert";
+            this.lbl_JoDell植針嘴相機_Convert.AutoSize = true;
+            this.lbl_JoDell植針嘴相機_Convert.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_JoDell植針嘴相機_Convert.Location = new System.Drawing.Point(590, 265);
+            this.lbl_JoDell植針嘴相機_Convert.Name = "lbl_JoDell植針嘴相機_Convert";
+            this.lbl_JoDell植針嘴相機_Convert.Size = new System.Drawing.Size(165, 13);
+            this.lbl_JoDell植針嘴相機_Convert.TabIndex = 179;
+            this.lbl_JoDell植針嘴相機_Convert.Text = "lbl_JoDell植針嘴相機_Convert";
             // 
-            // lbl_JoDell植針嘴_Back
+            // lbl_JoDell植針嘴相機_Back
             // 
-            this.lbl_JoDell植針嘴_Back.AutoSize = true;
-            this.lbl_JoDell植針嘴_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell植針嘴_Back.Location = new System.Drawing.Point(770, 265);
-            this.lbl_JoDell植針嘴_Back.Name = "lbl_JoDell植針嘴_Back";
-            this.lbl_JoDell植針嘴_Back.Size = new System.Drawing.Size(125, 13);
-            this.lbl_JoDell植針嘴_Back.TabIndex = 178;
-            this.lbl_JoDell植針嘴_Back.Text = "lbl_JoDell植針嘴_Back";
+            this.lbl_JoDell植針嘴相機_Back.AutoSize = true;
+            this.lbl_JoDell植針嘴相機_Back.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_JoDell植針嘴相機_Back.Location = new System.Drawing.Point(770, 265);
+            this.lbl_JoDell植針嘴相機_Back.Name = "lbl_JoDell植針嘴相機_Back";
+            this.lbl_JoDell植針嘴相機_Back.Size = new System.Drawing.Size(151, 13);
+            this.lbl_JoDell植針嘴相機_Back.TabIndex = 178;
+            this.lbl_JoDell植針嘴相機_Back.Text = "lbl_JoDell植針嘴相機_Back";
             // 
-            // lbl_JoDell植針嘴_RAW
+            // lbl_JoDell植針嘴相機_RAW
             // 
-            this.lbl_JoDell植針嘴_RAW.AutoSize = true;
-            this.lbl_JoDell植針嘴_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_JoDell植針嘴_RAW.Location = new System.Drawing.Point(420, 265);
-            this.lbl_JoDell植針嘴_RAW.Name = "lbl_JoDell植針嘴_RAW";
-            this.lbl_JoDell植針嘴_RAW.Size = new System.Drawing.Size(130, 13);
-            this.lbl_JoDell植針嘴_RAW.TabIndex = 177;
-            this.lbl_JoDell植針嘴_RAW.Text = "lbl_JoDell植針嘴_RAW";
+            this.lbl_JoDell植針嘴相機_RAW.AutoSize = true;
+            this.lbl_JoDell植針嘴相機_RAW.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_JoDell植針嘴相機_RAW.Location = new System.Drawing.Point(420, 265);
+            this.lbl_JoDell植針嘴相機_RAW.Name = "lbl_JoDell植針嘴相機_RAW";
+            this.lbl_JoDell植針嘴相機_RAW.Size = new System.Drawing.Size(156, 13);
+            this.lbl_JoDell植針嘴相機_RAW.TabIndex = 177;
+            this.lbl_JoDell植針嘴相機_RAW.Text = "lbl_JoDell植針嘴相機_RAW";
             // 
-            // en_JoDell植針嘴
+            // en_JoDell植針嘴相機
             // 
-            this.en_JoDell植針嘴.AutoSize = true;
-            this.en_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.en_JoDell植針嘴.Location = new System.Drawing.Point(25, 265);
-            this.en_JoDell植針嘴.Name = "en_JoDell植針嘴";
-            this.en_JoDell植針嘴.Size = new System.Drawing.Size(58, 17);
-            this.en_JoDell植針嘴.TabIndex = 176;
-            this.en_JoDell植針嘴.Text = "Enable";
-            this.en_JoDell植針嘴.UseVisualStyleBackColor = true;
-            this.en_JoDell植針嘴.CheckedChanged += new System.EventHandler(this.en_Group_Click);
+            this.en_JoDell植針嘴相機.AutoSize = true;
+            this.en_JoDell植針嘴相機.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.en_JoDell植針嘴相機.Location = new System.Drawing.Point(25, 265);
+            this.en_JoDell植針嘴相機.Name = "en_JoDell植針嘴相機";
+            this.en_JoDell植針嘴相機.Size = new System.Drawing.Size(58, 17);
+            this.en_JoDell植針嘴相機.TabIndex = 176;
+            this.en_JoDell植針嘴相機.Text = "Enable";
+            this.en_JoDell植針嘴相機.UseVisualStyleBackColor = true;
+            this.en_JoDell植針嘴相機.CheckedChanged += new System.EventHandler(this.en_Group_Click);
             // 
-            // lbl_acpos_JoDell植針嘴
+            // lbl_acpos_JoDell植針嘴相機
             // 
-            this.lbl_acpos_JoDell植針嘴.AutoSize = true;
-            this.lbl_acpos_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell植針嘴.Location = new System.Drawing.Point(340, 265);
-            this.lbl_acpos_JoDell植針嘴.Name = "lbl_acpos_JoDell植針嘴";
-            this.lbl_acpos_JoDell植針嘴.Size = new System.Drawing.Size(28, 13);
-            this.lbl_acpos_JoDell植針嘴.TabIndex = 175;
-            this.lbl_acpos_JoDell植針嘴.Text = "0.00";
+            this.lbl_acpos_JoDell植針嘴相機.AutoSize = true;
+            this.lbl_acpos_JoDell植針嘴相機.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_acpos_JoDell植針嘴相機.Location = new System.Drawing.Point(340, 265);
+            this.lbl_acpos_JoDell植針嘴相機.Name = "lbl_acpos_JoDell植針嘴相機";
+            this.lbl_acpos_JoDell植針嘴相機.Size = new System.Drawing.Size(28, 13);
+            this.lbl_acpos_JoDell植針嘴相機.TabIndex = 175;
+            this.lbl_acpos_JoDell植針嘴相機.Text = "0.00";
             // 
-            // lbl_acpos_JoDell植針嘴_lbl
+            // lbl_acpos_JoDell植針嘴相機_lbl
             // 
-            this.lbl_acpos_JoDell植針嘴_lbl.AutoSize = true;
-            this.lbl_acpos_JoDell植針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_acpos_JoDell植針嘴_lbl.Location = new System.Drawing.Point(290, 265);
-            this.lbl_acpos_JoDell植針嘴_lbl.Name = "lbl_acpos_JoDell植針嘴_lbl";
-            this.lbl_acpos_JoDell植針嘴_lbl.Size = new System.Drawing.Size(34, 13);
-            this.lbl_acpos_JoDell植針嘴_lbl.TabIndex = 174;
-            this.lbl_acpos_JoDell植針嘴_lbl.Text = "acpos";
+            this.lbl_acpos_JoDell植針嘴相機_lbl.AutoSize = true;
+            this.lbl_acpos_JoDell植針嘴相機_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_acpos_JoDell植針嘴相機_lbl.Location = new System.Drawing.Point(290, 265);
+            this.lbl_acpos_JoDell植針嘴相機_lbl.Name = "lbl_acpos_JoDell植針嘴相機_lbl";
+            this.lbl_acpos_JoDell植針嘴相機_lbl.Size = new System.Drawing.Size(34, 13);
+            this.lbl_acpos_JoDell植針嘴相機_lbl.TabIndex = 174;
+            this.lbl_acpos_JoDell植針嘴相機_lbl.Text = "acpos";
             // 
-            // lbl_spd_JoDell植針嘴
+            // lbl_spd_JoDell植針嘴相機
             // 
-            this.lbl_spd_JoDell植針嘴.AutoSize = true;
-            this.lbl_spd_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell植針嘴.Location = new System.Drawing.Point(230, 265);
-            this.lbl_spd_JoDell植針嘴.Name = "lbl_spd_JoDell植針嘴";
-            this.lbl_spd_JoDell植針嘴.Size = new System.Drawing.Size(28, 13);
-            this.lbl_spd_JoDell植針嘴.TabIndex = 173;
-            this.lbl_spd_JoDell植針嘴.Text = "0.00";
+            this.lbl_spd_JoDell植針嘴相機.AutoSize = true;
+            this.lbl_spd_JoDell植針嘴相機.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_spd_JoDell植針嘴相機.Location = new System.Drawing.Point(230, 265);
+            this.lbl_spd_JoDell植針嘴相機.Name = "lbl_spd_JoDell植針嘴相機";
+            this.lbl_spd_JoDell植針嘴相機.Size = new System.Drawing.Size(28, 13);
+            this.lbl_spd_JoDell植針嘴相機.TabIndex = 173;
+            this.lbl_spd_JoDell植針嘴相機.Text = "0.00";
             // 
-            // lbl_spd_JoDell植針嘴_lbl
+            // lbl_spd_JoDell植針嘴相機_lbl
             // 
-            this.lbl_spd_JoDell植針嘴_lbl.AutoSize = true;
-            this.lbl_spd_JoDell植針嘴_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_spd_JoDell植針嘴_lbl.Location = new System.Drawing.Point(180, 265);
-            this.lbl_spd_JoDell植針嘴_lbl.Name = "lbl_spd_JoDell植針嘴_lbl";
-            this.lbl_spd_JoDell植針嘴_lbl.Size = new System.Drawing.Size(34, 13);
-            this.lbl_spd_JoDell植針嘴_lbl.TabIndex = 172;
-            this.lbl_spd_JoDell植針嘴_lbl.Text = "speed";
+            this.lbl_spd_JoDell植針嘴相機_lbl.AutoSize = true;
+            this.lbl_spd_JoDell植針嘴相機_lbl.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_spd_JoDell植針嘴相機_lbl.Location = new System.Drawing.Point(180, 265);
+            this.lbl_spd_JoDell植針嘴相機_lbl.Name = "lbl_spd_JoDell植針嘴相機_lbl";
+            this.lbl_spd_JoDell植針嘴相機_lbl.Size = new System.Drawing.Size(34, 13);
+            this.lbl_spd_JoDell植針嘴相機_lbl.TabIndex = 172;
+            this.lbl_spd_JoDell植針嘴相機_lbl.Text = "speed";
             // 
-            // select_JoDell植針嘴
+            // select_JoDell植針嘴相機
             // 
-            this.select_JoDell植針嘴.AutoSize = true;
-            this.select_JoDell植針嘴.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.select_JoDell植針嘴.Location = new System.Drawing.Point(95, 265);
-            this.select_JoDell植針嘴.Name = "select_JoDell植針嘴";
-            this.select_JoDell植針嘴.Size = new System.Drawing.Size(64, 17);
-            this.select_JoDell植針嘴.TabIndex = 171;
-            this.select_JoDell植針嘴.Text = "植針嘴";
-            this.select_JoDell植針嘴.UseVisualStyleBackColor = true;
-            this.select_JoDell植針嘴.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
+            this.select_JoDell植針嘴相機.AutoSize = true;
+            this.select_JoDell植針嘴相機.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.select_JoDell植針嘴相機.Location = new System.Drawing.Point(95, 265);
+            this.select_JoDell植針嘴相機.Name = "select_JoDell植針嘴相機";
+            this.select_JoDell植針嘴相機.Size = new System.Drawing.Size(64, 17);
+            this.select_JoDell植針嘴相機.TabIndex = 171;
+            this.select_JoDell植針嘴相機.Text = "植針嘴";
+            this.select_JoDell植針嘴相機.UseVisualStyleBackColor = true;
+            this.select_JoDell植針嘴相機.CheckedChanged += new System.EventHandler(this.RadioGroupChanged);
             // 
             // lbl_IAI_Convert
             // 
@@ -2969,9 +3233,9 @@ namespace InjectorInspector
             this.groupBox1.Controls.Add(this.lbl上右右門);
             this.groupBox1.Controls.Add(this.lbl上左右門);
             this.groupBox1.Controls.Add(this.lbl_NA_19);
-            this.groupBox1.Controls.Add(this.lbl_NA_18);
+            this.groupBox1.Controls.Add(this.lbl_堵料桿出);
             this.groupBox1.Controls.Add(this.lbl_NA_17);
-            this.groupBox1.Controls.Add(this.lbl_NA_16);
+            this.groupBox1.Controls.Add(this.lbl_堵料桿進);
             this.groupBox1.Controls.Add(this.lbl_NA_15);
             this.groupBox1.Controls.Add(this.lbl_擺放座關);
             this.groupBox1.Controls.Add(this.lbl_NA_13);
@@ -3193,15 +3457,15 @@ namespace InjectorInspector
             this.lbl_NA_19.TabIndex = 207;
             this.lbl_NA_19.Text = "lbl_NA_19";
             // 
-            // lbl_NA_18
+            // lbl_堵料桿出
             // 
-            this.lbl_NA_18.AutoSize = true;
-            this.lbl_NA_18.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_18.Location = new System.Drawing.Point(420, 160);
-            this.lbl_NA_18.Name = "lbl_NA_18";
-            this.lbl_NA_18.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_18.TabIndex = 206;
-            this.lbl_NA_18.Text = "lbl_NA_18";
+            this.lbl_堵料桿出.AutoSize = true;
+            this.lbl_堵料桿出.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_堵料桿出.Location = new System.Drawing.Point(420, 160);
+            this.lbl_堵料桿出.Name = "lbl_堵料桿出";
+            this.lbl_堵料桿出.Size = new System.Drawing.Size(77, 13);
+            this.lbl_堵料桿出.TabIndex = 206;
+            this.lbl_堵料桿出.Text = "lbl_堵料桿出";
             // 
             // lbl_NA_17
             // 
@@ -3213,15 +3477,15 @@ namespace InjectorInspector
             this.lbl_NA_17.TabIndex = 205;
             this.lbl_NA_17.Text = "lbl_NA_17";
             // 
-            // lbl_NA_16
+            // lbl_堵料桿進
             // 
-            this.lbl_NA_16.AutoSize = true;
-            this.lbl_NA_16.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbl_NA_16.Location = new System.Drawing.Point(420, 120);
-            this.lbl_NA_16.Name = "lbl_NA_16";
-            this.lbl_NA_16.Size = new System.Drawing.Size(61, 13);
-            this.lbl_NA_16.TabIndex = 204;
-            this.lbl_NA_16.Text = "lbl_NA_16";
+            this.lbl_堵料桿進.AutoSize = true;
+            this.lbl_堵料桿進.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbl_堵料桿進.Location = new System.Drawing.Point(420, 120);
+            this.lbl_堵料桿進.Name = "lbl_堵料桿進";
+            this.lbl_堵料桿進.Size = new System.Drawing.Size(77, 13);
+            this.lbl_堵料桿進.TabIndex = 204;
+            this.lbl_堵料桿進.Text = "lbl_堵料桿進";
             // 
             // lbl_NA_15
             // 
@@ -5233,6 +5497,8 @@ namespace InjectorInspector
             this.ms_Viewer.PerformLayout();
             this.tabJob.ResumeLayout(false);
             this.tabJob.PerformLayout();
+            this.FlowTask_Debug.ResumeLayout(false);
+            this.FlowTask_Debug.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -5465,15 +5731,15 @@ namespace InjectorInspector
         public Label lbl_spd_JoDell3D掃描;
         public Label lbl_spd_JoDell3D掃描_lbl;
         public RadioButton select_JoDell3D掃描;
-        public Label lbl_JoDell植針嘴_Convert;
-        public Label lbl_JoDell植針嘴_Back;
-        public Label lbl_JoDell植針嘴_RAW;
-        public CheckBox en_JoDell植針嘴;
-        public Label lbl_acpos_JoDell植針嘴;
-        public Label lbl_acpos_JoDell植針嘴_lbl;
-        public Label lbl_spd_JoDell植針嘴;
-        public Label lbl_spd_JoDell植針嘴_lbl;
-        public RadioButton select_JoDell植針嘴;
+        public Label lbl_JoDell植針嘴相機_Convert;
+        public Label lbl_JoDell植針嘴相機_Back;
+        public Label lbl_JoDell植針嘴相機_RAW;
+        public CheckBox en_JoDell植針嘴相機;
+        public Label lbl_acpos_JoDell植針嘴相機;
+        public Label lbl_acpos_JoDell植針嘴相機_lbl;
+        public Label lbl_spd_JoDell植針嘴相機;
+        public Label lbl_spd_JoDell植針嘴相機_lbl;
+        public RadioButton select_JoDell植針嘴相機;
         public Label lbl_IAI_Convert;
         public Label lbl_IAI_Back;
         public Label lbl_IAI_RAW;
@@ -5534,9 +5800,9 @@ namespace InjectorInspector
         public Label lbl上右右門;
         public Label lbl上左右門;
         public Label lbl_NA_19;
-        public Label lbl_NA_18;
+        public Label lbl_堵料桿出;
         public Label lbl_NA_17;
-        public Label lbl_NA_16;
+        public Label lbl_堵料桿進;
         public Label lbl_NA_15;
         public Label lbl_擺放座關;
         public Label lbl_NA_13;
@@ -5727,6 +5993,28 @@ namespace InjectorInspector
         public Label label21;
         public Label lbl_讀取計數;
         private Timer tmr_TaskFlow;
+        private GroupBox FlowTask_Debug;
+        public Label lbldbg_Task1_ID;
+        public Label lbldbg_Task1_Title;
+        public Label lbldbg_Task1_Info;
+        public Label lbldbg_Task2_Info;
+        public Label lbldbg_Task2_ID;
+        public Label lbldbg_Task2_Title;
+        public Label lbldbg_Task3_Info;
+        public Label lbldbg_Task3_ID;
+        public Label lbldbg_Task3_Title;
+        public Label lbldbg_Task6_Info;
+        public Label lbldbg_Task6_ID;
+        public Label lbldbg_Task6_Title;
+        public Label lbldbg_Task5_Info;
+        public Label lbldbg_Task5_ID;
+        public Label lbldbg_Task5_Title;
+        public Label lbldbg_Task4_Info;
+        public Label lbldbg_Task4_ID;
+        public Label lbldbg_Task4_Title;
+        public Label lbldbg_Task_Info;
+        public Label lbldbg_Task_ID;
+        public Label lbldbg_Task_Title;
     }
 }
 
