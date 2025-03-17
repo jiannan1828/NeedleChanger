@@ -474,8 +474,7 @@ namespace InjectorInspector
             wmx.SetDeviceName("DLF");
 
             //設置齒輪比
-            if (wmx != null)
-            {
+            if (wmx != null) {
                 if(false) {
                   //motion.Config.SetGearRatio(           (int)WMX3軸定義.吸嘴X軸, 1000, 100);  //小線碼, 500,000
                     motion.Config.SetAbsoluteEncoderMode( (int)WMX3軸定義.吸嘴X軸, true);
@@ -508,9 +507,7 @@ namespace InjectorInspector
                     AxisParam apErr   = new AxisParam();
                     motion.Config.ImportAndSetAll("wmx_parameters.xml", ref spErr, ref apErr);
                 }
-            }
-            else
-            {
+            } else {
                 return;
             }
 
@@ -524,20 +521,16 @@ namespace InjectorInspector
             WMX3_Initial();
 
             Thread.Sleep(2000);
-            if (wmx != null)
-            {
+            if (wmx != null) {
                 Thread.Sleep(2000);
                 int ret = wmx.StartCommunication();
-                if (ret != 0)
-                {
+                if (ret != 0) {
                     string str = WMX3Api.ErrorToString(ret);
                     MessageBox.Show(str);
                 }
 
                 rslt = 1;
-            }
-            else
-            {
+            } else {
                 rslt = 0;
             }
 
@@ -546,15 +539,10 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public void WMX3_destroy_Commu()
         {
-
-            if (wmx != null)
-            {
-                if (false)
-                {
+            if (wmx != null) {
+                if (false) {
                     wmx.StopCommunication();
-                }
-                else
-                {
+                } else {
                     wmx.StopCommunication(10000);
                 }
 
@@ -563,12 +551,9 @@ namespace InjectorInspector
                 motion.Dispose();
                 wmx.Dispose();
                 wmx = null;
-            }
-            else
-            {
+            } else {
                 return;
             }
-
         }  //end of public void WMX3_destroy_Commu()
         //---------------------------------------------------------------------------------------
         public int WMX3_check_Commu()
@@ -596,6 +581,11 @@ namespace InjectorInspector
 
             return rslt;
         }  //end of public int WMX3_check_Commu()
+        //---------------------------------------------------------------------------------------
+        public void WMX3_Stop_Axis(int iAxisID) {
+            //馬達停止
+            motion.Motion.Stop(iAxisID);
+        }
         //---------------------------------------------------------------------------------------
         public void WMX3_ServoOnOff(int axis, bool bOn)
         {
@@ -751,8 +741,7 @@ namespace InjectorInspector
                         //尋找內部home
                         rslt = motion.Config.SetHomeParam(axis, AxisHomeParam);//設置原點參數
 
-                        if (rslt != 0)
-                        {
+                        if (rslt != 0) {
                             string ers = CoreMotion.ErrorToString(rslt);//如果無法通訊則報錯誤給使用者
                         }
 

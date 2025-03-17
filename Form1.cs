@@ -6568,6 +6568,30 @@ namespace InjectorInspector
         xeXavier_Indicator xeXI_Event  = xeXavier_Indicator.xeXI_事件_空;
         bool apiIndicator_InternalBTN = false;
 
+        public xeXavier_Indicator apiGetMachineAction() {
+            xeXavier_Indicator rslt_event = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
+            if (rslt_event == xeXavier_Indicator.xeXI_事件_空) {
+                rslt_event = apiIndicator(xeXavier_Indicator.xeXI_讀_狀態);
+            }
+            switch (rslt_event) {
+                case xeXavier_Indicator.xeXI_狀態_運行:
+                    break;
+                case xeXavier_Indicator.xeXI_狀態_停止:
+                    break;
+                case xeXavier_Indicator.xeXI_狀態_急停:
+                    break;
+
+                case xeXavier_Indicator.xeXI_事件_復歸:
+                    break;
+                case xeXavier_Indicator.xeXI_事件_暫停: break;
+                case xeXavier_Indicator.xeXI_事件_異常: break;
+
+                default:
+                    return xeXavier_Indicator.xeXI_事件_異常;
+            }
+
+            return rslt_event;
+        }
         public xeXavier_Indicator apiIndicator(xeXavier_Indicator eEventID) {
             xeXavier_Indicator result = xeXavier_Indicator.xeXI_狀態_停止;
 
@@ -6634,11 +6658,11 @@ namespace InjectorInspector
                 }
 
                 apiIndicator_InternalBTN = true; {
-                    xeXavier_Indicator rslt = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
-                    if(rslt == xeXavier_Indicator.xeXI_事件_空) { 
-                        rslt = apiIndicator(xeXavier_Indicator.xeXI_讀_狀態);
+                    xeXavier_Indicator rslt_event = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
+                    if(rslt_event == xeXavier_Indicator.xeXI_事件_空) {
+                        rslt_event = apiIndicator(xeXavier_Indicator.xeXI_讀_狀態);
                     }
-                    switch(rslt) {
+                    switch(rslt_event) {
                         case xeXavier_Indicator.xeXI_狀態_運行: 
                             digitalWrite((int)WMX3IO對照.pxeIO_面板左按鈕紅燈, LOW);
                             digitalWrite((int)WMX3IO對照.pxeIO_面板中按鈕綠燈, HIGH);
@@ -6765,6 +6789,7 @@ namespace InjectorInspector
         //Home Flag
         public bool btp2Home_告知植針軸組可以進行復歸動作                = false;
         public bool btp2Home_告知吸嘴軸組已回home完畢                    = false;
+        public bool btp3Home_告知吸嘴軸組_植針軸組無干涉                 = false;
         public bool btp3Home_告知載盤組_植針軸組無干涉                   = false;
         public bool btp3Home_告知植針軸組已回home完畢                    = false;
         public bool btp4Home_告知載盤組_電動缸無干涉                     = false;
@@ -6780,6 +6805,7 @@ namespace InjectorInspector
  
                 tp3Home_確認植針軸組可以進行復歸動作_從_tp2Home_告知植針軸組可以進行復歸動作,
                 tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢,
+                tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉
                 tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉,
                 tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢,
                 tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉,
@@ -6794,6 +6820,7 @@ namespace InjectorInspector
 
                 tp2Home_告知植針軸組可以進行復歸動作
                 tp2Home_告知吸嘴軸組已回home完畢,
+                tp3Home_告知吸嘴軸組_植針軸組無干涉,
                 tp3Home_告知載盤組_植針軸組無干涉,
                 tp3Home_告知植針軸組已回home完畢,
                 tp4Home_告知載盤組_電動缸無干涉,
@@ -6810,12 +6837,14 @@ namespace InjectorInspector
                 tp2Home_確認吸嘴軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
                 tp2Home_吸嘴Z縮回0,
                 tp2Home_告知植針軸組可以進行復歸動作,
-                tp2Home_吸嘴XYR回home,
+                tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉,
                 tp2Home_吸嘴Z回home,
                 tp2Home_告知吸嘴軸組已回home完畢,
 
             //植針軸組
             tp3HomeSTART,
+                tp3Home_如果植針軸組Z過高_則降低至植針軸組Z原點位,
+                tp3Home_告知吸嘴軸組_植針軸組無干涉,
                 tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
                 tp3Home_確認植針軸組可以進行復歸動作_從_tp2Home_告知植針軸組可以進行復歸動作,
                 tp3Home_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位,
@@ -7435,7 +7464,7 @@ namespace InjectorInspector
                 tp2Home_確認吸嘴軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
                 tp2Home_吸嘴Z縮回0,
                 tp2Home_告知植針軸組可以進行復歸動作,
-                tp2Home_吸嘴XYR回home,
+                tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉,
                 tp2Home_吸嘴Z回home,
                 tp2Home_告知吸嘴軸組已回home完畢,
 
@@ -7529,11 +7558,26 @@ namespace InjectorInspector
 
                 case xeXavier_T2_Job.tp2START:  //判斷動作種類
                     { 
-                        xeXavier_Indicator rslt = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
-                        if(rslt == xeXavier_Indicator.xeXI_事件_復歸) {
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2HomeSTART);
-                        } else {
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2START);
+                        xeXavier_Indicator rslt = apiGetMachineAction();
+                        switch(rslt) {
+                            case xeXavier_Indicator.xeXI_狀態_運行: 
+                                break;
+                            case xeXavier_Indicator.xeXI_狀態_停止:
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2START);
+                                break;
+                            case xeXavier_Indicator.xeXI_狀態_急停:
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2START);
+                                break;
+
+                            case xeXavier_Indicator.xeXI_事件_復歸:
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2HomeSTART);
+                                break;
+                            case xeXavier_Indicator.xeXI_事件_暫停:    break;
+                            case xeXavier_Indicator.xeXI_事件_異常:    break;
+
+                            default:
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2START);
+                                break;
                         }
                     }
                     Xavier_Task2_Debugprintf("tp2START\r\n");
@@ -7589,40 +7633,44 @@ namespace InjectorInspector
                             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, true);  
                             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, false); 
                         }
-                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_吸嘴XYR回home);
+                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉);
                         Xavier_Task2_Debugprintf("tp2Home_告知植針軸組可以進行復歸動作\r\n");
                         break;
-                    case xeXavier_T2_Job.tp2Home_吸嘴XYR回home:
+                    case xeXavier_T2_Job.tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉:
                         {
-                            dbapiNozzleX(dbNozzle安全原點X, dbVelocityNozzleX);  
-                            dbapiNozzleY(dbNozzle安全原點Y, dbVelocityNozzleY);       
+                            if(btp3Home_告知吸嘴軸組_植針軸組無干涉 == true) { 
+                                dbapiNozzleX(dbNozzle安全原點X, dbVelocityNozzleX);  
+                                dbapiNozzleY(dbNozzle安全原點Y, dbVelocityNozzleY);       
 
-                            if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
-                                (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
+                                    (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
 
-                                { 
-                                    int rslt = 0;
-                                    int axis = 0;
-                                    string position = "";
-                                    string speed    = "";
+                                    { 
+                                        int rslt = 0;
+                                        int axis = 0;
+                                        string position = "";
+                                        string speed    = "";
 
-                                    axis = (int)WMX3軸定義.吸嘴R軸;
-                                    rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-                                    if (rslt == 1) {
-                                        clsServoControlWMX3.WMX3_SetHomePosition(axis);                                 
+                                        axis = (int)WMX3軸定義.吸嘴R軸;
+                                        rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
+                                        if (rslt == 1) {
+                                            clsServoControlWMX3.WMX3_SetHomePosition(axis);                                 
+                                        }
                                     }
+                                    dbapiNozzleR(dbNozzle安全原點R, dbVelocityNozzleR);
+
+                                    en_吸嘴Z軸.Checked = true;
+                                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, true);
+
+                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_吸嘴Z回home);
+                                } else { 
+                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉);
                                 }
-                                dbapiNozzleR(dbNozzle安全原點R, dbVelocityNozzleR);
-
-                                en_吸嘴Z軸.Checked = true;
-                                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, true);
-
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_吸嘴Z回home);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_吸嘴XYR回home);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉);
                             }
                         }
-                        Xavier_Task2_Debugprintf("tp2Home_吸嘴XYR回home\r\n");
+                        Xavier_Task2_Debugprintf("tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Home_吸嘴Z回home:
                         {
@@ -7822,6 +7870,8 @@ namespace InjectorInspector
 
             //植針軸組
             tp3HomeSTART,
+                tp3Home_如果植針軸組Z過高_則降低至植針軸組Z原點位,
+                tp3Home_告知吸嘴軸組_植針軸組無干涉,
                 tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉,
                 tp3Home_確認植針軸組可以進行復歸動作_從_tp2Home_告知植針軸組可以進行復歸動作,
                 tp3Home_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位,
@@ -7910,20 +7960,57 @@ namespace InjectorInspector
 
                 case xeXavier_T3_Job.tp3START:  //判斷動作種類
                     { 
-                        xeXavier_Indicator rslt = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
-                        if(rslt == xeXavier_Indicator.xeXI_事件_復歸) {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3HomeSTART); 
-                        } else {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3START);
+                        xeXavier_Indicator rslt = apiGetMachineAction();
+                        switch(rslt) {
+                            case xeXavier_Indicator.xeXI_狀態_運行: 
+                                break;
+                            case xeXavier_Indicator.xeXI_狀態_停止:
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3START);
+                                break;
+                            case xeXavier_Indicator.xeXI_狀態_急停:
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3START);
+                                break;
+
+                            case xeXavier_Indicator.xeXI_事件_復歸:
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3HomeSTART);
+                                break;
+                            case xeXavier_Indicator.xeXI_事件_暫停:    break;
+                            case xeXavier_Indicator.xeXI_事件_異常:    break;
+
+                            default:
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3START);
+                                break;
                         }
                     }
                     Xavier_Task3_Debugprintf("tp3START\r\n");
                     break;
 
                 case xeXavier_T3_Job.tp3HomeSTART:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_如果植針軸組Z過高_則降低至植針軸組Z原點位);
                     Xavier_Task3_Debugprintf("tp3HomeSTART\r\n");
                     break;
+                    case xeXavier_T3_Job.tp3Home_如果植針軸組Z過高_則降低至植針軸組Z原點位:
+                        { 
+                            double SetZ_position = dbapiSetZ(dbRead, 0);
+                            if(SetZ_position < 15.0) { 
+                                en_植針Z軸.Checked = true;
+                                clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, true);
+
+                                dbapiSetZ(15, 33*2);  
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_如果植針軸組Z過高_則降低至植針軸組Z原點位);
+                            } else { 
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_告知吸嘴軸組_植針軸組無干涉);
+                            }
+                        }
+                        Xavier_Task3_Debugprintf("tp3Home_如果植針軸組Z過高_則降低至植針軸組Z原點位\r\n");
+                        break;
+                    case xeXavier_T3_Job.tp3Home_告知吸嘴軸組_植針軸組無干涉:
+                        {
+                            btp3Home_告知吸嘴軸組_植針軸組無干涉 = true;
+                        }
+                        Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
+                        Xavier_Task3_Debugprintf("tp3Home_告知吸嘴軸組_植針軸組無干涉\r\n");
+                        break;
                     case xeXavier_T3_Job.tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉:
                         {
                             if(btp6Home_告知工作門已關閉 == true) { 
@@ -8269,11 +8356,26 @@ namespace InjectorInspector
 
                 case xeXavier_T4_Job.tp4START:  //判斷動作種類
                     { 
-                        xeXavier_Indicator rslt = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
-                        if(rslt == xeXavier_Indicator.xeXI_事件_復歸) {
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4HomeSTART);
-                        } else {
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4START);
+                        xeXavier_Indicator rslt = apiGetMachineAction();
+                        switch(rslt) {
+                            case xeXavier_Indicator.xeXI_狀態_運行: 
+                                break;
+                            case xeXavier_Indicator.xeXI_狀態_停止:
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4START);
+                                break;
+                            case xeXavier_Indicator.xeXI_狀態_急停:
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4START);
+                                break;
+
+                            case xeXavier_Indicator.xeXI_事件_復歸:
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4HomeSTART);
+                                break;
+                            case xeXavier_Indicator.xeXI_事件_暫停:    break;
+                            case xeXavier_Indicator.xeXI_事件_異常:    break;
+
+                            default:
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4START);
+                                break;
                         }
                     }
                     Xavier_Task4_Debugprintf("tp4START\r\n");
@@ -8641,11 +8743,26 @@ namespace InjectorInspector
 
                 case xeXavier_T5_Job.tp5START:  //判斷動作種類
                     { 
-                        xeXavier_Indicator rslt = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
-                        if(rslt == xeXavier_Indicator.xeXI_事件_復歸) {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5HomeSTART);
-                        } else {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5START);
+                        xeXavier_Indicator rslt = apiGetMachineAction();
+                        switch(rslt) {
+                            case xeXavier_Indicator.xeXI_狀態_運行: 
+                                break;
+                            case xeXavier_Indicator.xeXI_狀態_停止:
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5START);
+                                break;
+                            case xeXavier_Indicator.xeXI_狀態_急停:
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5START);
+                                break;
+
+                            case xeXavier_Indicator.xeXI_事件_復歸:
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5HomeSTART);
+                                break;
+                            case xeXavier_Indicator.xeXI_事件_暫停:    break;
+                            case xeXavier_Indicator.xeXI_事件_異常:    break;
+
+                            default:
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5START);
+                                break;
                         }
                     }
                     Xavier_Task5_Debugprintf("tp5START\r\n");
@@ -8976,11 +9093,27 @@ namespace InjectorInspector
 
                 case xeXavier_T6_Job.tp6START:  //判斷動作種類
                     { 
-                        xeXavier_Indicator rslt = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
-                        if(rslt == xeXavier_Indicator.xeXI_事件_復歸) { 
-                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6HomeSTART);
-                        } else { 
-                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);                        
+                        xeXavier_Indicator rslt = apiGetMachineAction();
+                        switch(rslt) {
+                            case xeXavier_Indicator.xeXI_狀態_運行:
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6HomeSTART);
+                                break;
+                            case xeXavier_Indicator.xeXI_狀態_停止:
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);
+                                break;
+                            case xeXavier_Indicator.xeXI_狀態_急停:
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);
+                                break;
+
+                            case xeXavier_Indicator.xeXI_事件_復歸:
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6HomeSTART);
+                                break;
+                            case xeXavier_Indicator.xeXI_事件_暫停:    break;
+                            case xeXavier_Indicator.xeXI_事件_異常:    break;
+
+                            default:
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);
+                                break;
                         }
                     }
                     Xavier_Task6_Debugprintf("tp6START\r\n");
@@ -8990,6 +9123,7 @@ namespace InjectorInspector
                     { 
                         btp2Home_告知植針軸組可以進行復歸動作                = false;
                         btp2Home_告知吸嘴軸組已回home完畢                    = false;
+                        btp3Home_告知吸嘴軸組_植針軸組無干涉                 = false;
                         btp3Home_告知載盤組_植針軸組無干涉                   = false;
                         btp3Home_告知植針軸組已回home完畢                    = false;
                         btp4Home_告知載盤組_電動缸無干涉                     = false;
