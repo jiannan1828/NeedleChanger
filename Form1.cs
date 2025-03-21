@@ -4446,7 +4446,7 @@ namespace InjectorInspector
                                     break;
                                 case xe_tmr_takepin.xett_Nozzle吸嘴關真空等待1秒: 
                                     if( (dbapiDelayCNT01(dbCheckArrived) == dbAxisMoveOk) ) { 
-                                        dbapiDelayCNT01(2);
+                                        dbapiDelayCNT01(12);
                                         xeTmrTakePin = xe_tmr_takepin.xett_吸嘴破真空等待1秒; 
                                     }  
                                     break;
