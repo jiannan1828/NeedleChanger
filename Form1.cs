@@ -6874,6 +6874,7 @@ namespace InjectorInspector
             public bool btp3Insert_告知載盤組進行補光                          = false;
             public bool btp3Insert_告知完成植針嘴堵料拍照                      = false;
             public bool btp3Insert_告知植針軸組判斷堵料                        = false;
+            public bool btp3Insert_告知植針軸組堵料吹氣完畢                    = false;
             public bool btp3Insert_告知植針軸組判斷未堵料                      = false;
             public bool btp4Insert_告知載盤組_電動缸無干涉                     = false;
             public bool btp4Insert_告知植針嘴相機已至拍照位                    = false;
@@ -6960,6 +6961,7 @@ namespace InjectorInspector
                 tp3Insert_告知載盤組進行補光,
                 tp3Insert_告知完成植針嘴堵料拍照,
                 tp3Insert_告知植針軸組判斷堵料,
+                tp3Insert_告知植針軸組堵料吹氣完畢,
                 tp3Insert_告知植針軸組判斷未堵料,
                 tp4Insert_告知載盤組_電動缸無干涉,
                 tp4Insert_告知植針嘴相機已至拍照位,
@@ -7072,6 +7074,7 @@ namespace InjectorInspector
                                                                         tp3Insert_植針軸組堵料吹氣桿伸出,
                                                                         tp3Insert_植針軸組ZR至放料位,
                                                                         tp3Insert_植針軸組堵料吹氣完畢,
+                                                                        tp3Insert_告知植針軸組堵料吹氣完畢,
                                                                         tp3Insert_跳回_至_tp3Insert_檢查堵料排除retry次數,
                                                                         tp3Insert_植針軸動作完成,
 
@@ -7143,16 +7146,17 @@ namespace InjectorInspector
                 tp5Insert_告知植針軸組載盤組已移至植針位,
                 tp5Insert_確認可進行植針檢查_從_tp3Insert_告知載盤組_植針軸植針完畢,
                 tp5Insert_載盤組移至植針拍照位檢查植針況狀,
+                tp5Insert_載盤組進行拍照位檢查植針況狀,
                 tp5Insert_植針成功,                                     tp5Insert_植針失敗,
                 tp5Insert_告知系統植針成功,                             tp5Insert_告知系統植針失敗,
                 tp5Insert_跳回_至_tp5Insert_載盤植針前置作業,           tp5Insert_等待是否進行堵料補光_從_tp3Insert_告知載盤組進行補光_或_tp3Insert_告知系統賭料排除異常_告知系統中止,
-                                                                        tp5Insert_載盤組移至補光位,                         tp5Insert_植針異常停止_告知系統停止,
+                                                                        tp5Insert_載盤組移至補光位,                                                             tp5Insert_植針異常停止_告知系統停止,
                                                                         tp5Insert_告知載盤組已至補光位,
                                                                         tp5Insert_等待堵料檢查結果_從_tp3Insert_告知植針軸組判斷未堵料_或_tp3Insert_告知植針軸組判斷堵料,
-                                                                        tp5Insert_得知植針嘴已堵料,                         tp5Insert_得知植針嘴未堵料,
-                                                                        tp5Insert_載盤組XY移動至堵料收廢料位,               tp5Insert_跳回_至_tp5Insert_載盤組移至植針拍照位,
+                                                                        tp5Insert_得知植針嘴已堵料,                                                             tp5Insert_得知植針嘴未堵料,
+                                                                        tp5Insert_載盤組XY移動至堵料收廢料位,                                                   tp5Insert_跳回_至_tp5Insert_載盤組移至植針拍照位,
                                                                         tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位,
-                                                                        tp5Insert_跳回_至_tp5Insert_告知系統植針失敗,
+                                                                        tp5Insert_跳回_至_tp5Insert_告知系統植針失敗_從_tp3Insert_告知植針軸組堵料吹氣完畢,
                                                                         tp5Insert_完成載盤植針,
 
             //IO檢查_工作門_檔案組
@@ -8485,6 +8489,7 @@ namespace InjectorInspector
                                                                         tp3Insert_植針軸組堵料吹氣桿伸出,
                                                                         tp3Insert_植針軸組ZR至放料位,
                                                                         tp3Insert_植針軸組堵料吹氣完畢,
+                                                                        tp3Insert_告知植針軸組堵料吹氣完畢,
                                                                         tp3Insert_跳回_至_tp3Insert_檢查堵料排除retry次數,
                                                                         tp3Insert_植針軸動作完成,
 
@@ -8992,13 +8997,36 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T3_Job.tp3Insert_告知完成植針嘴堵料拍照:
                         {
-                            //btp3Insert_告知完成植針嘴堵料拍照 = true;  //應該不需要
+                            bool success = false;
 
-                            if(true) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知植針軸組判斷堵料);
-                            } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知植針軸組判斷未堵料);
+                            double dbSetPinStatus; {
+                                dbSetPinStatus = apiParaReadIndex("SaveParameterJason.json", 33);
                             }
+                            switch(dbSetPinStatus) { 
+                                case 0: //強制判斷堵孔
+                                    success = false;
+                                    break;
+
+                                case 1: //強制判斷未堵孔
+                                    success = true;
+                                    break;
+
+                                case 2: { //依照視覺判斷
+                                    //btn_植針嘴檢查_Click(sender, e);
+
+                                    //植針嘴有無堵料, 無:ok, 有:ng
+                                    Inspector.Vector3 pos2;
+                                    success = inspector1.xInsp夾爪(out pos2);   //夾爪針孔偵測 回傳:OK/NG 及找到孔的位置
+                                } break;
+                            }  // end of switch(dbSetPinStatus) { 
+
+                            if(success == true) { 
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知植針軸組判斷未堵料);
+                            } else { 
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知植針軸組判斷堵料);
+                            }
+
+                            btp3Insert_告知完成植針嘴堵料拍照 = true;  //應該不需要
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_告知完成植針嘴堵料拍照\r\n");
                         break;
@@ -9066,9 +9094,16 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣完畢:
                         {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_跳回_至_tp3Insert_檢查堵料排除retry次數);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知植針軸組堵料吹氣完畢);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針軸組堵料吹氣完畢\r\n");
+                        break;
+                    case xeXavier_T3_Job.tp3Insert_告知植針軸組堵料吹氣完畢:
+                        {
+                            btp3Insert_告知植針軸組堵料吹氣完畢 = true;
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_跳回_至_tp3Insert_檢查堵料排除retry次數);
+                        }
+                        Xavier_Task3_Debugprintf("tp3Insert_告知植針軸組堵料吹氣完畢\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Insert_跳回_至_tp3Insert_檢查堵料排除retry次數:
                         Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_檢查堵料排除retry次數);
@@ -9806,16 +9841,17 @@ namespace InjectorInspector
                 tp5Insert_告知植針軸組載盤組已移至植針位,
                 tp5Insert_確認可進行植針檢查_從_tp3Insert_告知載盤組_植針軸植針完畢,
                 tp5Insert_載盤組移至植針拍照位檢查植針況狀,
+                tp5Insert_載盤組進行拍照位檢查植針況狀,
                 tp5Insert_植針成功,                                     tp5Insert_植針失敗,
                 tp5Insert_告知系統植針成功,                             tp5Insert_告知系統植針失敗,
                 tp5Insert_跳回_至_tp5Insert_載盤植針前置作業,           tp5Insert_等待是否進行堵料補光_從_tp3Insert_告知載盤組進行補光_或_tp3Insert_告知系統賭料排除異常_告知系統中止,
-                                                                        tp5Insert_載盤組移至補光位,                         tp5Insert_植針異常停止_告知系統停止,
+                                                                        tp5Insert_載盤組移至補光位,                                                             tp5Insert_植針異常停止_告知系統停止,
                                                                         tp5Insert_告知載盤組已至補光位,
                                                                         tp5Insert_等待堵料檢查結果_從_tp3Insert_告知植針軸組判斷未堵料_或_tp3Insert_告知植針軸組判斷堵料,
-                                                                        tp5Insert_得知植針嘴已堵料,                         tp5Insert_得知植針嘴未堵料,
-                                                                        tp5Insert_載盤組XY移動至堵料收廢料位,               tp5Insert_跳回_至_tp5Insert_載盤組移至植針拍照位,
+                                                                        tp5Insert_得知植針嘴已堵料,                                                             tp5Insert_得知植針嘴未堵料,
+                                                                        tp5Insert_載盤組XY移動至堵料收廢料位,                                                   tp5Insert_跳回_至_tp5Insert_載盤組移至植針拍照位,
                                                                         tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位,
-                                                                        tp5Insert_跳回_至_tp5Insert_告知系統植針失敗,
+                                                                        tp5Insert_跳回_至_tp5Insert_告知系統植針失敗_從_tp3Insert_告知植針軸組堵料吹氣完畢,
                                                                         tp5Insert_完成載盤植針,
 
             tp5RemoveSTART,
@@ -10023,78 +10059,179 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知載盤組_電動缸無干涉:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知植針嘴相機已至拍照位);
+                            if(btp4Insert_告知載盤組_電動缸無干涉 == true) { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知植針嘴相機已至拍照位);
+                            } else { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知載盤組_電動缸無干涉);
+                            }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知載盤組_電動缸無干涉\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知植針嘴相機已至拍照位:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp6Insert_告知載盤組已拿到兩點校正資料);
+                            if(btp4Insert_告知植針嘴相機已至拍照位 == true) { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp6Insert_告知載盤組已拿到兩點校正資料);
+                            } else { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知植針嘴相機已至拍照位);
+                            }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知植針嘴相機已至拍照位\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp6Insert_告知載盤組已拿到兩點校正資料:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_開始載盤組XY兩點校正程序);
+                            if(btp6Insert_告知載盤組已拿到兩點校正資料 == true) { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_開始載盤組XY兩點校正程序);
+                            } else { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp6Insert_告知載盤組已拿到兩點校正資料);
+                            }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp6Insert_告知載盤組已拿到兩點校正資料\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_開始載盤組XY兩點校正程序:
                         {
+                            double dbSocketCamera; {
+                                dbSocketCamera = apiParaReadIndex("SaveParameterJason.json", 17);
+                                dbapiIAI(dbSocketCamera);
+                            }
+                            
+                            btn_參數_Click(null, EventArgs.Empty);
+
                             Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_開始載盤組XY兩點校正程序\r\n");
                         break;
                         case xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點:
                             {
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY取得兩點校正孔第1點校正參數);
+                                //Get Real Pxy
+                                double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                                double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                                double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                                double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                                double dbTargetX = rlAx;
+                                double dbTargetY = rlAy;
+                                dbapiCarrierX_defaultSpeed(dbTargetX);
+                                dbapiCarrierY_defaultSpeed(dbTargetY);
+
+                                if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
+                                    (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY取得兩點校正孔第1點校正參數);
+                                } else { 
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點);
+                                }
                             }
                             Xavier_Task5_Debugprintf("tp5Insert_載盤組XY移動至兩點校正孔第1點\r\n");
                             break;
                             case xeXavier_T5_Job.tp5Insert_載盤組XY取得兩點校正孔第1點校正參數:
                                 {
+                                    btn_socket相機兩點定位_Click(null, EventArgs.Empty);
+
                                     Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點補正位);
                                 }
                                 Xavier_Task5_Debugprintf("tp5Insert_載盤組XY取得兩點校正孔第1點校正參數\r\n");
                                 break;
                             case xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點補正位:
                                 {
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_儲存兩點校正孔第1點補正值);
+                                    //Get Real Pxy
+                                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                                    double dbTargetX = rlAx - dbCameraCalibrationX;
+                                    double dbTargetY = rlAy + dbCameraCalibrationY;
+
+                                    fmParameterFormHandle.dataGridView1.Rows[0].Cells[1].Value = dbTargetX;
+                                    fmParameterFormHandle.dataGridView1.Rows[1].Cells[1].Value = dbTargetY;
+
+                                    dbapiCarrierX_defaultSpeed(dbTargetX);
+                                    dbapiCarrierY_defaultSpeed(dbTargetY);
+
+                                    if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
+                                        (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_儲存兩點校正孔第1點補正值);
+                                    } else { 
+                                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點補正位);
+                                    }
                                 }
                                 Xavier_Task5_Debugprintf("tp5Insert_載盤組XY移動至兩點校正孔第1點補正位\r\n");
                                 break;       
                             case xeXavier_T5_Job.tp5Insert_儲存兩點校正孔第1點補正值:
                                 {
+                                    fmParameterFormHandle.btn_Save_Click(null, EventArgs.Empty);
+
                                     Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點);
                                 }
                                 Xavier_Task5_Debugprintf("tp5Insert_儲存兩點校正孔第1點補正值\r\n");
                                 break;     
                         case xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點:
                             {
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY取得兩點校正孔第2點校正參數);
+                                //Get Real Pxy
+                                double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                                double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                                double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                                double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                                double dbTargetX = rlBx;
+                                double dbTargetY = rlBy;
+                                dbapiCarrierX_defaultSpeed(dbTargetX);
+                                dbapiCarrierY_defaultSpeed(dbTargetY);
+
+                                if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
+                                    (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY取得兩點校正孔第2點校正參數);
+                                } else { 
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點);
+                                }
                             }
                             Xavier_Task5_Debugprintf("tp5Insert_載盤組XY移動至兩點校正孔第2點\r\n");
                             break;
                             case xeXavier_T5_Job.tp5Insert_載盤組XY取得兩點校正孔第2點校正參數:
                                 {
+                                    btn_socket相機兩點定位_Click(null, EventArgs.Empty);
+
                                     Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點補正位);
                                 }
                                 Xavier_Task5_Debugprintf("tp5Insert_載盤組XY取得兩點校正孔第2點校正參數\r\n");
                                 break;
                             case xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點補正位:
                                 {
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_儲存兩點校正孔第2點補正值);
+                                    //Get Real Pxy
+                                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                                    double dbTargetX = rlBx - dbCameraCalibrationX;
+                                    double dbTargetY = rlBy + dbCameraCalibrationY;
+
+                                    fmParameterFormHandle.dataGridView1.Rows[2].Cells[1].Value = dbTargetX;
+                                    fmParameterFormHandle.dataGridView1.Rows[3].Cells[1].Value = dbTargetY;
+
+                                    dbapiCarrierX_defaultSpeed(dbTargetX);
+                                    dbapiCarrierY_defaultSpeed(dbTargetY);
+
+                                    if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
+                                        (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_儲存兩點校正孔第2點補正值);
+                                    } else { 
+                                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點補正位);
+                                    }
                                 }
                                 Xavier_Task5_Debugprintf("tp5Insert_載盤組XY移動至兩點校正孔第2點補正位\r\n");
                                 break;    
                             case xeXavier_T5_Job.tp5Insert_儲存兩點校正孔第2點補正值:
                                 {
+                                    fmParameterFormHandle.btn_Save_Click(null, EventArgs.Empty);
+
                                     Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知檔案組已完成兩點校正);
                                 }
                                 Xavier_Task5_Debugprintf("tp5Insert_儲存兩點校正孔第2點補正值\r\n");
                                 break;  
                         case xeXavier_T5_Job.tp5Insert_告知檔案組已完成兩點校正:
                             {
+                                btp5Insert_告知檔案組已完成兩點校正 = true;
+
                                 Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_完成載盤組XY兩點校正程序);
                             }
                             Xavier_Task5_Debugprintf("tp5Insert_告知檔案組已完成兩點校正\r\n");
@@ -10107,6 +10244,62 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T5_Job.tp5Insert_載盤植針前置作業:
                         {
+                            {  // start of Matrix Calibration
+                                //Get Real Pxy
+                                double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                                double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                                double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                                double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                                //Get Ideal Pxy
+                                double idlpAx = 0, idlpAy = 0, idlpBx = 0, idlpBy = 0;
+
+                                string Cal2pFileName = apiParaReadStr("SaveParameterJason.json",   8);
+                                int PointLeft  = (int)apiParaReadIndex("SaveParameterJason.json",  9);
+                                int PointRight = (int)apiParaReadIndex("SaveParameterJason.json", 10);
+
+                                apiReadNeedleInfo(Cal2pFileName, PointLeft,  ref idlpAx, ref idlpAy);
+                                apiReadNeedleInfo(Cal2pFileName, PointRight, ref idlpBx, ref idlpBy);
+
+                                //Calculate Cal 2p
+                                {
+                                    Normal calculate = new Normal();
+
+                                    // 定義 PointA, PointB 的數據
+                                    Normal.Point idealA = new Normal.Point(idlpAx, idlpAy);
+                                    Normal.Point idealB = new Normal.Point(idlpBx, idlpBy);
+                                    Normal.Point realA  = new Normal.Point(rlAx,   rlAy  );
+                                    Normal.Point realB  = new Normal.Point(rlBx,   rlBy  );
+
+                                    // 宣告 PointForward 和 PointBackward 變數
+                                    Normal.Point idealAForward  = new Normal.Point();
+                                    Normal.Point idealABackward = new Normal.Point();
+                                    Normal.Point realAForward   = new Normal.Point();
+                                    Normal.Point realABackward  = new Normal.Point();
+
+                                    // 呼叫計算並傳遞相應的點作為參數
+                                    CalculateAndPrintPlotData(idealA, idealB, out idealAForward, out idealABackward);
+                                    CalculateAndPrintPlotData(realA,  realB,  out realAForward,  out realABackward);
+
+                                    // 計算PerspectiveTransform
+                                    double[,] idealCoords = { { idealA.X,         idealA.Y },
+                                                              { idealAForward.X,  idealAForward.Y },
+                                                              { idealB.X,         idealB.Y },
+                                                              { idealABackward.X, idealABackward.Y } };
+
+                                    double[,] realCoords  = { { realA.X,         realA.Y },
+                                                              { realABackward.X, realABackward.Y },
+                                                              { realB.X,         realB.Y },
+                                                              { realAForward.X,  realAForward.Y } };
+
+                                    ComputePerspectiveTransform(idealCoords, realCoords, PerspectiveTransformMatrix);
+
+                                    //// 求得映射轉換座標
+                                    //double X_In = idealA.X,
+                                    //       Y_In = idealA.Y;
+                                    //Normal.Point pMapping = MapToCoords(PerspectiveTransformMatrix, X_In, Y_In);
+                                }
+                            }  // end of Matrix Calibration
                             Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認進行載盤植針位定位_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤植針前置作業\r\n");
@@ -10114,7 +10307,15 @@ namespace InjectorInspector
                     case xeXavier_T5_Job.tp5Insert_確認進行載盤植針位定位_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料:
                         {
                             if(btp6Insert_告知系統已拿到目標植針資料 == true) { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_有植針資料);
+                                btn_取得目標座標_Click(null, EventArgs.Empty);  //需要修改
+                                if(bChambered == false) { 
+                                    //沒針種
+                                    //要回home跟保護位
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_無植針資料);
+                                } else {
+                                    //有針種
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_有植針資料);
+                                }
                             } else if(btp6Insert_告知系統無目標植針資料 == true) { 
                                 Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_無植針資料);
                             } else { 
@@ -10137,19 +10338,63 @@ namespace InjectorInspector
                         break;                                    
                     case xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
+                            double dbTargetX = dbPinHolePositionX;
+                            double dbTargetY = dbPinHolePositionY;
+
+                            dbapiCarrierX_defaultSpeed(dbTargetX);
+                            dbapiCarrierY_defaultSpeed(dbTargetY);
+
+                            if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
+                                (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
+                            } else { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位);
+                            }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組移至植針拍照位\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至植針位);
+                            btn_Socket孔檢查_Click(null, EventArgs.Empty);
+
+                            if(b有看到校正孔 == true) { 
+                                double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX;
+                                double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY;
+
+                                dbapiCarrierX_defaultSpeed(dbTargetX);
+                                dbapiCarrierY_defaultSpeed(dbTargetY);
+
+                                if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
+                                    (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至植針位);
+                                } else { 
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
+                                }
+                            } else { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
+                            }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組進行植針拍照位補正\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_載盤組移至植針位:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知植針軸組載盤組已移至植針位);
+                            double SetPinOffsetX, SetPinOffsetY; {
+                                SetPinOffsetX = apiParaReadIndex("SaveParameterJason.json", 13);
+                                SetPinOffsetY = apiParaReadIndex("SaveParameterJason.json", 14);
+                            }
+
+                            double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX + SetPinOffsetX;
+                            double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY + SetPinOffsetY;
+
+                            dbapiCarrierX_defaultSpeed(dbTargetX);
+                            dbapiCarrierY_defaultSpeed(dbTargetY);
+
+                            if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
+                                (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知植針軸組載盤組已移至植針位);
+                            } else { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至植針位);
+                            }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組移至植針位\r\n");
                         break;
@@ -10172,13 +10417,57 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位檢查植針況狀:
                         {
-                            if(true) { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_植針成功);
-                            } else {
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_植針失敗);
+
+                            double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX;
+                            double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY;
+
+                            dbapiCarrierX_defaultSpeed(dbTargetX);
+                            dbapiCarrierY_defaultSpeed(dbTargetY);
+                            if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
+                                (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組進行拍照位檢查植針況狀);    
+                            } else { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位檢查植針況狀);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組移至植針拍照位檢查植針況狀\r\n");
+                        break;
+                    case xeXavier_T5_Job.tp5Insert_載盤組進行拍照位檢查植針況狀:
+                        {
+                            bool success = false;
+
+                            double dbSetNeedleStatus; {
+                                dbSetNeedleStatus = apiParaReadIndex("SaveParameterJason.json", 36);
+                            }
+                            switch(dbSetNeedleStatus) { 
+                                case 0: //強制判斷植針ng
+                                    success = false;
+                                    break;
+
+                                case 1: //強制判斷植針ok
+                                    success = true;
+                                    break;
+
+                                case 2: //依照視覺判斷
+                                    btn_Socket孔檢查_Click(null, EventArgs.Empty); {
+                                        //取得校正攝影機校正參數
+                                        success = inspector1.xInspSocket植針後檢查();
+                                        label7.Text  = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
+
+                                        rtb_Status_AppendMessage(rtb_Status, $"植針 {(success ? "OK":"NG")}");
+                                    }
+                                    break;
+                            }  // end of switch(dbSetPinStatus) { 
+
+                            if(success == true) { 
+                                //植針ok
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_植針成功);
+                            } else { 
+                                //植針ng
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_植針失敗);
+                            }
+                        }
+                        Xavier_Task5_Debugprintf("tp5Insert_載盤組進行拍照位檢查植針況狀\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_植針成功:
                         {
@@ -10188,6 +10477,8 @@ namespace InjectorInspector
                         break;                                     
                     case xeXavier_T5_Job.tp5Insert_告知系統植針成功:
                         { 
+                            btp5Insert_告知系統植針成功 = true;
+
                             Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_載盤植針前置作業);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_告知系統植針成功\r\n");
@@ -10229,7 +10520,19 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T5_Job.tp5Insert_載盤組移至補光位:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知載盤組已至補光位);
+                            double CheckCarryX, CheckCarryY; {
+                                CheckCarryX = apiParaReadIndex("SaveParameterJason.json", 28);
+                                CheckCarryY = apiParaReadIndex("SaveParameterJason.json", 29);
+                            }
+                            dbapiCarrierX_defaultSpeed(CheckCarryX);
+                            dbapiCarrierY_defaultSpeed(CheckCarryY);
+
+                            if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
+                                (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知載盤組已至補光位);
+                            } else { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至補光位);
+                            }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組移至補光位\r\n");
                         break;                         
@@ -10272,22 +10575,34 @@ namespace InjectorInspector
                         break;                         
                     case xeXavier_T5_Job.tp5Insert_載盤組XY移動至堵料收廢料位:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位);
+                            double MakeClearCarryY; {
+                                MakeClearCarryY = apiParaReadIndex("SaveParameterJason.json", 34);
+                            }
+                            dbapiCarrierX_defaultSpeed(MakeClearCarryY);
+                            if( (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位);
+                            } else { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至堵料收廢料位);
+                            }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組XY移動至堵料收廢料位\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位:
                         {
                             btp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位 = true;
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_告知系統植針失敗);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_告知系統植針失敗_從_tp3Insert_告知植針軸組堵料吹氣完畢);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位\r\n");
                         break;
-                    case xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_告知系統植針失敗:
+                    case xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_告知系統植針失敗_從_tp3Insert_告知植針軸組堵料吹氣完畢:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知系統植針失敗);
+                            if(btp3Insert_告知植針軸組堵料吹氣完畢 == true) { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知系統植針失敗);
+                            } else { 
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_告知系統植針失敗_從_tp3Insert_告知植針軸組堵料吹氣完畢);
+                            }
                         }
-                        Xavier_Task5_Debugprintf("tp5Insert_跳回_至_tp5Insert_告知系統植針失敗\r\n");
+                        Xavier_Task5_Debugprintf("tp5Insert_跳回_至_tp5Insert_告知系統植針失敗_從_tp3Insert_告知植針軸組堵料吹氣完畢\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_完成載盤植針:
                         Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_完成載盤植針);
