@@ -131,7 +131,6 @@ namespace InjectorInspector
                 case xeXavier_Indicator.xeXI_事件_暫停:
                 case xeXavier_Indicator.xeXI_事件_異常: 
                 default:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3START);
                     break;
             }
 
@@ -7271,6 +7270,12 @@ namespace InjectorInspector
         #region XavierTaskFlowEngine
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
+        uint u32HomeDelayCNT   = 15;
+        uint u32InsertDelayCNT = 15;
+        uint u32ISRDelayCNT    = 1;
+
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
         public void Xavier_Task_Eng_Debugprintf(string message) {
             lbldbg_Task_Info.Text = message;
         }
@@ -7542,28 +7547,28 @@ namespace InjectorInspector
 
             switch (priTASK) {
                 case xeXavier_T1_Job.tp1Empty:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, xeXavier_T1_Job.tp1Init);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1Init);
                     Xavier_Task1_Debugprintf("tp1Empty\r\n");
                     break;
 
                 case xeXavier_T1_Job.tp1Init:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 15, xeXavier_T1_Job.tp1START);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1START);
                     Xavier_Task1_Debugprintf("tp1Init\r\n");
                     break;
 
                 //======ISR Job======
                 case xeXavier_T1_Job.tp1_ISR01_START:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5, xeXavier_T1_Job.tp1_ISR01_STEP1);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1_ISR01_STEP1);
                     Xavier_Task1_Debugprintf("tp1_ISR01_START\r\n");
                     break;
 
                 case xeXavier_T1_Job.tp1_ISR01_STEP1:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5, xeXavier_T1_Job.tp1_ISR01_STEP2);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1_ISR01_STEP2);
                     Xavier_Task1_Debugprintf("tp1_ISR01_STEP1\r\n");
                     break;
 
                 case xeXavier_T1_Job.tp1_ISR01_STEP2:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5, xeXavier_T1_Job.tp1_ISR01_END);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1_ISR01_END);
                     Xavier_Task1_Debugprintf("tp1_ISR01_STEP2\r\n");
                     break;
 
@@ -7577,17 +7582,17 @@ namespace InjectorInspector
                     break;
                 //======ISR Job======
                 case xeXavier_T1_Job.tp1_ISR02_START:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5, xeXavier_T1_Job.tp1_ISR02_STEP1);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1_ISR02_STEP1);
                     Xavier_Task1_Debugprintf("tp1_ISR02_START\r\n");
                     break;
 
                 case xeXavier_T1_Job.tp1_ISR02_STEP1:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5, xeXavier_T1_Job.tp1_ISR02_STEP2);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1_ISR02_STEP2);
                     Xavier_Task1_Debugprintf("tp1_ISR02_STEP1\r\n");
                     break;
 
                 case xeXavier_T1_Job.tp1_ISR02_STEP2:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 5, xeXavier_T1_Job.tp1_ISR02_END);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1_ISR02_END);
                     Xavier_Task1_Debugprintf("tp1_ISR02_STEP2\r\n");
                     break;
 
@@ -7605,14 +7610,14 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T1_Job.tp1START: {
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, xeXavier_T1_Job.tp1STEP1);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1STEP1);
                     Xavier_Task1_Debugprintf("tp1START\r\n");
                 } break;
 
                 case xeXavier_T1_Job.tp1STEP1:
                     apiIndicator(xeXavier_Indicator.xeXI_讀_狀態);
 
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, xeXavier_T1_Job.tp1STEP2);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1STEP2);
                     Xavier_Task1_Debugprintf("tp1STEP1\r\n");
                     break;
 
@@ -7707,32 +7712,32 @@ namespace InjectorInspector
                             } break;
                     }  // end of switch (eWIndicatorSpeed) {
 
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, xeXavier_T1_Job.tp1STEP3);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1STEP3);
                     Xavier_Task1_Debugprintf("tp1STEP2\r\n");
                 } break;
 
                 case xeXavier_T1_Job.tp1STEP3:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, xeXavier_T1_Job.tp1STEP4);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1STEP4);
                     Xavier_Task1_Debugprintf("tp1STEP3\r\n");
                     break;
 
                 case xeXavier_T1_Job.tp1STEP4:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, xeXavier_T1_Job.tp1STEP5);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1STEP5);
                     Xavier_Task1_Debugprintf("tp1STEP4\r\n");
                     break;
 
                 case xeXavier_T1_Job.tp1STEP5:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, xeXavier_T1_Job.tp1STEP6);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1STEP6);
                     Xavier_Task1_Debugprintf("tp1STEP5\r\n");
                     break;
 
                 case xeXavier_T1_Job.tp1STEP6:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, xeXavier_T1_Job.tp1STEP7);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1STEP7);
                     Xavier_Task1_Debugprintf("tp1STEP6\r\n");
                     break;
 
                 case xeXavier_T1_Job.tp1STEP7:
-                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, 1, xeXavier_T1_Job.tp1STEP1);
+                    Xavier_T1_delayCase(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT, xeXavier_T1_Job.tp1STEP1);
                     Xavier_Task1_Debugprintf("tp1STEP1\r\n");
                     break;
 
@@ -7974,30 +7979,30 @@ namespace InjectorInspector
                 case xeXavier_Indicator.xeXI_事件_暫停:
                 case xeXavier_Indicator.xeXI_事件_異常: 
                 default:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2START);
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2START);
                     break;
             }
 
             switch (priTASK) {
                 case xeXavier_T2_Job.tp2Empty:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Init);
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Init);
                     Xavier_Task2_Debugprintf("tp2Empty\r\n");
                     break;
 
                 case xeXavier_T2_Job.tp2Init:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2START);
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2START);
                     Xavier_Task2_Debugprintf("tp2Init\r\n");
                     break;
 
                 //======ISR Job======
                 case xeXavier_T2_Job.tp2_ISR01_START:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_飛拍成功_01);
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_飛拍成功_01);
                     Xavier_Task2_Debugprintf("tp2_ISR01_START\r\n");
                     break;
 
                     case xeXavier_T2_Job.tp2Insert_ISR_飛拍成功_01:
                         {
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_告知取得吸針嘴組R軸);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_告知取得吸針嘴組R軸);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_ISR_飛拍成功_01\r\n");
                         break;
@@ -8005,7 +8010,7 @@ namespace InjectorInspector
                         {
                             btp2Insert_ISR_告知取得吸針嘴組R軸 = true;
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2_ISR01_END);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2_ISR01_END);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_ISR_告知取得吸針嘴組R軸\r\n");
                         break;
@@ -8020,13 +8025,13 @@ namespace InjectorInspector
                     break;
                 //======ISR Job======
                 case xeXavier_T2_Job.tp2_ISR02_START:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_飛拍失敗_02);
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_飛拍失敗_02);
                     Xavier_Task2_Debugprintf("tp2_ISR02_START\r\n");
                     break;
 
                     case xeXavier_T2_Job.tp2Insert_ISR_飛拍失敗_02:
                         {
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_吸嘴Z縮回0保護);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴Z縮回0保護);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_ISR_飛拍失敗_02\r\n");
                         break;
@@ -8034,9 +8039,9 @@ namespace InjectorInspector
                         {
                             dbapiNozzleZ_defaultSpeed(dbNozzleZ_Home位);
                             if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組XYR移動至吐料位);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組XYR移動至吐料位);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_吸嘴Z縮回0保護);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴Z縮回0保護);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_ISR_吸嘴Z縮回0保護\r\n");
@@ -8049,9 +8054,9 @@ namespace InjectorInspector
                             if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組Z下降至吐料位);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組Z下降至吐料位);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組XYR移動至吐料位);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組XYR移動至吐料位);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_ISR_吸嘴軸組XYR移動至吐料位\r\n");
@@ -8060,9 +8065,9 @@ namespace InjectorInspector
                         {
                             dbapiNozzleZ_defaultSpeed(db吐料位下降Z高度);
                             if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組吐料前準備作業);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組吐料前準備作業);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組Z下降至吐料位);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組Z下降至吐料位);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_ISR_吸嘴軸組Z下降至吐料位\r\n");
@@ -8076,7 +8081,7 @@ namespace InjectorInspector
                             vcb_吸嘴破真空流量閥.Value = 100-100;
                             vcb流量閥_Scroll(vcb_吸嘴破真空流量閥, null);
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組吐料作業);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組吐料作業);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_ISR_吸嘴軸組吐料前準備作業\r\n");
                         break;
@@ -8085,7 +8090,7 @@ namespace InjectorInspector
                             //吸嘴破真空開啟
                             digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, HIGH);
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_吸嘴Z縮回0);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴Z縮回0);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_ISR_吸嘴軸組吐料作業\r\n");
                         break;
@@ -8100,9 +8105,9 @@ namespace InjectorInspector
 
                             dbapiNozzleZ_defaultSpeed(dbNozzleZ_Home位);
                             if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_吸嘴XYR回home保護位);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴XYR回home保護位);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_吸嘴Z縮回0);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴Z縮回0);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_ISR_吸嘴Z縮回0\r\n");
@@ -8115,16 +8120,16 @@ namespace InjectorInspector
                             if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組吐料完畢);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組吐料完畢);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_吸嘴XYR回home保護位);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴XYR回home保護位);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_ISR_吸嘴XYR回home保護位\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組吐料完畢:
                         {
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2Insert_ISR_跳回_至_tp2Insert_取針前動作準備);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_跳回_至_tp2Insert_取針前動作準備);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_ISR_吸嘴軸組吐料完畢\r\n");
                         break;
@@ -8133,7 +8138,7 @@ namespace InjectorInspector
                             Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2SET, (xeXavier_T2_Job)15);
                             Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc.pt2SET, xeXavier_T2_Job.tp2Insert_取針前動作準備);
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 5, xeXavier_T2_Job.tp2_ISR02_END);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2_ISR02_END);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_ISR_跳回_至_tp2Insert_取針前動作準備\r\n");
                         break;
@@ -8157,26 +8162,26 @@ namespace InjectorInspector
                         switch(rslt) {
                             case xeXavier_Indicator.xeXI_狀態_運行: 
                                 if(btp6Home_告知系統回home完畢 == true) {
-                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2InsertSTART);
+                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2InsertSTART);
                                 } else {
-                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2HomeSTART);
+                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2HomeSTART);
                                 }
                                 break;
                             case xeXavier_Indicator.xeXI_狀態_停止:
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2START);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2START);
                                 break;
                             case xeXavier_Indicator.xeXI_狀態_急停:
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2START);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2START);
                                 break;
 
                             case xeXavier_Indicator.xeXI_事件_復歸:
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2HomeSTART);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2HomeSTART);
                                 break;
                             case xeXavier_Indicator.xeXI_事件_暫停:    break;
                             case xeXavier_Indicator.xeXI_事件_異常:    break;
 
                             default:
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2START);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2START);
                                 break;
                         }
                     }
@@ -8190,7 +8195,7 @@ namespace InjectorInspector
                         dbVelocityNozzleZ = apiParaReadIndex("SaveParameterJason.json", 41);
                         dbVelocityNozzleR = apiParaReadIndex("SaveParameterJason.json", 42);
 
-                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_確認吸嘴軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
+                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_確認吸嘴軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
                     }
                     Xavier_Task2_Debugprintf("tp2HomeSTART\r\n");
                     break;
@@ -8200,9 +8205,9 @@ namespace InjectorInspector
                                 en_吸嘴Z軸.Checked = true;
                                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, true);
 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_吸嘴Z縮回0);                        
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_吸嘴Z縮回0);                        
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_確認吸嘴軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_確認吸嘴軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Home_確認吸嘴軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉\r\n");
@@ -8214,9 +8219,9 @@ namespace InjectorInspector
                                 en_吸嘴R軸.Checked = false;
                                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, false); 
 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_告知植針軸組可以進行復歸動作);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_告知植針軸組可以進行復歸動作);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_吸嘴Z縮回0);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_吸嘴Z縮回0);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Home_吸嘴Z縮回0\r\n");
@@ -8234,7 +8239,7 @@ namespace InjectorInspector
                             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, true);  
                             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, false); 
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉);
                         }
                         Xavier_Task2_Debugprintf("tp2Home_告知植針軸組可以進行復歸動作\r\n");
                         break;
@@ -8264,12 +8269,12 @@ namespace InjectorInspector
                                     en_吸嘴Z軸.Checked = true;
                                     clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, true);
 
-                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_吸嘴Z回home);
+                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_吸嘴Z回home);
                                 } else { 
-                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉);
+                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉);
                                 }
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Home_吸嘴XYR回home_從_tp3Home_告知吸嘴軸組_植針軸組無干涉\r\n");
@@ -8287,7 +8292,7 @@ namespace InjectorInspector
                                 clsServoControlWMX3.WMX3_SetHomePosition(axis);                                 
                             }
                         }
-                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_告知吸嘴軸組已回home完畢);
+                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_告知吸嘴軸組已回home完畢);
                         Xavier_Task2_Debugprintf("tp2Home_吸嘴Z回home\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Home_告知吸嘴軸組已回home完畢:
@@ -8295,25 +8300,25 @@ namespace InjectorInspector
                             btp2Home_告知吸嘴軸組已回home完畢 = true;
 
                             if(btp6Home_告知系統回home完畢 == true) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2START);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2START);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Home_告知吸嘴軸組已回home完畢);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_告知吸嘴軸組已回home完畢);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Home_告知吸嘴軸組已回home完畢\r\n");
                         break;
 
                     case xeXavier_T2_Job.tp2TakeAndDiscardSTART:
-                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2TakeAndDiscardSTART);
+                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2TakeAndDiscardSTART);
                         Xavier_Task2_Debugprintf("tp2TakeAndDiscardSTART\r\n");
                         break;
 
                 case xeXavier_T2_Job.tp2InsertSTART:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_取針前動作準備);
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_取針前動作準備);
                     Xavier_Task2_Debugprintf("tp2InsertSTART\r\n");
                     break;
                     case xeXavier_T2_Job.tp2Insert_取針前動作準備:
-                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_確認進行取針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
+                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_確認進行取針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
                         Xavier_Task2_Debugprintf("tp2Insert_取針前動作準備\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_確認進行取針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料:
@@ -8321,35 +8326,35 @@ namespace InjectorInspector
                             if(btp6Insert_告知系統已拿到目標植針資料_To_Tp2 == true) { 
                                 btp6Insert_告知系統已拿到目標植針資料_To_Tp2 = false;
 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_有植針資料);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_有植針資料);
                             } else if(btp6Insert_告知系統無目標植針資料_To_Tp2 == true) {
                                 btp6Insert_告知系統無目標植針資料_To_Tp2 = false;
 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_無植針資料);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_無植針資料);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_確認進行取針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_確認進行取針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_確認進行取針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_有植針資料:
-                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_確認吸嘴軸不在柔震上方遮住相機);
+                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_確認吸嘴軸不在柔震上方遮住相機);
                         Xavier_Task2_Debugprintf("tp2Insert_有植針資料\r\n");
                         break;                                      
                     case xeXavier_T2_Job.tp2Insert_無植針資料:
-                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸動作完成);
+                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸動作完成);
                         Xavier_Task2_Debugprintf("tp2Insert_無植針資料\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_確認吸嘴軸不在柔震上方遮住相機:
                         if(dbapiNozzleX(dbRead, 0) >= 120.0) { 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照);
                         } else { 
                             dbapiNozzleZ_defaultSpeed(dbNozzleZ_Home位);
                             if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
                                 dbapiNozzleX_defaultSpeed(dbNozzleX_Home位);
                                 dbapiNozzleY_defaultSpeed(dbNozzleY_Home位);
                             }
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_確認吸嘴軸不在柔震上方遮住相機);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_確認吸嘴軸不在柔震上方遮住相機);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_確認吸嘴軸不在柔震上方遮住相機\r\n");
                         break;
@@ -8357,7 +8362,7 @@ namespace InjectorInspector
                         {
                             btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照 = true;
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_取得柔震物料座標_從_tp4Insert_告知吸嘴軸組柔震盤物料座標);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_取得柔震物料座標_從_tp4Insert_告知吸嘴軸組柔震盤物料座標);
                         }    
                         Xavier_Task2_Debugprintf("tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照\r\n");
                         break;
@@ -8366,9 +8371,9 @@ namespace InjectorInspector
                             if(btp4Insert_告知吸嘴軸組柔震盤物料座標 == true) { 
                                 btp4Insert_告知吸嘴軸組柔震盤物料座標 = false;
 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組XYR移動至物料座標);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組XYR移動至物料座標);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_取得柔震物料座標_從_tp4Insert_告知吸嘴軸組柔震盤物料座標);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_取得柔震物料座標_從_tp4Insert_告知吸嘴軸組柔震盤物料座標);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_取得柔震物料座標_從_tp4Insert_告知吸嘴軸組柔震盤物料座標\r\n");
@@ -8381,9 +8386,9 @@ namespace InjectorInspector
                             if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降前準備作業);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降前準備作業);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組XYR移動至物料座標);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組XYR移動至物料座標);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組XYR移動至物料座標\r\n");
@@ -8392,7 +8397,7 @@ namespace InjectorInspector
                         {
                             digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴吸, HIGH);
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至取料位);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至取料位);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組Z下降前準備作業\r\n");
                         break;
@@ -8400,23 +8405,23 @@ namespace InjectorInspector
                         {
                             dbapiNozzleZ_defaultSpeed(db取料Nozzle中心點Z);
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降完畢);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降完畢);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組Z下降至取料位\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降完畢:
                         {
                             if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組取料作業);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組取料作業);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降完畢);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降完畢);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組Z下降完畢\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組取料作業:
                         {
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組ZR上升至安全位);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組ZR上升至安全位);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組取料作業\r\n");
                         break;
@@ -8425,9 +8430,9 @@ namespace InjectorInspector
                             dbapiNozzleR_defaultSpeed(db取料Nozzle中心點R + 90);
                             dbapiNozzleZ_defaultSpeed(dbNozzleZ_Home位);
                             if(dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組XY移動至飛拍準備位);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組XY移動至飛拍準備位);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組ZR上升至安全位);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組ZR上升至安全位);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組ZR上升至安全位\r\n");
@@ -8438,7 +8443,7 @@ namespace InjectorInspector
                             dbapiNozzleY_defaultSpeed(db下視覺取像Y      );
                             dbapiNozzleZ_defaultSpeed(db下視覺取像Z      );
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組XY移動至飛拍準備位\r\n");
                         break;
@@ -8446,7 +8451,7 @@ namespace InjectorInspector
                         {
                             btp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標 = true;
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照_再次);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照_再次);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標\r\n");
                         break;
@@ -8454,7 +8459,7 @@ namespace InjectorInspector
                         {
                             btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照 = true;
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組X觸發移動飛拍);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組X觸發移動飛拍);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照_再次\r\n");
                         break;
@@ -8465,16 +8470,16 @@ namespace InjectorInspector
                                 (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
                                 dbapiNozzleX_defaultSpeed(db下視覺取像X_END);
 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_進行植針軸組放料位檢查);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_進行植針軸組放料位檢查);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組X觸發移動飛拍);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組X觸發移動飛拍);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組X觸發移動飛拍\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_進行植針軸組放料位檢查:
                         {
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_判斷值針軸組是否可以放置物料_從_tp3Insert_告知吸嘴軸組可以放物料);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_判斷值針軸組是否可以放置物料_從_tp3Insert_告知吸嘴軸組可以放物料);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_進行植針軸組放料位檢查\r\n");
                         break;
@@ -8483,16 +8488,16 @@ namespace InjectorInspector
                             if(btp3Insert_告知吸嘴軸組可以放物料 == true) { 
                                 btp3Insert_告知吸嘴軸組可以放物料 = false;
 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_可以放置物料);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_可以放置物料);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_無法放置物料);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_無法放置物料);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_判斷值針軸組是否可以放置物料_從_tp3Insert_告知吸嘴軸組可以放物料\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_無法放置物料:
                         {
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_移動到植針軸組前等待);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_移動到植針軸組前等待);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_無法放置物料\r\n");
                         break;                                    
@@ -8500,19 +8505,19 @@ namespace InjectorInspector
                         {
                             dbapiNozzleX_defaultSpeed(370);
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_跳回_至_tp2Insert_進行植針軸組放料位檢查);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_跳回_至_tp2Insert_進行植針軸組放料位檢查);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_移動到植針軸組前等待\r\n");
                         break;                             
                     case xeXavier_T2_Job.tp2Insert_跳回_至_tp2Insert_進行植針軸組放料位檢查:
                         {
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_進行植針軸組放料位檢查);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_進行植針軸組放料位檢查);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_跳回_至_tp2Insert_進行植針軸組放料位檢查\r\n");
                         break;         
                     case xeXavier_T2_Job.tp2Insert_可以放置物料:
                         {
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組R至放料位_從_tp2Insert_ISR_告知取得吸針嘴組R軸);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組R至放料位_從_tp2Insert_ISR_告知取得吸針嘴組R軸);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_可以放置物料\r\n");
                         break;
@@ -8538,9 +8543,9 @@ namespace InjectorInspector
                                 dbapiNozzleY_defaultSpeed(77.05);
                                 dbapiNozzleR_defaultSpeed(dbTargetNozzleR);
 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_移至植針軸組上方放料位);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_移至植針軸組上方放料位);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組R至放料位_從_tp2Insert_ISR_告知取得吸針嘴組R軸);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組R至放料位_從_tp2Insert_ISR_告知取得吸針嘴組R軸);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組R至放料位_從_tp2Insert_ISR_告知取得吸針嘴組R軸\r\n");
@@ -8550,16 +8555,16 @@ namespace InjectorInspector
                             if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至放料前準備作業);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至放料前準備作業);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_移至植針軸組上方放料位);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_移至植針軸組上方放料位);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_移至植針軸組上方放料位\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至放料前準備作業:
                         {
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至放料位);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至放料位);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組Z下降至放料前準備作業\r\n");
                         break;
@@ -8570,9 +8575,9 @@ namespace InjectorInspector
                             }
                             dbapiNozzleZ_defaultSpeed(dbNozzleZ下降至放料位);
                             if(dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降放料完畢);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降放料完畢);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至放料位);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至放料位);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組Z下降至放料位\r\n");
@@ -8586,7 +8591,7 @@ namespace InjectorInspector
                             vcb_吸嘴破真空流量閥.Value = 100-100;
                             vcb流量閥_Scroll(vcb_吸嘴破真空流量閥, null);
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組放料作業);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組放料作業);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組Z下降放料完畢\r\n");
                         break;
@@ -8595,7 +8600,7 @@ namespace InjectorInspector
                             //吸嘴破真空開啟
                             digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, HIGH);
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_告知植針軸組可以進行放料作業);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_告知植針軸組可以進行放料作業);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組放料作業\r\n");
                         break;
@@ -8603,7 +8608,7 @@ namespace InjectorInspector
                         {
                             btp2Insert_告知植針軸組可以進行放料作業 = true;
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組放料完成_從_tp3Insert_告知吸嘴軸組_植針軸放料完成);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組放料完成_從_tp3Insert_告知吸嘴軸組_植針軸放料完成);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_告知植針軸組可以進行放料作業\r\n");
                         break;
@@ -8619,9 +8624,9 @@ namespace InjectorInspector
                                 //吸嘴破真空關閉
                                 digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, LOW);
 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴Z縮回0);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴Z縮回0);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸組放料完成_從_tp3Insert_告知吸嘴軸組_植針軸放料完成);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組放料完成_從_tp3Insert_告知吸嘴軸組_植針軸放料完成);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組放料完成_從_tp3Insert_告知吸嘴軸組_植針軸放料完成\r\n");
@@ -8630,9 +8635,9 @@ namespace InjectorInspector
                         {
                             dbapiNozzleZ_defaultSpeed(dbNozzleZ_Home位);
                             if(dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 1, xeXavier_T2_Job.tp2Insert_吸嘴XYR回home保護位);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴XYR回home保護位);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 1, xeXavier_T2_Job.tp2Insert_吸嘴Z縮回0);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴Z縮回0);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴Z縮回0\r\n");
@@ -8645,26 +8650,26 @@ namespace InjectorInspector
                             if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 1, xeXavier_T2_Job.tp2Insert_跳回_至_tp2Insert_取針前動作準備);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_跳回_至_tp2Insert_取針前動作準備);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 1, xeXavier_T2_Job.tp2Insert_吸嘴XYR回home保護位);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴XYR回home保護位);
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴XYR回home保護位\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_跳回_至_tp2Insert_取針前動作準備:
                         {
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 1, xeXavier_T2_Job.tp2Insert_取針前動作準備);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_取針前動作準備);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_跳回_至_tp2Insert_取針前動作準備\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸動作完成:
-                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2Insert_吸嘴軸動作完成);
+                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸動作完成);
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸動作完成\r\n");
                         break;
 
                 case xeXavier_T2_Job.tp2RemoveSTART:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 15, xeXavier_T2_Job.tp2RemoveSTART);
+                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2RemoveSTART);
                     Xavier_Task2_Debugprintf("tp2RemoveSTART\r\n");
                     break;
 
@@ -8913,34 +8918,34 @@ namespace InjectorInspector
                 case xeXavier_Indicator.xeXI_事件_暫停:
                 case xeXavier_Indicator.xeXI_事件_異常: 
                 default:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3START);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3START);
                     break;
             }
 
             switch (priTASK) {
                 case xeXavier_T3_Job.tp3Empty:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Init);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Init);
                     Xavier_Task3_Debugprintf("tp3Empty\r\n");
                     break;
 
                 case xeXavier_T3_Job.tp3Init:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3START);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3START);
                     Xavier_Task3_Debugprintf("tp3Init\r\n");
                     break;
 
                 //======ISR Job======
                 case xeXavier_T3_Job.tp3_ISR01_START:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 5, xeXavier_T3_Job.tp3_ISR01_STEP1);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3_ISR01_STEP1);
                     Xavier_Task3_Debugprintf("tp3_ISR01_START\r\n");
                     break;
 
                 case xeXavier_T3_Job.tp3_ISR01_STEP1:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 5, xeXavier_T3_Job.tp3_ISR01_STEP2);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3_ISR01_STEP2);
                     Xavier_Task3_Debugprintf("tp3_ISR01_STEP1\r\n");
                     break;
 
                 case xeXavier_T3_Job.tp3_ISR01_STEP2:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 5, xeXavier_T3_Job.tp3_ISR01_END);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3_ISR01_END);
                     Xavier_Task3_Debugprintf("tp3_ISR01_STEP2\r\n");
                     break;
 
@@ -8954,17 +8959,17 @@ namespace InjectorInspector
                     break;
                 //======ISR Job======
                 case xeXavier_T3_Job.tp3_ISR02_START:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 5, xeXavier_T3_Job.tp3_ISR02_STEP1);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3_ISR02_STEP1);
                     Xavier_Task3_Debugprintf("tp3_ISR02_START\r\n");
                     break;
 
                 case xeXavier_T3_Job.tp3_ISR02_STEP1:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 5, xeXavier_T3_Job.tp3_ISR02_STEP2);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3_ISR02_STEP2);
                     Xavier_Task3_Debugprintf("tp3_ISR02_STEP1\r\n");
                     break;
 
                 case xeXavier_T3_Job.tp3_ISR02_STEP2:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 5, xeXavier_T3_Job.tp3_ISR02_END);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3_ISR02_END);
                     Xavier_Task3_Debugprintf("tp3_ISR02_STEP2\r\n");
                     break;
 
@@ -8987,26 +8992,26 @@ namespace InjectorInspector
                         switch(rslt) {
                             case xeXavier_Indicator.xeXI_狀態_運行: 
                                 if(btp6Home_告知系統回home完畢 == true) {
-                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3InsertSTART);
+                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3InsertSTART);
                                 } else {
-                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3HomeSTART);
+                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3HomeSTART);
                                 }
                                 break;
                             case xeXavier_Indicator.xeXI_狀態_停止:
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3START);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3START);
                                 break;
                             case xeXavier_Indicator.xeXI_狀態_急停:
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3START);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3START);
                                 break;
 
                             case xeXavier_Indicator.xeXI_事件_復歸:
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3HomeSTART);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3HomeSTART);
                                 break;
                             case xeXavier_Indicator.xeXI_事件_暫停:    break;
                             case xeXavier_Indicator.xeXI_事件_異常:    break;
 
                             default:
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3START);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3START);
                                 break;
                         }
                     }
@@ -9014,7 +9019,7 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T3_Job.tp3HomeSTART:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_如果植針軸組Z過高_則降低至植針軸組Z原點位);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_如果植針軸組Z過高_則降低至植針軸組Z原點位);
                     Xavier_Task3_Debugprintf("tp3HomeSTART\r\n");
                     break;
                     case xeXavier_T3_Job.tp3Home_如果植針軸組Z過高_則降低至植針軸組Z原點位:
@@ -9026,12 +9031,12 @@ namespace InjectorInspector
 
                                 dbapiSetZ_defaultSpeed(dbSetZ_Home位);
                                 if( (dbapiSetZ(dbCheckArrived, 0) == dbAxisMoveOk) ) {
-                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_告知吸嘴軸組_植針軸組無干涉); 
+                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_告知吸嘴軸組_植針軸組無干涉); 
                                 } else { 
-                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_如果植針軸組Z過高_則降低至植針軸組Z原點位);
+                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_如果植針軸組Z過高_則降低至植針軸組Z原點位);
                                 }
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_告知吸嘴軸組_植針軸組無干涉);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_告知吸嘴軸組_植針軸組無干涉);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Home_如果植針軸組Z過高_則降低至植針軸組Z原點位\r\n");
@@ -9039,16 +9044,16 @@ namespace InjectorInspector
                     case xeXavier_T3_Job.tp3Home_告知吸嘴軸組_植針軸組無干涉:
                         {
                             btp3Home_告知吸嘴軸組_植針軸組無干涉 = true;
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
                         }
                         Xavier_Task3_Debugprintf("tp3Home_告知吸嘴軸組_植針軸組無干涉\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉:
                         {
                             if(btp6Home_告知工作門已關閉 == true) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_確認植針軸組可以進行復歸動作_從_tp2Home_告知植針軸組可以進行復歸動作);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_確認植針軸組可以進行復歸動作_從_tp2Home_告知植針軸組可以進行復歸動作);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Home_確認植針軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉\r\n");
@@ -9059,9 +9064,9 @@ namespace InjectorInspector
                                 en_植針Z軸.Checked = true;
                                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, true);
 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_確認植針軸組可以進行復歸動作_從_tp2Home_告知植針軸組可以進行復歸動作);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_確認植針軸組可以進行復歸動作_從_tp2Home_告知植針軸組可以進行復歸動作);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Home_確認植針軸組可以進行復歸動作_從_tp2Home_告知植針軸組可以進行復歸動作\r\n");
@@ -9073,9 +9078,9 @@ namespace InjectorInspector
 
                             dbapiSetZ_defaultSpeed(dbSetZ_Home位);    
                             if( (dbapiSetZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_告知載盤組_植針軸組無干涉);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_告知載盤組_植針軸組無干涉);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Home_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位\r\n");
@@ -9087,7 +9092,7 @@ namespace InjectorInspector
                             en_植針R軸.Checked = true;
                             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, true);
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_植針嘴R回放料位);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_植針嘴R回放料位);
                         }
                         Xavier_Task3_Debugprintf("tp3Home_告知載盤組_植針軸組無干涉\r\n");
                         break;
@@ -9108,12 +9113,12 @@ namespace InjectorInspector
                                 dbapiSetR_defaultSpeed(dbSetR放料位);
 
                                 if ( (dbapiSetR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_告知植針軸組已回home完畢);
+                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_告知植針軸組已回home完畢);
                                 } else { 
-                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_植針嘴R回放料位);
+                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_植針嘴R回放料位);
                                 }  
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_植針嘴R回放料位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_植針嘴R回放料位);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Home_植針嘴R回放料位\r\n");
@@ -9123,25 +9128,25 @@ namespace InjectorInspector
                             btp3Home_告知植針軸組已回home完畢 = true;
 
                             if(btp6Home_告知系統回home完畢 == true) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3START);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3START);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Home_告知植針軸組已回home完畢);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_告知植針軸組已回home完畢);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Home_告知植針軸組已回home完畢\r\n");
                         break;
 
                 case xeXavier_T3_Job.tp3TakeAndDiscardSTART:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3TakeAndDiscardSTART);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3TakeAndDiscardSTART);
                     Xavier_Task3_Debugprintf("tp3TakeAndDiscardSTART\r\n");
                     break;
 
                 case xeXavier_T3_Job.tp3InsertSTART:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_歸位準備);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_歸位準備);
                     Xavier_Task3_Debugprintf("tp3InsertSTART\r\n");
                     break;
                     case xeXavier_T3_Job.tp3Insert_歸位準備:
-                        Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認進行植針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
+                        Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認進行植針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
                         Xavier_Task3_Debugprintf("tp3Insert_歸位準備\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Insert_確認進行植針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料:
@@ -9149,26 +9154,26 @@ namespace InjectorInspector
                             if(btp6Insert_告知系統已拿到目標植針資料_To_Tp3 == true) { 
                                 btp6Insert_告知系統已拿到目標植針資料_To_Tp3 = false;
 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_有植針資料);                        
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_有植針資料);                        
                             } else if(btp6Insert_告知系統無目標植針資料_To_Tp3 == true) { 
                                 btp6Insert_告知系統無目標植針資料_To_Tp3 = false;
 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_無植針資料);  
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_無植針資料);  
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認進行植針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);   
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認進行植針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);   
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_確認進行植針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Insert_無植針資料:
                         {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸動作完成);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸動作完成);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_無植針資料\r\n");
                         break;                                   
                     case xeXavier_T3_Job.tp3Insert_有植針資料:
                         {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_有植針資料\r\n");
                         break;
@@ -9184,9 +9189,9 @@ namespace InjectorInspector
                             if( (dbapiSetZ(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (b堵料吹氣桿退出 == true)  &&
                                 (b擺放座蓋板打開 == true) ) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知載盤組_植針軸組無干涉);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_告知載盤組_植針軸組無干涉);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位\r\n");
@@ -9195,7 +9200,7 @@ namespace InjectorInspector
                         {
                             btp3Insert_告知載盤組_植針軸組無干涉 = true;
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針嘴R回放料位);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針嘴R回放料位);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_告知載盤組_植針軸組無干涉\r\n");
                         break;
@@ -9215,7 +9220,7 @@ namespace InjectorInspector
                                 dbapiSetR_defaultSpeed(dbSetR放料位);
                             }
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_判斷植針軸是否可以放料);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_判斷植針軸是否可以放料);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針嘴R回放料位\r\n");
                         break;
@@ -9249,9 +9254,9 @@ namespace InjectorInspector
                                 (b擺放座蓋板打開 == true) &&
                                 (bSetZ放料位     == true) &&
                                 (bSetR放料位     == true) ) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知吸嘴軸組可以放物料);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_告知吸嘴軸組可以放物料);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_判斷植針軸是否可以放料\r\n");
@@ -9261,7 +9266,7 @@ namespace InjectorInspector
                             btp3Insert_告知吸嘴軸組可以放物料 = true;
                             digitalWrite((int)WMX3IO對照.pxeIO_擺放座吸真空, HIGH);
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認植針軸組可以進行放料作業_從_tp2Insert_告知植針軸組可以進行放料作業);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認植針軸組可以進行放料作業_從_tp2Insert_告知植針軸組可以進行放料作業);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_告知吸嘴軸組可以放物料\r\n");
                         break;
@@ -9270,22 +9275,22 @@ namespace InjectorInspector
                             if(btp2Insert_告知植針軸組可以進行放料作業 == true) { 
                                 btp2Insert_告知植針軸組可以進行放料作業 = false;
 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸放料前置作業);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸放料前置作業);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認植針軸組可以進行放料作業_從_tp2Insert_告知植針軸組可以進行放料作業);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認植針軸組可以進行放料作業_從_tp2Insert_告知植針軸組可以進行放料作業);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_確認植針軸組可以進行放料作業_從_tp2Insert_告知植針軸組可以進行放料作業\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Insert_植針軸放料前置作業:
                         {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸放料作業);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸放料作業);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針軸放料前置作業\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Insert_植針軸放料作業:
                         {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知吸嘴軸組_植針軸放料完成);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_告知吸嘴軸組_植針軸放料完成);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針軸放料作業\r\n");
                         break;
@@ -9293,13 +9298,13 @@ namespace InjectorInspector
                         {
                             btp3Insert_告知吸嘴軸組_植針軸放料完成 = true;
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸放料完畢);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸放料完畢);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_告知吸嘴軸組_植針軸放料完成\r\n");
                         break; 
                     case xeXavier_T3_Job.tp3Insert_植針軸放料完畢:
                         {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認植針軸可進行植針_從_tp5Insert_告知植針軸組載盤組已移至植針位);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認植針軸可進行植針_從_tp5Insert_告知植針軸組載盤組已移至植針位);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針軸放料完畢\r\n");
                         break;
@@ -9308,9 +9313,9 @@ namespace InjectorInspector
                             if(btp5Insert_告知植針軸組載盤組已移至植針位 == true) { 
                                 btp5Insert_告知植針軸組載盤組已移至植針位 = false;
 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組ZR至植針位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組ZR至植針位);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認植針軸可進行植針_從_tp5Insert_告知植針軸組載盤組已移至植針位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認植針軸可進行植針_從_tp5Insert_告知植針軸組載盤組已移至植針位);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_確認植針軸可進行植針_從_tp5Insert_告知植針軸組載盤組已移至植針位\r\n");
@@ -9338,9 +9343,9 @@ namespace InjectorInspector
 
                                 if( (dbapiSetZ(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                     (dbapiSetR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_擺放座蓋板關);
+                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_擺放座蓋板關);
                                 } else { 
-                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組ZR至植針位);
+                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組ZR至植針位);
                                 }
                             }
                         }
@@ -9352,9 +9357,9 @@ namespace InjectorInspector
                             bool b擺放座蓋板閉合 = indicateRead((int)WMX3IO對照.pxeIO_擺放座蓋板合);
 
                             if(b擺放座蓋板閉合 == true) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針吹氣前置作業);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針吹氣前置作業);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_擺放座蓋板關);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_擺放座蓋板關);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_擺放座蓋板關\r\n");
@@ -9364,7 +9369,7 @@ namespace InjectorInspector
                             //擺放座真空關閉:    
                             digitalWrite((int)WMX3IO對照.pxeIO_擺放座吸真空, LOW);
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針吹氣作業);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針吹氣作業);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針吹氣前置作業\r\n");
                         break;
@@ -9378,7 +9383,7 @@ namespace InjectorInspector
                             ScrollEventArgs xe = null;
                             vcb流量閥_Scroll(vcb_植針吹氣流量閥, xe);
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針吹氣完畢);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針吹氣完畢);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針吹氣作業\r\n");
                         break;
@@ -9392,7 +9397,7 @@ namespace InjectorInspector
                             //植針吹氣電磁閥關閉:       
                             digitalWrite((int)WMX3IO對照.pxeIO_植針吹氣, LOW);
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位_再次);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位_再次);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針吹氣完畢\r\n");
                         break;
@@ -9408,9 +9413,9 @@ namespace InjectorInspector
                             if( (dbapiSetZ(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (b堵料吹氣桿退出 == true)  &&
                                 (b擺放座蓋板打開 == true) ) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知載盤組_植針軸植針完畢);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_告知載盤組_植針軸植針完畢);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位_再次);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位_再次);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位_再次\r\n");
@@ -9419,7 +9424,7 @@ namespace InjectorInspector
                         {
                             btp3Insert_告知載盤組_植針軸植針完畢 = true;
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認植針結果_從_tp5Insert_告知系統植針成功_或_tp5Insert_告知系統植針失敗);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認植針結果_從_tp5Insert_告知系統植針成功_或_tp5Insert_告知系統植針失敗);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_告知載盤組_植針軸植針完畢\r\n");
                         break;
@@ -9428,27 +9433,27 @@ namespace InjectorInspector
                             if(btp5Insert_告知系統植針成功_To_Tp3 == true) { 
                                 btp5Insert_告知系統植針成功_To_Tp3 = false;
 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_得知植針成功);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_得知植針成功);
                             } else if(btp5Insert_告知系統植針失敗 == true) { 
                                 btp5Insert_告知系統植針失敗 = false;
 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_得知植針失敗);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_得知植針失敗);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認植針結果_從_tp5Insert_告知系統植針成功_或_tp5Insert_告知系統植針失敗);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認植針結果_從_tp5Insert_告知系統植針成功_或_tp5Insert_告知系統植針失敗);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_確認植針結果_從_tp5Insert_告知系統植針成功_或_tp5Insert_告知系統植針失敗\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Insert_得知植針成功:
                         {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_歸位準備);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_歸位準備);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_得知植針成功\r\n");
                         break;                             
                     case xeXavier_T3_Job.tp3Insert_得知植針失敗:
                         {
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_重設堵料排除retry次數);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_重設堵料排除retry次數);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_得知植針失敗\r\n");
                         break;
@@ -9456,24 +9461,24 @@ namespace InjectorInspector
                         {
                             i堵料排除retry次數 = 3;
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_檢查堵料排除retry次數);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_檢查堵料排除retry次數);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_重設堵料排除retry次數\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Insert_檢查堵料排除retry次數:
                         {
                             if(i堵料排除retry次數 > 0) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_賭料排除retry次數大於0);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_賭料排除retry次數大於0);
                             } else 
                             if(i堵料排除retry次數 == 0) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_賭料排除retry次數等於0);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_賭料排除retry次數等於0);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_檢查堵料排除retry次數\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Insert_賭料排除retry次數等於0:
                         {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知系統賭料排除異常_告知系統中止);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_告知系統賭料排除異常_告知系統中止);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_賭料排除retry次數等於0\r\n");
                         break;                   
@@ -9481,13 +9486,13 @@ namespace InjectorInspector
                         { 
                             btp3Insert_告知系統賭料排除異常_告知系統中止 = true;
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知系統賭料排除異常_告知系統中止);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_告知系統賭料排除異常_告知系統中止);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_告知系統賭料排除異常_告知系統中止\r\n");
                         break;        
                     case xeXavier_T3_Job.tp3Insert_賭料排除retry次數大於0:
                         {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知載盤組進行補光);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_告知載盤組進行補光);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_賭料排除retry次數大於0\r\n");
                         break;
@@ -9495,7 +9500,7 @@ namespace InjectorInspector
                         {
                             btp3Insert_告知載盤組進行補光 = true;
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認植針軸組可進行堵料檢查_從_tp5Insert_告知載盤組已至補光位);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認植針軸組可進行堵料檢查_從_tp5Insert_告知載盤組已至補光位);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_告知載盤組進行補光\r\n");
                         break;
@@ -9504,9 +9509,9 @@ namespace InjectorInspector
                             if(btp5Insert_告知載盤組已至補光位 == true) {
                                 btp5Insert_告知載盤組已至補光位 = false;
 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組ZR至堵孔檢查位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組ZR至堵孔檢查位);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認植針軸組可進行堵料檢查_從_tp5Insert_告知載盤組已至補光位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認植針軸組可進行堵料檢查_從_tp5Insert_告知載盤組已至補光位);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_確認植針軸組可進行堵料檢查_從_tp5Insert_告知載盤組已至補光位\r\n");
@@ -9543,9 +9548,9 @@ namespace InjectorInspector
 
                             if( (bCheckSetZpos == true) && 
                                 (bCheckSetRpos == true) ) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認植針軸組可進行堵料檢查_從_tp4Insert_告知堵料檢查植針嘴相機已至拍照位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認植針軸組可進行堵料檢查_從_tp4Insert_告知堵料檢查植針嘴相機已至拍照位);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組ZR至堵孔檢查位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組ZR至堵孔檢查位);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針軸組ZR至堵孔檢查位\r\n");
@@ -9555,16 +9560,16 @@ namespace InjectorInspector
                             if(btp4Insert_告知堵料檢查植針嘴相機已至拍照位 == true) { 
                                 btp4Insert_告知堵料檢查植針嘴相機已至拍照位 = false;
 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_進行植針嘴堵料拍照);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_進行植針嘴堵料拍照);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認植針軸組可進行堵料檢查_從_tp4Insert_告知堵料檢查植針嘴相機已至拍照位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認植針軸組可進行堵料檢查_從_tp4Insert_告知堵料檢查植針嘴相機已至拍照位);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_確認植針軸組可進行堵料檢查_從_tp4Insert_告知堵料檢查植針嘴相機已至拍照位\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Insert_進行植針嘴堵料拍照:
                         {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組ZR回至放料位);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組ZR回至放料位);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_進行植針嘴堵料拍照\r\n");
                         break;
@@ -9598,9 +9603,9 @@ namespace InjectorInspector
                                 (b擺放座蓋板打開 == true) &&
                                 (bSetZ放料位     == true) &&
                                 (bSetR放料位     == true) ) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知完成植針嘴堵料拍照);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_告知完成植針嘴堵料拍照);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組ZR回至放料位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組ZR回至放料位);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針軸組ZR回至放料位\r\n");
@@ -9628,9 +9633,9 @@ namespace InjectorInspector
                                     } break;
                                 }  // end of switch(dbSetPinStatus) { 
                             if(success == true) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知植針軸組判斷未堵料);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_告知植針軸組判斷未堵料);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知植針軸組判斷堵料);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_告知植針軸組判斷堵料);
                             }
 
                             btp3Insert_告知完成植針嘴堵料拍照 = true;  //應該不需要
@@ -9641,7 +9646,7 @@ namespace InjectorInspector
                         {
                             btp3Insert_告知植針軸組判斷未堵料 = true;
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_歸位準備);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_歸位準備);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_告知植針軸組判斷未堵料\r\n");
                         break;                   
@@ -9649,13 +9654,13 @@ namespace InjectorInspector
                         {
                             btp3Insert_告知植針軸組判斷堵料 = true;
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_進行堵料排除程序);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_進行堵料排除程序);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_告知植針軸組判斷堵料\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Insert_進行堵料排除程序:
                         {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認堵料排除程序前置作業_從_tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認堵料排除程序前置作業_從_tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_進行堵料排除程序\r\n");
                         break;
@@ -9664,9 +9669,9 @@ namespace InjectorInspector
                             if(btp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位 == true) { 
                                 btp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位 = false;
 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組ZR至植針位供排除堵料);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組ZR至植針位供排除堵料);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_確認堵料排除程序前置作業_從_tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認堵料排除程序前置作業_從_tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_確認堵料排除程序前置作業_從_tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位\r\n");
@@ -9702,9 +9707,9 @@ namespace InjectorInspector
 
                             if( (bMakeClearSetZ == true) &&
                                 (bMakeClearSetR == true) ) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣桿縮入);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣桿縮入);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組ZR至植針位供排除堵料);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組ZR至植針位供排除堵料);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針軸組ZR至植針位供排除堵料\r\n");
@@ -9718,9 +9723,9 @@ namespace InjectorInspector
                                 //堵料吹氣電磁閥打開
                                 digitalWrite((int)WMX3IO對照.pxeIO_堵料吹氣, HIGH);
 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣桿縮入);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣桿縮入);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針軸組堵料吹氣桿縮入\r\n");
@@ -9728,7 +9733,7 @@ namespace InjectorInspector
                     case xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣:
                         {
                             //堵料吹氣等待作業
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣桿伸出);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣桿伸出);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針軸組堵料吹氣\r\n");
                         break;
@@ -9745,9 +9750,9 @@ namespace InjectorInspector
 
                             if( (b堵料吹氣桿退出 == true) &&
                                 (b擺放座蓋板打開 == true) ) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組ZR至放料位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組ZR至放料位);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣桿伸出);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣桿伸出);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針軸組堵料吹氣桿伸出\r\n");
@@ -9782,16 +9787,16 @@ namespace InjectorInspector
                                 (b擺放座蓋板打開 == true) &&
                                 (bSetZ放料位     == true) &&
                                 (bSetR放料位     == true) ) { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣完畢);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣完畢);
                             } else { 
-                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸組ZR至放料位);
+                                Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組ZR至放料位);
                             }
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針軸組ZR至放料位\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Insert_植針軸組堵料吹氣完畢:
                         {
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_告知植針軸組堵料吹氣完畢);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_告知植針軸組堵料吹氣完畢);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針軸組堵料吹氣完畢\r\n");
                         break;
@@ -9800,21 +9805,21 @@ namespace InjectorInspector
                             btp3Insert_告知植針軸組堵料吹氣完畢 = true;
                             i堵料排除retry次數--;
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_跳回_至_tp3Insert_檢查堵料排除retry次數);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_跳回_至_tp3Insert_檢查堵料排除retry次數);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_告知植針軸組堵料吹氣完畢\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Insert_跳回_至_tp3Insert_檢查堵料排除retry次數:
-                        Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_檢查堵料排除retry次數);
+                        Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_檢查堵料排除retry次數);
                         Xavier_Task3_Debugprintf("tp3Insert_跳回_至_tp3Insert_檢查堵料排除retry次數\r\n");
                         break;
                     case xeXavier_T3_Job.tp3Insert_植針軸動作完成:
-                        Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3Insert_植針軸動作完成);
+                        Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸動作完成);
                         Xavier_Task3_Debugprintf("tp3Insert_植針軸動作完成\r\n");
                         break;
 
                 case xeXavier_T3_Job.tp3RemoveSTART:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3RemoveSTART);
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3RemoveSTART);
                     Xavier_Task3_Debugprintf("tp3RemoveSTART\r\n");
                     break;
 
@@ -10036,34 +10041,34 @@ namespace InjectorInspector
                 case xeXavier_Indicator.xeXI_事件_暫停:
                 case xeXavier_Indicator.xeXI_事件_異常: 
                 default:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4START);
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4START);
                     break;
             }
 
             switch (priTASK) {
                 case xeXavier_T4_Job.tp4Empty:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Init);
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Init);
                     Xavier_Task4_Debugprintf("tp4Empty\r\n");
                     break;
 
                 case xeXavier_T4_Job.tp4Init:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4START);
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4START);
                     Xavier_Task4_Debugprintf("tp4Init\r\n");
                     break;
 
                 //======ISR Job======
                 case xeXavier_T4_Job.tp4_ISR01_START:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 5, xeXavier_T4_Job.tp4_ISR01_STEP1);
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4_ISR01_STEP1);
                     Xavier_Task4_Debugprintf("tp4_ISR01_START\r\n");
                     break;
 
                 case xeXavier_T4_Job.tp4_ISR01_STEP1:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 5, xeXavier_T4_Job.tp4_ISR01_STEP2);
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4_ISR01_STEP2);
                     Xavier_Task4_Debugprintf("tp4_ISR01_STEP1\r\n");
                     break;
 
                 case xeXavier_T4_Job.tp4_ISR01_STEP2:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 5, xeXavier_T4_Job.tp4_ISR01_END);
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4_ISR01_END);
                     Xavier_Task4_Debugprintf("tp4_ISR01_STEP2\r\n");
                     break;
 
@@ -10077,17 +10082,17 @@ namespace InjectorInspector
                     break;
                 //======ISR Job======
                 case xeXavier_T4_Job.tp4_ISR02_START:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 5, xeXavier_T4_Job.tp4_ISR02_STEP1);
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4_ISR02_STEP1);
                     Xavier_Task4_Debugprintf("tp4_ISR02_START\r\n");
                     break;
 
                 case xeXavier_T4_Job.tp4_ISR02_STEP1:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 5, xeXavier_T4_Job.tp4_ISR02_STEP2);
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4_ISR02_STEP2);
                     Xavier_Task4_Debugprintf("tp4_ISR02_STEP1\r\n");
                     break;
 
                 case xeXavier_T4_Job.tp4_ISR02_STEP2:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 5, xeXavier_T4_Job.tp4_ISR02_END);
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4_ISR02_END);
                     Xavier_Task4_Debugprintf("tp4_ISR02_STEP2\r\n");
                     break;
 
@@ -10110,26 +10115,26 @@ namespace InjectorInspector
                         switch(rslt) {
                             case xeXavier_Indicator.xeXI_狀態_運行: 
                                 if(btp6Home_告知系統回home完畢 == true) {
-                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4InsertSTART);
+                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4InsertSTART);
                                 } else {
-                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4HomeSTART);
+                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4HomeSTART);
                                 }
                                 break;
                             case xeXavier_Indicator.xeXI_狀態_停止:
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4START);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4START);
                                 break;
                             case xeXavier_Indicator.xeXI_狀態_急停:
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4START);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4START);
                                 break;
 
                             case xeXavier_Indicator.xeXI_事件_復歸:
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4HomeSTART);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4HomeSTART);
                                 break;
                             case xeXavier_Indicator.xeXI_事件_暫停:    break;
                             case xeXavier_Indicator.xeXI_事件_異常:    break;
 
                             default:
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4START);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4START);
                                 break;
                         }
                     }
@@ -10137,7 +10142,7 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T4_Job.tp4HomeSTART:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Home_確認電動缸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_確認電動缸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
                     Xavier_Task4_Debugprintf("tp4HomeSTART\r\n");
                     break;
                     case xeXavier_T4_Job.tp4Home_確認電動缸組可以進行復歸動作_從_tp6Home_告知工作門已關閉:
@@ -10151,9 +10156,9 @@ namespace InjectorInspector
                                 //所有IO Out需要回default, 除了燈
                                 //完畢後, 載盤要破真空一下
 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Home_電動缸組_抽針嘴_3D掃描_回安全位);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_電動缸組_抽針嘴_3D掃描_回安全位);
                             } else { 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Home_確認電動缸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_確認電動缸組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
                             }
                         }
                         Xavier_Task4_Debugprintf("tp4Home_確認電動缸組可以進行復歸動作_從_tp6Home_告知工作門已關閉\r\n");
@@ -10167,9 +10172,9 @@ namespace InjectorInspector
                             double dbrsltJoDell吸針嘴 = dbapiJoDell吸針嘴(dbCheckArrived);
                             if( dbrsltJoDell3D掃描 == dbAxisMoveOk &&
                                 dbrsltJoDell吸針嘴 == dbAxisMoveOk ) {
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Home_告知載盤組_電動缸無干涉);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_告知載盤組_電動缸無干涉);
                             } else { 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Home_電動缸組_抽針嘴_3D掃描_回安全位);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_電動缸組_抽針嘴_3D掃描_回安全位);
                             }
                         }
                         Xavier_Task4_Debugprintf("tp4Home_電動缸組_抽針嘴_3D掃描_回安全位\r\n");
@@ -10184,7 +10189,7 @@ namespace InjectorInspector
                             clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  0); 
                             clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_MotorOn, 0); 
 
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Home_電動缸組_IAI相機_植針相機_回home);
+                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_電動缸組_IAI相機_植針相機_回home);
                         }
                         Xavier_Task4_Debugprintf("tp4Home_告知載盤組_電動缸無干涉\r\n");
                         break;
@@ -10199,7 +10204,7 @@ namespace InjectorInspector
                             Thread.Sleep(100);
                             dbapiIAI(dbIAI_Home位);
 
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作);
+                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作);
                         }
                         Xavier_Task4_Debugprintf("tp4Hotp4Home_電動缸組_IAI相機_植針相機_回homemeSTART\r\n");
                         break;
@@ -10211,9 +10216,9 @@ namespace InjectorInspector
                                 clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 0);
                                 clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 0); 
 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Home_電動缸組_抽針嘴_3D掃描_回home);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_電動缸組_抽針嘴_3D掃描_回home);
                             } else { 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作);
                             }
                         }
                         Xavier_Task4_Debugprintf("tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作\r\n");
@@ -10225,7 +10230,7 @@ namespace InjectorInspector
                             clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 1); 
                             clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 1);  
 
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Home_告知電動缸組已回home完畢);
+                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_告知電動缸組已回home完畢);
                         }
                         Xavier_Task4_Debugprintf("tp4Home_電動缸組_抽針嘴_3D掃描_回home\r\n");
                         break;
@@ -10239,21 +10244,21 @@ namespace InjectorInspector
                             dbapiJoDell植針嘴相機(dbJoDell植針嘴相機_Home位);
 
                             if(btp6Home_告知系統回home完畢 == true) { 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4START);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4START);
                             } else { 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Home_告知電動缸組已回home完畢);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_告知電動缸組已回home完畢);
                             }
                         }
                         Xavier_Task4_Debugprintf("tp4Home_告知電動缸組已回home完畢\r\n");
                         break;
 
                 case xeXavier_T4_Job.tp4TakeAndDiscardSTART:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4TakeAndDiscardSTART);
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4TakeAndDiscardSTART);
                     Xavier_Task4_Debugprintf("tp4TakeAndDiscardSTART\r\n");
                     break;
 
                 case xeXavier_T4_Job.tp4InsertSTART:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_電動缸組_抽針嘴_3D掃描_回安全位);
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_電動缸組_抽針嘴_3D掃描_回安全位);
                     Xavier_Task4_Debugprintf("tp4InsertSTART\r\n");
                     break;
                     case xeXavier_T4_Job.tp4Insert_電動缸組_抽針嘴_3D掃描_回安全位:
@@ -10265,9 +10270,9 @@ namespace InjectorInspector
                             double dbrsltJoDell吸針嘴 = dbapiJoDell吸針嘴(dbCheckArrived);
                             if( dbrsltJoDell3D掃描 == dbAxisMoveOk &&
                                 dbrsltJoDell吸針嘴 == dbAxisMoveOk ) {
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_告知載盤組_電動缸無干涉);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_告知載盤組_電動缸無干涉);
                             } else { 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_電動缸組_抽針嘴_3D掃描_回安全位);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_電動缸組_抽針嘴_3D掃描_回安全位);
                             }
                         }
                         Xavier_Task4_Debugprintf("tp4Insert_電動缸組_抽針嘴_3D掃描_回安全位\r\n");
@@ -10276,7 +10281,7 @@ namespace InjectorInspector
                         {
                             btp4Insert_告知載盤組_電動缸無干涉 = true;
 
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_Socket孔檢測相機移至拍照位);
+                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_Socket孔檢測相機移至拍照位);
                         }
                         Xavier_Task4_Debugprintf("tp4Insert_告知載盤組_電動缸無干涉\r\n");
                         break;
@@ -10287,7 +10292,7 @@ namespace InjectorInspector
                                 dbapiIAI(dbSocketCamera);
                             }
 
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_告知Socket孔檢測相機已至拍照位);
+                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_告知Socket孔檢測相機已至拍照位);
                         }
                         Xavier_Task4_Debugprintf("tp4Insert_Socket孔檢測相機移至拍照位\r\n");
                         break;
@@ -10295,7 +10300,7 @@ namespace InjectorInspector
                         {
                             btp4Insert_告知Socket孔檢測相機已至拍照位 = true;
 
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_堵料檢查植針嘴相機移至拍照位);
+                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_堵料檢查植針嘴相機移至拍照位);
                         }
                         Xavier_Task4_Debugprintf("tp4Insert_告知Socket孔檢測相機已至拍照位\r\n");
                         break;
@@ -10306,7 +10311,7 @@ namespace InjectorInspector
                             }
                             dbapiJoDell植針嘴相機(CheckCameraZ);
 
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_告知堵料檢查植針嘴相機已至拍照位);
+                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_告知堵料檢查植針嘴相機已至拍照位);
                         }
                         Xavier_Task4_Debugprintf("tp4Insert_堵料檢查植針嘴相機移至拍照位\r\n");
                         break;
@@ -10314,7 +10319,7 @@ namespace InjectorInspector
                         {
                             btp4Insert_告知堵料檢查植針嘴相機已至拍照位 = true;
 
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤檢測機制開始);
+                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤檢測機制開始);
                         }
                         Xavier_Task4_Debugprintf("tp4Insert_告知堵料檢查植針嘴相機已至拍照位\r\n");
                         break;
@@ -10327,7 +10332,7 @@ namespace InjectorInspector
                                 lblVBLED.Text = "Light:" + (uint)SB_VBLED.Value;
                             }
 
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_進行柔震盤物料確認_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
+                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_進行柔震盤物料確認_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
                         }
                         Xavier_Task4_Debugprintf("tp4Insert_柔震盤檢測機制開始\r\n");
                         break;
@@ -10336,32 +10341,32 @@ namespace InjectorInspector
                             if(btp6Insert_告知系統已拿到目標植針資料_To_Tp4 == true) { 
                                 btp6Insert_告知系統已拿到目標植針資料_To_Tp4 = false;
 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_有植針資料);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_有植針資料);
                             } else if(btp6Insert_告知系統無目標植針資料_To_Tp4 == true) { 
                                 btp6Insert_告知系統無目標植針資料_To_Tp4 = false;
 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_無植針資料);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_無植針資料);
                             } else { 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_進行柔震盤物料確認_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_進行柔震盤物料確認_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
                             }
                         }
                         Xavier_Task4_Debugprintf("tp4Insert_進行柔震盤物料確認_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料\r\n");
                         break;
                         case xeXavier_T4_Job.tp4Insert_無植針資料:
                             { 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤檢測機制完成);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤檢測機制完成);
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_無植針資料\r\n");
                             break;
                         case xeXavier_T4_Job.tp4Insert_有植針資料:
                             {
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_進行柔震盤物料拍照前作業);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_進行柔震盤物料拍照前作業);
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_有植針資料\r\n");
                             break;                           
                         case xeXavier_T4_Job.tp4Insert_進行柔震盤物料拍照前作業:
                             {
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_進行柔震盤物料確認_從_tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_進行柔震盤物料確認_從_tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照);
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_進行柔震盤物料拍照前作業\r\n");
                             break;
@@ -10370,9 +10375,9 @@ namespace InjectorInspector
                                 if(btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照 == true) { 
                                     btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照 = false;
 
-                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數重設);
+                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數重設);
                                 } else {
-                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_進行柔震盤物料確認_從_tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照);
+                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_進行柔震盤物料確認_從_tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照);
                                 }
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_進行柔震盤物料確認_從_tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照\r\n");
@@ -10381,34 +10386,34 @@ namespace InjectorInspector
                             {
                                 i柔震盤物料檢測retry次數 = 3;
 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數);
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_柔震盤物料檢測retry次數重設\r\n");
                             break;
                         case xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數:
                             {
                                 if(i柔震盤物料檢測retry次數 > 0) { 
-                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數大於0);
+                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數大於0);
                                 } else 
                                 if(i柔震盤物料檢測retry次數 == 0) { 
-                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數等於0);
+                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數等於0);
                                 }
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_柔震盤物料檢測retry次數\r\n");
                             break;
                         case xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數等於0:
                             {
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤物料異常_告知系統中止);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤物料異常_告知系統中止);
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_柔震盤物料檢測retry次數等於0\r\n");
                             break;
                         case xeXavier_T4_Job.tp4Insert_柔震盤物料異常_告知系統中止:
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤物料異常_告知系統中止);
+                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤物料異常_告知系統中止);
                             Xavier_Task4_Debugprintf("tp4Insert_柔震盤物料異常_告知系統中止\r\n");
                             break;
                         case xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數大於0:
                             {
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_檢查柔震是否有物料);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_檢查柔震是否有物料);
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_柔震盤物料檢測retry次數大於0\r\n");
                             break;                                                
@@ -10417,17 +10422,17 @@ namespace InjectorInspector
                                 btn_取得PinInfo_Click(null, EventArgs.Empty); 
                                 if(b柔震盤有料_tmrTakePinTick == true) { 
                                     //柔震有料
-                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤有物料);
+                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤有物料);
                                 } else { 
                                     //柔震無料
-                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤無物料);
+                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤無物料);
                                 }
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_檢查柔震是否有物料\r\n");
                             break;
                         case xeXavier_T4_Job.tp4Insert_柔震盤有物料:
                             {
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_告知吸嘴軸組柔震盤物料座標);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_告知吸嘴軸組柔震盤物料座標);
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_柔震盤有物料\r\n");
                             break;
@@ -10436,7 +10441,7 @@ namespace InjectorInspector
                                 //先啟動震盤料倉震動
                                 i柔震TypeStep = 1;
 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤啟動震動);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤啟動震動);
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_柔震盤無物料\r\n");
                             break;
@@ -10453,7 +10458,7 @@ namespace InjectorInspector
 
                                         i柔震TypeStep = 2;  //柔震盤上下震動:
 
-                                        Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤啟動震動);
+                                        Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤啟動震動);
                                         break; 
 
                                     case 2:
@@ -10466,7 +10471,7 @@ namespace InjectorInspector
 
                                         i柔震TypeStep = 3;  //柔震盤左右震動:
 
-                                        Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤啟動震動);
+                                        Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤啟動震動);
                                         break; 
 
                                     case 3:
@@ -10479,7 +10484,7 @@ namespace InjectorInspector
 
                                         i柔震TypeStep = 4;  //柔震盤散震震動
 
-                                        Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤啟動震動);
+                                        Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤啟動震動);
                                         break; 
 
                                     case 4:
@@ -10492,7 +10497,7 @@ namespace InjectorInspector
 
                                         i柔震TypeStep = 0;  //柔震盤停止
 
-                                        Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤啟動震動);
+                                        Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤啟動震動);
                                         break;
 
                                     default:
@@ -10502,7 +10507,7 @@ namespace InjectorInspector
                                         
                                         i柔震TypeStep = 0;  //柔震盤停止
 
-                                        Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤停止震動);
+                                        Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤停止震動);
                                         break;
                                 }
                             }
@@ -10512,13 +10517,13 @@ namespace InjectorInspector
                             {
                                 i柔震盤物料檢測retry次數--;
 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_跳回_至_tp4Insert_柔震盤物料檢測retry次數);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_跳回_至_tp4Insert_柔震盤物料檢測retry次數);
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_柔震盤停止震動\r\n");
                             break;
                         case xeXavier_T4_Job.tp4Insert_跳回_至_tp4Insert_柔震盤物料檢測retry次數:
                             {
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數);
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_跳回_至_tp4Insert_柔震盤物料檢測retry次數\r\n");
                             break;
@@ -10526,7 +10531,7 @@ namespace InjectorInspector
                             {
                                 btp4Insert_告知吸嘴軸組柔震盤物料座標 = true;
 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_清除tp4Insert_告知吸嘴軸組柔震盤有物料_從_tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標);
+                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_清除tp4Insert_告知吸嘴軸組柔震盤有物料_從_tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標);
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_告知吸嘴軸組柔震盤物料座標\r\n");
                             break;
@@ -10535,24 +10540,24 @@ namespace InjectorInspector
                                 if(btp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標 == true) { 
                                     btp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標 = false;
 
-                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_跳回_至_tp4Insert_進行柔震盤物料拍照前作業);
+                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_跳回_至_tp4Insert_進行柔震盤物料拍照前作業);
                                 } else { 
-                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_清除tp4Insert_告知吸嘴軸組柔震盤有物料_從_tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標);
+                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_清除tp4Insert_告知吸嘴軸組柔震盤有物料_從_tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標);
                                 }
                             }
                             Xavier_Task4_Debugprintf("tp4Insert_清除tp4Insert_告知吸嘴軸組柔震盤有物料_從_tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標\r\n");
                             break;
                         case xeXavier_T4_Job.tp4Insert_跳回_至_tp4Insert_進行柔震盤物料拍照前作業:
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_進行柔震盤物料拍照前作業);
+                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_進行柔震盤物料拍照前作業);
                             Xavier_Task4_Debugprintf("tp4Insert_跳回_至_tp4Insert_進行柔震盤物料拍照前作業\r\n");
                             break;
                     case xeXavier_T4_Job.tp4Insert_柔震盤檢測機制完成:
-                        Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4Insert_柔震盤檢測機制完成);
+                        Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤檢測機制完成);
                         Xavier_Task4_Debugprintf("tp4Insert_柔震盤檢測機制完成\r\n");
                         break;
 
                 case xeXavier_T4_Job.tp4RemoveSTART:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, 15, xeXavier_T4_Job.tp4RemoveSTART);
+                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4RemoveSTART);
                     Xavier_Task4_Debugprintf("tp4RemoveSTART\r\n");
                     break;
 
@@ -10784,34 +10789,34 @@ namespace InjectorInspector
                 case xeXavier_Indicator.xeXI_事件_暫停:
                 case xeXavier_Indicator.xeXI_事件_異常: 
                 default:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5START);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5START);
                     break;
             }
 
             switch (priTASK) {
                 case xeXavier_T5_Job.tp5Empty:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Init);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Init);
                     Xavier_Task5_Debugprintf("tp5Empty\r\n");
                     break;
 
                 case xeXavier_T5_Job.tp5Init:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5START);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5START);
                     Xavier_Task5_Debugprintf("tp5Init\r\n");
                     break;
 
                 //======ISR Job======
                 case xeXavier_T5_Job.tp5_ISR01_START:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 5, xeXavier_T5_Job.tp5_ISR01_STEP1);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5_ISR01_STEP1);
                     Xavier_Task5_Debugprintf("tp5_ISR01_START\r\n");
                     break;
 
                 case xeXavier_T5_Job.tp5_ISR01_STEP1:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 5, xeXavier_T5_Job.tp5_ISR01_STEP2);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5_ISR01_STEP2);
                     Xavier_Task5_Debugprintf("tp5_ISR01_STEP1\r\n");
                     break;
 
                 case xeXavier_T5_Job.tp5_ISR01_STEP2:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 5, xeXavier_T5_Job.tp5_ISR01_END);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5_ISR01_END);
                     Xavier_Task5_Debugprintf("tp5_ISR01_STEP2\r\n");
                     break;
 
@@ -10825,17 +10830,17 @@ namespace InjectorInspector
                     break;
                 //======ISR Job======
                 case xeXavier_T5_Job.tp5_ISR02_START:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 5, xeXavier_T5_Job.tp5_ISR02_STEP1);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5_ISR02_STEP1);
                     Xavier_Task5_Debugprintf("tp5_ISR02_START\r\n");
                     break;
 
                 case xeXavier_T5_Job.tp5_ISR02_STEP1:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 5, xeXavier_T5_Job.tp5_ISR02_STEP2);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5_ISR02_STEP2);
                     Xavier_Task5_Debugprintf("tp5_ISR02_STEP1\r\n");
                     break;
 
                 case xeXavier_T5_Job.tp5_ISR02_STEP2:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 5, xeXavier_T5_Job.tp5_ISR02_END);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5_ISR02_END);
                     Xavier_Task5_Debugprintf("tp5_ISR02_STEP2\r\n");
                     break;
 
@@ -10858,26 +10863,26 @@ namespace InjectorInspector
                         switch(rslt) {
                             case xeXavier_Indicator.xeXI_狀態_運行: 
                                 if(btp6Home_告知系統回home完畢 == true) {
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5InsertSTART);
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5InsertSTART);
                                 } else {
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5HomeSTART);
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5HomeSTART);
                                 }
                                 break;
                             case xeXavier_Indicator.xeXI_狀態_停止:
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5START);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5START);
                                 break;
                             case xeXavier_Indicator.xeXI_狀態_急停:
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5START);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5START);
                                 break;
 
                             case xeXavier_Indicator.xeXI_事件_復歸:
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5HomeSTART);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5HomeSTART);
                                 break;
                             case xeXavier_Indicator.xeXI_事件_暫停:    break;
                             case xeXavier_Indicator.xeXI_事件_異常:    break;
 
                             default:
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5START);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5START);
                                 break;
                         }
                     }
@@ -10885,22 +10890,22 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T5_Job.tp5HomeSTART:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32HomeDelayCNT, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
                     Xavier_Task5_Debugprintf("tp5HomeSTART\r\n");
                     break;
                     case xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp6Home_告知工作門已關閉:
                         if(btp6Home_告知工作門已關閉 == true) { 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32HomeDelayCNT, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉);
                         } else { 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32HomeDelayCNT, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp6Home_告知工作門已關閉);
                         }
                         Xavier_Task5_Debugprintf("tp5Home_確認載盤組可以進行復歸動作_從_tp6Home_告知工作門已關閉\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉:
                         if(btp3Home_告知載盤組_植針軸組無干涉 == true) { 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32HomeDelayCNT, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉);
                         } else { 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32HomeDelayCNT, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉);
                         }
                         Xavier_Task5_Debugprintf("tp5Home_確認載盤組可以進行復歸動作_從_tp3Home_告知載盤組_植針軸組無干涉\r\n");
                         break;
@@ -10911,9 +10916,9 @@ namespace InjectorInspector
                             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, true);
                             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, true);
 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_載盤組XY復歸);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32HomeDelayCNT, xeXavier_T5_Job.tp5Home_載盤組XY復歸);
                         } else { 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32HomeDelayCNT, xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉);
                         }
                         Xavier_Task5_Debugprintf("tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉\r\n");
                         break;
@@ -10923,9 +10928,9 @@ namespace InjectorInspector
                             dbapiCarrierY_defaultSpeed(dbCarrierY_Home位);
                             if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32HomeDelayCNT, xeXavier_T5_Job.tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_載盤組XY復歸);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32HomeDelayCNT, xeXavier_T5_Job.tp5Home_載盤組XY復歸);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Home_載盤組XY復歸\r\n");
@@ -10934,7 +10939,7 @@ namespace InjectorInspector
                         {
                             btp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作 = true;
 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_告知載盤組已回home完畢);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32HomeDelayCNT, xeXavier_T5_Job.tp5Home_告知載盤組已回home完畢);
                         }
                         Xavier_Task5_Debugprintf("tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作\r\n");
                         break;
@@ -10943,21 +10948,21 @@ namespace InjectorInspector
                             btp5Home_告知載盤組已回home完畢 = true;
 
                             if (btp6Home_告知系統回home完畢 == true) { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5START);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32HomeDelayCNT, xeXavier_T5_Job.tp5START);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Home_告知載盤組已回home完畢);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32HomeDelayCNT, xeXavier_T5_Job.tp5Home_告知載盤組已回home完畢);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Home_告知載盤組已回home完畢\r\n");
                         break;
 
                 case xeXavier_T5_Job.tp5TakeAndDiscardSTART:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5TakeAndDiscardSTART);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5TakeAndDiscardSTART);
                     Xavier_Task5_Debugprintf("tp5TakeAndDiscardSTART\r\n");
                     break;
 
                 case xeXavier_T5_Job.tp5InsertSTART:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤與Soket吸真空);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤與Soket吸真空);
                     Xavier_Task5_Debugprintf("tp5InsertSTART\r\n");
                     break;
                     case xeXavier_T5_Job.tp5Insert_載盤與Soket吸真空:
@@ -10966,7 +10971,7 @@ namespace InjectorInspector
                             digitalWrite((int)WMX3IO對照.pxeIO_Socket真空1, HIGH);
                             digitalWrite((int)WMX3IO對照.pxeIO_Socket真空2, HIGH);
 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp3Insert_告知載盤組_植針軸組無干涉);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp3Insert_告知載盤組_植針軸組無干涉);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤與Soket吸真空\r\n");
                         break;
@@ -10975,9 +10980,9 @@ namespace InjectorInspector
                             if(btp3Insert_告知載盤組_植針軸組無干涉 == true) { 
                                 btp3Insert_告知載盤組_植針軸組無干涉 = false;
 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知載盤組_電動缸無干涉);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知載盤組_電動缸無干涉);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp3Insert_告知載盤組_植針軸組無干涉);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp3Insert_告知載盤組_植針軸組無干涉);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp3Insert_告知載盤組_植針軸組無干涉\r\n");
@@ -10987,9 +10992,9 @@ namespace InjectorInspector
                             if(btp4Insert_告知載盤組_電動缸無干涉 == true) { 
                                 btp4Insert_告知載盤組_電動缸無干涉 = false;
 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知Socket孔檢測相機已至拍照位);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知Socket孔檢測相機已至拍照位);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知載盤組_電動缸無干涉);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知載盤組_電動缸無干涉);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知載盤組_電動缸無干涉\r\n");
@@ -10999,9 +11004,9 @@ namespace InjectorInspector
                             if(btp4Insert_告知Socket孔檢測相機已至拍照位 == true) { 
                                 btp4Insert_告知Socket孔檢測相機已至拍照位 = false;
 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp6Insert_告知載盤組已拿到兩點校正資料);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp6Insert_告知載盤組已拿到兩點校正資料);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知Socket孔檢測相機已至拍照位);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知Socket孔檢測相機已至拍照位);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp4Insert_告知Socket孔檢測相機已至拍照位\r\n");
@@ -11011,9 +11016,9 @@ namespace InjectorInspector
                             if(btp6Insert_告知載盤組已拿到兩點校正資料 == true) { 
                                 btp6Insert_告知載盤組已拿到兩點校正資料 = false;
 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_開始載盤組XY兩點校正程序);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_開始載盤組XY兩點校正程序);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp6Insert_告知載盤組已拿到兩點校正資料);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp6Insert_告知載盤組已拿到兩點校正資料);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_確認載盤組可以移動至兩點校正孔第1孔_從_tp6Insert_告知載盤組已拿到兩點校正資料\r\n");
@@ -11023,7 +11028,7 @@ namespace InjectorInspector
                             //開啟參數表視窗
                             btn_參數_Click(null, EventArgs.Empty);
 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_開始載盤組XY兩點校正程序\r\n");
                         break;
@@ -11042,9 +11047,9 @@ namespace InjectorInspector
 
                                 if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                     (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY取得兩點校正孔第1點校正參數);
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY取得兩點校正孔第1點校正參數);
                                 } else { 
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點);
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點);
                                 }
                             }
                             Xavier_Task5_Debugprintf("tp5Insert_載盤組XY移動至兩點校正孔第1點\r\n");
@@ -11053,7 +11058,7 @@ namespace InjectorInspector
                                 {
                                     btn_socket相機兩點定位_Click(null, EventArgs.Empty);
 
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點補正位);
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點補正位);
                                 }
                                 Xavier_Task5_Debugprintf("tp5Insert_載盤組XY取得兩點校正孔第1點校正參數\r\n");
                                 break;
@@ -11076,9 +11081,9 @@ namespace InjectorInspector
 
                                     if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                         (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_儲存兩點校正孔第1點補正值);
+                                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_儲存兩點校正孔第1點補正值);
                                     } else { 
-                                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點補正位);
+                                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點補正位);
                                     }
                                 }
                                 Xavier_Task5_Debugprintf("tp5Insert_載盤組XY移動至兩點校正孔第1點補正位\r\n");
@@ -11087,7 +11092,7 @@ namespace InjectorInspector
                                 {
                                     fmParameterFormHandle.btn_Save_Click(null, EventArgs.Empty);
 
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點);
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點);
                                 }
                                 Xavier_Task5_Debugprintf("tp5Insert_儲存兩點校正孔第1點補正值\r\n");
                                 break;     
@@ -11106,9 +11111,9 @@ namespace InjectorInspector
 
                                 if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                     (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY取得兩點校正孔第2點校正參數);
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY取得兩點校正孔第2點校正參數);
                                 } else { 
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點);
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點);
                                 }
                             }
                             Xavier_Task5_Debugprintf("tp5Insert_載盤組XY移動至兩點校正孔第2點\r\n");
@@ -11117,7 +11122,7 @@ namespace InjectorInspector
                                 {
                                     btn_socket相機兩點定位_Click(null, EventArgs.Empty);
 
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點補正位);
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點補正位);
                                 }
                                 Xavier_Task5_Debugprintf("tp5Insert_載盤組XY取得兩點校正孔第2點校正參數\r\n");
                                 break;
@@ -11140,9 +11145,9 @@ namespace InjectorInspector
 
                                     if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                         (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_儲存兩點校正孔第2點補正值);
+                                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_儲存兩點校正孔第2點補正值);
                                     } else { 
-                                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點補正位);
+                                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點補正位);
                                     }
                                 }
                                 Xavier_Task5_Debugprintf("tp5Insert_載盤組XY移動至兩點校正孔第2點補正位\r\n");
@@ -11151,7 +11156,7 @@ namespace InjectorInspector
                                 {
                                     fmParameterFormHandle.btn_Save_Click(null, EventArgs.Empty);
 
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知檔案組已完成兩點校正);
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_告知檔案組已完成兩點校正);
                                 }
                                 Xavier_Task5_Debugprintf("tp5Insert_儲存兩點校正孔第2點補正值\r\n");
                                 break;  
@@ -11159,13 +11164,13 @@ namespace InjectorInspector
                             {
                                 btp5Insert_告知檔案組已完成兩點校正 = true;
 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_完成載盤組XY兩點校正程序);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_完成載盤組XY兩點校正程序);
                             }
                             Xavier_Task5_Debugprintf("tp5Insert_告知檔案組已完成兩點校正\r\n");
                             break;
                     case xeXavier_T5_Job.tp5Insert_完成載盤組XY兩點校正程序:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤植針前置作業);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤植針前置作業);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_完成載盤組XY兩點校正程序\r\n");
                         break;
@@ -11227,7 +11232,7 @@ namespace InjectorInspector
                                     //Normal.Point pMapping = MapToCoords(PerspectiveTransformMatrix, X_In, Y_In);
                                 }
                             }  // end of Matrix Calibration
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認進行載盤植針位定位_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認進行載盤植針位定位_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤植針前置作業\r\n");
                         break;
@@ -11236,26 +11241,26 @@ namespace InjectorInspector
                             if(btp6Insert_告知系統已拿到目標植針資料_To_Tp5 == true) { 
                                 btp6Insert_告知系統已拿到目標植針資料_To_Tp5 = false;
 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_有植針資料);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_有植針資料);
                             } else if(btp6Insert_告知系統無目標植針資料_To_Tp5 == true) { 
                                 btp6Insert_告知系統無目標植針資料_To_Tp5 = false;
 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_無植針資料);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_無植針資料);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認進行載盤植針位定位_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認進行載盤植針位定位_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_確認進行載盤植針位定位_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_無植針資料:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_完成載盤植針);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_完成載盤植針);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_無植針資料\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_有植針資料:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_有植針資料\r\n");
                         break;                                    
@@ -11269,9 +11274,9 @@ namespace InjectorInspector
 
                             if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組移至植針拍照位\r\n");
@@ -11293,12 +11298,12 @@ namespace InjectorInspector
 
                                 if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                     (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至植針位);
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至植針位);
                                 } else { 
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
                                 }
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組進行植針拍照位補正\r\n");
@@ -11318,9 +11323,9 @@ namespace InjectorInspector
 
                             if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知植針軸組載盤組已移至植針位);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_告知植針軸組載盤組已移至植針位);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至植針位);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至植針位);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組移至植針位\r\n");
@@ -11329,7 +11334,7 @@ namespace InjectorInspector
                         {
                             btp5Insert_告知植針軸組載盤組已移至植針位 = true;
 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認可進行植針檢查_從_tp3Insert_告知載盤組_植針軸植針完畢);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認可進行植針檢查_從_tp3Insert_告知載盤組_植針軸植針完畢);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_告知植針軸組載盤組已移至植針位\r\n");
                         break;
@@ -11338,9 +11343,9 @@ namespace InjectorInspector
                             if(btp3Insert_告知載盤組_植針軸植針完畢 == true) { 
                                 btp3Insert_告知載盤組_植針軸植針完畢 = false;
 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位檢查植針況狀);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位檢查植針況狀);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_確認可進行植針檢查_從_tp3Insert_告知載盤組_植針軸植針完畢);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認可進行植針檢查_從_tp3Insert_告知載盤組_植針軸植針完畢);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_確認可進行植針檢查_從_tp3Insert_告知載盤組_植針軸植針完畢\r\n");
@@ -11354,9 +11359,9 @@ namespace InjectorInspector
                             dbapiCarrierY_defaultSpeed(dbTargetY);
                             if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組進行拍照位檢查植針況狀);    
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組進行拍照位檢查植針況狀);    
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位檢查植針況狀);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位檢查植針況狀);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組移至植針拍照位檢查植針況狀\r\n");
@@ -11387,17 +11392,17 @@ namespace InjectorInspector
                                 }  // end of switch(dbSetPinStatus) { 
                             if(success == true) { 
                                 //植針ok
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_植針成功);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_植針成功);
                             } else { 
                                 //植針ng
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_植針失敗);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_植針失敗);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組進行拍照位檢查植針況狀\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_植針成功:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知系統植針成功);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_告知系統植針成功);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_植針成功\r\n");
                         break;                                     
@@ -11406,19 +11411,19 @@ namespace InjectorInspector
                             btp5Insert_告知系統植針成功_To_Tp6 = true;
                             btp5Insert_告知系統植針成功_To_Tp3 = true;
 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_載盤植針前置作業);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_載盤植針前置作業);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_告知系統植針成功\r\n");
                         break;                             
                     case xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_載盤植針前置作業:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤植針前置作業);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤植針前置作業);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_跳回_至_tp5Insert_載盤植針前置作業\r\n");
                         break;           
                     case xeXavier_T5_Job.tp5Insert_植針失敗:
                         { 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知系統植針失敗);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_告知系統植針失敗);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_植針失敗\r\n");
                         break;
@@ -11426,7 +11431,7 @@ namespace InjectorInspector
                         {
                             btp5Insert_告知系統植針失敗 = true;
 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_等待是否進行堵料補光_從_tp3Insert_告知載盤組進行補光_或_tp3Insert_告知系統賭料排除異常_告知系統中止);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_等待是否進行堵料補光_從_tp3Insert_告知載盤組進行補光_或_tp3Insert_告知系統賭料排除異常_告知系統中止);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_告知系統植針失敗\r\n");
                         break;
@@ -11435,19 +11440,19 @@ namespace InjectorInspector
                             if(btp3Insert_告知載盤組進行補光 == true) { 
                                 btp3Insert_告知載盤組進行補光 = false;
 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至補光位);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至補光位);
                             } else if(btp3Insert_告知系統賭料排除異常_告知系統中止 == true) {
                                 btp3Insert_告知系統賭料排除異常_告知系統中止 = false;
 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_植針異常停止_告知系統停止);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_植針異常停止_告知系統停止);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_等待是否進行堵料補光_從_tp3Insert_告知載盤組進行補光_或_tp3Insert_告知系統賭料排除異常_告知系統中止);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_等待是否進行堵料補光_從_tp3Insert_告知載盤組進行補光_或_tp3Insert_告知系統賭料排除異常_告知系統中止);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_等待是否進行堵料補光_從_tp3Insert_告知載盤組進行補光_或_tp3Insert_告知系統賭料排除異常_告知系統中止\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_植針異常停止_告知系統停止:
-                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_植針異常停止_告知系統停止);
+                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_植針異常停止_告知系統停止);
                         Xavier_Task5_Debugprintf("tp5Insert_植針異常停止_告知系統停止\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_載盤組移至補光位:
@@ -11461,9 +11466,9 @@ namespace InjectorInspector
 
                             if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知載盤組已至補光位);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_告知載盤組已至補光位);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至補光位);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至補光位);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組移至補光位\r\n");
@@ -11472,7 +11477,7 @@ namespace InjectorInspector
                         { 
                             btp5Insert_告知載盤組已至補光位 = true;
 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_等待堵料檢查結果_從_tp3Insert_告知植針軸組判斷未堵料_或_tp3Insert_告知植針軸組判斷堵料);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_等待堵料檢查結果_從_tp3Insert_告知植針軸組判斷未堵料_或_tp3Insert_告知植針軸組判斷堵料);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_告知載盤組已至補光位\r\n");
                         break;
@@ -11481,32 +11486,32 @@ namespace InjectorInspector
                             if(btp3Insert_告知植針軸組判斷未堵料 == true) { 
                                 btp3Insert_告知植針軸組判斷未堵料 = false;
 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_得知植針嘴未堵料);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_得知植針嘴未堵料);
                             } else if(btp3Insert_告知植針軸組判斷堵料 == true) { 
                                 btp3Insert_告知植針軸組判斷堵料 = false;
 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_得知植針嘴已堵料);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_得知植針嘴已堵料);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_等待堵料檢查結果_從_tp3Insert_告知植針軸組判斷未堵料_或_tp3Insert_告知植針軸組判斷堵料);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_等待堵料檢查結果_從_tp3Insert_告知植針軸組判斷未堵料_或_tp3Insert_告知植針軸組判斷堵料);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_等待堵料檢查結果_從_tp3Insert_告知植針軸組判斷未堵料_或_tp3Insert_告知植針軸組判斷堵料\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_得知植針嘴未堵料:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_載盤組移至植針拍照位);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_載盤組移至植針拍照位);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_得知植針嘴未堵料\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_載盤組移至植針拍照位:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_跳回_至_tp5Insert_載盤組移至植針拍照位\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_得知植針嘴已堵料:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至堵料收廢料位);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至堵料收廢料位);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_得知植針嘴已堵料\r\n");
                         break;                         
@@ -11517,9 +11522,9 @@ namespace InjectorInspector
                             }
                             dbapiCarrierX_defaultSpeed(MakeClearCarryY);
                             if( (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_載盤組XY移動至堵料收廢料位);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至堵料收廢料位);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組XY移動至堵料收廢料位\r\n");
@@ -11528,33 +11533,33 @@ namespace InjectorInspector
                         {
                             btp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位 = true;
 
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_堵料排除完成_從_tp3Insert_告知植針軸組堵料吹氣完畢);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_堵料排除完成_從_tp3Insert_告知植針軸組堵料吹氣完畢);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_堵料排除完成_從_tp3Insert_告知植針軸組堵料吹氣完畢:
                         {
                             if(btp3Insert_告知植針軸組堵料吹氣完畢 == true) { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_告知系統植針失敗_從_tp3Insert_告知植針軸組堵料吹氣完畢);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_告知系統植針失敗_從_tp3Insert_告知植針軸組堵料吹氣完畢);
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_堵料排除完成_從_tp3Insert_告知植針軸組堵料吹氣完畢);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_堵料排除完成_從_tp3Insert_告知植針軸組堵料吹氣完畢);
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_堵料排除完成_從_tp3Insert_告知植針軸組堵料吹氣完畢\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_告知系統植針失敗_從_tp3Insert_告知植針軸組堵料吹氣完畢:
                         {
-                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_告知系統植針失敗);
+                            Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_告知系統植針失敗);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_跳回_至_tp5Insert_告知系統植針失敗_從_tp3Insert_告知植針軸組堵料吹氣完畢\r\n");
                         break;
                     case xeXavier_T5_Job.tp5Insert_完成載盤植針:
-                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5Insert_完成載盤植針);
+                        Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_完成載盤植針);
                         Xavier_Task5_Debugprintf("tp5Insert_完成載盤植針\r\n");
                         break;
 
                 case xeXavier_T5_Job.tp5RemoveSTART:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, 15, xeXavier_T5_Job.tp5RemoveSTART);
+                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5RemoveSTART);
                     Xavier_Task5_Debugprintf("tp5RemoveSTART\r\n");
                     break;
 
@@ -11775,34 +11780,34 @@ namespace InjectorInspector
                 case xeXavier_Indicator.xeXI_事件_暫停:
                 case xeXavier_Indicator.xeXI_事件_異常: 
                 default:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6START);
                     break;
             }
 
             switch (priTASK) {
                 case xeXavier_T6_Job.tp6Empty:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Init);
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Init);
                     Xavier_Task6_Debugprintf("tp6Empty\r\n");
                     break;
 
                 case xeXavier_T6_Job.tp6Init:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6START);
                     Xavier_Task6_Debugprintf("tp6Init\r\n");
                     break;
 
                 //======ISR Job======
                 case xeXavier_T6_Job.tp6_ISR01_START:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 5, xeXavier_T6_Job.tp6_ISR01_STEP1);
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6_ISR01_STEP1);
                     Xavier_Task6_Debugprintf("tp6_ISR01_START\r\n");
                     break;
 
                 case xeXavier_T6_Job.tp6_ISR01_STEP1:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 5, xeXavier_T6_Job.tp6_ISR01_STEP2);
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6_ISR01_STEP2);
                     Xavier_Task6_Debugprintf("tp6_ISR01_STEP1\r\n");
                     break;
 
                 case xeXavier_T6_Job.tp6_ISR01_STEP2:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 5, xeXavier_T6_Job.tp6_ISR01_END);
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6_ISR01_END);
                     Xavier_Task6_Debugprintf("tp6_ISR01_STEP2\r\n");
                     break;
 
@@ -11816,17 +11821,17 @@ namespace InjectorInspector
                     break;
                 //======ISR Job======
                 case xeXavier_T6_Job.tp6_ISR02_START:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 5, xeXavier_T6_Job.tp6_ISR02_STEP1);
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6_ISR02_STEP1);
                     Xavier_Task6_Debugprintf("tp6_ISR02_START\r\n");
                     break;
 
                 case xeXavier_T6_Job.tp6_ISR02_STEP1:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 5, xeXavier_T6_Job.tp6_ISR02_STEP2);
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6_ISR02_STEP2);
                     Xavier_Task6_Debugprintf("tp6_ISR02_STEP1\r\n");
                     break;
 
                 case xeXavier_T6_Job.tp6_ISR02_STEP2:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 5, xeXavier_T6_Job.tp6_ISR02_END);
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6_ISR02_END);
                     Xavier_Task6_Debugprintf("tp6_ISR02_STEP2\r\n");
                     break;
 
@@ -11849,26 +11854,26 @@ namespace InjectorInspector
                         switch(rslt) {
                             case xeXavier_Indicator.xeXI_狀態_運行:
                                 if(btp6Home_告知系統回home完畢 == true) {
-                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6InsertSTART);
+                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6InsertSTART);
                                 } else {
-                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6HomeSTART);
+                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6HomeSTART);
                                 }
                                 break;
                             case xeXavier_Indicator.xeXI_狀態_停止:
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6START);
                                 break;
                             case xeXavier_Indicator.xeXI_狀態_急停:
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6START);
                                 break;
 
                             case xeXavier_Indicator.xeXI_事件_復歸:
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6HomeSTART);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6HomeSTART);
                                 break;
                             case xeXavier_Indicator.xeXI_事件_暫停:    break;
                             case xeXavier_Indicator.xeXI_事件_異常:    break;
 
                             default:
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6START);
                                 break;
                         }
                     }
@@ -11892,7 +11897,7 @@ namespace InjectorInspector
                         en_工作門.Checked = true;
                         clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, true);
 
-                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_工作門關閉);
+                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_工作門關閉);
                     }
                     Xavier_Task6_Debugprintf("tp6HomeSTART\r\n");
                     break;
@@ -11902,9 +11907,9 @@ namespace InjectorInspector
 
                             dbapiGate_defaultSpeed(dbGate_關門);
                             if(dbapiGate(dbCheckArrived, 0) == dbAxisMoveOk) {
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_告知工作門已關閉);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_告知工作門已關閉);
                             } else { 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_工作門關閉);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_工作門關閉);
                             }
                         }
                         Xavier_Task6_Debugprintf("tp6Home_工作門關閉\r\n");
@@ -11913,16 +11918,16 @@ namespace InjectorInspector
                         {
                             btp6Home_告知工作門已關閉 = true;
                             digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, LOW);
-                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢);
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢);
                         }
                         Xavier_Task6_Debugprintf("tp6Home_告知工作門已關閉\r\n");
                         break;
                     case xeXavier_T6_Job.tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢:
                         {
                             if(btp2Home_告知吸嘴軸組已回home完畢 == true) { 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢);
                             } else { 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢);
                             }
                         }
                         Xavier_Task6_Debugprintf("tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢\r\n");
@@ -11930,9 +11935,9 @@ namespace InjectorInspector
                     case xeXavier_T6_Job.tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢:
                         {
                             if(btp3Home_告知植針軸組已回home完畢 == true) { 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認電動缸組回home完畢_從_tp4Home_告知電動缸組已回home完畢);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_確認電動缸組回home完畢_從_tp4Home_告知電動缸組已回home完畢);
                             } else { 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢);
                             }
                         }
                         Xavier_Task6_Debugprintf("tp6Home_確認植針軸組回home完畢_從_tp3Home_告知植針軸組已回home完畢\r\n");
@@ -11940,9 +11945,9 @@ namespace InjectorInspector
                     case xeXavier_T6_Job.tp6Home_確認電動缸組回home完畢_從_tp4Home_告知電動缸組已回home完畢:
                         {
                             if(btp4Home_告知電動缸組已回home完畢 == true) { 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認載盤組回home完畢_從_tp5Home_告知載盤組已回home完畢);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_確認載盤組回home完畢_從_tp5Home_告知載盤組已回home完畢);
                             } else { 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認電動缸組回home完畢_從_tp4Home_告知電動缸組已回home完畢);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_確認電動缸組回home完畢_從_tp4Home_告知電動缸組已回home完畢);
                             }
                         }
                         Xavier_Task6_Debugprintf("tp6Home_確認電動缸組回home完畢_從_tp4Home_告知電動缸組已回home完畢\r\n");
@@ -11950,9 +11955,9 @@ namespace InjectorInspector
                     case xeXavier_T6_Job.tp6Home_確認載盤組回home完畢_從_tp5Home_告知載盤組已回home完畢:
                         {
                             if(btp5Home_告知載盤組已回home完畢 == true) { 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_告知系統回home完畢);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_告知系統回home完畢);
                             } else { 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_確認載盤組回home完畢_從_tp5Home_告知載盤組已回home完畢);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_確認載盤組回home完畢_從_tp5Home_告知載盤組已回home完畢);
                             }
                         }
                         Xavier_Task6_Debugprintf("tp6Home_確認載盤組回home完畢_從_tp5Home_告知載盤組已回home完畢\r\n");
@@ -11961,7 +11966,7 @@ namespace InjectorInspector
                         {
                             btp6Home_告知系統回home完畢 = true;
                             digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, HIGH);
-                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Home_工作門開啟);
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_工作門開啟);
                         }
                         Xavier_Task6_Debugprintf("tp6Home_告知系統回home完畢\r\n");
                         break;
@@ -11971,14 +11976,14 @@ namespace InjectorInspector
                             digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, LOW);
                             apiIndicator(xeXavier_Indicator.xeXI_狀態_停止);
 
-                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6START);
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6START);
                         }
                         Xavier_Task6_Debugprintf("tp6Home_工作門開啟\r\n");
                         break;
 
 
                 case xeXavier_T6_Job.tp6TakeAndDiscardSTART:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6TakeAndDiscardSTART);
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6TakeAndDiscardSTART);
                     Xavier_Task6_Debugprintf("tp6TakeAndDiscardSTART\r\n");
                     break;
 
@@ -11987,7 +11992,7 @@ namespace InjectorInspector
                         bForceToLoadCalibrationJson = false;
                         bForceToLoadInsertJson      = false;
 
-                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_讀取兩點校正檔);
+                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_讀取兩點校正檔);
                     }
                     Xavier_Task6_Debugprintf("tp6InsertSTART\r\n");
                     break;
@@ -12009,11 +12014,11 @@ namespace InjectorInspector
                                 if(igetCount == 2) { 
                                     bForceToLoadCalibrationJson = false;
                                     //讀取校正檔案 確認有看到兩個點資料
-                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_告知載盤組已拿到兩點校正資料);
+                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_告知載盤組已拿到兩點校正資料);
                                 } else { 
                                     bForceToLoadCalibrationJson = false;
                                     //讀取校正檔案 點數資料數量錯誤
-                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_讀取兩點校正檔);
+                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_讀取兩點校正檔);
                                 }
                             }
                         }
@@ -12028,7 +12033,7 @@ namespace InjectorInspector
                             btp6Insert_告知系統已拿到目標植針資料_To_Tp4 = true;
                             btp6Insert_告知系統已拿到目標植針資料_To_Tp2 = true; 
 
-                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_確認載盤組完成XY兩點校正程序_從_tp5Insert_告知檔案組已完成兩點校正);
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_確認載盤組完成XY兩點校正程序_從_tp5Insert_告知檔案組已完成兩點校正);
                         }
                         Xavier_Task6_Debugprintf("tp6Insert_告知載盤組已拿到兩點校正資料\r\n");
                         break;
@@ -12042,16 +12047,16 @@ namespace InjectorInspector
                                 btp6Insert_告知系統已拿到目標植針資料_To_Tp4 = false;
                                 btp6Insert_告知系統已拿到目標植針資料_To_Tp2 = false; 
 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_開始讀取植針資料檔);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_開始讀取植針資料檔);
                             } else { 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_確認載盤組完成XY兩點校正程序_從_tp5Insert_告知檔案組已完成兩點校正);   
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_確認載盤組完成XY兩點校正程序_從_tp5Insert_告知檔案組已完成兩點校正);   
                             }
                         }
                         Xavier_Task6_Debugprintf("tp6Insert_確認載盤組完成XY兩點校正程序_從_tp5Insert_告知檔案組已完成兩點校正\r\n");
                         break;
                     case xeXavier_T6_Job.tp6Insert_開始讀取植針資料檔:
                         {
-                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_讀取植針資料檔);
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_讀取植針資料檔);
                         }
                         Xavier_Task6_Debugprintf("tp6Insert_開始讀取植針資料檔\r\n");
                         break;
@@ -12073,11 +12078,11 @@ namespace InjectorInspector
                                     if(igetCount > 0) { 
                                         bForceToLoadInsertJson = false;
                                         //讀取校正檔案 確認有看到兩個點資料
-                                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_植針資料檔資料確認);
+                                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_植針資料檔資料確認);
                                     } else { 
                                         bForceToLoadInsertJson = false;
                                         //讀取校正檔案 點數資料數量錯誤
-                                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_讀取植針資料檔);
+                                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_讀取植針資料檔);
                                     }
                                 }
                             }
@@ -12099,7 +12104,7 @@ namespace InjectorInspector
                                     iSocketHoleArrayIndex  = -1;
                                 }
 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_取出目標植針資料確認);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_取出目標植針資料確認);
                             }
                             Xavier_Task6_Debugprintf("tp6Insert_植針資料檔資料確認\r\n");
                             break;
@@ -12143,21 +12148,21 @@ namespace InjectorInspector
                                         label14.Text = dbX.ToString();
                                         label15.Text = dbY.ToString();
 
-                                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_有資料確定需要值針);
+                                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_有資料確定需要值針);
                                     } else
                                     if (iSocketHoleIndex == -1) {
                                         //錯誤
-                                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_無資料不需要值針);
+                                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_無資料不需要值針);
                                     } 
                                 } else { 
-                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_無資料不需要值針);
+                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_無資料不需要值針);
                                 }
                             }
                             Xavier_Task6_Debugprintf("tp6Insert_取出目標植針資料確認\r\n");
                             break;
                         case xeXavier_T6_Job.tp6Insert_無資料不需要值針:
                             {
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_告知系統無目標植針資料);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_告知系統無目標植針資料);
                             }
                             Xavier_Task6_Debugprintf("tp6Insert_無資料不需要值針\r\n");
                             break;
@@ -12168,13 +12173,13 @@ namespace InjectorInspector
                                 btp6Insert_告知系統無目標植針資料_To_Tp4 = true;               
                                 btp6Insert_告知系統無目標植針資料_To_Tp2 = true; 
 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_完成讀取植針資料檔);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_完成讀取植針資料檔);
                             }
                             Xavier_Task6_Debugprintf("tp6Insert_告知系統無目標植針資料\r\n");
                             break;            
                         case xeXavier_T6_Job.tp6Insert_有資料確定需要值針:
                             {
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_告知系統已拿到目標植針資料);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_告知系統已拿到目標植針資料);
                             }
                             Xavier_Task6_Debugprintf("tp6Insert_有資料確定需要值針\r\n");
                             break;
@@ -12185,7 +12190,7 @@ namespace InjectorInspector
                                 btp6Insert_告知系統已拿到目標植針資料_To_Tp4 = true;
                                 btp6Insert_告知系統已拿到目標植針資料_To_Tp2 = true;
 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_等待系統植針動作完成_從_tp5Insert_告知系統植針成功);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_等待系統植針動作完成_從_tp5Insert_告知系統植針成功);
                             }
                             Xavier_Task6_Debugprintf("tp6Insert_告知系統已拿到目標植針資料\r\n");
                             break;
@@ -12194,9 +12199,9 @@ namespace InjectorInspector
                                 if(btp5Insert_告知系統植針成功_To_Tp6 == true) { 
                                     btp5Insert_告知系統植針成功_To_Tp6 = false;
 
-                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_清除告知系統已拿到目標植針資料);
+                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_清除告知系統已拿到目標植針資料);
                                 } else { 
-                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_等待系統植針動作完成_從_tp5Insert_告知系統植針成功);
+                                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_等待系統植針動作完成_從_tp5Insert_告知系統植針成功);
                                 }
                             }
                             Xavier_Task6_Debugprintf("tp6Insert_等待系統植針動作完成_從_tp5Insert_告知系統植針成功\r\n");
@@ -12218,23 +12223,23 @@ namespace InjectorInspector
 
                                 iSocketHoleArrayIndex++;
 
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_跳回_至_tp6Insert_取出目標植針資料確認);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_跳回_至_tp6Insert_取出目標植針資料確認);
                             }
                             Xavier_Task6_Debugprintf("tp6Insert_清除告知系統已拿到目標植針資料\r\n");
                             break;
                         case xeXavier_T6_Job.tp6Insert_跳回_至_tp6Insert_取出目標植針資料確認:
                             {
-                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_取出目標植針資料確認);
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_取出目標植針資料確認);
                             }
                             Xavier_Task6_Debugprintf("tp6Insert_跳回_至_tp6Insert_取出目標植針資料確認\r\n");
                             break;
                         case xeXavier_T6_Job.tp6Insert_完成讀取植針資料檔:
-                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6Insert_完成讀取植針資料檔);
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_完成讀取植針資料檔);
                             Xavier_Task6_Debugprintf("tp6Insert_完成讀取植針資料檔\r\n");
                             break;
 
                 case xeXavier_T6_Job.tp6RemoveSTART:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, 15, xeXavier_T6_Job.tp6RemoveSTART);
+                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6RemoveSTART);
                     Xavier_Task6_Debugprintf("tp6RemoveSTART\r\n");
                     break;
 
