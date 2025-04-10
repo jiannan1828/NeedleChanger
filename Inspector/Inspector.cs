@@ -51,7 +51,7 @@ namespace Inspector
         public Action on下視覺;
         public Func<string, double> getParam;
 
-        public int lights = 120;
+        public int lights = 255;
 
         public double nozzleX, nozzleY;
         public double 移載X, 移載Y;
@@ -2273,8 +2273,8 @@ namespace Inspector
                     if (targetDist <= owner.parameter.SocketDist)
                     {
                         targetIndex = tempIndex;
-                        result.X = pX = row[targetIndex];
-                        result.Y = pY = col[targetIndex];
+                        result.X = pX = col[targetIndex];
+                        result.Y = pY = row[targetIndex];
                         result = CCD.GetReal(result.X, result.Y, W, H);
                         result.X = -result.X;
                         Msg = Msg + "，成功";
