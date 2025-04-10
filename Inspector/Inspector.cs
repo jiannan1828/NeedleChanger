@@ -2281,7 +2281,14 @@ namespace Inspector
                         hole = result;
                     }
                     else
+                    {
+                        result.X = pX = col[tempIndex];
+                        result.Y = pY = row[tempIndex];
+                        result = CCD.GetReal(result.X, result.Y, W, H);
+                        result.X = -result.X;
+                        hole = result;
                         Msg = Msg + "，失敗，距離超過限制";
+                    }
                 }
                 owner.WriteLog(Msg);
                 SaveResult(temp, OutArea, targetIndex, W, H);

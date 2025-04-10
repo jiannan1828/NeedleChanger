@@ -112,6 +112,29 @@ namespace InjectorInspector
         eDownVisionRsult eDVR_Rsult = eDownVisionRsult.eDVR_Null;
         public void apiCallBackTest()
         {
+            //確定是否要執行飛拍中斷事件
+            bool bEnableTriggerISR = false;
+            xeXavier_Indicator rslt_event = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
+            if(rslt_event == xeXavier_Indicator.xeXI_事件_空) {
+                rslt_event = apiIndicator(xeXavier_Indicator.xeXI_讀_狀態);
+            }
+            switch (rslt_event) {
+                case xeXavier_Indicator.xeXI_狀態_運行:
+                    bEnableTriggerISR = true;
+                    break;
+
+                case xeXavier_Indicator.xeXI_事件_復歸:
+                    break;
+
+                case xeXavier_Indicator.xeXI_狀態_停止:
+                case xeXavier_Indicator.xeXI_狀態_急停:
+                case xeXavier_Indicator.xeXI_事件_暫停:
+                case xeXavier_Indicator.xeXI_事件_異常: 
+                default:
+                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, 15, xeXavier_T3_Job.tp3START);
+                    break;
+            }
+
             //Vision Callback Function test
             cntcallback++;
             this.Text = cntcallback.ToString() + "  " + inspector1.InspNozzle.CCD.GrabCount.ToString();
@@ -134,12 +157,16 @@ namespace InjectorInspector
                             }
 
                             //飛拍成功
-                            Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR01);
+                            if(bEnableTriggerISR == true) { 
+                                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR01);
+                            }
                         } else { 
                             eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ng;
 
                             //飛拍失敗
-                            Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR02);
+                            if(bEnableTriggerISR == true) { 
+                                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR02);
+                            }
                         }
                     } else { 
                         this.Text = getJob.ToString() + "飛拍起始狀態錯誤";
@@ -160,10 +187,14 @@ namespace InjectorInspector
                             eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ok_Normal;
 
                             //飛拍成功
-                            Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR01);
+                            if(bEnableTriggerISR == true) { 
+                                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR01);
+                            }
                         } else { 
                             //飛拍失敗
-                            Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR02);
+                            if(bEnableTriggerISR == true) { 
+                                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR02);
+                            }
                         }
                     }
                 }  // end of if (inspector1.InspectOK == true && inspector1.Inspected == true) {
