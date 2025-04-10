@@ -7573,9 +7573,9 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T1_Job.tp1_ISR01_END:
-                    //Xavier_Task1_ISR_CNTTmp(xeXavier_T1_proc.pt1SET, 15);
+                    //Xavier_Task1_ISR_CNTTmp(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT);
                     //Xavier_Task1_ISR_JobTmp(xeXavier_T1_proc.pt1SET, xeXavier_T1_Job.tp1STEP2);
-                    
+
                     Task1ResumeJob();
                     Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp1_ISR);
                     Xavier_Task1_Debugprintf("tp1_ISR01_end\r\n");
@@ -7597,7 +7597,7 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T1_Job.tp1_ISR02_END:
-                    //Xavier_Task1_ISR_CNTTmp(xeXavier_T1_proc.pt1SET, 15);
+                    //Xavier_Task1_ISR_CNTTmp(xeXavier_T1_proc.pt1SET, u32ISRDelayCNT);
                     //Xavier_Task1_ISR_JobTmp(xeXavier_T1_proc.pt1SET, xeXavier_T1_Job.tp1STEP5);
                     
                     Task1ResumeJob();
@@ -8016,9 +8016,9 @@ namespace InjectorInspector
                         break;
 
                 case xeXavier_T2_Job.tp2_ISR01_END:
-                    //Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2SET, 15);
+                    //Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT);
                     //Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc.pt2SET, xeXavier_T2_Job.tp2STEP2);
-                    
+
                     Task2ResumeJob();
                     Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR);
                     Xavier_Task2_Debugprintf("tp2_ISR01_end\r\n");
@@ -8135,7 +8135,7 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_ISR_跳回_至_tp2Insert_取針前動作準備:
                         {
-                            Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2SET, (xeXavier_T2_Job)15);
+                            Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2SET, (xeXavier_T2_Job)u32ISRDelayCNT);
                             Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc.pt2SET, xeXavier_T2_Job.tp2Insert_取針前動作準備);
 
                             Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2_ISR02_END);
@@ -8144,9 +8144,9 @@ namespace InjectorInspector
                         break;
 
                 case xeXavier_T2_Job.tp2_ISR02_END:
-                    //Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2SET, 15);
+                    //Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT);
                     //Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc.pt2SET, xeXavier_T2_Job.tp2STEP5);
-                    
+
                     Task2ResumeJob();
                     Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR);
                     Xavier_Task2_Debugprintf("tp2_ISR02_end\r\n");
@@ -8950,9 +8950,9 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T3_Job.tp3_ISR01_END:
-                    //Xavier_Task3_ISR_CNTTmp(xeXavier_T3_proc.pt3SET, 15);
+                    //Xavier_Task3_ISR_CNTTmp(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT);
                     //Xavier_Task3_ISR_JobTmp(xeXavier_T3_proc.pt3SET, xeXavier_T3_Job.tp3STEP2);
-                    
+
                     Task3ResumeJob();
                     Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp3_ISR);
                     Xavier_Task3_Debugprintf("tp3_ISR01_end\r\n");
@@ -8974,9 +8974,9 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T3_Job.tp3_ISR02_END:
-                    //Xavier_Task3_ISR_CNTTmp(xeXavier_T3_proc.pt3SET, 15);
+                    //Xavier_Task3_ISR_CNTTmp(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT);
                     //Xavier_Task3_ISR_JobTmp(xeXavier_T3_proc.pt3SET, xeXavier_T3_Job.tp3STEP5);
-                    
+
                     Task3ResumeJob();
                     Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp3_ISR);
                     Xavier_Task3_Debugprintf("tp3_ISR02_end\r\n");
@@ -10073,9 +10073,9 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T4_Job.tp4_ISR01_END:
-                    //Xavier_Task4_ISR_CNTTmp(xeXavier_T4_proc.pt4SET, 15);
+                    //Xavier_Task4_ISR_CNTTmp(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT);
                     //Xavier_Task4_ISR_JobTmp(xeXavier_T4_proc.pt4SET, xeXavier_T4_Job.tp4STEP2);
-                    
+
                     Task4ResumeJob();
                     Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp4_ISR);
                     Xavier_Task4_Debugprintf("tp4_ISR01_end\r\n");
@@ -10097,9 +10097,9 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T4_Job.tp4_ISR02_END:
-                    //Xavier_Task4_ISR_CNTTmp(xeXavier_T4_proc.pt4SET, 15);
+                    //Xavier_Task4_ISR_CNTTmp(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT);
                     //Xavier_Task4_ISR_JobTmp(xeXavier_T4_proc.pt4SET, xeXavier_T4_Job.tp4STEP5);
-                    
+
                     Task4ResumeJob();
                     Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp4_ISR);
                     Xavier_Task4_Debugprintf("tp4_ISR02_end\r\n");
@@ -10821,9 +10821,9 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T5_Job.tp5_ISR01_END:
-                    //Xavier_Task5_ISR_CNTTmp(xeXavier_T5_proc.pT5SET, 15);
+                    //Xavier_Task5_ISR_CNTTmp(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT);
                     //Xavier_Task5_ISR_JobTmp(xeXavier_T5_proc.pT5SET, xeXavier_T5_Job.tp5STEP2);
-                    
+
                     Task5ResumeJob();
                     //Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp5_ISR);  //尚未加入此TASK ISR
                     Xavier_Task5_Debugprintf("tp5_ISR01_end\r\n");
@@ -10845,9 +10845,9 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T5_Job.tp5_ISR02_END:
-                    //Xavier_Task5_ISR_CNTTmp(xeXavier_T5_proc.pT5SET, 15);
+                    //Xavier_Task5_ISR_CNTTmp(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT);
                     //Xavier_Task5_ISR_JobTmp(xeXavier_T5_proc.pT5SET, xeXavier_T5_Job.tp5STEP5);
-                    
+
                     Task5ResumeJob();
                     //Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp5_ISR);  //尚未加入此TASK ISR
                     Xavier_Task5_Debugprintf("tp5_ISR02_end\r\n");
@@ -11812,9 +11812,9 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T6_Job.tp6_ISR01_END:
-                    //Xavier_Task6_ISR_CNTTmp(xeXavier_T6_proc.pT6SET, 15);
+                    //Xavier_Task6_ISR_CNTTmp(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT);
                     //Xavier_Task6_ISR_JobTmp(xeXavier_T6_proc.pT6SET, xeXavier_T6_Job.tp6STEP2);
-                    
+
                     Task6ResumeJob();
                     //Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp6_ISR);  //尚未加入此TASK ISR
                     Xavier_Task6_Debugprintf("tp6_ISR01_end\r\n");
@@ -11836,9 +11836,9 @@ namespace InjectorInspector
                     break;
 
                 case xeXavier_T6_Job.tp6_ISR02_END:
-                    //Xavier_Task6_ISR_CNTTmp(xeXavier_T6_proc.pT6SET, 15);
+                    //Xavier_Task6_ISR_CNTTmp(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT);
                     //Xavier_Task6_ISR_JobTmp(xeXavier_T6_proc.pT6SET, xeXavier_T6_Job.tp6STEP5);
-                    
+
                     Task6ResumeJob();
                     //Xavier_ResumeTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp6_ISR);  //尚未加入此TASK ISR
                     Xavier_Task6_Debugprintf("tp6_ISR02_end\r\n");
