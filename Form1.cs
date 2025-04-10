@@ -7270,8 +7270,8 @@ namespace InjectorInspector
         #region XavierTaskFlowEngine
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
-        public uint u32HomeDelayCNT   = 7;
-        public uint u32InsertDelayCNT = 5;
+        public uint u32HomeDelayCNT   = 5;
+        public uint u32InsertDelayCNT = 3;
         public uint u32ISRDelayCNT    = 1;
 
         //---------------------------------------------------------------------------------------
