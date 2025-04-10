@@ -7270,9 +7270,9 @@ namespace InjectorInspector
         #region XavierTaskFlowEngine
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
-        uint u32HomeDelayCNT   = 15;
-        uint u32InsertDelayCNT = 15;
-        uint u32ISRDelayCNT    = 1;
+        public uint u32HomeDelayCNT   = 7;
+        public uint u32InsertDelayCNT = 5;
+        public uint u32ISRDelayCNT    = 1;
 
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -7979,7 +7979,7 @@ namespace InjectorInspector
                 case xeXavier_Indicator.xeXI_事件_暫停:
                 case xeXavier_Indicator.xeXI_事件_異常: 
                 default:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2START);
+                    priTASK = xeXavier_T2_Job.tp2START;
                     break;
             }
 
@@ -8918,7 +8918,7 @@ namespace InjectorInspector
                 case xeXavier_Indicator.xeXI_事件_暫停:
                 case xeXavier_Indicator.xeXI_事件_異常: 
                 default:
-                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32ISRDelayCNT, xeXavier_T3_Job.tp3START);
+                    priTASK = xeXavier_T3_Job.tp3START;
                     break;
             }
 
@@ -10041,7 +10041,7 @@ namespace InjectorInspector
                 case xeXavier_Indicator.xeXI_事件_暫停:
                 case xeXavier_Indicator.xeXI_事件_異常: 
                 default:
-                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32ISRDelayCNT, xeXavier_T4_Job.tp4START);
+                    priTASK = xeXavier_T4_Job.tp4START;
                     break;
             }
 
@@ -10680,6 +10680,10 @@ namespace InjectorInspector
         //------------------------------- XavierTaskFlowEngine_T5 -------------------------------
         //---------------------------------------------------------------------------------------
 
+        // ----------Private Variables---------
+        public static int iRetrySocket孔無法植針檢查 = 0;
+        public static int iRetrySocket孔無法植針檢查次數 = 2;
+
         // ----------Global Variables----------
         public static uint Xavier_T5_dC_decdelayCNT  = 0;
         public static xeXavier_T5_Job Xavier_T5_dC_GetInJob     = 0;
@@ -10789,7 +10793,7 @@ namespace InjectorInspector
                 case xeXavier_Indicator.xeXI_事件_暫停:
                 case xeXavier_Indicator.xeXI_事件_異常: 
                 default:
-                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32ISRDelayCNT, xeXavier_T5_Job.tp5START);
+                    priTASK = xeXavier_T5_Job.tp5START;
                     break;
             }
 
@@ -11241,6 +11245,8 @@ namespace InjectorInspector
                             if(btp6Insert_告知系統已拿到目標植針資料_To_Tp5 == true) { 
                                 btp6Insert_告知系統已拿到目標植針資料_To_Tp5 = false;
 
+                                iRetrySocket孔無法植針檢查 = iRetrySocket孔無法植針檢查次數;
+
                                 Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_有植針資料);
                             } else if(btp6Insert_告知系統無目標植針資料_To_Tp5 == true) { 
                                 btp6Insert_告知系統無目標植針資料_To_Tp5 = false;
@@ -11303,7 +11309,14 @@ namespace InjectorInspector
                                     Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
                                 }
                             } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
+                                iRetrySocket孔無法植針檢查--;
+                                if(iRetrySocket孔無法植針檢查==0) { 
+                                    //拿下一筆植針孔位
+                                    btp5Insert_告知系統植針成功_To_Tp6 = true;
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認進行載盤植針位定位_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
+                                } else { 
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
+                                }
                             }
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_載盤組進行植針拍照位補正\r\n");
@@ -11780,7 +11793,7 @@ namespace InjectorInspector
                 case xeXavier_Indicator.xeXI_事件_暫停:
                 case xeXavier_Indicator.xeXI_事件_異常: 
                 default:
-                    Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32ISRDelayCNT, xeXavier_T6_Job.tp6START);
+                    priTASK = xeXavier_T6_Job.tp6START;
                     break;
             }
 
