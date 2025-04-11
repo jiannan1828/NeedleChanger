@@ -2610,6 +2610,17 @@ namespace InjectorInspector
             //先跳到第2頁
             int iAimToPageIndex = 4-1;
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
+
+            //InitSpeed Num Block
+            SpeedNozzleX.Value  = (int)dbInsertSpeedNozzleX;
+            SpeedNozzleY.Value  = (int)dbInsertSpeedNozzleY;
+            SpeedNozzleZ.Value  = (int)dbInsertSpeedNozzleZ;
+            SpeedNozzleR.Value  = (int)dbInsertSpeedNozzleR;
+            SpeedCarriorX.Value = (int)dbInsertSpeedCarrierX;
+            SpeedCarriorY.Value = (int)dbInsertSpeedCarrierY;
+            SpeedSetZ.Value     = (int)dbInsertSpeedSetZ;
+            SpeedSetR.Value     = (int)dbInsertSpeedSetR;
+
         }
         //---------------------------------------------------------------------------------------
         public void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -2954,6 +2965,29 @@ namespace InjectorInspector
                 }
             }  // end of if (SelectLabel != null) {
         }  // end of public void lbl_SetIO_Click(object sender, EventArgs e)
+        //---------------------------------------------------------------------------------------
+        private void Speed_ValueChanged(object sender, EventArgs e)
+        {
+            System.Windows.Forms.NumericUpDown vluChg = sender as System.Windows.Forms.NumericUpDown;
+
+                   if(vluChg == SpeedNozzleX) {
+                dbInsertSpeedNozzleX = (double)SpeedNozzleX.Value;
+            } else if(vluChg == SpeedNozzleY) {
+                dbInsertSpeedNozzleY = (double)SpeedNozzleY.Value;
+            } else if(vluChg == SpeedNozzleZ) {
+                dbInsertSpeedNozzleZ = (double)SpeedNozzleZ.Value;
+            } else if(vluChg == SpeedNozzleR) {
+                dbInsertSpeedNozzleR = (double)SpeedNozzleR.Value;
+            } else if(vluChg == SpeedCarriorX) {
+                dbInsertSpeedCarrierX = (double)SpeedCarriorX.Value;
+            } else if(vluChg == SpeedCarriorY) {
+                dbInsertSpeedCarrierY = (double)SpeedCarriorY.Value;
+            } else if(vluChg == SpeedSetZ) {
+                dbInsertSpeedSetZ = (double)SpeedSetZ.Value;
+            } else if(vluChg == SpeedSetR) {
+                dbInsertSpeedSetR = (double)SpeedSetR.Value;
+            }
+        }
         //---------------------------------------------------------------------------------------
         public void btn_adjust_JOG(object sender, EventArgs e)
         {  // start of public void btn_adjust_JOG(object sender, EventArgs e)

@@ -144,6 +144,22 @@ namespace InjectorInspector
             this.tsmi_CloseFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miniToolStrip = new System.Windows.Forms.MenuStrip();
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.SpdSetR = new System.Windows.Forms.Label();
+            this.SpdSetZ = new System.Windows.Forms.Label();
+            this.SpdCarY = new System.Windows.Forms.Label();
+            this.SpdCarX = new System.Windows.Forms.Label();
+            this.SpeedSetR = new System.Windows.Forms.NumericUpDown();
+            this.SpeedSetZ = new System.Windows.Forms.NumericUpDown();
+            this.SpeedCarriorY = new System.Windows.Forms.NumericUpDown();
+            this.SpeedCarriorX = new System.Windows.Forms.NumericUpDown();
+            this.SpdNozR = new System.Windows.Forms.Label();
+            this.SpdNozZ = new System.Windows.Forms.Label();
+            this.SpdNozY = new System.Windows.Forms.Label();
+            this.SpdNozX = new System.Windows.Forms.Label();
+            this.SpeedNozzleR = new System.Windows.Forms.NumericUpDown();
+            this.SpeedNozzleZ = new System.Windows.Forms.NumericUpDown();
+            this.SpeedNozzleY = new System.Windows.Forms.NumericUpDown();
+            this.SpeedNozzleX = new System.Windows.Forms.NumericUpDown();
             this.lbldbg_Task6_Info = new System.Windows.Forms.Label();
             this.lbldbg_Task5_Info = new System.Windows.Forms.Label();
             this.lbldbg_Task4_Info = new System.Windows.Forms.Label();
@@ -500,6 +516,14 @@ namespace InjectorInspector
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.ms_Viewer.SuspendLayout();
             this.tabJob.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedSetR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedSetZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedCarriorY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedCarriorX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedNozzleR)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedNozzleZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedNozzleY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedNozzleX)).BeginInit();
             this.FlowTask_Debug.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -1714,6 +1738,22 @@ namespace InjectorInspector
             // 
             // tabJob
             // 
+            this.tabJob.Controls.Add(this.SpdSetR);
+            this.tabJob.Controls.Add(this.SpdSetZ);
+            this.tabJob.Controls.Add(this.SpdCarY);
+            this.tabJob.Controls.Add(this.SpdCarX);
+            this.tabJob.Controls.Add(this.SpeedSetR);
+            this.tabJob.Controls.Add(this.SpeedSetZ);
+            this.tabJob.Controls.Add(this.SpeedCarriorY);
+            this.tabJob.Controls.Add(this.SpeedCarriorX);
+            this.tabJob.Controls.Add(this.SpdNozR);
+            this.tabJob.Controls.Add(this.SpdNozZ);
+            this.tabJob.Controls.Add(this.SpdNozY);
+            this.tabJob.Controls.Add(this.SpdNozX);
+            this.tabJob.Controls.Add(this.SpeedNozzleR);
+            this.tabJob.Controls.Add(this.SpeedNozzleZ);
+            this.tabJob.Controls.Add(this.SpeedNozzleY);
+            this.tabJob.Controls.Add(this.SpeedNozzleX);
             this.tabJob.Controls.Add(this.lbldbg_Task6_Info);
             this.tabJob.Controls.Add(this.lbldbg_Task5_Info);
             this.tabJob.Controls.Add(this.lbldbg_Task4_Info);
@@ -1882,6 +1922,262 @@ namespace InjectorInspector
             this.tabJob.TabIndex = 2;
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
+            // 
+            // SpdSetR
+            // 
+            this.SpdSetR.AutoSize = true;
+            this.SpdSetR.Location = new System.Drawing.Point(960, 401);
+            this.SpdSetR.Name = "SpdSetR";
+            this.SpdSetR.Size = new System.Drawing.Size(72, 19);
+            this.SpdSetR.TabIndex = 257;
+            this.SpdSetR.Text = "SpdSetR";
+            // 
+            // SpdSetZ
+            // 
+            this.SpdSetZ.AutoSize = true;
+            this.SpdSetZ.Location = new System.Drawing.Point(960, 369);
+            this.SpdSetZ.Name = "SpdSetZ";
+            this.SpdSetZ.Size = new System.Drawing.Size(71, 19);
+            this.SpdSetZ.TabIndex = 256;
+            this.SpdSetZ.Text = "SpdSetZ";
+            // 
+            // SpdCarY
+            // 
+            this.SpdCarY.AutoSize = true;
+            this.SpdCarY.Location = new System.Drawing.Point(960, 336);
+            this.SpdCarY.Name = "SpdCarY";
+            this.SpdCarY.Size = new System.Drawing.Size(76, 19);
+            this.SpdCarY.TabIndex = 255;
+            this.SpdCarY.Text = "SpdCarY";
+            // 
+            // SpdCarX
+            // 
+            this.SpdCarX.AutoSize = true;
+            this.SpdCarX.Location = new System.Drawing.Point(960, 303);
+            this.SpdCarX.Name = "SpdCarX";
+            this.SpdCarX.Size = new System.Drawing.Size(76, 19);
+            this.SpdCarX.TabIndex = 254;
+            this.SpdCarX.Text = "SpdCarX";
+            // 
+            // SpeedSetR
+            // 
+            this.SpeedSetR.Location = new System.Drawing.Point(1042, 395);
+            this.SpeedSetR.Maximum = new decimal(new int[] {
+            36000,
+            0,
+            0,
+            0});
+            this.SpeedSetR.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedSetR.Name = "SpeedSetR";
+            this.SpeedSetR.Size = new System.Drawing.Size(120, 30);
+            this.SpeedSetR.TabIndex = 253;
+            this.SpeedSetR.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedSetR.ValueChanged += new System.EventHandler(this.Speed_ValueChanged);
+            // 
+            // SpeedSetZ
+            // 
+            this.SpeedSetZ.Location = new System.Drawing.Point(1042, 363);
+            this.SpeedSetZ.Maximum = new decimal(new int[] {
+            3300,
+            0,
+            0,
+            0});
+            this.SpeedSetZ.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedSetZ.Name = "SpeedSetZ";
+            this.SpeedSetZ.Size = new System.Drawing.Size(120, 30);
+            this.SpeedSetZ.TabIndex = 252;
+            this.SpeedSetZ.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedSetZ.ValueChanged += new System.EventHandler(this.Speed_ValueChanged);
+            // 
+            // SpeedCarriorY
+            // 
+            this.SpeedCarriorY.Location = new System.Drawing.Point(1042, 330);
+            this.SpeedCarriorY.Maximum = new decimal(new int[] {
+            80000,
+            0,
+            0,
+            0});
+            this.SpeedCarriorY.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedCarriorY.Name = "SpeedCarriorY";
+            this.SpeedCarriorY.Size = new System.Drawing.Size(120, 30);
+            this.SpeedCarriorY.TabIndex = 251;
+            this.SpeedCarriorY.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedCarriorY.ValueChanged += new System.EventHandler(this.Speed_ValueChanged);
+            // 
+            // SpeedCarriorX
+            // 
+            this.SpeedCarriorX.Location = new System.Drawing.Point(1042, 297);
+            this.SpeedCarriorX.Maximum = new decimal(new int[] {
+            19000,
+            0,
+            0,
+            0});
+            this.SpeedCarriorX.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedCarriorX.Name = "SpeedCarriorX";
+            this.SpeedCarriorX.Size = new System.Drawing.Size(120, 30);
+            this.SpeedCarriorX.TabIndex = 250;
+            this.SpeedCarriorX.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedCarriorX.ValueChanged += new System.EventHandler(this.Speed_ValueChanged);
+            // 
+            // SpdNozR
+            // 
+            this.SpdNozR.AutoSize = true;
+            this.SpdNozR.Location = new System.Drawing.Point(743, 401);
+            this.SpdNozR.Name = "SpdNozR";
+            this.SpdNozR.Size = new System.Drawing.Size(79, 19);
+            this.SpdNozR.TabIndex = 249;
+            this.SpdNozR.Text = "SpdNozR";
+            // 
+            // SpdNozZ
+            // 
+            this.SpdNozZ.AutoSize = true;
+            this.SpdNozZ.Location = new System.Drawing.Point(743, 369);
+            this.SpdNozZ.Name = "SpdNozZ";
+            this.SpdNozZ.Size = new System.Drawing.Size(78, 19);
+            this.SpdNozZ.TabIndex = 248;
+            this.SpdNozZ.Text = "SpdNozZ";
+            // 
+            // SpdNozY
+            // 
+            this.SpdNozY.AutoSize = true;
+            this.SpdNozY.Location = new System.Drawing.Point(743, 336);
+            this.SpdNozY.Name = "SpdNozY";
+            this.SpdNozY.Size = new System.Drawing.Size(80, 19);
+            this.SpdNozY.TabIndex = 247;
+            this.SpdNozY.Text = "SpdNozY";
+            // 
+            // SpdNozX
+            // 
+            this.SpdNozX.AutoSize = true;
+            this.SpdNozX.Location = new System.Drawing.Point(743, 303);
+            this.SpdNozX.Name = "SpdNozX";
+            this.SpdNozX.Size = new System.Drawing.Size(80, 19);
+            this.SpdNozX.TabIndex = 246;
+            this.SpdNozX.Text = "SpdNozX";
+            // 
+            // SpeedNozzleR
+            // 
+            this.SpeedNozzleR.Location = new System.Drawing.Point(825, 395);
+            this.SpeedNozzleR.Maximum = new decimal(new int[] {
+            36000,
+            0,
+            0,
+            0});
+            this.SpeedNozzleR.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedNozzleR.Name = "SpeedNozzleR";
+            this.SpeedNozzleR.Size = new System.Drawing.Size(120, 30);
+            this.SpeedNozzleR.TabIndex = 245;
+            this.SpeedNozzleR.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedNozzleR.ValueChanged += new System.EventHandler(this.Speed_ValueChanged);
+            // 
+            // SpeedNozzleZ
+            // 
+            this.SpeedNozzleZ.Location = new System.Drawing.Point(825, 363);
+            this.SpeedNozzleZ.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.SpeedNozzleZ.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedNozzleZ.Name = "SpeedNozzleZ";
+            this.SpeedNozzleZ.Size = new System.Drawing.Size(120, 30);
+            this.SpeedNozzleZ.TabIndex = 244;
+            this.SpeedNozzleZ.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedNozzleZ.ValueChanged += new System.EventHandler(this.Speed_ValueChanged);
+            // 
+            // SpeedNozzleY
+            // 
+            this.SpeedNozzleY.Location = new System.Drawing.Point(825, 330);
+            this.SpeedNozzleY.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.SpeedNozzleY.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedNozzleY.Name = "SpeedNozzleY";
+            this.SpeedNozzleY.Size = new System.Drawing.Size(120, 30);
+            this.SpeedNozzleY.TabIndex = 243;
+            this.SpeedNozzleY.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedNozzleY.ValueChanged += new System.EventHandler(this.Speed_ValueChanged);
+            // 
+            // SpeedNozzleX
+            // 
+            this.SpeedNozzleX.Location = new System.Drawing.Point(825, 297);
+            this.SpeedNozzleX.Maximum = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
+            this.SpeedNozzleX.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedNozzleX.Name = "SpeedNozzleX";
+            this.SpeedNozzleX.Size = new System.Drawing.Size(120, 30);
+            this.SpeedNozzleX.TabIndex = 242;
+            this.SpeedNozzleX.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            65536});
+            this.SpeedNozzleX.ValueChanged += new System.EventHandler(this.Speed_ValueChanged);
             // 
             // lbldbg_Task6_Info
             // 
@@ -5532,6 +5828,14 @@ namespace InjectorInspector
             this.ms_Viewer.PerformLayout();
             this.tabJob.ResumeLayout(false);
             this.tabJob.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedSetR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedSetZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedCarriorY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedCarriorX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedNozzleR)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedNozzleZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedNozzleY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SpeedNozzleX)).EndInit();
             this.FlowTask_Debug.ResumeLayout(false);
             this.FlowTask_Debug.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -6055,6 +6359,22 @@ namespace InjectorInspector
         private Timer tmr_植針嘴;
         private Timer tmr_載盤;
         private Timer tmr_電動缸;
+        private NumericUpDown SpeedNozzleX;
+        private NumericUpDown SpeedNozzleR;
+        private NumericUpDown SpeedNozzleZ;
+        private NumericUpDown SpeedNozzleY;
+        private Label SpdNozX;
+        private Label SpdSetR;
+        private Label SpdSetZ;
+        private Label SpdCarY;
+        private Label SpdCarX;
+        private NumericUpDown SpeedSetR;
+        private NumericUpDown SpeedSetZ;
+        private NumericUpDown SpeedCarriorY;
+        private NumericUpDown SpeedCarriorX;
+        private Label SpdNozR;
+        private Label SpdNozZ;
+        private Label SpdNozY;
     }
 }
 
