@@ -6688,9 +6688,10 @@ namespace InjectorInspector
                 xeXI_事件_暫停,
                 xeXI_事件_異常,
         }
-        xeXavier_Indicator xeXI_Status = xeXavier_Indicator.xeXI_狀態_停止;
-        xeXavier_Indicator xeXI_Event  = xeXavier_Indicator.xeXI_事件_空;
-        bool apiIndicator_InternalBTN = false;
+        xeXavier_Indicator xeXI_Status   = xeXavier_Indicator.xeXI_狀態_停止;
+        xeXavier_Indicator xeXI_Event    = xeXavier_Indicator.xeXI_事件_空;
+        bool apiIndicator_InternalBTN    = false;
+        xeXavier_Indicator xeXI_SaveRslt = xeXavier_Indicator.xeXI_狀態_停止;
 
         public xeXavier_Indicator apiGetMachineAction() {
             xeXavier_Indicator rslt_event = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
@@ -6786,38 +6787,56 @@ namespace InjectorInspector
                     if(rslt_event == xeXavier_Indicator.xeXI_事件_空) {
                         rslt_event = apiIndicator(xeXavier_Indicator.xeXI_讀_狀態);
                     }
-                    switch(rslt_event) {
-                        case xeXavier_Indicator.xeXI_狀態_運行: 
-                            digitalWrite((int)WMX3IO對照.pxeIO_面板左按鈕紅燈, LOW);
-                            digitalWrite((int)WMX3IO對照.pxeIO_面板中按鈕綠燈, HIGH);
-                            digitalWrite((int)WMX3IO對照.pxeIO_面板右按鈕綠燈, LOW);
-                            eWIndicatorSpeed = eWarningSpeed.xeeWS_狀態_運行;
-                            break;
-                        case xeXavier_Indicator.xeXI_狀態_停止:
-                            digitalWrite((int)WMX3IO對照.pxeIO_面板左按鈕紅燈, HIGH);
-                            digitalWrite((int)WMX3IO對照.pxeIO_面板中按鈕綠燈, LOW);
-                            digitalWrite((int)WMX3IO對照.pxeIO_面板右按鈕綠燈, LOW);
+                    if(xeXI_SaveRslt != rslt_event) {
+                        xeXI_SaveRslt = rslt_event;
+                        switch (xeXI_SaveRslt) {
+                            case xeXavier_Indicator.xeXI_狀態_運行: 
+                                digitalWrite((int)WMX3IO對照.pxeIO_面板左按鈕紅燈, LOW);
+                                digitalWrite((int)WMX3IO對照.pxeIO_面板中按鈕綠燈, HIGH);
+                                digitalWrite((int)WMX3IO對照.pxeIO_面板右按鈕綠燈, LOW);
 
-                            //停止buzzer叫聲
-                            digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, LOW);
+                                //艙內燈關閉
+                                digitalWrite((int)WMX3IO對照.pxeIO_LIGHT, HIGH);
 
-                            eWIndicatorSpeed = eWarningSpeed.xeeWS_狀態_停止;
-                            break;
-                        case xeXavier_Indicator.xeXI_狀態_急停:    
-                            digitalWrite((int)WMX3IO對照.pxeIO_面板左按鈕紅燈, LOW);
-                            digitalWrite((int)WMX3IO對照.pxeIO_面板中按鈕綠燈, LOW);
-                            digitalWrite((int)WMX3IO對照.pxeIO_面板右按鈕綠燈, LOW);
-                            eWIndicatorSpeed = eWarningSpeed.xeeWS_狀態_急停;
-                            break;
+                                eWIndicatorSpeed = eWarningSpeed.xeeWS_狀態_運行;
+                                break;
+                            case xeXavier_Indicator.xeXI_狀態_停止:
+                                digitalWrite((int)WMX3IO對照.pxeIO_面板左按鈕紅燈, HIGH);
+                                digitalWrite((int)WMX3IO對照.pxeIO_面板中按鈕綠燈, LOW);
+                                digitalWrite((int)WMX3IO對照.pxeIO_面板右按鈕綠燈, LOW);
 
-                        case xeXavier_Indicator.xeXI_事件_復歸:    
-                            digitalWrite((int)WMX3IO對照.pxeIO_面板左按鈕紅燈, LOW);
-                            digitalWrite((int)WMX3IO對照.pxeIO_面板中按鈕綠燈, LOW);
-                            digitalWrite((int)WMX3IO對照.pxeIO_面板右按鈕綠燈, HIGH);
-                            eWIndicatorSpeed = eWarningSpeed.xeeWS_事件_復歸;
-                            break;
-                        case xeXavier_Indicator.xeXI_事件_暫停:    break;
-                        case xeXavier_Indicator.xeXI_事件_異常:    break;
+                                //艙內燈打開
+                                digitalWrite((int)WMX3IO對照.pxeIO_LIGHT, LOW);
+
+                                //停止buzzer叫聲
+                                digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, LOW);
+
+                                eWIndicatorSpeed = eWarningSpeed.xeeWS_狀態_停止;
+                                break;
+                            case xeXavier_Indicator.xeXI_狀態_急停:    
+                                digitalWrite((int)WMX3IO對照.pxeIO_面板左按鈕紅燈, LOW);
+                                digitalWrite((int)WMX3IO對照.pxeIO_面板中按鈕綠燈, LOW);
+                                digitalWrite((int)WMX3IO對照.pxeIO_面板右按鈕綠燈, LOW);
+
+                                //艙內燈打開
+                                digitalWrite((int)WMX3IO對照.pxeIO_LIGHT, LOW);
+
+                                eWIndicatorSpeed = eWarningSpeed.xeeWS_狀態_急停;
+                                break;
+
+                            case xeXavier_Indicator.xeXI_事件_復歸:    
+                                digitalWrite((int)WMX3IO對照.pxeIO_面板左按鈕紅燈, LOW);
+                                digitalWrite((int)WMX3IO對照.pxeIO_面板中按鈕綠燈, LOW);
+                                digitalWrite((int)WMX3IO對照.pxeIO_面板右按鈕綠燈, HIGH);
+
+                                //艙內燈打開
+                                digitalWrite((int)WMX3IO對照.pxeIO_LIGHT, LOW);
+
+                                eWIndicatorSpeed = eWarningSpeed.xeeWS_事件_復歸;
+                                break;
+                            case xeXavier_Indicator.xeXI_事件_暫停:    break;
+                            case xeXavier_Indicator.xeXI_事件_異常:    break;
+                        }
                     }
                 } apiIndicator_InternalBTN = false;
             }  // end of if(apiIndicator_InternalBTN == false) { 
@@ -8252,22 +8271,35 @@ namespace InjectorInspector
                                 if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                     (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
 
-                                    { 
-                                        int rslt = 0;
-                                        int axis = 0;
-                                        string position = "";
-                                        string speed    = "";
+                                    //NozzleZ to Home
+                                    {
+                                        { 
+                                            int rslt = 0;
+                                            int axis = 0;
+                                            string position = "";
+                                            string speed    = "";
 
-                                        axis = (int)WMX3軸定義.吸嘴R軸;
-                                        rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-                                        if (rslt == 1) {
-                                            clsServoControlWMX3.WMX3_SetHomePosition(axis);                                 
+                                            axis = (int)WMX3軸定義.吸嘴R軸;
+                                            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
+                                            if (rslt == 1) {
+                                                clsServoControlWMX3.WMX3_SetHomePosition(axis);                                 
+                                            }
                                         }
-                                    }
-                                    dbapiNozzleR_defaultSpeed(dbNozzleR_Home位);
+                                        dbapiNozzleR_defaultSpeed(dbNozzleR_Home位);
 
-                                    en_吸嘴Z軸.Checked = true;
-                                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, true);
+                                        en_吸嘴Z軸.Checked = true;
+                                        clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, true);
+                                    }
+
+                                    //排料前準備
+                                    {
+                                        //吸嘴吸真空關閉
+                                        digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴吸, LOW);
+
+                                        //流量閥開啟
+                                        vcb_吸嘴破真空流量閥.Value = 100-100;
+                                        vcb流量閥_Scroll(vcb_吸嘴破真空流量閥, null);
+                                    }
 
                                     Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_吸嘴Z回home);
                                 } else { 
@@ -8281,18 +8313,25 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Home_吸嘴Z回home:
                         {
-                            int rslt = 0;
-                            int axis = 0;
-                            string position = "";
-                            string speed    = "";
+                            //NozzleZ Home 作業
+                            {
+                                int rslt = 0;
+                                int axis = 0;
+                                string position = "";
+                                string speed    = "";
 
-                            axis = (int)WMX3軸定義.吸嘴Z軸;
-                            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-                            if (rslt == 1) {
-                                clsServoControlWMX3.WMX3_SetHomePosition(axis);                                 
+                                axis = (int)WMX3軸定義.吸嘴Z軸;
+                                rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
+                                if (rslt == 1) {
+                                    clsServoControlWMX3.WMX3_SetHomePosition(axis);                                 
+                                }
                             }
+
+                            //吸嘴破真空開啟
+                            digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, HIGH);
+
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_告知吸嘴軸組已回home完畢);
                         }
-                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_告知吸嘴軸組已回home完畢);
                         Xavier_Task2_Debugprintf("tp2Home_吸嘴Z回home\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Home_告知吸嘴軸組已回home完畢:
@@ -8300,6 +8339,13 @@ namespace InjectorInspector
                             btp2Home_告知吸嘴軸組已回home完畢 = true;
 
                             if(btp6Home_告知系統回home完畢 == true) { 
+                                //流量閥關閉
+                                vcb_吸嘴破真空流量閥.Value = 100-0;
+                                vcb流量閥_Scroll(vcb_吸嘴破真空流量閥, null);
+
+                                //吸嘴破真空關閉
+                                digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, LOW);
+
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2START);
                             } else { 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_告知吸嘴軸組已回home完畢);
