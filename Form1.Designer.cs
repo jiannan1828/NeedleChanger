@@ -144,23 +144,23 @@ namespace InjectorInspector
             this.tsmi_CloseFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miniToolStrip = new System.Windows.Forms.MenuStrip();
             this.tabJob = new System.Windows.Forms.TabPage();
+            this.lbldbg_Task6_Info = new System.Windows.Forms.Label();
+            this.lbldbg_Task5_Info = new System.Windows.Forms.Label();
+            this.lbldbg_Task4_Info = new System.Windows.Forms.Label();
+            this.lbldbg_Task3_Info = new System.Windows.Forms.Label();
+            this.lbldbg_Task2_Info = new System.Windows.Forms.Label();
             this.FlowTask_Debug = new System.Windows.Forms.GroupBox();
             this.lbldbg_Task_Info = new System.Windows.Forms.Label();
             this.lbldbg_Task_ID = new System.Windows.Forms.Label();
             this.lbldbg_Task_Title = new System.Windows.Forms.Label();
-            this.lbldbg_Task6_Info = new System.Windows.Forms.Label();
             this.lbldbg_Task6_ID = new System.Windows.Forms.Label();
             this.lbldbg_Task6_Title = new System.Windows.Forms.Label();
-            this.lbldbg_Task5_Info = new System.Windows.Forms.Label();
             this.lbldbg_Task5_ID = new System.Windows.Forms.Label();
             this.lbldbg_Task5_Title = new System.Windows.Forms.Label();
-            this.lbldbg_Task4_Info = new System.Windows.Forms.Label();
             this.lbldbg_Task4_ID = new System.Windows.Forms.Label();
             this.lbldbg_Task4_Title = new System.Windows.Forms.Label();
-            this.lbldbg_Task3_Info = new System.Windows.Forms.Label();
             this.lbldbg_Task3_ID = new System.Windows.Forms.Label();
             this.lbldbg_Task3_Title = new System.Windows.Forms.Label();
-            this.lbldbg_Task2_Info = new System.Windows.Forms.Label();
             this.lbldbg_Task2_ID = new System.Windows.Forms.Label();
             this.lbldbg_Task2_Title = new System.Windows.Forms.Label();
             this.lbldbg_Task1_Info = new System.Windows.Forms.Label();
@@ -476,7 +476,12 @@ namespace InjectorInspector
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tmr_TaskFlow = new System.Windows.Forms.Timer(this.components);
+            this.tmr_燈號 = new System.Windows.Forms.Timer(this.components);
+            this.tmr_檔案 = new System.Windows.Forms.Timer(this.components);
+            this.tmr_吸針嘴 = new System.Windows.Forms.Timer(this.components);
+            this.tmr_植針嘴 = new System.Windows.Forms.Timer(this.components);
+            this.tmr_載盤 = new System.Windows.Forms.Timer(this.components);
+            this.tmr_電動缸 = new System.Windows.Forms.Timer(this.components);
             this.cms_pic_Needles.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.grp_NeedleInfo.SuspendLayout();
@@ -1709,6 +1714,11 @@ namespace InjectorInspector
             // 
             // tabJob
             // 
+            this.tabJob.Controls.Add(this.lbldbg_Task6_Info);
+            this.tabJob.Controls.Add(this.lbldbg_Task5_Info);
+            this.tabJob.Controls.Add(this.lbldbg_Task4_Info);
+            this.tabJob.Controls.Add(this.lbldbg_Task3_Info);
+            this.tabJob.Controls.Add(this.lbldbg_Task2_Info);
             this.tabJob.Controls.Add(this.FlowTask_Debug);
             this.tabJob.Controls.Add(this.btn_minus);
             this.tabJob.Controls.Add(this.btn_plus);
@@ -1873,24 +1883,69 @@ namespace InjectorInspector
             this.tabJob.Text = "tabJob";
             this.tabJob.UseVisualStyleBackColor = true;
             // 
+            // lbldbg_Task6_Info
+            // 
+            this.lbldbg_Task6_Info.AutoSize = true;
+            this.lbldbg_Task6_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task6_Info.Location = new System.Drawing.Point(386, 186);
+            this.lbldbg_Task6_Info.Name = "lbldbg_Task6_Info";
+            this.lbldbg_Task6_Info.Size = new System.Drawing.Size(98, 13);
+            this.lbldbg_Task6_Info.TabIndex = 241;
+            this.lbldbg_Task6_Info.Text = "lbldbg_Task6_Info";
+            // 
+            // lbldbg_Task5_Info
+            // 
+            this.lbldbg_Task5_Info.AutoSize = true;
+            this.lbldbg_Task5_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task5_Info.Location = new System.Drawing.Point(386, 166);
+            this.lbldbg_Task5_Info.Name = "lbldbg_Task5_Info";
+            this.lbldbg_Task5_Info.Size = new System.Drawing.Size(98, 13);
+            this.lbldbg_Task5_Info.TabIndex = 240;
+            this.lbldbg_Task5_Info.Text = "lbldbg_Task5_Info";
+            // 
+            // lbldbg_Task4_Info
+            // 
+            this.lbldbg_Task4_Info.AutoSize = true;
+            this.lbldbg_Task4_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task4_Info.Location = new System.Drawing.Point(386, 146);
+            this.lbldbg_Task4_Info.Name = "lbldbg_Task4_Info";
+            this.lbldbg_Task4_Info.Size = new System.Drawing.Size(98, 13);
+            this.lbldbg_Task4_Info.TabIndex = 239;
+            this.lbldbg_Task4_Info.Text = "lbldbg_Task4_Info";
+            // 
+            // lbldbg_Task3_Info
+            // 
+            this.lbldbg_Task3_Info.AutoSize = true;
+            this.lbldbg_Task3_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task3_Info.Location = new System.Drawing.Point(386, 126);
+            this.lbldbg_Task3_Info.Name = "lbldbg_Task3_Info";
+            this.lbldbg_Task3_Info.Size = new System.Drawing.Size(98, 13);
+            this.lbldbg_Task3_Info.TabIndex = 238;
+            this.lbldbg_Task3_Info.Text = "lbldbg_Task3_Info";
+            // 
+            // lbldbg_Task2_Info
+            // 
+            this.lbldbg_Task2_Info.AutoSize = true;
+            this.lbldbg_Task2_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.lbldbg_Task2_Info.Location = new System.Drawing.Point(386, 106);
+            this.lbldbg_Task2_Info.Name = "lbldbg_Task2_Info";
+            this.lbldbg_Task2_Info.Size = new System.Drawing.Size(98, 13);
+            this.lbldbg_Task2_Info.TabIndex = 237;
+            this.lbldbg_Task2_Info.Text = "lbldbg_Task2_Info";
+            // 
             // FlowTask_Debug
             // 
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task_Info);
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task_ID);
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task_Title);
-            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task6_Info);
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task6_ID);
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task6_Title);
-            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task5_Info);
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task5_ID);
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task5_Title);
-            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task4_Info);
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task4_ID);
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task4_Title);
-            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task3_Info);
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task3_ID);
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task3_Title);
-            this.FlowTask_Debug.Controls.Add(this.lbldbg_Task2_Info);
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task2_ID);
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task2_Title);
             this.FlowTask_Debug.Controls.Add(this.lbldbg_Task1_Info);
@@ -1933,16 +1988,6 @@ namespace InjectorInspector
             this.lbldbg_Task_Title.TabIndex = 179;
             this.lbldbg_Task_Title.Text = "lbldbg_Task_Title";
             // 
-            // lbldbg_Task6_Info
-            // 
-            this.lbldbg_Task6_Info.AutoSize = true;
-            this.lbldbg_Task6_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbldbg_Task6_Info.Location = new System.Drawing.Point(915, 55);
-            this.lbldbg_Task6_Info.Name = "lbldbg_Task6_Info";
-            this.lbldbg_Task6_Info.Size = new System.Drawing.Size(98, 13);
-            this.lbldbg_Task6_Info.TabIndex = 178;
-            this.lbldbg_Task6_Info.Text = "lbldbg_Task6_Info";
-            // 
             // lbldbg_Task6_ID
             // 
             this.lbldbg_Task6_ID.AutoSize = true;
@@ -1962,16 +2007,6 @@ namespace InjectorInspector
             this.lbldbg_Task6_Title.Size = new System.Drawing.Size(99, 13);
             this.lbldbg_Task6_Title.TabIndex = 176;
             this.lbldbg_Task6_Title.Text = "lbldbg_Task6_Title";
-            // 
-            // lbldbg_Task5_Info
-            // 
-            this.lbldbg_Task5_Info.AutoSize = true;
-            this.lbldbg_Task5_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbldbg_Task5_Info.Location = new System.Drawing.Point(765, 55);
-            this.lbldbg_Task5_Info.Name = "lbldbg_Task5_Info";
-            this.lbldbg_Task5_Info.Size = new System.Drawing.Size(98, 13);
-            this.lbldbg_Task5_Info.TabIndex = 175;
-            this.lbldbg_Task5_Info.Text = "lbldbg_Task5_Info";
             // 
             // lbldbg_Task5_ID
             // 
@@ -1993,16 +2028,6 @@ namespace InjectorInspector
             this.lbldbg_Task5_Title.TabIndex = 173;
             this.lbldbg_Task5_Title.Text = "lbldbg_Task5_Title";
             // 
-            // lbldbg_Task4_Info
-            // 
-            this.lbldbg_Task4_Info.AutoSize = true;
-            this.lbldbg_Task4_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbldbg_Task4_Info.Location = new System.Drawing.Point(615, 55);
-            this.lbldbg_Task4_Info.Name = "lbldbg_Task4_Info";
-            this.lbldbg_Task4_Info.Size = new System.Drawing.Size(98, 13);
-            this.lbldbg_Task4_Info.TabIndex = 172;
-            this.lbldbg_Task4_Info.Text = "lbldbg_Task4_Info";
-            // 
             // lbldbg_Task4_ID
             // 
             this.lbldbg_Task4_ID.AutoSize = true;
@@ -2023,16 +2048,6 @@ namespace InjectorInspector
             this.lbldbg_Task4_Title.TabIndex = 170;
             this.lbldbg_Task4_Title.Text = "lbldbg_Task4_Title";
             // 
-            // lbldbg_Task3_Info
-            // 
-            this.lbldbg_Task3_Info.AutoSize = true;
-            this.lbldbg_Task3_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbldbg_Task3_Info.Location = new System.Drawing.Point(465, 55);
-            this.lbldbg_Task3_Info.Name = "lbldbg_Task3_Info";
-            this.lbldbg_Task3_Info.Size = new System.Drawing.Size(98, 13);
-            this.lbldbg_Task3_Info.TabIndex = 169;
-            this.lbldbg_Task3_Info.Text = "lbldbg_Task3_Info";
-            // 
             // lbldbg_Task3_ID
             // 
             this.lbldbg_Task3_ID.AutoSize = true;
@@ -2052,16 +2067,6 @@ namespace InjectorInspector
             this.lbldbg_Task3_Title.Size = new System.Drawing.Size(99, 13);
             this.lbldbg_Task3_Title.TabIndex = 167;
             this.lbldbg_Task3_Title.Text = "lbldbg_Task3_Title";
-            // 
-            // lbldbg_Task2_Info
-            // 
-            this.lbldbg_Task2_Info.AutoSize = true;
-            this.lbldbg_Task2_Info.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.lbldbg_Task2_Info.Location = new System.Drawing.Point(315, 55);
-            this.lbldbg_Task2_Info.Name = "lbldbg_Task2_Info";
-            this.lbldbg_Task2_Info.Size = new System.Drawing.Size(98, 13);
-            this.lbldbg_Task2_Info.TabIndex = 166;
-            this.lbldbg_Task2_Info.Text = "lbldbg_Task2_Info";
             // 
             // lbldbg_Task2_ID
             // 
@@ -2231,7 +2236,7 @@ namespace InjectorInspector
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(703, 372);
+            this.button5.Location = new System.Drawing.Point(623, 371);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 220;
@@ -2240,7 +2245,7 @@ namespace InjectorInspector
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(703, 343);
+            this.button2.Location = new System.Drawing.Point(623, 342);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 219;
@@ -2330,7 +2335,7 @@ namespace InjectorInspector
             // lbl_debug
             // 
             this.lbl_debug.AutoSize = true;
-            this.lbl_debug.Location = new System.Drawing.Point(784, 354);
+            this.lbl_debug.Location = new System.Drawing.Point(704, 353);
             this.lbl_debug.Name = "lbl_debug";
             this.lbl_debug.Size = new System.Drawing.Size(81, 19);
             this.lbl_debug.TabIndex = 211;
@@ -5446,11 +5451,41 @@ namespace InjectorInspector
             this.tabControl1.Size = new System.Drawing.Size(1236, 825);
             this.tabControl1.TabIndex = 2;
             // 
-            // tmr_TaskFlow
+            // tmr_燈號
             // 
-            this.tmr_TaskFlow.Enabled = true;
-            this.tmr_TaskFlow.Interval = 10;
-            this.tmr_TaskFlow.Tick += new System.EventHandler(this.tmr_TaskFlow_Tick);
+            this.tmr_燈號.Enabled = true;
+            this.tmr_燈號.Interval = 10;
+            this.tmr_燈號.Tick += new System.EventHandler(this.tmr_燈號_Tick);
+            // 
+            // tmr_檔案
+            // 
+            this.tmr_檔案.Enabled = true;
+            this.tmr_檔案.Interval = 10;
+            this.tmr_檔案.Tick += new System.EventHandler(this.tmr_檔案_Tick);
+            // 
+            // tmr_吸針嘴
+            // 
+            this.tmr_吸針嘴.Enabled = true;
+            this.tmr_吸針嘴.Interval = 10;
+            this.tmr_吸針嘴.Tick += new System.EventHandler(this.tmr_吸針嘴_Tick);
+            // 
+            // tmr_植針嘴
+            // 
+            this.tmr_植針嘴.Enabled = true;
+            this.tmr_植針嘴.Interval = 10;
+            this.tmr_植針嘴.Tick += new System.EventHandler(this.tmr_植針嘴_Tick);
+            // 
+            // tmr_載盤
+            // 
+            this.tmr_載盤.Enabled = true;
+            this.tmr_載盤.Interval = 10;
+            this.tmr_載盤.Tick += new System.EventHandler(this.tmr_載盤_Tick);
+            // 
+            // tmr_電動缸
+            // 
+            this.tmr_電動缸.Enabled = true;
+            this.tmr_電動缸.Interval = 10;
+            this.tmr_電動缸.Tick += new System.EventHandler(this.tmr_電動缸_Tick);
             // 
             // Form1
             // 
@@ -5992,29 +6027,34 @@ namespace InjectorInspector
         public TabControl tabControl1;
         public Label label21;
         public Label lbl_讀取計數;
-        private Timer tmr_TaskFlow;
         private GroupBox FlowTask_Debug;
         public Label lbldbg_Task1_ID;
         public Label lbldbg_Task1_Title;
         public Label lbldbg_Task1_Info;
-        public Label lbldbg_Task2_Info;
         public Label lbldbg_Task2_ID;
         public Label lbldbg_Task2_Title;
-        public Label lbldbg_Task3_Info;
         public Label lbldbg_Task3_ID;
         public Label lbldbg_Task3_Title;
-        public Label lbldbg_Task6_Info;
         public Label lbldbg_Task6_ID;
         public Label lbldbg_Task6_Title;
-        public Label lbldbg_Task5_Info;
         public Label lbldbg_Task5_ID;
         public Label lbldbg_Task5_Title;
-        public Label lbldbg_Task4_Info;
         public Label lbldbg_Task4_ID;
         public Label lbldbg_Task4_Title;
         public Label lbldbg_Task_Info;
         public Label lbldbg_Task_ID;
         public Label lbldbg_Task_Title;
+        public Label lbldbg_Task2_Info;
+        public Label lbldbg_Task6_Info;
+        public Label lbldbg_Task5_Info;
+        public Label lbldbg_Task4_Info;
+        public Label lbldbg_Task3_Info;
+        private Timer tmr_燈號;
+        private Timer tmr_檔案;
+        private Timer tmr_吸針嘴;
+        private Timer tmr_植針嘴;
+        private Timer tmr_載盤;
+        private Timer tmr_電動缸;
     }
 }
 

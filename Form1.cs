@@ -564,7 +564,18 @@ namespace InjectorInspector
         public const bool LOW  = false;
         public const bool ON   = true;
         public const bool OFF  = false;
-        
+
+        //Servo EtherCAT
+        public double dbInsertSpeedNozzleX  = (500.0) * 0.1;
+        public double dbInsertSpeedNozzleY  = (100.0) * 0.1;
+        public double dbInsertSpeedNozzleZ  = ( 40.0) * 0.1;
+        public double dbInsertSpeedNozzleR  = (360.0) * 0.1;
+        public double dbInsertSpeedCarrierX = (190.0) * 0.1;
+        public double dbInsertSpeedCarrierY = (800.0) * 0.1;
+        public double dbInsertSpeedSetZ     = ( 33.0) * 0.1;
+        public double dbInsertSpeedSetR     = (360.0) * 0.1;
+        public double dbInsertSpeedGate     = (580.0) * 0.1;
+
         //---------------------------------------------------------------------------------------
 
         // 設定YASKAWA GPIO OUT
@@ -871,6 +882,10 @@ namespace InjectorInspector
             double dbDefaultSpeed = (500.0) * 0.1;
             return dbapiNozzleX(dbIncreaseNozzleX, dbDefaultSpeed);
         }
+        public double dbapiNozzleX_InsertSpeed(double dbIncreaseNozzleX)  //NozzleX
+        {
+            return dbapiNozzleX(dbIncreaseNozzleX, dbInsertSpeedNozzleX);
+        }
         public double dbapiNozzleX(double dbIncreaseNozzleX, double dbTargetSpeed)  //NozzleX
         {
             Normal calculate = new Normal();
@@ -998,6 +1013,10 @@ namespace InjectorInspector
             double dbDefaultSpeed = (100.0) * 0.1;
             return dbapiNozzleY(dbIncreaseNozzleY, dbDefaultSpeed);
         }
+        public double dbapiNozzleY_InsertSpeed(double dbIncreaseNozzleY)  //NozzleY
+        {
+            return dbapiNozzleY(dbIncreaseNozzleY, dbInsertSpeedNozzleY);
+        }
         public double dbapiNozzleY(double dbIncreaseNozzleY, double dbTargetSpeed)  //NozzleY
         {
             Normal calculate = new Normal();
@@ -1117,6 +1136,10 @@ namespace InjectorInspector
         {
             double dbDefaultSpeed = (40.0) * 0.1;
             return dbapiNozzleZ(dbIncreaseNozzleZ, dbDefaultSpeed);
+        }
+        public double dbapiNozzleZ_InsertSpeed(double dbIncreaseNozzleZ)  //NozzleZ
+        {
+            return dbapiNozzleZ(dbIncreaseNozzleZ, dbInsertSpeedNozzleZ);
         }
         public double dbapiNozzleZ(double dbIncreaseNozzleZ, double dbTargetSpeed)  //NozzleZ
         {
@@ -1238,6 +1261,10 @@ namespace InjectorInspector
         {
             double dbDefaultSpeed = (360.0) * 0.1;
             return dbapiNozzleR(dbIncreaseNozzleR, dbDefaultSpeed);
+        }
+        public double dbapiNozzleR_InsertSpeed(double dbIncreaseNozzleR)  //NozzleR
+        {
+            return dbapiNozzleR(dbIncreaseNozzleR, dbInsertSpeedNozzleR);
         }
         public double dbapiNozzleR(double dbIncreaseNozzleR, double dbTargetSpeed)  //NozzleR
         {
@@ -1365,6 +1392,10 @@ namespace InjectorInspector
             double dbDefaultSpeed = (190.0) * 0.1;
             return dbapiCarrierX(dbIncreaseCarrierX, dbDefaultSpeed);
         }
+        public double dbapiCarrierX_InsertSpeed(double dbIncreaseCarrierX)  //CarrierX
+        {
+            return dbapiCarrierX(dbIncreaseCarrierX, dbInsertSpeedCarrierX);
+        }
         public double dbapiCarrierX(double dbIncreaseCarrierX, double dbTargetSpeed)  //CarrierX
         {
             Normal calculate = new Normal();
@@ -1480,10 +1511,14 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public double dbTargetPositionCarrierY = 0.0;
         public const double dbCarrierY_Home位  = 10.0;
-        public double dbapiCarrierY_defaultSpeed(double dbIncreaseCarrierY)  //CarrierX
+        public double dbapiCarrierY_defaultSpeed(double dbIncreaseCarrierY)  //CarrierY
         {
             double dbDefaultSpeed = (800.0) * 0.1;
             return dbapiCarrierY(dbIncreaseCarrierY, dbDefaultSpeed);
+        }
+        public double dbapiCarrierY_InsertSpeed(double dbIncreaseCarrierY)  //CarrierY
+        {
+            return dbapiCarrierY(dbIncreaseCarrierY, dbInsertSpeedCarrierY);
         }
         public double dbapiCarrierY(double dbIncreaseCarrierY, double dbTargetSpeed)  //CarrierY
         {
@@ -1606,6 +1641,10 @@ namespace InjectorInspector
             double dbDefaultSpeed = (33.0) * 0.1;
             return dbapiSetZ(dbIncreaseSetZ, dbDefaultSpeed);
         }
+        public double dbapiSetZ_InsertSpeed(double dbIncreaseSetZ)  //SetZ
+        {
+            return dbapiSetZ(dbIncreaseSetZ, dbInsertSpeedSetZ);
+        }
         public double dbapiSetZ(double dbIncreaseSetZ, double dbTargetSpeed)  //SetZ
         {
             Normal calculate = new Normal();
@@ -1724,6 +1763,10 @@ namespace InjectorInspector
         {
             double dbDefaultSpeed = (360.0) * 0.1;
             return dbapiSetR(dbIncreaseSetR, dbDefaultSpeed);
+        }
+        public double dbapiSetR_InsertSpeed(double dbIncreaseSetR)  //SetR
+        {
+            return dbapiSetR(dbIncreaseSetR, dbInsertSpeedSetR);
         }
         public double dbapiSetR(double dbIncreaseSetR, double dbTargetSpeed)  //SetR
         {
@@ -1845,6 +1888,10 @@ namespace InjectorInspector
         {
             double dbDefaultSpeed = (580.0) * 0.1;
             return dbapiGate(dbIncreaseGate, dbDefaultSpeed);
+        }
+        public double dbapiGate_InsertSpeed(double dbIncreaseGate)  //Gate
+        {
+            return dbapiGate(dbIncreaseGate, dbInsertSpeedGate);
         }
         public double dbapiGate(double dbIncreaseGate, double dbTargetSpeed)  //Gate
         {
@@ -6655,17 +6702,184 @@ namespace InjectorInspector
             dbCameraCalibrationY = pos.Y;
         }
         //---------------------------------------------------------------------------------------
-        public void tmr_TaskFlow_Tick(object sender, EventArgs e)
-        {
+        private void tmr_燈號_Tick(object sender, EventArgs e) {
+            var tempBits = TaskISRFlag.bits;
+                if(tempBits.bit0 == true) {
+                    Xavier_TASK1();  //面板按鈕以及指示燈
+                } else 
+                if(tempBits.bit1 == true) {
+                    //Xavier_TASK2();  //吸嘴軸組
+                } else 
+                if(tempBits.bit2 == true) {
+                    //Xavier_TASK3();  //植針軸組
+                } else 
+                if(tempBits.bit3 == true) {
+                    //Xavier_TASK4();  //電動缸組_含抽針
+                } else 
+                if(tempBits.bit4 == true) {
+                    //Xavier_TASK5();  //載盤組
+                } else 
+                if(tempBits.bit5 == true) {
+                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
+                } else 
+                {
+                    Xavier_TASK1();  //面板按鈕以及指示燈
+                    //Xavier_TASK2();  //吸嘴軸組
+                    //Xavier_TASK3();  //植針軸組
+                    //Xavier_TASK4();  //電動缸組_含抽針
+                    //Xavier_TASK5();  //載盤組
+                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
+                }
+        }
 
-            Xavier_Engine();
+        private void tmr_吸針嘴_Tick(object sender, EventArgs e) {
+            var tempBits = TaskISRFlag.bits;
+                if(tempBits.bit0 == true) {
+                    //Xavier_TASK1();  //面板按鈕以及指示燈
+                } else 
+                if(tempBits.bit1 == true) {
+                    Xavier_TASK2();  //吸嘴軸組
+                } else 
+                if(tempBits.bit2 == true) {
+                    //Xavier_TASK3();  //植針軸組
+                } else 
+                if(tempBits.bit3 == true) {
+                    //Xavier_TASK4();  //電動缸組_含抽針
+                } else 
+                if(tempBits.bit4 == true) {
+                    //Xavier_TASK5();  //載盤組
+                } else 
+                if(tempBits.bit5 == true) {
+                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
+                } else 
+                {
+                    //Xavier_TASK1();  //面板按鈕以及指示燈
+                    Xavier_TASK2();  //吸嘴軸組
+                    //Xavier_TASK3();  //植針軸組
+                    //Xavier_TASK4();  //電動缸組_含抽針
+                    //Xavier_TASK5();  //載盤組
+                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
+                }
+        }
 
-            if (false) { 
-                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR01);
-                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp1_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR02);
-                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp4_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR01);
-                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp3_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR02);
-            }
+        private void tmr_植針嘴_Tick(object sender, EventArgs e) {
+            var tempBits = TaskISRFlag.bits;
+                if(tempBits.bit0 == true) {
+                    //Xavier_TASK1();  //面板按鈕以及指示燈
+                } else 
+                if(tempBits.bit1 == true) {
+                    //Xavier_TASK2();  //吸嘴軸組
+                } else 
+                if(tempBits.bit2 == true) {
+                    Xavier_TASK3();  //植針軸組
+                } else 
+                if(tempBits.bit3 == true) {
+                    //Xavier_TASK4();  //電動缸組_含抽針
+                } else 
+                if(tempBits.bit4 == true) {
+                    //Xavier_TASK5();  //載盤組
+                } else 
+                if(tempBits.bit5 == true) {
+                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
+                } else 
+                {
+                    //Xavier_TASK1();  //面板按鈕以及指示燈
+                    //Xavier_TASK2();  //吸嘴軸組
+                    Xavier_TASK3();  //植針軸組
+                    //Xavier_TASK4();  //電動缸組_含抽針
+                    //Xavier_TASK5();  //載盤組
+                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
+                }
+        }
+
+        private void tmr_電動缸_Tick(object sender, EventArgs e) {
+            var tempBits = TaskISRFlag.bits;
+                if(tempBits.bit0 == true) {
+                    //Xavier_TASK1();  //面板按鈕以及指示燈
+                } else 
+                if(tempBits.bit1 == true) {
+                    //Xavier_TASK2();  //吸嘴軸組
+                } else 
+                if(tempBits.bit2 == true) {
+                    //Xavier_TASK3();  //植針軸組
+                } else 
+                if(tempBits.bit3 == true) {
+                    Xavier_TASK4();  //電動缸組_含抽針
+                } else 
+                if(tempBits.bit4 == true) {
+                    //Xavier_TASK5();  //載盤組
+                } else 
+                if(tempBits.bit5 == true) {
+                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
+                } else 
+                {
+                    //Xavier_TASK1();  //面板按鈕以及指示燈
+                    //Xavier_TASK2();  //吸嘴軸組
+                    //Xavier_TASK3();  //植針軸組
+                    Xavier_TASK4();  //電動缸組_含抽針
+                    //Xavier_TASK5();  //載盤組
+                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
+                }
+        }
+
+        private void tmr_載盤_Tick(object sender, EventArgs e) {
+            var tempBits = TaskISRFlag.bits;
+                if(tempBits.bit0 == true) {
+                    //Xavier_TASK1();  //面板按鈕以及指示燈
+                } else 
+                if(tempBits.bit1 == true) {
+                    //Xavier_TASK2();  //吸嘴軸組
+                } else 
+                if(tempBits.bit2 == true) {
+                    //Xavier_TASK3();  //植針軸組
+                } else 
+                if(tempBits.bit3 == true) {
+                    //Xavier_TASK4();  //電動缸組_含抽針
+                } else 
+                if(tempBits.bit4 == true) {
+                    Xavier_TASK5();  //載盤組
+                } else 
+                if(tempBits.bit5 == true) {
+                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
+                } else 
+                {
+                    //Xavier_TASK1();  //面板按鈕以及指示燈
+                    //Xavier_TASK2();  //吸嘴軸組
+                    //Xavier_TASK3();  //植針軸組
+                    //Xavier_TASK4();  //電動缸組_含抽針
+                    Xavier_TASK5();  //載盤組
+                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
+                }
+        }
+
+        private void tmr_檔案_Tick(object sender, EventArgs e) {
+            var tempBits = TaskISRFlag.bits;
+                if(tempBits.bit0 == true) {
+                    //Xavier_TASK1();  //面板按鈕以及指示燈
+                } else 
+                if(tempBits.bit1 == true) {
+                    //Xavier_TASK2();  //吸嘴軸組
+                } else 
+                if(tempBits.bit2 == true) {
+                    //Xavier_TASK3();  //植針軸組
+                } else 
+                if(tempBits.bit3 == true) {
+                    //Xavier_TASK4();  //電動缸組_含抽針
+                } else 
+                if(tempBits.bit4 == true) {
+                    //Xavier_TASK5();  //載盤組
+                } else 
+                if(tempBits.bit5 == true) {
+                    Xavier_TASK6();  //IO檢查_工作門_檔案組
+                } else 
+                {
+                    //Xavier_TASK1();  //面板按鈕以及指示燈
+                    //Xavier_TASK2();  //吸嘴軸組
+                    //Xavier_TASK3();  //植針軸組
+                    //Xavier_TASK4();  //電動缸組_含抽針
+                    //Xavier_TASK5();  //載盤組
+                    Xavier_TASK6();  //IO檢查_工作門_檔案組
+                }
         }
         //---------------------------------------------------------------------------------------
         public enum xeXavier_RunType {
@@ -8056,7 +8270,7 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_ISR_吸嘴Z縮回0保護:
                         {
-                            dbapiNozzleZ_defaultSpeed(dbNozzleZ_Home位);
+                            dbapiNozzleZ_InsertSpeed(dbNozzleZ_Home位);
                             if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組XYR移動至吐料位);
                             } else { 
@@ -8067,9 +8281,9 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組XYR移動至吐料位:
                         {
-                            dbapiNozzleX_defaultSpeed(dbNozzleX_Home位);
-                            dbapiNozzleY_defaultSpeed(dbNozzleY_Home位);
-                            dbapiNozzleR_defaultSpeed(dbNozzleR_Home位);
+                            dbapiNozzleX_InsertSpeed(dbNozzleX_Home位);
+                            dbapiNozzleY_InsertSpeed(dbNozzleY_Home位);
+                            dbapiNozzleR_InsertSpeed(dbNozzleR_Home位);
                             if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -8082,7 +8296,7 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組Z下降至吐料位:
                         {
-                            dbapiNozzleZ_defaultSpeed(db吐料位下降Z高度);
+                            dbapiNozzleZ_InsertSpeed(db吐料位下降Z高度);
                             if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴軸組吐料前準備作業);
                             } else { 
@@ -8122,7 +8336,7 @@ namespace InjectorInspector
                             //吸嘴破真空關閉
                             digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, LOW);
 
-                            dbapiNozzleZ_defaultSpeed(dbNozzleZ_Home位);
+                            dbapiNozzleZ_InsertSpeed(dbNozzleZ_Home位);
                             if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴XYR回home保護位);
                             } else { 
@@ -8133,9 +8347,9 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_ISR_吸嘴XYR回home保護位:
                         {
-                            dbapiNozzleX_defaultSpeed(dbNozzleX_Home位);
-                            dbapiNozzleY_defaultSpeed(dbNozzleY_Home位);
-                            dbapiNozzleR_defaultSpeed(dbNozzleR_Home位);
+                            dbapiNozzleX_InsertSpeed(dbNozzleX_Home位);
+                            dbapiNozzleY_InsertSpeed(dbNozzleY_Home位);
+                            dbapiNozzleR_InsertSpeed(dbNozzleR_Home位);
                             if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -8395,10 +8609,10 @@ namespace InjectorInspector
                         if(dbapiNozzleX(dbRead, 0) >= 120.0) { 
                             Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照);
                         } else { 
-                            dbapiNozzleZ_defaultSpeed(dbNozzleZ_Home位);
+                            dbapiNozzleZ_InsertSpeed(dbNozzleZ_Home位);
                             if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                dbapiNozzleX_defaultSpeed(dbNozzleX_Home位);
-                                dbapiNozzleY_defaultSpeed(dbNozzleY_Home位);
+                                dbapiNozzleX_InsertSpeed(dbNozzleX_Home位);
+                                dbapiNozzleY_InsertSpeed(dbNozzleY_Home位);
                             }
                             Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_確認吸嘴軸不在柔震上方遮住相機);
                         }
@@ -8426,9 +8640,9 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組XYR移動至物料座標:
                         {
-                            dbapiNozzleX_defaultSpeed(db取料Nozzle中心點X + dbPinX_tmrTakePinTick);
-                            dbapiNozzleY_defaultSpeed(db取料Nozzle中心點Y + dbPinY_tmrTakePinTick);
-                            dbapiNozzleR_defaultSpeed(db取料Nozzle中心點R + dbPinR_tmrTakePinTick);
+                            dbapiNozzleX_InsertSpeed(db取料Nozzle中心點X + dbPinX_tmrTakePinTick);
+                            dbapiNozzleY_InsertSpeed(db取料Nozzle中心點Y + dbPinY_tmrTakePinTick);
+                            dbapiNozzleR_InsertSpeed(db取料Nozzle中心點R + dbPinR_tmrTakePinTick);
                             if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -8449,7 +8663,7 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至取料位:
                         {
-                            dbapiNozzleZ_defaultSpeed(db取料Nozzle中心點Z);
+                            dbapiNozzleZ_InsertSpeed(db取料Nozzle中心點Z);
 
                             Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降完畢);
                         }
@@ -8473,8 +8687,8 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組ZR上升至安全位:
                         {
-                            dbapiNozzleR_defaultSpeed(db取料Nozzle中心點R + 90);
-                            dbapiNozzleZ_defaultSpeed(dbNozzleZ_Home位);
+                            dbapiNozzleR_InsertSpeed(db取料Nozzle中心點R + 90);
+                            dbapiNozzleZ_InsertSpeed(dbNozzleZ_Home位);
                             if(dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) { 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組XY移動至飛拍準備位);
                             } else { 
@@ -8485,9 +8699,9 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組XY移動至飛拍準備位:
                         {
-                            dbapiNozzleX_defaultSpeed(db下視覺取像X_Start);
-                            dbapiNozzleY_defaultSpeed(db下視覺取像Y      );
-                            dbapiNozzleZ_defaultSpeed(db下視覺取像Z      );
+                            dbapiNozzleX_InsertSpeed(db下視覺取像X_Start);
+                            dbapiNozzleY_InsertSpeed(db下視覺取像Y      );
+                            dbapiNozzleZ_InsertSpeed(db下視覺取像Z      );
 
                             Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標);
                         }
@@ -8514,7 +8728,7 @@ namespace InjectorInspector
                             if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                dbapiNozzleX_defaultSpeed(db下視覺取像X_END);
+                                dbapiNozzleX_InsertSpeed(db下視覺取像X_END);
 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_進行植針軸組放料位檢查);
                             } else { 
@@ -8549,7 +8763,7 @@ namespace InjectorInspector
                         break;                                    
                     case xeXavier_T2_Job.tp2Insert_移動到植針軸組前等待:
                         {
-                            dbapiNozzleX_defaultSpeed(370);
+                            dbapiNozzleX_InsertSpeed(370);
 
                             Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_跳回_至_tp2Insert_進行植針軸組放料位檢查);
                         }
@@ -8585,9 +8799,9 @@ namespace InjectorInspector
                                         //錯誤
                                         return;
                                 }
-                                dbapiNozzleX_defaultSpeed(495);
-                                dbapiNozzleY_defaultSpeed(77.05);
-                                dbapiNozzleR_defaultSpeed(dbTargetNozzleR);
+                                dbapiNozzleX_InsertSpeed(495);
+                                dbapiNozzleY_InsertSpeed(77.05);
+                                dbapiNozzleR_InsertSpeed(dbTargetNozzleR);
 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_移至植針軸組上方放料位);
                             } else { 
@@ -8619,7 +8833,7 @@ namespace InjectorInspector
                             double dbNozzleZ下降至放料位; {
                                 dbNozzleZ下降至放料位 = apiParaReadIndex("SaveParameterJason.json", 38);
                             }
-                            dbapiNozzleZ_defaultSpeed(dbNozzleZ下降至放料位);
+                            dbapiNozzleZ_InsertSpeed(dbNozzleZ下降至放料位);
                             if(dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) { 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降放料完畢);
                             } else { 
@@ -8679,7 +8893,7 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴Z縮回0:
                         {
-                            dbapiNozzleZ_defaultSpeed(dbNozzleZ_Home位);
+                            dbapiNozzleZ_InsertSpeed(dbNozzleZ_Home位);
                             if(dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) { 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴XYR回home保護位);
                             } else { 
@@ -8690,9 +8904,9 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴XYR回home保護位:
                         {
-                            dbapiNozzleX_defaultSpeed(dbNozzleX_Home位);
-                            dbapiNozzleY_defaultSpeed(dbNozzleY_Home位);
-                            dbapiNozzleR_defaultSpeed(dbNozzleR_Home位);
+                            dbapiNozzleX_InsertSpeed(dbNozzleX_Home位);
+                            dbapiNozzleY_InsertSpeed(dbNozzleY_Home位);
+                            dbapiNozzleR_InsertSpeed(dbNozzleR_Home位);
                             if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiNozzleR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -9231,7 +9445,7 @@ namespace InjectorInspector
                             digitalWrite((int)WMX3IO對照.pxeIO_擺放座蓋板, LOW);  //擺放座蓋板->開
                             bool b擺放座蓋板打開 = indicateRead((int)WMX3IO對照.pxeIO_擺放座蓋板開);
 
-                            dbapiSetZ_defaultSpeed(dbSetZ_放料位);
+                            dbapiSetZ_InsertSpeed(dbSetZ_放料位);
                             if( (dbapiSetZ(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (b堵料吹氣桿退出 == true)  &&
                                 (b擺放座蓋板打開 == true) ) { 
@@ -9263,7 +9477,7 @@ namespace InjectorInspector
                                 double dbSetR放料位; {
                                     dbSetR放料位 = apiParaReadIndex("SaveParameterJason.json", 44);
                                 }
-                                dbapiSetR_defaultSpeed(dbSetR放料位);
+                                dbapiSetR_InsertSpeed(dbSetR放料位);
                             }
 
                             Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_判斷植針軸是否可以放料);
@@ -9380,12 +9594,12 @@ namespace InjectorInspector
                                 double SetPlacePinZHight; {
                                     SetPlacePinZHight = apiParaReadIndex("SaveParameterJason.json", 11);
                                 }
-                                dbapiSetZ_defaultSpeed(SetPlacePinZHight);
+                                dbapiSetZ_InsertSpeed(SetPlacePinZHight);
 
                                 double dbSetR植針位; {
                                     dbSetR植針位 = apiParaReadIndex("SaveParameterJason.json", 43);
                                 }
-                                dbapiSetR_defaultSpeed(dbSetR植針位);
+                                dbapiSetR_InsertSpeed(dbSetR植針位);
 
                                 if( (dbapiSetZ(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                     (dbapiSetR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -9455,7 +9669,7 @@ namespace InjectorInspector
                             digitalWrite((int)WMX3IO對照.pxeIO_擺放座蓋板, LOW);  //擺放座蓋板->開
                             bool b擺放座蓋板打開 = indicateRead((int)WMX3IO對照.pxeIO_擺放座蓋板開);
 
-                            dbapiSetZ_defaultSpeed(dbSetZ_放料位);
+                            dbapiSetZ_InsertSpeed(dbSetZ_放料位);
                             if( (dbapiSetZ(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (b堵料吹氣桿退出 == true)  &&
                                 (b擺放座蓋板打開 == true) ) { 
@@ -9574,7 +9788,7 @@ namespace InjectorInspector
                             double CheckSetZ; {
                                 CheckSetZ = apiParaReadIndex("SaveParameterJason.json", 31);
                             }
-                            dbapiSetZ_defaultSpeed(CheckSetZ);
+                            dbapiSetZ_InsertSpeed(CheckSetZ);
                             if( (dbapiSetZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
                                 bCheckSetZpos = true;
                             }  
@@ -9585,7 +9799,7 @@ namespace InjectorInspector
                                 double CheckSetR; {
                                     CheckSetR = apiParaReadIndex("SaveParameterJason.json", 30);
                                 }
-                                dbapiSetR_defaultSpeed(CheckSetR);
+                                dbapiSetR_InsertSpeed(CheckSetR);
 
                                 if( (dbapiSetR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
                                     bCheckSetRpos = true;
@@ -9734,7 +9948,7 @@ namespace InjectorInspector
                             double MakeClearSetZ; {
                                 MakeClearSetZ = apiParaReadIndex("SaveParameterJason.json", 35);
                             }
-                            dbapiSetZ_defaultSpeed(MakeClearSetZ);
+                            dbapiSetZ_InsertSpeed(MakeClearSetZ);
                             if( (dbapiSetZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
                                 bMakeClearSetZ = true;
                             }   
@@ -9745,7 +9959,7 @@ namespace InjectorInspector
                                 double dbSetR植針位; {
                                     dbSetR植針位 = apiParaReadIndex("SaveParameterJason.json", 43);
                                 }
-                                dbapiSetR_defaultSpeed(dbSetR植針位);
+                                dbapiSetR_InsertSpeed(dbSetR植針位);
                                 if( (dbapiSetR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
                                     bMakeClearSetR = true;
                                 }    
@@ -11092,8 +11306,8 @@ namespace InjectorInspector
 
                                 double dbTargetX = rlAx;
                                 double dbTargetY = rlAy;
-                                dbapiCarrierX_defaultSpeed(dbTargetX);
-                                dbapiCarrierY_defaultSpeed(dbTargetY);
+                                dbapiCarrierX_InsertSpeed(dbTargetX);
+                                dbapiCarrierY_InsertSpeed(dbTargetY);
 
                                 if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                     (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -11126,8 +11340,8 @@ namespace InjectorInspector
                                     fmParameterFormHandle.dataGridView1.Rows[0].Cells[1].Value = dbTargetX;
                                     fmParameterFormHandle.dataGridView1.Rows[1].Cells[1].Value = dbTargetY;
 
-                                    dbapiCarrierX_defaultSpeed(dbTargetX);
-                                    dbapiCarrierY_defaultSpeed(dbTargetY);
+                                    dbapiCarrierX_InsertSpeed(dbTargetX);
+                                    dbapiCarrierY_InsertSpeed(dbTargetY);
 
                                     if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                         (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -11156,8 +11370,8 @@ namespace InjectorInspector
 
                                 double dbTargetX = rlBx;
                                 double dbTargetY = rlBy;
-                                dbapiCarrierX_defaultSpeed(dbTargetX);
-                                dbapiCarrierY_defaultSpeed(dbTargetY);
+                                dbapiCarrierX_InsertSpeed(dbTargetX);
+                                dbapiCarrierY_InsertSpeed(dbTargetY);
 
                                 if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                     (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -11190,8 +11404,8 @@ namespace InjectorInspector
                                     fmParameterFormHandle.dataGridView1.Rows[2].Cells[1].Value = dbTargetX;
                                     fmParameterFormHandle.dataGridView1.Rows[3].Cells[1].Value = dbTargetY;
 
-                                    dbapiCarrierX_defaultSpeed(dbTargetX);
-                                    dbapiCarrierY_defaultSpeed(dbTargetY);
+                                    dbapiCarrierX_InsertSpeed(dbTargetX);
+                                    dbapiCarrierY_InsertSpeed(dbTargetY);
 
                                     if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                         (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -11321,8 +11535,8 @@ namespace InjectorInspector
                             double dbTargetX = dbPinHolePositionX;
                             double dbTargetY = dbPinHolePositionY;
 
-                            dbapiCarrierX_defaultSpeed(dbTargetX);
-                            dbapiCarrierY_defaultSpeed(dbTargetY);
+                            dbapiCarrierX_InsertSpeed(dbTargetX);
+                            dbapiCarrierY_InsertSpeed(dbTargetY);
 
                             if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -11345,8 +11559,8 @@ namespace InjectorInspector
                                 double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX;
                                 double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY;
 
-                                dbapiCarrierX_defaultSpeed(dbTargetX);
-                                dbapiCarrierY_defaultSpeed(dbTargetY);
+                                dbapiCarrierX_InsertSpeed(dbTargetX);
+                                dbapiCarrierY_InsertSpeed(dbTargetY);
 
                                 if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                     (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -11377,8 +11591,8 @@ namespace InjectorInspector
                             double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX + SetPinOffsetX;
                             double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY + SetPinOffsetY;
 
-                            dbapiCarrierX_defaultSpeed(dbTargetX);
-                            dbapiCarrierY_defaultSpeed(dbTargetY);
+                            dbapiCarrierX_InsertSpeed(dbTargetX);
+                            dbapiCarrierY_InsertSpeed(dbTargetY);
 
                             if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -11414,8 +11628,8 @@ namespace InjectorInspector
                             double dbTargetX = dbPinHolePositionX + dbCameraCalibrationX;
                             double dbTargetY = dbPinHolePositionY + dbCameraCalibrationY;
 
-                            dbapiCarrierX_defaultSpeed(dbTargetX);
-                            dbapiCarrierY_defaultSpeed(dbTargetY);
+                            dbapiCarrierX_InsertSpeed(dbTargetX);
+                            dbapiCarrierY_InsertSpeed(dbTargetY);
                             if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
                                 Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組進行拍照位檢查植針況狀);    
@@ -11520,8 +11734,8 @@ namespace InjectorInspector
                                 CheckCarryX = apiParaReadIndex("SaveParameterJason.json", 28);
                                 CheckCarryY = apiParaReadIndex("SaveParameterJason.json", 29);
                             }
-                            dbapiCarrierX_defaultSpeed(CheckCarryX);
-                            dbapiCarrierY_defaultSpeed(CheckCarryY);
+                            dbapiCarrierX_InsertSpeed(CheckCarryX);
+                            dbapiCarrierY_InsertSpeed(CheckCarryY);
 
                             if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
@@ -11579,7 +11793,7 @@ namespace InjectorInspector
                             double MakeClearCarryY; {
                                 MakeClearCarryY = apiParaReadIndex("SaveParameterJason.json", 34);
                             }
-                            dbapiCarrierX_defaultSpeed(MakeClearCarryY);
+                            dbapiCarrierX_InsertSpeed(MakeClearCarryY);
                             if( (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
                                 Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位);
                             } else { 
@@ -11687,13 +11901,6 @@ namespace InjectorInspector
         public void Task5CallJobWithDelay(xeXavier_T5_Job excuteJob, uint delayCNT) {
             Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, delayCNT, excuteJob);
         }
-
-        private void button5_Click_1(object sender, EventArgs e)
-        {
-            xeXavier_T2_Job getJob = Xavier_T2_delayCase(xeXavier_T2_proc.pt2GET, 0, xeXavier_T2_Job.tp2Empty);
-            this.Text = getJob.ToString();
-        }
-
         //---------------------------------------------------------------------------------------
         public void Task5ResumeJob() {
             Xavier_T5_delayCase(xeXavier_T5_proc.pT5ResISR, 0, 0);
