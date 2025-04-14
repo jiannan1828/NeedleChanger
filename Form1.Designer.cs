@@ -36,11 +36,9 @@ namespace InjectorInspector
             this.tsmi_Enable = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Reset = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Reserve1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tmr_Home = new System.Windows.Forms.Timer(this.components);
             this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.ttp_NeedleInfo = new System.Windows.Forms.ToolTip(this.components);
             this.tmrBarCodeScanner = new System.Windows.Forms.Timer(this.components);
-            this.tmr_2p_Calibration = new System.Windows.Forms.Timer(this.components);
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.rtb_Status = new System.Windows.Forms.RichTextBox();
             this.lbl_ZoomFactor = new System.Windows.Forms.Label();
@@ -608,10 +606,6 @@ namespace InjectorInspector
             this.tsmi_Reserve1.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Reserve1.Text = "保留";
             // 
-            // tmr_Home
-            // 
-            this.tmr_Home.Tick += new System.EventHandler(this.tmr_Home_Tick);
-            // 
             // tmr_TakePin
             // 
             this.tmr_TakePin.Interval = 5;
@@ -622,11 +616,6 @@ namespace InjectorInspector
             this.tmrBarCodeScanner.Enabled = true;
             this.tmrBarCodeScanner.Interval = 10;
             this.tmrBarCodeScanner.Tick += new System.EventHandler(this.tmrBarCodeScanner_Tick);
-            // 
-            // tmr_2p_Calibration
-            // 
-            this.tmr_2p_Calibration.Enabled = true;
-            this.tmr_2p_Calibration.Tick += new System.EventHandler(this.tmr_2p_Calibration_Tick);
             // 
             // tabPage3
             // 
@@ -5232,7 +5221,6 @@ namespace InjectorInspector
             this.btn_兩點校正.TabIndex = 242;
             this.btn_兩點校正.Text = "兩點校正";
             this.btn_兩點校正.UseVisualStyleBackColor = true;
-            this.btn_兩點校正.Click += new System.EventHandler(this.btn_兩點校正_Click);
             // 
             // label19
             // 
@@ -5904,7 +5892,6 @@ namespace InjectorInspector
 
         #endregion
         public System.Windows.Forms.Timer tmr_ReadWMX3;
-        public System.Windows.Forms.Timer tmr_Home;
         public System.Windows.Forms.Timer tmr_TakePin;
         public ContextMenuStrip cms_pic_Needles;
         public ToolStripMenuItem tsmi_Place;
@@ -5917,7 +5904,6 @@ namespace InjectorInspector
         public ToolTip ttp_NeedleInfo;
         public Timer tmrBarCodeScanner;
         private System.ComponentModel.IContainer components;
-        public Timer tmr_2p_Calibration;
         public TabPage tabPage3;
         public RichTextBox rtb_Status;
         public Label lbl_ZoomFactor;

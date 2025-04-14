@@ -3382,372 +3382,12 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //-------------------------------- State Machine implement ------------------------------
         //---------------------------------------------------------------------------------------
-        public enum xe_tmr_home {
-            xets_empty,
-            xets_idle,
-            xets_home_start,
-                xets_home_StartGate_01,
-                xets_home_StartGate_02,
-                xets_home_CheckGate,
-                xets_home_EndGate, 
-
-                xets_home_鬆開擺放座蓋板,
-
-                xets_home_StartZR電動缸Home_01, 
-                xets_home_StartZR電動缸Home_02, 
-                xets_home_CheckZR電動缸Home, 
-                xets_home_EndZR電動缸Home, 
-
-                xets_home_StartXYHome_01, 
-                xets_home_StartXYHome_02, 
-                xets_home_CheckXYHome, 
-                xets_home_EndXYHome, 
-
-                xets_home_StartSetZR_01,
-                xets_home_StartSetZR_02,
-                xets_home_CheckSetZR,
-                xets_home_EndSetZR01,
-
-                xets_home_StartCarrierXHome_01,
-                xets_home_StartCarrierXHome_02,
-                xets_home_CheckCarrierXHome,
-                xets_home_EndCarrierXHome,
-
-                xets_home_StartCarrierYHome_01,
-                xets_home_StartCarrierYHome_02,
-                xets_home_CheckCarrierYHome,
-                xets_home_EndCarrierYHome,
-            xets_home_end,
-            xets_end,
-        };
-        public xe_tmr_home xeTmrHome = xe_tmr_home.xets_empty;
-
-        public int ihomeFinishedCNT = 0;
-        public bool bhome    = false;
-        public bool bGotHome = false;
         //---------------------------------------------------------------------------------------
         public void btn_home_Click(object sender, EventArgs e)
         {
-            //bhome    = true;
             apiIndicator(xeXavier_Indicator.xeXI_事件_復歸);
         }
         //---------------------------------------------------------------------------------------
-        public void tmr_Home_Tick(object sender, EventArgs e)
-        {
-            int getrslt = 0;
-            lbl_debug.Text = clsServoControlWMX3.WMX3_check_ServoOpState((int)WMX3軸定義.工作門, ref getrslt);
-
-            switch (xeTmrHome) {
-                case xe_tmr_home.xets_home_start:
-                    btn_home.Text = "Start Home";
-
-                    //Workaround for prevent Z Collide
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, false);  Thread.Sleep(200);
-                    dbapiJoDell3D掃描(dbJoDell3D掃描_Home位);                             Thread.Sleep(10);   //tmr_Home_Tick
-                    dbapiJoDell吸針嘴(dbJoDell吸針嘴_Home位);                             Thread.Sleep(10);   //tmr_Home_Tick
-                    dbapiJoDell植針嘴相機(dbJoDell植針嘴相機_Home位);                     Thread.Sleep(10);   //tmr_Home_Tick
-                    dbapiSetZ_defaultSpeed(dbSetZ_Home位);                                Thread.Sleep(200);  //tmr_Home_Tick
-
-                    //Disable All
-                    en_吸嘴X軸.Checked          = false;
-                    en_吸嘴Y軸.Checked          = false;
-                    en_吸嘴Z軸.Checked          = false;
-                    en_吸嘴R軸.Checked          = false;
-
-                    en_載盤X軸.Checked          = false;
-                    en_載盤Y軸.Checked          = false;
-
-                    en_植針Z軸.Checked          = false;
-                    en_植針R軸.Checked          = false;
-
-                    en_工作門.Checked           = false;
-
-                    en_IAI.Checked              = false;
-                    en_JoDell3D掃描.Checked     = false;
-                    en_JoDell吸針嘴.Checked     = false;
-                    en_JoDell植針嘴相機.Checked = false;
-
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, false);      Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, false);      Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, false);      Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, false);      Thread.Sleep(10);
-
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, false);      Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, false);      Thread.Sleep(10);
-
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, false);      Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, false);      Thread.Sleep(10);
-
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門,  false);      Thread.Sleep(10);
-
-                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 0);                 Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  0);                 Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 0);      Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 0);      Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_MotorOn, 0);  Thread.Sleep(10);
-
-                    xeTmrHome = xe_tmr_home.xets_home_StartGate_01; 
-                    break;
-
-                case xe_tmr_home.xets_home_StartGate_01:
-                    en_工作門.Checked = true;
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, true);  Thread.Sleep(10);
-                    xeTmrHome = xe_tmr_home.xets_home_StartGate_02;
-                    break;
-
-                case xe_tmr_home.xets_home_StartGate_02:
-                    dbapiGate(580, 580/4);  Thread.Sleep(10);  //tmr_Home_Tick
-                    xeTmrHome = xe_tmr_home.xets_home_CheckGate;
-                    break;
-
-                case xe_tmr_home.xets_home_CheckGate:
-                    if(dbapiGate(dbCheckArrived, 0) == dbAxisMoveOk) {
-                        xeTmrHome = xe_tmr_home.xets_home_鬆開擺放座蓋板;
-                    }
-                    break;
-
-                case xe_tmr_home.xets_home_鬆開擺放座蓋板:
-                    digitalWrite((int)WMX3IO對照.pxeIO_擺放座蓋板, LOW);
-                    xeTmrHome = xe_tmr_home.xets_home_EndGate;
-                    break;
-
-                case xe_tmr_home.xets_home_EndGate:
-                case xe_tmr_home.xets_home_StartZR電動缸Home_01:
-                    en_吸嘴Z軸.Checked = true;
-                    en_吸嘴R軸.Checked = true;
-
-                    en_IAI.Checked          = true;
-                    en_JoDell3D掃描.Checked = true;
-                    en_JoDell吸針嘴.Checked = true;
-                    en_JoDell植針嘴相機.Checked = true;
-
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, true);       Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, true);       Thread.Sleep(10);
-
-                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 1);                 Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  1);                 Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 1);      Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 1);      Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_MotorOn, 1);  Thread.Sleep(10);
-
-                    xeTmrHome = xe_tmr_home.xets_home_StartZR電動缸Home_02;
-                    break;
-
-                case xe_tmr_home.xets_home_StartZR電動缸Home_02:
-                    if(true) { 
-                        int rslt = 0;
-                        int axis = 0;
-                        string position = "";
-                        string speed    = "";
-
-                        axis = (int)WMX3軸定義.吸嘴Z軸;
-                        rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);  Thread.Sleep(10);
-                        if (rslt == 1) {
-                            clsServoControlWMX3.WMX3_SetHomePosition(axis);                               Thread.Sleep(10);
-                        }
-
-                        axis = (int)WMX3軸定義.吸嘴R軸;
-                        rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);  Thread.Sleep(10);
-                        if (rslt == 1) {
-                            clsServoControlWMX3.WMX3_SetHomePosition(axis);                               Thread.Sleep(10);
-                        }
-
-                        dbapiIAI(0);  Thread.Sleep(10);  //tmr_Home_Tick
-
-                        xeTmrHome = xe_tmr_home.xets_home_CheckZR電動缸Home;
-                    }
-                    break;
-
-                case xe_tmr_home.xets_home_CheckZR電動缸Home:
-                    if(true) {
-                        int rslt01 = 0, rslt02 = 0;
-                        int axis01 = 0, axis02 = 0;
-
-                        axis01 = (int)WMX3軸定義.吸嘴Z軸;
-                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
-
-                        axis02 = (int)WMX3軸定義.吸嘴R軸;
-                        rslt02 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis02);  Thread.Sleep(10);
-
-                        if (rslt01==1 && rslt02==1) {
-                            if (dbapiNozzleZ(dbRead, 0) <= 1.0) {
-                                xeTmrHome = xe_tmr_home.xets_home_EndZR電動缸Home;
-                            }
-                        }
-                    }
-                    break;
-
-                case xe_tmr_home.xets_home_EndZR電動缸Home:
-                    dbapiIAI(10);               Thread.Sleep(10);  //tmr_Home_Tick
-
-                    dbapiJoDell3D掃描(10);      Thread.Sleep(10);  //tmr_Home_Tick
-                    dbapiJoDell吸針嘴( 5);      Thread.Sleep(10);  //tmr_Home_Tick
-                    dbapiJoDell植針嘴相機(10);  Thread.Sleep(10);  //tmr_Home_Tick
-                    xeTmrHome = xe_tmr_home.xets_home_StartXYHome_01;
-                    break;
-
-                case xe_tmr_home.xets_home_StartXYHome_01:
-                    en_吸嘴X軸.Checked = true;
-                    en_吸嘴Y軸.Checked = true;
-
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, true);  Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, true);  Thread.Sleep(10);
-                    xeTmrHome = xe_tmr_home.xets_home_StartXYHome_02;
-                    break;
-
-                case xe_tmr_home.xets_home_StartXYHome_02:
-                    if (dbapiNozzleZ(dbRead, 0) <= 1.0) {
-                        dbapiNozzleX_defaultSpeed(dbNozzleX_Home位);   Thread.Sleep(10);  //tmr_Home_Tick
-                        dbapiNozzleY_defaultSpeed(dbNozzleY_Home位);   Thread.Sleep(10);  //tmr_Home_Tick
-                        xeTmrHome = xe_tmr_home.xets_home_CheckXYHome;
-                    }
-                    break;
-
-                case xe_tmr_home.xets_home_CheckXYHome:
-                    if (dbapiNozzleZ(dbRead, 0) <= 1.0) { 
-                        int rslt01 = 0, rslt02 = 0;
-                        int axis01 = 0, axis02 = 0;
-
-                        axis01 = (int)WMX3軸定義.吸嘴X軸;
-                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
-
-                        axis02 = (int)WMX3軸定義.吸嘴Y軸;
-                        rslt02 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis02);  Thread.Sleep(10);
-
-                        if (rslt01 == 1 && rslt02 == 1) {
-                            xeTmrHome = xe_tmr_home.xets_home_EndXYHome;
-                        }
-                    }
-                    break;
-
-                case xe_tmr_home.xets_home_EndXYHome:
-                case xe_tmr_home.xets_home_StartSetZR_01:
-                    en_植針Z軸.Checked = true;
-                    en_植針R軸.Checked = true;
-
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, true);  Thread.Sleep(10);
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, true);  Thread.Sleep(10);
-
-                    xeTmrHome = xe_tmr_home.xets_home_StartSetZR_02;
-                    break;
-
-                case xe_tmr_home.xets_home_StartSetZR_02:
-                    dbapiSetZ_defaultSpeed(dbSetZ_Home位);  Thread.Sleep(10);  //tmr_Home_Tick
-                    double dbSetR放料位; {
-                        dbSetR放料位 = apiParaReadIndex("SaveParameterJason.json", 44);
-                    }
-                    if(indicateRead((int)WMX3IO對照.pxeIO_堵料吹氣桿出) == HIGH) { 
-                        dbapiSetR(dbSetR放料位, 360*2);  Thread.Sleep(10);  //tmr_Home_Tick
-                        xeTmrHome = xe_tmr_home.xets_home_CheckSetZR;
-                    }
-                    break;
-
-                case xe_tmr_home.xets_home_CheckSetZR:
-                    if (true) {
-                        int rslt01 = 0, rslt02 = 0;
-                        int axis01 = 0, axis02 = 0;
-
-                        axis01 = (int)WMX3軸定義.植針Z軸;
-                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
-
-                        axis02 = (int)WMX3軸定義.植針R軸;
-                        rslt02 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis02);  Thread.Sleep(10);
-
-                        if (rslt01 == 1 && rslt02 == 1) {
-                            if (dbapiSetZ(dbRead, 0) <= 16) {
-                                xeTmrHome = xe_tmr_home.xets_home_EndSetZR01;
-                            }
-                        }
-                    }
-                    break;
-
-                case xe_tmr_home.xets_home_EndSetZR01:
-                case xe_tmr_home.xets_home_StartCarrierXHome_01:
-                    en_載盤X軸.Checked = true;
-
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, true);  Thread.Sleep(10);
-                    xeTmrHome = xe_tmr_home.xets_home_StartCarrierXHome_02;
-                    break;
-
-                case xe_tmr_home.xets_home_StartCarrierXHome_02:
-                    if (dbapiSetZ(dbRead, 0) <= 16) {
-                        dbapiCarrierX_defaultSpeed(dbCarrierX_Home位);  //tmr_Home_Tick
-                        xeTmrHome = xe_tmr_home.xets_home_CheckCarrierXHome;
-                    }
-                    break;
-
-                case xe_tmr_home.xets_home_CheckCarrierXHome:
-                    if (true) {
-                        int rslt01 = 0;
-                        int axis01 = 0;
-
-                        axis01 = (int)WMX3軸定義.載盤X軸;
-                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
-
-                        if (rslt01 == 1) {
-                            if (dbapiSetZ(dbRead, 0) <= 16) {
-                                xeTmrHome = xe_tmr_home.xets_home_EndCarrierXHome;
-                            }
-                        }
-                    }
-                    break;
-
-                case xe_tmr_home.xets_home_EndCarrierXHome:
-                case xe_tmr_home.xets_home_StartCarrierYHome_01:
-                    en_載盤Y軸.Checked = true;
-
-                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, true);  Thread.Sleep(10);
-                    xeTmrHome = xe_tmr_home.xets_home_StartCarrierYHome_02;
-                    break;
-
-                case xe_tmr_home.xets_home_StartCarrierYHome_02:
-                    if (dbapiSetZ(dbRead, 0) <= 16) {
-                        dbapiCarrierY_defaultSpeed(dbCarrierY_Home位);
-                        xeTmrHome = xe_tmr_home.xets_home_CheckCarrierYHome;
-                    }
-                    break;
-
-                case xe_tmr_home.xets_home_CheckCarrierYHome:
-                    if (true) {
-                        int rslt01 = 0;
-                        int axis01 = 0;
-
-                        axis01 = (int)WMX3軸定義.載盤Y軸;
-                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
-
-                        if (rslt01 == 1) {
-                            if (dbapiSetZ(dbRead, 0) <= 16) {
-                                xeTmrHome = xe_tmr_home.xets_home_EndCarrierYHome;
-                            }
-                        }
-                    }
-                    break;
-
-                case xe_tmr_home.xets_home_EndCarrierYHome:
-                case xe_tmr_home.xets_home_end:
-                    dbapiNozzleR_defaultSpeed(dbNozzleR_Home位);  Thread.Sleep(10);
-                    dbapiGate_defaultSpeed(dbGate_開門);          Thread.Sleep(10);
-
-                    bGotHome = true;
-
-                    xeTmrHome = xe_tmr_home.xets_end;
-                    break;
-
-                default:
-                case xe_tmr_home.xets_empty:
-                case xe_tmr_home.xets_idle:
-                case xe_tmr_home.xets_end:
-                    btn_home.Text = "Home";
-
-                    if(bhome == true) {
-                        bhome    = false;
-                        bGotHome = false;
-                        xeTmrHome = xe_tmr_home.xets_home_start;
-                    }
-                    break;
-            }
-
-        }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public enum xe_tmr_takepin {
@@ -5536,7 +5176,7 @@ namespace InjectorInspector
                         bChambered = false;
                         bRemove    = false;
 
-                        bhome      = true;
+                        //bhome      = true;
 
                         xeTmrTakePin = xe_tmr_takepin.xett_Empty; 
                         break;
@@ -5548,527 +5188,8 @@ namespace InjectorInspector
         }  // end of public void tmr_TakePin_Tick(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
-        public enum xe_tmr_2pCalibration {
-            xet2C_empty,
-            xet2C_idle,
-            xet2C_2pCalibration_start,
-
-                xet2C_StopAllTask,
-                    xet2C_StopAllTask_ok,
-
-                xet2C_ClearAllTaskStatus,
-                    xet2C_ClearAllTaskStatus_ok,
-
-                xet2C_SystemHome,
-                    xet2C_SystemHome_ok,
-
-                xet2C_Load_Calibration_Json,
-                    xet2C_Load_Calibration_Json_ok,
-                    xet2C_Load_Calibration_Json_ng,
-
-                xet2C_Socket_Camera_Home,
-                xet2C_Socket_Camera_Home_Wait,
-                xet2C_Socket_Camera_Home_Done,
-                xet2C_Socket_Camera_To_CapturePosition,
-                    xet2C_Socket_Camera_To_CapturePosition_ok,
-
-                xet2C_關工作門,
-                xet2C_檢查工作門關閉,
-                xet2C_確定工作門關閉,
-                xet2C_載盤真空閥啟用,
-                xet2C_Socket1真空閥啟用,
-                xet2C_Socket2真空閥啟用,
-
-                xet2C_開始進行校正參數調整, 
-                    xet2C_移動至_校正第1點,
-                        xet2C_等待移動至_校正第1點,
-                        xet2C_確定移動至_校正第1點,
-                    xet2C_取得補正_校正第1點,
-                        xet2C_移動補正_校正第1點,
-                            xet2C_等待移動補正_校正第1點,
-                            xet2C_確定移動補正_校正第1點,
-
-                    xet2C_移動至_校正第2點,
-                        xet2C_等待移動至_校正第2點,
-                        xet2C_確定移動至_校正第2點,
-                    xet2C_取得補正_校正第2點,
-                        xet2C_移動補正_校正第2點,
-                            xet2C_等待移動補正_校正第2點,
-                            xet2C_確定移動補正_校正第2點,
-
-                    xet2C_儲存校正參數,               
-                xet2C_完成進行校正參數調整,   
-                
-            xet2C_2pCalibration_end,
-            xet2C_end,
-        };
-        public xe_tmr_2pCalibration xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_empty;
-
-        public bool bStartCalibration           = false;
-        public bool bForceToLoadCalibrationJson = false;
-        public bool bForceToLoadInsertJson      = false;
-        public uint u32Delaycnt                 = 0;
-
         //---------------------------------------------------------------------------------------
-        private void btn_兩點校正_Click(object sender, EventArgs e)
-        {
-            bStartCalibration = true;
-        }
         //---------------------------------------------------------------------------------------
-        private void tmr_2p_Calibration_Tick(object sender, EventArgs e)
-        {
-            lbl_2pCalibraLog.Text = xetmr2pCalibration.ToString();
-
-            if(cB_AlwaysResume.Checked == true) {
-                bResume = true;
-            }
-
-            switch (xetmr2pCalibration) {  // start of switch(xetmr2pCalibration) {
-                case xe_tmr_2pCalibration.xet2C_empty:
-                    if(bStartCalibration == true) {
-                        bStartCalibration = false;
-
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_2pCalibration_start;
-                    }
-                    break;
-                case xe_tmr_2pCalibration.xet2C_2pCalibration_start:                                  
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_StopAllTask;
-                    break;
-
-                case xe_tmr_2pCalibration.xet2C_StopAllTask:
-                    //Home Sequense
-                    tmr_Home.Enabled = false;
-                        xeTmrHome        = xe_tmr_home.xets_empty;
-                        ihomeFinishedCNT = 0;
-                        bhome            = false;
-                        bGotHome         = false;
-                    tmr_Home.Enabled = true;
-
-                    //TakePin
-                    tmr_TakePin.Enabled  = false;
-                        xeTmrTakePin         = xe_tmr_takepin.xett_Empty;
-                        iTakePinFinishedCNT2 = 0;
-                        bTakePin             = false;
-                        bChambered           = false;
-                        bRemove              = false;
-                        bPause               = false;
-                        btmrStop             = false;
-                    tmr_TakePin.Enabled  = true;
-
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_StopAllTask_ok;
-                    break;
-                case xe_tmr_2pCalibration.xet2C_StopAllTask_ok:
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_ClearAllTaskStatus;
-                    break;
-
-                case xe_tmr_2pCalibration.xet2C_ClearAllTaskStatus:
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_ClearAllTaskStatus_ok;
-                    break;
-                case xe_tmr_2pCalibration.xet2C_ClearAllTaskStatus_ok:
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_SystemHome;
-                    break;
-
-                case xe_tmr_2pCalibration.xet2C_SystemHome:
-                    bhome = true;
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_SystemHome_ok;
-                    break;
-                case xe_tmr_2pCalibration.xet2C_SystemHome_ok:
-                    if(bGotHome == true) { 
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Load_Calibration_Json;
-                    }
-                    break;
-
-                case xe_tmr_2pCalibration.xet2C_Load_Calibration_Json: {
-                    if(bForceToLoadCalibrationJson == false) {
-                        bForceToLoadCalibrationJson = true;
-
-                        if (OpenFile())  {
-                            tsmi_SaveFile.Enabled = true;
-                            btn_SaveFile.Enabled  = true;
-
-                            show_grp_BarcodeInfo(grp_BarcodeInfo);
-
-                            find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
-
-                            pic_Needles.Refresh();
-                        }
-
-                        int igetCount = get_NeedleCount();
-                        if(igetCount == 2) { 
-                            bForceToLoadCalibrationJson = false;
-                            xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Load_Calibration_Json_ok;
-                        } else { 
-                            bForceToLoadCalibrationJson = false;
-                            xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Load_Calibration_Json_ng;
-                        }
-                    }
-                } break;
-                case xe_tmr_2pCalibration.xet2C_Load_Calibration_Json_ok:
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket_Camera_Home;
-                    break;
-                case xe_tmr_2pCalibration.xet2C_Load_Calibration_Json_ng:
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_empty;
-                    break;
-
-                case xe_tmr_2pCalibration.xet2C_Socket_Camera_Home:
-                    dbapiIAI(0);
-                    u32Delaycnt = 0;
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket_Camera_Home_Wait;
-                    break;
-                case xe_tmr_2pCalibration.xet2C_Socket_Camera_Home_Wait:
-                    u32Delaycnt++;
-                    if(u32Delaycnt>=20) {
-                        u32Delaycnt = 0;
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket_Camera_Home_Done;
-                    }
-                    break;
-                case xe_tmr_2pCalibration.xet2C_Socket_Camera_Home_Done:
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket_Camera_To_CapturePosition;
-                    break;
-                case xe_tmr_2pCalibration.xet2C_Socket_Camera_To_CapturePosition: {   
-                    double dbSocketCamera; {
-                        dbSocketCamera = apiParaReadIndex("SaveParameterJason.json", 17);
-                        dbapiIAI(dbSocketCamera);
-                    }
-
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket_Camera_To_CapturePosition_ok;
-                } break;
-                case xe_tmr_2pCalibration.xet2C_Socket_Camera_To_CapturePosition_ok: {
-                    double dbSocketCamera; {
-                        dbSocketCamera = apiParaReadIndex("SaveParameterJason.json", 17);
-                    }
-
-                    double dbIAIHeight = dbapiIAI(dbRead);
-
-                    if(dbSocketCamera * 0.99<= dbIAIHeight && dbIAIHeight <= dbSocketCamera * 1.01) { 
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_關工作門;
-                    }
-                } break;
-
-                case xe_tmr_2pCalibration.xet2C_關工作門:     
-                    dbapiGate(580, 580/4);
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_檢查工作門關閉;
-                    break;
-                case xe_tmr_2pCalibration.xet2C_檢查工作門關閉:
-                    if(dbapiGate(dbCheckArrived, 0) == dbAxisMoveOk) {
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定工作門關閉;
-                    }
-                    break;
-                case xe_tmr_2pCalibration.xet2C_確定工作門關閉:
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_載盤真空閥啟用;
-                    break;
-                case xe_tmr_2pCalibration.xet2C_載盤真空閥啟用:
-                    digitalWrite((int)WMX3IO對照.pxeIO_載盤真空閥, HIGH);
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket1真空閥啟用;
-                    break;
-                case xe_tmr_2pCalibration.xet2C_Socket1真空閥啟用:
-                    digitalWrite((int)WMX3IO對照.pxeIO_Socket真空1, HIGH);
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket2真空閥啟用;
-                    break;
-                case xe_tmr_2pCalibration.xet2C_Socket2真空閥啟用:
-                    digitalWrite((int)WMX3IO對照.pxeIO_Socket真空2, HIGH);
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_開始進行校正參數調整;
-                    break;
-
-                case xe_tmr_2pCalibration.xet2C_開始進行校正參數調整:
-                    if (bResume==true) {
-                        bResume = false;
-                        btn_參數_Click(sender, e);
-
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_移動至_校正第1點;
-                    }
-                    break;
-                case xe_tmr_2pCalibration.xet2C_移動至_校正第1點: {   
-                    //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
-
-                    double dbTargetX = rlAx;
-                    double dbTargetY = rlAy;
-                    dbapiCarrierX(dbTargetX, 190*2);
-                    dbapiCarrierY(dbTargetY, 800*2);
-
-                    if(bResume==true) {
-                        bResume = false;
-
-                        u32Delaycnt = 0;
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_等待移動至_校正第1點;
-                    }
-                } break;
-                case xe_tmr_2pCalibration.xet2C_等待移動至_校正第1點: {
-                    //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
-
-                    double dbTargetX = rlAx;
-                    double dbTargetY = rlAy;
-
-                    double dbX = dbapiCarrierX(dbRead, 0);
-                    double dbY = dbapiCarrierY(dbRead, 0);
-                    if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
-                        (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
-
-                        u32Delaycnt++;
-                        if(u32Delaycnt>=10) { 
-                            u32Delaycnt = 0;
-
-                            if(bResume==true) { 
-                                bResume = false;
-                                xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動至_校正第1點;
-                            }
-                        }
-                    }
-                } break;
-                case xe_tmr_2pCalibration.xet2C_確定移動至_校正第1點:
-                    if(bResume==true) { 
-                        bResume = false;
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_取得補正_校正第1點;
-                    }
-                    break;
-                case xe_tmr_2pCalibration.xet2C_取得補正_校正第1點: {
-                     btn_socket相機兩點定位_Click(sender, e);
-
-                    if(bResume==true) { 
-                        bResume = false;
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_移動補正_校正第1點;
-                    }
-                } break;
-                case xe_tmr_2pCalibration.xet2C_移動補正_校正第1點: {
-                    //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
-
-                    double dbTargetX = rlAx - dbCameraCalibrationX;
-                    double dbTargetY = rlAy + dbCameraCalibrationY;
-
-                    dbapiCarrierX(dbTargetX, 190*2);
-                    dbapiCarrierY(dbTargetY, 800*2);
-
-                    fmParameterFormHandle.dataGridView1.Rows[0].Cells[1].Value = dbTargetX;
-                    fmParameterFormHandle.dataGridView1.Rows[1].Cells[1].Value = dbTargetY;
-
-                    if(bResume==true) { 
-                        bResume = false;
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_等待移動補正_校正第1點;
-                    }
-                } break;
-                case xe_tmr_2pCalibration.xet2C_等待移動補正_校正第1點: {
-                    //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
-
-                    double dbTargetX = rlAx + dbCameraCalibrationX;
-                    double dbTargetY = rlAy + dbCameraCalibrationY;
-
-                    double dbX = dbapiCarrierX(dbRead, 0);
-                    double dbY = dbapiCarrierY(dbRead, 0);
-                    if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
-                        (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
-
-                        u32Delaycnt++;
-                        if(u32Delaycnt>=10) { 
-                            u32Delaycnt = 0;
-
-                            if(bResume==true) { 
-                                bResume = false;
-                                xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動補正_校正第1點;
-                            }
-                        }
-                    }
-                } break;
-                case xe_tmr_2pCalibration.xet2C_確定移動補正_校正第1點:
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_移動至_校正第2點;
-                    break;
-
-                case xe_tmr_2pCalibration.xet2C_移動至_校正第2點: {  
-                    //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
-
-                    double dbTargetX = rlBx;
-                    double dbTargetY = rlBy;
-                    dbapiCarrierX(dbTargetX, 190*2);
-                    dbapiCarrierY(dbTargetY, 800*2);
-
-                    if(bResume==true) { 
-                        bResume = false;
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_等待移動至_校正第2點;
-                    }
-                } break;
-                case xe_tmr_2pCalibration.xet2C_等待移動至_校正第2點: {
-                    //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
-
-                    double dbTargetX = rlBx;
-                    double dbTargetY = rlBy;
-
-                    double dbX = dbapiCarrierX(dbRead, 0);
-                    double dbY = dbapiCarrierY(dbRead, 0);
-                    if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
-                        (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
-
-                        u32Delaycnt++;
-                        if(u32Delaycnt>=10) { 
-                            u32Delaycnt = 0;
-
-                            if(bResume==true) { 
-                                bResume = false;
-                                xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動至_校正第2點;
-                            }
-                        }
-                    }
-                } break;
-                case xe_tmr_2pCalibration.xet2C_確定移動至_校正第2點:
-                    if(bResume==true) { 
-                        bResume = false;
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_取得補正_校正第2點;
-                    }
-                    break;
-                case xe_tmr_2pCalibration.xet2C_取得補正_校正第2點:
-                    btn_socket相機兩點定位_Click(sender, e);
-
-                    if (bResume==true) { 
-                        bResume = false;
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_移動補正_校正第2點;
-                    }
-                    break;
-                case xe_tmr_2pCalibration.xet2C_移動補正_校正第2點: {
-                    //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
-
-                    double dbTargetX = rlBx - dbCameraCalibrationX;
-                    double dbTargetY = rlBy + dbCameraCalibrationY;
-
-                    dbapiCarrierX(dbTargetX, 190*2);
-                    dbapiCarrierY(dbTargetY, 800*2);
-
-                    fmParameterFormHandle.dataGridView1.Rows[2].Cells[1].Value = dbTargetX;
-                    fmParameterFormHandle.dataGridView1.Rows[3].Cells[1].Value = dbTargetY;
-
-                    if(bResume==true) { 
-                        bResume = false;
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_等待移動補正_校正第2點;
-                    }
-                } break;
-                case xe_tmr_2pCalibration.xet2C_等待移動補正_校正第2點: {
-                    //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
-
-                    double dbTargetX = rlBx + dbCameraCalibrationX;
-                    double dbTargetY = rlBy + dbCameraCalibrationY;
-
-                    double dbX = dbapiCarrierX(dbRead, 0);
-                    double dbY = dbapiCarrierY(dbRead, 0);
-                    if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
-                        (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
-
-                        u32Delaycnt++;
-                        if(u32Delaycnt>=10) { 
-                            u32Delaycnt = 0;
-
-                            if(bResume==true) { 
-                                bResume = false;
-                                xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動補正_校正第2點;
-                            }
-                        }
-                    }
-                } break;
-                case xe_tmr_2pCalibration.xet2C_確定移動補正_校正第2點:
-                    if(bResume==true) { 
-                        bResume = false;
-                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_儲存校正參數;
-                    }
-                    break;
-
-                case xe_tmr_2pCalibration.xet2C_儲存校正參數:
-                    fmParameterFormHandle.btn_Save_Click(sender, e);
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_完成進行校正參數調整;
-                    break;
-                case xe_tmr_2pCalibration.xet2C_完成進行校正參數調整: {
-                    //Get Real Pxy
-                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
-                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
-                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
-                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
-
-                    //Get Ideal Pxy
-                    double idlpAx = 0, idlpAy = 0, idlpBx = 0, idlpBy = 0;
-
-                    string Cal2pFileName = apiParaReadStr("SaveParameterJason.json", 8);
-                    int PointLeft  = (int)apiParaReadIndex("SaveParameterJason.json", 9);
-                    int PointRight = (int)apiParaReadIndex("SaveParameterJason.json", 10);
-
-                    apiReadNeedleInfo(Cal2pFileName, PointLeft,  ref idlpAx, ref idlpAy);
-                    apiReadNeedleInfo(Cal2pFileName, PointRight, ref idlpBx, ref idlpBy);
-
-                    //Calculate Cal 2p
-                    {
-                        Normal calculate = new Normal();
-
-                        // 定義 PointA, PointB 的數據
-                        Normal.Point idealA = new Normal.Point(idlpAx, idlpAy);
-                        Normal.Point idealB = new Normal.Point(idlpBx, idlpBy);
-                        Normal.Point realA = new Normal.Point(rlAx, rlAy);
-                        Normal.Point realB = new Normal.Point(rlBx, rlBy);
-
-                        // 宣告 PointForward 和 PointBackward 變數
-                        Normal.Point idealAForward = new Normal.Point();
-                        Normal.Point idealABackward = new Normal.Point();
-                        Normal.Point realAForward = new Normal.Point();
-                        Normal.Point realABackward = new Normal.Point();
-
-                        // 呼叫計算並傳遞相應的點作為參數
-                        CalculateAndPrintPlotData(idealA, idealB, out idealAForward, out idealABackward);
-                        CalculateAndPrintPlotData(realA,  realB,  out realAForward,  out realABackward);
-
-                        // 計算PerspectiveTransform
-                        double[,] idealCoords = { { idealA.X,         idealA.Y },
-                                                  { idealAForward.X,  idealAForward.Y },
-                                                  { idealB.X,         idealB.Y },
-                                                  { idealABackward.X, idealABackward.Y } };
-
-                        double[,] realCoords  = { { realA.X,         realA.Y },
-                                                  { realABackward.X, realABackward.Y },
-                                                  { realB.X,         realB.Y },
-                                                  { realAForward.X,  realAForward.Y } };
-
-                        ComputePerspectiveTransform(idealCoords, realCoords, PerspectiveTransformMatrix);
-
-                        //// 求得映射轉換座標
-                        //double X_In = idealA.X,
-                        //       Y_In = idealA.Y;
-                        //Normal.Point pMapping = MapToCoords(PerspectiveTransformMatrix, X_In, Y_In);
-                    }
-                } xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_2pCalibration_end;
-                break;
-
-                default:
-                case xe_tmr_2pCalibration.xet2C_2pCalibration_end: 
-                case xe_tmr_2pCalibration.xet2C_idle: 
-                case xe_tmr_2pCalibration.xet2C_end:
-                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_empty;
-                    break;
-            }  // end of switch(xetmr2pCalibration) {
-        }
         //---------------------------------------------------------------------------------------
         //-------------------------------- State Machine implement ------------------------------
         //---------------------------------------------------------------------------------------
@@ -7110,6 +6231,900 @@ namespace InjectorInspector
         }
         //---------------------------------------------------------------------------------------
         //------------------------------------- 暫時或實驗中 ------------------------------------
+        //---------------------------------------------------------------------------------------
+        #endregion
+
+
+        #region 廢棄
+        //---------------------------------------------------------------------------------------
+        //----------------------------------------- 廢棄 ----------------------------------------
+        //---------------------------------------------------------------------------------------
+        #if (false)
+        public enum xe_tmr_2pCalibration {
+            xet2C_empty,
+            xet2C_idle,
+            xet2C_2pCalibration_start,
+
+                xet2C_StopAllTask,
+                    xet2C_StopAllTask_ok,
+
+                xet2C_ClearAllTaskStatus,
+                    xet2C_ClearAllTaskStatus_ok,
+
+                xet2C_SystemHome,
+                    xet2C_SystemHome_ok,
+
+                xet2C_Load_Calibration_Json,
+                    xet2C_Load_Calibration_Json_ok,
+                    xet2C_Load_Calibration_Json_ng,
+
+                xet2C_Socket_Camera_Home,
+                xet2C_Socket_Camera_Home_Wait,
+                xet2C_Socket_Camera_Home_Done,
+                xet2C_Socket_Camera_To_CapturePosition,
+                    xet2C_Socket_Camera_To_CapturePosition_ok,
+
+                xet2C_關工作門,
+                xet2C_檢查工作門關閉,
+                xet2C_確定工作門關閉,
+                xet2C_載盤真空閥啟用,
+                xet2C_Socket1真空閥啟用,
+                xet2C_Socket2真空閥啟用,
+
+                xet2C_開始進行校正參數調整, 
+                    xet2C_移動至_校正第1點,
+                        xet2C_等待移動至_校正第1點,
+                        xet2C_確定移動至_校正第1點,
+                    xet2C_取得補正_校正第1點,
+                        xet2C_移動補正_校正第1點,
+                            xet2C_等待移動補正_校正第1點,
+                            xet2C_確定移動補正_校正第1點,
+
+                    xet2C_移動至_校正第2點,
+                        xet2C_等待移動至_校正第2點,
+                        xet2C_確定移動至_校正第2點,
+                    xet2C_取得補正_校正第2點,
+                        xet2C_移動補正_校正第2點,
+                            xet2C_等待移動補正_校正第2點,
+                            xet2C_確定移動補正_校正第2點,
+
+                    xet2C_儲存校正參數,               
+                xet2C_完成進行校正參數調整,   
+                
+            xet2C_2pCalibration_end,
+            xet2C_end,
+        };
+        public xe_tmr_2pCalibration xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_empty;
+
+        public bool bStartCalibration           = false;
+        public uint u32Delaycnt                 = 0;
+
+        //---------------------------------------------------------------------------------------
+        private void btn_兩點校正_Click(object sender, EventArgs e)
+        {
+            bStartCalibration = true;
+        }
+        //---------------------------------------------------------------------------------------
+        private void tmr_2p_Calibration_Tick(object sender, EventArgs e)
+        {
+            lbl_2pCalibraLog.Text = xetmr2pCalibration.ToString();
+
+            if(cB_AlwaysResume.Checked == true) {
+                bResume = true;
+            }
+
+            switch (xetmr2pCalibration) {  // start of switch(xetmr2pCalibration) {
+                case xe_tmr_2pCalibration.xet2C_empty:
+                    if(bStartCalibration == true) {
+                        bStartCalibration = false;
+
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_2pCalibration_start;
+                    }
+                    break;
+                case xe_tmr_2pCalibration.xet2C_2pCalibration_start:                                  
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_StopAllTask;
+                    break;
+
+                case xe_tmr_2pCalibration.xet2C_StopAllTask:
+                    //Home Sequense
+                    tmr_Home.Enabled = false;
+                        xeTmrHome        = xe_tmr_home.xets_empty;
+                        ihomeFinishedCNT = 0;
+                        bhome            = false;
+                        bGotHome         = false;
+                    tmr_Home.Enabled = true;
+
+                    //TakePin
+                    tmr_TakePin.Enabled  = false;
+                        xeTmrTakePin         = xe_tmr_takepin.xett_Empty;
+                        iTakePinFinishedCNT2 = 0;
+                        bTakePin             = false;
+                        bChambered           = false;
+                        bRemove              = false;
+                        bPause               = false;
+                        btmrStop             = false;
+                    tmr_TakePin.Enabled  = true;
+
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_StopAllTask_ok;
+                    break;
+                case xe_tmr_2pCalibration.xet2C_StopAllTask_ok:
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_ClearAllTaskStatus;
+                    break;
+
+                case xe_tmr_2pCalibration.xet2C_ClearAllTaskStatus:
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_ClearAllTaskStatus_ok;
+                    break;
+                case xe_tmr_2pCalibration.xet2C_ClearAllTaskStatus_ok:
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_SystemHome;
+                    break;
+
+                case xe_tmr_2pCalibration.xet2C_SystemHome:
+                    bhome = true;
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_SystemHome_ok;
+                    break;
+                case xe_tmr_2pCalibration.xet2C_SystemHome_ok:
+                    if(bGotHome == true) { 
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Load_Calibration_Json;
+                    }
+                    break;
+
+                case xe_tmr_2pCalibration.xet2C_Load_Calibration_Json: {
+                    if(bForceToLoadCalibrationJson == false) {
+                        bForceToLoadCalibrationJson = true;
+
+                        if (OpenFile())  {
+                            tsmi_SaveFile.Enabled = true;
+                            btn_SaveFile.Enabled  = true;
+
+                            show_grp_BarcodeInfo(grp_BarcodeInfo);
+
+                            find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
+
+                            pic_Needles.Refresh();
+                        }
+
+                        int igetCount = get_NeedleCount();
+                        if(igetCount == 2) { 
+                            bForceToLoadCalibrationJson = false;
+                            xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Load_Calibration_Json_ok;
+                        } else { 
+                            bForceToLoadCalibrationJson = false;
+                            xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Load_Calibration_Json_ng;
+                        }
+                    }
+                } break;
+                case xe_tmr_2pCalibration.xet2C_Load_Calibration_Json_ok:
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket_Camera_Home;
+                    break;
+                case xe_tmr_2pCalibration.xet2C_Load_Calibration_Json_ng:
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_empty;
+                    break;
+
+                case xe_tmr_2pCalibration.xet2C_Socket_Camera_Home:
+                    dbapiIAI(0);
+                    u32Delaycnt = 0;
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket_Camera_Home_Wait;
+                    break;
+                case xe_tmr_2pCalibration.xet2C_Socket_Camera_Home_Wait:
+                    u32Delaycnt++;
+                    if(u32Delaycnt>=20) {
+                        u32Delaycnt = 0;
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket_Camera_Home_Done;
+                    }
+                    break;
+                case xe_tmr_2pCalibration.xet2C_Socket_Camera_Home_Done:
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket_Camera_To_CapturePosition;
+                    break;
+                case xe_tmr_2pCalibration.xet2C_Socket_Camera_To_CapturePosition: {   
+                    double dbSocketCamera; {
+                        dbSocketCamera = apiParaReadIndex("SaveParameterJason.json", 17);
+                        dbapiIAI(dbSocketCamera);
+                    }
+
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket_Camera_To_CapturePosition_ok;
+                } break;
+                case xe_tmr_2pCalibration.xet2C_Socket_Camera_To_CapturePosition_ok: {
+                    double dbSocketCamera; {
+                        dbSocketCamera = apiParaReadIndex("SaveParameterJason.json", 17);
+                    }
+
+                    double dbIAIHeight = dbapiIAI(dbRead);
+
+                    if(dbSocketCamera * 0.99<= dbIAIHeight && dbIAIHeight <= dbSocketCamera * 1.01) { 
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_關工作門;
+                    }
+                } break;
+
+                case xe_tmr_2pCalibration.xet2C_關工作門:     
+                    dbapiGate(580, 580/4);
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_檢查工作門關閉;
+                    break;
+                case xe_tmr_2pCalibration.xet2C_檢查工作門關閉:
+                    if(dbapiGate(dbCheckArrived, 0) == dbAxisMoveOk) {
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定工作門關閉;
+                    }
+                    break;
+                case xe_tmr_2pCalibration.xet2C_確定工作門關閉:
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_載盤真空閥啟用;
+                    break;
+                case xe_tmr_2pCalibration.xet2C_載盤真空閥啟用:
+                    digitalWrite((int)WMX3IO對照.pxeIO_載盤真空閥, HIGH);
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket1真空閥啟用;
+                    break;
+                case xe_tmr_2pCalibration.xet2C_Socket1真空閥啟用:
+                    digitalWrite((int)WMX3IO對照.pxeIO_Socket真空1, HIGH);
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_Socket2真空閥啟用;
+                    break;
+                case xe_tmr_2pCalibration.xet2C_Socket2真空閥啟用:
+                    digitalWrite((int)WMX3IO對照.pxeIO_Socket真空2, HIGH);
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_開始進行校正參數調整;
+                    break;
+
+                case xe_tmr_2pCalibration.xet2C_開始進行校正參數調整:
+                    if (bResume==true) {
+                        bResume = false;
+                        btn_參數_Click(sender, e);
+
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_移動至_校正第1點;
+                    }
+                    break;
+                case xe_tmr_2pCalibration.xet2C_移動至_校正第1點: {   
+                    //Get Real Pxy
+                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                    double dbTargetX = rlAx;
+                    double dbTargetY = rlAy;
+                    dbapiCarrierX(dbTargetX, 190*2);
+                    dbapiCarrierY(dbTargetY, 800*2);
+
+                    if(bResume==true) {
+                        bResume = false;
+
+                        u32Delaycnt = 0;
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_等待移動至_校正第1點;
+                    }
+                } break;
+                case xe_tmr_2pCalibration.xet2C_等待移動至_校正第1點: {
+                    //Get Real Pxy
+                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                    double dbTargetX = rlAx;
+                    double dbTargetY = rlAy;
+
+                    double dbX = dbapiCarrierX(dbRead, 0);
+                    double dbY = dbapiCarrierY(dbRead, 0);
+                    if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
+                        (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
+
+                        u32Delaycnt++;
+                        if(u32Delaycnt>=10) { 
+                            u32Delaycnt = 0;
+
+                            if(bResume==true) { 
+                                bResume = false;
+                                xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動至_校正第1點;
+                            }
+                        }
+                    }
+                } break;
+                case xe_tmr_2pCalibration.xet2C_確定移動至_校正第1點:
+                    if(bResume==true) { 
+                        bResume = false;
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_取得補正_校正第1點;
+                    }
+                    break;
+                case xe_tmr_2pCalibration.xet2C_取得補正_校正第1點: {
+                     btn_socket相機兩點定位_Click(sender, e);
+
+                    if(bResume==true) { 
+                        bResume = false;
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_移動補正_校正第1點;
+                    }
+                } break;
+                case xe_tmr_2pCalibration.xet2C_移動補正_校正第1點: {
+                    //Get Real Pxy
+                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                    double dbTargetX = rlAx - dbCameraCalibrationX;
+                    double dbTargetY = rlAy + dbCameraCalibrationY;
+
+                    dbapiCarrierX(dbTargetX, 190*2);
+                    dbapiCarrierY(dbTargetY, 800*2);
+
+                    fmParameterFormHandle.dataGridView1.Rows[0].Cells[1].Value = dbTargetX;
+                    fmParameterFormHandle.dataGridView1.Rows[1].Cells[1].Value = dbTargetY;
+
+                    if(bResume==true) { 
+                        bResume = false;
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_等待移動補正_校正第1點;
+                    }
+                } break;
+                case xe_tmr_2pCalibration.xet2C_等待移動補正_校正第1點: {
+                    //Get Real Pxy
+                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                    double dbTargetX = rlAx + dbCameraCalibrationX;
+                    double dbTargetY = rlAy + dbCameraCalibrationY;
+
+                    double dbX = dbapiCarrierX(dbRead, 0);
+                    double dbY = dbapiCarrierY(dbRead, 0);
+                    if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
+                        (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
+
+                        u32Delaycnt++;
+                        if(u32Delaycnt>=10) { 
+                            u32Delaycnt = 0;
+
+                            if(bResume==true) { 
+                                bResume = false;
+                                xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動補正_校正第1點;
+                            }
+                        }
+                    }
+                } break;
+                case xe_tmr_2pCalibration.xet2C_確定移動補正_校正第1點:
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_移動至_校正第2點;
+                    break;
+
+                case xe_tmr_2pCalibration.xet2C_移動至_校正第2點: {  
+                    //Get Real Pxy
+                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                    double dbTargetX = rlBx;
+                    double dbTargetY = rlBy;
+                    dbapiCarrierX(dbTargetX, 190*2);
+                    dbapiCarrierY(dbTargetY, 800*2);
+
+                    if(bResume==true) { 
+                        bResume = false;
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_等待移動至_校正第2點;
+                    }
+                } break;
+                case xe_tmr_2pCalibration.xet2C_等待移動至_校正第2點: {
+                    //Get Real Pxy
+                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                    double dbTargetX = rlBx;
+                    double dbTargetY = rlBy;
+
+                    double dbX = dbapiCarrierX(dbRead, 0);
+                    double dbY = dbapiCarrierY(dbRead, 0);
+                    if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
+                        (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
+
+                        u32Delaycnt++;
+                        if(u32Delaycnt>=10) { 
+                            u32Delaycnt = 0;
+
+                            if(bResume==true) { 
+                                bResume = false;
+                                xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動至_校正第2點;
+                            }
+                        }
+                    }
+                } break;
+                case xe_tmr_2pCalibration.xet2C_確定移動至_校正第2點:
+                    if(bResume==true) { 
+                        bResume = false;
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_取得補正_校正第2點;
+                    }
+                    break;
+                case xe_tmr_2pCalibration.xet2C_取得補正_校正第2點:
+                    btn_socket相機兩點定位_Click(sender, e);
+
+                    if (bResume==true) { 
+                        bResume = false;
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_移動補正_校正第2點;
+                    }
+                    break;
+                case xe_tmr_2pCalibration.xet2C_移動補正_校正第2點: {
+                    //Get Real Pxy
+                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                    double dbTargetX = rlBx - dbCameraCalibrationX;
+                    double dbTargetY = rlBy + dbCameraCalibrationY;
+
+                    dbapiCarrierX(dbTargetX, 190*2);
+                    dbapiCarrierY(dbTargetY, 800*2);
+
+                    fmParameterFormHandle.dataGridView1.Rows[2].Cells[1].Value = dbTargetX;
+                    fmParameterFormHandle.dataGridView1.Rows[3].Cells[1].Value = dbTargetY;
+
+                    if(bResume==true) { 
+                        bResume = false;
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_等待移動補正_校正第2點;
+                    }
+                } break;
+                case xe_tmr_2pCalibration.xet2C_等待移動補正_校正第2點: {
+                    //Get Real Pxy
+                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                    double dbTargetX = rlBx + dbCameraCalibrationX;
+                    double dbTargetY = rlBy + dbCameraCalibrationY;
+
+                    double dbX = dbapiCarrierX(dbRead, 0);
+                    double dbY = dbapiCarrierY(dbRead, 0);
+                    if( (dbTargetX*0.99 <= dbX && dbX <= dbTargetX*1.01) &&
+                        (dbTargetY*0.99 <= dbY && dbY <= dbTargetY*1.01) ) { 
+
+                        u32Delaycnt++;
+                        if(u32Delaycnt>=10) { 
+                            u32Delaycnt = 0;
+
+                            if(bResume==true) { 
+                                bResume = false;
+                                xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_確定移動補正_校正第2點;
+                            }
+                        }
+                    }
+                } break;
+                case xe_tmr_2pCalibration.xet2C_確定移動補正_校正第2點:
+                    if(bResume==true) { 
+                        bResume = false;
+                        xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_儲存校正參數;
+                    }
+                    break;
+
+                case xe_tmr_2pCalibration.xet2C_儲存校正參數:
+                    fmParameterFormHandle.btn_Save_Click(sender, e);
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_完成進行校正參數調整;
+                    break;
+                case xe_tmr_2pCalibration.xet2C_完成進行校正參數調整: {
+                    //Get Real Pxy
+                    double rlAx = apiParaReadIndex("SaveParameterJason.json", 0);
+                    double rlAy = apiParaReadIndex("SaveParameterJason.json", 1);
+                    double rlBx = apiParaReadIndex("SaveParameterJason.json", 2);
+                    double rlBy = apiParaReadIndex("SaveParameterJason.json", 3);
+
+                    //Get Ideal Pxy
+                    double idlpAx = 0, idlpAy = 0, idlpBx = 0, idlpBy = 0;
+
+                    string Cal2pFileName = apiParaReadStr("SaveParameterJason.json", 8);
+                    int PointLeft  = (int)apiParaReadIndex("SaveParameterJason.json", 9);
+                    int PointRight = (int)apiParaReadIndex("SaveParameterJason.json", 10);
+
+                    apiReadNeedleInfo(Cal2pFileName, PointLeft,  ref idlpAx, ref idlpAy);
+                    apiReadNeedleInfo(Cal2pFileName, PointRight, ref idlpBx, ref idlpBy);
+
+                    //Calculate Cal 2p
+                    {
+                        Normal calculate = new Normal();
+
+                        // 定義 PointA, PointB 的數據
+                        Normal.Point idealA = new Normal.Point(idlpAx, idlpAy);
+                        Normal.Point idealB = new Normal.Point(idlpBx, idlpBy);
+                        Normal.Point realA = new Normal.Point(rlAx, rlAy);
+                        Normal.Point realB = new Normal.Point(rlBx, rlBy);
+
+                        // 宣告 PointForward 和 PointBackward 變數
+                        Normal.Point idealAForward = new Normal.Point();
+                        Normal.Point idealABackward = new Normal.Point();
+                        Normal.Point realAForward = new Normal.Point();
+                        Normal.Point realABackward = new Normal.Point();
+
+                        // 呼叫計算並傳遞相應的點作為參數
+                        CalculateAndPrintPlotData(idealA, idealB, out idealAForward, out idealABackward);
+                        CalculateAndPrintPlotData(realA,  realB,  out realAForward,  out realABackward);
+
+                        // 計算PerspectiveTransform
+                        double[,] idealCoords = { { idealA.X,         idealA.Y },
+                                                  { idealAForward.X,  idealAForward.Y },
+                                                  { idealB.X,         idealB.Y },
+                                                  { idealABackward.X, idealABackward.Y } };
+
+                        double[,] realCoords  = { { realA.X,         realA.Y },
+                                                  { realABackward.X, realABackward.Y },
+                                                  { realB.X,         realB.Y },
+                                                  { realAForward.X,  realAForward.Y } };
+
+                        ComputePerspectiveTransform(idealCoords, realCoords, PerspectiveTransformMatrix);
+
+                        //// 求得映射轉換座標
+                        //double X_In = idealA.X,
+                        //       Y_In = idealA.Y;
+                        //Normal.Point pMapping = MapToCoords(PerspectiveTransformMatrix, X_In, Y_In);
+                    }
+                } xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_2pCalibration_end;
+                break;
+
+                default:
+                case xe_tmr_2pCalibration.xet2C_2pCalibration_end: 
+                case xe_tmr_2pCalibration.xet2C_idle: 
+                case xe_tmr_2pCalibration.xet2C_end:
+                    xetmr2pCalibration = xe_tmr_2pCalibration.xet2C_empty;
+                    break;
+            }  // end of switch(xetmr2pCalibration) {
+        }
+        #endif
+        //---------------------------------------------------------------------------------------
+        #if(false)
+        public enum xe_tmr_home {
+            xets_empty,
+            xets_idle,
+            xets_home_start,
+                xets_home_StartGate_01,
+                xets_home_StartGate_02,
+                xets_home_CheckGate,
+                xets_home_EndGate, 
+
+                xets_home_鬆開擺放座蓋板,
+
+                xets_home_StartZR電動缸Home_01, 
+                xets_home_StartZR電動缸Home_02, 
+                xets_home_CheckZR電動缸Home, 
+                xets_home_EndZR電動缸Home, 
+
+                xets_home_StartXYHome_01, 
+                xets_home_StartXYHome_02, 
+                xets_home_CheckXYHome, 
+                xets_home_EndXYHome, 
+
+                xets_home_StartSetZR_01,
+                xets_home_StartSetZR_02,
+                xets_home_CheckSetZR,
+                xets_home_EndSetZR01,
+
+                xets_home_StartCarrierXHome_01,
+                xets_home_StartCarrierXHome_02,
+                xets_home_CheckCarrierXHome,
+                xets_home_EndCarrierXHome,
+
+                xets_home_StartCarrierYHome_01,
+                xets_home_StartCarrierYHome_02,
+                xets_home_CheckCarrierYHome,
+                xets_home_EndCarrierYHome,
+            xets_home_end,
+            xets_end,
+        };
+        public xe_tmr_home xeTmrHome = xe_tmr_home.xets_empty;
+
+        public int ihomeFinishedCNT = 0;
+        public bool bhome    = false;
+        public bool bGotHome = false;
+        //---------------------------------------------------------------------------------------
+        public void tmr_Home_Tick(object sender, EventArgs e)
+        {
+            int getrslt = 0;
+            lbl_debug.Text = clsServoControlWMX3.WMX3_check_ServoOpState((int)WMX3軸定義.工作門, ref getrslt);
+
+            switch (xeTmrHome) {
+                case xe_tmr_home.xets_home_start:
+                    btn_home.Text = "Start Home";
+
+                    //Workaround for prevent Z Collide
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, false);  Thread.Sleep(200);
+                    dbapiJoDell3D掃描(dbJoDell3D掃描_Home位);                             Thread.Sleep(10);   //tmr_Home_Tick
+                    dbapiJoDell吸針嘴(dbJoDell吸針嘴_Home位);                             Thread.Sleep(10);   //tmr_Home_Tick
+                    dbapiJoDell植針嘴相機(dbJoDell植針嘴相機_Home位);                     Thread.Sleep(10);   //tmr_Home_Tick
+                    dbapiSetZ_defaultSpeed(dbSetZ_Home位);                                Thread.Sleep(200);  //tmr_Home_Tick
+
+                    //Disable All
+                    en_吸嘴X軸.Checked          = false;
+                    en_吸嘴Y軸.Checked          = false;
+                    en_吸嘴Z軸.Checked          = false;
+                    en_吸嘴R軸.Checked          = false;
+
+                    en_載盤X軸.Checked          = false;
+                    en_載盤Y軸.Checked          = false;
+
+                    en_植針Z軸.Checked          = false;
+                    en_植針R軸.Checked          = false;
+
+                    en_工作門.Checked           = false;
+
+                    en_IAI.Checked              = false;
+                    en_JoDell3D掃描.Checked     = false;
+                    en_JoDell吸針嘴.Checked     = false;
+                    en_JoDell植針嘴相機.Checked = false;
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, false);      Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, false);      Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, false);      Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, false);      Thread.Sleep(10);
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, false);      Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, false);      Thread.Sleep(10);
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, false);      Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, false);      Thread.Sleep(10);
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門,  false);      Thread.Sleep(10);
+
+                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 0);                 Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  0);                 Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 0);      Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 0);      Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_MotorOn, 0);  Thread.Sleep(10);
+
+                    xeTmrHome = xe_tmr_home.xets_home_StartGate_01; 
+                    break;
+
+                case xe_tmr_home.xets_home_StartGate_01:
+                    en_工作門.Checked = true;
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, true);  Thread.Sleep(10);
+                    xeTmrHome = xe_tmr_home.xets_home_StartGate_02;
+                    break;
+
+                case xe_tmr_home.xets_home_StartGate_02:
+                    dbapiGate(580, 580/4);  Thread.Sleep(10);  //tmr_Home_Tick
+                    xeTmrHome = xe_tmr_home.xets_home_CheckGate;
+                    break;
+
+                case xe_tmr_home.xets_home_CheckGate:
+                    if(dbapiGate(dbCheckArrived, 0) == dbAxisMoveOk) {
+                        xeTmrHome = xe_tmr_home.xets_home_鬆開擺放座蓋板;
+                    }
+                    break;
+
+                case xe_tmr_home.xets_home_鬆開擺放座蓋板:
+                    digitalWrite((int)WMX3IO對照.pxeIO_擺放座蓋板, LOW);
+                    xeTmrHome = xe_tmr_home.xets_home_EndGate;
+                    break;
+
+                case xe_tmr_home.xets_home_EndGate:
+                case xe_tmr_home.xets_home_StartZR電動缸Home_01:
+                    en_吸嘴Z軸.Checked = true;
+                    en_吸嘴R軸.Checked = true;
+
+                    en_IAI.Checked          = true;
+                    en_JoDell3D掃描.Checked = true;
+                    en_JoDell吸針嘴.Checked = true;
+                    en_JoDell植針嘴相機.Checked = true;
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, true);       Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, true);       Thread.Sleep(10);
+
+                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 1);                 Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  1);                 Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 1);      Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 1);      Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_MotorOn, 1);  Thread.Sleep(10);
+
+                    xeTmrHome = xe_tmr_home.xets_home_StartZR電動缸Home_02;
+                    break;
+
+                case xe_tmr_home.xets_home_StartZR電動缸Home_02:
+                    if(true) { 
+                        int rslt = 0;
+                        int axis = 0;
+                        string position = "";
+                        string speed    = "";
+
+                        axis = (int)WMX3軸定義.吸嘴Z軸;
+                        rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);  Thread.Sleep(10);
+                        if (rslt == 1) {
+                            clsServoControlWMX3.WMX3_SetHomePosition(axis);                               Thread.Sleep(10);
+                        }
+
+                        axis = (int)WMX3軸定義.吸嘴R軸;
+                        rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);  Thread.Sleep(10);
+                        if (rslt == 1) {
+                            clsServoControlWMX3.WMX3_SetHomePosition(axis);                               Thread.Sleep(10);
+                        }
+
+                        dbapiIAI(0);  Thread.Sleep(10);  //tmr_Home_Tick
+
+                        xeTmrHome = xe_tmr_home.xets_home_CheckZR電動缸Home;
+                    }
+                    break;
+
+                case xe_tmr_home.xets_home_CheckZR電動缸Home:
+                    if(true) {
+                        int rslt01 = 0, rslt02 = 0;
+                        int axis01 = 0, axis02 = 0;
+
+                        axis01 = (int)WMX3軸定義.吸嘴Z軸;
+                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
+
+                        axis02 = (int)WMX3軸定義.吸嘴R軸;
+                        rslt02 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis02);  Thread.Sleep(10);
+
+                        if (rslt01==1 && rslt02==1) {
+                            if (dbapiNozzleZ(dbRead, 0) <= 1.0) {
+                                xeTmrHome = xe_tmr_home.xets_home_EndZR電動缸Home;
+                            }
+                        }
+                    }
+                    break;
+
+                case xe_tmr_home.xets_home_EndZR電動缸Home:
+                    dbapiIAI(10);               Thread.Sleep(10);  //tmr_Home_Tick
+
+                    dbapiJoDell3D掃描(10);      Thread.Sleep(10);  //tmr_Home_Tick
+                    dbapiJoDell吸針嘴( 5);      Thread.Sleep(10);  //tmr_Home_Tick
+                    dbapiJoDell植針嘴相機(10);  Thread.Sleep(10);  //tmr_Home_Tick
+                    xeTmrHome = xe_tmr_home.xets_home_StartXYHome_01;
+                    break;
+
+                case xe_tmr_home.xets_home_StartXYHome_01:
+                    en_吸嘴X軸.Checked = true;
+                    en_吸嘴Y軸.Checked = true;
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, true);  Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, true);  Thread.Sleep(10);
+                    xeTmrHome = xe_tmr_home.xets_home_StartXYHome_02;
+                    break;
+
+                case xe_tmr_home.xets_home_StartXYHome_02:
+                    if (dbapiNozzleZ(dbRead, 0) <= 1.0) {
+                        dbapiNozzleX_defaultSpeed(dbNozzleX_Home位);   Thread.Sleep(10);  //tmr_Home_Tick
+                        dbapiNozzleY_defaultSpeed(dbNozzleY_Home位);   Thread.Sleep(10);  //tmr_Home_Tick
+                        xeTmrHome = xe_tmr_home.xets_home_CheckXYHome;
+                    }
+                    break;
+
+                case xe_tmr_home.xets_home_CheckXYHome:
+                    if (dbapiNozzleZ(dbRead, 0) <= 1.0) { 
+                        int rslt01 = 0, rslt02 = 0;
+                        int axis01 = 0, axis02 = 0;
+
+                        axis01 = (int)WMX3軸定義.吸嘴X軸;
+                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
+
+                        axis02 = (int)WMX3軸定義.吸嘴Y軸;
+                        rslt02 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis02);  Thread.Sleep(10);
+
+                        if (rslt01 == 1 && rslt02 == 1) {
+                            xeTmrHome = xe_tmr_home.xets_home_EndXYHome;
+                        }
+                    }
+                    break;
+
+                case xe_tmr_home.xets_home_EndXYHome:
+                case xe_tmr_home.xets_home_StartSetZR_01:
+                    en_植針Z軸.Checked = true;
+                    en_植針R軸.Checked = true;
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, true);  Thread.Sleep(10);
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, true);  Thread.Sleep(10);
+
+                    xeTmrHome = xe_tmr_home.xets_home_StartSetZR_02;
+                    break;
+
+                case xe_tmr_home.xets_home_StartSetZR_02:
+                    dbapiSetZ_defaultSpeed(dbSetZ_Home位);  Thread.Sleep(10);  //tmr_Home_Tick
+                    double dbSetR放料位; {
+                        dbSetR放料位 = apiParaReadIndex("SaveParameterJason.json", 44);
+                    }
+                    if(indicateRead((int)WMX3IO對照.pxeIO_堵料吹氣桿出) == HIGH) { 
+                        dbapiSetR(dbSetR放料位, 360*2);  Thread.Sleep(10);  //tmr_Home_Tick
+                        xeTmrHome = xe_tmr_home.xets_home_CheckSetZR;
+                    }
+                    break;
+
+                case xe_tmr_home.xets_home_CheckSetZR:
+                    if (true) {
+                        int rslt01 = 0, rslt02 = 0;
+                        int axis01 = 0, axis02 = 0;
+
+                        axis01 = (int)WMX3軸定義.植針Z軸;
+                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
+
+                        axis02 = (int)WMX3軸定義.植針R軸;
+                        rslt02 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis02);  Thread.Sleep(10);
+
+                        if (rslt01 == 1 && rslt02 == 1) {
+                            if (dbapiSetZ(dbRead, 0) <= 16) {
+                                xeTmrHome = xe_tmr_home.xets_home_EndSetZR01;
+                            }
+                        }
+                    }
+                    break;
+
+                case xe_tmr_home.xets_home_EndSetZR01:
+                case xe_tmr_home.xets_home_StartCarrierXHome_01:
+                    en_載盤X軸.Checked = true;
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, true);  Thread.Sleep(10);
+                    xeTmrHome = xe_tmr_home.xets_home_StartCarrierXHome_02;
+                    break;
+
+                case xe_tmr_home.xets_home_StartCarrierXHome_02:
+                    if (dbapiSetZ(dbRead, 0) <= 16) {
+                        dbapiCarrierX_defaultSpeed(dbCarrierX_Home位);  //tmr_Home_Tick
+                        xeTmrHome = xe_tmr_home.xets_home_CheckCarrierXHome;
+                    }
+                    break;
+
+                case xe_tmr_home.xets_home_CheckCarrierXHome:
+                    if (true) {
+                        int rslt01 = 0;
+                        int axis01 = 0;
+
+                        axis01 = (int)WMX3軸定義.載盤X軸;
+                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
+
+                        if (rslt01 == 1) {
+                            if (dbapiSetZ(dbRead, 0) <= 16) {
+                                xeTmrHome = xe_tmr_home.xets_home_EndCarrierXHome;
+                            }
+                        }
+                    }
+                    break;
+
+                case xe_tmr_home.xets_home_EndCarrierXHome:
+                case xe_tmr_home.xets_home_StartCarrierYHome_01:
+                    en_載盤Y軸.Checked = true;
+
+                    clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, true);  Thread.Sleep(10);
+                    xeTmrHome = xe_tmr_home.xets_home_StartCarrierYHome_02;
+                    break;
+
+                case xe_tmr_home.xets_home_StartCarrierYHome_02:
+                    if (dbapiSetZ(dbRead, 0) <= 16) {
+                        dbapiCarrierY_defaultSpeed(dbCarrierY_Home位);
+                        xeTmrHome = xe_tmr_home.xets_home_CheckCarrierYHome;
+                    }
+                    break;
+
+                case xe_tmr_home.xets_home_CheckCarrierYHome:
+                    if (true) {
+                        int rslt01 = 0;
+                        int axis01 = 0;
+
+                        axis01 = (int)WMX3軸定義.載盤Y軸;
+                        rslt01 = clsServoControlWMX3.WMX3_check_ServoMovingState(axis01);  Thread.Sleep(10);
+
+                        if (rslt01 == 1) {
+                            if (dbapiSetZ(dbRead, 0) <= 16) {
+                                xeTmrHome = xe_tmr_home.xets_home_EndCarrierYHome;
+                            }
+                        }
+                    }
+                    break;
+
+                case xe_tmr_home.xets_home_EndCarrierYHome:
+                case xe_tmr_home.xets_home_end:
+                    dbapiNozzleR_defaultSpeed(dbNozzleR_Home位);  Thread.Sleep(10);
+                    dbapiGate_defaultSpeed(dbGate_開門);          Thread.Sleep(10);
+
+                    bGotHome = true;
+
+                    xeTmrHome = xe_tmr_home.xets_end;
+                    break;
+
+                default:
+                case xe_tmr_home.xets_empty:
+                case xe_tmr_home.xets_idle:
+                case xe_tmr_home.xets_end:
+                    btn_home.Text = "Home";
+
+                    if(bhome == true) {
+                        bhome    = false;
+                        bGotHome = false;
+                        xeTmrHome = xe_tmr_home.xets_home_start;
+                    }
+                    break;
+            }
+
+        }
+        #endif
+        //---------------------------------------------------------------------------------------
+        //----------------------------------------- 廢棄 ----------------------------------------
         //---------------------------------------------------------------------------------------
         #endregion
 
@@ -12054,6 +12069,8 @@ namespace InjectorInspector
         }
 
         // ---------Private Variables----------
+        public bool bForceToLoadCalibrationJson = false;
+        public bool bForceToLoadInsertJson      = false;
         public int iSocketHoleNum        = -1;
         public int iSocketHoleArrayIndex = -1;
         public int iSocketHoleIndex      = -1;
