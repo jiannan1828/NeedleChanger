@@ -36,7 +36,6 @@ namespace InjectorInspector
             this.tsmi_Enable = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Reset = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Reserve1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tmr_TakePin = new System.Windows.Forms.Timer(this.components);
             this.ttp_NeedleInfo = new System.Windows.Forms.ToolTip(this.components);
             this.tmrBarCodeScanner = new System.Windows.Forms.Timer(this.components);
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -549,7 +548,7 @@ namespace InjectorInspector
             this.tsmi_Reset,
             this.tsmi_Reserve1});
             this.cms_pic_Needles.Name = "cms_pic_Needles";
-            this.cms_pic_Needles.Size = new System.Drawing.Size(115, 158);
+            this.cms_pic_Needles.Size = new System.Drawing.Size(181, 180);
             this.cms_pic_Needles.Opened += new System.EventHandler(this.cms_pic_Needles_Opened);
             // 
             // tsmi_Place
@@ -605,11 +604,6 @@ namespace InjectorInspector
             this.tsmi_Reserve1.Name = "tsmi_Reserve1";
             this.tsmi_Reserve1.Size = new System.Drawing.Size(114, 22);
             this.tsmi_Reserve1.Text = "保留";
-            // 
-            // tmr_TakePin
-            // 
-            this.tmr_TakePin.Interval = 5;
-            this.tmr_TakePin.Tick += new System.EventHandler(this.tmr_TakePin_Tick);
             // 
             // tmrBarCodeScanner
             // 
@@ -5239,7 +5233,6 @@ namespace InjectorInspector
             this.btn抽針.TabIndex = 240;
             this.btn抽針.Text = "抽針";
             this.btn抽針.UseVisualStyleBackColor = true;
-            this.btn抽針.Click += new System.EventHandler(this.btn抽針_Click);
             // 
             // label16
             // 
@@ -5297,7 +5290,6 @@ namespace InjectorInspector
             this.cB_AlwaysResume.TabIndex = 234;
             this.cB_AlwaysResume.Text = "cB_AlwaysResume";
             this.cB_AlwaysResume.UseVisualStyleBackColor = true;
-            this.cB_AlwaysResume.CheckedChanged += new System.EventHandler(this.cB_AlwaysResume_CheckedChanged);
             // 
             // lbl_PinIndex
             // 
@@ -5425,7 +5417,6 @@ namespace InjectorInspector
             this.btn_tmrClear.TabIndex = 222;
             this.btn_tmrClear.Text = "清除流程";
             this.btn_tmrClear.UseVisualStyleBackColor = true;
-            this.btn_tmrClear.Click += new System.EventHandler(this.btn_tmrClear_Click);
             // 
             // btn_Resume
             // 
@@ -5435,7 +5426,6 @@ namespace InjectorInspector
             this.btn_Resume.TabIndex = 220;
             this.btn_Resume.Text = "btn_Resume";
             this.btn_Resume.UseVisualStyleBackColor = true;
-            this.btn_Resume.Click += new System.EventHandler(this.btn_Resume_Click);
             // 
             // label15
             // 
@@ -5463,7 +5453,6 @@ namespace InjectorInspector
             this.btn_取得目標座標.TabIndex = 217;
             this.btn_取得目標座標.Text = "取得目標座標";
             this.btn_取得目標座標.UseVisualStyleBackColor = true;
-            this.btn_取得目標座標.Click += new System.EventHandler(this.btn_取得目標座標_Click);
             // 
             // lbl_CycleTime
             // 
@@ -5482,7 +5471,6 @@ namespace InjectorInspector
             this.btn_tmrPause.TabIndex = 215;
             this.btn_tmrPause.Text = "循環暫停";
             this.btn_tmrPause.UseVisualStyleBackColor = true;
-            this.btn_tmrPause.Click += new System.EventHandler(this.btn_tmrPause_Click);
             // 
             // btn_tmrStop
             // 
@@ -5492,7 +5480,6 @@ namespace InjectorInspector
             this.btn_tmrStop.TabIndex = 214;
             this.btn_tmrStop.Text = "循環停止";
             this.btn_tmrStop.UseVisualStyleBackColor = true;
-            this.btn_tmrStop.Click += new System.EventHandler(this.btn_tmrStop_Click);
             // 
             // btn上膛
             // 
@@ -5521,7 +5508,6 @@ namespace InjectorInspector
             this.btn_TakePin.TabIndex = 30;
             this.btn_TakePin.Text = "取針丟棄";
             this.btn_TakePin.UseVisualStyleBackColor = true;
-            this.btn_TakePin.Click += new System.EventHandler(this.btn_TakePin_Click);
             // 
             // btn_home
             // 
@@ -5892,7 +5878,6 @@ namespace InjectorInspector
 
         #endregion
         public System.Windows.Forms.Timer tmr_ReadWMX3;
-        public System.Windows.Forms.Timer tmr_TakePin;
         public ContextMenuStrip cms_pic_Needles;
         public ToolStripMenuItem tsmi_Place;
         public ToolStripMenuItem tsmi_Remove;
