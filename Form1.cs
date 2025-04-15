@@ -1570,9 +1570,9 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value;
+                    UIHelper.SetControlProperty(lbl_植針Z軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_植針Z軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_植針Z軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
 
 
                     //得到原始數值
@@ -2524,6 +2524,75 @@ namespace InjectorInspector
             SpeedSetZ.Value     = (int)dbInsertSpeedSetZ;
             SpeedSetR.Value     = (int)dbInsertSpeedSetR;
 
+            //Light Thread
+            {
+                Thread thread_LightTask   = new Thread(new ThreadStart(DoWork_Light));
+                Thread thread_NozzleTask  = new Thread(new ThreadStart(DoWork_Nozzle));
+                Thread thread_SetTask     = new Thread(new ThreadStart(DoWork_Set));
+                Thread thread_電動缸Task  = new Thread(new ThreadStart(DoWork_電動缸));
+                Thread thread_CarriorTask = new Thread(new ThreadStart(DoWork_Carrior));
+                Thread thread_FileTask    = new Thread(new ThreadStart(DoWork_File));
+
+                thread_LightTask.Start();
+                thread_NozzleTask.Start();
+                thread_SetTask.Start();
+                thread_電動缸Task.Start();
+                thread_CarriorTask.Start();
+                thread_FileTask.Start();
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        void DoWork_Light() {
+            while(true) {
+                Xavier_TASK1();  //面板按鈕以及指示燈
+
+                Console.WriteLine("DoWork_Light thread\r\n");
+                Thread.Sleep(1);
+            }
+        }
+        void DoWork_Nozzle() {
+            while(true) {
+                Xavier_TASK2();  //吸嘴軸組
+
+                Console.WriteLine("DoWork_Nozzle thread\r\n");
+                Thread.Sleep(1);
+            }
+        }
+        void DoWork_Set() {
+            while(true) {
+                Xavier_TASK3();  //植針軸組
+
+                Console.WriteLine("DoWork_Set thread\r\n");
+                Thread.Sleep(1);
+            }
+        }
+        void DoWork_電動缸() {
+            while(true) {
+                Xavier_TASK4();  //電動缸組_含抽針
+
+                Console.WriteLine("DoWork_電動缸 thread\r\n");
+                Thread.Sleep(1);
+            }
+        }
+        void DoWork_Carrior()
+        {
+            while (true)
+            {
+                Xavier_TASK5();  //載盤組
+
+                Console.WriteLine("DoWork_Carrior thread\r\n");
+                Thread.Sleep(1);
+            }
+        }
+        void DoWork_File()
+        {
+            while (true)
+            {
+                Xavier_TASK6();  //IO檢查_工作門_檔案組
+
+                Console.WriteLine("DoWork_File thread\r\n");
+                Thread.Sleep(1);
+            }
         }
         //---------------------------------------------------------------------------------------
         public void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -3958,6 +4027,27 @@ namespace InjectorInspector
         #endregion
 
 
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------- Invoke ---------------------------------------
+        //---------------------------------------------------------------------------------------
+        void SetEn工作門_Checked(bool value) {
+            if (en_工作門.InvokeRequired) {
+                en_工作門.Invoke(
+                    new Action(
+                        () => {
+                            en_工作門.Checked = value;
+                        }
+                    )
+                );
+            } else {
+                en_工作門.Checked = value;
+            }
+        }
+        //---------------------------------------------------------------------------------------
+        //---------------------------------------- Invoke ---------------------------------------
+        //---------------------------------------------------------------------------------------
+
+
         #region 暫時或實驗中
         //---------------------------------------------------------------------------------------
         //------------------------------------- 暫時或實驗中 ------------------------------------
@@ -3975,186 +4065,6 @@ namespace InjectorInspector
 
             dbCameraCalibrationX = pos.X;
             dbCameraCalibrationY = pos.Y;
-        }
-        //---------------------------------------------------------------------------------------
-        private void tmr_燈號_Tick(object sender, EventArgs e) {
-            var tempBits = TaskISRFlag.bits;
-                if(tempBits.bit0 == true) {
-                    Xavier_TASK1();  //面板按鈕以及指示燈
-                } else 
-                if(tempBits.bit1 == true) {
-                    //Xavier_TASK2();  //吸嘴軸組
-                } else 
-                if(tempBits.bit2 == true) {
-                    //Xavier_TASK3();  //植針軸組
-                } else 
-                if(tempBits.bit3 == true) {
-                    //Xavier_TASK4();  //電動缸組_含抽針
-                } else 
-                if(tempBits.bit4 == true) {
-                    //Xavier_TASK5();  //載盤組
-                } else 
-                if(tempBits.bit5 == true) {
-                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
-                } else 
-                {
-                    Xavier_TASK1();  //面板按鈕以及指示燈
-                    //Xavier_TASK2();  //吸嘴軸組
-                    //Xavier_TASK3();  //植針軸組
-                    //Xavier_TASK4();  //電動缸組_含抽針
-                    //Xavier_TASK5();  //載盤組
-                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
-                }
-        }
-
-        private void tmr_吸針嘴_Tick(object sender, EventArgs e) {
-            var tempBits = TaskISRFlag.bits;
-                if(tempBits.bit0 == true) {
-                    //Xavier_TASK1();  //面板按鈕以及指示燈
-                } else 
-                if(tempBits.bit1 == true) {
-                    Xavier_TASK2();  //吸嘴軸組
-                } else 
-                if(tempBits.bit2 == true) {
-                    //Xavier_TASK3();  //植針軸組
-                } else 
-                if(tempBits.bit3 == true) {
-                    //Xavier_TASK4();  //電動缸組_含抽針
-                } else 
-                if(tempBits.bit4 == true) {
-                    //Xavier_TASK5();  //載盤組
-                } else 
-                if(tempBits.bit5 == true) {
-                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
-                } else 
-                {
-                    //Xavier_TASK1();  //面板按鈕以及指示燈
-                    Xavier_TASK2();  //吸嘴軸組
-                    //Xavier_TASK3();  //植針軸組
-                    //Xavier_TASK4();  //電動缸組_含抽針
-                    //Xavier_TASK5();  //載盤組
-                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
-                }
-        }
-
-        private void tmr_植針嘴_Tick(object sender, EventArgs e) {
-            var tempBits = TaskISRFlag.bits;
-                if(tempBits.bit0 == true) {
-                    //Xavier_TASK1();  //面板按鈕以及指示燈
-                } else 
-                if(tempBits.bit1 == true) {
-                    //Xavier_TASK2();  //吸嘴軸組
-                } else 
-                if(tempBits.bit2 == true) {
-                    Xavier_TASK3();  //植針軸組
-                } else 
-                if(tempBits.bit3 == true) {
-                    //Xavier_TASK4();  //電動缸組_含抽針
-                } else 
-                if(tempBits.bit4 == true) {
-                    //Xavier_TASK5();  //載盤組
-                } else 
-                if(tempBits.bit5 == true) {
-                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
-                } else 
-                {
-                    //Xavier_TASK1();  //面板按鈕以及指示燈
-                    //Xavier_TASK2();  //吸嘴軸組
-                    Xavier_TASK3();  //植針軸組
-                    //Xavier_TASK4();  //電動缸組_含抽針
-                    //Xavier_TASK5();  //載盤組
-                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
-                }
-        }
-
-        private void tmr_電動缸_Tick(object sender, EventArgs e) {
-            var tempBits = TaskISRFlag.bits;
-                if(tempBits.bit0 == true) {
-                    //Xavier_TASK1();  //面板按鈕以及指示燈
-                } else 
-                if(tempBits.bit1 == true) {
-                    //Xavier_TASK2();  //吸嘴軸組
-                } else 
-                if(tempBits.bit2 == true) {
-                    //Xavier_TASK3();  //植針軸組
-                } else 
-                if(tempBits.bit3 == true) {
-                    Xavier_TASK4();  //電動缸組_含抽針
-                } else 
-                if(tempBits.bit4 == true) {
-                    //Xavier_TASK5();  //載盤組
-                } else 
-                if(tempBits.bit5 == true) {
-                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
-                } else 
-                {
-                    //Xavier_TASK1();  //面板按鈕以及指示燈
-                    //Xavier_TASK2();  //吸嘴軸組
-                    //Xavier_TASK3();  //植針軸組
-                    Xavier_TASK4();  //電動缸組_含抽針
-                    //Xavier_TASK5();  //載盤組
-                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
-                }
-        }
-
-        private void tmr_載盤_Tick(object sender, EventArgs e) {
-            var tempBits = TaskISRFlag.bits;
-                if(tempBits.bit0 == true) {
-                    //Xavier_TASK1();  //面板按鈕以及指示燈
-                } else 
-                if(tempBits.bit1 == true) {
-                    //Xavier_TASK2();  //吸嘴軸組
-                } else 
-                if(tempBits.bit2 == true) {
-                    //Xavier_TASK3();  //植針軸組
-                } else 
-                if(tempBits.bit3 == true) {
-                    //Xavier_TASK4();  //電動缸組_含抽針
-                } else 
-                if(tempBits.bit4 == true) {
-                    Xavier_TASK5();  //載盤組
-                } else 
-                if(tempBits.bit5 == true) {
-                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
-                } else 
-                {
-                    //Xavier_TASK1();  //面板按鈕以及指示燈
-                    //Xavier_TASK2();  //吸嘴軸組
-                    //Xavier_TASK3();  //植針軸組
-                    //Xavier_TASK4();  //電動缸組_含抽針
-                    Xavier_TASK5();  //載盤組
-                    //Xavier_TASK6();  //IO檢查_工作門_檔案組
-                }
-        }
-
-        private void tmr_檔案_Tick(object sender, EventArgs e) {
-            var tempBits = TaskISRFlag.bits;
-                if(tempBits.bit0 == true) {
-                    //Xavier_TASK1();  //面板按鈕以及指示燈
-                } else 
-                if(tempBits.bit1 == true) {
-                    //Xavier_TASK2();  //吸嘴軸組
-                } else 
-                if(tempBits.bit2 == true) {
-                    //Xavier_TASK3();  //植針軸組
-                } else 
-                if(tempBits.bit3 == true) {
-                    //Xavier_TASK4();  //電動缸組_含抽針
-                } else 
-                if(tempBits.bit4 == true) {
-                    //Xavier_TASK5();  //載盤組
-                } else 
-                if(tempBits.bit5 == true) {
-                    Xavier_TASK6();  //IO檢查_工作門_檔案組
-                } else 
-                {
-                    //Xavier_TASK1();  //面板按鈕以及指示燈
-                    //Xavier_TASK2();  //吸嘴軸組
-                    //Xavier_TASK3();  //植針軸組
-                    //Xavier_TASK4();  //電動缸組_含抽針
-                    //Xavier_TASK5();  //載盤組
-                    Xavier_TASK6();  //IO檢查_工作門_檔案組
-                }
         }
         //---------------------------------------------------------------------------------------
         public enum xeXavier_RunType {
@@ -5057,7 +4967,19 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void Xavier_Task1_Debugprintf(string message) {
-            lbldbg_Task1_Info.Text = message;
+            if (lbldbg_Task1_Info.InvokeRequired) {
+                // 用主執行緒呼叫自己
+                lbldbg_Task1_Info.Invoke(
+                    new Action(
+                        () => {
+                            lbldbg_Task1_Info.Text = message;
+                        } 
+                    )
+                );
+            } else {
+                // 已經在 UI thread，可以直接改
+                lbldbg_Task1_Info.Text = message;
+            }
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -6025,7 +5947,19 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void Xavier_Task2_Debugprintf(string message) {
-            lbldbg_Task2_Info.Text = message;
+            if (lbldbg_Task2_Info.InvokeRequired) {
+                // 用主執行緒呼叫自己
+                lbldbg_Task2_Info.Invoke(
+                    new Action(
+                        () => {
+                            lbldbg_Task2_Info.Text = message;
+                        } 
+                    )
+                );
+            } else {
+                // 已經在 UI thread，可以直接改
+                lbldbg_Task2_Info.Text = message;
+            }
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -7201,7 +7135,19 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void Xavier_Task3_Debugprintf(string message) {
-            lbldbg_Task3_Info.Text = message;
+            if (lbldbg_Task3_Info.InvokeRequired) {
+                // 用主執行緒呼叫自己
+                lbldbg_Task3_Info.Invoke(
+                    new Action(
+                        () => {
+                            lbldbg_Task3_Info.Text = message;
+                        } 
+                    )
+                );
+            } else {
+                // 已經在 UI thread，可以直接改
+                lbldbg_Task3_Info.Text = message;
+            }
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -7983,7 +7929,19 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void Xavier_Task4_Debugprintf(string message) {
-            lbldbg_Task4_Info.Text = message;
+            if (lbldbg_Task4_Info.InvokeRequired) {
+                // 用主執行緒呼叫自己
+                lbldbg_Task4_Info.Invoke(
+                    new Action(
+                        () => {
+                            lbldbg_Task4_Info.Text = message;
+                        } 
+                    )
+                );
+            } else {
+                // 已經在 UI thread，可以直接改
+                lbldbg_Task4_Info.Text = message;
+            }
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -9008,7 +8966,19 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void Xavier_Task5_Debugprintf(string message) {
-            lbldbg_Task5_Info.Text = message;
+            if (lbldbg_Task5_Info.InvokeRequired) {
+                // 用主執行緒呼叫自己
+                lbldbg_Task5_Info.Invoke(
+                    new Action(
+                        () => {
+                            lbldbg_Task5_Info.Text = message;
+                        } 
+                    )
+                );
+            } else {
+                // 已經在 UI thread，可以直接改
+                lbldbg_Task5_Info.Text = message;
+            }
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -9258,7 +9228,8 @@ namespace InjectorInspector
                         btp6Home_告知工作門已關閉                            = false;
                         btp6Home_告知系統回home完畢                          = false;
 
-                        en_工作門.Checked = true;
+                        UIHelper.SetControlProperty(en_工作門, () => en_工作門.Checked = true);
+
                         clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, true);
 
                         Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_工作門關閉);
@@ -9917,7 +9888,19 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void Xavier_Task6_Debugprintf(string message) {
-            lbldbg_Task6_Info.Text = message;
+            if (lbldbg_Task6_Info.InvokeRequired) {
+                // 用主執行緒呼叫自己
+                lbldbg_Task1_Info.Invoke(
+                    new Action(
+                        () => {
+                            lbldbg_Task6_Info.Text = message;
+                        } 
+                    )
+                );
+            } else {
+                // 已經在 UI thread，可以直接改
+                lbldbg_Task6_Info.Text = message;
+            }
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -10003,6 +9986,18 @@ namespace InjectorInspector
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr GetModuleHandle(string lpModuleName);
+    }
+    //---------------------------------------------------------------------------------------
+    //解決呼叫一大堆Invoke
+    public static class UIHelper
+    {
+        public static void SetControlProperty(Control control, Action action) {
+            if (control.InvokeRequired) { 
+                control.Invoke(action);
+            } else { 
+                action();
+            }
+        }
     }
     //---------------------------------------------------------------------------------------
 }  // end of namespace InjectorInspector
