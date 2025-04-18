@@ -7728,7 +7728,12 @@ namespace InjectorInspector
                             Xavier_Task4_Debugprintf("tp4Insert_柔震盤物料檢測retry次數等於0\r\n");
                             break;
                         case xeXavier_T4_Job.tp4Insert_柔震盤物料異常_告知系統中止:
+                            //預設Retry次數到達後異常停止
                             Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤物料異常_告知系統中止);
+                            
+                            //料過Retry次數異常停, 繼續植針
+                            //Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_進行柔震盤物料確認_從_tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照);
+                            
                             Xavier_Task4_Debugprintf("tp4Insert_柔震盤物料異常_告知系統中止\r\n");
                             break;
                         case xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數大於0:
