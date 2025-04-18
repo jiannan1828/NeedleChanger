@@ -4442,7 +4442,7 @@ namespace InjectorInspector
             public bool btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照      = false;
             public bool btp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標   = false;
           //public bool btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照_再次 = false;
-            public bool btp2Insert_ISR_告知取得吸針嘴組R軸                     = false;
+          //public bool btp2Insert_ISR_告知取得吸針嘴組R軸                     = false;
             public bool btp3Insert_告知系統賭料排除異常_告知系統中止           = false;
             public bool btp2Insert_告知植針軸組可以進行放料作業                = false;
             public bool btp3Insert_告知載盤組_植針軸組無干涉                   = false;
@@ -5230,7 +5230,7 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_ISR_告知取得吸針嘴組R軸:
                         {
-                            btp2Insert_ISR_告知取得吸針嘴組R軸 = true;
+                            //btp2Insert_ISR_告知取得吸針嘴組R軸 = true;
 
                             Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2_ISR01_END);
                         }
@@ -5770,9 +5770,7 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組R至放料位_從_tp2Insert_ISR_告知取得吸針嘴組R軸:
                         {
-                            if(btp2Insert_ISR_告知取得吸針嘴組R軸 == true) { 
-                                btp2Insert_ISR_告知取得吸針嘴組R軸 = false;
-
+                            if(eDVR_Rsult != eDownVisionRsult.eDVR_Null) { 
                                 double dbTargetNozzleR = 0.0;
                                 switch(eDVR_Rsult) {
                                     case eDownVisionRsult.eDVR_Get_1Pin_ok_Normal:   dbTargetNozzleR = db取料Nozzle中心點R + 90;        break;
@@ -5789,6 +5787,8 @@ namespace InjectorInspector
                                 dbapiNozzleX_InsertSpeed(495);
                                 dbapiNozzleY_InsertSpeed(77.05);
                                 dbapiNozzleR_InsertSpeed(dbTargetNozzleR);
+
+                                eDVR_Rsult = eDownVisionRsult.eDVR_Null;
 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_移至植針軸組上方放料位);
                             } else { 
@@ -7380,10 +7380,10 @@ namespace InjectorInspector
                         }
 
                         //3D掃描電動缸縮回
-                        dbapiJoDell3D掃描(10);
+                        dbapiJoDell3D掃描(dbJoDell3D掃描_Home位);
 
                         //吸針嘴電動缸縮回
-                        dbapiJoDell吸針嘴(10);
+                        dbapiJoDell吸針嘴(dbJoDell吸針嘴_Home位);
 
                         //吸針接料盒就位
                         digitalWrite((int)WMX3IO對照.pxeIO_接料區氣桿, HIGH);
@@ -9747,7 +9747,7 @@ namespace InjectorInspector
                                 Xavier_Task6_Debugprintf("tp6Remove_抽料電磁閥關閉\r\n");
                                 break;
                         case xeXavier_T6_Job.tp6Remove_抽料Z軸回0:
-                            dbapiJoDell吸針嘴(10);
+                            dbapiJoDell吸針嘴(dbJoDell吸針嘴_Home位);
                             if(dbapiJoDell吸針嘴(dbCheckArrived) == dbAxisMoveOk) { 
                                 Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Remove_載盤XY移置拍照檢查位);
                             } else { 
