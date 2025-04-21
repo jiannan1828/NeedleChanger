@@ -58,6 +58,7 @@ namespace Inspector
         public int 缺料警告數量 = 10;
         public bool 下視覺正向 = true;
         public int PinCount = 0;
+        public bool First = true;
 
         int GetDWord(int Index)
         {
@@ -172,7 +173,13 @@ namespace Inspector
             InspSocket.Show();
             Insp夾爪CCD.Show();
             Insp吸針孔.Show();
-            OPT.Lights[0] = lights;
+            if (First)
+            {
+                First = false;
+                OPT.Lights[0] = OPT.Lights[1] = 0;
+            }
+            else
+                OPT.Lights[0] = OPT.Lights[1] = lights;
         }
 
         public void LoadRecipe(int Num)
@@ -1040,15 +1047,18 @@ namespace Inspector
         HObject GetAllPin(HObject img, HObject whiteArea, double WMin, double WMax, double HMin, double HMax)
         {
             HObject redImage, meanImg, dynRegion, cloRegion, conn, SelInner, LimH, LimW;
+            HTuple dW, dH, dL1, dL2;
             HOperatorSet.ReduceDomain(img, whiteArea, out redImage);
-            HOperatorSet.MeanImage(redImage, out meanImg, 9, 9);
-            HOperatorSet.DynThreshold(redImage, meanImg, out dynRegion, 5, "dark");
+            //HOperatorSet.MeanImage(redImage, out meanImg, 9, 9);
+            //HOperatorSet.DynThreshold(redImage, meanImg, out dynRegion, 5, "dark");
+            HOperatorSet.Threshold(redImage, out dynRegion, 0, owner.parameter.TrayThreshold);
             HOperatorSet.ClosingCircle(dynRegion, out cloRegion, WMin);
             HOperatorSet.Connection(cloRegion, out conn);
-            HOperatorSet.SelectShape(conn, out SelInner, "inner_radius", "and", WMin, 99999);
-            HOperatorSet.SelectShape(SelInner, out LimH, "rect2_len1", "and", HMin, 99999);
+            //HOperatorSet.SelectShape(conn, out SelInner, "inner_radius", "and", WMin / 3, 99999);
+            HOperatorSet.SelectShape(conn, out LimH, "rect2_len1", "and", HMin, 99999);
             HOperatorSet.SelectShape(LimH, out LimW, "rect2_len2", "and", WMin, 99999);
-            owner.DisposeObj(redImage, meanImg, dynRegion, cloRegion, conn, SelInner, LimH);
+            HOperatorSet.SmallestRectangle2(LimW, out dW, out dH, out dH, out dL1, out dL2);
+            owner.DisposeObj(redImage, dynRegion, cloRegion, conn, LimH);
             return LimW;
         }
 
