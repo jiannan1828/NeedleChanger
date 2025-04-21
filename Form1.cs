@@ -8847,6 +8847,8 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T5_Job.tp5Insert_得知植針嘴未堵料:
                         {
+                            btp5Insert_告知系統植針成功_To_Tp6 = true;
+
                             Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_載盤組移至植針拍照位);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_得知植針嘴未堵料\r\n");
