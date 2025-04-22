@@ -542,7 +542,7 @@ namespace InjectorInspector
             this.tsmi_Reset,
             this.tsmi_Reserve1});
             this.cms_pic_Needles.Name = "cms_pic_Needles";
-            this.cms_pic_Needles.Size = new System.Drawing.Size(115, 158);
+            this.cms_pic_Needles.Size = new System.Drawing.Size(181, 180);
             this.cms_pic_Needles.Opened += new System.EventHandler(this.cms_pic_Needles_Opened);
             // 
             // tsmi_Place

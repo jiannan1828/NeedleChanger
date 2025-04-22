@@ -843,11 +843,11 @@ namespace InjectorInspector
 
                 //變更顏色
                 if (rslt == 1) {
-                    select_吸嘴X軸.BackColor    = Color.Red;
+                    UIHelper.SetControlProperty(select_吸嘴X軸, () => select_吸嘴X軸.BackColor = Color.Red);
                     UIHelper.SetControlProperty(lbl_acpos_吸嘴X軸,     () => lbl_acpos_吸嘴X軸.BackColor = Color.White);
                     UIHelper.SetControlProperty(lbl_spd_吸嘴X軸,     () => lbl_spd_吸嘴X軸.BackColor   = Color.White);
                 } else {
-                    select_吸嘴X軸.BackColor    = Color.Green;
+                    UIHelper.SetControlProperty(select_吸嘴X軸, () => select_吸嘴X軸.BackColor = Color.Green);
                     UIHelper.SetControlProperty(lbl_acpos_吸嘴X軸,     () => lbl_acpos_吸嘴X軸.BackColor = Color.Gray);
                     UIHelper.SetControlProperty(lbl_spd_吸嘴X軸,     () => lbl_spd_吸嘴X軸.BackColor   = Color.Gray);
                 }
@@ -974,11 +974,11 @@ namespace InjectorInspector
 
                 //變更顏色
                 if (rslt == 1) {
-                    select_吸嘴Y軸.BackColor    = Color.Red;
+                    UIHelper.SetControlProperty(select_吸嘴Y軸, () => select_吸嘴Y軸.BackColor = Color.Red);
                     UIHelper.SetControlProperty(lbl_acpos_吸嘴Y軸,    () => lbl_acpos_吸嘴Y軸.BackColor = Color.White);
                     UIHelper.SetControlProperty(lbl_spd_吸嘴Y軸,    () => lbl_spd_吸嘴Y軸.BackColor   = Color.White);
                 } else {
-                    select_吸嘴Y軸.BackColor    = Color.Green;
+                    UIHelper.SetControlProperty(select_吸嘴Y軸, () => select_吸嘴Y軸.BackColor = Color.Green);
                     UIHelper.SetControlProperty(lbl_acpos_吸嘴Y軸,    () => lbl_acpos_吸嘴Y軸.BackColor = Color.Gray);
                     UIHelper.SetControlProperty(lbl_spd_吸嘴Y軸,    () => lbl_spd_吸嘴Y軸.BackColor   = Color.Gray);
                 }
@@ -1098,11 +1098,11 @@ namespace InjectorInspector
 
                 //變更顏色
                 if (rslt == 1) {
-                    select_吸嘴Z軸.BackColor    = Color.Red;
+                    UIHelper.SetControlProperty(select_吸嘴Z軸, () => select_吸嘴Z軸.BackColor = Color.Red);
                     UIHelper.SetControlProperty(lbl_acpos_吸嘴Z軸,    () => lbl_acpos_吸嘴Z軸.BackColor = Color.White);
                     UIHelper.SetControlProperty(lbl_spd_吸嘴Z軸,    () => lbl_spd_吸嘴Z軸.BackColor   = Color.White);
                 } else {
-                    select_吸嘴Z軸.BackColor    = Color.Green;
+                    UIHelper.SetControlProperty(select_吸嘴Z軸, () => select_吸嘴Z軸.BackColor = Color.Green);
                     UIHelper.SetControlProperty(lbl_acpos_吸嘴Z軸,    () => lbl_acpos_吸嘴Z軸.BackColor = Color.Gray);
                     UIHelper.SetControlProperty(lbl_spd_吸嘴Z軸,    () => lbl_spd_吸嘴Z軸.BackColor   = Color.Gray);
                 }
@@ -1225,11 +1225,11 @@ namespace InjectorInspector
 
                 //變更顏色
                 if (rslt == 1) {
-                    select_吸嘴R軸.BackColor    = Color.Red;
+                    UIHelper.SetControlProperty(select_吸嘴R軸, () => select_吸嘴R軸.BackColor = Color.Red);
                     UIHelper.SetControlProperty(lbl_acpos_吸嘴R軸,    () => lbl_acpos_吸嘴R軸.BackColor = Color.White);
                     UIHelper.SetControlProperty(lbl_spd_吸嘴R軸,    () => lbl_spd_吸嘴R軸.BackColor   = Color.White);
                 } else {
-                    select_吸嘴R軸.BackColor    = Color.Green;
+                    UIHelper.SetControlProperty(select_吸嘴R軸, () => select_吸嘴R軸.BackColor = Color.Green);
                     UIHelper.SetControlProperty(lbl_acpos_吸嘴R軸,    () => lbl_acpos_吸嘴R軸.BackColor = Color.Gray);
                     UIHelper.SetControlProperty(lbl_spd_吸嘴R軸,    () => lbl_spd_吸嘴R軸.BackColor   = Color.Gray);
                 }
@@ -1353,11 +1353,11 @@ namespace InjectorInspector
 
                 //變更顏色
                 if (rslt == 1) {
-                    select_載盤X軸.BackColor    = Color.Red;
+                    UIHelper.SetControlProperty(select_載盤X軸, () => select_載盤X軸.BackColor = Color.Red);
                     UIHelper.SetControlProperty(lbl_acpos_載盤X軸,    () => lbl_acpos_載盤X軸.BackColor = Color.White);
                     UIHelper.SetControlProperty(lbl_spd_載盤X軸,    () => lbl_spd_載盤X軸.BackColor   = Color.White);
                 } else {
-                    select_載盤X軸.BackColor    = Color.Green;
+                    UIHelper.SetControlProperty(select_載盤X軸, () => select_載盤X軸.BackColor = Color.Green);
                     UIHelper.SetControlProperty(lbl_acpos_載盤X軸,    () => lbl_acpos_載盤X軸.BackColor = Color.Gray);
                     UIHelper.SetControlProperty(lbl_spd_載盤X軸,    () => lbl_spd_載盤X軸.BackColor   = Color.Gray);
                 }
@@ -1477,11 +1477,11 @@ namespace InjectorInspector
 
                 //變更顏色
                 if (rslt == 1) {
-                    select_載盤Y軸.BackColor    = Color.Red;
+                    UIHelper.SetControlProperty(select_載盤Y軸, () => select_載盤Y軸.BackColor = Color.Red);
                     UIHelper.SetControlProperty(lbl_acpos_載盤Y軸,    () => lbl_acpos_載盤Y軸.BackColor = Color.White);
                     UIHelper.SetControlProperty(lbl_spd_載盤Y軸,    () => lbl_spd_載盤Y軸.BackColor   = Color.White);
                 } else {
-                    select_載盤Y軸.BackColor    = Color.Green;
+                    UIHelper.SetControlProperty(select_載盤Y軸, () => select_載盤Y軸.BackColor = Color.Green);
                     UIHelper.SetControlProperty(lbl_acpos_載盤Y軸,    () => lbl_acpos_載盤Y軸.BackColor = Color.Gray);
                     UIHelper.SetControlProperty(lbl_spd_載盤Y軸,    () => lbl_spd_載盤Y軸.BackColor   = Color.Gray);
                 }
@@ -1602,11 +1602,11 @@ namespace InjectorInspector
 
                 //變更顏色
                 if (rslt == 1) {
-                    select_植針Z軸.BackColor    = Color.Red;
+                    UIHelper.SetControlProperty(select_植針Z軸, () => select_植針Z軸.BackColor = Color.Red);
                     UIHelper.SetControlProperty(lbl_acpos_植針Z軸,    () => lbl_acpos_植針Z軸.BackColor = Color.White);
                     UIHelper.SetControlProperty(lbl_spd_植針Z軸,    () => lbl_spd_植針Z軸.BackColor   = Color.White);
                 } else {
-                    select_植針Z軸.BackColor    = Color.Green;
+                    UIHelper.SetControlProperty(select_植針Z軸, () => select_植針Z軸.BackColor = Color.Green);
                     UIHelper.SetControlProperty(lbl_acpos_植針Z軸,    () => lbl_acpos_植針Z軸.BackColor = Color.Gray);
                     UIHelper.SetControlProperty(lbl_spd_植針Z軸,    () => lbl_spd_植針Z軸.BackColor   = Color.Gray);
                 }
@@ -1725,11 +1725,11 @@ namespace InjectorInspector
 
                 //變更顏色
                 if (rslt == 1) {
-                    select_植針R軸.BackColor    = Color.Red;
+                    UIHelper.SetControlProperty(select_植針R軸, () => select_植針R軸.BackColor = Color.Red);
                     UIHelper.SetControlProperty(lbl_acpos_植針R軸,    () => lbl_acpos_植針R軸.BackColor = Color.White);
                     UIHelper.SetControlProperty(lbl_spd_植針R軸,    () => lbl_spd_植針R軸.BackColor   = Color.White);
                 } else {
-                    select_植針R軸.BackColor    = Color.Green;
+                    UIHelper.SetControlProperty(select_植針R軸, () => select_植針R軸.BackColor = Color.Green);
                     UIHelper.SetControlProperty(lbl_acpos_植針R軸,    () => lbl_acpos_植針R軸.BackColor = Color.Gray);
                     UIHelper.SetControlProperty(lbl_spd_植針R軸,    () => lbl_spd_植針R軸.BackColor   = Color.Gray);
                 }
@@ -1850,11 +1850,11 @@ namespace InjectorInspector
 
                 //變更顏色
                 if (rslt == 1) {
-                    select_工作門.BackColor     = Color.Red;
+                    UIHelper.SetControlProperty(select_工作門, () => select_工作門.BackColor = Color.Red);
                     UIHelper.SetControlProperty(lbl_acpos_工作門,    () => lbl_acpos_工作門.BackColor  = Color.White);
                     UIHelper.SetControlProperty(lbl_spd_工作門,    () => lbl_spd_工作門.BackColor    = Color.White);
                 } else {
-                    select_工作門.BackColor     = Color.Green;
+                    UIHelper.SetControlProperty(select_工作門, () => select_工作門.BackColor = Color.Green);
                     UIHelper.SetControlProperty(lbl_acpos_工作門,    () => lbl_acpos_工作門.BackColor  = Color.Gray);
                     UIHelper.SetControlProperty(lbl_spd_工作門,    () => lbl_spd_工作門.BackColor    = Color.Gray);
                 }
@@ -1972,11 +1972,11 @@ namespace InjectorInspector
 
                 //變更顏色
                 if (rslt == 2) {
-                    select_Socket檢測.BackColor      = Color.Red;
+                    UIHelper.SetControlProperty(select_Socket檢測, () => select_Socket檢測.BackColor = Color.Red);
                     UIHelper.SetControlProperty(lbl_acpos_IAI,    () => lbl_acpos_IAI.BackColor          = Color.White);
                     UIHelper.SetControlProperty(lbl_spd_IAI,    () => lbl_spd_IAI.BackColor            = Color.White);
                 } else {
-                    select_Socket檢測.BackColor      = Color.Green;
+                    UIHelper.SetControlProperty(select_Socket檢測, () => select_Socket檢測.BackColor = Color.Green);
                     UIHelper.SetControlProperty(lbl_acpos_IAI,    () => lbl_acpos_IAI.BackColor          = Color.Gray);
                     UIHelper.SetControlProperty(lbl_spd_IAI,    () => lbl_spd_IAI.BackColor            = Color.Gray);
                 }
@@ -2093,11 +2093,11 @@ namespace InjectorInspector
 
                 //變更顏色
                 if (rslt == 4) {
-                    select_JoDell3D掃描.BackColor    = Color.Red;
+                    UIHelper.SetControlProperty(select_JoDell3D掃描, () => select_JoDell3D掃描.BackColor = Color.Red);
                     UIHelper.SetControlProperty(lbl_acpos_JoDell3D掃描,    () => lbl_acpos_JoDell3D掃描.BackColor = Color.White);
                     UIHelper.SetControlProperty(lbl_spd_JoDell3D掃描,    () => lbl_spd_JoDell3D掃描.BackColor   = Color.White);
                 } else {
-                    select_JoDell3D掃描.BackColor    = Color.Green;
+                    UIHelper.SetControlProperty(select_JoDell3D掃描, () => select_JoDell3D掃描.BackColor = Color.Green);
                     UIHelper.SetControlProperty(lbl_acpos_JoDell3D掃描,    () => lbl_acpos_JoDell3D掃描.BackColor = Color.Gray);
                     UIHelper.SetControlProperty(lbl_spd_JoDell3D掃描,    () => lbl_spd_JoDell3D掃描.BackColor   = Color.Gray);
                 }
@@ -2212,11 +2212,11 @@ namespace InjectorInspector
 
                 //變更顏色
                 if (rslt == 4) {
-                    select_JoDell吸針嘴.BackColor    = Color.Red;
+                    UIHelper.SetControlProperty(select_JoDell吸針嘴, () => select_JoDell吸針嘴.BackColor = Color.Red);
                     UIHelper.SetControlProperty(lbl_acpos_JoDell吸針嘴,    () => lbl_acpos_JoDell吸針嘴.BackColor = Color.White);
                     UIHelper.SetControlProperty(lbl_spd_JoDell吸針嘴,    () => lbl_spd_JoDell吸針嘴.BackColor   = Color.White);
                 } else {
-                    select_JoDell吸針嘴.BackColor    = Color.Green;
+                    UIHelper.SetControlProperty(select_JoDell吸針嘴, () => select_JoDell吸針嘴.BackColor = Color.Green);
                     UIHelper.SetControlProperty(lbl_acpos_JoDell吸針嘴,    () => lbl_acpos_JoDell吸針嘴.BackColor = Color.Gray);
                     UIHelper.SetControlProperty(lbl_spd_JoDell吸針嘴,    () => lbl_spd_JoDell吸針嘴.BackColor   = Color.Gray);
                 }
@@ -2331,11 +2331,11 @@ namespace InjectorInspector
 
                 //變更顏色
                 if (rslt == 4) {
-                    select_JoDell植針嘴相機.BackColor    = Color.Red;
+                    UIHelper.SetControlProperty(select_JoDell植針嘴相機, () => select_JoDell植針嘴相機.BackColor = Color.Red);
                     UIHelper.SetControlProperty(lbl_acpos_JoDell植針嘴相機,    () => lbl_acpos_JoDell植針嘴相機.BackColor = Color.White);
                     UIHelper.SetControlProperty(lbl_spd_JoDell植針嘴相機,    () => lbl_spd_JoDell植針嘴相機.BackColor   = Color.White);
                 } else {
-                    select_JoDell植針嘴相機.BackColor    = Color.Green;
+                    UIHelper.SetControlProperty(select_JoDell植針嘴相機, () => select_JoDell植針嘴相機.BackColor = Color.Green);
                     UIHelper.SetControlProperty(lbl_acpos_JoDell植針嘴相機,    () => lbl_acpos_JoDell植針嘴相機.BackColor = Color.Gray);
                     UIHelper.SetControlProperty(lbl_spd_JoDell植針嘴相機,    () => lbl_spd_JoDell植針嘴相機.BackColor   = Color.Gray);
                 }
@@ -3059,116 +3059,116 @@ namespace InjectorInspector
 
             //讀取 Yaskawa OutputIO                                                                                                   
             {
-                lbl擺放蓋板.BackColor     = (digitalRead((int)(WMX3IO對照.pxeIO_擺放座蓋板))       == HIGH) ? Color.Green : Color.Red;
-                lbl吸料真空閥.BackColor   = (digitalRead((int)(WMX3IO對照.pxeIO_吸料真空電磁閥))   == HIGH) ? Color.Green : Color.Red;
-                lbl堵料吹氣缸.BackColor   = (digitalRead((int)(WMX3IO對照.pxeIO_堵料吹氣缸))       == HIGH) ? Color.Green : Color.Red;
-                lbl接料區缸.BackColor     = (digitalRead((int)(WMX3IO對照.pxeIO_接料區氣桿))       == HIGH) ? Color.Green : Color.Red;
-                lbl植針吹氣.BackColor     = (digitalRead((int)(WMX3IO對照.pxeIO_植針吹氣))         == HIGH) ? Color.Green : Color.Red;
-                lbl收料區缸.BackColor     = (digitalRead((int)(WMX3IO對照.pxeIO_收料區缸))         == HIGH) ? Color.Green : Color.Red;
-                lbl堵料吹氣.BackColor     = (digitalRead((int)(WMX3IO對照.pxeIO_堵料吹氣))         == HIGH) ? Color.Green : Color.Red;
-                lbl_NA_25.BackColor       = (digitalRead((int)(WMX3IO對照.pxeIO_NA_O_07))          == HIGH) ? Color.Green : Color.Red;
-                                          
-                lbl載盤真空閥.BackColor   = (digitalRead((int)(WMX3IO對照.pxeIO_載盤真空閥))       == HIGH) ? Color.Green : Color.Red;
-                lblsk真空2.BackColor      = (digitalRead((int)(WMX3IO對照.pxeIO_Socket真空2))      == HIGH) ? Color.Green : Color.Red;
-                lbl載盤破真空.BackColor   = (digitalRead((int)(WMX3IO對照.pxeIO_載盤破真空))       == HIGH) ? Color.Green : Color.Red;
-                lblsk破真空2.BackColor    = (digitalRead((int)(WMX3IO對照.pxeIO_Socket破真空2))    == HIGH) ? Color.Green : Color.Red;
-                lblsk真空1.BackColor      = (digitalRead((int)(WMX3IO對照.pxeIO_Socket真空1))      == HIGH) ? Color.Green : Color.Red;
-                lbl擺放座真空.BackColor   = (digitalRead((int)(WMX3IO對照.pxeIO_擺放座吸真空))     == HIGH) ? Color.Green : Color.Red;
-                lblsk破真空1.BackColor    = (digitalRead((int)(WMX3IO對照.pxeIO_Socket破真空1))    == HIGH) ? Color.Green : Color.Red;
-                lbl擺放破真空.BackColor   = (digitalRead((int)(WMX3IO對照.pxeIO_擺放座破真空))     == HIGH) ? Color.Green : Color.Red;
-                                          
-                lbl取料吸嘴吸.BackColor   = (digitalRead((int)(WMX3IO對照.pxeIO_取料吸嘴吸))       == HIGH) ? Color.Green : Color.Red;
-                lbl下後左門鎖.BackColor   = (digitalRead((int)(WMX3IO對照.pxeIO_下後左門鎖))       == HIGH) ? Color.Green : Color.Red;
-                lbl取料吸嘴破舊.BackColor = (digitalRead((int)(WMX3IO對照.pxeIO_取料吸嘴破真空舊)) == HIGH) ? Color.Green : Color.Red;
-                lbl下後右門鎖.BackColor   = (digitalRead((int)(WMX3IO對照.pxeIO_下後右門鎖))       == HIGH) ? Color.Green : Color.Red;
-                lbl植針Z煞車.BackColor    = (digitalRead((int)(WMX3IO對照.pxeIO_植針Z煞車))        == HIGH) ? Color.Green : Color.Red;
-                lblHEPA.BackColor         = (digitalRead((int)(WMX3IO對照.pxeIO_HEPA))             == HIGH) ? Color.Green : Color.Red;
-                lbl取料吸嘴破新.BackColor = (digitalRead((int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)) == HIGH) ? Color.Green : Color.Red;
-                lbl艙內燈.BackColor       = (digitalRead((int)(WMX3IO對照.pxeIO_LIGHT))            == HIGH) ? Color.Green : Color.Red;
+                UIHelper.SetIndicator(lbl擺放蓋板,     digitalRead((int)(WMX3IO對照.pxeIO_擺放座蓋板))       == HIGH);
+                UIHelper.SetIndicator(lbl吸料真空閥,   digitalRead((int)(WMX3IO對照.pxeIO_吸料真空電磁閥))   == HIGH);
+                UIHelper.SetIndicator(lbl堵料吹氣缸,   digitalRead((int)(WMX3IO對照.pxeIO_堵料吹氣缸))       == HIGH);
+                UIHelper.SetIndicator(lbl接料區缸,     digitalRead((int)(WMX3IO對照.pxeIO_接料區氣桿))       == HIGH);
+                UIHelper.SetIndicator(lbl植針吹氣,     digitalRead((int)(WMX3IO對照.pxeIO_植針吹氣))         == HIGH);
+                UIHelper.SetIndicator(lbl收料區缸,     digitalRead((int)(WMX3IO對照.pxeIO_收料區缸))         == HIGH);
+                UIHelper.SetIndicator(lbl堵料吹氣,     digitalRead((int)(WMX3IO對照.pxeIO_堵料吹氣))         == HIGH);
+                UIHelper.SetIndicator(lbl_NA_25,       digitalRead((int)(WMX3IO對照.pxeIO_NA_O_07))          == HIGH);
 
-                lbl右按鈕綠燈.BackColor   = (digitalRead((int)(WMX3IO對照.pxeIO_面板右按鈕綠燈))   == HIGH) ? Color.Green : Color.Red;
-                lbl紅燈.BackColor         = (digitalRead((int)(WMX3IO對照.pxeIO_機台紅燈))         == HIGH) ? Color.Green : Color.Red; 
-                lbl中按鈕綠燈.BackColor   = (digitalRead((int)(WMX3IO對照.pxeIO_面板中按鈕綠燈))   == HIGH) ? Color.Green : Color.Red;
-                lbl黃燈.BackColor         = (digitalRead((int)(WMX3IO對照.pxeIO_機台黃燈))         == HIGH) ? Color.Green : Color.Red;
-                lbl左按鈕紅燈.BackColor   = (digitalRead((int)(WMX3IO對照.pxeIO_面板左按鈕紅燈))   == HIGH) ? Color.Green : Color.Red;
-                lbl綠燈.BackColor         = (digitalRead((int)(WMX3IO對照.pxeIO_機台綠燈))         == HIGH) ? Color.Green : Color.Red;
-                lbl_NA_31.BackColor       = (digitalRead((int)(WMX3IO對照.pxeIO_NA_O_36))          == HIGH) ? Color.Green : Color.Red;
-                lblBuzzer.BackColor       = (digitalRead((int)(WMX3IO對照.pxeIO_Buzzer))           == HIGH) ? Color.Green : Color.Red;
+                UIHelper.SetIndicator(lbl載盤真空閥,   digitalRead((int)(WMX3IO對照.pxeIO_載盤真空閥))       == HIGH);
+                UIHelper.SetIndicator(lblsk真空2,      digitalRead((int)(WMX3IO對照.pxeIO_Socket真空2))      == HIGH);
+                UIHelper.SetIndicator(lbl載盤破真空,   digitalRead((int)(WMX3IO對照.pxeIO_載盤破真空))       == HIGH);
+                UIHelper.SetIndicator(lblsk破真空2,    digitalRead((int)(WMX3IO對照.pxeIO_Socket破真空2))    == HIGH);
+                UIHelper.SetIndicator(lblsk真空1,      digitalRead((int)(WMX3IO對照.pxeIO_Socket真空1))      == HIGH);
+                UIHelper.SetIndicator(lbl擺放座真空,   digitalRead((int)(WMX3IO對照.pxeIO_擺放座吸真空))     == HIGH);
+                UIHelper.SetIndicator(lblsk破真空1,    digitalRead((int)(WMX3IO對照.pxeIO_Socket破真空1))    == HIGH);
+                UIHelper.SetIndicator(lbl擺放破真空,   digitalRead((int)(WMX3IO對照.pxeIO_擺放座破真空))     == HIGH);
+
+                UIHelper.SetIndicator(lbl取料吸嘴吸,   digitalRead((int)(WMX3IO對照.pxeIO_取料吸嘴吸))       == HIGH);
+                UIHelper.SetIndicator(lbl下後左門鎖,   digitalRead((int)(WMX3IO對照.pxeIO_下後左門鎖))       == HIGH);
+                UIHelper.SetIndicator(lbl取料吸嘴破舊, digitalRead((int)(WMX3IO對照.pxeIO_取料吸嘴破真空舊)) == HIGH);
+                UIHelper.SetIndicator(lbl下後右門鎖,   digitalRead((int)(WMX3IO對照.pxeIO_下後右門鎖))       == HIGH);
+                UIHelper.SetIndicator(lbl植針Z煞車,    digitalRead((int)(WMX3IO對照.pxeIO_植針Z煞車))        == HIGH);
+                UIHelper.SetIndicator(lblHEPA,         digitalRead((int)(WMX3IO對照.pxeIO_HEPA))             == HIGH);
+                UIHelper.SetIndicator(lbl取料吸嘴破新, digitalRead((int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)) == HIGH);
+                UIHelper.SetIndicator(lbl艙內燈,       digitalRead((int)(WMX3IO對照.pxeIO_LIGHT))            == HIGH);
+
+                UIHelper.SetIndicator(lbl右按鈕綠燈,   digitalRead((int)(WMX3IO對照.pxeIO_面板右按鈕綠燈))   == HIGH);
+                UIHelper.SetIndicator(lbl紅燈,         digitalRead((int)(WMX3IO對照.pxeIO_機台紅燈))         == HIGH);
+                UIHelper.SetIndicator(lbl中按鈕綠燈,   digitalRead((int)(WMX3IO對照.pxeIO_面板中按鈕綠燈))   == HIGH);
+                UIHelper.SetIndicator(lbl黃燈,         digitalRead((int)(WMX3IO對照.pxeIO_機台黃燈))         == HIGH);
+                UIHelper.SetIndicator(lbl左按鈕紅燈,   digitalRead((int)(WMX3IO對照.pxeIO_面板左按鈕紅燈))   == HIGH);
+                UIHelper.SetIndicator(lbl綠燈,         digitalRead((int)(WMX3IO對照.pxeIO_機台綠燈))         == HIGH);
+                UIHelper.SetIndicator(lbl_NA_31,       digitalRead((int)(WMX3IO對照.pxeIO_NA_O_36))          == HIGH);
+                UIHelper.SetIndicator(lblBuzzer,       digitalRead((int)(WMX3IO對照.pxeIO_Buzzer))           == HIGH);
             }  // end of //讀取 Yaskawa OutputIO  
 
             //讀取 Yaskawa InputIO
             {
-                lbl載盤Y後.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_載盤Y軸後極限)   == HIGH)? Color.Green : Color.Red;
-                lbl取料Y後.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_取料Y軸後極限)   == HIGH)? Color.Green : Color.Red;
-                lbl載盤Y前.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_載盤Y軸前極限)   == HIGH)? Color.Green : Color.Red;
-                lbl取料Y前.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_取料Y軸前極限)   == HIGH)? Color.Green : Color.Red;
-                lbl取料X後.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_取料X軸後極限)   == HIGH)? Color.Green : Color.Red;
-                lbl_NA_01.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA05)            == HIGH)? Color.Green : Color.Red;
-                lbl取料X前.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_取料X軸前極限)   == HIGH)? Color.Green : Color.Red;
-                lbl_NA_02.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA07)            == HIGH)? Color.Green : Color.Red;         
-                                                                                               
-                lbl植針Z後.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_植針Z軸後極限)   == HIGH)? Color.Green : Color.Red;
-                lbl_NA_03.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA11)            == HIGH)? Color.Green : Color.Red;
-                lbl植針Z前.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_植針Z軸前極限)   == HIGH)? Color.Green : Color.Red;
-                lbl_NA_04.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA13)            == HIGH)? Color.Green : Color.Red;
-                lbl載盤X前.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_載盤X軸前極限)   == HIGH)? Color.Green : Color.Red;
-                lbl_NA_05.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA15)            == HIGH)? Color.Green : Color.Red;
-                lbl載盤X後.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_載盤X軸後極限)   == HIGH)? Color.Green : Color.Red;
-                lbl_NA_06.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA17)            == HIGH)? Color.Green : Color.Red;
-                                                                                             
-                lbl載盤空1.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_載盤真空檢1)     == HIGH)? Color.Green : Color.Red;
-                lblsk2空1.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_Socket2真空檢1)  == HIGH)? Color.Green : Color.Red;
-                lbl載盤空2.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_載盤真空檢2)     == HIGH)? Color.Green : Color.Red;
-                lblsk2空2.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_Socket2真空檢2)  == HIGH)? Color.Green : Color.Red;
-                lblsk1空1.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_Socket1真空檢1)  == HIGH)? Color.Green : Color.Red;
-                lbl擺放空1.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_擺放座真空檢1)   == HIGH)? Color.Green : Color.Red;
-                lblsk1空2.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_Socket1真空檢2)  == HIGH)? Color.Green : Color.Red;
-                lbl擺放空2.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_擺放座真空檢2)   == HIGH)? Color.Green : Color.Red;
-                                                                                               
-                lbl吸嘴空1.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_吸嘴真空檢1)     == HIGH)? Color.Green : Color.Red;
-                lbl_NA_07.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA31)            == HIGH)? Color.Green : Color.Red;
-                lbl吸嘴空2.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_吸嘴真空檢2)     == HIGH)? Color.Green : Color.Red;
-                lbl取料ng盒.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_取料NG收料盒)    == HIGH)? Color.Green : Color.Red;
-                lbl兩點壓1.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_兩點組合壓力檢1) == HIGH)? Color.Green : Color.Red;
-                lbl堵料盒.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_堵料收料盒)      == HIGH)? Color.Green : Color.Red;
-                lbl兩點壓2.BackColor    = (indicateRead((int)WMX3IO對照.pxeIO_兩點組合壓力檢2) == HIGH)? Color.Green : Color.Red;
-                lbl吸料盒.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_吸料收料盒)      == HIGH)? Color.Green : Color.Red;            
+                UIHelper.SetIndicator(lbl載盤Y後,      indicateRead((int)WMX3IO對照.pxeIO_載盤Y軸後極限)     == HIGH);
+                UIHelper.SetIndicator(lbl取料Y後,      indicateRead((int)WMX3IO對照.pxeIO_取料Y軸後極限)     == HIGH);
+                UIHelper.SetIndicator(lbl載盤Y前,      indicateRead((int)WMX3IO對照.pxeIO_載盤Y軸前極限)     == HIGH);
+                UIHelper.SetIndicator(lbl取料Y前,      indicateRead((int)WMX3IO對照.pxeIO_取料Y軸前極限)     == HIGH);
+                UIHelper.SetIndicator(lbl取料X後,      indicateRead((int)WMX3IO對照.pxeIO_取料X軸後極限)     == HIGH);
+                UIHelper.SetIndicator(lbl_NA_01,       indicateRead((int)WMX3IO對照.pxeIO_NA05)              == HIGH);
+                UIHelper.SetIndicator(lbl取料X前,      indicateRead((int)WMX3IO對照.pxeIO_取料X軸前極限)     == HIGH);
+                UIHelper.SetIndicator(lbl_NA_02,       indicateRead((int)WMX3IO對照.pxeIO_NA07)              == HIGH);
 
-                lbl復歸鈕.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_復歸按鈕)        == HIGH)? Color.Green : Color.Red;
-                lbl_NA_08.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA41)            == HIGH)? Color.Green : Color.Red;
-                lbl啟動鈕.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_啟動按鈕)        == HIGH)? Color.Green : Color.Red;
-                lbl_NA_09.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA43)            == HIGH)? Color.Green : Color.Red;
-                lbl停止鈕.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_停止按鈕)        == HIGH)? Color.Green : Color.Red;
-                lbl_NA_10.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA45)            == HIGH)? Color.Green : Color.Red;
-                lbl急停鈕.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_緊急停止按鈕)    == HIGH)? Color.Green : Color.Red;
-                lbl_NA_11.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA47)            == HIGH)? Color.Green : Color.Red;
-                                                                                     
-                lbl_擺放座開.BackColor  = (indicateRead((int)WMX3IO對照.pxeIO_擺放座蓋板開)    == HIGH)? Color.Green : Color.Red;
-                lbl_NA_13.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA51)            == HIGH)? Color.Green : Color.Red;
-                lbl_擺放座關.BackColor  = (indicateRead((int)WMX3IO對照.pxeIO_擺放座蓋板合)    == HIGH)? Color.Green : Color.Red;
-                lbl_NA_15.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA53)            == HIGH)? Color.Green : Color.Red;
-                lbl_堵料桿進.BackColor  = (indicateRead((int)WMX3IO對照.pxeIO_堵料吹氣桿進)    == HIGH)? Color.Green : Color.Red;
-                lbl_NA_17.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA55)            == HIGH)? Color.Green : Color.Red;
-                lbl_堵料桿出.BackColor  = (indicateRead((int)WMX3IO對照.pxeIO_堵料吹氣桿出)    == HIGH)? Color.Green : Color.Red;
-                lbl_NA_19.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA57)            == HIGH)? Color.Green : Color.Red;
-                                   
-                lbl上左右門.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_上罩左側右門)    == HIGH)? Color.Green : Color.Red;
-                lbl上右右門.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_上罩右側右門)    == HIGH)? Color.Green : Color.Red;
-                lbl上左左門.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_上罩左側左門)    == HIGH)? Color.Green : Color.Red;
-                lbl上右左門.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_上罩右側左門)    == HIGH)? Color.Green : Color.Red;
-                lbl上後右門.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_上罩後側右門)    == HIGH)? Color.Green : Color.Red;
-                lbl螢幕小門.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_螢幕旁小門)      == HIGH)? Color.Green : Color.Red;
-                lbl上後左門.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_上罩後側左門)    == HIGH)? Color.Green : Color.Red;
-                lbl_NA_20.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA67)            == HIGH)? Color.Green : Color.Red;
-                                                                                  
-                lbl下左右門.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_下支架左側右門)  == HIGH)? Color.Green : Color.Red;
-                lbl下後左門.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_下支架後側左門)  == HIGH)? Color.Green : Color.Red;
-                lbl下左左門.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_下支架左側左門)  == HIGH)? Color.Green : Color.Red;
-                lbl下後右門.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_下支架後側右門)  == HIGH)? Color.Green : Color.Red;
-                lbl下右右門.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_下支架右側右門)  == HIGH)? Color.Green : Color.Red;
-                lbl_NA_23.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA75)            == HIGH)? Color.Green : Color.Red;
-                lbl下右左門.BackColor   = (indicateRead((int)WMX3IO對照.pxeIO_下支架右側左門)  == HIGH)? Color.Green : Color.Red;
-                lbl_NA_24.BackColor     = (indicateRead((int)WMX3IO對照.pxeIO_NA76)            == HIGH)? Color.Green : Color.Red;
+                UIHelper.SetIndicator(lbl植針Z後,      indicateRead((int)WMX3IO對照.pxeIO_植針Z軸後極限)     == HIGH);
+                UIHelper.SetIndicator(lbl_NA_03,       indicateRead((int)WMX3IO對照.pxeIO_NA11)              == HIGH);
+                UIHelper.SetIndicator(lbl植針Z前,      indicateRead((int)WMX3IO對照.pxeIO_植針Z軸前極限)     == HIGH);
+                UIHelper.SetIndicator(lbl_NA_04,       indicateRead((int)WMX3IO對照.pxeIO_NA13)              == HIGH);
+                UIHelper.SetIndicator(lbl載盤X前,      indicateRead((int)WMX3IO對照.pxeIO_載盤X軸前極限)     == HIGH);
+                UIHelper.SetIndicator(lbl_NA_05,       indicateRead((int)WMX3IO對照.pxeIO_NA15)              == HIGH);
+                UIHelper.SetIndicator(lbl載盤X後,      indicateRead((int)WMX3IO對照.pxeIO_載盤X軸後極限)     == HIGH);
+                UIHelper.SetIndicator(lbl_NA_06,       indicateRead((int)WMX3IO對照.pxeIO_NA17)              == HIGH);
+
+                UIHelper.SetIndicator(lbl載盤空1,      indicateRead((int)WMX3IO對照.pxeIO_載盤真空檢1)       == HIGH);
+                UIHelper.SetIndicator(lblsk2空1,       indicateRead((int)WMX3IO對照.pxeIO_Socket2真空檢1)    == HIGH);
+                UIHelper.SetIndicator(lbl載盤空2,      indicateRead((int)WMX3IO對照.pxeIO_載盤真空檢2)       == HIGH);
+                UIHelper.SetIndicator(lblsk2空2,       indicateRead((int)WMX3IO對照.pxeIO_Socket2真空檢2)    == HIGH);
+                UIHelper.SetIndicator(lblsk1空1,       indicateRead((int)WMX3IO對照.pxeIO_Socket1真空檢1)    == HIGH);
+                UIHelper.SetIndicator(lbl擺放空1,      indicateRead((int)WMX3IO對照.pxeIO_擺放座真空檢1)     == HIGH);
+                UIHelper.SetIndicator(lblsk1空2,       indicateRead((int)WMX3IO對照.pxeIO_Socket1真空檢2)    == HIGH);
+                UIHelper.SetIndicator(lbl擺放空2,      indicateRead((int)WMX3IO對照.pxeIO_擺放座真空檢2)     == HIGH);
+
+                UIHelper.SetIndicator(lbl吸嘴空1,      indicateRead((int)WMX3IO對照.pxeIO_吸嘴真空檢1)       == HIGH);
+                UIHelper.SetIndicator(lbl_NA_07,       indicateRead((int)WMX3IO對照.pxeIO_NA31)              == HIGH);
+                UIHelper.SetIndicator(lbl吸嘴空2,      indicateRead((int)WMX3IO對照.pxeIO_吸嘴真空檢2)       == HIGH);
+                UIHelper.SetIndicator(lbl取料ng盒,     indicateRead((int)WMX3IO對照.pxeIO_取料NG收料盒)      == HIGH);
+                UIHelper.SetIndicator(lbl兩點壓1,      indicateRead((int)WMX3IO對照.pxeIO_兩點組合壓力檢1)   == HIGH);
+                UIHelper.SetIndicator(lbl堵料盒,       indicateRead((int)WMX3IO對照.pxeIO_堵料收料盒)        == HIGH);
+                UIHelper.SetIndicator(lbl兩點壓2,      indicateRead((int)WMX3IO對照.pxeIO_兩點組合壓力檢2)   == HIGH);
+                UIHelper.SetIndicator(lbl吸料盒,       indicateRead((int)WMX3IO對照.pxeIO_吸料收料盒)        == HIGH);
+
+                UIHelper.SetIndicator(lbl復歸鈕,       indicateRead((int)WMX3IO對照.pxeIO_復歸按鈕)          == HIGH);
+                UIHelper.SetIndicator(lbl_NA_08,       indicateRead((int)WMX3IO對照.pxeIO_NA41)              == HIGH);
+                UIHelper.SetIndicator(lbl啟動鈕,       indicateRead((int)WMX3IO對照.pxeIO_啟動按鈕)          == HIGH);
+                UIHelper.SetIndicator(lbl_NA_09,       indicateRead((int)WMX3IO對照.pxeIO_NA43)              == HIGH);
+                UIHelper.SetIndicator(lbl停止鈕,       indicateRead((int)WMX3IO對照.pxeIO_停止按鈕)          == HIGH);
+                UIHelper.SetIndicator(lbl_NA_10,       indicateRead((int)WMX3IO對照.pxeIO_NA45)              == HIGH);
+                UIHelper.SetIndicator(lbl急停鈕,       indicateRead((int)WMX3IO對照.pxeIO_緊急停止按鈕)      == HIGH);
+                UIHelper.SetIndicator(lbl_NA_11,       indicateRead((int)WMX3IO對照.pxeIO_NA47)              == HIGH);
+
+                UIHelper.SetIndicator(lbl_擺放座開,    indicateRead((int)WMX3IO對照.pxeIO_擺放座蓋板開)      == HIGH);
+                UIHelper.SetIndicator(lbl_NA_13,       indicateRead((int)WMX3IO對照.pxeIO_NA51)              == HIGH);
+                UIHelper.SetIndicator(lbl_擺放座關,    indicateRead((int)WMX3IO對照.pxeIO_擺放座蓋板合)      == HIGH);
+                UIHelper.SetIndicator(lbl_NA_15,       indicateRead((int)WMX3IO對照.pxeIO_NA53)              == HIGH);
+                UIHelper.SetIndicator(lbl_堵料桿進,    indicateRead((int)WMX3IO對照.pxeIO_堵料吹氣桿進)      == HIGH);
+                UIHelper.SetIndicator(lbl_NA_17,       indicateRead((int)WMX3IO對照.pxeIO_NA55)              == HIGH);
+                UIHelper.SetIndicator(lbl_堵料桿出,    indicateRead((int)WMX3IO對照.pxeIO_堵料吹氣桿出)      == HIGH);
+                UIHelper.SetIndicator(lbl_NA_19,       indicateRead((int)WMX3IO對照.pxeIO_NA57)              == HIGH);
+
+                UIHelper.SetIndicator(lbl上左右門,     indicateRead((int)WMX3IO對照.pxeIO_上罩左側右門)      == HIGH);
+                UIHelper.SetIndicator(lbl上右右門,     indicateRead((int)WMX3IO對照.pxeIO_上罩右側右門)      == HIGH);
+                UIHelper.SetIndicator(lbl上左左門,     indicateRead((int)WMX3IO對照.pxeIO_上罩左側左門)      == HIGH);
+                UIHelper.SetIndicator(lbl上右左門,     indicateRead((int)WMX3IO對照.pxeIO_上罩右側左門)      == HIGH);
+                UIHelper.SetIndicator(lbl上後右門,     indicateRead((int)WMX3IO對照.pxeIO_上罩後側右門)      == HIGH);
+                UIHelper.SetIndicator(lbl螢幕小門,     indicateRead((int)WMX3IO對照.pxeIO_螢幕旁小門)        == HIGH);
+                UIHelper.SetIndicator(lbl上後左門,     indicateRead((int)WMX3IO對照.pxeIO_上罩後側左門)      == HIGH);
+                UIHelper.SetIndicator(lbl_NA_20,       indicateRead((int)WMX3IO對照.pxeIO_NA67)              == HIGH);
+
+                UIHelper.SetIndicator(lbl下左右門,     indicateRead((int)WMX3IO對照.pxeIO_下支架左側右門)    == HIGH);
+                UIHelper.SetIndicator(lbl下後左門,     indicateRead((int)WMX3IO對照.pxeIO_下支架後側左門)    == HIGH);
+                UIHelper.SetIndicator(lbl下左左門,     indicateRead((int)WMX3IO對照.pxeIO_下支架左側左門)    == HIGH);
+                UIHelper.SetIndicator(lbl下後右門,     indicateRead((int)WMX3IO對照.pxeIO_下支架後側右門)    == HIGH);
+                UIHelper.SetIndicator(lbl下右右門,     indicateRead((int)WMX3IO對照.pxeIO_下支架右側右門)    == HIGH);
+                UIHelper.SetIndicator(lbl_NA_23,       indicateRead((int)WMX3IO對照.pxeIO_NA75)              == HIGH);
+                UIHelper.SetIndicator(lbl下右左門,     indicateRead((int)WMX3IO對照.pxeIO_下支架右側左門)    == HIGH);
+                UIHelper.SetIndicator(lbl_NA_24,       indicateRead((int)WMX3IO對照.pxeIO_NA76)              == HIGH);
             }  // end of //讀取 Yaskawa InputIO
 
         }  // end of public void tmr_ReadWMX3_Tick(object sender, EventArgs e)
@@ -4354,7 +4354,7 @@ namespace InjectorInspector
             public bool btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照      = false;
             public bool btp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標   = false;
           //public bool btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照_再次 = false;
-            public bool btp2Insert_ISR_告知取得吸針嘴組R軸                     = false;
+          //public bool btp2Insert_ISR_告知取得吸針嘴組R軸                     = false;
             public bool btp3Insert_告知系統賭料排除異常_告知系統中止           = false;
             public bool btp2Insert_告知植針軸組可以進行放料作業                = false;
             public bool btp3Insert_告知載盤組_植針軸組無干涉                   = false;
@@ -5154,7 +5154,7 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_ISR_告知取得吸針嘴組R軸:
                         {
-                            btp2Insert_ISR_告知取得吸針嘴組R軸 = true;
+                            //btp2Insert_ISR_告知取得吸針嘴組R軸 = true;
 
                             Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2_ISR01_END);
                         }
@@ -5694,9 +5694,7 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組R至放料位_從_tp2Insert_ISR_告知取得吸針嘴組R軸:
                         {
-                            if(btp2Insert_ISR_告知取得吸針嘴組R軸 == true) { 
-                                btp2Insert_ISR_告知取得吸針嘴組R軸 = false;
-
+                            if(eDVR_Rsult != eDownVisionRsult.eDVR_Null) { 
                                 double dbTargetNozzleR = 0.0;
                                 switch(eDVR_Rsult) {
                                     case eDownVisionRsult.eDVR_Get_1Pin_ok_Normal:   dbTargetNozzleR = db取料Nozzle中心點R + 90;        break;
@@ -5713,6 +5711,8 @@ namespace InjectorInspector
                                 dbapiNozzleX_InsertSpeed(495);
                                 dbapiNozzleY_InsertSpeed(77.05);
                                 dbapiNozzleR_InsertSpeed(dbTargetNozzleR);
+
+                                eDVR_Rsult = eDownVisionRsult.eDVR_Null;
 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_移至植針軸組上方放料位);
                             } else { 
@@ -7328,10 +7328,10 @@ namespace InjectorInspector
                         }
 
                         //3D掃描電動缸縮回
-                        dbapiJoDell3D掃描(10);
+                        dbapiJoDell3D掃描(dbJoDell3D掃描_Home位);
 
                         //吸針嘴電動缸縮回
-                        dbapiJoDell吸針嘴(10);
+                        dbapiJoDell吸針嘴(dbJoDell吸針嘴_Home位);
 
                         //吸針接料盒就位
                         digitalWrite((int)WMX3IO對照.pxeIO_接料區氣桿, HIGH);
@@ -7676,7 +7676,12 @@ namespace InjectorInspector
                             Xavier_Task4_Debugprintf("tp4Insert_柔震盤物料檢測retry次數等於0\r\n");
                             break;
                         case xeXavier_T4_Job.tp4Insert_柔震盤物料異常_告知系統中止:
+                            //預設Retry次數到達後異常停止
                             Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤物料異常_告知系統中止);
+                            
+                            //料過Retry次數異常停, 繼續植針
+                            //Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_進行柔震盤物料確認_從_tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照);
+                            
                             Xavier_Task4_Debugprintf("tp4Insert_柔震盤物料異常_告知系統中止\r\n");
                             break;
                         case xeXavier_T4_Job.tp4Insert_柔震盤物料檢測retry次數大於0:
@@ -8807,6 +8812,9 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T5_Job.tp5Insert_得知植針嘴未堵料:
                         {
+                            //如果堵料排除後 要繼續下一個孔
+                            btp5Insert_告知系統植針成功_To_Tp6 = true;
+
                             Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_跳回_至_tp5Insert_載盤組移至植針拍照位);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_得知植針嘴未堵料\r\n");
@@ -9720,7 +9728,7 @@ namespace InjectorInspector
                                 Xavier_Task6_Debugprintf("tp6Remove_抽料電磁閥關閉\r\n");
                                 break;
                         case xeXavier_T6_Job.tp6Remove_抽料Z軸回0:
-                            dbapiJoDell吸針嘴(10);
+                            dbapiJoDell吸針嘴(dbJoDell吸針嘴_Home位);
                             if(dbapiJoDell吸針嘴(dbCheckArrived) == dbAxisMoveOk) { 
                                 Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Remove_載盤XY移置拍照檢查位);
                             } else { 
@@ -10020,6 +10028,14 @@ namespace InjectorInspector
             } else {
                 action();
             }
+        }
+
+        public static void SetIndicator(Control control, bool isOn) {
+            SetControlProperty(control, () =>
+                {
+                    control.BackColor = isOn ? Color.Green : Color.Red;
+                }
+            );
         }
     }
     //---------------------------------------------------------------------------------------
