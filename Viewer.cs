@@ -302,63 +302,44 @@ namespace InjectorInspector
         /// 打開 DXF 或者 JSON 檔案
         /// </summary>
         public static string strFileName = "";
-        public static bool OpenFile()
-        {
+        public static bool OpenFile(Control uiControl) {
             OpenDxfFileDialog.Filter = "JSON Files (*.json)|*.json|DXF Files (*.dxf)|*.dxf";
             
-            if (OpenDxfFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                if (OpenDxfFileDialog.FilterIndex == 2) // 如果選擇 .dxf
-                {
-                    try
-                    {
+            DialogResult result = UIHelper.GetControlProperty(uiControl, () => OpenDxfFileDialog.ShowDialog());
+            if (result == DialogResult.OK) {
+                if (OpenDxfFileDialog.FilterIndex == 2) { // 如果選擇 .dxf
+                    try {
                         DxfDoc = DxfDocument.Load(OpenDxfFileDialog.FileName);
                         strFileName = OpenDxfFileDialog.FileName;
 
-                        if (DxfDoc.Entities.Circles.Count() > 0)
-                        {
+                        if (DxfDoc.Entities.Circles.Count() > 0) {
                             //MessageBox.Show($"檔案 {OpenDxfFileDialog.FileName} 成功讀取！");
 
                             TransformDxf2Json(DxfDoc, ref Json);
                             ResortPosition(ref Json);
                             return true;
-                        }
-                        else
-                        {
+                        } else {
                             MessageBox.Show("此 DXF 檔案沒有圓形！", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return false;
                         }
-                    }
-                    catch (Exception ex)
-                    {
+                    } catch (Exception ex) {
                         MessageBox.Show($"讀取 DXF 檔時發生錯誤: {ex.Message}");
                         return false;
                     }
-                }
-                else if (OpenDxfFileDialog.FilterIndex == 1) // 如果選擇 .json
-                {
-                    try
-                    {
+                } else if (OpenDxfFileDialog.FilterIndex == 1) { // 如果選擇 .json
+                    try {
                         Json = JsonConvert.DeserializeObject<JSON>(File.ReadAllText(OpenDxfFileDialog.FileName));
                         strFileName = OpenDxfFileDialog.FileName;
                         //MessageBox.Show($"檔案 {OpenDxfFileDialog.FileName} 成功讀取！");
                         return true;
-                    }
-                    catch (Exception ex)
-                    {
+                    } catch (Exception ex) {
                         MessageBox.Show($"讀取 Json 檔時發生錯誤: {ex.Message}");
                         return false;
                     }
                 }
-                else
-                {
-                    return false;
-                }
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <summary>

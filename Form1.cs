@@ -142,7 +142,7 @@ namespace InjectorInspector
 
             eDVR_Rsult = eDownVisionRsult.eDVR_Null;
                 if (inspector1.InspectOK == true && inspector1.Inspected == true) {
-                    label10.Text = inspector1.PinDeg.ToString();
+                    UIHelper.SetControlProperty(label10, () => label10.Text = inspector1.PinDeg.ToString());
 
                     xeXavier_T2_Job getJob = Xavier_T2_delayCase(xeXavier_T2_proc.pt2GET, 0, xeXavier_T2_Job.tp2Empty);
                     if(getJob >= xeXavier_T2_Job.tp2Insert_吸嘴軸組XY移動至飛拍準備位) { 
@@ -288,11 +288,11 @@ namespace InjectorInspector
             b有看到校正孔 = success;
             dbCameraCalibrationX = pos.X;
             dbCameraCalibrationY = pos.Y;
-            label6.Text = string.Format("Socket 偵測 {0} 中心偏移 = {1:F3} , {2:F3}", success, pos.X, pos.Y);
+            UIHelper.SetControlProperty(label6, () => label6.Text = string.Format("Socket 偵測 {0} 中心偏移 = {1:F3} , {2:F3}", success, pos.X, pos.Y));
 
             //取得校正攝影機校正參數
             success      = inspector1.xInspSocket植針後檢查();
-            label7.Text  = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
+            UIHelper.SetControlProperty(label7, () => label7.Text = (success) ? "植針後檢查 OK" : "植針後檢查 NG");
         }
         //---------------------------------------------------------------------------------------
         public void btn_植針嘴檢查_Click(object sender, EventArgs e)
@@ -300,7 +300,7 @@ namespace InjectorInspector
             //植針嘴有無堵料, 無:ok, 有:ng
             Inspector.Vector3 pos2;
             bool success2 = inspector1.xInsp夾爪(out pos2);   //夾爪針孔偵測 回傳:OK/NG 及找到孔的位置
-            label21.Text = success2.ToString();
+            UIHelper.SetControlProperty(label21, () => label21.Text = success2.ToString());
         }
         //---------------------------------------------------------------------------------------
         public void tB_PointAB_Calculate(object sender, EventArgs e)
@@ -327,11 +327,11 @@ namespace InjectorInspector
             // 確保 run 不為 0，避免除以零的錯誤
             if (run == 0) {
                 if (rise > 0) {
-                    lbl_計算角度.Text = "夾角為 90 度(垂直向上)";
+                    UIHelper.SetControlProperty(lbl_計算角度,     () => lbl_計算角度.Text = "夾角為 90 度(垂直向上)");
                 } else if (rise < 0) {
-                    lbl_計算角度.Text = "夾角為 270 度(垂直向下)";
+                    UIHelper.SetControlProperty(lbl_計算角度,     () => lbl_計算角度.Text = "夾角為 270 度(垂直向下)");
                 } else {
-                    lbl_計算角度.Text = "兩點相同，無法計算夾角";
+                    UIHelper.SetControlProperty(lbl_計算角度,     () => lbl_計算角度.Text = "兩點相同，無法計算夾角");
                 }
             } else {
                 // 使用 Math.Atan2 計算角度，這樣可以處理所有象限的情況
@@ -349,7 +349,7 @@ namespace InjectorInspector
                 }
 
                 // 顯示夾角
-                lbl_計算角度.Text = string.Format("Cx:{1}, Cy:{2}, 夾角: {0:F2} 度", angle_degrees, Cx, Cy);
+                UIHelper.SetControlProperty(lbl_計算角度,     () => lbl_計算角度.Text = string.Format("Cx:{1}, Cy:{2}, 夾角: {0:F2} 度", angle_degrees, Cx, Cy));
             }
         }
         //---------------------------------------------------------------------------------------
@@ -364,26 +364,26 @@ namespace InjectorInspector
                 success = inspector1.xCarb震動盤(out pos);
                 pos.X = (float)inspector1.nozzleX - pos.X;
                 pos.Y = (float)inspector1.nozzleY - pos.Y;
-                label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y);
+                UIHelper.SetControlProperty(label2, () => label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y));
             }
 
             if(SetToPoint == btn_ToPointA) {
-                tB_Ax.Text = pos.X.ToString();
-                tB_Ay.Text = pos.Y.ToString();
+                UIHelper.SetControlProperty(tB_Ax, () => tB_Ax.Text = pos.X.ToString());
+                UIHelper.SetControlProperty(tB_Ay, () => tB_Ay.Text = pos.Y.ToString());
             } else if(SetToPoint == btn_ToPointB) {
-                tB_Bx.Text = pos.X.ToString();
-                tB_By.Text = pos.Y.ToString();
+                UIHelper.SetControlProperty(tB_Bx, () => tB_Bx.Text = pos.X.ToString());
+                UIHelper.SetControlProperty(tB_By, () => tB_By.Text = pos.Y.ToString());
             } else if(SetToPoint == btn_SwitchPointAB) {
                 double dbX = 0.0, dbY = 0.0;
 
                 dbX = double.Parse(tB_Ax.Text);
                 dbY = double.Parse(tB_Ay.Text);
 
-                tB_Ax.Text = tB_Bx.Text;
-                tB_Ay.Text = tB_By.Text;
+                UIHelper.SetControlProperty(tB_Ax, () => tB_Ax.Text = tB_Bx.Text);
+                UIHelper.SetControlProperty(tB_Ay, () => tB_Ay.Text = tB_By.Text);
 
-                tB_Bx.Text = dbX.ToString();
-                tB_By.Text = dbY.ToString();    
+                UIHelper.SetControlProperty(tB_Bx, () => tB_Bx.Text = dbX.ToString());
+                UIHelper.SetControlProperty(tB_By, () => tB_By.Text = dbY.ToString());
             }
         }
         //---------------------------------------------------------------------------------------
@@ -409,14 +409,14 @@ namespace InjectorInspector
                 success = inspector1.xCarb震動盤二孔(out pos, out deg1);
                 pos.X = (float)inspector1.nozzleX - pos.X;
                 pos.Y = (float)inspector1.nozzleY - pos.Y;
-                label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}, deg= {3:F2}", success, pos.X, pos.Y, deg1);
+                UIHelper.SetControlProperty(label2, () => label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}, deg= {3:F2}", success, pos.X, pos.Y, deg1));
             }
             else
             {
                 success = inspector1.xCarb震動盤(out pos);
                 //pos.X = (float)inspector1.nozzleX - pos.X;
                 //pos.Y = (float)inspector1.nozzleY - pos.Y;
-                label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y);
+                UIHelper.SetControlProperty(label2, () => label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y));
             }
             //bool success = inspector1.xCarb震動盤(out pos);
             //label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y);
@@ -427,14 +427,14 @@ namespace InjectorInspector
 
             //黑色料倉
             bool 料倉有料 = inspector1.xInsp入料();
-            label3.Text = string.Format("黑色料倉 料倉有料 = {0}", 料倉有料);
+            UIHelper.SetControlProperty(label3, () => label3.Text = string.Format("黑色料倉 料倉有料 = {0}", 料倉有料));
             b黑色料倉有料_tmrTakePinTick = 料倉有料;
 
             //光源震動盤
             List<Vector3> pins;
             bool 料盤有料 = inspector1.xInsp震動盤(out pins);
             Vector3 temp = (料盤有料) ? pins.First() : new Vector3();
-            label4.Text = string.Format("光源震動盤 震動盤 = {0} X = {1:F2} Y = {2:F2} θ = {3:F2}", 料盤有料, temp.X, temp.Y, temp.θ);
+            UIHelper.SetControlProperty(label4, () => label4.Text = string.Format("光源震動盤 震動盤 = {0} X = {1:F2} Y = {2:F2} θ = {3:F2}", 料盤有料, temp.X, temp.Y, temp.θ));
             b柔震盤有料_tmrTakePinTick = 料盤有料;
             dbPinX_tmrTakePinTick = temp.X;
             dbPinY_tmrTakePinTick = temp.Y;
@@ -442,9 +442,11 @@ namespace InjectorInspector
 
             if (inspector1.Inspected && inspector1.InspectOK) {
                 double deg = inspector1.PinDeg;
-                label5.Text = string.Format("吸嘴物料分析  θ = {0:F2}", deg);
-            } else
-                label5.Text = "吸嘴物料分析失敗";
+                UIHelper.SetControlProperty(label5, () => label5.Text = string.Format("吸嘴物料分析  θ = {0:F2}", deg));
+            } else { 
+                UIHelper.SetControlProperty(label5, () => label5.Text = "吸嘴物料分析失敗");
+            }
+
 
             int cntdebug = inspector1.RecvCount;
 
@@ -811,43 +813,43 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    lbl_吸嘴X軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_吸嘴X軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_吸嘴X軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value;
+                    UIHelper.SetControlProperty(lbl_吸嘴X軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_吸嘴X軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_吸嘴X軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
 
 
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    lbl_吸嘴X軸_RAW.Text     = Convert.ToString();
+                    UIHelper.SetControlProperty(lbl_吸嘴X軸_RAW,     () => lbl_吸嘴X軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    lbl_吸嘴X軸_Convert.Text = dbGet.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_吸嘴X軸_Convert,     () => lbl_吸嘴X軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    lbl_吸嘴X軸_Back.Text    = cnback.ToString();
+                    UIHelper.SetControlProperty(lbl_吸嘴X軸_Back,     () => lbl_吸嘴X軸_Back.Text    = cnback.ToString());
 
 
                     //顯示讀取長度
                     dbRstNozzleX             = dbGet;
-                    lbl_acpos_吸嘴X軸.Text   = dbRstNozzleX.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴X軸,     () => lbl_acpos_吸嘴X軸.Text   = dbRstNozzleX.ToString("F3"));
 
                     //顯示運動速度
-                    lbl_spd_吸嘴X軸.Text     = dbSpeed.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴X軸,     () => lbl_spd_吸嘴X軸.Text     = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     select_吸嘴X軸.BackColor    = Color.Red;
-                    lbl_acpos_吸嘴X軸.BackColor = Color.White;
-                    lbl_spd_吸嘴X軸.BackColor   = Color.White;
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴X軸,     () => lbl_acpos_吸嘴X軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴X軸,     () => lbl_spd_吸嘴X軸.BackColor   = Color.White);
                 } else {
                     select_吸嘴X軸.BackColor    = Color.Green;
-                    lbl_acpos_吸嘴X軸.BackColor = Color.Gray;
-                    lbl_spd_吸嘴X軸.BackColor   = Color.Gray;
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴X軸,     () => lbl_acpos_吸嘴X軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴X軸,     () => lbl_spd_吸嘴X軸.BackColor   = Color.Gray);
                 }
 
             }  // end of 吸嘴X軸 讀取與顯示
@@ -942,43 +944,43 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    lbl_吸嘴Y軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_吸嘴Y軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_吸嘴Y軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value;
+                    UIHelper.SetControlProperty(lbl_吸嘴Y軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_吸嘴Y軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_吸嘴Y軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
 
 
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    lbl_吸嘴Y軸_RAW.Text     = Convert.ToString();
+                    UIHelper.SetControlProperty(lbl_吸嘴Y軸_RAW,    () => lbl_吸嘴Y軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    lbl_吸嘴Y軸_Convert.Text = dbGet.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_吸嘴Y軸_Convert,    () => lbl_吸嘴Y軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    lbl_吸嘴Y軸_Back.Text    = cnback.ToString();
+                    UIHelper.SetControlProperty(lbl_吸嘴Y軸_Back,    () => lbl_吸嘴Y軸_Back.Text    = cnback.ToString());
 
 
                     //顯示讀取長度
                     dbRstNozzleY             = dbGet;
-                    lbl_acpos_吸嘴Y軸.Text   = dbRstNozzleY.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Y軸,    () => lbl_acpos_吸嘴Y軸.Text   = dbRstNozzleY.ToString("F3"));
 
                     //顯示運動速度
-                    lbl_spd_吸嘴Y軸.Text     = dbSpeed.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴Y軸,    () => lbl_spd_吸嘴Y軸.Text     = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     select_吸嘴Y軸.BackColor    = Color.Red;
-                    lbl_acpos_吸嘴Y軸.BackColor = Color.White;
-                    lbl_spd_吸嘴Y軸.BackColor   = Color.White;
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Y軸,    () => lbl_acpos_吸嘴Y軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴Y軸,    () => lbl_spd_吸嘴Y軸.BackColor   = Color.White);
                 } else {
                     select_吸嘴Y軸.BackColor    = Color.Green;
-                    lbl_acpos_吸嘴Y軸.BackColor = Color.Gray;
-                    lbl_spd_吸嘴Y軸.BackColor   = Color.Gray;
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Y軸,    () => lbl_acpos_吸嘴Y軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴Y軸,    () => lbl_spd_吸嘴Y軸.BackColor   = Color.Gray);
                 }
 
             }  // end of 吸嘴Y軸 讀取與顯示
@@ -1066,43 +1068,43 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    lbl_吸嘴Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_吸嘴Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_吸嘴Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value;
+                    UIHelper.SetControlProperty(lbl_吸嘴Z軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_吸嘴Z軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_吸嘴Z軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
 
 
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    lbl_吸嘴Z軸_RAW.Text     = Convert.ToString();
+                    UIHelper.SetControlProperty(lbl_吸嘴Z軸_RAW,    () => lbl_吸嘴Z軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    lbl_吸嘴Z軸_Convert.Text = dbGet.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_吸嘴Z軸_Convert,    () => lbl_吸嘴Z軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    lbl_吸嘴Z軸_Back.Text    = cnback.ToString();
+                    UIHelper.SetControlProperty(lbl_吸嘴Z軸_Back,    () => lbl_吸嘴Z軸_Back.Text    = cnback.ToString());
 
 
                     //顯示讀取長度
                     dbRstNozzleZ             = dbGet;
-                    lbl_acpos_吸嘴Z軸.Text   = dbRstNozzleZ.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Z軸,    () => lbl_acpos_吸嘴Z軸.Text   = dbRstNozzleZ.ToString("F3"));
 
                     //顯示運動速度
-                    lbl_spd_吸嘴Z軸.Text     = dbSpeed.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴Z軸,    () => lbl_spd_吸嘴Z軸.Text     = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     select_吸嘴Z軸.BackColor    = Color.Red;
-                    lbl_acpos_吸嘴Z軸.BackColor = Color.White;
-                    lbl_spd_吸嘴Z軸.BackColor   = Color.White;
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Z軸,    () => lbl_acpos_吸嘴Z軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴Z軸,    () => lbl_spd_吸嘴Z軸.BackColor   = Color.White);
                 } else {
                     select_吸嘴Z軸.BackColor    = Color.Green;
-                    lbl_acpos_吸嘴Z軸.BackColor = Color.Gray;
-                    lbl_spd_吸嘴Z軸.BackColor   = Color.Gray;
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Z軸,    () => lbl_acpos_吸嘴Z軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴Z軸,    () => lbl_spd_吸嘴Z軸.BackColor   = Color.Gray);
                 }
 
             }  // end of 吸嘴Z軸 讀取與顯示
@@ -1191,45 +1193,45 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    lbl_吸嘴R軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_吸嘴R軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_吸嘴R軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value;
+                    UIHelper.SetControlProperty(lbl_吸嘴R軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_吸嘴R軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_吸嘴R軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
 
 
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    lbl_吸嘴R軸_RAW.Text     = Convert.ToString();
+                    UIHelper.SetControlProperty(lbl_吸嘴R軸_RAW,    () => lbl_吸嘴R軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
                     while (dbGet >= 360.0) { dbGet -= 360.0; }  //overflow
                     while (dbGet <    0.0) { dbGet += 360.0; }  //overflow
-                    lbl_吸嘴R軸_Convert.Text = dbGet.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_吸嘴R軸_Convert,    () => lbl_吸嘴R軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    lbl_吸嘴R軸_Back.Text    = cnback.ToString();
+                    UIHelper.SetControlProperty(lbl_吸嘴R軸_Back,    () => lbl_吸嘴R軸_Back.Text    = cnback.ToString());
 
 
                     //顯示讀取長度
                     dbRstNozzleR             = dbGet;
-                    lbl_acpos_吸嘴R軸.Text   = dbRstNozzleR.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴R軸,    () => lbl_acpos_吸嘴R軸.Text   = dbRstNozzleR.ToString("F3"));
 
                     //顯示運動速度
-                    lbl_spd_吸嘴R軸.Text     = dbSpeed.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴R軸,    () => lbl_spd_吸嘴R軸.Text     = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     select_吸嘴R軸.BackColor    = Color.Red;
-                    lbl_acpos_吸嘴R軸.BackColor = Color.White;
-                    lbl_spd_吸嘴R軸.BackColor   = Color.White;
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴R軸,    () => lbl_acpos_吸嘴R軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴R軸,    () => lbl_spd_吸嘴R軸.BackColor   = Color.White);
                 } else {
                     select_吸嘴R軸.BackColor    = Color.Green;
-                    lbl_acpos_吸嘴R軸.BackColor = Color.Gray;
-                    lbl_spd_吸嘴R軸.BackColor   = Color.Gray;
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴R軸,    () => lbl_acpos_吸嘴R軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴R軸,    () => lbl_spd_吸嘴R軸.BackColor   = Color.Gray);
                 }
 
             }  // end of 吸嘴R軸 讀取與顯示
@@ -1321,43 +1323,43 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    lbl_載盤X軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_載盤X軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_載盤X軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value;
+                    UIHelper.SetControlProperty(lbl_載盤X軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_載盤X軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_載盤X軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
 
 
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    lbl_載盤X軸_RAW.Text     = Convert.ToString();
+                    UIHelper.SetControlProperty(lbl_載盤X軸_RAW,    () => lbl_載盤X軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    lbl_載盤X軸_Convert.Text = dbGet.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_載盤X軸_Convert,    () => lbl_載盤X軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    lbl_載盤X軸_Back.Text    = cnback.ToString();
+                    UIHelper.SetControlProperty(lbl_載盤X軸_Back,    () => lbl_載盤X軸_Back.Text    = cnback.ToString());
 
 
                     //顯示讀取長度
                     dbRstCarrierX            = dbGet;
-                    lbl_acpos_載盤X軸.Text   = dbRstCarrierX.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_acpos_載盤X軸,    () => lbl_acpos_載盤X軸.Text   = dbRstCarrierX.ToString("F3"));
 
                     //顯示運動速度
-                    lbl_spd_載盤X軸.Text     = dbSpeed.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_spd_載盤X軸,    () => lbl_spd_載盤X軸.Text     = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     select_載盤X軸.BackColor    = Color.Red;
-                    lbl_acpos_載盤X軸.BackColor = Color.White;
-                    lbl_spd_載盤X軸.BackColor   = Color.White;
+                    UIHelper.SetControlProperty(lbl_acpos_載盤X軸,    () => lbl_acpos_載盤X軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_載盤X軸,    () => lbl_spd_載盤X軸.BackColor   = Color.White);
                 } else {
                     select_載盤X軸.BackColor    = Color.Green;
-                    lbl_acpos_載盤X軸.BackColor = Color.Gray;
-                    lbl_spd_載盤X軸.BackColor   = Color.Gray;
+                    UIHelper.SetControlProperty(lbl_acpos_載盤X軸,    () => lbl_acpos_載盤X軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_載盤X軸,    () => lbl_spd_載盤X軸.BackColor   = Color.Gray);
                 }
 
             }  // end of 載盤X軸 讀取與顯示
@@ -1445,43 +1447,43 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    lbl_載盤Y軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_載盤Y軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_載盤Y軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value;
+                    UIHelper.SetControlProperty(lbl_載盤Y軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_載盤Y軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_載盤Y軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
 
 
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    lbl_載盤Y軸_RAW.Text     = Convert.ToString();
+                    UIHelper.SetControlProperty(lbl_載盤Y軸_RAW,    () => lbl_載盤Y軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    lbl_載盤Y軸_Convert.Text = dbGet.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_載盤Y軸_Convert,    () => lbl_載盤Y軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    lbl_載盤Y軸_Back.Text    = cnback.ToString();
+                    UIHelper.SetControlProperty(lbl_載盤Y軸_Back,    () => lbl_載盤Y軸_Back.Text    = cnback.ToString());
 
 
                     //顯示讀取長度
                     dbRstCarrierY            = dbGet;
-                    lbl_acpos_載盤Y軸.Text   = dbRstCarrierY.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_acpos_載盤Y軸,    () => lbl_acpos_載盤Y軸.Text   = dbRstCarrierY.ToString("F3"));
 
                     //顯示運動速度
-                    lbl_spd_載盤Y軸.Text     = dbSpeed.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_spd_載盤Y軸,    () => lbl_spd_載盤Y軸.Text     = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     select_載盤Y軸.BackColor    = Color.Red;
-                    lbl_acpos_載盤Y軸.BackColor = Color.White;
-                    lbl_spd_載盤Y軸.BackColor   = Color.White;
+                    UIHelper.SetControlProperty(lbl_acpos_載盤Y軸,    () => lbl_acpos_載盤Y軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_載盤Y軸,    () => lbl_spd_載盤Y軸.BackColor   = Color.White);
                 } else {
                     select_載盤Y軸.BackColor    = Color.Green;
-                    lbl_acpos_載盤Y軸.BackColor = Color.Gray;
-                    lbl_spd_載盤Y軸.BackColor   = Color.Gray;
+                    UIHelper.SetControlProperty(lbl_acpos_載盤Y軸,    () => lbl_acpos_載盤Y軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_載盤Y軸,    () => lbl_spd_載盤Y軸.BackColor   = Color.Gray);
                 }
 
             }  // end of 載盤Y軸 讀取與顯示
@@ -1578,35 +1580,35 @@ namespace InjectorInspector
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    lbl_植針Z軸_RAW.Text     = Convert.ToString();
+                    UIHelper.SetControlProperty(lbl_植針Z軸_RAW,    () => lbl_植針Z軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    lbl_植針Z軸_Convert.Text = dbGet.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_植針Z軸_Convert,    () => lbl_植針Z軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    lbl_植針Z軸_Back.Text    = cnback.ToString();
+                    UIHelper.SetControlProperty(lbl_植針Z軸_Back,    () => lbl_植針Z軸_Back.Text    = cnback.ToString());
 
 
                     //顯示讀取長度
                     dbRstSetZ                = dbGet;
-                    lbl_acpos_植針Z軸.Text   = dbRstSetZ.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_acpos_植針Z軸,    () => lbl_acpos_植針Z軸.Text   = dbRstSetZ.ToString("F3"));
 
                     //顯示運動速度
-                    lbl_spd_植針Z軸.Text     = dbSpeed.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_spd_植針Z軸,    () => lbl_spd_植針Z軸.Text     = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     select_植針Z軸.BackColor    = Color.Red;
-                    lbl_acpos_植針Z軸.BackColor = Color.White;
-                    lbl_spd_植針Z軸.BackColor   = Color.White;
+                    UIHelper.SetControlProperty(lbl_acpos_植針Z軸,    () => lbl_acpos_植針Z軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_植針Z軸,    () => lbl_spd_植針Z軸.BackColor   = Color.White);
                 } else {
                     select_植針Z軸.BackColor    = Color.Green;
-                    lbl_acpos_植針Z軸.BackColor = Color.Gray;
-                    lbl_spd_植針Z軸.BackColor   = Color.Gray;
+                    UIHelper.SetControlProperty(lbl_acpos_植針Z軸,    () => lbl_acpos_植針Z軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_植針Z軸,    () => lbl_spd_植針Z軸.BackColor   = Color.Gray);
                 }
 
             }  // end of 植針Z軸 讀取與顯示
@@ -1693,43 +1695,43 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    lbl_植針R軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_植針R軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_植針R軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value;
+                    UIHelper.SetControlProperty(lbl_植針R軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_植針R軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_植針R軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
 
 
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    lbl_植針R軸_RAW.Text     = Convert.ToString();
+                    UIHelper.SetControlProperty(lbl_植針R軸_RAW,    () => lbl_植針R軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    lbl_植針R軸_Convert.Text = dbGet.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_植針R軸_Convert,    () => lbl_植針R軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    lbl_植針R軸_Back.Text    = cnback.ToString();
+                    UIHelper.SetControlProperty(lbl_植針R軸_Back,    () => lbl_植針R軸_Back.Text    = cnback.ToString());
 
 
                     //顯示讀取長度
                     dbRstSetR                = dbGet;
-                    lbl_acpos_植針R軸.Text   = dbRstSetR.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_acpos_植針R軸,    () => lbl_acpos_植針R軸.Text   = dbRstSetR.ToString("F3"));
 
                     //顯示運動速度
-                    lbl_spd_植針R軸.Text     = dbSpeed.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_spd_植針R軸,    () => lbl_spd_植針R軸.Text     = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     select_植針R軸.BackColor    = Color.Red;
-                    lbl_acpos_植針R軸.BackColor = Color.White;
-                    lbl_spd_植針R軸.BackColor   = Color.White;
+                    UIHelper.SetControlProperty(lbl_acpos_植針R軸,    () => lbl_acpos_植針R軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_植針R軸,    () => lbl_spd_植針R軸.BackColor   = Color.White);
                 } else {
                     select_植針R軸.BackColor    = Color.Green;
-                    lbl_acpos_植針R軸.BackColor = Color.Gray;
-                    lbl_spd_植針R軸.BackColor   = Color.Gray;
+                    UIHelper.SetControlProperty(lbl_acpos_植針R軸,    () => lbl_acpos_植針R軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_植針R軸,    () => lbl_spd_植針R軸.BackColor   = Color.Gray);
                 }
 
             }  // end of 植針R軸 讀取與顯示
@@ -1818,43 +1820,43 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    lbl_工作門_RAW.Visible      = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_工作門_Convert.Visible  = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_工作門_Back.Visible     = bshow_debug_RAW_Conver_Back_Value;
+                    UIHelper.SetControlProperty(lbl_工作門_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_工作門_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_工作門_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
 
 
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    lbl_工作門_RAW.Text      = Convert.ToString();
+                    UIHelper.SetControlProperty(lbl_工作門_RAW,    () => lbl_工作門_RAW.Text      = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    lbl_工作門_Convert.Text  = dbGet.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_工作門_Convert,    () => lbl_工作門_Convert.Text  = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    lbl_工作門_Back.Text     = cnback.ToString();
+                    UIHelper.SetControlProperty(lbl_工作門_Back,    () => lbl_工作門_Back.Text     = cnback.ToString());
 
 
                     //顯示讀取長度
                     dbRstGate                = dbGet;
-                    lbl_acpos_工作門.Text    = dbRstGate.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_acpos_工作門,    () => lbl_acpos_工作門.Text    = dbRstGate.ToString("F3"));
 
                     //顯示運動速度
-                    lbl_spd_工作門.Text      = dbSpeed.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_spd_工作門,    () => lbl_spd_工作門.Text      = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     select_工作門.BackColor     = Color.Red;
-                    lbl_acpos_工作門.BackColor  = Color.White;
-                    lbl_spd_工作門.BackColor    = Color.White;
+                    UIHelper.SetControlProperty(lbl_acpos_工作門,    () => lbl_acpos_工作門.BackColor  = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_工作門,    () => lbl_spd_工作門.BackColor    = Color.White);
                 } else {
                     select_工作門.BackColor     = Color.Green;
-                    lbl_acpos_工作門.BackColor  = Color.Gray;
-                    lbl_spd_工作門.BackColor    = Color.Gray;
+                    UIHelper.SetControlProperty(lbl_acpos_工作門,    () => lbl_acpos_工作門.BackColor  = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_工作門,    () => lbl_spd_工作門.BackColor    = Color.Gray);
                 }
 
             }  // end of 工作門 讀取與顯示
@@ -1940,43 +1942,43 @@ namespace InjectorInspector
 
                 //當數值有效
                 if(true) { 
-                    lbl_IAI_RAW.Visible               = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_IAI_Convert.Visible           = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_IAI_Back.Visible              = bshow_debug_RAW_Conver_Back_Value;
+                    UIHelper.SetControlProperty(lbl_IAI_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_IAI_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_IAI_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
 
 
                     //得到原始數值
                     int Convert                   = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetPosition, 0);
                     int Speed                     = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetCurrentSpeed4Bytes, 0);
-                    lbl_IAI_RAW.Text              = Convert.ToString();
+                    UIHelper.SetControlProperty(lbl_IAI_RAW,    () => lbl_IAI_RAW.Text              = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet                  = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed                = Speed / dbSpdF;
-                    lbl_IAI_Convert.Text          = dbGet.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_IAI_Convert,    () => lbl_IAI_Convert.Text          = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback                    = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    lbl_IAI_Back.Text             = cnback.ToString();
+                    UIHelper.SetControlProperty(lbl_IAI_Back,    () => lbl_IAI_Back.Text             = cnback.ToString());
 
 
                     //顯示讀取長度
                     dbRstIAI                      = dbGet;
-                    lbl_acpos_IAI.Text            = dbRstIAI.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_acpos_IAI,    () => lbl_acpos_IAI.Text            = dbRstIAI.ToString("F3"));
 
                     //顯示運動速度
-                    lbl_spd_IAI.Text              = dbSpeed.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_spd_IAI,    () => lbl_spd_IAI.Text              = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 2) {
                     select_Socket檢測.BackColor      = Color.Red;
-                    lbl_acpos_IAI.BackColor          = Color.White;
-                    lbl_spd_IAI.BackColor            = Color.White;
+                    UIHelper.SetControlProperty(lbl_acpos_IAI,    () => lbl_acpos_IAI.BackColor          = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_IAI,    () => lbl_spd_IAI.BackColor            = Color.White);
                 } else {
                     select_Socket檢測.BackColor      = Color.Green;
-                    lbl_acpos_IAI.BackColor          = Color.Gray;
-                    lbl_spd_IAI.BackColor            = Color.Gray;
+                    UIHelper.SetControlProperty(lbl_acpos_IAI,    () => lbl_acpos_IAI.BackColor          = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_IAI,    () => lbl_spd_IAI.BackColor            = Color.Gray);
                 }
 
             }  // end of Socket定位攝影機軸 讀取與顯示
@@ -2061,43 +2063,43 @@ namespace InjectorInspector
 
                 //當數值有效
                 if(true) { 
-                    lbl_JoDell3D掃描_RAW.Visible      = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_JoDell3D掃描_Convert.Visible  = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_JoDell3D掃描_Back.Visible     = bshow_debug_RAW_Conver_Back_Value;
+                    UIHelper.SetControlProperty(lbl_JoDell3D掃描_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_JoDell3D掃描_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_JoDell3D掃描_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
 
 
                     //得到原始數值
                     int Convert                   = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GetPosition, 0);
                     int Speed                     = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
-                    lbl_JoDell3D掃描_RAW.Text     = Convert.ToString();
+                    UIHelper.SetControlProperty(lbl_JoDell3D掃描_RAW,    () => lbl_JoDell3D掃描_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet                  = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
                     double dbSpeed                = Speed / dbSpdF;
-                    lbl_JoDell3D掃描_Convert.Text = dbGet.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_JoDell3D掃描_Convert,    () => lbl_JoDell3D掃描_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback                    = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
-                    lbl_JoDell3D掃描_Back.Text    = cnback.ToString();
+                    UIHelper.SetControlProperty(lbl_JoDell3D掃描_Back,    () => lbl_JoDell3D掃描_Back.Text    = cnback.ToString());
 
 
                     //顯示讀取長度
                     dbRstJoDell3D掃描             = dbGet;
-                    lbl_acpos_JoDell3D掃描.Text   = dbRstJoDell3D掃描.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell3D掃描,    () => lbl_acpos_JoDell3D掃描.Text   = dbRstJoDell3D掃描.ToString("F3"));
 
                     //顯示運動速度
-                    lbl_spd_JoDell3D掃描.Text     = dbSpeed.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_spd_JoDell3D掃描,    () => lbl_spd_JoDell3D掃描.Text     = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 4) {
                     select_JoDell3D掃描.BackColor    = Color.Red;
-                    lbl_acpos_JoDell3D掃描.BackColor = Color.White;
-                    lbl_spd_JoDell3D掃描.BackColor   = Color.White;
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell3D掃描,    () => lbl_acpos_JoDell3D掃描.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_JoDell3D掃描,    () => lbl_spd_JoDell3D掃描.BackColor   = Color.White);
                 } else {
                     select_JoDell3D掃描.BackColor    = Color.Green;
-                    lbl_acpos_JoDell3D掃描.BackColor = Color.Gray;
-                    lbl_spd_JoDell3D掃描.BackColor   = Color.Gray;
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell3D掃描,    () => lbl_acpos_JoDell3D掃描.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_JoDell3D掃描,    () => lbl_spd_JoDell3D掃描.BackColor   = Color.Gray);
                 }
 
             }  // end of JoDell3D掃描 讀取與顯示
@@ -2180,43 +2182,43 @@ namespace InjectorInspector
 
                 //當數值有效
                 if(true) { 
-                    lbl_JoDell吸針嘴_RAW.Visible      = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_JoDell吸針嘴_Convert.Visible  = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_JoDell吸針嘴_Back.Visible     = bshow_debug_RAW_Conver_Back_Value;
+                    UIHelper.SetControlProperty(lbl_JoDell吸針嘴_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_JoDell吸針嘴_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_JoDell吸針嘴_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
 
 
                     //得到原始數值
                     int Convert                   = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GetPosition, 0);
                     int Speed                     = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
-                    lbl_JoDell吸針嘴_RAW.Text     = Convert.ToString();
+                    UIHelper.SetControlProperty(lbl_JoDell吸針嘴_RAW,    () => lbl_JoDell吸針嘴_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet                  = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
                     double dbSpeed                = Speed / dbSpdF;
-                    lbl_JoDell吸針嘴_Convert.Text = dbGet.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_JoDell吸針嘴_Convert,    () => lbl_JoDell吸針嘴_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback                    = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
-                    lbl_JoDell吸針嘴_Back.Text    = cnback.ToString();
+                    UIHelper.SetControlProperty(lbl_JoDell吸針嘴_Back,    () => lbl_JoDell吸針嘴_Back.Text    = cnback.ToString());
 
 
                     //顯示讀取長度
                     dbRstJoDell吸針嘴             = dbGet;
-                    lbl_acpos_JoDell吸針嘴.Text   = dbRstJoDell吸針嘴.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell吸針嘴,    () => lbl_acpos_JoDell吸針嘴.Text   = dbRstJoDell吸針嘴.ToString("F3"));
 
                     //顯示運動速度
-                    lbl_spd_JoDell吸針嘴.Text     = dbSpeed.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_spd_JoDell吸針嘴,    () => lbl_spd_JoDell吸針嘴.Text     = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 4) {
                     select_JoDell吸針嘴.BackColor    = Color.Red;
-                    lbl_acpos_JoDell吸針嘴.BackColor = Color.White;
-                    lbl_spd_JoDell吸針嘴.BackColor   = Color.White;
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell吸針嘴,    () => lbl_acpos_JoDell吸針嘴.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_JoDell吸針嘴,    () => lbl_spd_JoDell吸針嘴.BackColor   = Color.White);
                 } else {
                     select_JoDell吸針嘴.BackColor    = Color.Green;
-                    lbl_acpos_JoDell吸針嘴.BackColor = Color.Gray;
-                    lbl_spd_JoDell吸針嘴.BackColor   = Color.Gray;
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell吸針嘴,    () => lbl_acpos_JoDell吸針嘴.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_JoDell吸針嘴,    () => lbl_spd_JoDell吸針嘴.BackColor   = Color.Gray);
                 }
 
             }  // end of JoDell吸針嘴 讀取與顯示
@@ -2299,43 +2301,43 @@ namespace InjectorInspector
 
                 //當數值有效
                 if(true) {
-                    lbl_JoDell植針嘴相機_RAW.Visible      = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_JoDell植針嘴相機_Convert.Visible  = bshow_debug_RAW_Conver_Back_Value;
-                    lbl_JoDell植針嘴相機_Back.Visible     = bshow_debug_RAW_Conver_Back_Value;
+                    UIHelper.SetControlProperty(lbl_JoDell植針嘴相機_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_JoDell植針嘴相機_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
+                    UIHelper.SetControlProperty(lbl_JoDell植針嘴相機_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
 
 
                     //得到原始數值
                     int Convert                       = clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_GetPosition, 0);
                     int Speed                         = clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
-                    lbl_JoDell植針嘴相機_RAW.Text     = Convert.ToString();
+                    UIHelper.SetControlProperty(lbl_JoDell植針嘴相機_RAW,    () => lbl_JoDell植針嘴相機_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet                      = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
                     double dbSpeed                    = Speed / dbSpdF;
-                    lbl_JoDell植針嘴相機_Convert.Text = dbGet.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_JoDell植針嘴相機_Convert,    () => lbl_JoDell植針嘴相機_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback                        = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
-                    lbl_JoDell植針嘴相機_Back.Text    = cnback.ToString();
+                    UIHelper.SetControlProperty(lbl_JoDell植針嘴相機_Back,    () => lbl_JoDell植針嘴相機_Back.Text    = cnback.ToString());
 
 
                     //顯示讀取長度
                     dbRstJoDell植針嘴相機             = dbGet;
-                    lbl_acpos_JoDell植針嘴相機.Text   = dbRstJoDell植針嘴相機.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell植針嘴相機,    () => lbl_acpos_JoDell植針嘴相機.Text   = dbRstJoDell植針嘴相機.ToString("F3"));
 
                     //顯示運動速度
-                    lbl_spd_JoDell植針嘴相機.Text     = dbSpeed.ToString("F3");
+                    UIHelper.SetControlProperty(lbl_spd_JoDell植針嘴相機,    () => lbl_spd_JoDell植針嘴相機.Text     = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 4) {
                     select_JoDell植針嘴相機.BackColor    = Color.Red;
-                    lbl_acpos_JoDell植針嘴相機.BackColor = Color.White;
-                    lbl_spd_JoDell植針嘴相機.BackColor   = Color.White;
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell植針嘴相機,    () => lbl_acpos_JoDell植針嘴相機.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_JoDell植針嘴相機,    () => lbl_spd_JoDell植針嘴相機.BackColor   = Color.White);
                 } else {
                     select_JoDell植針嘴相機.BackColor    = Color.Green;
-                    lbl_acpos_JoDell植針嘴相機.BackColor = Color.Gray;
-                    lbl_spd_JoDell植針嘴相機.BackColor   = Color.Gray;
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell植針嘴相機,    () => lbl_acpos_JoDell植針嘴相機.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_JoDell植針嘴相機,    () => lbl_spd_JoDell植針嘴相機.BackColor   = Color.Gray);
                 }
 
             }  // end of JoDell植針嘴相機 讀取與顯示
@@ -2426,7 +2428,7 @@ namespace InjectorInspector
                     i計時300ms = 0;
 
                     if (BarcodeBuffer.Count > 0) {
-                        btn_OpenFile_Click(sender, e);
+                        UIHelper.RunOnUIThread(this, () => { btn_OpenFile_Click(sender, e); });
                         BarcodeBuffer.Clear();
                     }
                     break;
@@ -2607,7 +2609,7 @@ namespace InjectorInspector
             TestForm fmTestForm = new TestForm();
             fmTestForm.Show();
 
-            btn_manual.Enabled = false;
+            UIHelper.SetControlProperty(btn_manual, () => btn_manual.Enabled = false);
         }
         //---------------------------------------------------------------------------------------
         ParameterForm fmParameterFormHandle;
@@ -2618,7 +2620,7 @@ namespace InjectorInspector
 
             fmParameterFormHandle = fmParameterForm;
 
-            btn_參數.Enabled = false;
+            UIHelper.SetControlProperty(btn_參數, () => btn_參數.Enabled = false);
         }
         //---------------------------------------------------------------------------------------
         public void btn_植針_Click(object sender, EventArgs e)
@@ -2626,7 +2628,7 @@ namespace InjectorInspector
             PlaceForm fmPlaceForm = new PlaceForm();
             fmPlaceForm.Show();
 
-            btn_植針.Enabled = false;
+            UIHelper.SetControlProperty(btn_植針, () => btn_植針.Enabled = false);
         }
         //---------------------------------------------------------------------------------------
         private void btn_取針_Click(object sender, EventArgs e)
@@ -2634,7 +2636,7 @@ namespace InjectorInspector
             RemoveForm fmRemoveForm = new RemoveForm();
             fmRemoveForm.Show();
 
-            btn_取針.Enabled = false;
+            UIHelper.SetControlProperty(btn_取針, () => btn_取針.Enabled = false);
         }
         //---------------------------------------------------------------------------------------
         private void btn_置換_Click(object sender, EventArgs e)
@@ -2642,7 +2644,7 @@ namespace InjectorInspector
             ReplaceForm fmReplaceForm = new ReplaceForm();
             fmReplaceForm.Show();
 
-            btn_置換.Enabled = false;
+            UIHelper.SetControlProperty(btn_置換, () => btn_置換.Enabled = false);
         }
         //---------------------------------------------------------------------------------------
         private void btn_拋料_Click(object sender, EventArgs e)
@@ -2650,7 +2652,7 @@ namespace InjectorInspector
             TakePinForm fmTakePinForm = new TakePinForm();
             fmTakePinForm.Show();
 
-            btn_拋料.Enabled = false;
+            UIHelper.SetControlProperty(btn_拋料, () => btn_拋料.Enabled = false);
         }
         //---------------------------------------------------------------------------------------
         public void btn_Connect_Click(object sender, EventArgs e)
@@ -2861,33 +2863,33 @@ namespace InjectorInspector
 
             //複製選擇之軸
                    if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴X軸) {
-                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴X軸.Text).ToString("F3"));
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴X軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴Y軸) {
-                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Y軸.Text).ToString("F3"));
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Y軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴Z軸) {
-                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Z軸.Text).ToString("F3"));
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Z軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴R軸) {
-                txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴R軸.Text).ToString("F3"));
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴R軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.載盤X軸) {
-                txtABSpos.Text = (double.Parse(lbl_acpos_載盤X軸.Text).ToString("F3"));
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_載盤X軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.載盤Y軸) {
-                txtABSpos.Text = (double.Parse(lbl_acpos_載盤Y軸.Text).ToString("F3"));
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_載盤Y軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.植針Z軸) {
-                txtABSpos.Text = (double.Parse(lbl_acpos_植針Z軸.Text).ToString("F3"));
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_植針Z軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.植針R軸) {
-                txtABSpos.Text = (double.Parse(lbl_acpos_植針R軸.Text).ToString("F3"));
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_植針R軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.工作門) {
-                txtABSpos.Text = (double.Parse(lbl_acpos_工作門.Text).ToString("F3"));
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_工作門.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.IAISocket孔檢測) {
-                txtABSpos.Text = (double.Parse(lbl_acpos_IAI.Text).ToString("F3"));
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_IAI.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.JoDell3D掃描) {
-                txtABSpos.Text = (double.Parse(lbl_acpos_JoDell3D掃描.Text).ToString("F3"));
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_JoDell3D掃描.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.JoDell吸針嘴) {
-                txtABSpos.Text = (double.Parse(lbl_acpos_JoDell吸針嘴.Text).ToString("F3"));
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_JoDell吸針嘴.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.JoDell植針嘴相機) {
-                txtABSpos.Text = (double.Parse(lbl_acpos_JoDell植針嘴相機.Text).ToString("F3"));
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_JoDell植針嘴相機.Text).ToString("F3")));
             } else {
-                txtABSpos.Text = "N/A";
+                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = "N/A");
             }
 
         }  // end of public void RadioGroupChanged(object sender, EventArgs e)
@@ -2999,7 +3001,7 @@ namespace InjectorInspector
                 }
             }
 
-            txtABSpos.Text = result.ToString("F3");
+            UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = result.ToString("F3"));
         }  // end of public void btn_adjust_JOG(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
         private void btn_plus_minus_Click(object sender, EventArgs e)
@@ -3010,11 +3012,11 @@ namespace InjectorInspector
             double dbdiff = double.Parse(edit_diff_value.Text);
 
             if (ptrBtn == btn_plus ) {
-                txtABSpos.Text = (result + dbdiff).ToString("F3");
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (result + dbdiff).ToString("F3"));
             } else if (ptrBtn == btn_minus) {
-                txtABSpos.Text = (result - dbdiff).ToString("F3");
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (result - dbdiff).ToString("F3"));
             }
-            edit_diff_value.Text = 0.0.ToString("F3");
+            UIHelper.SetControlProperty(edit_diff_value, () => edit_diff_value.Text = 0.0.ToString("F3"));
         }
         //---------------------------------------------------------------------------------------
         int getCommuStatus = 0;
@@ -3023,11 +3025,11 @@ namespace InjectorInspector
             //WMX3通訊狀態
             getCommuStatus = clsServoControlWMX3.WMX3_check_Commu();
             if (getCommuStatus == 1) {
-                label1.Text = "連線中";
-                label1.ForeColor = Color.Red;
+                UIHelper.SetControlProperty(label1, () => label1.Text = "連線中");
+                UIHelper.SetControlProperty(label1, () => label1.ForeColor = Color.Red);
             } else {
-                label1.Text = "尚未連線";
-                label1.ForeColor = Color.Black;
+                UIHelper.SetControlProperty(label1, () => label1.Text = "尚未連線");
+                UIHelper.SetControlProperty(label1, () => label1.ForeColor = Color.Black);
             }
 
 
@@ -3255,7 +3257,7 @@ namespace InjectorInspector
             clsVibration.apiEstablishTCPVibration(); {
                 clsVibration.u32LED_Level = (uint)SB_VBLED.Value;
                 clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
-                lblVBLED.Text = "Light:" + (uint)SB_VBLED.Value;
+                UIHelper.SetControlProperty(lblVBLED, () => lblVBLED.Text = "Light:" + (uint)SB_VBLED.Value);
             }
         }
         //---------------------------------------------------------------------------------------
@@ -3273,7 +3275,7 @@ namespace InjectorInspector
             if(iValue<=0) {
                 iValue = 0;
             }
-            vcb_植針吹氣流量閥.Value = 100 - iValue;
+            UIHelper.SetControlProperty(vcb_植針吹氣流量閥, () => vcb_植針吹氣流量閥.Value = 100 - iValue);
             vcb流量閥_Scroll(vcb_植針吹氣流量閥, null);
         }
         public void dbapi_FlowValve_吸嘴破真空(int iValue) {
@@ -3283,7 +3285,7 @@ namespace InjectorInspector
             if(iValue<=0) {
                 iValue = 0;
             }
-            vcb_吸嘴破真空流量閥.Value = 100 - iValue;
+            UIHelper.SetControlProperty(vcb_吸嘴破真空流量閥, () => vcb_吸嘴破真空流量閥.Value = 100 - iValue);
             vcb流量閥_Scroll(vcb_吸嘴破真空流量閥, null);
         }
         public void vcb流量閥_Scroll(object sender, ScrollEventArgs e)
@@ -3360,9 +3362,9 @@ namespace InjectorInspector
             //            "y:" + y.ToString();
 
             if(vcb流量閥 == vcb_吸嘴破真空流量閥) {
-                lbl_吸嘴破真空流量閥.Text = string.Format("{0:F1}", y);
+                UIHelper.SetControlProperty(lbl_吸嘴破真空流量閥, () => lbl_吸嘴破真空流量閥.Text = string.Format("{0:F1}", y));
             } else if(vcb流量閥 == vcb_植針吹氣流量閥) {
-                lbl_植針吹氣流量閥.Text = string.Format("{0:F1}", y);
+                UIHelper.SetControlProperty(lbl_植針吹氣流量閥, () => lbl_植針吹氣流量閥.Text = string.Format("{0:F1}", y));
             }
 
         }
@@ -3397,10 +3399,10 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public void tsmi_OpenFile_Click(object sender, EventArgs e)
         { 
-            if (OpenFile())
+            if (OpenFile(this))
             {
                 tsmi_SaveFile.Enabled = true;
-                btn_SaveFile.Enabled = true;
+                UIHelper.SetControlProperty(btn_SaveFile, () => btn_SaveFile.Enabled = true);
 
                 show_grp_BarcodeInfo(grp_BarcodeInfo);
 
@@ -3532,10 +3534,10 @@ namespace InjectorInspector
             RealMousePos.X = (e.X - Offset.X) / ZoomFactor ;
             RealMousePos.Y = -(e.Y - Offset.Y) / ZoomFactor ;
 
-            lbl_RealMousePos.Text = "真實座標 : " + RealMousePos.ToString();  
-            lbl_PicMousePos.Text = "繪圖座標 : " + e.Location.ToString();
-            lbl_Offset.Text = "Offset : " + Offset.ToString();
-            lbl_ZoomFactor.Text = "縮放比例 : " + ZoomFactor.ToString();
+            UIHelper.SetControlProperty(lbl_RealMousePos, () => lbl_RealMousePos.Text = "真實座標 : " + RealMousePos.ToString());
+            UIHelper.SetControlProperty(lbl_PicMousePos, () => lbl_PicMousePos.Text = "繪圖座標 : " + e.Location.ToString());
+            UIHelper.SetControlProperty(lbl_Offset, () => lbl_Offset.Text = "Offset : " + Offset.ToString());
+            UIHelper.SetControlProperty(lbl_ZoomFactor, () => lbl_ZoomFactor.Text = "縮放比例 : " + ZoomFactor.ToString());
 
             // 左鍵移動顯示位置
             if (e.Button == MouseButtons.Left)
@@ -3986,7 +3988,7 @@ namespace InjectorInspector
         public void btn_OpenFile_Click(object sender, EventArgs e)
         {
             tsmi_SaveFile.Enabled = true;
-            btn_SaveFile.Enabled = true;
+            UIHelper.SetControlProperty(btn_SaveFile, () => btn_SaveFile.Enabled = true);
 
             strFileName = new string(BarcodeBuffer.ToArray()).Trim(); 
             try
@@ -4061,7 +4063,7 @@ namespace InjectorInspector
         {
             Vector3 pos;
             bool success = inspector1.xInspSocket校正孔(out pos);
-            label16.Text = string.Format("Socket校正孔 = {0}, X = {1:F3} , Y = {2:F3}", success, pos.X, pos.Y);
+            UIHelper.SetControlProperty(label16, () => label16.Text = string.Format("Socket校正孔 = {0}, X = {1:F3} , Y = {2:F3}", success, pos.X, pos.Y));
 
             dbCameraCalibrationX = pos.X;
             dbCameraCalibrationY = pos.Y;
@@ -4401,7 +4403,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void Xavier_Task_Eng_Debugprintf(string message) {
-            lbldbg_Task_Info.Text = message;
+            UIHelper.SetControlProperty(lbldbg_Task_Info, () => lbldbg_Task_Info.Text = message);
         }
         //---------------------------------------------------------------------------------------
         public void Xavier_Engine() {
@@ -5346,7 +5348,7 @@ namespace InjectorInspector
                     case xeXavier_T2_Job.tp2Home_確認吸嘴軸組可以進行復歸動作_從_tp6Home_告知工作門已關閉:
                         {
                             if(btp6Home_告知工作門已關閉 == true) { 
-                                en_吸嘴Z軸.Checked = true;
+                                UIHelper.SetControlProperty(en_吸嘴Z軸,     () => en_吸嘴Z軸.Checked = true);
                                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, true);
 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_吸嘴Z縮回0);                        
@@ -5360,7 +5362,7 @@ namespace InjectorInspector
                         {
                             dbapiNozzleZ_defaultSpeed(dbNozzleZ_Home位);
                             if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                en_吸嘴R軸.Checked = false;
+                                UIHelper.SetControlProperty(en_吸嘴R軸,     () => en_吸嘴R軸.Checked = false);
                                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, false); 
 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32HomeDelayCNT, xeXavier_T2_Job.tp2Home_告知植針軸組可以進行復歸動作);
@@ -5374,10 +5376,10 @@ namespace InjectorInspector
                         {
                             btp2Home_告知植針軸組可以進行復歸動作 = true;
 
-                            en_吸嘴X軸.Checked = true;
-                            en_吸嘴Y軸.Checked = true;
-                            en_吸嘴R軸.Checked = true;
-                            en_吸嘴Z軸.Checked = false;
+                            UIHelper.SetControlProperty(en_吸嘴X軸,     () => en_吸嘴X軸.Checked = true);
+                            UIHelper.SetControlProperty(en_吸嘴Y軸,     () => en_吸嘴Y軸.Checked = true);
+                            UIHelper.SetControlProperty(en_吸嘴R軸,     () => en_吸嘴R軸.Checked = true);
+                            UIHelper.SetControlProperty(en_吸嘴Z軸,     () => en_吸嘴Z軸.Checked = false);
                             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, true); 
                             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, true); 
                             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, true);  
@@ -5412,7 +5414,7 @@ namespace InjectorInspector
                                         }
                                         dbapiNozzleR_defaultSpeed(dbNozzleR_Home位);
 
-                                        en_吸嘴Z軸.Checked = true;
+                                        UIHelper.SetControlProperty(en_吸嘴Z軸,     () => en_吸嘴Z軸.Checked = true);
                                         clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, true);
                                     }
 
@@ -6238,7 +6240,7 @@ namespace InjectorInspector
                         { 
                             double SetZ_position = dbapiSetZ(dbRead, 0);
                             if(SetZ_position < 15.0) { 
-                                en_植針Z軸.Checked = true;
+                                UIHelper.SetControlProperty(en_植針Z軸,     () => en_植針Z軸.Checked = true);
                                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, true);
 
                                 dbapiSetZ_defaultSpeed(dbSetZ_Home位);
@@ -6273,7 +6275,7 @@ namespace InjectorInspector
                     case xeXavier_T3_Job.tp3Home_確認植針軸組可以進行復歸動作_從_tp2Home_告知植針軸組可以進行復歸動作:
                         {
                             if(btp2Home_告知植針軸組可以進行復歸動作 == true) { 
-                                en_植針Z軸.Checked = true;
+                                UIHelper.SetControlProperty(en_植針Z軸,     () => en_植針Z軸.Checked = true);
                                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, true);
 
                                 Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_堵料吹氣桿出_擺放座蓋板開_並植針嘴Z回放料位);
@@ -6301,7 +6303,7 @@ namespace InjectorInspector
                         {
                             btp3Home_告知載盤組_植針軸組無干涉 = true;
 
-                            en_植針R軸.Checked = true;
+                            UIHelper.SetControlProperty(en_植針R軸,     () => en_植針R軸.Checked = true);
                             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, true);
 
                             Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32HomeDelayCNT, xeXavier_T3_Job.tp3Home_植針嘴R回放料位);
@@ -7414,8 +7416,8 @@ namespace InjectorInspector
                     case xeXavier_T4_Job.tp4Home_確認電動缸組可以進行復歸動作_從_tp6Home_告知工作門已關閉:
                         {
                             if(btp6Home_告知工作門已關閉 == true) { 
-                                en_JoDell3D掃描.Checked = true;
-                                en_JoDell吸針嘴.Checked = true;
+                                UIHelper.SetControlProperty(en_JoDell3D掃描,     () => en_JoDell3D掃描.Checked = true);
+                                UIHelper.SetControlProperty(en_JoDell吸針嘴,     () => en_JoDell吸針嘴.Checked = true);
                                 clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 1); 
                                 clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 1);  
 
@@ -7449,8 +7451,8 @@ namespace InjectorInspector
                         {
                             btp4Home_告知載盤組_電動缸無干涉 = true;
 
-                            en_IAI.Checked              = false;
-                            en_JoDell植針嘴相機.Checked = false;
+                            UIHelper.SetControlProperty(en_IAI,     () => en_IAI.Checked = false);
+                            UIHelper.SetControlProperty(en_JoDell植針嘴相機,     () => en_JoDell植針嘴相機.Checked = false);
                             clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 0); 
                             clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  0); 
                             clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_MotorOn, 0); 
@@ -7461,8 +7463,8 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T4_Job.tp4Home_電動缸組_IAI相機_植針相機_回home:
                         {
-                            en_IAI.Checked              = true;
-                            en_JoDell植針嘴相機.Checked = true;
+                            UIHelper.SetControlProperty(en_IAI,     () => en_IAI.Checked = true);
+                            UIHelper.SetControlProperty(en_JoDell植針嘴相機,     () => en_JoDell植針嘴相機.Checked = true);
                             clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 1);               
                             clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  1);                
                             clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_MotorOn, 1); 
@@ -7477,8 +7479,8 @@ namespace InjectorInspector
                     case xeXavier_T4_Job.tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作:
                         {
                             if(btp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作 == true) { 
-                                en_JoDell吸針嘴.Checked = false;
-                                en_JoDell3D掃描.Checked = false;
+                                UIHelper.SetControlProperty(en_JoDell吸針嘴,     () => en_JoDell吸針嘴.Checked = false);
+                                UIHelper.SetControlProperty(en_JoDell3D掃描,     () => en_JoDell3D掃描.Checked = false);
                                 clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 0);
                                 clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 0); 
 
@@ -7491,8 +7493,8 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T4_Job.tp4Home_電動缸組_抽針嘴_3D掃描_回home:
                         {
-                            en_JoDell3D掃描.Checked = true;
-                            en_JoDell吸針嘴.Checked = true;
+                            UIHelper.SetControlProperty(en_JoDell3D掃描,     () => en_JoDell3D掃描.Checked = true);
+                            UIHelper.SetControlProperty(en_JoDell吸針嘴,     () => en_JoDell吸針嘴.Checked = true);
                             clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 1); 
                             clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 1);  
 
@@ -7595,7 +7597,7 @@ namespace InjectorInspector
                             clsVibration.apiEstablishTCPVibration(); {
                                 clsVibration.u32LED_Level = (uint)SB_VBLED.Value;
                                 clsVibration.SetVibrationLED(clsVibration.u32LED_Level);
-                                lblVBLED.Text = "Light:" + (uint)SB_VBLED.Value;
+                                UIHelper.SetControlProperty(lblVBLED,    () => lblVBLED.Text = "Light:" + (uint)SB_VBLED.Value);
                             }
 
                             Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_進行柔震盤物料確認_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
@@ -7685,7 +7687,7 @@ namespace InjectorInspector
                             break;                                                
                         case xeXavier_T4_Job.tp4Insert_檢查柔震是否有物料:
                             {
-                                btn_取得PinInfo_Click(null, EventArgs.Empty); 
+                                UIHelper.RunOnUIThread(this, () => { btn_取得PinInfo_Click(null, EventArgs.Empty); });
                                 if(b柔震盤有料_tmrTakePinTick == true) { 
                                     //柔震有料
                                     Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32InsertDelayCNT, xeXavier_T4_Job.tp4Insert_柔震盤有物料);
@@ -7716,11 +7718,11 @@ namespace InjectorInspector
                                 switch(i柔震TypeStep) { 
                                     case 1:
                                         //柔震盤料倉震動
-                                        lbl震散.BackColor   = Color.Green; 
-                                        lbl上下收.BackColor = Color.Green;   
-                                        lbl左右收.BackColor = Color.Green; 
-                                        lbl料倉.BackColor   = Color.Red;
-                                        btnVibrationInit_Click(null, EventArgs.Empty); 
+                                        UIHelper.SetControlProperty(lbl震散,    () => lbl震散.BackColor   = Color.Green);
+                                        UIHelper.SetControlProperty(lbl上下收,    () => lbl上下收.BackColor = Color.Green);
+                                        UIHelper.SetControlProperty(lbl左右收,    () => lbl左右收.BackColor = Color.Green);
+                                        UIHelper.SetControlProperty(lbl料倉,    () => lbl料倉.BackColor   = Color.Red);
+                                        UIHelper.RunOnUIThread(this, () => { btnVibrationInit_Click(null, EventArgs.Empty); });
 
                                         i柔震TypeStep = 2;  //柔震盤上下震動:
 
@@ -7729,11 +7731,11 @@ namespace InjectorInspector
 
                                     case 2:
                                         //柔震盤上下震動: 
-                                        lbl震散.BackColor   = Color.Green; 
-                                        lbl上下收.BackColor = Color.Red;   
-                                        lbl左右收.BackColor = Color.Green; 
-                                        lbl料倉.BackColor   = Color.Green;
-                                        btnVibrationInit_Click(null, EventArgs.Empty); 
+                                        UIHelper.SetControlProperty(lbl震散,    () => lbl震散.BackColor   = Color.Green);
+                                        UIHelper.SetControlProperty(lbl上下收,    () => lbl上下收.BackColor = Color.Red);
+                                        UIHelper.SetControlProperty(lbl左右收,    () => lbl左右收.BackColor = Color.Green);
+                                        UIHelper.SetControlProperty(lbl料倉,    () => lbl料倉.BackColor   = Color.Green);
+                                        UIHelper.RunOnUIThread(this, () => { btnVibrationInit_Click(null, EventArgs.Empty); });
 
                                         i柔震TypeStep = 3;  //柔震盤左右震動:
 
@@ -7742,11 +7744,11 @@ namespace InjectorInspector
 
                                     case 3:
                                         //柔震盤左右震動:
-                                        lbl震散.BackColor   = Color.Green; 
-                                        lbl上下收.BackColor = Color.Green;   
-                                        lbl左右收.BackColor = Color.Red; 
-                                        lbl料倉.BackColor   = Color.Green;
-                                        btnVibrationInit_Click(null, EventArgs.Empty); 
+                                        UIHelper.SetControlProperty(lbl震散,    () => lbl震散.BackColor   = Color.Green);
+                                        UIHelper.SetControlProperty(lbl上下收,    () => lbl上下收.BackColor = Color.Green); 
+                                        UIHelper.SetControlProperty(lbl左右收,    () => lbl左右收.BackColor = Color.Red);
+                                        UIHelper.SetControlProperty(lbl料倉,    () => lbl料倉.BackColor   = Color.Green);
+                                        UIHelper.RunOnUIThread(this, () => { btnVibrationInit_Click(null, EventArgs.Empty); });
 
                                         i柔震TypeStep = 4;  //柔震盤散震震動
 
@@ -7755,11 +7757,11 @@ namespace InjectorInspector
 
                                     case 4:
                                         //柔震盤散震震動:
-                                        lbl震散.BackColor   = Color.Red; 
-                                        lbl上下收.BackColor = Color.Green;   
-                                        lbl左右收.BackColor = Color.Green; 
-                                        lbl料倉.BackColor   = Color.Green;
-                                        btnVibrationInit_Click(null, EventArgs.Empty); 
+                                        UIHelper.SetControlProperty(lbl震散,    () => lbl震散.BackColor   = Color.Red);
+                                        UIHelper.SetControlProperty(lbl上下收,    () => lbl上下收.BackColor = Color.Green);
+                                        UIHelper.SetControlProperty(lbl左右收,    () => lbl左右收.BackColor = Color.Green);
+                                        UIHelper.SetControlProperty(lbl料倉,    () => lbl料倉.BackColor   = Color.Green);
+                                        UIHelper.RunOnUIThread(this, () => { btnVibrationInit_Click(null, EventArgs.Empty); });
 
                                         i柔震TypeStep = 0;  //柔震盤停止
 
@@ -7769,7 +7771,7 @@ namespace InjectorInspector
                                     default:
                                     case 0:
                                         //柔震盤停止:
-                                        btnVibrationStop_Click(null, EventArgs.Empty); 
+                                        UIHelper.RunOnUIThread(this, () => { btnVibrationStop_Click(null, EventArgs.Empty); });
                                         
                                         i柔震TypeStep = 0;  //柔震盤停止
 
@@ -8203,8 +8205,8 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T5_Job.tp5Home_確認載盤組可以進行復歸動作_從_tp4Home_告知載盤組_電動缸無干涉:
                         if(btp4Home_告知載盤組_電動缸無干涉 == true) { 
-                            en_載盤X軸.Checked = true;
-                            en_載盤Y軸.Checked = true;
+                            UIHelper.SetControlProperty(en_載盤X軸,     () => en_載盤X軸.Checked = true);
+                            UIHelper.SetControlProperty(en_載盤Y軸,     () => en_載盤Y軸.Checked = true);
                             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, true);
                             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, true);
 
@@ -8318,7 +8320,7 @@ namespace InjectorInspector
                     case xeXavier_T5_Job.tp5Insert_開始載盤組XY兩點校正程序:
                         {                    
                             //開啟參數表視窗
-                            btn_參數_Click(null, EventArgs.Empty);
+                            UIHelper.RunOnUIThread(this, () => { btn_參數_Click(null, EventArgs.Empty); });
 
                             Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點);
                         }
@@ -8348,7 +8350,7 @@ namespace InjectorInspector
                             break;
                             case xeXavier_T5_Job.tp5Insert_載盤組XY取得兩點校正孔第1點校正參數:
                                 {
-                                    btn_socket相機兩點定位_Click(null, EventArgs.Empty);
+                                    UIHelper.RunOnUIThread(this, () => { btn_socket相機兩點定位_Click(null, EventArgs.Empty); });
 
                                     Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第1點補正位);
                                 }
@@ -8365,8 +8367,12 @@ namespace InjectorInspector
                                     double dbTargetX = rlAx - dbCameraCalibrationX;
                                     double dbTargetY = rlAy + dbCameraCalibrationY;
 
-                                    fmParameterFormHandle.dataGridView1.Rows[0].Cells[1].Value = dbTargetX;
-                                    fmParameterFormHandle.dataGridView1.Rows[1].Cells[1].Value = dbTargetY;
+                                    UIHelper.SetControlProperty(fmParameterFormHandle.dataGridView1, () => 
+                                        {
+                                            fmParameterFormHandle.dataGridView1.Rows[0].Cells[1].Value = dbTargetX;
+                                            fmParameterFormHandle.dataGridView1.Rows[1].Cells[1].Value = dbTargetY;
+                                        }
+                                    );
 
                                     dbapiCarrierX_InsertSpeed(dbTargetX);
                                     dbapiCarrierY_InsertSpeed(dbTargetY);
@@ -8382,7 +8388,7 @@ namespace InjectorInspector
                                 break;       
                             case xeXavier_T5_Job.tp5Insert_儲存兩點校正孔第1點補正值:
                                 {
-                                    fmParameterFormHandle.btn_Save_Click(null, EventArgs.Empty);
+                                    UIHelper.RunOnUIThread(fmParameterFormHandle, () => { fmParameterFormHandle.btn_Save_Click(null, EventArgs.Empty); });
 
                                     Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點);
                                 }
@@ -8412,7 +8418,7 @@ namespace InjectorInspector
                             break;
                             case xeXavier_T5_Job.tp5Insert_載盤組XY取得兩點校正孔第2點校正參數:
                                 {
-                                    btn_socket相機兩點定位_Click(null, EventArgs.Empty);
+                                    UIHelper.RunOnUIThread(this, () => { btn_socket相機兩點定位_Click(null, EventArgs.Empty); });
 
                                     Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組XY移動至兩點校正孔第2點補正位);
                                 }
@@ -8446,7 +8452,7 @@ namespace InjectorInspector
                                 break;    
                             case xeXavier_T5_Job.tp5Insert_儲存兩點校正孔第2點補正值:
                                 {
-                                    fmParameterFormHandle.btn_Save_Click(null, EventArgs.Empty);
+                                    UIHelper.RunOnUIThread(fmParameterFormHandle, () => { fmParameterFormHandle.btn_Save_Click(null, EventArgs.Empty); });
 
                                     Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_告知檔案組已完成兩點校正);
                                 }
@@ -8577,7 +8583,7 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正:
                         {
-                            btn_Socket孔檢查_Click(null, EventArgs.Empty);
+                            UIHelper.RunOnUIThread(this, () => { btn_Socket孔檢查_Click(null, EventArgs.Empty); });
 
                             if(cB_料盤有料.Checked == true) {
                                 b有看到校正孔 = true;
@@ -8682,10 +8688,11 @@ namespace InjectorInspector
 
                                     //依照視覺判斷
                                     case 2: 
-                                        btn_Socket孔檢查_Click(null, EventArgs.Empty); {
+                                        UIHelper.RunOnUIThread(this, () => { btn_Socket孔檢查_Click(null, EventArgs.Empty); });
+                                        {
                                             //取得校正攝影機校正參數
                                             success = inspector1.xInspSocket植針後檢查();
-                                            label7.Text  = (success) ? "植針後檢查 OK" : "植針後檢查 NG";
+                                            UIHelper.SetControlProperty(label7, () => label7.Text = (success) ? "植針後檢查 OK" : "植針後檢查 NG");
 
                                             rtb_Status_AppendMessage(rtb_Status, $"植針 {(success ? "OK":"NG")}");
                                         }
@@ -9336,9 +9343,9 @@ namespace InjectorInspector
                             if(bForceToLoadCalibrationJson == false) {
                                 bForceToLoadCalibrationJson = true;
 
-                                if (OpenFile())  {
+                                if (OpenFile(this))  {
                                     tsmi_SaveFile.Enabled = true;
-                                    btn_SaveFile.Enabled  = true;
+                                    UIHelper.SetControlProperty(btn_SaveFile, () => btn_SaveFile.Enabled = true);
 
                                     show_grp_BarcodeInfo(grp_BarcodeInfo);
                                     find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
@@ -9400,9 +9407,9 @@ namespace InjectorInspector
                                 if(bForceToLoadInsertJson == false) {
                                     bForceToLoadInsertJson = true;
 
-                                    if (OpenFile())  {
+                                    if (OpenFile(this))  {
                                         tsmi_SaveFile.Enabled = true;
-                                        btn_SaveFile.Enabled  = true;
+                                        UIHelper.SetControlProperty(btn_SaveFile, () => btn_SaveFile.Enabled = true);
 
                                         show_grp_BarcodeInfo(grp_BarcodeInfo);
                                         find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
@@ -9504,13 +9511,13 @@ namespace InjectorInspector
                                         show_grp_NeedleInfo(grp_NeedleInfo);
                                         pic_Needles.Refresh();
 
-                                        txt_HoldIndex.Text = iSocketHoleIndex.ToString();
+                                        UIHelper.SetControlProperty(txt_HoldIndex, () => txt_HoldIndex.Text = iSocketHoleIndex.ToString());
 
                                         dbPinHolePositionX = dbX;
                                         dbPinHolePositionY = dbY;
 
-                                        label14.Text = dbX.ToString();
-                                        label15.Text = dbY.ToString();
+                                        UIHelper.SetControlProperty(label14, () => label14.Text = dbX.ToString());
+                                        UIHelper.SetControlProperty(label15, () => label15.Text = dbY.ToString());
 
                                         Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_有資料確定需要值針);
                                     } else
@@ -9632,13 +9639,13 @@ namespace InjectorInspector
                             show_grp_NeedleInfo(grp_NeedleInfo);
                             pic_Needles.Refresh();
 
-                            txt_HoldIndex.Text = iSocketHoleIndex.ToString();
+                            UIHelper.SetControlProperty(txt_HoldIndex, () => txt_HoldIndex.Text = iSocketHoleIndex.ToString());
 
                             dbPinHolePositionX = dbX;
                             dbPinHolePositionY = dbY;
 
-                            label14.Text = dbX.ToString();
-                            label15.Text = dbY.ToString();
+                            UIHelper.SetControlProperty(label14, () => label14.Text = dbX.ToString());
+                            UIHelper.SetControlProperty(label15, () => label15.Text = dbY.ToString());
 
                             //設定抽針retry重抽次數
                             iRemoveRetryCNT = 3;
@@ -9741,10 +9748,11 @@ namespace InjectorInspector
                     case xeXavier_T6_Job.tp6Remove_檢查有無抽針成功:
                         {
                             bool success = false;
-                            btn_Socket孔檢查_Click(null, EventArgs.Empty); {
+                            UIHelper.RunOnUIThread(this, () => { btn_Socket孔檢查_Click(null, EventArgs.Empty); });
+                            {
                                 //取得校正攝影機校正參數
                                 success = inspector1.xInspSocket植針後檢查();
-                                label7.Text  = (success==false) ? "抽針檢查 OK" : "抽針檢查 NG";
+                                UIHelper.SetControlProperty(label7, () => label7.Text = (success == false) ? "抽針檢查 OK" : "抽針檢查 NG");
 
                                 rtb_Status_AppendMessage(rtb_Status, $"抽針 {(success ? "NG":"OK")}");
                             }
@@ -9995,6 +10003,21 @@ namespace InjectorInspector
             if (control.InvokeRequired) { 
                 control.Invoke(action);
             } else { 
+                action();
+            }
+        }
+        public static T GetControlProperty<T>(Control control, Func<T> getter) {
+            if (control.InvokeRequired) {
+                return (T)control.Invoke(getter);
+            } else {
+                return getter();
+            }
+        }
+
+        public static void RunOnUIThread(Control control, Action action) {
+            if (control.InvokeRequired) { 
+                control.Invoke(action);
+            } else {
                 action();
             }
         }
