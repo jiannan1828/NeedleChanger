@@ -471,14 +471,14 @@ namespace InjectorInspector
         public const bool OFF  = false;
 
         //Servo EtherCAT
-        public double dbInsertSpeedNozzleX  = (500.0) * 0.1;
-        public double dbInsertSpeedNozzleY  = (100.0) * 0.1;
-        public double dbInsertSpeedNozzleZ  = ( 40.0) * 0.1;
-        public double dbInsertSpeedNozzleR  = (360.0) * 0.1;
-        public double dbInsertSpeedCarrierX = (190.0) * 0.1;
-        public double dbInsertSpeedCarrierY = (800.0) * 0.1;
-        public double dbInsertSpeedSetZ     = ( 33.0) * 0.1;
-        public double dbInsertSpeedSetR     = (360.0) * 0.1;
+        public double dbInsertSpeedNozzleX  = 3500;  //(500.0) * 0.1;
+        public double dbInsertSpeedNozzleY  = 1000;  //(100.0) * 0.1;
+        public double dbInsertSpeedNozzleZ  = 2000;  //( 40.0) * 0.1;
+        public double dbInsertSpeedNozzleR  = 2000;  //(360.0) * 0.1;
+        public double dbInsertSpeedCarrierX = 1000;  //(190.0) * 0.1;
+        public double dbInsertSpeedCarrierY = 2000;  //(800.0) * 0.1;
+        public double dbInsertSpeedSetZ     = 2000;  //( 33.0) * 0.1;
+        public double dbInsertSpeedSetR     = 2000;  //(360.0) * 0.1;
         public double dbInsertSpeedGate     = (580.0) * 0.1;
 
         //---------------------------------------------------------------------------------------
@@ -2503,6 +2503,8 @@ namespace InjectorInspector
             return rsult;
         }
         //---------------------------------------------------------------------------------------
+        static volatile bool task3Ready = false;
+        static volatile bool task5Ready = false;
         public void Form1_Load(object sender, EventArgs e)
         {
             //Add the callback api from snapshot api
@@ -3408,7 +3410,19 @@ namespace InjectorInspector
 
                 find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
 
-                pic_Needles.Refresh();
+                // 檢查是否需要在主執行緒上執行
+                if (pic_Needles.InvokeRequired) {
+                    // 如果是其他執行緒，使用 Invoke 方法
+                    pic_Needles.Invoke(new Action( 
+                                                        () => {
+                                                            pic_Needles.Refresh();
+                                                        }
+                                                    )
+                                        );
+                } else {
+                    // 如果是在主執行緒，直接執行
+                    pic_Needles.Refresh();
+                }
             }
         }
         //---------------------------------------------------------------------------------------
@@ -3422,7 +3436,20 @@ namespace InjectorInspector
             Viewer.CloseFile();
 
             clear_grp_NeedleInfo(grp_NeedleInfo);
-            pic_Needles.Refresh();
+
+            // 檢查是否需要在主執行緒上執行
+            if (pic_Needles.InvokeRequired) {
+                // 如果是其他執行緒，使用 Invoke 方法
+                pic_Needles.Invoke(new Action( 
+                                                    () => {
+                                                        pic_Needles.Refresh();
+                                                    }
+                                                )
+                                    );
+            } else {
+                // 如果是在主執行緒，直接執行
+                pic_Needles.Refresh();
+            }
         }
         //---------------------------------------------------------------------------------------
         public void pic_Needles_Paint(object sender, PaintEventArgs e)
@@ -3600,7 +3627,19 @@ namespace InjectorInspector
                 ttp_NeedleInfo.SetToolTip(pic_Needles, string.Empty);  // 清除提示
             }
 
-            pic_Needles.Refresh();
+            // 檢查是否需要在主執行緒上執行
+            if (pic_Needles.InvokeRequired) {
+                // 如果是其他執行緒，使用 Invoke 方法
+                pic_Needles.Invoke(new Action( 
+                                                    () => {
+                                                        pic_Needles.Refresh();
+                                                    }
+                                                )
+                                    );
+            } else {
+                // 如果是在主執行緒，直接執行
+                pic_Needles.Refresh();
+            }
         }
         //---------------------------------------------------------------------------------------
         public void pic_Needles_MouseDown(object sender, MouseEventArgs e)
@@ -3674,10 +3713,22 @@ namespace InjectorInspector
                 switch (Control.ModifierKeys)
                 {
                     case Keys.Shift:
-                        if (IsDrag)
-                        {
+                        if (IsDrag) {
                             find_Selected_Needles();
-                            pic_Needles.Refresh();
+
+                            // 檢查是否需要在主執行緒上執行
+                            if (pic_Needles.InvokeRequired) {
+                                // 如果是其他執行緒，使用 Invoke 方法
+                                pic_Needles.Invoke(new Action( 
+                                                                    () => {
+                                                                        pic_Needles.Refresh();
+                                                                    }
+                                                                )
+                                                    );
+                            } else {
+                                // 如果是在主執行緒，直接執行
+                                pic_Needles.Refresh();
+                            }
                         }
 
                         break;
@@ -3714,7 +3765,19 @@ namespace InjectorInspector
             Offset.X += (RealMousePosAfterZoom.X - RealMousePosBeforeZoom.X) * ZoomFactor;
             Offset.Y += (RealMousePosAfterZoom.Y - RealMousePosBeforeZoom.Y) * -ZoomFactor;
 
-            pic_Needles.Refresh();
+            // 檢查是否需要在主執行緒上執行
+            if (pic_Needles.InvokeRequired) {
+                // 如果是其他執行緒，使用 Invoke 方法
+                pic_Needles.Invoke(new Action( 
+                                                    () => {
+                                                        pic_Needles.Refresh();
+                                                    }
+                                                )
+                                    );
+            } else {
+                // 如果是在主執行緒，直接執行
+                pic_Needles.Refresh();
+            }
         }
         //---------------------------------------------------------------------------------------
         public void cms_pic_Needles_Opened(object sender, EventArgs e)
@@ -3907,11 +3970,23 @@ namespace InjectorInspector
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                if (sender is TextBox textbox)
-                {
+                if (sender is TextBox textbox) {
                     Viewer.search_grp_NeedleInfo(textbox.Name, textbox.Text);
                     Viewer.show_grp_NeedleInfo(grp_NeedleInfo);
-                    pic_Needles.Refresh();
+
+                    // 檢查是否需要在主執行緒上執行
+                    if (pic_Needles.InvokeRequired) {
+                        // 如果是其他執行緒，使用 Invoke 方法
+                        pic_Needles.Invoke(new Action( 
+                                                            () => {
+                                                                pic_Needles.Refresh();
+                                                            }
+                                                        )
+                                            );
+                    } else {
+                        // 如果是在主執行緒，直接執行
+                        pic_Needles.Refresh();
+                    }
                 }
             }
         }
@@ -4001,7 +4076,19 @@ namespace InjectorInspector
 
                 find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
 
-                pic_Needles.Refresh();
+                // 檢查是否需要在主執行緒上執行
+                if (pic_Needles.InvokeRequired) {
+                    // 如果是其他執行緒，使用 Invoke 方法
+                    pic_Needles.Invoke(new Action( 
+                                                        () => {
+                                                            pic_Needles.Refresh();
+                                                        }
+                                                    )
+                                        );
+                } else {
+                    // 如果是在主執行緒，直接執行
+                    pic_Needles.Refresh();
+                }
             }
             catch (Exception ex)
             {
@@ -4360,7 +4447,7 @@ namespace InjectorInspector
             public bool btp3Insert_告知載盤組_植針軸組無干涉                   = false;
             public bool btp3Insert_告知吸嘴軸組可以放物料                      = false;
             public bool btp3Insert_告知吸嘴軸組_植針軸放料完成                 = false;
-            public bool btp3Insert_告知載盤組_植針軸植針完畢                   = false;
+          //public bool btp3Insert_告知載盤組_植針軸植針完畢                   = false;
             public bool btp3Insert_告知載盤組進行補光                          = false;
             public bool btp3Insert_告知完成植針嘴堵料拍照                      = false;
             public bool btp3Insert_告知植針軸組判斷堵料                        = false;
@@ -4392,6 +4479,63 @@ namespace InjectorInspector
         
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
+        public void CleanAllBoolFlag() { 
+            //Home Flag
+                 btp2Home_告知植針軸組可以進行復歸動作                  = false;
+                 btp2Home_告知吸嘴軸組已回home完畢                      = false;
+                 btp3Home_告知吸嘴軸組_植針軸組無干涉                   = false;
+                 btp3Home_告知載盤組_植針軸組無干涉                     = false;
+                 btp3Home_告知植針軸組已回home完畢                      = false;
+                 btp4Home_告知載盤組_電動缸無干涉                       = false;
+                 btp4Home_告知電動缸組已回home完畢                      = false;
+                 btp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作   = false;
+                 btp5Home_告知載盤組已回home完畢                        = false;
+
+                 btp6Home_告知工作門已關閉                              = false;
+
+               //btp6Home_告知系統回home完畢                            = false;
+
+            //植針動作 Flag
+                 btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照      = false;
+                 btp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標   = false;
+               //btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照_再次 = false;
+               //btp2Insert_ISR_告知取得吸針嘴組R軸                     = false;
+                 btp3Insert_告知系統賭料排除異常_告知系統中止           = false;
+                 btp2Insert_告知植針軸組可以進行放料作業                = false;
+                 btp3Insert_告知載盤組_植針軸組無干涉                   = false;
+                 btp3Insert_告知吸嘴軸組可以放物料                      = false;
+                 btp3Insert_告知吸嘴軸組_植針軸放料完成                 = false;
+               //btp3Insert_告知載盤組_植針軸植針完畢                   = false;
+                 btp3Insert_告知載盤組進行補光                          = false;
+                 btp3Insert_告知完成植針嘴堵料拍照                      = false;
+                 btp3Insert_告知植針軸組判斷堵料                        = false;
+                 btp3Insert_告知植針軸組堵料吹氣完畢                    = false;
+                 btp3Insert_告知植針軸組判斷未堵料                      = false;
+                 btp4Insert_告知載盤組_電動缸無干涉                     = false;
+                 btp4Insert_告知Socket孔檢測相機已至拍照位              = false;
+                 btp4Insert_告知堵料檢查植針嘴相機已至拍照位            = false;
+                 btp4Insert_柔震盤物料異常_告知系統中止                 = false;
+                 btp4Insert_告知吸嘴軸組柔震盤物料座標                  = false;
+                 btp5Insert_告知檔案組已完成兩點校正                    = false;
+                 btp5Insert_告知植針軸組載盤組已移至植針位              = false;
+                 btp5Insert_告知系統植針成功_To_Tp6                     = false;
+                 btp5Insert_告知系統植針成功_To_Tp3                     = false;
+                 btp5Insert_告知系統植針失敗                            = false;                             
+                 btp5Insert_植針異常停止_告知系統停止                   = false;
+                 btp5Insert_告知載盤組已至補光位                        = false;
+                 btp5Insert_告知植針嘴組_載盤組XY已至堵料收廢料位       = false;
+                 btp6Insert_告知載盤組已拿到兩點校正資料                = false;
+                 btp6Insert_告知系統無目標植針資料_To_Tp3               = false;               
+                 btp6Insert_告知系統無目標植針資料_To_Tp5               = false;               
+                 btp6Insert_告知系統無目標植針資料_To_Tp4               = false;               
+                 btp6Insert_告知系統無目標植針資料_To_Tp2               = false;               
+                 btp6Insert_告知系統已拿到目標植針資料_To_Tp3           = false;
+                 btp6Insert_告知系統已拿到目標植針資料_To_Tp5           = false;
+                 btp6Insert_告知系統已拿到目標植針資料_To_Tp4           = false;
+                 btp6Insert_告知系統已拿到目標植針資料_To_Tp2           = false;                            
+                 btp6Insert_清除告知系統已拿到目標植針資料              = false;
+        }
+        //---------------------------------------------------------------------------------------
 
         #region XavierTaskFlowEngine
         //---------------------------------------------------------------------------------------
@@ -4404,37 +4548,6 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public void Xavier_Task_Eng_Debugprintf(string message) {
             UIHelper.SetControlProperty(lbldbg_Task_Info, () => lbldbg_Task_Info.Text = message);
-        }
-        //---------------------------------------------------------------------------------------
-        public void Xavier_Engine() {
-            var tempBits = TaskISRFlag.bits;
-                if(tempBits.bit0 == true) {
-                    Xavier_TASK1();  //面板按鈕以及指示燈
-                } else 
-                if(tempBits.bit1 == true) {
-                    Xavier_TASK2();  //吸嘴軸組
-                } else 
-                if(tempBits.bit2 == true) {
-                    Xavier_TASK3();  //植針軸組
-                } else 
-                if(tempBits.bit3 == true) {
-                    Xavier_TASK4();  //電動缸組_含抽針
-                } else 
-                if(tempBits.bit4 == true) {
-                    Xavier_TASK5();  //載盤組
-                } else 
-                if(tempBits.bit5 == true) {
-                    Xavier_TASK6();  //IO檢查_工作門_檔案組
-                } else 
-                {
-                    Xavier_TASK1();  //面板按鈕以及指示燈
-                    Xavier_TASK2();  //吸嘴軸組
-                    Xavier_TASK3();  //植針軸組
-                    Xavier_TASK4();  //電動缸組_含抽針
-                    Xavier_TASK5();  //載盤組
-                    Xavier_TASK6();  //IO檢查_工作門_檔案組
-                }
-
         }
         //---------------------------------------------------------------------------------------
         public void Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR CallTask, xeXavier_FlowTask_ISR_ID isrID) {
@@ -4969,19 +5082,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void Xavier_Task1_Debugprintf(string message) {
-            if (lbldbg_Task1_Info.InvokeRequired) {
-                // 用主執行緒呼叫自己
-                lbldbg_Task1_Info.Invoke(
-                    new Action(
-                        () => {
-                            lbldbg_Task1_Info.Text = message;
-                        } 
-                    )
-                );
-            } else {
-                // 已經在 UI thread，可以直接改
-                lbldbg_Task1_Info.Text = message;
-            }
+            UIHelper.SetControlProperty(lbldbg_Task1_Info, () => lbldbg_Task1_Info.Text = message);
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -5077,8 +5178,8 @@ namespace InjectorInspector
                 tp2Insert_吸嘴軸組XYR移動至物料座標,
                 tp2Insert_吸嘴軸組Z下降前準備作業,
                 tp2Insert_吸嘴軸組Z下降至取料位,
-                tp2Insert_吸嘴軸組Z下降完畢,
-                tp2Insert_吸嘴軸組取料作業,
+              //tp2Insert_吸嘴軸組Z下降完畢,
+              //tp2Insert_吸嘴軸組取料作業,
                 tp2Insert_吸嘴軸組ZR上升至安全位,
                 tp2Insert_吸嘴軸組XY移動至飛拍準備位,
                 tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標,
@@ -5494,16 +5595,22 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_確認進行取針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料:
                         {
-                            if(btp6Insert_告知系統已拿到目標植針資料_To_Tp2 == true) { 
-                                btp6Insert_告知系統已拿到目標植針資料_To_Tp2 = false;
-
+                            if(true) { 
+                                //不管資料 直接取針
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_有植針資料);
-                            } else if(btp6Insert_告知系統無目標植針資料_To_Tp2 == true) {
-                                btp6Insert_告知系統無目標植針資料_To_Tp2 = false;
-
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_無植針資料);
                             } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_確認進行取針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
+                                //改由Task6觸發通知
+                                if(btp6Insert_告知系統已拿到目標植針資料_To_Tp2 == true) { 
+                                    btp6Insert_告知系統已拿到目標植針資料_To_Tp2 = false;
+
+                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_有植針資料);
+                                } else if(btp6Insert_告知系統無目標植針資料_To_Tp2 == true) {
+                                    btp6Insert_告知系統無目標植針資料_To_Tp2 = false;
+
+                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_無植針資料);
+                                } else { 
+                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_確認進行取針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料);
+                                }
                             }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_確認進行取針動作_從_tp6Insert_告知系統已拿到目標植針資料_或_tp6Insert_告知系統無目標植針資料\r\n");
@@ -5575,15 +5682,19 @@ namespace InjectorInspector
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至取料位:
                         {
                             dbapiNozzleZ_InsertSpeed(db取料Nozzle中心點Z);
-
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降完畢);
+                            if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組ZR上升至安全位);
+                            } else { 
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至取料位);
+                            }
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組Z下降至取料位\r\n");
                         break;
+                    #if(false)
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降完畢:
                         {
                             if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組取料作業);
+                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 1, xeXavier_T2_Job.tp2Insert_吸嘴軸組取料作業);
                             } else { 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降完畢);
                             }
@@ -5592,14 +5703,15 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組取料作業:
                         {
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組ZR上升至安全位);
+                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, 1, xeXavier_T2_Job.tp2Insert_吸嘴軸組ZR上升至安全位);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組取料作業\r\n");
                         break;
+                    #endif
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組ZR上升至安全位:
                         {
-                            dbapiNozzleR_InsertSpeed(db取料Nozzle中心點R + 90);
                             dbapiNozzleZ_InsertSpeed(dbNozzleZ_Home位);
+                            dbapiNozzleR_InsertSpeed(db取料Nozzle中心點R + 90);
                             if(dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) { 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組XY移動至飛拍準備位);
                             } else { 
@@ -5815,10 +5927,18 @@ namespace InjectorInspector
                         {
                             dbapiNozzleX_InsertSpeed(dbNozzleX_Home位);
                             dbapiNozzleY_InsertSpeed(dbNozzleY_Home位);
-                            dbapiNozzleR_InsertSpeed(dbNozzleR_Home位);
                             if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
-                                (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) &&
-                                (dbapiNozzleR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) ) {
+
+                                //吸嘴吸真空關閉
+                                digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴吸, LOW);
+
+                                //流量閥開啟
+                                dbapi_FlowValve_吸嘴破真空(100);
+
+                                //吸嘴破真空開啟
+                                digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, HIGH);
+
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_跳回_至_tp2Insert_取針前動作準備);
                             } else { 
                                 Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴XYR回home保護位);
@@ -5828,6 +5948,12 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Insert_跳回_至_tp2Insert_取針前動作準備:
                         {
+                            //流量閥關閉
+                            dbapi_FlowValve_吸嘴破真空(0);
+
+                            //吸嘴破真空關閉
+                            digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, LOW);
+
                             Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_取針前動作準備);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_跳回_至_tp2Insert_取針前動作準備\r\n");
@@ -5949,19 +6075,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void Xavier_Task2_Debugprintf(string message) {
-            if (lbldbg_Task2_Info.InvokeRequired) {
-                // 用主執行緒呼叫自己
-                lbldbg_Task2_Info.Invoke(
-                    new Action(
-                        () => {
-                            lbldbg_Task2_Info.Text = message;
-                        } 
-                    )
-                );
-            } else {
-                // 已經在 UI thread，可以直接改
-                lbldbg_Task2_Info.Text = message;
-            }
+            UIHelper.SetControlProperty(lbldbg_Task2_Info, () => lbldbg_Task2_Info.Text = message);
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -6477,7 +6591,7 @@ namespace InjectorInspector
                             btp3Insert_告知吸嘴軸組可以放物料 = true;
                             digitalWrite((int)WMX3IO對照.pxeIO_擺放座吸真空, HIGH);
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認植針軸組可以進行放料作業_從_tp2Insert_告知植針軸組可以進行放料作業);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT+5, xeXavier_T3_Job.tp3Insert_確認植針軸組可以進行放料作業_從_tp2Insert_告知植針軸組可以進行放料作業);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_告知吸嘴軸組可以放物料\r\n");
                         break;
@@ -6554,7 +6668,7 @@ namespace InjectorInspector
 
                                 if( (dbapiSetZ(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                     (dbapiSetR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_擺放座蓋板關);
+                                    Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT+20, xeXavier_T3_Job.tp3Insert_擺放座蓋板關);
                                 } else { 
                                     Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針軸組ZR至植針位);
                                 }
@@ -6592,7 +6706,7 @@ namespace InjectorInspector
                             //開啟流量閥
                             dbapi_FlowValve_植針吹氣(100);
 
-                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_植針吹氣完畢);
+                            Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT+50, xeXavier_T3_Job.tp3Insert_植針吹氣完畢);
                         }
                         Xavier_Task3_Debugprintf("tp3Insert_植針吹氣作業\r\n");
                         break;
@@ -6629,7 +6743,12 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T3_Job.tp3Insert_告知載盤組_植針軸植針完畢:
                         {
-                            btp3Insert_告知載盤組_植針軸植針完畢 = true;
+                            task3Ready = true;
+                            while (!task5Ready) {
+                                Thread.SpinWait(1);
+                            }
+
+                            //btp3Insert_告知載盤組_植針軸植針完畢 = true;
 
                             Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認植針結果_從_tp5Insert_告知系統植針成功_或_tp5Insert_告知系統植針失敗);
                         }
@@ -6640,9 +6759,15 @@ namespace InjectorInspector
                             if(btp5Insert_告知系統植針成功_To_Tp3 == true) { 
                                 btp5Insert_告知系統植針成功_To_Tp3 = false;
 
+                                task3Ready = false;
+                                task5Ready = false;
+
                                 Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_得知植針成功);
                             } else if(btp5Insert_告知系統植針失敗 == true) { 
                                 btp5Insert_告知系統植針失敗 = false;
+
+                                task3Ready = false;
+                                task5Ready = false;
 
                                 Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_得知植針失敗);
                             } else { 
@@ -6666,7 +6791,7 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T3_Job.tp3Insert_重設堵料排除retry次數:
                         {
-                            i堵料排除retry次數 = 3;
+                            i堵料排除retry次數 = 952730678;
 
                             Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_檢查堵料排除retry次數);
                         }
@@ -7137,19 +7262,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void Xavier_Task3_Debugprintf(string message) {
-            if (lbldbg_Task3_Info.InvokeRequired) {
-                // 用主執行緒呼叫自己
-                lbldbg_Task3_Info.Invoke(
-                    new Action(
-                        () => {
-                            lbldbg_Task3_Info.Text = message;
-                        } 
-                    )
-                );
-            } else {
-                // 已經在 UI thread，可以直接改
-                lbldbg_Task3_Info.Text = message;
-            }
+            UIHelper.SetControlProperty(lbldbg_Task3_Info, () => lbldbg_Task3_Info.Text = message);
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -7457,7 +7570,7 @@ namespace InjectorInspector
                             clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  0); 
                             clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_MotorOn, 0); 
 
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_電動缸組_IAI相機_植針相機_回home);
+                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT+100, xeXavier_T4_Job.tp4Home_電動缸組_IAI相機_植針相機_回home);
                         }
                         Xavier_Task4_Debugprintf("tp4Home_告知載盤組_電動缸無干涉\r\n");
                         break;
@@ -7472,7 +7585,7 @@ namespace InjectorInspector
                             Thread.Sleep(100);
                             dbapiIAI(dbIAI_Home位);
 
-                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作);
+                            Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT+500, xeXavier_T4_Job.tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作);
                         }
                         Xavier_Task4_Debugprintf("tp4Hotp4Home_電動缸組_IAI相機_植針相機_回homemeSTART\r\n");
                         break;
@@ -7936,19 +8049,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void Xavier_Task4_Debugprintf(string message) {
-            if (lbldbg_Task4_Info.InvokeRequired) {
-                // 用主執行緒呼叫自己
-                lbldbg_Task4_Info.Invoke(
-                    new Action(
-                        () => {
-                            lbldbg_Task4_Info.Text = message;
-                        } 
-                    )
-                );
-            } else {
-                // 已經在 UI thread，可以直接改
-                lbldbg_Task4_Info.Text = message;
-            }
+            UIHelper.SetControlProperty(lbldbg_Task4_Info, () => lbldbg_Task4_Info.Text = message);
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -8579,7 +8680,7 @@ namespace InjectorInspector
 
                             if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT+20, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
                             } else { 
                                 Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位);
                             }
@@ -8603,7 +8704,7 @@ namespace InjectorInspector
 
                                 if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                     (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至植針位);
+                                    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT+20, xeXavier_T5_Job.tp5Insert_載盤組移至植針位);
                                 } else { 
                                     Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組進行植針拍照位補正);
                                 }
@@ -8635,7 +8736,7 @@ namespace InjectorInspector
 
                             if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_告知植針軸組載盤組已移至植針位);
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT+20, xeXavier_T5_Job.tp5Insert_告知植針軸組載盤組已移至植針位);
                             } else { 
                                 Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至植針位);
                             }
@@ -8652,13 +8753,18 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T5_Job.tp5Insert_確認可進行植針檢查_從_tp3Insert_告知載盤組_植針軸植針完畢:
                         {
-                            if(btp3Insert_告知載盤組_植針軸植針完畢 == true) { 
-                                btp3Insert_告知載盤組_植針軸植針完畢 = false;
+                            task5Ready = true;
+                            while (!task3Ready) {
+                                Thread.SpinWait(1);
+                            }
+
+                            //if(btp3Insert_告知載盤組_植針軸植針完畢 == true) { 
+                            //    btp3Insert_告知載盤組_植針軸植針完畢 = false;
 
                                 Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位檢查植針況狀);
-                            } else { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認可進行植針檢查_從_tp3Insert_告知載盤組_植針軸植針完畢);
-                            }
+                            //} else { 
+                            //    Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認可進行植針檢查_從_tp3Insert_告知載盤組_植針軸植針完畢);
+                            //}
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_確認可進行植針檢查_從_tp3Insert_告知載盤組_植針軸植針完畢\r\n");
                         break;
@@ -8671,7 +8777,11 @@ namespace InjectorInspector
                             dbapiCarrierY_InsertSpeed(dbTargetY);
                             if( (dbapiCarrierX(dbCheckArrived, 0) == dbAxisMoveOk) &&
                                 (dbapiCarrierY(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組進行拍照位檢查植針況狀);    
+
+                                task3Ready = false;
+                                task5Ready = false;
+
+                                Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT+20, xeXavier_T5_Job.tp5Insert_載盤組進行拍照位檢查植針況狀);    
                             } else { 
                                 Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_載盤組移至植針拍照位檢查植針況狀);
                             }
@@ -8981,19 +9091,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void Xavier_Task5_Debugprintf(string message) {
-            if (lbldbg_Task5_Info.InvokeRequired) {
-                // 用主執行緒呼叫自己
-                lbldbg_Task5_Info.Invoke(
-                    new Action(
-                        () => {
-                            lbldbg_Task5_Info.Text = message;
-                        } 
-                    )
-                );
-            } else {
-                // 已經在 UI thread，可以直接改
-                lbldbg_Task5_Info.Text = message;
-            }
+            UIHelper.SetControlProperty(lbldbg_Task5_Info, () => lbldbg_Task5_Info.Text = message);
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -9326,6 +9424,8 @@ namespace InjectorInspector
                             digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, LOW);
                             apiIndicator(xeXavier_Indicator.xeXI_狀態_停止);
 
+                            CleanAllBoolFlag();
+
                             Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6START);
                         }
                         Xavier_Task6_Debugprintf("tp6Home_工作門開啟\r\n");
@@ -9357,7 +9457,20 @@ namespace InjectorInspector
 
                                     show_grp_BarcodeInfo(grp_BarcodeInfo);
                                     find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
-                                    pic_Needles.Refresh();
+
+                                    // 檢查是否需要在主執行緒上執行
+                                    if (pic_Needles.InvokeRequired) {
+                                        // 如果是其他執行緒，使用 Invoke 方法
+                                        pic_Needles.Invoke(new Action( 
+                                                                            () => {
+                                                                                pic_Needles.Refresh();
+                                                                            }
+                                                                        )
+                                                            );
+                                    } else {
+                                        // 如果是在主執行緒，直接執行
+                                        pic_Needles.Refresh();
+                                    }
                                 }
 
                                 int igetCount = get_NeedleCount();
@@ -9421,7 +9534,20 @@ namespace InjectorInspector
 
                                         show_grp_BarcodeInfo(grp_BarcodeInfo);
                                         find_Json_Boundary(Json, pic_Needles.Width, pic_Needles.Height);
-                                        pic_Needles.Refresh();
+
+                                        // 檢查是否需要在主執行緒上執行
+                                        if (pic_Needles.InvokeRequired) {
+                                            // 如果是其他執行緒，使用 Invoke 方法
+                                            pic_Needles.Invoke(new Action( 
+                                                                             () => {
+                                                                                 pic_Needles.Refresh();
+                                                                             }
+                                                                         )
+                                                              );
+                                        } else {
+                                            // 如果是在主執行緒，直接執行
+                                            pic_Needles.Refresh();
+                                        }
                                     }
 
                                     int igetCount = get_NeedleCount();
@@ -9517,7 +9643,20 @@ namespace InjectorInspector
                                         find_Needle_Position(PerspectiveTransformMatrix, iSocketHoleIndex, ref dbX, ref dbY);
                                         FocusedNeedle = PlaceNeedles[iSocketHoleArrayIndex];
                                         show_grp_NeedleInfo(grp_NeedleInfo);
-                                        pic_Needles.Refresh();
+
+                                        // 檢查是否需要在主執行緒上執行
+                                        if (pic_Needles.InvokeRequired) {
+                                            // 如果是其他執行緒，使用 Invoke 方法
+                                            pic_Needles.Invoke(new Action( 
+                                                                             () => {
+                                                                                 pic_Needles.Refresh();
+                                                                             }
+                                                                         )
+                                                              );
+                                        } else {
+                                            // 如果是在主執行緒，直接執行
+                                            pic_Needles.Refresh();
+                                        }
 
                                         UIHelper.SetControlProperty(txt_HoldIndex, () => txt_HoldIndex.Text = iSocketHoleIndex.ToString());
 
@@ -9645,7 +9784,20 @@ namespace InjectorInspector
                             find_Needle_Position(PerspectiveTransformMatrix, iSocketHoleIndex, ref dbX, ref dbY);
                             FocusedNeedle = RemoveNeedles[iSocketHoleArrayIndex];
                             show_grp_NeedleInfo(grp_NeedleInfo);
-                            pic_Needles.Refresh();
+
+                            // 檢查是否需要在主執行緒上執行
+                            if (pic_Needles.InvokeRequired) {
+                                // 如果是其他執行緒，使用 Invoke 方法
+                                pic_Needles.Invoke(new Action( 
+                                                                    () => {
+                                                                        pic_Needles.Refresh();
+                                                                    }
+                                                                )
+                                                    );
+                            } else {
+                                // 如果是在主執行緒，直接執行
+                                pic_Needles.Refresh();
+                            }
 
                             UIHelper.SetControlProperty(txt_HoldIndex, () => txt_HoldIndex.Text = iSocketHoleIndex.ToString());
 
@@ -9904,19 +10056,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void Xavier_Task6_Debugprintf(string message) {
-            if (lbldbg_Task6_Info.InvokeRequired) {
-                // 用主執行緒呼叫自己
-                lbldbg_Task1_Info.Invoke(
-                    new Action(
-                        () => {
-                            lbldbg_Task6_Info.Text = message;
-                        } 
-                    )
-                );
-            } else {
-                // 已經在 UI thread，可以直接改
-                lbldbg_Task6_Info.Text = message;
-            }
+            UIHelper.SetControlProperty(lbldbg_Task6_Info, () => lbldbg_Task6_Info.Text = message);
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
