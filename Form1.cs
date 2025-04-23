@@ -473,12 +473,12 @@ namespace InjectorInspector
         //Servo EtherCAT
         public double dbInsertSpeedNozzleX  = 3000;  //(500.0) * 0.1;
         public double dbInsertSpeedNozzleY  = 3000;  //(100.0) * 0.1;
-        public double dbInsertSpeedNozzleZ  = 5000;  //( 40.0) * 0.1;
+        public double dbInsertSpeedNozzleZ  = 6000;  //( 40.0) * 0.1;
         public double dbInsertSpeedNozzleR  = 3000;  //(360.0) * 0.1;
-        public double dbInsertSpeedCarrierX = 1000;  //(190.0) * 0.1;
-        public double dbInsertSpeedCarrierY = 1000;  //(800.0) * 0.1;
-        public double dbInsertSpeedSetZ     = 2000;  //( 33.0) * 0.1;
-        public double dbInsertSpeedSetR     = 2000;  //(360.0) * 0.1;
+        public double dbInsertSpeedCarrierX = 2000;  //(190.0) * 0.1;
+        public double dbInsertSpeedCarrierY = 2000;  //(800.0) * 0.1;
+        public double dbInsertSpeedSetZ     = 3000;  //( 33.0) * 0.1;
+        public double dbInsertSpeedSetR     = 3000;  //(360.0) * 0.1;
         public double dbInsertSpeedGate     = (580.0) * 0.1;
 
         //---------------------------------------------------------------------------------------
@@ -8084,6 +8084,8 @@ namespace InjectorInspector
         double dbPinHolePositionX = 0.0;
         double dbPinHolePositionY = 0.0;
 
+        Stopwatch stopwatch = new Stopwatch();
+
         // ----------Global Variables----------
         public static uint Xavier_T5_dC_decdelayCNT  = 0;
         public static xeXavier_T5_Job Xavier_T5_dC_GetInJob     = 0;
@@ -8792,6 +8794,8 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T5_Job.tp5Insert_載盤組進行拍照位檢查植針況狀:
                         {
+                            stopwatch.Start();
+
                             bool success = false;
                                 double dbSetNeedleStatus; {
                                     dbSetNeedleStatus = apiParaReadIndex("SaveParameterJason.json", 36);
@@ -8818,6 +8822,9 @@ namespace InjectorInspector
                             if(success == true) { 
                                 //植針ok
                                 Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_植針成功);
+                                stopwatch.Stop();
+                                UIHelper.SetControlProperty(lbl_CycleTime, () => lbl_CycleTime.Text = "執行時間（毫秒）: " + stopwatch.ElapsedMilliseconds);
+                                stopwatch.Reset();
                             } else { 
                                 //植針ng
                                 Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_植針失敗);
