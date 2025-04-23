@@ -302,63 +302,44 @@ namespace InjectorInspector
         /// 打開 DXF 或者 JSON 檔案
         /// </summary>
         public static string strFileName = "";
-        public static bool OpenFile()
-        {
+        public static bool OpenFile(Control uiControl) {
             OpenDxfFileDialog.Filter = "JSON Files (*.json)|*.json|DXF Files (*.dxf)|*.dxf";
             
-            if (OpenDxfFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                if (OpenDxfFileDialog.FilterIndex == 2) // 如果選擇 .dxf
-                {
-                    try
-                    {
+            DialogResult result = UIHelper.GetControlProperty(uiControl, () => OpenDxfFileDialog.ShowDialog());
+            if (result == DialogResult.OK) {
+                if (OpenDxfFileDialog.FilterIndex == 2) { // 如果選擇 .dxf
+                    try {
                         DxfDoc = DxfDocument.Load(OpenDxfFileDialog.FileName);
                         strFileName = OpenDxfFileDialog.FileName;
 
-                        if (DxfDoc.Entities.Circles.Count() > 0)
-                        {
+                        if (DxfDoc.Entities.Circles.Count() > 0) {
                             //MessageBox.Show($"檔案 {OpenDxfFileDialog.FileName} 成功讀取！");
 
                             TransformDxf2Json(DxfDoc, ref Json);
                             ResortPosition(ref Json);
                             return true;
-                        }
-                        else
-                        {
+                        } else {
                             MessageBox.Show("此 DXF 檔案沒有圓形！", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return false;
                         }
-                    }
-                    catch (Exception ex)
-                    {
+                    } catch (Exception ex) {
                         MessageBox.Show($"讀取 DXF 檔時發生錯誤: {ex.Message}");
                         return false;
                     }
-                }
-                else if (OpenDxfFileDialog.FilterIndex == 1) // 如果選擇 .json
-                {
-                    try
-                    {
+                } else if (OpenDxfFileDialog.FilterIndex == 1) { // 如果選擇 .json
+                    try {
                         Json = JsonConvert.DeserializeObject<JSON>(File.ReadAllText(OpenDxfFileDialog.FileName));
                         strFileName = OpenDxfFileDialog.FileName;
                         //MessageBox.Show($"檔案 {OpenDxfFileDialog.FileName} 成功讀取！");
                         return true;
-                    }
-                    catch (Exception ex)
-                    {
+                    } catch (Exception ex) {
                         MessageBox.Show($"讀取 Json 檔時發生錯誤: {ex.Message}");
                         return false;
                     }
                 }
-                else
-                {
-                    return false;
-                }
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <summary>
@@ -405,76 +386,51 @@ namespace InjectorInspector
         /// <param name="grp_NeedleInfo">植針資訊的 Groupbox</param>
         /// <param name="FocusedNeedle">在 picturebox 上按下的圓</param>
         /// <returns>無回傳值</returns>
-        public static void show_grp_NeedleInfo(GroupBox grp_NeedleInfo)
-        {
-            if(FocusedNeedle != null)
-            {
-                foreach (Control control in grp_NeedleInfo.Controls)
-                {
-                    switch (control)
-                    {
+        public static void show_grp_NeedleInfo(GroupBox grp_NeedleInfo) {
+            if (FocusedNeedle != null) {
+                foreach (Control control in grp_NeedleInfo.Controls) {
+                    switch (control) {
                         case TextBox textBox:
-
-                            switch (textBox.Name)
-                            {
-                                case "txt_Index":
-                                    textBox.Text = (FocusedNeedle.Index).ToString();
-                                    break;
-                                case "txt_Name":
-                                    textBox.Text = FocusedNeedle.Name;
-                                    break;
-                                case "txt_Id":
-                                    textBox.Text = FocusedNeedle.Id;
-                                    break;
-                                case "txt_PosX":
-                                    textBox.Text = (FocusedNeedle.X).ToString("F3");
-                                    break;
-                                case "txt_PosY":
-                                    textBox.Text = (FocusedNeedle.Y).ToString("F3");
-                                    break;
-                                case "txt_Diameter":
-                                    textBox.Text = (FocusedNeedle.Diameter).ToString("F3");
-                                    break;
-                            }
-
+                            UIHelper.SetControlProperty(textBox, () =>
+                                {
+                                    switch (textBox.Name) {
+                                        case "txt_Index": textBox.Text = FocusedNeedle.Index.ToString();           break;
+                                        case "txt_Name": textBox.Text = FocusedNeedle.Name;                        break;
+                                        case "txt_Id": textBox.Text = FocusedNeedle.Id;                            break;
+                                        case "txt_PosX": textBox.Text = FocusedNeedle.X.ToString("F3");            break;
+                                        case "txt_PosY": textBox.Text = FocusedNeedle.Y.ToString("F3");            break;
+                                        case "txt_Diameter": textBox.Text = FocusedNeedle.Diameter.ToString("F3"); break;
+                                    }
+                                }
+                            );
                             break;
 
                         case CheckBox checkBox:
-
-                            switch (checkBox.Name)
-                            {
-
-                                case "chk_Display":
-                                    checkBox.Checked = FocusedNeedle.Display;
-                                    break;
-                                case "chk_Disable":
-                                    checkBox.Checked = FocusedNeedle.Disable;
-                                    break;
-                                case "chk_Reserve1":
-                                    checkBox.Checked = FocusedNeedle.Reserve1;
-                                    break;
-                            }
-
+                            UIHelper.SetControlProperty(checkBox, () =>
+                                {
+                                    switch (checkBox.Name) {
+                                        case "chk_Display":  checkBox.Checked = FocusedNeedle.Display;  break;
+                                        case "chk_Disable":  checkBox.Checked = FocusedNeedle.Disable;  break;
+                                        case "chk_Reserve1": checkBox.Checked = FocusedNeedle.Reserve1; break;
+                                    }
+                                }
+                            );
                             break;
 
                         case RadioButton radioButton:
-
-                            switch (radioButton.Name)
-                            {
-                                case "rad_Place":
-                                    radioButton.Checked = FocusedNeedle.Place;
-                                    break;
-                                case "rad_Remove":
-                                    radioButton.Checked = FocusedNeedle.Remove;
-                                    break;
-                                case "rad_Replace":
-                                    radioButton.Checked = FocusedNeedle.Replace;
-                                    break;
-                            }
+                            UIHelper.SetControlProperty(radioButton, () =>
+                                {
+                                    switch (radioButton.Name) {
+                                        case "rad_Place":   radioButton.Checked = FocusedNeedle.Place;   break;
+                                        case "rad_Remove":  radioButton.Checked = FocusedNeedle.Remove;  break;
+                                        case "rad_Replace": radioButton.Checked = FocusedNeedle.Replace; break;
+                                    }
+                                }
+                            );
                             break;
-                    }
-                }
-            }
+                    }  // end of switch (control) {
+                }  // end of foreach (Control control in grp_NeedleInfo.Controls) {
+            }  // end of if (FocusedNeedle != null) {
         }
 
         /// <summary>
@@ -482,25 +438,24 @@ namespace InjectorInspector
         /// </summary>
         /// <param name="grp_NeedleInfo">植針資訊的 Groupbox</param>
         /// <returns>無回傳值</returns>
-        public static void clear_grp_NeedleInfo(GroupBox grp_NeedleInfo)
-        {
-            foreach (Control control in grp_NeedleInfo.Controls)
-            {
-                switch (control)
+        public static void clear_grp_NeedleInfo(GroupBox grp_NeedleInfo) {
+            UIHelper.SetControlProperty(grp_NeedleInfo, () =>
                 {
-                    case TextBox textBox:
-                        textBox.Clear();
-                        break;
-
-                    case CheckBox checkBox:
-                        checkBox.Checked = false;
-                        break;
-
-                    case RadioButton radioButton:
-                        radioButton.Checked = false;
-                        break;
+                    foreach (Control control in grp_NeedleInfo.Controls) {
+                        switch (control) {
+                            case TextBox textBox: 
+                                textBox.Clear(); 
+                                break;
+                            case CheckBox checkBox: 
+                                checkBox.Checked = false; 
+                                break;
+                            case RadioButton radioButton: 
+                                radioButton.Checked = false; 
+                                break;
+                        }  // end of switch (control) {
+                    }  // end of foreach (Control control in grp_NeedleInfo.Controls) {
                 }
-            }
+            );
         }
 
         /// <summary>
@@ -509,35 +464,27 @@ namespace InjectorInspector
         /// <param name="needleInfo">流水號名稱ID按下Enter傳進來的 Textbox.Name</param>
         /// <param name="FocusedNeedle">按下Enter要查詢的圓</param>
         /// <returns>無回傳值</returns>
-        public static void search_grp_NeedleInfo(string textBoxType, string textBoxText)
-        {
-            switch (textBoxType)
-            {
+        public static void search_grp_NeedleInfo(string textBoxType, string textBoxText) {
+            switch (textBoxType) {
                 case "txt_Index":
-                    foreach (var circle in Json.Needles)
-                    {
-                        if (circle.Index.ToString() == textBoxText)
-                        {
+                    foreach (var circle in Json.Needles) {
+                        if (circle.Index.ToString() == textBoxText) {
                             FocusedNeedle = circle;
                         }
                     }
                     break;
 
                 case "txt_Name":
-                    foreach (var circle in Json.Needles)
-                    {
-                        if (circle.Name == textBoxText)
-                        {
+                    foreach (var circle in Json.Needles) {
+                        if (circle.Name == textBoxText) {
                             FocusedNeedle = circle;
                         }
                     }
                     break;
 
                 case "txt_Id":
-                    foreach (var circle in Json.Needles)
-                    {
-                        if (circle.Id == textBoxText)
-                        {
+                    foreach (var circle in Json.Needles) {
+                        if (circle.Id == textBoxText) {
                             FocusedNeedle = circle;
                         }
                     }
@@ -551,39 +498,20 @@ namespace InjectorInspector
         /// <param name="grp_NeedleInfo">植針資訊的 Groupbox</param>
         /// <param name="FocusedNeedle">在 picturebox 上按下的圓</param>
         /// <returns>無回傳值</returns>
-        public static void show_grp_BarcodeInfo(GroupBox grp_BarcodeInfo)
-        {
-            foreach (Control control in grp_BarcodeInfo.Controls)
-            {
-                switch (control)
-                {
+        public static void show_grp_BarcodeInfo(GroupBox grp_BarcodeInfo) {
+            foreach (Control control in grp_BarcodeInfo.Controls) {
+                switch (control) {
                     case TextBox textBox:
-
-                        switch (textBox.Name)
-                        {
-                            case "txt_Barcode":
-                                textBox.Text = Json.Barcode.Barcode;
-                                break;
-                            case "txt_短編號":
-                                textBox.Text = Json.Barcode.短編號;
-                                break;
-                            case "txt_客戶":
-                                textBox.Text = Json.Barcode.客戶;
-                                break;
-                            case "txt_型號":
-                                textBox.Text = Json.Barcode.型號;
-                                break;
-                            case "txt_板全號":
-                                textBox.Text = Json.Barcode.板全號;
-                                break;
-                            case "txt_儲位":
-                                textBox.Text = Json.Barcode.儲位;
-                                break;
+                        switch (textBox.Name) {
+                            case "txt_Barcode": UIHelper.SetControlProperty(textBox, () => textBox.Text = Json.Barcode.Barcode); break;
+                            case "txt_短編號":  UIHelper.SetControlProperty(textBox, () => textBox.Text = Json.Barcode.短編號);  break;
+                            case "txt_客戶":    UIHelper.SetControlProperty(textBox, () => textBox.Text = Json.Barcode.客戶);    break;
+                            case "txt_型號":    UIHelper.SetControlProperty(textBox, () => textBox.Text = Json.Barcode.型號);    break;
+                            case "txt_板全號":  UIHelper.SetControlProperty(textBox, () => textBox.Text = Json.Barcode.板全號);  break;
+                            case "txt_儲位":    UIHelper.SetControlProperty(textBox, () => textBox.Text = Json.Barcode.儲位);    break;
+                            default:                                                                                             break;
                         }
-
                         break;
-
-                    
                 }
             }
         }
@@ -593,19 +521,23 @@ namespace InjectorInspector
         /// </summary>
         /// <param name="message">目標資訊</param>
         /// <returns>無回傳值</returns>
-        public static void rtb_Status_AppendMessage(RichTextBox rtb_Status, string message)
-        {
+        public static void rtb_Status_AppendMessage(RichTextBox rtb_Status, string message) {
             // 獲取當前時間
             string currentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
             // 構造帶有當前時間和訊息的字串
             string textToAdd = $"[{currentTime}] {message}";
 
-            // 更新RichTextBox內容，保持換行
-            rtb_Status.AppendText(textToAdd + Environment.NewLine);
+            UIHelper.SetControlProperty(rtb_Status, () =>
+                {
+                    // 更新RichTextBox內容，保持換行
+                    rtb_Status.AppendText(textToAdd + Environment.NewLine);
 
-            // 滾動到最後一行
-            rtb_Status.ScrollToCaret();
+                    // 滾動到最後一行
+                    rtb_Status.ScrollToCaret();
+                }
+            );
+
         }
     }
 }

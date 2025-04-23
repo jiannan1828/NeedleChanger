@@ -489,12 +489,6 @@ namespace InjectorInspector
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.inspector1 = new Inspector.Inspector();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tmr_燈號 = new System.Windows.Forms.Timer(this.components);
-            this.tmr_檔案 = new System.Windows.Forms.Timer(this.components);
-            this.tmr_吸針嘴 = new System.Windows.Forms.Timer(this.components);
-            this.tmr_植針嘴 = new System.Windows.Forms.Timer(this.components);
-            this.tmr_載盤 = new System.Windows.Forms.Timer(this.components);
-            this.tmr_電動缸 = new System.Windows.Forms.Timer(this.components);
             this.cms_pic_Needles.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.grp_NeedleInfo.SuspendLayout();
@@ -5721,42 +5715,6 @@ namespace InjectorInspector
             this.tabControl1.Size = new System.Drawing.Size(1236, 825);
             this.tabControl1.TabIndex = 2;
             // 
-            // tmr_燈號
-            // 
-            this.tmr_燈號.Enabled = true;
-            this.tmr_燈號.Interval = 10;
-            this.tmr_燈號.Tick += new System.EventHandler(this.tmr_燈號_Tick);
-            // 
-            // tmr_檔案
-            // 
-            this.tmr_檔案.Enabled = true;
-            this.tmr_檔案.Interval = 10;
-            this.tmr_檔案.Tick += new System.EventHandler(this.tmr_檔案_Tick);
-            // 
-            // tmr_吸針嘴
-            // 
-            this.tmr_吸針嘴.Enabled = true;
-            this.tmr_吸針嘴.Interval = 10;
-            this.tmr_吸針嘴.Tick += new System.EventHandler(this.tmr_吸針嘴_Tick);
-            // 
-            // tmr_植針嘴
-            // 
-            this.tmr_植針嘴.Enabled = true;
-            this.tmr_植針嘴.Interval = 10;
-            this.tmr_植針嘴.Tick += new System.EventHandler(this.tmr_植針嘴_Tick);
-            // 
-            // tmr_載盤
-            // 
-            this.tmr_載盤.Enabled = true;
-            this.tmr_載盤.Interval = 10;
-            this.tmr_載盤.Tick += new System.EventHandler(this.tmr_載盤_Tick);
-            // 
-            // tmr_電動缸
-            // 
-            this.tmr_電動缸.Enabled = true;
-            this.tmr_電動缸.Interval = 10;
-            this.tmr_電動缸.Tick += new System.EventHandler(this.tmr_電動缸_Tick);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -6324,12 +6282,6 @@ namespace InjectorInspector
         public Label lbldbg_Task5_Info;
         public Label lbldbg_Task4_Info;
         public Label lbldbg_Task3_Info;
-        private Timer tmr_燈號;
-        private Timer tmr_檔案;
-        private Timer tmr_吸針嘴;
-        private Timer tmr_植針嘴;
-        private Timer tmr_載盤;
-        private Timer tmr_電動缸;
         private NumericUpDown SpeedNozzleX;
         private NumericUpDown SpeedNozzleR;
         private NumericUpDown SpeedNozzleZ;
