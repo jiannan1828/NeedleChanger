@@ -542,7 +542,7 @@ namespace InjectorInspector
             this.tsmi_Reset,
             this.tsmi_Reserve1});
             this.cms_pic_Needles.Name = "cms_pic_Needles";
-            this.cms_pic_Needles.Size = new System.Drawing.Size(181, 180);
+            this.cms_pic_Needles.Size = new System.Drawing.Size(115, 158);
             this.cms_pic_Needles.Opened += new System.EventHandler(this.cms_pic_Needles_Opened);
             // 
             // tsmi_Place
@@ -1940,7 +1940,7 @@ namespace InjectorInspector
             // 
             this.SpeedSetR.Location = new System.Drawing.Point(1042, 395);
             this.SpeedSetR.Maximum = new decimal(new int[] {
-            36000,
+            50000,
             0,
             0,
             0});
@@ -1963,7 +1963,7 @@ namespace InjectorInspector
             // 
             this.SpeedSetZ.Location = new System.Drawing.Point(1042, 363);
             this.SpeedSetZ.Maximum = new decimal(new int[] {
-            3300,
+            50000,
             0,
             0,
             0});
@@ -1986,7 +1986,7 @@ namespace InjectorInspector
             // 
             this.SpeedCarriorY.Location = new System.Drawing.Point(1042, 330);
             this.SpeedCarriorY.Maximum = new decimal(new int[] {
-            80000,
+            50000,
             0,
             0,
             0});
@@ -2009,7 +2009,7 @@ namespace InjectorInspector
             // 
             this.SpeedCarriorX.Location = new System.Drawing.Point(1042, 297);
             this.SpeedCarriorX.Maximum = new decimal(new int[] {
-            19000,
+            50000,
             0,
             0,
             0});
@@ -2068,7 +2068,7 @@ namespace InjectorInspector
             // 
             this.SpeedNozzleR.Location = new System.Drawing.Point(825, 395);
             this.SpeedNozzleR.Maximum = new decimal(new int[] {
-            36000,
+            50000,
             0,
             0,
             0});
@@ -2091,7 +2091,7 @@ namespace InjectorInspector
             // 
             this.SpeedNozzleZ.Location = new System.Drawing.Point(825, 363);
             this.SpeedNozzleZ.Maximum = new decimal(new int[] {
-            4000,
+            50000,
             0,
             0,
             0});
@@ -2114,7 +2114,7 @@ namespace InjectorInspector
             // 
             this.SpeedNozzleY.Location = new System.Drawing.Point(825, 330);
             this.SpeedNozzleY.Maximum = new decimal(new int[] {
-            10000,
+            50000,
             0,
             0,
             0});
