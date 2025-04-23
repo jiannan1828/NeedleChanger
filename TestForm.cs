@@ -373,8 +373,8 @@ namespace InjectorInspector
                                 } 
                                 break;
                             case "植針嘴":
-                                form1.dbapiJoDell植針嘴(Convert.ToDouble(rowValues[1]));
-                                if (form1.select_JoDell植針嘴.Checked == true) {
+                                form1.dbapiJoDell植針嘴相機(Convert.ToDouble(rowValues[1]));
+                                if (form1.select_JoDell植針嘴相機.Checked == true) {
                                     form1.txtABSpos.Text = rowValues[1].ToString();
                                 }
                                 break;
@@ -485,8 +485,8 @@ namespace InjectorInspector
                             } 
                             break;
                         case "植針嘴":
-                            form1.dbapiJoDell植針嘴(Convert.ToDouble(rowValues[1]));
-                            if (form1.select_JoDell植針嘴.Checked == true) {
+                            form1.dbapiJoDell植針嘴相機(Convert.ToDouble(rowValues[1]));
+                            if (form1.select_JoDell植針嘴相機.Checked == true) {
                                 form1.txtABSpos.Text = rowValues[1].ToString();
                             }
                             break;

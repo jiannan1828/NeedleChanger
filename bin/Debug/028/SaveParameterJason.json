@@ -1,22 +1,22 @@
 [
   {
     "u32Index": 0,
-    "dbPosition": 146.42080245049158,
+    "dbPosition": 146.44119843524834,
     "strNote": "028\u5DE6Socket\u5DE6\u5B9A\u4F4D\u9EDEAx"
   },
   {
     "u32Index": 1,
-    "dbPosition": 615.97900787573042,
+    "dbPosition": 615.99387245154674,
     "strNote": "028\u5DE6Socket\u5DE6\u5B9A\u4F4D\u9EDEAy"
   },
   {
     "u32Index": 2,
-    "dbPosition": 114.43699733132193,
+    "dbPosition": 114.4825697791744,
     "strNote": "028\u5DE6Socket\u53F3\u5B9A\u4F4D\u9EDEBx"
   },
   {
     "u32Index": 3,
-    "dbPosition": 601.85788786910098,
+    "dbPosition": 601.84605102297473,
     "strNote": "028\u5DE6Socket\u53F3\u5B9A\u4F4D\u9EDEBy"
   },
   {
@@ -66,12 +66,12 @@
   },
   {
     "u32Index": 13,
-    "dbPosition": 1.5409999999999999,
+    "dbPosition": 1.5589999999999999,
     "strNote": "Socket\u76F8\u6A5F\u81F3\u690D\u91DD\u5634\u5DEE\u503CX"
   },
   {
     "u32Index": 14,
-    "dbPosition": 54.715000000000003,
+    "dbPosition": 54.685000000000002,
     "strNote": "Socket\u76F8\u6A5F\u81F3\u690D\u91DD\u5634\u5DEE\u503CY"
   },
   {
@@ -146,7 +146,7 @@
   },
   {
     "u32Index": 29,
-    "dbPosition": 663.60900000000004,
+    "dbPosition": 480,
     "strNote": "\u5835\u5B54\u6AA2\u6E2C\u4F4D \u8F09\u76E4Y\u8EF8 "
   },
   {
@@ -156,12 +156,12 @@
   },
   {
     "u32Index": 31,
-    "dbPosition": 21,
+    "dbPosition": 24,
     "strNote": "\u5835\u5B54\u6AA2\u6E2C\u4F4D \u690D\u91DDZ\u8EF8"
   },
   {
     "u32Index": 32,
-    "dbPosition": 36,
+    "dbPosition": 22.100000000000001,
     "strNote": "\u5835\u5B54\u6AA2\u6E2C\u4F4D \u76F8\u6A5F\u8EF8"
   },
   {
@@ -171,7 +171,7 @@
   },
   {
     "u32Index": 34,
-    "dbPosition": 479.19999999999999,
+    "dbPosition": 457.19999999999999,
     "strNote": "\u5835\u5B54\u5674\u6599\u4F4D \u8F09\u76E4Y\u8EF8"
   },
   {
@@ -191,7 +191,7 @@
   },
   {
     "u32Index": 38,
-    "dbPosition": 36.600000000000001,
+    "dbPosition": 36.350000000000001,
     "strNote": "NozzleZ\u4E0B\u964D\u81F3\u653E\u6599\u4F4D"
   },
   {
@@ -256,12 +256,12 @@
   },
   {
     "u32Index": 51,
-    "dbPosition": 5000,
+    "dbPosition": 4800,
     "strNote": "Socket\u9762\u7A4D\u9650\u5236\u5C0F"
   },
   {
     "u32Index": 52,
-    "dbPosition": 5200,
+    "dbPosition": 5400,
     "strNote": "Socket\u9762\u7A4D\u9650\u5236\u5927"
   },
   {
