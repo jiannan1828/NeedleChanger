@@ -16,10 +16,17 @@ namespace InjectorInspector
         [STAThread]
         static void Main()
         {
+            Application.ApplicationExit += OnApplicationExit;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             form1 = new Form1();
             Application.Run(form1);
+        }
+
+        private static void OnApplicationExit(object sender, EventArgs e)
+        {
+            XavierLogger.XavierLogger_Shutdown();
         }
     }
 }
