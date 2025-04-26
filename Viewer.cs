@@ -394,11 +394,11 @@ namespace InjectorInspector
                             UIHelper.SetControlProperty(textBox, () =>
                                 {
                                     switch (textBox.Name) {
-                                        case "txt_Index": textBox.Text = FocusedNeedle.Index.ToString();           break;
-                                        case "txt_Name": textBox.Text = FocusedNeedle.Name;                        break;
-                                        case "txt_Id": textBox.Text = FocusedNeedle.Id;                            break;
-                                        case "txt_PosX": textBox.Text = FocusedNeedle.X.ToString("F3");            break;
-                                        case "txt_PosY": textBox.Text = FocusedNeedle.Y.ToString("F3");            break;
+                                        case "txt_Index":    textBox.Text = FocusedNeedle.Index.ToString();        break;
+                                        case "txt_Name":     textBox.Text = FocusedNeedle.Name;                    break;
+                                        case "txt_Id":       textBox.Text = FocusedNeedle.Id;                      break;
+                                        case "txt_PosX":     textBox.Text = FocusedNeedle.X.ToString("F3");        break;
+                                        case "txt_PosY":     textBox.Text = FocusedNeedle.Y.ToString("F3");        break;
                                         case "txt_Diameter": textBox.Text = FocusedNeedle.Diameter.ToString("F3"); break;
                                     }
                                 }

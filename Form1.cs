@@ -145,6 +145,9 @@ namespace InjectorInspector
             this.Text = cntcallback.ToString() + "  " + inspector1.InspNozzle.CCD.GrabCount.ToString();
 
             eDVR_Rsult = eDownVisionRsult.eDVR_Null;
+                inspector1.InspectOK = true;
+                inspector1.Inspected = true;
+                inspector1.PinDeg = 90;
                 if (inspector1.InspectOK == true && inspector1.Inspected == true) {
                     UIHelper.SetControlProperty(label10, () => label10.Text = inspector1.PinDeg.ToString());
 
@@ -158,6 +161,7 @@ namespace InjectorInspector
                             if(inspector1.PinDeg < 0) {
                                 eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ok_Inverse;
                             } else {
+                                lbl_Normal:
                                 eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ok_Normal;
                             }
 
@@ -475,14 +479,14 @@ namespace InjectorInspector
         public const bool OFF  = false;
 
         //Servo EtherCAT
-        public double dbInsertSpeedNozzleX  = 3000;  //(500.0) * 0.1;
-        public double dbInsertSpeedNozzleY  = 3000;  //(100.0) * 0.1;
-        public double dbInsertSpeedNozzleZ  = 6000;  //( 40.0) * 0.1;
-        public double dbInsertSpeedNozzleR  = 3000;  //(360.0) * 0.1;
-        public double dbInsertSpeedCarrierX = 2000;  //(190.0) * 0.1;
-        public double dbInsertSpeedCarrierY = 2000;  //(800.0) * 0.1;
-        public double dbInsertSpeedSetZ     = 3000;  //( 33.0) * 0.1;
-        public double dbInsertSpeedSetR     = 3000;  //(360.0) * 0.1;
+        public double dbInsertSpeedNozzleX  =  3000;  //(500.0) * 0.1;
+        public double dbInsertSpeedNozzleY  = 15000;  //(100.0) * 0.1;
+        public double dbInsertSpeedNozzleZ  = 15000;  //( 40.0) * 0.1;
+        public double dbInsertSpeedNozzleR  = 15000;  //(360.0) * 0.1;
+        public double dbInsertSpeedCarrierX =  2000;  //(190.0) * 0.1;
+        public double dbInsertSpeedCarrierY =  2000;  //(800.0) * 0.1;
+        public double dbInsertSpeedSetZ     = 10000;  //( 33.0) * 0.1;
+        public double dbInsertSpeedSetR     = 10000;  //(360.0) * 0.1;
         public double dbInsertSpeedGate     = (580.0) * 0.1;
 
         //---------------------------------------------------------------------------------------
@@ -3332,58 +3336,23 @@ namespace InjectorInspector
                     (float)(2 * circle.Diameter / 2 * ScaleFactor)
                 );
 
-                if (circle.Display == false) // 隱藏
-                {
-                    fillBrush = new SolidBrush(HiddenNeedlesColor);
-                }
-                else if (circle.Disable == true) // 禁用
-                {
-                    fillBrush = new SolidBrush(EnableNeedlesColor);
-                }
-                else if (circle.Reserve1 == true) // 保留1
-                {
-                    fillBrush = new SolidBrush(Reserve1NeedlesColor);
-                }
-                else if (circle.Place == true) // 植針圓
-                {
-                    fillBrush= new SolidBrush(PlaceNeedlesColor);
-                }
-                else if (circle.Remove == true) // 取針圓
-                {
-                    fillBrush = new SolidBrush(RemoveNeedlesColor);
-                }
-                else if (circle.Replace == true) // 換針圓
-                {
-                    fillBrush = new SolidBrush(ReplaceNeedlesColor);
-                }
-                else // 預設圓
-                {
-                    fillBrush = new SolidBrush(DefaltNeedleColor);
-                }
+                if (circle.Display  == false) { fillBrush = new SolidBrush(HiddenNeedlesColor);   } else // 隱藏
+                if (circle.Disable  == true ) { fillBrush = new SolidBrush(EnableNeedlesColor);   } else // 禁用
+                if (circle.Reserve1 == true ) { fillBrush = new SolidBrush(Reserve1NeedlesColor); } else // 保留1
+                if (circle.Place    == true ) { fillBrush = new SolidBrush(PlaceNeedlesColor);    } else // 植針圓
+                if (circle.Remove   == true ) { fillBrush = new SolidBrush(RemoveNeedlesColor);   } else // 取針圓
+                if (circle.Replace  == true ) { fillBrush = new SolidBrush(ReplaceNeedlesColor);  } else // 換針圓
+                                              { fillBrush = new SolidBrush(DefaltNeedleColor);    }      // 預設圓
 
-                if (circle == FocusedNeedle) // 點擊圓
-                {
-                    fillBrush = new SolidBrush(FocusedNeedleColor);
-                }
-                else if (circle == HighlightedNeedle) // 觸擊圓
-                {
-                    fillBrush = new SolidBrush(HiddenNeedlesColor);
-                    //rectangleF = new RectangleF(
-                    //    (float)((circle.X * ScaleFactor - circle.Diameter / 2 * ScaleFactor) - (circle.Diameter / 2 * ScaleFactor * 0.5)),
-                    //    (float)((circle.Y * ScaleFactor - circle.Diameter / 2 * ScaleFactor) - (circle.Diameter / 2 * ScaleFactor * 0.5)),
-                    //    (float)(2 * circle.Diameter / 2 * ScaleFactor * 1.5),
-                    //    (float)(2 * circle.Diameter / 2 * ScaleFactor * 1.5)
-                    //);
-                }
+                if (circle == FocusedNeedle)  { fillBrush = new SolidBrush(FocusedNeedleColor);   } else // 點擊圓
+                if (circle == HighlightedNeedle) { fillBrush = new SolidBrush(HiddenNeedlesColor); }     // 觸擊圓
 
                 e.Graphics.FillEllipse(fillBrush, rectangleF);
-
             }
             #endregion
 
             #region 畫拖曳框
-            if (IsDrag)
-            {
+            if (IsDrag) {
                 // 設置半透明框的顏色 (Alpha 值為 128，表示半透明)
                 Color DragBoxColor = Color.FromArgb(128, 0, 0, 255);
                 Brush DragBoxBrush = new SolidBrush(DragBoxColor);
@@ -3469,7 +3438,7 @@ namespace InjectorInspector
                 }
                 else
                 {
-                    IsMouseinCircle = false;
+                    IsMouseinCircle   = false;
                     HighlightedNeedle = null;
                 }
             }
@@ -3477,12 +3446,12 @@ namespace InjectorInspector
             if (IsMouseinCircle) {
                 ttp_NeedleInfo.SetToolTip(
                     pic_Needles,
-                    "流水號 : " + HighlightedNeedle.Index.ToString() + "\n" +
-                    "名稱 : " + (HighlightedNeedle.Name ?? "無") + "\n" +  // 如果為 null, 顯示 "無"
-                    "Id : " + (HighlightedNeedle.Id ?? "無") + "\n" +
-                    "座標X : " + HighlightedNeedle.X.ToString("F3") + "\n" +
-                    "座標Y : " + HighlightedNeedle.Y.ToString("F3") + "\n" +
-                    "直徑 : " + HighlightedNeedle.Diameter.ToString("F3") + "\n" 
+                    "流水號 : " + HighlightedNeedle.Index.ToString()        + "\n" +
+                    "名稱 : "   + (HighlightedNeedle.Name ?? "無")          + "\n" +  // 如果為 null, 顯示 "無"
+                    "Id : "     + (HighlightedNeedle.Id ?? "無")            + "\n" +
+                    "座標X : "  + HighlightedNeedle.X.ToString("F3")        + "\n" +
+                    "座標Y : "  + HighlightedNeedle.Y.ToString("F3")        + "\n" +
+                    "直徑 : "   + HighlightedNeedle.Diameter.ToString("F3") + "\n" 
                 );
             }
             else
@@ -3645,8 +3614,7 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public void cms_pic_Needles_Opened(object sender, EventArgs e)
         {
-            if (SelectedNeedles.Count != 0)
-            {
+            if (SelectedNeedles.Count != 0) {
                 tsmi_Place.Enabled    = true;
                 tsmi_Remove.Enabled   = true;
                 tsmi_Replace.Enabled  = true;
@@ -3654,9 +3622,7 @@ namespace InjectorInspector
                 tsmi_Enable.Enabled   = true;
                 tsmi_Reset.Enabled    = true;
                 tsmi_Reserve1.Enabled = true;
-            }
-            else
-            {
+            } else {
                 tsmi_Place.Enabled    = false;
                 tsmi_Remove.Enabled   = false;
                 tsmi_Replace.Enabled  = false;
@@ -3710,11 +3676,10 @@ namespace InjectorInspector
                         Json.Needles[circle.Index].Remove   = false;
                         Json.Needles[circle.Index].Replace  = false;
                         Json.Needles[circle.Index].Display  = true;
-                        Json.Needles[circle.Index].Disable   = false;
+                        Json.Needles[circle.Index].Disable  = false;
                         Json.Needles[circle.Index].Reserve1 = false;
 
                         show_grp_NeedleInfo(grp_NeedleInfo);
-
                         break;
                 }
             }
@@ -3798,7 +3763,6 @@ namespace InjectorInspector
                                     chk_Disable.Checked = false;
                                     Json.Needles[SelectedNeedle.Index].Disable = false;
                                 }
-                               
                                 break;
                         }
                         break;
@@ -3809,11 +3773,11 @@ namespace InjectorInspector
                             case "btn_Reset":
                                 foreach (var SelectedNeedle in SelectedNeedles)
                                 {
-                                    Json.Needles[SelectedNeedle.Index].Place = false;
-                                    Json.Needles[SelectedNeedle.Index].Remove = false;
-                                    Json.Needles[SelectedNeedle.Index].Replace = false;
-                                    Json.Needles[SelectedNeedle.Index].Display = true;
-                                    Json.Needles[SelectedNeedle.Index].Disable = false;
+                                    Json.Needles[SelectedNeedle.Index].Place    = false;
+                                    Json.Needles[SelectedNeedle.Index].Remove   = false;
+                                    Json.Needles[SelectedNeedle.Index].Replace  = false;
+                                    Json.Needles[SelectedNeedle.Index].Display  = true;
+                                    Json.Needles[SelectedNeedle.Index].Disable  = false;
                                     Json.Needles[SelectedNeedle.Index].Reserve1 = false;
                                 }
 
@@ -5068,8 +5032,8 @@ namespace InjectorInspector
                                                                           tp2Insert_告知植針軸組可以進行放料作業,
                                                                           tp2Insert_吸嘴軸組放料完成_從_tp3Insert_告知吸嘴軸組_植針軸放料完成,
                                                                           tp2Insert_吸嘴Z縮回0,
-                                                                        //tp2Insert_吸嘴XYR回home保護位,
-                                                                        //tp2Insert_跳回_至_tp2Insert_取針前動作準備,
+                                                                          tp2Insert_吸嘴XYR回home保護位,
+                                                                          tp2Insert_跳回_至_tp2Insert_取針前動作準備,
                                                                           tp2Insert_吸嘴軸動作完成,
 
             tp2RemoveSTART,
@@ -5495,71 +5459,83 @@ namespace InjectorInspector
                         Xavier_Task2_Debugprintf("tp2Insert_無植針資料\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_確認吸嘴軸不在柔震上方遮住相機:
-                        if(dbapiNozzleX(dbRead, 0) >= 120.0) { 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照);
-                        } else { 
-                            dbapiNozzleZ_InsertSpeed(dbNozzleZ_Home位);
-                            if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                dbapiNozzleX_InsertSpeed(dbNozzleX_Home位);
-                                dbapiNozzleY_InsertSpeed(dbNozzleY_Home位);
+                        lblgoto_tp2Insert_確認吸嘴軸不在柔震上方遮住相機:
+                            Xavier_Task2_Debugprintf("tp2Insert_確認吸嘴軸不在柔震上方遮住相機\r\n");
+                            if(dbapiNozzleX(dbRead, 0) >= 120.0) { 
+                                goto lblgoto_tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照;
+                            } else { 
+                                dbapiNozzleZ_InsertSpeed(dbNozzleZ_Home位);
+                                if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                    dbapiNozzleX_InsertSpeed(dbNozzleX_Home位);
+                                    dbapiNozzleY_InsertSpeed(dbNozzleY_Home位);
+                                }
+                                goto lblgoto_tp2Insert_確認吸嘴軸不在柔震上方遮住相機;
                             }
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_確認吸嘴軸不在柔震上方遮住相機);
-                        }
-                        Xavier_Task2_Debugprintf("tp2Insert_確認吸嘴軸不在柔震上方遮住相機\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照:
-                        {
-                            btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照 = true;
+                        lblgoto_tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照:
+                            Xavier_Task2_Debugprintf("tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照\r\n");
+                            {
+                                btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照 = true;
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_取得柔震物料座標_從_tp4Insert_告知吸嘴軸組柔震盤物料座標);
-                        }    
-                        Xavier_Task2_Debugprintf("tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照\r\n");
+                                goto lblgoto_tp2Insert_取得柔震物料座標_從_tp4Insert_告知吸嘴軸組柔震盤物料座標;
+                            }    
                         break;
                     case xeXavier_T2_Job.tp2Insert_取得柔震物料座標_從_tp4Insert_告知吸嘴軸組柔震盤物料座標:
-                        {
-                            if(btp4Insert_告知吸嘴軸組柔震盤物料座標 == true) { 
-                                btp4Insert_告知吸嘴軸組柔震盤物料座標 = false;
+                        lblgoto_tp2Insert_取得柔震物料座標_從_tp4Insert_告知吸嘴軸組柔震盤物料座標:
+                            Xavier_Task2_Debugprintf("tp2Insert_取得柔震物料座標_從_tp4Insert_告知吸嘴軸組柔震盤物料座標\r\n");
+                            {
+                                if(btp4Insert_告知吸嘴軸組柔震盤物料座標 == true) { 
+                                    btp4Insert_告知吸嘴軸組柔震盤物料座標 = false;
 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組XYR移動至物料座標);
-                            } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_取得柔震物料座標_從_tp4Insert_告知吸嘴軸組柔震盤物料座標);
+                                    goto lblgoto_tp2Insert_吸嘴軸組XYR移動至物料座標;
+                                } else { 
+                                    goto lblgoto_tp2Insert_取得柔震物料座標_從_tp4Insert_告知吸嘴軸組柔震盤物料座標;
+                                }
                             }
-                        }
-                        Xavier_Task2_Debugprintf("tp2Insert_取得柔震物料座標_從_tp4Insert_告知吸嘴軸組柔震盤物料座標\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組XYR移動至物料座標:
-                        {
-                            dbapiNozzleX_InsertSpeed(db取料Nozzle中心點X + dbPinX_tmrTakePinTick);
-                            dbapiNozzleY_InsertSpeed(db取料Nozzle中心點Y + dbPinY_tmrTakePinTick);
-                            dbapiNozzleR_InsertSpeed(db取料Nozzle中心點R + dbPinR_tmrTakePinTick);
-                            if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
-                                (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) &&
-                                (dbapiNozzleR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降前準備作業);
-                            } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組XYR移動至物料座標);
+                        lblgoto_tp2Insert_吸嘴軸組XYR移動至物料座標:
+                            Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組XYR移動至物料座標\r\n");
+                            {
+                                dbapiNozzleX_InsertSpeed(db取料Nozzle中心點X + dbPinX_tmrTakePinTick);
+                                dbapiNozzleY_InsertSpeed(db取料Nozzle中心點Y + dbPinY_tmrTakePinTick);
+                                dbapiNozzleR_InsertSpeed(db取料Nozzle中心點R + dbPinR_tmrTakePinTick);
+
+                                lblgoto_tp2Insert_吸嘴軸組XYR移動至物料座標_inner:
+                                    double NozzleX_position = dbapiNozzleX(dbRead, 0);
+                                    double NozzleY_position = dbapiNozzleY(dbRead, 0);
+                                    if( (db取料Nozzle中心點X + dbPinX_tmrTakePinTick -2 <= NozzleX_position && NozzleX_position <= db取料Nozzle中心點X + dbPinX_tmrTakePinTick +2) &&
+                                        (db取料Nozzle中心點Y + dbPinY_tmrTakePinTick -2 <= NozzleY_position && NozzleY_position <= db取料Nozzle中心點Y + dbPinY_tmrTakePinTick +2) &&
+                                        (dbapiNozzleR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
+                                        goto lblgoto_tp2Insert_吸嘴軸組Z下降前準備作業;
+                                    } else { 
+                                        goto lblgoto_tp2Insert_吸嘴軸組XYR移動至物料座標_inner;
+                                    }
                             }
-                        }
-                        Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組XYR移動至物料座標\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降前準備作業:
-                        {
-                            digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴吸, HIGH);
+                        lblgoto_tp2Insert_吸嘴軸組Z下降前準備作業:
+                            Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組Z下降前準備作業\r\n");
+                            {
+                                digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴吸, HIGH);
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至取料位);
-                        }
-                        Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組Z下降前準備作業\r\n");
+                                goto lblgoto_tp2Insert_吸嘴軸組Z下降至取料位;
+                            }
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至取料位:
-                        {
-                            dbapiNozzleZ_InsertSpeed(db取料Nozzle中心點Z);
-                            if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組ZR上升至安全位);
-                            } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降至取料位);
+                        lblgoto_tp2Insert_吸嘴軸組Z下降至取料位:
+                            Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組Z下降至取料位\r\n");
+                            {
+                                dbapiNozzleZ_InsertSpeed(db取料Nozzle中心點Z);
+
+                                double NozzleZ_position = dbapiNozzleZ(dbRead, 0);
+                                if(db取料Nozzle中心點Z -1 <= NozzleZ_position && NozzleZ_position <= db取料Nozzle中心點Z +1) { 
+                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組ZR上升至安全位);
+                                } else { 
+                                    goto lblgoto_tp2Insert_吸嘴軸組Z下降至取料位;
+                                }
                             }
-                        }
-                        Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組Z下降至取料位\r\n");
                         break;
                     #if(false)
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組Z下降完畢:
@@ -5581,66 +5557,69 @@ namespace InjectorInspector
                     #endif
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組ZR上升至安全位:
                         {
-                            dbapiNozzleR_InsertSpeed(db取料Nozzle中心點R + 90);
+                            Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組ZR上升至安全位\r\n");
 
+                            dbapiNozzleR_InsertSpeed(db取料Nozzle中心點R + 90);
                             dbapiNozzleZ_InsertSpeed(dbNozzleZ_Home位);
-                            if(dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組XY移動至飛拍準備位);
-                            } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組ZR上升至安全位);
-                            }
+
+                            lblgoto_tp2Insert_吸嘴軸組ZR上升至安全位:
+                                double NozzleZ_position = dbapiNozzleZ(dbRead, 0);
+                                if(NozzleZ_position <= db取料Nozzle中心點Z-2) { 
+                                    goto lblgoto_tp2Insert_吸嘴軸組XY移動至飛拍準備位;
+                                } else { 
+                                    goto lblgoto_tp2Insert_吸嘴軸組ZR上升至安全位;
+                                }
                         }
-                        Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組ZR上升至安全位\r\n");
                         break;
-                    case xeXavier_T2_Job.tp2Insert_吸嘴軸組XY移動至飛拍準備位:
-                        {
-                            dbapiNozzleR_InsertSpeed(db取料Nozzle中心點R + 90);
+                    case xeXavier_T2_Job.tp2Insert_吸嘴軸組XY移動至飛拍準備位: 
+                        lblgoto_tp2Insert_吸嘴軸組XY移動至飛拍準備位:
+                            Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組XY移動至飛拍準備位\r\n");
+                            {
+                              //dbapiNozzleX_InsertSpeed(db下視覺取像X_Start);
+                                dbapiNozzleY_InsertSpeed(db下視覺取像Y      );
+                                dbapiNozzleZ_InsertSpeed(db下視覺取像Z      );
 
-                          //dbapiNozzleX_InsertSpeed(db下視覺取像X_Start);
-                            dbapiNozzleY_InsertSpeed(db下視覺取像Y      );
-                            dbapiNozzleZ_InsertSpeed(db下視覺取像Z      );
-
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標);
-                        }
-                        Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組XY移動至飛拍準備位\r\n");
+                                goto lblgoto_tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標;
+                            }
                         break;
                     case xeXavier_T2_Job.tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標:
-                        {
-                            btp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標 = true;
+                        lblgoto_tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標:
+                            Xavier_Task2_Debugprintf("tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標\r\n");
+                            {
+                                btp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標 = true;
 
-                            dbapiNozzleR_InsertSpeed(db取料Nozzle中心點R + 90);
-
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照_再次);
-                        }
-                        Xavier_Task2_Debugprintf("tp2Insert_告知電動缸組_已取出當前柔震盤目標物料座標\r\n");
+                                goto lbltogo_tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照_再次;
+                            }
                         break;
                     case xeXavier_T2_Job.tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照_再次:
-                        {
-                            btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照 = true;
+                        lbltogo_tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照_再次:
+                            Xavier_Task2_Debugprintf("tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照_再次\r\n");
+                            {
+                                btp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照 = true;
 
-                            dbapiNozzleR_InsertSpeed(db取料Nozzle中心點R + 90);
-
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組X觸發移動飛拍);
-                        }
-                        Xavier_Task2_Debugprintf("tp2Insert_告知電動缸組吸嘴軸組不干擾柔震取料拍照_再次\r\n");
+                                goto lblgoto_tp2Insert_吸嘴軸組X觸發移動飛拍;
+                            }
                         break;
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸組X觸發移動飛拍:
-                        {
-                            dbapiNozzleR_InsertSpeed(db取料Nozzle中心點R + 90);
+                        lblgoto_tp2Insert_吸嘴軸組X觸發移動飛拍:
+                            Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組X觸發移動飛拍\r\n");
+                            {
+                                double NozzleY_position = dbapiNozzleY(dbRead, 0);
+                                double NozzleZ_position = dbapiNozzleZ(dbRead, 0);
+                                double NozzleR_position = dbapiNozzleR(dbRead, 0);
 
-                            if( //(dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
-                                  (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) &&
-                                  (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) &&
-                                  (dbapiNozzleR(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
-                              //dbapiNozzleX_InsertSpeed(db下視覺取像X_END);
-                                dbapiNozzleX_InsertSpeed(495);
+                                if( //(dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
+                                      (db下視覺取像Y -5 <= NozzleY_position && NozzleY_position <= db下視覺取像Y +5) &&
+                                      (NozzleZ_position <= 9.0) &&
+                                      (db取料Nozzle中心點R + 90 -2 <= NozzleR_position && NozzleR_position <= db取料Nozzle中心點R + 90 +2) ) { 
+                                  //dbapiNozzleX_InsertSpeed(db下視覺取像X_END);
+                                    dbapiNozzleX_InsertSpeed(495);
 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_進行植針軸組放料位檢查);
-                            } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸組X觸發移動飛拍);
+                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_進行植針軸組放料位檢查);
+                                } else { 
+                                    goto lblgoto_tp2Insert_吸嘴軸組X觸發移動飛拍;
+                                }
                             }
-                        }
-                        Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組X觸發移動飛拍\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_進行植針軸組放料位檢查:
                         {
@@ -5812,51 +5791,57 @@ namespace InjectorInspector
                     case xeXavier_T2_Job.tp2Insert_吸嘴Z縮回0:
                         {
                             dbapiNozzleZ_InsertSpeed(dbNozzleZ_Home位);
-                            if(dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_取針前動作準備);
-                            } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴Z縮回0);
-                            }
+
+                            lblgoto_tp2Insert_吸嘴Z縮回0:
+                                Xavier_Task2_Debugprintf("tp2Insert_吸嘴Z縮回0\r\n");
+                                double NozzleZ_position = dbapiNozzleZ(dbRead, 0);
+                                if(NozzleZ_position <= dbNozzleZ_Home位+1) { 
+                                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴XYR回home保護位);
+                                } else { 
+                                    goto lblgoto_tp2Insert_吸嘴Z縮回0;
+                                }
                         }
-                        Xavier_Task2_Debugprintf("tp2Insert_吸嘴Z縮回0\r\n");
                         break;
-                    #if(false)
                     case xeXavier_T2_Job.tp2Insert_吸嘴XYR回home保護位:
+                        Xavier_Task2_Debugprintf("tp2Insert_吸嘴XYR回home保護位\r\n");
                         {
                             dbapiNozzleX_InsertSpeed(dbNozzleX_Home位);
                             dbapiNozzleY_InsertSpeed(dbNozzleY_Home位);
-                            if( (dbapiNozzleX(dbCheckArrived, 0) == dbAxisMoveOk) &&
-                                (dbapiNozzleY(dbCheckArrived, 0) == dbAxisMoveOk) ) {
 
-                                //吸嘴吸真空關閉
-                                digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴吸, LOW);
+                            //吸嘴吸真空關閉
+                            digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴吸, LOW);
 
-                                //流量閥開啟
-                                dbapi_FlowValve_吸嘴破真空(100);
+                            //流量閥開啟
+                            dbapi_FlowValve_吸嘴破真空(100);
 
-                                //吸嘴破真空開啟
-                                digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, HIGH);
+                            lblgoto_tp2Insert_吸嘴XYR回home保護位:
+                                double NozzleX_position = dbapiNozzleX(dbRead, 0);
+                                double NozzleY_position = dbapiNozzleY(dbRead, 0);
+                                if( (dbNozzleX_Home位 -17 <= NozzleX_position && NozzleX_position <= dbNozzleX_Home位 +17) &&
+                                    (dbNozzleY_Home位 -17 <= NozzleY_position && NozzleY_position <= dbNozzleY_Home位 +17) ) {
 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_跳回_至_tp2Insert_取針前動作準備);
-                            } else { 
-                                Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴XYR回home保護位);
-                            }
+                                    //吸嘴破真空開啟
+                                    digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, HIGH);
+
+                                    goto lblgoto_tp2Insert_跳回_至_tp2Insert_取針前動作準備;
+                                } else { 
+                                    goto lblgoto_tp2Insert_吸嘴XYR回home保護位;
+                                }
                         }
-                        Xavier_Task2_Debugprintf("tp2Insert_吸嘴XYR回home保護位\r\n");
                         break;
                     case xeXavier_T2_Job.tp2Insert_跳回_至_tp2Insert_取針前動作準備:
-                        {
-                            //流量閥關閉
-                            dbapi_FlowValve_吸嘴破真空(0);
+                        lblgoto_tp2Insert_跳回_至_tp2Insert_取針前動作準備:
+                            Xavier_Task2_Debugprintf("tp2Insert_跳回_至_tp2Insert_取針前動作準備\r\n");
+                            {
+                                //流量閥關閉
+                                //dbapi_FlowValve_吸嘴破真空(0);
 
-                            //吸嘴破真空關閉
-                            digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, LOW);
+                                //吸嘴破真空關閉
+                                digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, LOW);
 
-                            Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_取針前動作準備);
-                        }
-                        Xavier_Task2_Debugprintf("tp2Insert_跳回_至_tp2Insert_取針前動作準備\r\n");
+                                goto lblgoto_tp2Insert_確認吸嘴軸不在柔震上方遮住相機;
+                            }
                         break;
-                    #endif
                     case xeXavier_T2_Job.tp2Insert_吸嘴軸動作完成:
                         Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_吸嘴軸動作完成);
                         Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸動作完成\r\n");
