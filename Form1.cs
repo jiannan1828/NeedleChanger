@@ -817,25 +817,16 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    UIHelper.SetControlProperty(lbl_吸嘴X軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_吸嘴X軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_吸嘴X軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
-
-
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    UIHelper.SetControlProperty(lbl_吸嘴X軸_RAW,     () => lbl_吸嘴X軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    UIHelper.SetControlProperty(lbl_吸嘴X軸_Convert,     () => lbl_吸嘴X軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    UIHelper.SetControlProperty(lbl_吸嘴X軸_Back,     () => lbl_吸嘴X軸_Back.Text    = cnback.ToString());
-
 
                     //顯示讀取長度
                     dbRstNozzleX             = dbGet;
@@ -948,25 +939,16 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    UIHelper.SetControlProperty(lbl_吸嘴Y軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_吸嘴Y軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_吸嘴Y軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
-
-
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    UIHelper.SetControlProperty(lbl_吸嘴Y軸_RAW,    () => lbl_吸嘴Y軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    UIHelper.SetControlProperty(lbl_吸嘴Y軸_Convert,    () => lbl_吸嘴Y軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    UIHelper.SetControlProperty(lbl_吸嘴Y軸_Back,    () => lbl_吸嘴Y軸_Back.Text    = cnback.ToString());
-
 
                     //顯示讀取長度
                     dbRstNozzleY             = dbGet;
@@ -1072,25 +1054,16 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    UIHelper.SetControlProperty(lbl_吸嘴Z軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_吸嘴Z軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_吸嘴Z軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
-
-
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    UIHelper.SetControlProperty(lbl_吸嘴Z軸_RAW,    () => lbl_吸嘴Z軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    UIHelper.SetControlProperty(lbl_吸嘴Z軸_Convert,    () => lbl_吸嘴Z軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    UIHelper.SetControlProperty(lbl_吸嘴Z軸_Back,    () => lbl_吸嘴Z軸_Back.Text    = cnback.ToString());
-
 
                     //顯示讀取長度
                     dbRstNozzleZ             = dbGet;
@@ -1197,27 +1170,18 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    UIHelper.SetControlProperty(lbl_吸嘴R軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_吸嘴R軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_吸嘴R軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
-
-
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    UIHelper.SetControlProperty(lbl_吸嘴R軸_RAW,    () => lbl_吸嘴R軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
                     while (dbGet >= 360.0) { dbGet -= 360.0; }  //overflow
                     while (dbGet <    0.0) { dbGet += 360.0; }  //overflow
-                    UIHelper.SetControlProperty(lbl_吸嘴R軸_Convert,    () => lbl_吸嘴R軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    UIHelper.SetControlProperty(lbl_吸嘴R軸_Back,    () => lbl_吸嘴R軸_Back.Text    = cnback.ToString());
-
 
                     //顯示讀取長度
                     dbRstNozzleR             = dbGet;
@@ -1327,25 +1291,16 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    UIHelper.SetControlProperty(lbl_載盤X軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_載盤X軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_載盤X軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
-
-
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    UIHelper.SetControlProperty(lbl_載盤X軸_RAW,    () => lbl_載盤X軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    UIHelper.SetControlProperty(lbl_載盤X軸_Convert,    () => lbl_載盤X軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    UIHelper.SetControlProperty(lbl_載盤X軸_Back,    () => lbl_載盤X軸_Back.Text    = cnback.ToString());
-
 
                     //顯示讀取長度
                     dbRstCarrierX            = dbGet;
@@ -1451,25 +1406,16 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    UIHelper.SetControlProperty(lbl_載盤Y軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_載盤Y軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_載盤Y軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
-
-
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    UIHelper.SetControlProperty(lbl_載盤Y軸_RAW,    () => lbl_載盤Y軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    UIHelper.SetControlProperty(lbl_載盤Y軸_Convert,    () => lbl_載盤Y軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    UIHelper.SetControlProperty(lbl_載盤Y軸_Back,    () => lbl_載盤Y軸_Back.Text    = cnback.ToString());
-
 
                     //顯示讀取長度
                     dbRstCarrierY            = dbGet;
@@ -1583,25 +1529,16 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    UIHelper.SetControlProperty(lbl_植針Z軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_植針Z軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_植針Z軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
-
-
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    UIHelper.SetControlProperty(lbl_植針Z軸_RAW,    () => lbl_植針Z軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    UIHelper.SetControlProperty(lbl_植針Z軸_Convert,    () => lbl_植針Z軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    UIHelper.SetControlProperty(lbl_植針Z軸_Back,    () => lbl_植針Z軸_Back.Text    = cnback.ToString());
-
 
                     //顯示讀取長度
                     dbRstSetZ                = dbGet;
@@ -1706,25 +1643,16 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    UIHelper.SetControlProperty(lbl_植針R軸_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_植針R軸_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_植針R軸_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
-
-
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    UIHelper.SetControlProperty(lbl_植針R軸_RAW,    () => lbl_植針R軸_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    UIHelper.SetControlProperty(lbl_植針R軸_Convert,    () => lbl_植針R軸_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    UIHelper.SetControlProperty(lbl_植針R軸_Back,    () => lbl_植針R軸_Back.Text    = cnback.ToString());
-
 
                     //顯示讀取長度
                     dbRstSetR                = dbGet;
@@ -1831,25 +1759,16 @@ namespace InjectorInspector
 
                 //當數值有效
                 if( (position != "") && (speed != "") ) { 
-                    UIHelper.SetControlProperty(lbl_工作門_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_工作門_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_工作門_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
-
-
                     //得到原始數值
                     int Convert              = (int)(double.Parse(position));
                     int Speed                = (int)double.Parse(speed);
-                    UIHelper.SetControlProperty(lbl_工作門_RAW,    () => lbl_工作門_RAW.Text      = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed           = Speed / dbSpdF;
-                    UIHelper.SetControlProperty(lbl_工作門_Convert,    () => lbl_工作門_Convert.Text  = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    UIHelper.SetControlProperty(lbl_工作門_Back,    () => lbl_工作門_Back.Text     = cnback.ToString());
-
 
                     //顯示讀取長度
                     dbRstGate                = dbGet;
@@ -1953,25 +1872,16 @@ namespace InjectorInspector
 
                 //當數值有效
                 if(true) { 
-                    UIHelper.SetControlProperty(lbl_IAI_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_IAI_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_IAI_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
-
-
                     //得到原始數值
                     int Convert                   = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetPosition, 0);
                     int Speed                     = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetCurrentSpeed4Bytes, 0);
-                    UIHelper.SetControlProperty(lbl_IAI_RAW,    () => lbl_IAI_RAW.Text              = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet                  = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
                     double dbSpeed                = Speed / dbSpdF;
-                    UIHelper.SetControlProperty(lbl_IAI_Convert,    () => lbl_IAI_Convert.Text          = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback                    = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
-                    UIHelper.SetControlProperty(lbl_IAI_Back,    () => lbl_IAI_Back.Text             = cnback.ToString());
-
 
                     //顯示讀取長度
                     dbRstIAI                      = dbGet;
@@ -2074,25 +1984,16 @@ namespace InjectorInspector
 
                 //當數值有效
                 if(true) { 
-                    UIHelper.SetControlProperty(lbl_JoDell3D掃描_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_JoDell3D掃描_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_JoDell3D掃描_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
-
-
                     //得到原始數值
                     int Convert                   = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GetPosition, 0);
                     int Speed                     = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
-                    UIHelper.SetControlProperty(lbl_JoDell3D掃描_RAW,    () => lbl_JoDell3D掃描_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet                  = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
                     double dbSpeed                = Speed / dbSpdF;
-                    UIHelper.SetControlProperty(lbl_JoDell3D掃描_Convert,    () => lbl_JoDell3D掃描_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback                    = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
-                    UIHelper.SetControlProperty(lbl_JoDell3D掃描_Back,    () => lbl_JoDell3D掃描_Back.Text    = cnback.ToString());
-
 
                     //顯示讀取長度
                     dbRstJoDell3D掃描             = dbGet;
@@ -2193,25 +2094,16 @@ namespace InjectorInspector
 
                 //當數值有效
                 if(true) { 
-                    UIHelper.SetControlProperty(lbl_JoDell吸針嘴_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_JoDell吸針嘴_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_JoDell吸針嘴_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
-
-
                     //得到原始數值
                     int Convert                   = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GetPosition, 0);
                     int Speed                     = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
-                    UIHelper.SetControlProperty(lbl_JoDell吸針嘴_RAW,    () => lbl_JoDell吸針嘴_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet                  = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
                     double dbSpeed                = Speed / dbSpdF;
-                    UIHelper.SetControlProperty(lbl_JoDell吸針嘴_Convert,    () => lbl_JoDell吸針嘴_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback                    = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
-                    UIHelper.SetControlProperty(lbl_JoDell吸針嘴_Back,    () => lbl_JoDell吸針嘴_Back.Text    = cnback.ToString());
-
 
                     //顯示讀取長度
                     dbRstJoDell吸針嘴             = dbGet;
@@ -2312,25 +2204,16 @@ namespace InjectorInspector
 
                 //當數值有效
                 if(true) {
-                    UIHelper.SetControlProperty(lbl_JoDell植針嘴相機_RAW,     () => lbl_植針Z軸_RAW.Visible     = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_JoDell植針嘴相機_Convert, () => lbl_植針Z軸_Convert.Visible = bshow_debug_RAW_Conver_Back_Value);
-                    UIHelper.SetControlProperty(lbl_JoDell植針嘴相機_Back,    () => lbl_植針Z軸_Back.Visible    = bshow_debug_RAW_Conver_Back_Value);
-
-
                     //得到原始數值
                     int Convert                       = clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_GetPosition, 0);
                     int Speed                         = clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
-                    UIHelper.SetControlProperty(lbl_JoDell植針嘴相機_RAW,    () => lbl_JoDell植針嘴相機_RAW.Text     = Convert.ToString());
 
                     //得到轉換數值
                     double dbGet                      = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
                     double dbSpeed                    = Speed / dbSpdF;
-                    UIHelper.SetControlProperty(lbl_JoDell植針嘴相機_Convert,    () => lbl_JoDell植針嘴相機_Convert.Text = dbGet.ToString("F3"));
 
                     //轉回原始數值
                     int cnback                        = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
-                    UIHelper.SetControlProperty(lbl_JoDell植針嘴相機_Back,    () => lbl_JoDell植針嘴相機_Back.Text    = cnback.ToString());
-
 
                     //顯示讀取長度
                     dbRstJoDell植針嘴相機             = dbGet;
@@ -2712,38 +2595,6 @@ namespace InjectorInspector
             clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn,     isOn?1.0:0.0);
             clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn,     isOn?1.0:0.0);
             clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_MotorOn, isOn?1.0:0.0);
-        }
-        //---------------------------------------------------------------------------------------
-        public void btnSetHome_Click(object sender, EventArgs e)
-        {
-            int rslt = 0;
-            int axis = 0;
-            string position = "";
-            string speed = "";
-
-            axis = (int)WMX3軸定義.吸嘴X軸;
-            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1) {
-                clsServoControlWMX3.WMX3_SetHomePosition(axis);
-            }
-
-            axis = (int)WMX3軸定義.吸嘴Y軸;
-            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1) {
-                clsServoControlWMX3.WMX3_SetHomePosition(axis);
-            }
-
-            axis = (int)WMX3軸定義.吸嘴Z軸;
-            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1) {
-                clsServoControlWMX3.WMX3_SetHomePosition(axis);
-            }
-
-            axis = (int)WMX3軸定義.吸嘴R軸;
-            rslt = clsServoControlWMX3.WMX3_check_ServoOnOff(axis, ref position, ref speed);
-            if (rslt == 1) {
-                clsServoControlWMX3.WMX3_SetHomePosition(axis);
-            }
         }
         //---------------------------------------------------------------------------------------
         public bool enGC_吸嘴X軸          = false;
@@ -3393,7 +3244,10 @@ namespace InjectorInspector
             apiIndicator(xeXavier_Indicator.xeXI_事件_復歸);
         }
         //---------------------------------------------------------------------------------------
-        //---------------------------------------------------------------------------------------
+        private void btn抽針_Click(object sender, EventArgs e)
+        {
+
+        }
         //---------------------------------------------------------------------------------------
         public void btn上膛_Click(object sender, EventArgs e)
         {
