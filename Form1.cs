@@ -7398,6 +7398,7 @@ namespace InjectorInspector
         // ---------Private Variables----------
         public int i柔震盤物料檢測retry次數 = 0;
         public int i柔震TypeStep = 0;
+        public int iIAIHomeRetry = 0;
 
         // ----------Methods----------
         //---------------------------------------------------------------------------------------
@@ -7643,9 +7644,16 @@ namespace InjectorInspector
                                 clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, 0);
                                 clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, 0); 
 
+                                iIAIHomeRetry = 0;
                                 Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_電動缸組_抽針嘴_3D掃描_回home);
                             } else { 
-                                Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作);
+                                iIAIHomeRetry++;
+                                if(iIAIHomeRetry >= 100) {
+                                    iIAIHomeRetry = 0;
+                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_電動缸組_IAI相機_植針相機_回home);
+                                } else { 
+                                    Xavier_T4_delayCase(xeXavier_T4_proc.pt4SET, u32HomeDelayCNT, xeXavier_T4_Job.tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作);
+                                }
                             }
                         }
                         Xavier_Task4_Debugprintf("tp4Home_確認電動缸組_抽針嘴_3D掃描_可以進行復歸動作_從_tp5Home_告知電動缸組_抽針嘴_3D掃描_可以進行復歸動作\r\n");
