@@ -3981,24 +3981,26 @@ namespace InjectorInspector
         double dbScannerZ = 0.0;
 
         int iScanTime = -1;
-
         bool bScanInit = false;
-        //bool bScanStart = false;
         ReceiveSurface.ReceiveSurface RScanner;
         //---------------------------------------------------------------------------------------
-        private void timer1_Tick(object sender, EventArgs e)
+        private void tmr_3DScanner_Tick(object sender, EventArgs e)
         {
+            //如果沒有Initial
+            if(bScanInit == false) {
+                bScanInit = true;
 
-            if(!bScanInit) {
                 RScanner = new ReceiveSurface.ReceiveSurface();
                 RScanner.Init();
-                bScanInit = true;
             }
 
-            if( (RScanner.sensor.State != GoState.Running) && 
-                (bScanInit)                                && 
-                (iScanTime == 11) ) {
-                RScanner.Start();
+            //有Initial
+            if(bScanInit == true) {
+                if(iScanTime == 11) {
+                    if(RScanner.sensor.State != GoState.Running) {
+                        RScanner.Start();
+                    }
+                }
             }
 
             //馬達動作
@@ -4023,8 +4025,8 @@ namespace InjectorInspector
                 if( ( (dbTargetX -0.01 <= dbScannerX) && (dbScannerX <= dbTargetX +0.01) ) &&
                     ( (dbTargetY -0.01 <= dbScannerY) && (dbScannerY <= dbTargetY +0.01) ) &&
                     ( (dbTargetZ -0.01 <= dbScannerZ) && (dbScannerZ <= dbTargetZ +0.01) ) ) {
-                    //相等, 下一步
-                    switch(eiJob) {
+                    //位置讀值與目標數值相等, 下一步
+                    switch (eiJob) {
                         case e_iJob.eiJob_Origin:
                             dbTargetX = 178.7;
                             dbTargetY = 354.8;
@@ -4054,7 +4056,7 @@ namespace InjectorInspector
                         } break;
                     }
                 } else {
-                    //不相等
+                    //位置讀值與目標數值不相等
                     dbapiCarrierX(dbTargetX, 20);
                     dbapiCarrierY(dbTargetY, 2000);
                     dbapiJoDell3D掃描(16.3);
@@ -4062,11 +4064,11 @@ namespace InjectorInspector
             }  // end of } else if(iScanTime>0) 
         }
         //---------------------------------------------------------------------------------------
-        private void button1_Click_1(object sender, EventArgs e)
+        private void btn_3DScanner_Click(object sender, EventArgs e)
         {
             iScanTime = 11;
 
-            timer1.Enabled = true;
+            tmr_3DScanner.Enabled = true;
         }
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------

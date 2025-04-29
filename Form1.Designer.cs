@@ -389,7 +389,7 @@ namespace InjectorInspector
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_3DScanner = new System.Windows.Forms.Button();
             this.lbl_讀取計數 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.lbl_2pCalibraLog = new System.Windows.Forms.Label();
@@ -441,9 +441,9 @@ namespace InjectorInspector
             this.btn_AlarmRST = new System.Windows.Forms.Button();
             this.btn_Connect = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.inspector1 = new Inspector.Inspector();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tmr_3DScanner = new System.Windows.Forms.Timer(this.components);
             this.cms_pic_Needles.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.grp_NeedleInfo.SuspendLayout();
@@ -4607,7 +4607,7 @@ namespace InjectorInspector
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Controls.Add(this.btn_3DScanner);
             this.tabPage2.Controls.Add(this.lbl_讀取計數);
             this.tabPage2.Controls.Add(this.label21);
             this.tabPage2.Controls.Add(this.lbl_2pCalibraLog);
@@ -4666,15 +4666,15 @@ namespace InjectorInspector
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btn_3DScanner
             // 
-            this.button1.Location = new System.Drawing.Point(408, 120);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(85, 44);
-            this.button1.TabIndex = 246;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.btn_3DScanner.Location = new System.Drawing.Point(395, 191);
+            this.btn_3DScanner.Name = "btn_3DScanner";
+            this.btn_3DScanner.Size = new System.Drawing.Size(85, 40);
+            this.btn_3DScanner.TabIndex = 246;
+            this.btn_3DScanner.Text = "3D掃描";
+            this.btn_3DScanner.UseVisualStyleBackColor = true;
+            this.btn_3DScanner.Click += new System.EventHandler(this.btn_3DScanner_Click);
             // 
             // lbl_讀取計數
             // 
@@ -4872,7 +4872,7 @@ namespace InjectorInspector
             // 
             // txt_取料循環
             // 
-            this.txt_取料循環.Location = new System.Drawing.Point(90, 218);
+            this.txt_取料循環.Location = new System.Drawing.Point(29, 225);
             this.txt_取料循環.Name = "txt_取料循環";
             this.txt_取料循環.Size = new System.Drawing.Size(100, 30);
             this.txt_取料循環.TabIndex = 31;
@@ -5150,6 +5150,15 @@ namespace InjectorInspector
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // inspector1
+            // 
+            this.inspector1.Font = new System.Drawing.Font("新細明體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.inspector1.Location = new System.Drawing.Point(58, 7);
+            this.inspector1.Margin = new System.Windows.Forms.Padding(5);
+            this.inspector1.Name = "inspector1";
+            this.inspector1.Size = new System.Drawing.Size(1112, 744);
+            this.inspector1.TabIndex = 1;
+            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
@@ -5162,18 +5171,9 @@ namespace InjectorInspector
             this.tabControl1.Size = new System.Drawing.Size(1236, 825);
             this.tabControl1.TabIndex = 2;
             // 
-            // timer1
+            // tmr_3DScanner
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // inspector1
-            // 
-            this.inspector1.Font = new System.Drawing.Font("新細明體", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            this.inspector1.Location = new System.Drawing.Point(58, 7);
-            this.inspector1.Margin = new System.Windows.Forms.Padding(5);
-            this.inspector1.Name = "inspector1";
-            this.inspector1.Size = new System.Drawing.Size(1112, 744);
-            this.inspector1.TabIndex = 1;
+            this.tmr_3DScanner.Tick += new System.EventHandler(this.tmr_3DScanner_Tick);
             // 
             // Form1
             // 
@@ -5711,8 +5711,8 @@ namespace InjectorInspector
         private Label SpdNozR;
         private Label SpdNozZ;
         private Label SpdNozY;
-        private Button button1;
-        private Timer timer1;
+        private Button btn_3DScanner;
+        private Timer tmr_3DScanner;
     }
 }
 
