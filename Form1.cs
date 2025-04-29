@@ -146,9 +146,6 @@ namespace InjectorInspector
             this.Text = cntcallback.ToString() + "  " + inspector1.InspNozzle.CCD.GrabCount.ToString();
 
             eDVR_Rsult = eDownVisionRsult.eDVR_Null;
-            inspector1.InspectOK = true;
-            inspector1.Inspected = true;
-            inspector1.PinDeg = 90;
             if (inspector1.InspectOK == true && inspector1.Inspected == true) {
                 UIHelper.SetControlProperty(label10, () => label10.Text = inspector1.PinDeg.ToString());
 
@@ -162,7 +159,6 @@ namespace InjectorInspector
                         if (inspector1.PinDeg < 0) {
                             eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ok_Inverse;
                         } else {
-                        lbl_Normal:
                             eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ok_Normal;
                         }
 
