@@ -68,6 +68,7 @@ using ReceiveSurface;
 //---------------------------------------------------------------------------------------
 //Log
 using System.Collections.Concurrent;
+using Lmi3d.GoSdk;
 
 //---------------------------------------------------------------------------------------
 namespace InjectorInspector
@@ -77,17 +78,17 @@ namespace InjectorInspector
     {
         //---------------------------------------------------------------------------------------
         //State Enum
-        public const double dbRead           = 9916777216.99;
-        public const double dbCheckArrived   = 9916777254.87;
-        public const double dbAxisMoveOk     = 9916777294.78;
-        public const double dbAxisMoveNg     = 9916777209.87;
-        public const double dbAimToNext      = 9916777299.77;
-        public const double dbSpecific       = 9916777277.18;
+        public const double dbRead = 9916777216.99;
+        public const double dbCheckArrived = 9916777254.87;
+        public const double dbAxisMoveOk = 9916777294.78;
+        public const double dbAxisMoveNg = 9916777209.87;
+        public const double dbAimToNext = 9916777299.77;
+        public const double dbSpecific = 9916777277.18;
 
         //---------------------------------------------------------------------------------------
         //Debug config
         bool bshow_debug_RAW_Conver_Back_Value = false;
-        
+
         //---------------------------------------------------------------------------------------
         //WMX3
         ServoControl clsServoControlWMX3 = new ServoControl();
@@ -119,12 +120,12 @@ namespace InjectorInspector
             //確定是否要執行飛拍中斷事件
             bool bEnableTriggerISR = false;
             xeXavier_Indicator rslt_event = apiIndicator(xeXavier_Indicator.xeXI_讀_事件);
-            if(rslt_event == xeXavier_Indicator.xeXI_事件_空) {
+            if (rslt_event == xeXavier_Indicator.xeXI_事件_空) {
                 rslt_event = apiIndicator(xeXavier_Indicator.xeXI_讀_狀態);
             }
             switch (rslt_event) {
                 case xeXavier_Indicator.xeXI_狀態_運行:
-                    if(eNeedleType == xeXavier_NeedleType.pT6Place) { 
+                    if (eNeedleType == xeXavier_NeedleType.pT6Place) {
                         bEnableTriggerISR = true;
                     }
                     break;
@@ -135,7 +136,7 @@ namespace InjectorInspector
                 case xeXavier_Indicator.xeXI_狀態_停止:
                 case xeXavier_Indicator.xeXI_狀態_急停:
                 case xeXavier_Indicator.xeXI_事件_暫停:
-                case xeXavier_Indicator.xeXI_事件_異常: 
+                case xeXavier_Indicator.xeXI_事件_異常:
                 default:
                     break;
             }
@@ -145,68 +146,68 @@ namespace InjectorInspector
             this.Text = cntcallback.ToString() + "  " + inspector1.InspNozzle.CCD.GrabCount.ToString();
 
             eDVR_Rsult = eDownVisionRsult.eDVR_Null;
-                inspector1.InspectOK = true;
-                inspector1.Inspected = true;
-                inspector1.PinDeg = 90;
-                if (inspector1.InspectOK == true && inspector1.Inspected == true) {
-                    UIHelper.SetControlProperty(label10, () => label10.Text = inspector1.PinDeg.ToString());
+            inspector1.InspectOK = true;
+            inspector1.Inspected = true;
+            inspector1.PinDeg = 90;
+            if (inspector1.InspectOK == true && inspector1.Inspected == true) {
+                UIHelper.SetControlProperty(label10, () => label10.Text = inspector1.PinDeg.ToString());
 
-                    xeXavier_T2_Job getJob = Xavier_T2_delayCase(xeXavier_T2_proc.pt2GET, 0, xeXavier_T2_Job.tp2Empty);
-                    if(getJob >= xeXavier_T2_Job.tp2Insert_吸嘴軸組XY移動至飛拍準備位) { 
-                        this.Text = getJob.ToString() + "飛拍起始狀態正確";
+                xeXavier_T2_Job getJob = Xavier_T2_delayCase(xeXavier_T2_proc.pt2GET, 0, xeXavier_T2_Job.tp2Empty);
+                if (getJob >= xeXavier_T2_Job.tp2Insert_吸嘴軸組XY移動至飛拍準備位) {
+                    this.Text = getJob.ToString() + "飛拍起始狀態正確";
 
-                        const int torence_deg = 5;
-                        if(90.0-torence_deg <= Math.Abs(inspector1.PinDeg) &&
-                                               Math.Abs(inspector1.PinDeg) <= 90.0+torence_deg) { 
-                            if(inspector1.PinDeg < 0) {
-                                eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ok_Inverse;
-                            } else {
-                                lbl_Normal:
-                                eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ok_Normal;
-                            }
-
-                            //飛拍成功
-                            if(bEnableTriggerISR == true) { 
-                                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR01);
-                            }
-                        } else { 
-                            eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ng;
-
-                            //飛拍失敗
-                            if(bEnableTriggerISR == true) { 
-                                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR02);
-                            }
-                        }
-                    } else { 
-                        this.Text = getJob.ToString() + "飛拍起始狀態錯誤";
-                    }  // end of if(getJob >= xeXavier_T2_Job.tp2Insert_吸嘴軸組XY移動至飛拍準備位) { 
-
-                } else {  //if(inspector1.InspectOK == false) {
-                    if(inspector1.下視覺正向 == true) { 
-                        switch(inspector1.PinCount) {
-                            case 0:   eDVR_Rsult = eDownVisionRsult.eDVR_Get_0Pin_ng;  break;
-                            case 1:   eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ng;  break;
-                            case 2:   eDVR_Rsult = eDownVisionRsult.eDVR_Get_2Pin_ng;  break;
-                            default:  eDVR_Rsult = eDownVisionRsult.eDVR_NG;           break;
-                        }
-
-                        if(cB_料盤有料.Checked == true) {
-                            //永遠跳過
-
+                    const int torence_deg = 5;
+                    if (90.0 - torence_deg <= Math.Abs(inspector1.PinDeg) &&
+                                           Math.Abs(inspector1.PinDeg) <= 90.0 + torence_deg) {
+                        if (inspector1.PinDeg < 0) {
+                            eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ok_Inverse;
+                        } else {
+                        lbl_Normal:
                             eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ok_Normal;
+                        }
 
-                            //飛拍成功
-                            if(bEnableTriggerISR == true) { 
-                                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR01);
-                            }
-                        } else { 
-                            //飛拍失敗
-                            if(bEnableTriggerISR == true) { 
-                                Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR02);
-                            }
+                        //飛拍成功
+                        if (bEnableTriggerISR == true) {
+                            Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR01);
+                        }
+                    } else {
+                        eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ng;
+
+                        //飛拍失敗
+                        if (bEnableTriggerISR == true) {
+                            Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR02);
                         }
                     }
-                }  // end of if (inspector1.InspectOK == true && inspector1.Inspected == true) {
+                } else {
+                    this.Text = getJob.ToString() + "飛拍起始狀態錯誤";
+                }  // end of if(getJob >= xeXavier_T2_Job.tp2Insert_吸嘴軸組XY移動至飛拍準備位) { 
+
+            } else {  //if(inspector1.InspectOK == false) {
+                if (inspector1.下視覺正向 == true) {
+                    switch (inspector1.PinCount) {
+                        case 0: eDVR_Rsult = eDownVisionRsult.eDVR_Get_0Pin_ng; break;
+                        case 1: eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ng; break;
+                        case 2: eDVR_Rsult = eDownVisionRsult.eDVR_Get_2Pin_ng; break;
+                        default: eDVR_Rsult = eDownVisionRsult.eDVR_NG; break;
+                    }
+
+                    if (cB_料盤有料.Checked == true) {
+                        //永遠跳過
+
+                        eDVR_Rsult = eDownVisionRsult.eDVR_Get_1Pin_ok_Normal;
+
+                        //飛拍成功
+                        if (bEnableTriggerISR == true) {
+                            Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR01);
+                        }
+                    } else {
+                        //飛拍失敗
+                        if (bEnableTriggerISR == true) {
+                            Xavier_CallTaskInterrupt(xeXavier_FlowTaskISR.xeXFTI_tp2_ISR, xeXavier_FlowTask_ISR_ID.xeFTII_ISR02);
+                        }
+                    }
+                }
+            }  // end of if (inspector1.InspectOK == true && inspector1.Inspected == true) {
         }
         //---------------------------------------------------------------------------------------
         void apiParaWriteIndex(string filename, int index, double dbValue)
@@ -285,7 +286,7 @@ namespace InjectorInspector
             inspector1.LoadRecipe(8);
         }
         //---------------------------------------------------------------------------------------
-        bool   b有看到校正孔         = false;
+        bool b有看到校正孔 = false;
         double dbCameraCalibrationX = 0.0;
         double dbCameraCalibrationY = 0.0;
         public void btn_Socket孔檢查_Click(object sender, EventArgs e)
@@ -299,7 +300,7 @@ namespace InjectorInspector
             UIHelper.SetControlProperty(label6, () => label6.Text = string.Format("Socket 偵測 {0} 中心偏移 = {1:F3} , {2:F3}", success, pos.X, pos.Y));
 
             //取得校正攝影機校正參數
-            success      = inspector1.xInspSocket植針後檢查();
+            success = inspector1.xInspSocket植針後檢查();
             UIHelper.SetControlProperty(label7, () => label7.Text = (success) ? "植針後檢查 OK" : "植針後檢查 NG");
         }
         //---------------------------------------------------------------------------------------
@@ -326,20 +327,20 @@ namespace InjectorInspector
 
             // 計算斜率
             double rise = By - Ay;   // 垂直變化
-            double run  = Bx - Ax;   // 水平變化
+            double run = Bx - Ax;   // 水平變化
 
             // 計算中心
-            double Cx = (Ax+Bx)/2,
-                   Cy = (Ay+By)/2;
+            double Cx = (Ax + Bx) / 2,
+                   Cy = (Ay + By) / 2;
 
             // 確保 run 不為 0，避免除以零的錯誤
             if (run == 0) {
                 if (rise > 0) {
-                    UIHelper.SetControlProperty(lbl_計算角度,     () => lbl_計算角度.Text = "夾角為 90 度(垂直向上)");
+                    UIHelper.SetControlProperty(lbl_計算角度, () => lbl_計算角度.Text = "夾角為 90 度(垂直向上)");
                 } else if (rise < 0) {
-                    UIHelper.SetControlProperty(lbl_計算角度,     () => lbl_計算角度.Text = "夾角為 270 度(垂直向下)");
+                    UIHelper.SetControlProperty(lbl_計算角度, () => lbl_計算角度.Text = "夾角為 270 度(垂直向下)");
                 } else {
-                    UIHelper.SetControlProperty(lbl_計算角度,     () => lbl_計算角度.Text = "兩點相同，無法計算夾角");
+                    UIHelper.SetControlProperty(lbl_計算角度, () => lbl_計算角度.Text = "兩點相同，無法計算夾角");
                 }
             } else {
                 // 使用 Math.Atan2 計算角度，這樣可以處理所有象限的情況
@@ -352,12 +353,12 @@ namespace InjectorInspector
                 while (180 <= angle_degrees) {
                     angle_degrees = angle_degrees - 360;
                 }
-                while(angle_degrees <= -180) {
+                while (angle_degrees <= -180) {
                     angle_degrees = angle_degrees + 360;
                 }
 
                 // 顯示夾角
-                UIHelper.SetControlProperty(lbl_計算角度,     () => lbl_計算角度.Text = string.Format("Cx:{1}, Cy:{2}, 夾角: {0:F2} 度", angle_degrees, Cx, Cy));
+                UIHelper.SetControlProperty(lbl_計算角度, () => lbl_計算角度.Text = string.Format("Cx:{1}, Cy:{2}, 夾角: {0:F2} 度", angle_degrees, Cx, Cy));
             }
         }
         //---------------------------------------------------------------------------------------
@@ -375,13 +376,13 @@ namespace InjectorInspector
                 UIHelper.SetControlProperty(label2, () => label2.Text = string.Format("吸料盤校正用 分析結果 = {0} X = {1:F2} Y = {2:F2}", success, pos.X, pos.Y));
             }
 
-            if(SetToPoint == btn_ToPointA) {
+            if (SetToPoint == btn_ToPointA) {
                 UIHelper.SetControlProperty(tB_Ax, () => tB_Ax.Text = pos.X.ToString());
                 UIHelper.SetControlProperty(tB_Ay, () => tB_Ay.Text = pos.Y.ToString());
-            } else if(SetToPoint == btn_ToPointB) {
+            } else if (SetToPoint == btn_ToPointB) {
                 UIHelper.SetControlProperty(tB_Bx, () => tB_Bx.Text = pos.X.ToString());
                 UIHelper.SetControlProperty(tB_By, () => tB_By.Text = pos.Y.ToString());
-            } else if(SetToPoint == btn_SwitchPointAB) {
+            } else if (SetToPoint == btn_SwitchPointAB) {
                 double dbX = 0.0, dbY = 0.0;
 
                 dbX = double.Parse(tB_Ax.Text);
@@ -401,11 +402,11 @@ namespace InjectorInspector
             //bResume = true;
         }
         //---------------------------------------------------------------------------------------
-        bool   b黑色料倉有料_tmrTakePinTick = false;
-        bool   b柔震盤有料_tmrTakePinTick   = false;
-        double dbPinX_tmrTakePinTick        = 0.0,
-               dbPinY_tmrTakePinTick        = 0.0,
-               dbPinR_tmrTakePinTick        = 0.0;
+        bool b黑色料倉有料_tmrTakePinTick = false;
+        bool b柔震盤有料_tmrTakePinTick = false;
+        double dbPinX_tmrTakePinTick = 0.0,
+               dbPinY_tmrTakePinTick = 0.0,
+               dbPinR_tmrTakePinTick = 0.0;
         public void btn_取得PinInfo_Click(object sender, EventArgs e)
         {
             //吸料盤校正用
@@ -451,14 +452,14 @@ namespace InjectorInspector
             if (inspector1.Inspected && inspector1.InspectOK) {
                 double deg = inspector1.PinDeg;
                 UIHelper.SetControlProperty(label5, () => label5.Text = string.Format("吸嘴物料分析  θ = {0:F2}", deg));
-            } else { 
+            } else {
                 UIHelper.SetControlProperty(label5, () => label5.Text = "吸嘴物料分析失敗");
             }
 
 
             int cntdebug = inspector1.RecvCount;
 
-            if(cB_料盤有料.Checked == true) {
+            if (cB_料盤有料.Checked == true) {
                 b柔震盤有料_tmrTakePinTick = true;
             }
         }
@@ -474,62 +475,62 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //State Enum       
         public const bool HIGH = true;
-        public const bool LOW  = false;
-        public const bool ON   = true;
-        public const bool OFF  = false;
+        public const bool LOW = false;
+        public const bool ON = true;
+        public const bool OFF = false;
 
         //Servo EtherCAT
-        public double dbInsertSpeedNozzleX  =  3000;  //(500.0) * 0.1;
-        public double dbInsertSpeedNozzleY  = 30000;  //(100.0) * 0.1;
-        public double dbInsertSpeedNozzleZ  = 30000;  //( 40.0) * 0.1;
-        public double dbInsertSpeedNozzleR  = 30000;  //(360.0) * 0.1;
-        public double dbInsertSpeedCarrierX =  2000;  //(190.0) * 0.1;
-        public double dbInsertSpeedCarrierY =  2000;  //(800.0) * 0.1;
-        public double dbInsertSpeedSetZ     = 30000;  //( 33.0) * 0.1;
-        public double dbInsertSpeedSetR     = 30000;  //(360.0) * 0.1;
-        public double dbInsertSpeedGate     = (580.0) * 0.1;
+        public double dbInsertSpeedNozzleX = 3000;  //(500.0) * 0.1;
+        public double dbInsertSpeedNozzleY = 30000;  //(100.0) * 0.1;
+        public double dbInsertSpeedNozzleZ = 30000;  //( 40.0) * 0.1;
+        public double dbInsertSpeedNozzleR = 30000;  //(360.0) * 0.1;
+        public double dbInsertSpeedCarrierX = 2000;  //(190.0) * 0.1;
+        public double dbInsertSpeedCarrierY = 2000;  //(800.0) * 0.1;
+        public double dbInsertSpeedSetZ = 30000;  //( 33.0) * 0.1;
+        public double dbInsertSpeedSetR = 30000;  //(360.0) * 0.1;
+        public double dbInsertSpeedGate = (580.0) * 0.1;
 
         //---------------------------------------------------------------------------------------
 
         // 設定YASKAWA GPIO OUT
         public void digitalWrite(int pin, bool state) {
-            switch(pin) {
-                case (int)WMX3IO對照.pxeIO_擺放座蓋板: 
-                case (int)WMX3IO對照.pxeIO_吸料真空電磁閥: 
-                case (int)WMX3IO對照.pxeIO_堵料吹氣缸:    
-                case (int)WMX3IO對照.pxeIO_接料區氣桿:    
-                case (int)WMX3IO對照.pxeIO_植針吹氣:      
-                case (int)WMX3IO對照.pxeIO_收料區缸:      
-                case (int)WMX3IO對照.pxeIO_堵料吹氣:      
-                case (int)WMX3IO對照.pxeIO_NA_O_07:       
+            switch (pin) {
+                case (int)WMX3IO對照.pxeIO_擺放座蓋板:
+                case (int)WMX3IO對照.pxeIO_吸料真空電磁閥:
+                case (int)WMX3IO對照.pxeIO_堵料吹氣缸:
+                case (int)WMX3IO對照.pxeIO_接料區氣桿:
+                case (int)WMX3IO對照.pxeIO_植針吹氣:
+                case (int)WMX3IO對照.pxeIO_收料區缸:
+                case (int)WMX3IO對照.pxeIO_堵料吹氣:
+                case (int)WMX3IO對照.pxeIO_NA_O_07:
 
-                case (int)WMX3IO對照.pxeIO_載盤真空閥:    
-                case (int)WMX3IO對照.pxeIO_Socket真空2:   
-                case (int)WMX3IO對照.pxeIO_載盤破真空:    
-                case (int)WMX3IO對照.pxeIO_Socket破真空2: 
-                case (int)WMX3IO對照.pxeIO_Socket真空1:   
-                case (int)WMX3IO對照.pxeIO_擺放座吸真空:   
-                case (int)WMX3IO對照.pxeIO_Socket破真空1:  
-                case (int)WMX3IO對照.pxeIO_擺放座破真空:   
+                case (int)WMX3IO對照.pxeIO_載盤真空閥:
+                case (int)WMX3IO對照.pxeIO_Socket真空2:
+                case (int)WMX3IO對照.pxeIO_載盤破真空:
+                case (int)WMX3IO對照.pxeIO_Socket破真空2:
+                case (int)WMX3IO對照.pxeIO_Socket真空1:
+                case (int)WMX3IO對照.pxeIO_擺放座吸真空:
+                case (int)WMX3IO對照.pxeIO_Socket破真空1:
+                case (int)WMX3IO對照.pxeIO_擺放座破真空:
 
-                case (int)WMX3IO對照.pxeIO_取料吸嘴吸:     
-                case (int)WMX3IO對照.pxeIO_下後左門鎖:     
+                case (int)WMX3IO對照.pxeIO_取料吸嘴吸:
+                case (int)WMX3IO對照.pxeIO_下後左門鎖:
                 case (int)WMX3IO對照.pxeIO_取料吸嘴破真空舊:
-                case (int)WMX3IO對照.pxeIO_下後右門鎖:      
-                case (int)WMX3IO對照.pxeIO_植針Z煞車:       
-                case (int)WMX3IO對照.pxeIO_HEPA:            
-                case (int)WMX3IO對照.pxeIO_取料吸嘴破真空新: 
-                case (int)WMX3IO對照.pxeIO_LIGHT:            
+                case (int)WMX3IO對照.pxeIO_下後右門鎖:
+                case (int)WMX3IO對照.pxeIO_植針Z煞車:
+                case (int)WMX3IO對照.pxeIO_HEPA:
+                case (int)WMX3IO對照.pxeIO_取料吸嘴破真空新:
+                case (int)WMX3IO對照.pxeIO_LIGHT:
 
-                case (int)WMX3IO對照.pxeIO_面板右按鈕綠燈:   
-                case (int)WMX3IO對照.pxeIO_機台紅燈:         
-                case (int)WMX3IO對照.pxeIO_面板中按鈕綠燈:   
-                case (int)WMX3IO對照.pxeIO_機台黃燈:         
-                case (int)WMX3IO對照.pxeIO_面板左按鈕紅燈:   
-                case (int)WMX3IO對照.pxeIO_機台綠燈:         
-                case (int)WMX3IO對照.pxeIO_NA_O_36:          
-                case (int)WMX3IO對照.pxeIO_Buzzer:        
-                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + pin/10, pin%10, (state == HIGH)?(byte)1:(byte)0);
+                case (int)WMX3IO對照.pxeIO_面板右按鈕綠燈:
+                case (int)WMX3IO對照.pxeIO_機台紅燈:
+                case (int)WMX3IO對照.pxeIO_面板中按鈕綠燈:
+                case (int)WMX3IO對照.pxeIO_機台黃燈:
+                case (int)WMX3IO對照.pxeIO_面板左按鈕紅燈:
+                case (int)WMX3IO對照.pxeIO_機台綠燈:
+                case (int)WMX3IO對照.pxeIO_NA_O_36:
+                case (int)WMX3IO對照.pxeIO_Buzzer:
+                    clsServoControlWMX3.WMX3_SetIOBit((int)WMX3IO對照.pxeIO_Addr4 + pin / 10, pin % 10, (state == HIGH) ? (byte)1 : (byte)0);
                     break;
 
                 default:
@@ -542,47 +543,47 @@ namespace InjectorInspector
         public bool digitalRead(int pin) {
             bool brsult = false;
 
-            switch(pin) {
-                case (int)WMX3IO對照.pxeIO_擺放座蓋板: 
-                case (int)WMX3IO對照.pxeIO_吸料真空電磁閥: 
-                case (int)WMX3IO對照.pxeIO_堵料吹氣缸:    
-                case (int)WMX3IO對照.pxeIO_接料區氣桿:    
-                case (int)WMX3IO對照.pxeIO_植針吹氣:      
-                case (int)WMX3IO對照.pxeIO_收料區缸:      
-                case (int)WMX3IO對照.pxeIO_堵料吹氣:      
-                case (int)WMX3IO對照.pxeIO_NA_O_07:       
+            switch (pin) {
+                case (int)WMX3IO對照.pxeIO_擺放座蓋板:
+                case (int)WMX3IO對照.pxeIO_吸料真空電磁閥:
+                case (int)WMX3IO對照.pxeIO_堵料吹氣缸:
+                case (int)WMX3IO對照.pxeIO_接料區氣桿:
+                case (int)WMX3IO對照.pxeIO_植針吹氣:
+                case (int)WMX3IO對照.pxeIO_收料區缸:
+                case (int)WMX3IO對照.pxeIO_堵料吹氣:
+                case (int)WMX3IO對照.pxeIO_NA_O_07:
 
-                case (int)WMX3IO對照.pxeIO_載盤真空閥:    
-                case (int)WMX3IO對照.pxeIO_Socket真空2:   
-                case (int)WMX3IO對照.pxeIO_載盤破真空:    
-                case (int)WMX3IO對照.pxeIO_Socket破真空2: 
-                case (int)WMX3IO對照.pxeIO_Socket真空1:   
-                case (int)WMX3IO對照.pxeIO_擺放座吸真空:   
-                case (int)WMX3IO對照.pxeIO_Socket破真空1:  
-                case (int)WMX3IO對照.pxeIO_擺放座破真空:   
+                case (int)WMX3IO對照.pxeIO_載盤真空閥:
+                case (int)WMX3IO對照.pxeIO_Socket真空2:
+                case (int)WMX3IO對照.pxeIO_載盤破真空:
+                case (int)WMX3IO對照.pxeIO_Socket破真空2:
+                case (int)WMX3IO對照.pxeIO_Socket真空1:
+                case (int)WMX3IO對照.pxeIO_擺放座吸真空:
+                case (int)WMX3IO對照.pxeIO_Socket破真空1:
+                case (int)WMX3IO對照.pxeIO_擺放座破真空:
 
-                case (int)WMX3IO對照.pxeIO_取料吸嘴吸:     
-                case (int)WMX3IO對照.pxeIO_下後左門鎖:     
+                case (int)WMX3IO對照.pxeIO_取料吸嘴吸:
+                case (int)WMX3IO對照.pxeIO_下後左門鎖:
                 case (int)WMX3IO對照.pxeIO_取料吸嘴破真空舊:
-                case (int)WMX3IO對照.pxeIO_下後右門鎖:      
-                case (int)WMX3IO對照.pxeIO_植針Z煞車:       
-                case (int)WMX3IO對照.pxeIO_HEPA:            
-                case (int)WMX3IO對照.pxeIO_取料吸嘴破真空新: 
-                case (int)WMX3IO對照.pxeIO_LIGHT:            
+                case (int)WMX3IO對照.pxeIO_下後右門鎖:
+                case (int)WMX3IO對照.pxeIO_植針Z煞車:
+                case (int)WMX3IO對照.pxeIO_HEPA:
+                case (int)WMX3IO對照.pxeIO_取料吸嘴破真空新:
+                case (int)WMX3IO對照.pxeIO_LIGHT:
 
-                case (int)WMX3IO對照.pxeIO_面板右按鈕綠燈:   
-                case (int)WMX3IO對照.pxeIO_機台紅燈:         
-                case (int)WMX3IO對照.pxeIO_面板中按鈕綠燈:   
-                case (int)WMX3IO對照.pxeIO_機台黃燈:         
-                case (int)WMX3IO對照.pxeIO_面板左按鈕紅燈:   
-                case (int)WMX3IO對照.pxeIO_機台綠燈:         
-                case (int)WMX3IO對照.pxeIO_NA_O_36:          
-                case (int)WMX3IO對照.pxeIO_Buzzer: {       
-                    //讀取 Yaskawa OutputIO
-                    byte[] pDataGetOutIO = new byte[4];
-                    clsServoControlWMX3.WMX3_GetOutIO(ref pDataGetOutIO, (int)WMX3IO對照.pxeIO_Addr4, 4);
-                    brsult = ((pDataGetOutIO[(pin / 10)] & (1 << pin % 10)) != 0) ? HIGH : LOW;
-                } break;
+                case (int)WMX3IO對照.pxeIO_面板右按鈕綠燈:
+                case (int)WMX3IO對照.pxeIO_機台紅燈:
+                case (int)WMX3IO對照.pxeIO_面板中按鈕綠燈:
+                case (int)WMX3IO對照.pxeIO_機台黃燈:
+                case (int)WMX3IO對照.pxeIO_面板左按鈕紅燈:
+                case (int)WMX3IO對照.pxeIO_機台綠燈:
+                case (int)WMX3IO對照.pxeIO_NA_O_36:
+                case (int)WMX3IO對照.pxeIO_Buzzer: {
+                        //讀取 Yaskawa OutputIO
+                        byte[] pDataGetOutIO = new byte[4];
+                        clsServoControlWMX3.WMX3_GetOutIO(ref pDataGetOutIO, (int)WMX3IO對照.pxeIO_Addr4, 4);
+                        brsult = ((pDataGetOutIO[(pin / 10)] & (1 << pin % 10)) != 0) ? HIGH : LOW;
+                    } break;
 
                 default:
                     //Error
@@ -594,44 +595,44 @@ namespace InjectorInspector
 
         // 切換YASKAWA GPIO OUT
         public void digitalToggle(int pin) {
-            switch(pin) {
-                case (int)WMX3IO對照.pxeIO_擺放座蓋板: 
-                case (int)WMX3IO對照.pxeIO_吸料真空電磁閥: 
-                case (int)WMX3IO對照.pxeIO_堵料吹氣缸:    
-                case (int)WMX3IO對照.pxeIO_接料區氣桿:    
-                case (int)WMX3IO對照.pxeIO_植針吹氣:      
-                case (int)WMX3IO對照.pxeIO_收料區缸:      
-                case (int)WMX3IO對照.pxeIO_堵料吹氣:      
-                case (int)WMX3IO對照.pxeIO_NA_O_07:       
+            switch (pin) {
+                case (int)WMX3IO對照.pxeIO_擺放座蓋板:
+                case (int)WMX3IO對照.pxeIO_吸料真空電磁閥:
+                case (int)WMX3IO對照.pxeIO_堵料吹氣缸:
+                case (int)WMX3IO對照.pxeIO_接料區氣桿:
+                case (int)WMX3IO對照.pxeIO_植針吹氣:
+                case (int)WMX3IO對照.pxeIO_收料區缸:
+                case (int)WMX3IO對照.pxeIO_堵料吹氣:
+                case (int)WMX3IO對照.pxeIO_NA_O_07:
 
-                case (int)WMX3IO對照.pxeIO_載盤真空閥:    
-                case (int)WMX3IO對照.pxeIO_Socket真空2:   
-                case (int)WMX3IO對照.pxeIO_載盤破真空:    
-                case (int)WMX3IO對照.pxeIO_Socket破真空2: 
-                case (int)WMX3IO對照.pxeIO_Socket真空1:   
-                case (int)WMX3IO對照.pxeIO_擺放座吸真空:   
-                case (int)WMX3IO對照.pxeIO_Socket破真空1:  
-                case (int)WMX3IO對照.pxeIO_擺放座破真空:   
+                case (int)WMX3IO對照.pxeIO_載盤真空閥:
+                case (int)WMX3IO對照.pxeIO_Socket真空2:
+                case (int)WMX3IO對照.pxeIO_載盤破真空:
+                case (int)WMX3IO對照.pxeIO_Socket破真空2:
+                case (int)WMX3IO對照.pxeIO_Socket真空1:
+                case (int)WMX3IO對照.pxeIO_擺放座吸真空:
+                case (int)WMX3IO對照.pxeIO_Socket破真空1:
+                case (int)WMX3IO對照.pxeIO_擺放座破真空:
 
-                case (int)WMX3IO對照.pxeIO_取料吸嘴吸:     
-                case (int)WMX3IO對照.pxeIO_下後左門鎖:     
+                case (int)WMX3IO對照.pxeIO_取料吸嘴吸:
+                case (int)WMX3IO對照.pxeIO_下後左門鎖:
                 case (int)WMX3IO對照.pxeIO_取料吸嘴破真空舊:
-                case (int)WMX3IO對照.pxeIO_下後右門鎖:      
-                case (int)WMX3IO對照.pxeIO_植針Z煞車:       
-                case (int)WMX3IO對照.pxeIO_HEPA:            
-                case (int)WMX3IO對照.pxeIO_取料吸嘴破真空新: 
-                case (int)WMX3IO對照.pxeIO_LIGHT:            
+                case (int)WMX3IO對照.pxeIO_下後右門鎖:
+                case (int)WMX3IO對照.pxeIO_植針Z煞車:
+                case (int)WMX3IO對照.pxeIO_HEPA:
+                case (int)WMX3IO對照.pxeIO_取料吸嘴破真空新:
+                case (int)WMX3IO對照.pxeIO_LIGHT:
 
-                case (int)WMX3IO對照.pxeIO_面板右按鈕綠燈:   
-                case (int)WMX3IO對照.pxeIO_機台紅燈:         
-                case (int)WMX3IO對照.pxeIO_面板中按鈕綠燈:   
-                case (int)WMX3IO對照.pxeIO_機台黃燈:         
-                case (int)WMX3IO對照.pxeIO_面板左按鈕紅燈:   
-                case (int)WMX3IO對照.pxeIO_機台綠燈:         
-                case (int)WMX3IO對照.pxeIO_NA_O_36:          
-                case (int)WMX3IO對照.pxeIO_Buzzer: {       
-                    digitalWrite(pin, !digitalRead(pin));
-                } break;
+                case (int)WMX3IO對照.pxeIO_面板右按鈕綠燈:
+                case (int)WMX3IO對照.pxeIO_機台紅燈:
+                case (int)WMX3IO對照.pxeIO_面板中按鈕綠燈:
+                case (int)WMX3IO對照.pxeIO_機台黃燈:
+                case (int)WMX3IO對照.pxeIO_面板左按鈕紅燈:
+                case (int)WMX3IO對照.pxeIO_機台綠燈:
+                case (int)WMX3IO對照.pxeIO_NA_O_36:
+                case (int)WMX3IO對照.pxeIO_Buzzer: {
+                        digitalWrite(pin, !digitalRead(pin));
+                    } break;
 
                 default:
                     //Error
@@ -643,7 +644,7 @@ namespace InjectorInspector
         public bool indicateRead(int pin) {
             bool brsult = false;
 
-            switch(pin) {
+            switch (pin) {
                 case (int)WMX3IO對照.pxeIO_載盤Y軸後極限:
                 case (int)WMX3IO對照.pxeIO_取料Y軸後極限:
                 case (int)WMX3IO對照.pxeIO_載盤Y軸前極限:
@@ -714,12 +715,12 @@ namespace InjectorInspector
                 case (int)WMX3IO對照.pxeIO_下支架右側右門:
                 case (int)WMX3IO對照.pxeIO_NA75:
                 case (int)WMX3IO對照.pxeIO_下支架右側左門:
-                case (int)WMX3IO對照.pxeIO_NA76: { 
-                    //讀取 Yaskawa InputIO
-                    byte[] pDataGetInIO = new byte[8];
-                    clsServoControlWMX3.WMX3_GetInIO(ref pDataGetInIO, (int)WMX3IO對照.pxeIO_Addr28, 8);
-                    brsult = ((pDataGetInIO[(pin / 10)] & (1 << pin % 10)) != 0) ? HIGH : LOW;
-                } break;
+                case (int)WMX3IO對照.pxeIO_NA76: {
+                        //讀取 Yaskawa InputIO
+                        byte[] pDataGetInIO = new byte[8];
+                        clsServoControlWMX3.WMX3_GetInIO(ref pDataGetInIO, (int)WMX3IO對照.pxeIO_Addr28, 8);
+                        brsult = ((pDataGetInIO[(pin / 10)] & (1 << pin % 10)) != 0) ? HIGH : LOW;
+                    } break;
 
                 default:
                     //Error
@@ -737,7 +738,7 @@ namespace InjectorInspector
                 default:
                     return 0.0;
 
-                case dbRead: 
+                case dbRead:
                     switch (dbTargetState) {
                         default:
                             return 0.0;
@@ -762,34 +763,34 @@ namespace InjectorInspector
         }  // end of public double dbapiDelayCNT01(double dbDelayCNT) 
         //---------------------------------------------------------------------------------------
         public double dbTargetDelayCNT01 = 0.0;
-        public double dbapiDelayCNT01(double dbDelayCNT) 
+        public double dbapiDelayCNT01(double dbDelayCNT)
         {
-            if(dbTargetDelayCNT01>0) { 
+            if (dbTargetDelayCNT01 > 0) {
                 dbTargetDelayCNT01--;
             }
 
-            switch(dbDelayCNT) {
+            switch (dbDelayCNT) {
                 case dbRead:
                     break;
 
                 case dbCheckArrived: {
-                    if(dbTargetDelayCNT01==0) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        if (dbTargetDelayCNT01 == 0) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {
-                    dbTargetDelayCNT01 = dbDelayCNT;
-                } break;
+                        dbTargetDelayCNT01 = dbDelayCNT;
+                    } break;
             }
 
             return dbTargetDelayCNT01;
         }  // end of public double dbapiDelayCNT01(double dbDelayCNT) 
         //---------------------------------------------------------------------------------------
         public double dbTargetPositionNozzleX = 0.0;
-        public const double dbNozzleX_Home位  = 242;
+        public const double dbNozzleX_Home位 = 242;
         public double dbapiNozzleX_defaultSpeed(double dbIncreaseNozzleX)  //NozzleX
         {
             double dbDefaultSpeed = (500.0) * 0.1;
@@ -802,116 +803,116 @@ namespace InjectorInspector
         public double dbapiNozzleX(double dbIncreaseNozzleX, double dbTargetSpeed)  //NozzleX
         {
             Normal calculate = new Normal();
-                const int    MaxRAW = 500000;
-                const int    MinRAW =      0;
-                const double Maxdb  =  500.0;
-                const double Mindb  =    0.0;
-                const double Sum    = 500000;
-                const double dbSpdF =  Sum / Maxdb;
+            const int MaxRAW = 500000;
+            const int MinRAW = 0;
+            const double Maxdb = 500.0;
+            const double Mindb = 0.0;
+            const double Sum = 500000;
+            const double dbSpdF = Sum / Maxdb;
 
-            double dbRstNozzleX     = 0.0;
+            double dbRstNozzleX = 0.0;
 
             {  // start of 吸嘴X軸 讀取與顯示
-                int    rslt     = 0;
+                int rslt = 0;
                 string position = "";
-                string speed    = "";
+                string speed = "";
 
                 //讀取 吸嘴X軸 資訊
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.吸嘴X軸, ref position, ref speed);
 
                 //當數值有效
-                if( (position != "") && (speed != "") ) { 
+                if ((position != "") && (speed != "")) {
                     //得到原始數值
-                    int Convert              = (int)(double.Parse(position));
-                    int Speed                = (int)double.Parse(speed);
+                    int Convert = (int)(double.Parse(position));
+                    int Speed = (int)double.Parse(speed);
 
                     //得到轉換數值
-                    double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
-                    double dbSpeed           = Speed / dbSpdF;
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+                    double dbSpeed = Speed / dbSpdF;
 
                     //轉回原始數值
-                    int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
 
                     //顯示讀取長度
-                    dbRstNozzleX             = dbGet;
-                    UIHelper.SetControlProperty(lbl_acpos_吸嘴X軸,     () => lbl_acpos_吸嘴X軸.Text   = dbRstNozzleX.ToString("F3"));
+                    dbRstNozzleX = dbGet;
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴X軸, () => lbl_acpos_吸嘴X軸.Text = dbRstNozzleX.ToString("F3"));
 
                     //顯示運動速度
-                    UIHelper.SetControlProperty(lbl_spd_吸嘴X軸,     () => lbl_spd_吸嘴X軸.Text     = dbSpeed.ToString("F3"));
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴X軸, () => lbl_spd_吸嘴X軸.Text = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     UIHelper.SetControlProperty(select_吸嘴X軸, () => select_吸嘴X軸.BackColor = Color.Red);
-                    UIHelper.SetControlProperty(lbl_acpos_吸嘴X軸,     () => lbl_acpos_吸嘴X軸.BackColor = Color.White);
-                    UIHelper.SetControlProperty(lbl_spd_吸嘴X軸,     () => lbl_spd_吸嘴X軸.BackColor   = Color.White);
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴X軸, () => lbl_acpos_吸嘴X軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴X軸, () => lbl_spd_吸嘴X軸.BackColor = Color.White);
                 } else {
                     UIHelper.SetControlProperty(select_吸嘴X軸, () => select_吸嘴X軸.BackColor = Color.Green);
-                    UIHelper.SetControlProperty(lbl_acpos_吸嘴X軸,     () => lbl_acpos_吸嘴X軸.BackColor = Color.Gray);
-                    UIHelper.SetControlProperty(lbl_spd_吸嘴X軸,     () => lbl_spd_吸嘴X軸.BackColor   = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴X軸, () => lbl_acpos_吸嘴X軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴X軸, () => lbl_spd_吸嘴X軸.BackColor = Color.Gray);
                 }
 
             }  // end of 吸嘴X軸 讀取與顯示
 
             //Function Classification
-            switch(dbIncreaseNozzleX) {
+            switch (dbIncreaseNozzleX) {
                 case dbRead:
                     break;
 
                 case dbCheckArrived: {
-                    double dbMin = 0.0;
-                    double dbMax = 0.0;
-                    if(dbTargetPositionNozzleX * 1.01 > dbTargetPositionNozzleX * 0.99) { 
-                        dbMin = dbTargetPositionNozzleX * 0.99 - 0.1;
-                        dbMax = dbTargetPositionNozzleX * 1.01 + 0.1;
-                    } else { 
-                        dbMin = dbTargetPositionNozzleX * 1.01 - 0.1;
-                        dbMax = dbTargetPositionNozzleX * 0.99 + 0.1;
-                    }
-                    if( dbMin <= dbRstNozzleX &&
-                                 dbRstNozzleX <= dbMax) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        double dbMin = 0.0;
+                        double dbMax = 0.0;
+                        if (dbTargetPositionNozzleX * 1.01 > dbTargetPositionNozzleX * 0.99) {
+                            dbMin = dbTargetPositionNozzleX * 0.99 - 0.1;
+                            dbMax = dbTargetPositionNozzleX * 1.01 + 0.1;
+                        } else {
+                            dbMin = dbTargetPositionNozzleX * 1.01 - 0.1;
+                            dbMax = dbTargetPositionNozzleX * 0.99 + 0.1;
+                        }
+                        if (dbMin <= dbRstNozzleX &&
+                                     dbRstNozzleX <= dbMax) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {  //吸嘴X軸 變更位置
-                    //伸長量overflow保護
-                    if( Mindb<=dbIncreaseNozzleX && dbIncreaseNozzleX<=Maxdb ) {
+                            //伸長量overflow保護
+                        if (Mindb <= dbIncreaseNozzleX && dbIncreaseNozzleX <= Maxdb) {
 
-                    } else if( dbIncreaseNozzleX<=Mindb ) {
-                        dbIncreaseNozzleX = (int)Mindb;
-                    } else if( Maxdb<=dbIncreaseNozzleX ) {
-                        dbIncreaseNozzleX = (int)Maxdb;
-                    }
+                        } else if (dbIncreaseNozzleX <= Mindb) {
+                            dbIncreaseNozzleX = (int)Mindb;
+                        } else if (Maxdb <= dbIncreaseNozzleX) {
+                            dbIncreaseNozzleX = (int)Maxdb;
+                        }
 
-                    // 取得欲變更的的浮點數
-                    int fChangeNozzleX      = calculate.Map(dbIncreaseNozzleX, Maxdb, Mindb, MaxRAW, MinRAW);
+                        // 取得欲變更的的浮點數
+                        int fChangeNozzleX = calculate.Map(dbIncreaseNozzleX, Maxdb, Mindb, MaxRAW, MinRAW);
 
-                    if(dbIncreaseNozzleX > dbTargetPositionNozzleX) { 
-                        inspector1.下視覺正向 = true;
-                    } else 
-                    if(dbIncreaseNozzleX < dbTargetPositionNozzleX) { 
-                         inspector1.下視覺正向 = false;
-                    }
-                    dbTargetPositionNozzleX = dbIncreaseNozzleX;
+                        if (dbIncreaseNozzleX > dbTargetPositionNozzleX) {
+                            inspector1.下視覺正向 = true;
+                        } else
+                        if (dbIncreaseNozzleX < dbTargetPositionNozzleX) {
+                            inspector1.下視覺正向 = false;
+                        }
+                        dbTargetPositionNozzleX = dbIncreaseNozzleX;
 
-                    //執行移動吸嘴
-                    int axis     = (int)WMX3軸定義.吸嘴X軸;
-                    int position = fChangeNozzleX;
-                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                    int accel    = speed;
-                    int daccel   = speed;
-                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
-                } break;
+                        //執行移動吸嘴
+                        int axis = (int)WMX3軸定義.吸嘴X軸;
+                        int position = fChangeNozzleX;
+                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel = speed;
+                        int daccel = speed;
+                        clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    } break;
             }
 
             return dbRstNozzleX;
         }  // end of public double dbapiNozzleX(double dbIncreaseNozzleX)  //NozzleX
         //---------------------------------------------------------------------------------------
         public double dbTargetPositionNozzleY = 0.0;
-        public const double dbNozzleY_Home位  = 28;
+        public const double dbNozzleY_Home位 = 28;
         public double dbapiNozzleY_defaultSpeed(double dbIncreaseNozzleY)  //NozzleY
         {
             double dbDefaultSpeed = (100.0) * 0.1;
@@ -924,109 +925,109 @@ namespace InjectorInspector
         public double dbapiNozzleY(double dbIncreaseNozzleY, double dbTargetSpeed)  //NozzleY
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =  10000;
-                const int    MinRAW =      0;
-                const double Maxdb  =  100.0;
-                const double Mindb  =    0.0;
-                const double Sum    =  10000;
-                const double dbSpdF =  Sum / Maxdb;
+            const int MaxRAW = 10000;
+            const int MinRAW = 0;
+            const double Maxdb = 100.0;
+            const double Mindb = 0.0;
+            const double Sum = 10000;
+            const double dbSpdF = Sum / Maxdb;
 
-            double dbRstNozzleY     = 0.0;
+            double dbRstNozzleY = 0.0;
 
             {  // start of 吸嘴Y軸 讀取與顯示
-                int    rslt     = 0;
+                int rslt = 0;
                 string position = "";
-                string speed    = "";
+                string speed = "";
 
                 //讀取 吸嘴Y軸 資訊
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, ref position, ref speed);
 
                 //當數值有效
-                if( (position != "") && (speed != "") ) { 
+                if ((position != "") && (speed != "")) {
                     //得到原始數值
-                    int Convert              = (int)(double.Parse(position));
-                    int Speed                = (int)double.Parse(speed);
+                    int Convert = (int)(double.Parse(position));
+                    int Speed = (int)double.Parse(speed);
 
                     //得到轉換數值
-                    double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
-                    double dbSpeed           = Speed / dbSpdF;
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+                    double dbSpeed = Speed / dbSpdF;
 
                     //轉回原始數值
-                    int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
 
                     //顯示讀取長度
-                    dbRstNozzleY             = dbGet;
-                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Y軸,    () => lbl_acpos_吸嘴Y軸.Text   = dbRstNozzleY.ToString("F3"));
+                    dbRstNozzleY = dbGet;
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Y軸, () => lbl_acpos_吸嘴Y軸.Text = dbRstNozzleY.ToString("F3"));
 
                     //顯示運動速度
-                    UIHelper.SetControlProperty(lbl_spd_吸嘴Y軸,    () => lbl_spd_吸嘴Y軸.Text     = dbSpeed.ToString("F3"));
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴Y軸, () => lbl_spd_吸嘴Y軸.Text = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     UIHelper.SetControlProperty(select_吸嘴Y軸, () => select_吸嘴Y軸.BackColor = Color.Red);
-                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Y軸,    () => lbl_acpos_吸嘴Y軸.BackColor = Color.White);
-                    UIHelper.SetControlProperty(lbl_spd_吸嘴Y軸,    () => lbl_spd_吸嘴Y軸.BackColor   = Color.White);
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Y軸, () => lbl_acpos_吸嘴Y軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴Y軸, () => lbl_spd_吸嘴Y軸.BackColor = Color.White);
                 } else {
                     UIHelper.SetControlProperty(select_吸嘴Y軸, () => select_吸嘴Y軸.BackColor = Color.Green);
-                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Y軸,    () => lbl_acpos_吸嘴Y軸.BackColor = Color.Gray);
-                    UIHelper.SetControlProperty(lbl_spd_吸嘴Y軸,    () => lbl_spd_吸嘴Y軸.BackColor   = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Y軸, () => lbl_acpos_吸嘴Y軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴Y軸, () => lbl_spd_吸嘴Y軸.BackColor = Color.Gray);
                 }
 
             }  // end of 吸嘴Y軸 讀取與顯示
 
             //Function Classification
-            switch(dbIncreaseNozzleY) {
+            switch (dbIncreaseNozzleY) {
                 case dbRead:
                     break;
 
                 case dbCheckArrived: {
-                    double dbMin = 0.0;
-                    double dbMax = 0.0;
-                    if(dbTargetPositionNozzleY * 1.01 > dbTargetPositionNozzleY * 0.99) { 
-                        dbMin = dbTargetPositionNozzleY * 0.99 - 0.1;
-                        dbMax = dbTargetPositionNozzleY * 1.01 + 0.1;
-                    } else { 
-                        dbMin = dbTargetPositionNozzleY * 1.01 - 0.1;
-                        dbMax = dbTargetPositionNozzleY * 0.99 + 0.1;
-                    }
-                    if( dbMin <= dbRstNozzleY &&
-                                 dbRstNozzleY <= dbMax) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        double dbMin = 0.0;
+                        double dbMax = 0.0;
+                        if (dbTargetPositionNozzleY * 1.01 > dbTargetPositionNozzleY * 0.99) {
+                            dbMin = dbTargetPositionNozzleY * 0.99 - 0.1;
+                            dbMax = dbTargetPositionNozzleY * 1.01 + 0.1;
+                        } else {
+                            dbMin = dbTargetPositionNozzleY * 1.01 - 0.1;
+                            dbMax = dbTargetPositionNozzleY * 0.99 + 0.1;
+                        }
+                        if (dbMin <= dbRstNozzleY &&
+                                     dbRstNozzleY <= dbMax) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {  //吸嘴Y軸 變更位置
-                    //伸長量overflow保護
-                    if( Mindb<=dbIncreaseNozzleY && dbIncreaseNozzleY<=Maxdb ) {
+                            //伸長量overflow保護
+                        if (Mindb <= dbIncreaseNozzleY && dbIncreaseNozzleY <= Maxdb) {
 
-                    } else if( dbIncreaseNozzleY<=Mindb ) {
-                        dbIncreaseNozzleY = (int)Mindb;
-                    } else if( Maxdb<=dbIncreaseNozzleY ) {
-                        dbIncreaseNozzleY = (int)Maxdb;
-                    }
+                        } else if (dbIncreaseNozzleY <= Mindb) {
+                            dbIncreaseNozzleY = (int)Mindb;
+                        } else if (Maxdb <= dbIncreaseNozzleY) {
+                            dbIncreaseNozzleY = (int)Maxdb;
+                        }
 
-                    // 取得欲變更的的浮點數
-                    int fChangeNozzleY      = calculate.Map(dbIncreaseNozzleY, Maxdb, Mindb, MaxRAW, MinRAW);
-                    dbTargetPositionNozzleY = dbIncreaseNozzleY;
+                        // 取得欲變更的的浮點數
+                        int fChangeNozzleY = calculate.Map(dbIncreaseNozzleY, Maxdb, Mindb, MaxRAW, MinRAW);
+                        dbTargetPositionNozzleY = dbIncreaseNozzleY;
 
-                    //執行移動吸嘴
-                    int axis     = (int)WMX3軸定義.吸嘴Y軸;
-                    int position = fChangeNozzleY;
-                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                    int accel    = speed;
-                    int daccel   = speed;
-                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
-                } break;
+                        //執行移動吸嘴
+                        int axis = (int)WMX3軸定義.吸嘴Y軸;
+                        int position = fChangeNozzleY;
+                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel = speed;
+                        int daccel = speed;
+                        clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    } break;
             }
 
             return dbRstNozzleY;
         }  // end of public double dbapiNozzleY(double dbIncreaseNozzleY)  //NozzleY
         //---------------------------------------------------------------------------------------
         public double dbTargetPositionNozzleZ = 0.0;
-        public const double dbNozzleZ_Home位  = 0;
+        public const double dbNozzleZ_Home位 = 0;
         public double dbapiNozzleZ_defaultSpeed(double dbIncreaseNozzleZ)  //NozzleZ
         {
             double dbDefaultSpeed = (40.0) * 0.1;
@@ -1039,109 +1040,109 @@ namespace InjectorInspector
         public double dbapiNozzleZ(double dbIncreaseNozzleZ, double dbTargetSpeed)  //NozzleZ
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =  41496;
-                const int    MinRAW =    -93;
-                const double Maxdb  =   40.0;
-                const double Mindb  =    0.0;
-                const double Sum    =  40000;
-                const double dbSpdF =  Sum / Maxdb;
+            const int MaxRAW = 41496;
+            const int MinRAW = -93;
+            const double Maxdb = 40.0;
+            const double Mindb = 0.0;
+            const double Sum = 40000;
+            const double dbSpdF = Sum / Maxdb;
 
-            double dbRstNozzleZ     = 0.0;
-            
+            double dbRstNozzleZ = 0.0;
+
             {  // start of 吸嘴Z軸 讀取與顯示
-                int    rslt     = 0;
+                int rslt = 0;
                 string position = "";
-                string speed    = "";
+                string speed = "";
 
                 //讀取 吸嘴Z軸 資訊
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, ref position, ref speed);
 
                 //當數值有效
-                if( (position != "") && (speed != "") ) { 
+                if ((position != "") && (speed != "")) {
                     //得到原始數值
-                    int Convert              = (int)(double.Parse(position));
-                    int Speed                = (int)double.Parse(speed);
+                    int Convert = (int)(double.Parse(position));
+                    int Speed = (int)double.Parse(speed);
 
                     //得到轉換數值
-                    double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
-                    double dbSpeed           = Speed / dbSpdF;
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+                    double dbSpeed = Speed / dbSpdF;
 
                     //轉回原始數值
-                    int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
 
                     //顯示讀取長度
-                    dbRstNozzleZ             = dbGet;
-                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Z軸,    () => lbl_acpos_吸嘴Z軸.Text   = dbRstNozzleZ.ToString("F3"));
+                    dbRstNozzleZ = dbGet;
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Z軸, () => lbl_acpos_吸嘴Z軸.Text = dbRstNozzleZ.ToString("F3"));
 
                     //顯示運動速度
-                    UIHelper.SetControlProperty(lbl_spd_吸嘴Z軸,    () => lbl_spd_吸嘴Z軸.Text     = dbSpeed.ToString("F3"));
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴Z軸, () => lbl_spd_吸嘴Z軸.Text = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     UIHelper.SetControlProperty(select_吸嘴Z軸, () => select_吸嘴Z軸.BackColor = Color.Red);
-                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Z軸,    () => lbl_acpos_吸嘴Z軸.BackColor = Color.White);
-                    UIHelper.SetControlProperty(lbl_spd_吸嘴Z軸,    () => lbl_spd_吸嘴Z軸.BackColor   = Color.White);
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Z軸, () => lbl_acpos_吸嘴Z軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴Z軸, () => lbl_spd_吸嘴Z軸.BackColor = Color.White);
                 } else {
                     UIHelper.SetControlProperty(select_吸嘴Z軸, () => select_吸嘴Z軸.BackColor = Color.Green);
-                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Z軸,    () => lbl_acpos_吸嘴Z軸.BackColor = Color.Gray);
-                    UIHelper.SetControlProperty(lbl_spd_吸嘴Z軸,    () => lbl_spd_吸嘴Z軸.BackColor   = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴Z軸, () => lbl_acpos_吸嘴Z軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴Z軸, () => lbl_spd_吸嘴Z軸.BackColor = Color.Gray);
                 }
 
             }  // end of 吸嘴Z軸 讀取與顯示
 
             //Function Classification
-            switch(dbIncreaseNozzleZ) {
+            switch (dbIncreaseNozzleZ) {
                 case dbRead:
                     break;
 
                 case dbCheckArrived: {
-                    double dbMin = 0.0;
-                    double dbMax = 0.0;
-                    if(dbTargetPositionNozzleZ * 1.01 > dbTargetPositionNozzleZ * 0.99) { 
-                        dbMin = dbTargetPositionNozzleZ * 0.99 - 0.1;
-                        dbMax = dbTargetPositionNozzleZ * 1.01 + 0.1;
-                    } else { 
-                        dbMin = dbTargetPositionNozzleZ * 1.01 - 0.1;
-                        dbMax = dbTargetPositionNozzleZ * 0.99 + 0.1;
-                    }
-                    if( dbMin <= dbRstNozzleZ &&
-                                 dbRstNozzleZ <= dbMax) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        double dbMin = 0.0;
+                        double dbMax = 0.0;
+                        if (dbTargetPositionNozzleZ * 1.01 > dbTargetPositionNozzleZ * 0.99) {
+                            dbMin = dbTargetPositionNozzleZ * 0.99 - 0.1;
+                            dbMax = dbTargetPositionNozzleZ * 1.01 + 0.1;
+                        } else {
+                            dbMin = dbTargetPositionNozzleZ * 1.01 - 0.1;
+                            dbMax = dbTargetPositionNozzleZ * 0.99 + 0.1;
+                        }
+                        if (dbMin <= dbRstNozzleZ &&
+                                     dbRstNozzleZ <= dbMax) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {  //吸嘴Z軸 變更位置
-                    //伸長量overflow保護
-                    if( Mindb<=dbIncreaseNozzleZ && dbIncreaseNozzleZ<=Maxdb ) {
+                            //伸長量overflow保護
+                        if (Mindb <= dbIncreaseNozzleZ && dbIncreaseNozzleZ <= Maxdb) {
 
-                    } else if( dbIncreaseNozzleZ<=Mindb ) {
-                        dbIncreaseNozzleZ = (int)Mindb;
-                    } else if ( Maxdb<=dbIncreaseNozzleZ ) {
-                        dbIncreaseNozzleZ = (int)Maxdb;
-                    }
+                        } else if (dbIncreaseNozzleZ <= Mindb) {
+                            dbIncreaseNozzleZ = (int)Mindb;
+                        } else if (Maxdb <= dbIncreaseNozzleZ) {
+                            dbIncreaseNozzleZ = (int)Maxdb;
+                        }
 
-                    // 取得欲變更的的浮點數
-                    int fChangeNozzleZ      = calculate.Map(dbIncreaseNozzleZ, Maxdb, Mindb, MaxRAW, MinRAW);
-                    dbTargetPositionNozzleZ = dbIncreaseNozzleZ;
+                        // 取得欲變更的的浮點數
+                        int fChangeNozzleZ = calculate.Map(dbIncreaseNozzleZ, Maxdb, Mindb, MaxRAW, MinRAW);
+                        dbTargetPositionNozzleZ = dbIncreaseNozzleZ;
 
-                    //執行伸縮吸嘴
-                    int axis     = (int)WMX3軸定義.吸嘴Z軸;
-                    int position = fChangeNozzleZ;
-                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                    int accel    = speed;
-                    int daccel   = speed;
-                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
-                } break;
+                        //執行伸縮吸嘴
+                        int axis = (int)WMX3軸定義.吸嘴Z軸;
+                        int position = fChangeNozzleZ;
+                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel = speed;
+                        int daccel = speed;
+                        clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    } break;
             }
 
             return dbRstNozzleZ;
         }  // end of public double dbapiNozzleZ(double dbIncreaseNozzleZ)  //NozzleZ
         //---------------------------------------------------------------------------------------
         public double dbTargetPositionNozzleR = 0.0;
-        public const double dbNozzleR_Home位  = 0.0;
+        public const double dbNozzleR_Home位 = 0.0;
         public const double dbNozzleR_0補正值 = 1.350;
         public double dbapiNozzleR_defaultSpeed(double dbIncreaseNozzleR)  //NozzleR
         {
@@ -1155,115 +1156,115 @@ namespace InjectorInspector
         public double dbapiNozzleR(double dbIncreaseNozzleR, double dbTargetSpeed)  //NozzleR
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =  24120;
-                const int    MinRAW = -11880;
-                const double Maxdb  =  360.0;
-                const double Mindb  =    0.0;
-                const double Sum    =  36000;
-                const double dbSpdF =  Sum / Maxdb;
+            const int MaxRAW = 24120;
+            const int MinRAW = -11880;
+            const double Maxdb = 360.0;
+            const double Mindb = 0.0;
+            const double Sum = 36000;
+            const double dbSpdF = Sum / Maxdb;
 
-            double dbRstNozzleR     = 0.0;
+            double dbRstNozzleR = 0.0;
 
             {  // start of 吸嘴R軸 讀取與顯示
-                int    rslt     = 0;
+                int rslt = 0;
                 string position = "";
-                string speed    = "";
+                string speed = "";
 
                 //讀取 吸嘴R軸 資訊
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.吸嘴R軸, ref position, ref speed);
 
                 //當數值有效
-                if( (position != "") && (speed != "") ) { 
+                if ((position != "") && (speed != "")) {
                     //得到原始數值
-                    int Convert              = (int)(double.Parse(position));
-                    int Speed                = (int)double.Parse(speed);
+                    int Convert = (int)(double.Parse(position));
+                    int Speed = (int)double.Parse(speed);
 
                     //得到轉換數值
-                    double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
-                    double dbSpeed           = Speed / dbSpdF;
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+                    double dbSpeed = Speed / dbSpdF;
                     while (dbGet >= 360.0) { dbGet -= 360.0; }  //overflow
-                    while (dbGet <    0.0) { dbGet += 360.0; }  //overflow
+                    while (dbGet < 0.0) { dbGet += 360.0; }  //overflow
 
                     //轉回原始數值
-                    int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
 
                     //顯示讀取長度
-                    dbRstNozzleR             = dbGet;
-                    UIHelper.SetControlProperty(lbl_acpos_吸嘴R軸,    () => lbl_acpos_吸嘴R軸.Text   = dbRstNozzleR.ToString("F3"));
+                    dbRstNozzleR = dbGet;
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴R軸, () => lbl_acpos_吸嘴R軸.Text = dbRstNozzleR.ToString("F3"));
 
                     //顯示運動速度
-                    UIHelper.SetControlProperty(lbl_spd_吸嘴R軸,    () => lbl_spd_吸嘴R軸.Text     = dbSpeed.ToString("F3"));
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴R軸, () => lbl_spd_吸嘴R軸.Text = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     UIHelper.SetControlProperty(select_吸嘴R軸, () => select_吸嘴R軸.BackColor = Color.Red);
-                    UIHelper.SetControlProperty(lbl_acpos_吸嘴R軸,    () => lbl_acpos_吸嘴R軸.BackColor = Color.White);
-                    UIHelper.SetControlProperty(lbl_spd_吸嘴R軸,    () => lbl_spd_吸嘴R軸.BackColor   = Color.White);
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴R軸, () => lbl_acpos_吸嘴R軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴R軸, () => lbl_spd_吸嘴R軸.BackColor = Color.White);
                 } else {
                     UIHelper.SetControlProperty(select_吸嘴R軸, () => select_吸嘴R軸.BackColor = Color.Green);
-                    UIHelper.SetControlProperty(lbl_acpos_吸嘴R軸,    () => lbl_acpos_吸嘴R軸.BackColor = Color.Gray);
-                    UIHelper.SetControlProperty(lbl_spd_吸嘴R軸,    () => lbl_spd_吸嘴R軸.BackColor   = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_acpos_吸嘴R軸, () => lbl_acpos_吸嘴R軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_吸嘴R軸, () => lbl_spd_吸嘴R軸.BackColor = Color.Gray);
                 }
 
             }  // end of 吸嘴R軸 讀取與顯示
 
             //Function Classification
-            switch(dbIncreaseNozzleR) {
+            switch (dbIncreaseNozzleR) {
                 case dbRead:
                     break;
 
                 case dbCheckArrived: {
-                    double dbMin = 0.0;
-                    double dbMax = 0.0;
-                    if(dbTargetPositionNozzleR*1.01 > dbTargetPositionNozzleR*0.99) { 
-                        dbMin = dbTargetPositionNozzleR*0.99 - 0.1;
-                        dbMax = dbTargetPositionNozzleR*1.01 + 0.1;
-                    } else { 
-                        dbMin = dbTargetPositionNozzleR*1.01 - 0.1;
-                        dbMax = dbTargetPositionNozzleR*0.99 + 0.1;
-                    }
-                    if( dbMin <= dbRstNozzleR && 
-                                 dbRstNozzleR <= dbMax) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        double dbMin = 0.0;
+                        double dbMax = 0.0;
+                        if (dbTargetPositionNozzleR * 1.01 > dbTargetPositionNozzleR * 0.99) {
+                            dbMin = dbTargetPositionNozzleR * 0.99 - 0.1;
+                            dbMax = dbTargetPositionNozzleR * 1.01 + 0.1;
+                        } else {
+                            dbMin = dbTargetPositionNozzleR * 1.01 - 0.1;
+                            dbMax = dbTargetPositionNozzleR * 0.99 + 0.1;
+                        }
+                        if (dbMin <= dbRstNozzleR &&
+                                     dbRstNozzleR <= dbMax) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {  //吸嘴R軸 變更位置
-                    //伸長量overflow保護
-                    //if( Mindb<=dbIncreaseNozzleR && dbIncreaseNozzleR<=Maxdb ) {
-                    //
-                    //} else if( dbIncreaseNozzleR<=Mindb ) {
-                    //    dbIncreaseNozzleR = (int)Mindb;
-                    //} else if( Maxdb<= dbIncreaseNozzleR) {
-                    //    dbIncreaseNozzleR = (int)Maxdb;
-                    //}
+                            //伸長量overflow保護
+                            //if( Mindb<=dbIncreaseNozzleR && dbIncreaseNozzleR<=Maxdb ) {
+                            //
+                            //} else if( dbIncreaseNozzleR<=Mindb ) {
+                            //    dbIncreaseNozzleR = (int)Mindb;
+                            //} else if( Maxdb<= dbIncreaseNozzleR) {
+                            //    dbIncreaseNozzleR = (int)Maxdb;
+                            //}
 
-                    // 取得欲變更的的浮點數
-                    dbIncreaseNozzleR += dbNozzleR_0補正值;
+                        // 取得欲變更的的浮點數
+                        dbIncreaseNozzleR += dbNozzleR_0補正值;
 
-                    int fChangeNozzleR = calculate.Map(dbIncreaseNozzleR, Maxdb, Mindb, MaxRAW, MinRAW);
-                    dbTargetPositionNozzleR = dbIncreaseNozzleR;
-                    while (dbTargetPositionNozzleR >= 360.0) { dbTargetPositionNozzleR -= 360.0; }  //overflow
-                    while (dbTargetPositionNozzleR <    0.0) { dbTargetPositionNozzleR += 360.0; }  //overflow
+                        int fChangeNozzleR = calculate.Map(dbIncreaseNozzleR, Maxdb, Mindb, MaxRAW, MinRAW);
+                        dbTargetPositionNozzleR = dbIncreaseNozzleR;
+                        while (dbTargetPositionNozzleR >= 360.0) { dbTargetPositionNozzleR -= 360.0; }  //overflow
+                        while (dbTargetPositionNozzleR < 0.0) { dbTargetPositionNozzleR += 360.0; }  //overflow
 
-                    //執行旋轉吸嘴
-                    int axis     = (int)WMX3軸定義.吸嘴R軸;
-                    int position = fChangeNozzleR;
-                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                    int accel    = speed * 2;
-                    int daccel   = speed * 2;
-                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
-                } break;
+                        //執行旋轉吸嘴
+                        int axis = (int)WMX3軸定義.吸嘴R軸;
+                        int position = fChangeNozzleR;
+                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel = speed * 2;
+                        int daccel = speed * 2;
+                        clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    } break;
             }
 
             return dbRstNozzleR;
         }  // end of public double dbapiNozzleR(double dbIncreaseNozzleR)  //NozzleR
         //---------------------------------------------------------------------------------------
         public double dbTargetPositionCarrierX = 0.0;
-        public const double dbCarrierX_Home位  = 95.0;
+        public const double dbCarrierX_Home位 = 95.0;
         public double dbapiCarrierX_defaultSpeed(double dbIncreaseCarrierX)  //CarrierX
         {
             double dbDefaultSpeed = (190.0) * 0.1;
@@ -1276,109 +1277,109 @@ namespace InjectorInspector
         public double dbapiCarrierX(double dbIncreaseCarrierX, double dbTargetSpeed)  //CarrierX
         {
             Normal calculate = new Normal();
-                const int    MaxRAW = 190000;
-                const int    MinRAW =      0;
-                const double Maxdb  =  190.0;
-                const double Mindb  =    0.0;
-                const double Sum    = 190000;
-                const double dbSpdF =  Sum / Maxdb;
+            const int MaxRAW = 190000;
+            const int MinRAW = 0;
+            const double Maxdb = 190.0;
+            const double Mindb = 0.0;
+            const double Sum = 190000;
+            const double dbSpdF = Sum / Maxdb;
 
-            double dbRstCarrierX    = 0.0;
+            double dbRstCarrierX = 0.0;
 
             {  // start of 載盤X軸 讀取與顯示
-                int    rslt     = 0;
+                int rslt = 0;
                 string position = "";
-                string speed    = "";
+                string speed = "";
 
                 //讀取 載盤X軸 資訊
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.載盤X軸, ref position, ref speed);
 
                 //當數值有效
-                if( (position != "") && (speed != "") ) { 
+                if ((position != "") && (speed != "")) {
                     //得到原始數值
-                    int Convert              = (int)(double.Parse(position));
-                    int Speed                = (int)double.Parse(speed);
+                    int Convert = (int)(double.Parse(position));
+                    int Speed = (int)double.Parse(speed);
 
                     //得到轉換數值
-                    double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
-                    double dbSpeed           = Speed / dbSpdF;
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+                    double dbSpeed = Speed / dbSpdF;
 
                     //轉回原始數值
-                    int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
 
                     //顯示讀取長度
-                    dbRstCarrierX            = dbGet;
-                    UIHelper.SetControlProperty(lbl_acpos_載盤X軸,    () => lbl_acpos_載盤X軸.Text   = dbRstCarrierX.ToString("F3"));
+                    dbRstCarrierX = dbGet;
+                    UIHelper.SetControlProperty(lbl_acpos_載盤X軸, () => lbl_acpos_載盤X軸.Text = dbRstCarrierX.ToString("F3"));
 
                     //顯示運動速度
-                    UIHelper.SetControlProperty(lbl_spd_載盤X軸,    () => lbl_spd_載盤X軸.Text     = dbSpeed.ToString("F3"));
+                    UIHelper.SetControlProperty(lbl_spd_載盤X軸, () => lbl_spd_載盤X軸.Text = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     UIHelper.SetControlProperty(select_載盤X軸, () => select_載盤X軸.BackColor = Color.Red);
-                    UIHelper.SetControlProperty(lbl_acpos_載盤X軸,    () => lbl_acpos_載盤X軸.BackColor = Color.White);
-                    UIHelper.SetControlProperty(lbl_spd_載盤X軸,    () => lbl_spd_載盤X軸.BackColor   = Color.White);
+                    UIHelper.SetControlProperty(lbl_acpos_載盤X軸, () => lbl_acpos_載盤X軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_載盤X軸, () => lbl_spd_載盤X軸.BackColor = Color.White);
                 } else {
                     UIHelper.SetControlProperty(select_載盤X軸, () => select_載盤X軸.BackColor = Color.Green);
-                    UIHelper.SetControlProperty(lbl_acpos_載盤X軸,    () => lbl_acpos_載盤X軸.BackColor = Color.Gray);
-                    UIHelper.SetControlProperty(lbl_spd_載盤X軸,    () => lbl_spd_載盤X軸.BackColor   = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_acpos_載盤X軸, () => lbl_acpos_載盤X軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_載盤X軸, () => lbl_spd_載盤X軸.BackColor = Color.Gray);
                 }
 
             }  // end of 載盤X軸 讀取與顯示
 
             //Function Classification
-            switch(dbIncreaseCarrierX) {
+            switch (dbIncreaseCarrierX) {
                 case dbRead:
                     break;
 
                 case dbCheckArrived: {
-                    double dbMin = 0.0;
-                    double dbMax = 0.0;
-                    if(dbTargetPositionCarrierX * 1.01 > dbTargetPositionCarrierX * 0.99) { 
-                        dbMin = dbTargetPositionCarrierX * 0.99 - 0.1;
-                        dbMax = dbTargetPositionCarrierX * 1.01 + 0.1;
-                    } else { 
-                        dbMin = dbTargetPositionCarrierX * 1.01 - 0.1;
-                        dbMax = dbTargetPositionCarrierX * 0.99 + 0.1;
-                    }
-                    if( dbMin <= dbRstCarrierX &&
-                                 dbRstCarrierX <= dbMax) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        double dbMin = 0.0;
+                        double dbMax = 0.0;
+                        if (dbTargetPositionCarrierX * 1.01 > dbTargetPositionCarrierX * 0.99) {
+                            dbMin = dbTargetPositionCarrierX * 0.99 - 0.1;
+                            dbMax = dbTargetPositionCarrierX * 1.01 + 0.1;
+                        } else {
+                            dbMin = dbTargetPositionCarrierX * 1.01 - 0.1;
+                            dbMax = dbTargetPositionCarrierX * 0.99 + 0.1;
+                        }
+                        if (dbMin <= dbRstCarrierX &&
+                                     dbRstCarrierX <= dbMax) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {  //載盤X軸 變更位置
-                    //伸長量overflow保護
-                    if( Mindb<=dbIncreaseCarrierX && dbIncreaseCarrierX<=Maxdb ) {
+                            //伸長量overflow保護
+                        if (Mindb <= dbIncreaseCarrierX && dbIncreaseCarrierX <= Maxdb) {
 
-                    } else if( dbIncreaseCarrierX<=Mindb ) {
-                        dbIncreaseCarrierX = (int)Mindb;
-                    } else if( Maxdb<=dbIncreaseCarrierX ) {
-                        dbIncreaseCarrierX = (int)Maxdb;
-                    }
+                        } else if (dbIncreaseCarrierX <= Mindb) {
+                            dbIncreaseCarrierX = (int)Mindb;
+                        } else if (Maxdb <= dbIncreaseCarrierX) {
+                            dbIncreaseCarrierX = (int)Maxdb;
+                        }
 
-                    // 取得欲變更的的浮點數
-                    int fChangeCarrierX = calculate.Map(dbIncreaseCarrierX, Maxdb, Mindb, MaxRAW, MinRAW);
-                    dbTargetPositionCarrierX = dbIncreaseCarrierX;
+                        // 取得欲變更的的浮點數
+                        int fChangeCarrierX = calculate.Map(dbIncreaseCarrierX, Maxdb, Mindb, MaxRAW, MinRAW);
+                        dbTargetPositionCarrierX = dbIncreaseCarrierX;
 
-                    //執行移動載盤
-                    int axis     = (int)WMX3軸定義.載盤X軸;
-                    int position = fChangeCarrierX;
-                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                    int accel    = speed;
-                    int daccel   = speed;
-                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
-                } break;
+                        //執行移動載盤
+                        int axis = (int)WMX3軸定義.載盤X軸;
+                        int position = fChangeCarrierX;
+                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel = speed;
+                        int daccel = speed;
+                        clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    } break;
             }
 
             return dbRstCarrierX;
         }  // end of public double dbapiCarrierX(double dbIncreaseCarrierX)  //CarrierX
         //---------------------------------------------------------------------------------------
         public double dbTargetPositionCarrierY = 0.0;
-        public const double dbCarrierY_Home位  = 10.0;
+        public const double dbCarrierY_Home位 = 10.0;
         public double dbapiCarrierY_defaultSpeed(double dbIncreaseCarrierY)  //CarrierY
         {
             double dbDefaultSpeed = (800.0) * 0.1;
@@ -1391,110 +1392,110 @@ namespace InjectorInspector
         public double dbapiCarrierY(double dbIncreaseCarrierY, double dbTargetSpeed)  //CarrierY
         {
             Normal calculate = new Normal();
-                const int    MaxRAW = 800000;
-                const int    MinRAW =      0;
-                const double Maxdb  =  800.0;
-                const double Mindb  =    0.0;
-                const double Sum    = 800000;
-                const double dbSpdF =  Sum / Maxdb;
+            const int MaxRAW = 800000;
+            const int MinRAW = 0;
+            const double Maxdb = 800.0;
+            const double Mindb = 0.0;
+            const double Sum = 800000;
+            const double dbSpdF = Sum / Maxdb;
 
-            double dbRstCarrierY    = 0.0;
+            double dbRstCarrierY = 0.0;
 
             {  // start of 載盤Y軸 讀取與顯示
-                int    rslt     = 0;
+                int rslt = 0;
                 string position = "";
-                string speed    = "";
+                string speed = "";
 
                 //讀取 載盤Y軸 資訊
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.載盤Y軸, ref position, ref speed);
 
                 //當數值有效
-                if( (position != "") && (speed != "") ) { 
+                if ((position != "") && (speed != "")) {
                     //得到原始數值
-                    int Convert              = (int)(double.Parse(position));
-                    int Speed                = (int)double.Parse(speed);
+                    int Convert = (int)(double.Parse(position));
+                    int Speed = (int)double.Parse(speed);
 
                     //得到轉換數值
-                    double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
-                    double dbSpeed           = Speed / dbSpdF;
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+                    double dbSpeed = Speed / dbSpdF;
 
                     //轉回原始數值
-                    int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
 
                     //顯示讀取長度
-                    dbRstCarrierY            = dbGet;
-                    UIHelper.SetControlProperty(lbl_acpos_載盤Y軸,    () => lbl_acpos_載盤Y軸.Text   = dbRstCarrierY.ToString("F3"));
+                    dbRstCarrierY = dbGet;
+                    UIHelper.SetControlProperty(lbl_acpos_載盤Y軸, () => lbl_acpos_載盤Y軸.Text = dbRstCarrierY.ToString("F3"));
 
                     //顯示運動速度
-                    UIHelper.SetControlProperty(lbl_spd_載盤Y軸,    () => lbl_spd_載盤Y軸.Text     = dbSpeed.ToString("F3"));
+                    UIHelper.SetControlProperty(lbl_spd_載盤Y軸, () => lbl_spd_載盤Y軸.Text = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     UIHelper.SetControlProperty(select_載盤Y軸, () => select_載盤Y軸.BackColor = Color.Red);
-                    UIHelper.SetControlProperty(lbl_acpos_載盤Y軸,    () => lbl_acpos_載盤Y軸.BackColor = Color.White);
-                    UIHelper.SetControlProperty(lbl_spd_載盤Y軸,    () => lbl_spd_載盤Y軸.BackColor   = Color.White);
+                    UIHelper.SetControlProperty(lbl_acpos_載盤Y軸, () => lbl_acpos_載盤Y軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_載盤Y軸, () => lbl_spd_載盤Y軸.BackColor = Color.White);
                 } else {
                     UIHelper.SetControlProperty(select_載盤Y軸, () => select_載盤Y軸.BackColor = Color.Green);
-                    UIHelper.SetControlProperty(lbl_acpos_載盤Y軸,    () => lbl_acpos_載盤Y軸.BackColor = Color.Gray);
-                    UIHelper.SetControlProperty(lbl_spd_載盤Y軸,    () => lbl_spd_載盤Y軸.BackColor   = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_acpos_載盤Y軸, () => lbl_acpos_載盤Y軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_載盤Y軸, () => lbl_spd_載盤Y軸.BackColor = Color.Gray);
                 }
 
             }  // end of 載盤Y軸 讀取與顯示
 
             //Function Classification
-            switch(dbIncreaseCarrierY) {
+            switch (dbIncreaseCarrierY) {
                 case dbRead:
                     break;
 
                 case dbCheckArrived: {
-                    double dbMin = 0.0;
-                    double dbMax = 0.0;
-                    if(dbTargetPositionCarrierY * 1.01 > dbTargetPositionCarrierY * 0.99) { 
-                        dbMin = dbTargetPositionCarrierY * 0.99 - 0.1;
-                        dbMax = dbTargetPositionCarrierY * 1.01 + 0.1;
-                    } else { 
-                        dbMin = dbTargetPositionCarrierY * 1.01 - 0.1;
-                        dbMax = dbTargetPositionCarrierY * 0.99 + 0.1;
-                    }
-                    if( dbMin <= dbRstCarrierY &&
-                                 dbRstCarrierY <= dbMax) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        double dbMin = 0.0;
+                        double dbMax = 0.0;
+                        if (dbTargetPositionCarrierY * 1.01 > dbTargetPositionCarrierY * 0.99) {
+                            dbMin = dbTargetPositionCarrierY * 0.99 - 0.1;
+                            dbMax = dbTargetPositionCarrierY * 1.01 + 0.1;
+                        } else {
+                            dbMin = dbTargetPositionCarrierY * 1.01 - 0.1;
+                            dbMax = dbTargetPositionCarrierY * 0.99 + 0.1;
+                        }
+                        if (dbMin <= dbRstCarrierY &&
+                                     dbRstCarrierY <= dbMax) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {  //載盤Y軸 變更位置
-                    //伸長量overflow保護
-                    if( Mindb<=dbIncreaseCarrierY && dbIncreaseCarrierY<=Maxdb ) {
+                            //伸長量overflow保護
+                        if (Mindb <= dbIncreaseCarrierY && dbIncreaseCarrierY <= Maxdb) {
 
-                    } else if( dbIncreaseCarrierY<=Mindb ) {
-                        dbIncreaseCarrierY = (int)Mindb;
-                    } else if( Maxdb<=dbIncreaseCarrierY ) {
-                        dbIncreaseCarrierY = (int)Maxdb;
-                    }
+                        } else if (dbIncreaseCarrierY <= Mindb) {
+                            dbIncreaseCarrierY = (int)Mindb;
+                        } else if (Maxdb <= dbIncreaseCarrierY) {
+                            dbIncreaseCarrierY = (int)Maxdb;
+                        }
 
-                    // 取得欲變更的的浮點數
-                    int fChangeCarrierY      = calculate.Map(dbIncreaseCarrierY, Maxdb, Mindb, MaxRAW, MinRAW);
-                    dbTargetPositionCarrierY = dbIncreaseCarrierY;
+                        // 取得欲變更的的浮點數
+                        int fChangeCarrierY = calculate.Map(dbIncreaseCarrierY, Maxdb, Mindb, MaxRAW, MinRAW);
+                        dbTargetPositionCarrierY = dbIncreaseCarrierY;
 
-                    //執行移動載盤
-                    int axis     = (int)WMX3軸定義.載盤Y軸;
-                    int position = fChangeCarrierY;
-                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                    int accel    = speed;
-                    int daccel   = speed;
-                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
-                } break;
+                        //執行移動載盤
+                        int axis = (int)WMX3軸定義.載盤Y軸;
+                        int position = fChangeCarrierY;
+                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel = speed;
+                        int daccel = speed;
+                        clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    } break;
             }
 
             return dbRstCarrierY;
         }  // end of public double dbapiCarrierY(double dbIncreaseCarrierY)  //CarrierY
         //---------------------------------------------------------------------------------------
         public double dbTargetPositionSetZ = 0.0;
-        public const double dbSetZ_Home位  = 15.0;
-        public const double dbSetZ_放料位  = 12.0;
+        public const double dbSetZ_Home位 = 15.0;
+        public const double dbSetZ_放料位 = 12.0;
         public double dbapiSetZ_defaultSpeed(double dbIncreaseSetZ)  //SetZ
         {
             double dbDefaultSpeed = (33.0) * 0.1;
@@ -1507,109 +1508,109 @@ namespace InjectorInspector
         public double dbapiSetZ(double dbIncreaseSetZ, double dbTargetSpeed)  //SetZ
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =   3300;
-                const int    MinRAW =      0;
-                const double Maxdb  =     33;
-                const double Mindb  =    0.0;
-                const double Sum    =   3300;
-                const double dbSpdF =  Sum / Maxdb;
+            const int MaxRAW = 3300;
+            const int MinRAW = 0;
+            const double Maxdb = 33;
+            const double Mindb = 0.0;
+            const double Sum = 3300;
+            const double dbSpdF = Sum / Maxdb;
 
-            double dbRstSetZ        = 0.0;
+            double dbRstSetZ = 0.0;
 
             double dbUpperLimit = dbIncreaseSetZ;
-            if(dbUpperLimit < 10.0) {
+            if (dbUpperLimit < 10.0) {
                 dbUpperLimit = 10.0;
 
                 MessageBox.Show("錯誤:植針位置小於10, 太高了");
             }
 
             {  // start of 植針Z軸 讀取與顯示
-                int    rslt     = 0;
+                int rslt = 0;
                 string position = "";
-                string speed    = "";
+                string speed = "";
 
                 //讀取 植針Z軸 資訊
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.植針Z軸, ref position, ref speed);
 
                 //當數值有效
-                if( (position != "") && (speed != "") ) { 
+                if ((position != "") && (speed != "")) {
                     //得到原始數值
-                    int Convert              = (int)(double.Parse(position));
-                    int Speed                = (int)double.Parse(speed);
+                    int Convert = (int)(double.Parse(position));
+                    int Speed = (int)double.Parse(speed);
 
                     //得到轉換數值
-                    double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
-                    double dbSpeed           = Speed / dbSpdF;
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+                    double dbSpeed = Speed / dbSpdF;
 
                     //轉回原始數值
-                    int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
 
                     //顯示讀取長度
-                    dbRstSetZ                = dbGet;
-                    UIHelper.SetControlProperty(lbl_acpos_植針Z軸,    () => lbl_acpos_植針Z軸.Text   = dbRstSetZ.ToString("F3"));
+                    dbRstSetZ = dbGet;
+                    UIHelper.SetControlProperty(lbl_acpos_植針Z軸, () => lbl_acpos_植針Z軸.Text = dbRstSetZ.ToString("F3"));
 
                     //顯示運動速度
-                    UIHelper.SetControlProperty(lbl_spd_植針Z軸,    () => lbl_spd_植針Z軸.Text     = dbSpeed.ToString("F3"));
+                    UIHelper.SetControlProperty(lbl_spd_植針Z軸, () => lbl_spd_植針Z軸.Text = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     UIHelper.SetControlProperty(select_植針Z軸, () => select_植針Z軸.BackColor = Color.Red);
-                    UIHelper.SetControlProperty(lbl_acpos_植針Z軸,    () => lbl_acpos_植針Z軸.BackColor = Color.White);
-                    UIHelper.SetControlProperty(lbl_spd_植針Z軸,    () => lbl_spd_植針Z軸.BackColor   = Color.White);
+                    UIHelper.SetControlProperty(lbl_acpos_植針Z軸, () => lbl_acpos_植針Z軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_植針Z軸, () => lbl_spd_植針Z軸.BackColor = Color.White);
                 } else {
                     UIHelper.SetControlProperty(select_植針Z軸, () => select_植針Z軸.BackColor = Color.Green);
-                    UIHelper.SetControlProperty(lbl_acpos_植針Z軸,    () => lbl_acpos_植針Z軸.BackColor = Color.Gray);
-                    UIHelper.SetControlProperty(lbl_spd_植針Z軸,    () => lbl_spd_植針Z軸.BackColor   = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_acpos_植針Z軸, () => lbl_acpos_植針Z軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_植針Z軸, () => lbl_spd_植針Z軸.BackColor = Color.Gray);
                 }
 
             }  // end of 植針Z軸 讀取與顯示
 
             //Function Classification
-            switch(dbIncreaseSetZ) {
+            switch (dbIncreaseSetZ) {
                 case dbRead:
                     break;
 
                 case dbCheckArrived: {
-                    double dbMin = 0.0;
-                    double dbMax = 0.0;
-                    if(dbTargetPositionSetZ * 1.01 > dbTargetPositionSetZ * 0.99) { 
-                        dbMin = dbTargetPositionSetZ * 0.99 - 0.1;
-                        dbMax = dbTargetPositionSetZ * 1.01 + 0.1;
-                    } else { 
-                        dbMin = dbTargetPositionSetZ * 1.01 - 0.1;
-                        dbMax = dbTargetPositionSetZ * 0.99 + 0.1;
-                    }
-                    if( dbMin <= dbRstSetZ &&
-                                 dbRstSetZ <= dbMax) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        double dbMin = 0.0;
+                        double dbMax = 0.0;
+                        if (dbTargetPositionSetZ * 1.01 > dbTargetPositionSetZ * 0.99) {
+                            dbMin = dbTargetPositionSetZ * 0.99 - 0.1;
+                            dbMax = dbTargetPositionSetZ * 1.01 + 0.1;
+                        } else {
+                            dbMin = dbTargetPositionSetZ * 1.01 - 0.1;
+                            dbMax = dbTargetPositionSetZ * 0.99 + 0.1;
+                        }
+                        if (dbMin <= dbRstSetZ &&
+                                     dbRstSetZ <= dbMax) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {  //植針Z軸 變更位置
-                    //伸長量overflow保護
-                    if( Mindb<=dbIncreaseSetZ && dbIncreaseSetZ<=Maxdb ) {
+                            //伸長量overflow保護
+                        if (Mindb <= dbIncreaseSetZ && dbIncreaseSetZ <= Maxdb) {
 
-                    } else if( dbIncreaseSetZ<=Mindb ) {
-                        dbIncreaseSetZ = (int)Mindb;
-                    } else if( Maxdb<=dbIncreaseSetZ ) {
-                        dbIncreaseSetZ = (int)Maxdb;
-                    }
+                        } else if (dbIncreaseSetZ <= Mindb) {
+                            dbIncreaseSetZ = (int)Mindb;
+                        } else if (Maxdb <= dbIncreaseSetZ) {
+                            dbIncreaseSetZ = (int)Maxdb;
+                        }
 
-                    // 取得欲變更的的浮點數
-                    int fChangeSetZ      = calculate.Map(dbIncreaseSetZ, Maxdb, Mindb, MaxRAW, MinRAW);
-                    dbTargetPositionSetZ = dbIncreaseSetZ;
+                        // 取得欲變更的的浮點數
+                        int fChangeSetZ = calculate.Map(dbIncreaseSetZ, Maxdb, Mindb, MaxRAW, MinRAW);
+                        dbTargetPositionSetZ = dbIncreaseSetZ;
 
-                    //執行移動植針Z軸
-                    int axis     = (int)WMX3軸定義.植針Z軸;
-                    int position = fChangeSetZ;
-                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                    int accel    = speed;
-                    int daccel   = speed;
-                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
-                } break;
+                        //執行移動植針Z軸
+                        int axis = (int)WMX3軸定義.植針Z軸;
+                        int position = fChangeSetZ;
+                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel = speed;
+                        int daccel = speed;
+                        clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    } break;
             }
 
             return dbRstSetZ;
@@ -1628,110 +1629,110 @@ namespace InjectorInspector
         public double dbapiSetR(double dbIncreaseSetR, double dbTargetSpeed)  //SetR
         {
             Normal calculate = new Normal();
-                const int    MaxRAW = 360000;
-                const int    MinRAW =      0;
-                const double Maxdb  =  360.0;
-                const double Mindb  =    0.0;
-                const double Sum    = 360000;
-                const double dbSpdF =  Sum / Maxdb;
+            const int MaxRAW = 360000;
+            const int MinRAW = 0;
+            const double Maxdb = 360.0;
+            const double Mindb = 0.0;
+            const double Sum = 360000;
+            const double dbSpdF = Sum / Maxdb;
 
-            double dbRstSetR        = 0.0;
+            double dbRstSetR = 0.0;
 
             {  // start of 植針R軸 讀取與顯示
-                int    rslt     = 0;
+                int rslt = 0;
                 string position = "";
-                string speed    = "";
+                string speed = "";
 
                 //讀取 植針R軸 資訊
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.植針R軸, ref position, ref speed);
 
                 //當數值有效
-                if( (position != "") && (speed != "") ) { 
+                if ((position != "") && (speed != "")) {
                     //得到原始數值
-                    int Convert              = (int)(double.Parse(position));
-                    int Speed                = (int)double.Parse(speed);
+                    int Convert = (int)(double.Parse(position));
+                    int Speed = (int)double.Parse(speed);
 
                     //得到轉換數值
-                    double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
-                    double dbSpeed           = Speed / dbSpdF;
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+                    double dbSpeed = Speed / dbSpdF;
 
                     //轉回原始數值
-                    int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
 
                     //顯示讀取長度
-                    dbRstSetR                = dbGet;
-                    UIHelper.SetControlProperty(lbl_acpos_植針R軸,    () => lbl_acpos_植針R軸.Text   = dbRstSetR.ToString("F3"));
+                    dbRstSetR = dbGet;
+                    UIHelper.SetControlProperty(lbl_acpos_植針R軸, () => lbl_acpos_植針R軸.Text = dbRstSetR.ToString("F3"));
 
                     //顯示運動速度
-                    UIHelper.SetControlProperty(lbl_spd_植針R軸,    () => lbl_spd_植針R軸.Text     = dbSpeed.ToString("F3"));
+                    UIHelper.SetControlProperty(lbl_spd_植針R軸, () => lbl_spd_植針R軸.Text = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     UIHelper.SetControlProperty(select_植針R軸, () => select_植針R軸.BackColor = Color.Red);
-                    UIHelper.SetControlProperty(lbl_acpos_植針R軸,    () => lbl_acpos_植針R軸.BackColor = Color.White);
-                    UIHelper.SetControlProperty(lbl_spd_植針R軸,    () => lbl_spd_植針R軸.BackColor   = Color.White);
+                    UIHelper.SetControlProperty(lbl_acpos_植針R軸, () => lbl_acpos_植針R軸.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_植針R軸, () => lbl_spd_植針R軸.BackColor = Color.White);
                 } else {
                     UIHelper.SetControlProperty(select_植針R軸, () => select_植針R軸.BackColor = Color.Green);
-                    UIHelper.SetControlProperty(lbl_acpos_植針R軸,    () => lbl_acpos_植針R軸.BackColor = Color.Gray);
-                    UIHelper.SetControlProperty(lbl_spd_植針R軸,    () => lbl_spd_植針R軸.BackColor   = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_acpos_植針R軸, () => lbl_acpos_植針R軸.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_植針R軸, () => lbl_spd_植針R軸.BackColor = Color.Gray);
                 }
 
             }  // end of 植針R軸 讀取與顯示
 
             //Function Classification
-            switch(dbIncreaseSetR) {
+            switch (dbIncreaseSetR) {
                 case dbRead:
                     break;
 
                 case dbCheckArrived: {
-                    double dbMin = 0.0;
-                    double dbMax = 0.0;
-                    if(dbTargetPositionSetR * 1.01 > dbTargetPositionSetR * 0.99) { 
-                        dbMin = dbTargetPositionSetR * 0.99 - 0.1;
-                        dbMax = dbTargetPositionSetR * 1.01 + 0.1;
-                    } else { 
-                        dbMin = dbTargetPositionSetR * 1.01 - 0.1;
-                        dbMax = dbTargetPositionSetR * 0.99 + 0.1;
-                    }
-                    if( dbMin <= dbRstSetR &&
-                                 dbRstSetR <= dbMax) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        double dbMin = 0.0;
+                        double dbMax = 0.0;
+                        if (dbTargetPositionSetR * 1.01 > dbTargetPositionSetR * 0.99) {
+                            dbMin = dbTargetPositionSetR * 0.99 - 0.1;
+                            dbMax = dbTargetPositionSetR * 1.01 + 0.1;
+                        } else {
+                            dbMin = dbTargetPositionSetR * 1.01 - 0.1;
+                            dbMax = dbTargetPositionSetR * 0.99 + 0.1;
+                        }
+                        if (dbMin <= dbRstSetR &&
+                                     dbRstSetR <= dbMax) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {  //植針R軸 變更位置
-                    //伸長量overflow保護
-                    if( Mindb<=dbIncreaseSetR && dbIncreaseSetR<=Maxdb ) {
+                            //伸長量overflow保護
+                        if (Mindb <= dbIncreaseSetR && dbIncreaseSetR <= Maxdb) {
 
-                    } else if( dbIncreaseSetR<=Mindb ) {
-                        dbIncreaseSetR = (int)Mindb;
-                    } else if( Maxdb<=dbIncreaseSetR ) {
-                        dbIncreaseSetR = (int)Maxdb;
-                    }
+                        } else if (dbIncreaseSetR <= Mindb) {
+                            dbIncreaseSetR = (int)Mindb;
+                        } else if (Maxdb <= dbIncreaseSetR) {
+                            dbIncreaseSetR = (int)Maxdb;
+                        }
 
-                    // 取得欲變更的的浮點數
-                    int fChangeSetR      = calculate.Map(dbIncreaseSetR, Maxdb, Mindb, MaxRAW, MinRAW);
-                    dbTargetPositionSetR = dbIncreaseSetR;
+                        // 取得欲變更的的浮點數
+                        int fChangeSetR = calculate.Map(dbIncreaseSetR, Maxdb, Mindb, MaxRAW, MinRAW);
+                        dbTargetPositionSetR = dbIncreaseSetR;
 
-                    //執行移動植針R軸
-                    int axis     = (int)WMX3軸定義.植針R軸;
-                    int position = fChangeSetR;
-                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                    int accel    = speed;
-                    int daccel   = speed;
-                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
-                } break;
+                        //執行移動植針R軸
+                        int axis = (int)WMX3軸定義.植針R軸;
+                        int position = fChangeSetR;
+                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel = speed;
+                        int daccel = speed;
+                        clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    } break;
             }
 
             return dbRstSetR;
         }  // end of public double dbapiSetR(double dbIncreaseSetR)  //SetR
         //---------------------------------------------------------------------------------------
         public double dbTargetPositionGate = 0.0;
-        public const double dbGate_開門    = 0.0;
-        public const double dbGate_關門    = 580.0;
+        public const double dbGate_開門 = 0.0;
+        public const double dbGate_關門 = 580.0;
         public double dbapiGate_defaultSpeed(double dbIncreaseGate)  //Gate
         {
             double dbDefaultSpeed = (580.0) * 0.1;
@@ -1744,126 +1745,126 @@ namespace InjectorInspector
         public double dbapiGate(double dbIncreaseGate, double dbTargetSpeed)  //Gate
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =  58000;
-                const int    MinRAW =      0;
-                const double Maxdb  =  580.0;
-                const double Mindb  =    0.0;
-                const double Sum    =  58000;
-                const double dbSpdF =  Sum / Maxdb;
+            const int MaxRAW = 58000;
+            const int MinRAW = 0;
+            const double Maxdb = 580.0;
+            const double Mindb = 0.0;
+            const double Sum = 58000;
+            const double dbSpdF = Sum / Maxdb;
 
-            double dbRstGate        = 0.0;
+            double dbRstGate = 0.0;
 
             {  // start of 工作門 讀取與顯示
-                int    rslt     = 0;
+                int rslt = 0;
                 string position = "";
-                string speed    = "";
+                string speed = "";
 
                 //讀取 工作門 資訊
                 rslt = clsServoControlWMX3.WMX3_check_ServoOnOff((int)WMX3軸定義.工作門, ref position, ref speed);
 
                 //當數值有效
-                if( (position != "") && (speed != "") ) { 
+                if ((position != "") && (speed != "")) {
                     //得到原始數值
-                    int Convert              = (int)(double.Parse(position));
-                    int Speed                = (int)double.Parse(speed);
+                    int Convert = (int)(double.Parse(position));
+                    int Speed = (int)double.Parse(speed);
 
                     //得到轉換數值
-                    double dbGet             = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
-                    double dbSpeed           = Speed / dbSpdF;
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+                    double dbSpeed = Speed / dbSpdF;
 
                     //轉回原始數值
-                    int cnback               = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
 
                     //顯示讀取長度
-                    dbRstGate                = dbGet;
-                    UIHelper.SetControlProperty(lbl_acpos_工作門,    () => lbl_acpos_工作門.Text    = dbRstGate.ToString("F3"));
+                    dbRstGate = dbGet;
+                    UIHelper.SetControlProperty(lbl_acpos_工作門, () => lbl_acpos_工作門.Text = dbRstGate.ToString("F3"));
 
                     //顯示運動速度
-                    UIHelper.SetControlProperty(lbl_spd_工作門,    () => lbl_spd_工作門.Text      = dbSpeed.ToString("F3"));
+                    UIHelper.SetControlProperty(lbl_spd_工作門, () => lbl_spd_工作門.Text = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 1) {
                     UIHelper.SetControlProperty(select_工作門, () => select_工作門.BackColor = Color.Red);
-                    UIHelper.SetControlProperty(lbl_acpos_工作門,    () => lbl_acpos_工作門.BackColor  = Color.White);
-                    UIHelper.SetControlProperty(lbl_spd_工作門,    () => lbl_spd_工作門.BackColor    = Color.White);
+                    UIHelper.SetControlProperty(lbl_acpos_工作門, () => lbl_acpos_工作門.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_工作門, () => lbl_spd_工作門.BackColor = Color.White);
                 } else {
                     UIHelper.SetControlProperty(select_工作門, () => select_工作門.BackColor = Color.Green);
-                    UIHelper.SetControlProperty(lbl_acpos_工作門,    () => lbl_acpos_工作門.BackColor  = Color.Gray);
-                    UIHelper.SetControlProperty(lbl_spd_工作門,    () => lbl_spd_工作門.BackColor    = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_acpos_工作門, () => lbl_acpos_工作門.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_工作門, () => lbl_spd_工作門.BackColor = Color.Gray);
                 }
 
             }  // end of 工作門 讀取與顯示
 
             //Function Classification
-            switch(dbIncreaseGate) {
+            switch (dbIncreaseGate) {
                 case dbRead:
                     break;
 
                 case dbCheckArrived: {
-                    double dbMin = 0.0;
-                    double dbMax = 0.0;
-                    if(dbTargetPositionGate * 1.01 > dbTargetPositionGate * 0.99) { 
-                        dbMin = dbTargetPositionGate * 0.99 - 0.1;
-                        dbMax = dbTargetPositionGate * 1.01 + 0.1;
-                    } else { 
-                        dbMin = dbTargetPositionGate * 1.01 - 0.1;
-                        dbMax = dbTargetPositionGate * 0.99 + 0.1;
-                    }
-                    if( dbMin <= dbRstGate &&
-                                 dbRstGate <= dbMax) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        double dbMin = 0.0;
+                        double dbMax = 0.0;
+                        if (dbTargetPositionGate * 1.01 > dbTargetPositionGate * 0.99) {
+                            dbMin = dbTargetPositionGate * 0.99 - 0.1;
+                            dbMax = dbTargetPositionGate * 1.01 + 0.1;
+                        } else {
+                            dbMin = dbTargetPositionGate * 1.01 - 0.1;
+                            dbMax = dbTargetPositionGate * 0.99 + 0.1;
+                        }
+                        if (dbMin <= dbRstGate &&
+                                     dbRstGate <= dbMax) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {  //工作門 變更位置
-                    //伸長量overflow保護
-                    if( Mindb<=dbIncreaseGate && dbIncreaseGate<=Maxdb ) {
+                            //伸長量overflow保護
+                        if (Mindb <= dbIncreaseGate && dbIncreaseGate <= Maxdb) {
 
-                    } else if( dbIncreaseGate<=Mindb ) {
-                        dbIncreaseGate = (int)Mindb;
-                    } else if( Maxdb<=dbIncreaseGate ) {
-                        dbIncreaseGate = (int)Maxdb;
-                    }
+                        } else if (dbIncreaseGate <= Mindb) {
+                            dbIncreaseGate = (int)Mindb;
+                        } else if (Maxdb <= dbIncreaseGate) {
+                            dbIncreaseGate = (int)Maxdb;
+                        }
 
-                    // 取得欲變更的的浮點數
-                    int fChangeGate = calculate.Map(dbIncreaseGate, Maxdb, Mindb, MaxRAW, MinRAW);
-                    dbTargetPositionGate = dbIncreaseGate;
+                        // 取得欲變更的的浮點數
+                        int fChangeGate = calculate.Map(dbIncreaseGate, Maxdb, Mindb, MaxRAW, MinRAW);
+                        dbTargetPositionGate = dbIncreaseGate;
 
-                    //執行移動工作門
-                    int axis     = (int)WMX3軸定義.工作門;
-                    int position = fChangeGate;
-                    int speed    = (int)(dbTargetSpeed * (MaxRAW/ Maxdb));
-                    int accel    = speed;
-                    int daccel   = speed;
-                    clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
-                } break;
+                        //執行移動工作門
+                        int axis = (int)WMX3軸定義.工作門;
+                        int position = fChangeGate;
+                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel = speed;
+                        int daccel = speed;
+                        clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
+                    } break;
             }
 
             return dbRstGate;
         }  // end of public double dbapiGate(double dbIncreaseGate)  //Gate
         //---------------------------------------------------------------------------------------
         public double dbTargetPositionIAI = 0.0;
-        public const double dbIAI_Home位  = 0.0;
-        public const double dbIAI_預備位  = 10.0;
+        public const double dbIAI_Home位 = 0.0;
+        public const double dbIAI_預備位 = 10.0;
         public double dbapiIAI(double dbIncreaseIAI)  //IAI
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =   3000;
-                const int    MinRAW =      0;
-                const double Maxdb  =   30.0;
-                const double Mindb  =    0.0;
-                const double Sum    =   3000;
-                const double dbSpdF =  Sum / Maxdb;
+            const int MaxRAW = 3000;
+            const int MinRAW = 0;
+            const double Maxdb = 30.0;
+            const double Mindb = 0.0;
+            const double Sum = 3000;
+            const double dbSpdF = Sum / Maxdb;
 
-            double dbRstIAI         = 0.0;
+            double dbRstIAI = 0.0;
 
             {  // start of Socket定位攝影機軸 讀取與顯示
-                int    rslt     = 0;
+                int rslt = 0;
                 string position = "";
-                string speed    = "";
+                string speed = "";
 
                 //讀取 Socket定位攝影機軸 資訊
                 byte[] aGetGetIAI = new byte[2];
@@ -1875,108 +1876,108 @@ namespace InjectorInspector
                 rslt += ((aGetSetIAI[(int)(addr_IAI.pxeaI_SetDisableBrake - addr_IAI.pxeaI_SetControlSignal2_2Bytes) / 10] & (1 << (int)(addr_IAI.pxeaI_SetDisableBrake) % 10)) != 0) ? 1 : 0;
 
                 //當數值有效
-                if(true) { 
+                if (true) {
                     //得到原始數值
-                    int Convert                   = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetPosition, 0);
-                    int Speed                     = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetCurrentSpeed4Bytes, 0);
+                    int Convert = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetPosition, 0);
+                    int Speed = clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GetCurrentSpeed4Bytes, 0);
 
                     //得到轉換數值
-                    double dbGet                  = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
-                    double dbSpeed                = Speed / dbSpdF;
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Maxdb, Mindb);
+                    double dbSpeed = Speed / dbSpdF;
 
                     //轉回原始數值
-                    int cnback                    = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Maxdb, (int)Mindb, (double)MaxRAW, (double)MinRAW);
 
                     //顯示讀取長度
-                    dbRstIAI                      = dbGet;
-                    UIHelper.SetControlProperty(lbl_acpos_IAI,    () => lbl_acpos_IAI.Text            = dbRstIAI.ToString("F3"));
+                    dbRstIAI = dbGet;
+                    UIHelper.SetControlProperty(lbl_acpos_IAI, () => lbl_acpos_IAI.Text = dbRstIAI.ToString("F3"));
 
                     //顯示運動速度
-                    UIHelper.SetControlProperty(lbl_spd_IAI,    () => lbl_spd_IAI.Text              = dbSpeed.ToString("F3"));
+                    UIHelper.SetControlProperty(lbl_spd_IAI, () => lbl_spd_IAI.Text = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 2) {
                     UIHelper.SetControlProperty(select_Socket檢測, () => select_Socket檢測.BackColor = Color.Red);
-                    UIHelper.SetControlProperty(lbl_acpos_IAI,    () => lbl_acpos_IAI.BackColor          = Color.White);
-                    UIHelper.SetControlProperty(lbl_spd_IAI,    () => lbl_spd_IAI.BackColor            = Color.White);
+                    UIHelper.SetControlProperty(lbl_acpos_IAI, () => lbl_acpos_IAI.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_IAI, () => lbl_spd_IAI.BackColor = Color.White);
                 } else {
                     UIHelper.SetControlProperty(select_Socket檢測, () => select_Socket檢測.BackColor = Color.Green);
-                    UIHelper.SetControlProperty(lbl_acpos_IAI,    () => lbl_acpos_IAI.BackColor          = Color.Gray);
-                    UIHelper.SetControlProperty(lbl_spd_IAI,    () => lbl_spd_IAI.BackColor            = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_acpos_IAI, () => lbl_acpos_IAI.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_IAI, () => lbl_spd_IAI.BackColor = Color.Gray);
                 }
 
             }  // end of Socket定位攝影機軸 讀取與顯示
 
             //Function Classification
-            switch(dbIncreaseIAI) {
+            switch (dbIncreaseIAI) {
                 case dbRead:
                     break;
 
                 case dbCheckArrived: {
-                    double dbMin = 0.0;
-                    double dbMax = 0.0;
-                    if(dbTargetPositionIAI * 1.01 > dbTargetPositionIAI * 0.99) { 
-                        dbMin = dbTargetPositionIAI * 0.99 - 0.1;
-                        dbMax = dbTargetPositionIAI * 1.01 + 0.1;
-                    } else { 
-                        dbMin = dbTargetPositionIAI * 1.01 - 0.1;
-                        dbMax = dbTargetPositionIAI * 0.99 + 0.1;
-                    }
-                    if( dbMin <= dbRstIAI &&
-                                 dbRstIAI <= dbMax) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        double dbMin = 0.0;
+                        double dbMax = 0.0;
+                        if (dbTargetPositionIAI * 1.01 > dbTargetPositionIAI * 0.99) {
+                            dbMin = dbTargetPositionIAI * 0.99 - 0.1;
+                            dbMax = dbTargetPositionIAI * 1.01 + 0.1;
+                        } else {
+                            dbMin = dbTargetPositionIAI * 1.01 - 0.1;
+                            dbMax = dbTargetPositionIAI * 0.99 + 0.1;
+                        }
+                        if (dbMin <= dbRstIAI &&
+                                     dbRstIAI <= dbMax) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {  //IAI 變更位置
-                    //伸長量overflow保護
-                    if( Mindb<=dbIncreaseIAI && dbIncreaseIAI<=Maxdb ) {
+                            //伸長量overflow保護
+                        if (Mindb <= dbIncreaseIAI && dbIncreaseIAI <= Maxdb) {
 
-                    } else if( dbIncreaseIAI<=Mindb ) {
-                        dbIncreaseIAI = (int)Mindb;
-                    } else if( Maxdb<=dbIncreaseIAI ) {
-                        dbIncreaseIAI = (int)Maxdb;
-                    }
+                        } else if (dbIncreaseIAI <= Mindb) {
+                            dbIncreaseIAI = (int)Mindb;
+                        } else if (Maxdb <= dbIncreaseIAI) {
+                            dbIncreaseIAI = (int)Maxdb;
+                        }
 
-                    // 取得欲變更的的浮點數
-                    double fChangeGate = calculate.Map(dbIncreaseIAI, (double)Maxdb, (double)Mindb, (double)Maxdb, (double)Mindb);
-                    dbTargetPositionIAI = dbIncreaseIAI;
+                        // 取得欲變更的的浮點數
+                        double fChangeGate = calculate.Map(dbIncreaseIAI, (double)Maxdb, (double)Mindb, (double)Maxdb, (double)Mindb);
+                        dbTargetPositionIAI = dbIncreaseIAI;
 
-                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 1);
+                        clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, 1);
 
-                    //執行移動工作門
-                    clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GoToPosition, fChangeGate);
-                } break;
+                        //執行移動工作門
+                        clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_GoToPosition, fChangeGate);
+                    } break;
             }
 
             return dbRstIAI;
         }  // end of public double dbapiIAI(double dbIncreaseIAI)  //IAI
         //---------------------------------------------------------------------------------------
         public double dbTargetPositionJoDell3D掃描 = 0.0;
-        public const double dbJoDell3D掃描_Home位  = 10.0;
+        public const double dbJoDell3D掃描_Home位 = 10.0;
         public double dbapiJoDell3D掃描(double dbIncreaseJoDell3D)  //JoDell3D掃描
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =   3000;
-                const int    MinRAW =      0;
-                const double Maxdb  =   30.0;
-                const double Mindb  =    0.0;
-                const double Sum    =   3000;
-                const double dbSpdF =  Sum / Maxdb;
+            const int MaxRAW = 3000;
+            const int MinRAW = 0;
+            const double Maxdb = 30.0;
+            const double Mindb = 0.0;
+            const double Sum = 3000;
+            const double dbSpdF = Sum / Maxdb;
 
             double dbRstJoDell3D掃描 = 0.0;
 
             {  // start of JoDell3D掃描 讀取與顯示
-                int    rslt     = 0;
+                int rslt = 0;
                 string position = "";
-                string speed    = "";
+                string speed = "";
 
                 //讀取 JoDell3D掃描 資訊
                 byte[] JODELL_RX = new byte[18];
-                int addr_TargetGetDevice   = (int)(addr_JODELL.pxeaJ_3D掃描_Input) / 10;
+                int addr_TargetGetDevice = (int)(addr_JODELL.pxeaJ_3D掃描_Input) / 10;
                 int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START) / 10;
                 clsServoControlWMX3.WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice + addr_TargetGetFunction, JODELL_RX.Length);
 
@@ -1987,106 +1988,106 @@ namespace InjectorInspector
                 rslt = varJODELL_RX[0];
 
                 //當數值有效
-                if(true) { 
+                if (true) {
                     //得到原始數值
-                    int Convert                   = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GetPosition, 0);
-                    int Speed                     = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
+                    int Convert = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GetPosition, 0);
+                    int Speed = clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
 
                     //得到轉換數值
-                    double dbGet                  = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
-                    double dbSpeed                = Speed / dbSpdF;
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
+                    double dbSpeed = Speed / dbSpdF;
 
                     //轉回原始數值
-                    int cnback                    = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
 
                     //顯示讀取長度
-                    dbRstJoDell3D掃描             = dbGet;
-                    UIHelper.SetControlProperty(lbl_acpos_JoDell3D掃描,    () => lbl_acpos_JoDell3D掃描.Text   = dbRstJoDell3D掃描.ToString("F3"));
+                    dbRstJoDell3D掃描 = dbGet;
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell3D掃描, () => lbl_acpos_JoDell3D掃描.Text = dbRstJoDell3D掃描.ToString("F3"));
 
                     //顯示運動速度
-                    UIHelper.SetControlProperty(lbl_spd_JoDell3D掃描,    () => lbl_spd_JoDell3D掃描.Text     = dbSpeed.ToString("F3"));
+                    UIHelper.SetControlProperty(lbl_spd_JoDell3D掃描, () => lbl_spd_JoDell3D掃描.Text = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 4) {
                     UIHelper.SetControlProperty(select_JoDell3D掃描, () => select_JoDell3D掃描.BackColor = Color.Red);
-                    UIHelper.SetControlProperty(lbl_acpos_JoDell3D掃描,    () => lbl_acpos_JoDell3D掃描.BackColor = Color.White);
-                    UIHelper.SetControlProperty(lbl_spd_JoDell3D掃描,    () => lbl_spd_JoDell3D掃描.BackColor   = Color.White);
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell3D掃描, () => lbl_acpos_JoDell3D掃描.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_JoDell3D掃描, () => lbl_spd_JoDell3D掃描.BackColor = Color.White);
                 } else {
                     UIHelper.SetControlProperty(select_JoDell3D掃描, () => select_JoDell3D掃描.BackColor = Color.Green);
-                    UIHelper.SetControlProperty(lbl_acpos_JoDell3D掃描,    () => lbl_acpos_JoDell3D掃描.BackColor = Color.Gray);
-                    UIHelper.SetControlProperty(lbl_spd_JoDell3D掃描,    () => lbl_spd_JoDell3D掃描.BackColor   = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell3D掃描, () => lbl_acpos_JoDell3D掃描.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_JoDell3D掃描, () => lbl_spd_JoDell3D掃描.BackColor = Color.Gray);
                 }
 
             }  // end of JoDell3D掃描 讀取與顯示
 
             //Function Classification
-            switch(dbIncreaseJoDell3D) {
+            switch (dbIncreaseJoDell3D) {
                 case dbRead:
                     break;
 
                 case dbCheckArrived: {
-                    double dbMin = 0.0;
-                    double dbMax = 0.0;
-                    if(dbTargetPositionJoDell3D掃描 * 1.01 > dbTargetPositionJoDell3D掃描 * 0.99) { 
-                        dbMin = dbTargetPositionJoDell3D掃描 * 0.99 - 0.1;
-                        dbMax = dbTargetPositionJoDell3D掃描 * 1.01 + 0.1;
-                    } else { 
-                        dbMin = dbTargetPositionJoDell3D掃描 * 1.01 - 0.1;
-                        dbMax = dbTargetPositionJoDell3D掃描 * 0.99 + 0.1;
-                    }
-                    if( dbMin <= dbRstJoDell3D掃描 &&
-                                 dbRstJoDell3D掃描 <= dbMax) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        double dbMin = 0.0;
+                        double dbMax = 0.0;
+                        if (dbTargetPositionJoDell3D掃描 * 1.01 > dbTargetPositionJoDell3D掃描 * 0.99) {
+                            dbMin = dbTargetPositionJoDell3D掃描 * 0.99 - 0.1;
+                            dbMax = dbTargetPositionJoDell3D掃描 * 1.01 + 0.1;
+                        } else {
+                            dbMin = dbTargetPositionJoDell3D掃描 * 1.01 - 0.1;
+                            dbMax = dbTargetPositionJoDell3D掃描 * 0.99 + 0.1;
+                        }
+                        if (dbMin <= dbRstJoDell3D掃描 &&
+                                     dbRstJoDell3D掃描 <= dbMax) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {  //3D掃描 變更位置
-                    //伸長量overflow保護
-                    if( Mindb<=dbIncreaseJoDell3D && dbIncreaseJoDell3D<=Maxdb ) {
+                            //伸長量overflow保護
+                        if (Mindb <= dbIncreaseJoDell3D && dbIncreaseJoDell3D <= Maxdb) {
 
-                    } else if( dbIncreaseJoDell3D<=Mindb ) {
-                        dbIncreaseJoDell3D = (int)Mindb;
-                    } else if( Maxdb<=dbIncreaseJoDell3D ) {
-                        dbIncreaseJoDell3D = (int)Maxdb;
-                    }
+                        } else if (dbIncreaseJoDell3D <= Mindb) {
+                            dbIncreaseJoDell3D = (int)Mindb;
+                        } else if (Maxdb <= dbIncreaseJoDell3D) {
+                            dbIncreaseJoDell3D = (int)Maxdb;
+                        }
 
-                    // 取得欲變更的的浮點數
-                    double fChangeGate = calculate.Map(dbIncreaseJoDell3D, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
-                    dbTargetPositionJoDell3D掃描 = dbIncreaseJoDell3D;
+                        // 取得欲變更的的浮點數
+                        double fChangeGate = calculate.Map(dbIncreaseJoDell3D, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
+                        dbTargetPositionJoDell3D掃描 = dbIncreaseJoDell3D;
 
-                    //執行移動JoDell3D掃描
-                    clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
-                } break;
+                        //執行移動JoDell3D掃描
+                        clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
+                    } break;
             }
 
             return dbRstJoDell3D掃描;
         }  // end of public double dbapiJoDell3D掃描(double dbIncreaseJoDell3D)  //JoDell3D掃描
         //---------------------------------------------------------------------------------------
         public double dbTargetPositionJoDell吸針嘴 = 0.0;
-        public const double dbJoDell吸針嘴_Home位  = 5.0;
+        public const double dbJoDell吸針嘴_Home位 = 5.0;
         public double dbapiJoDell吸針嘴(double dbIncreaseJoDell吸針嘴)  //JoDell吸針嘴
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =   3000;
-                const int    MinRAW =      0;
-                const double Maxdb  =   30.0;
-                const double Mindb  =    0.0;
-                const double Sum    =   3000;
-                const double dbSpdF =  Sum / Maxdb;
+            const int MaxRAW = 3000;
+            const int MinRAW = 0;
+            const double Maxdb = 30.0;
+            const double Mindb = 0.0;
+            const double Sum = 3000;
+            const double dbSpdF = Sum / Maxdb;
 
             double dbRstJoDell吸針嘴 = 0.0;
 
             {  // start of JoDell吸針嘴 讀取與顯示
-                int    rslt     = 0;
+                int rslt = 0;
                 string position = "";
-                string speed    = "";
+                string speed = "";
 
                 //讀取 JoDell吸針嘴 資訊
                 byte[] JODELL_RX = new byte[18];
-                int addr_TargetGetDevice   = (int)(addr_JODELL.pxeaJ_吸針嘴_Input) / 10;
+                int addr_TargetGetDevice = (int)(addr_JODELL.pxeaJ_吸針嘴_Input) / 10;
                 int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START) / 10;
                 clsServoControlWMX3.WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice + addr_TargetGetFunction, JODELL_RX.Length);
 
@@ -2097,106 +2098,106 @@ namespace InjectorInspector
                 rslt = varJODELL_RX[0];
 
                 //當數值有效
-                if(true) { 
+                if (true) {
                     //得到原始數值
-                    int Convert                   = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GetPosition, 0);
-                    int Speed                     = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
+                    int Convert = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GetPosition, 0);
+                    int Speed = clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
 
                     //得到轉換數值
-                    double dbGet                  = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
-                    double dbSpeed                = Speed / dbSpdF;
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
+                    double dbSpeed = Speed / dbSpdF;
 
                     //轉回原始數值
-                    int cnback                    = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
 
                     //顯示讀取長度
-                    dbRstJoDell吸針嘴             = dbGet;
-                    UIHelper.SetControlProperty(lbl_acpos_JoDell吸針嘴,    () => lbl_acpos_JoDell吸針嘴.Text   = dbRstJoDell吸針嘴.ToString("F3"));
+                    dbRstJoDell吸針嘴 = dbGet;
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell吸針嘴, () => lbl_acpos_JoDell吸針嘴.Text = dbRstJoDell吸針嘴.ToString("F3"));
 
                     //顯示運動速度
-                    UIHelper.SetControlProperty(lbl_spd_JoDell吸針嘴,    () => lbl_spd_JoDell吸針嘴.Text     = dbSpeed.ToString("F3"));
+                    UIHelper.SetControlProperty(lbl_spd_JoDell吸針嘴, () => lbl_spd_JoDell吸針嘴.Text = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 4) {
                     UIHelper.SetControlProperty(select_JoDell吸針嘴, () => select_JoDell吸針嘴.BackColor = Color.Red);
-                    UIHelper.SetControlProperty(lbl_acpos_JoDell吸針嘴,    () => lbl_acpos_JoDell吸針嘴.BackColor = Color.White);
-                    UIHelper.SetControlProperty(lbl_spd_JoDell吸針嘴,    () => lbl_spd_JoDell吸針嘴.BackColor   = Color.White);
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell吸針嘴, () => lbl_acpos_JoDell吸針嘴.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_JoDell吸針嘴, () => lbl_spd_JoDell吸針嘴.BackColor = Color.White);
                 } else {
                     UIHelper.SetControlProperty(select_JoDell吸針嘴, () => select_JoDell吸針嘴.BackColor = Color.Green);
-                    UIHelper.SetControlProperty(lbl_acpos_JoDell吸針嘴,    () => lbl_acpos_JoDell吸針嘴.BackColor = Color.Gray);
-                    UIHelper.SetControlProperty(lbl_spd_JoDell吸針嘴,    () => lbl_spd_JoDell吸針嘴.BackColor   = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell吸針嘴, () => lbl_acpos_JoDell吸針嘴.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_JoDell吸針嘴, () => lbl_spd_JoDell吸針嘴.BackColor = Color.Gray);
                 }
 
             }  // end of JoDell吸針嘴 讀取與顯示
 
             //Function Classification
-            switch(dbIncreaseJoDell吸針嘴) {
+            switch (dbIncreaseJoDell吸針嘴) {
                 case dbRead:
                     break;
 
                 case dbCheckArrived: {
-                    double dbMin = 0.0;
-                    double dbMax = 0.0;
-                    if(dbTargetPositionJoDell吸針嘴 * 1.01 > dbTargetPositionJoDell吸針嘴 * 0.99) { 
-                        dbMin = dbTargetPositionJoDell吸針嘴 * 0.99 - 0.1;
-                        dbMax = dbTargetPositionJoDell吸針嘴 * 1.01 + 0.1;
-                    } else { 
-                        dbMin = dbTargetPositionJoDell吸針嘴 * 1.01 - 0.1;
-                        dbMax = dbTargetPositionJoDell吸針嘴 * 0.99 + 0.1;
-                    }
-                    if( dbMin <= dbRstJoDell吸針嘴 &&
-                                 dbRstJoDell吸針嘴 <= dbMax) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        double dbMin = 0.0;
+                        double dbMax = 0.0;
+                        if (dbTargetPositionJoDell吸針嘴 * 1.01 > dbTargetPositionJoDell吸針嘴 * 0.99) {
+                            dbMin = dbTargetPositionJoDell吸針嘴 * 0.99 - 0.1;
+                            dbMax = dbTargetPositionJoDell吸針嘴 * 1.01 + 0.1;
+                        } else {
+                            dbMin = dbTargetPositionJoDell吸針嘴 * 1.01 - 0.1;
+                            dbMax = dbTargetPositionJoDell吸針嘴 * 0.99 + 0.1;
+                        }
+                        if (dbMin <= dbRstJoDell吸針嘴 &&
+                                     dbRstJoDell吸針嘴 <= dbMax) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {  //3D掃描 變更位置
-                    //伸長量overflow保護
-                    if( Mindb<=dbIncreaseJoDell吸針嘴 && dbIncreaseJoDell吸針嘴<=Maxdb ) {
+                            //伸長量overflow保護
+                        if (Mindb <= dbIncreaseJoDell吸針嘴 && dbIncreaseJoDell吸針嘴 <= Maxdb) {
 
-                    } else if( dbIncreaseJoDell吸針嘴<=Mindb ) {
-                        dbIncreaseJoDell吸針嘴 = (int)Mindb;
-                    } else if( Maxdb<=dbIncreaseJoDell吸針嘴 ) {
-                        dbIncreaseJoDell吸針嘴 = (int)Maxdb;
-                    }
+                        } else if (dbIncreaseJoDell吸針嘴 <= Mindb) {
+                            dbIncreaseJoDell吸針嘴 = (int)Mindb;
+                        } else if (Maxdb <= dbIncreaseJoDell吸針嘴) {
+                            dbIncreaseJoDell吸針嘴 = (int)Maxdb;
+                        }
 
-                    // 取得欲變更的的浮點數
-                    double fChangeGate = calculate.Map(dbIncreaseJoDell吸針嘴, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
-                    dbTargetPositionJoDell吸針嘴 = dbIncreaseJoDell吸針嘴;
+                        // 取得欲變更的的浮點數
+                        double fChangeGate = calculate.Map(dbIncreaseJoDell吸針嘴, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
+                        dbTargetPositionJoDell吸針嘴 = dbIncreaseJoDell吸針嘴;
 
-                    //執行移動JoDell吸針嘴
-                    clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
-                } break;
+                        //執行移動JoDell吸針嘴
+                        clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
+                    } break;
             }
 
             return dbRstJoDell吸針嘴;
         }  // end of public double dbapiJoDell吸針嘴(double dbIncreaseJoDell吸針嘴)  //JoDell吸針嘴
         //---------------------------------------------------------------------------------------
-        public double dbTargetPositionJoDell植針嘴相機 =  0.0;
-        public const double dbJoDell植針嘴相機_Home位  = 10.0;
+        public double dbTargetPositionJoDell植針嘴相機 = 0.0;
+        public const double dbJoDell植針嘴相機_Home位 = 10.0;
         public double dbapiJoDell植針嘴相機(double dbIncreaseJoDell植針嘴相機)  //JoDell植針嘴相機
         {
             Normal calculate = new Normal();
-                const int    MaxRAW =   5000;
-                const int    MinRAW =      0;
-                const double Maxdb  =   50.0;
-                const double Mindb  =    0.0;
-                const double Sum    =   5000;
-                const double dbSpdF =  Sum / Maxdb;
+            const int MaxRAW = 5000;
+            const int MinRAW = 0;
+            const double Maxdb = 50.0;
+            const double Mindb = 0.0;
+            const double Sum = 5000;
+            const double dbSpdF = Sum / Maxdb;
 
             double dbRstJoDell植針嘴相機 = 0.0;
 
             {  // start of JoDell植針嘴相機 讀取與顯示
-                int    rslt     = 0;
+                int rslt = 0;
                 string position = "";
-                string speed    = "";
+                string speed = "";
 
                 //讀取 JoDell植針嘴相機 資訊
                 byte[] JODELL_RX = new byte[18];
-                int addr_TargetGetDevice   = (int)(addr_JODELL.pxeaJ_植針嘴相機_Input) / 10;
+                int addr_TargetGetDevice = (int)(addr_JODELL.pxeaJ_植針嘴相機_Input) / 10;
                 int addr_TargetGetFunction = (int)(addr_JODELL.pxeaJ_GetAddr_START) / 10;
                 clsServoControlWMX3.WMX3_GetInIO(ref JODELL_RX, addr_TargetGetDevice + addr_TargetGetFunction, JODELL_RX.Length);
 
@@ -2207,35 +2208,35 @@ namespace InjectorInspector
                 rslt = varJODELL_RX[0];
 
                 //當數值有效
-                if(true) {
+                if (true) {
                     //得到原始數值
-                    int Convert                       = clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_GetPosition, 0);
-                    int Speed                         = clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
+                    int Convert = clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_GetPosition, 0);
+                    int Speed = clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaJ_GetAddr_Speed2Bytes, 0);
 
                     //得到轉換數值
-                    double dbGet                      = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
-                    double dbSpeed                    = Speed / dbSpdF;
+                    double dbGet = calculate.Map(Convert, MaxRAW, MinRAW, Mindb, Maxdb);
+                    double dbSpeed = Speed / dbSpdF;
 
                     //轉回原始數值
-                    int cnback                        = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
+                    int cnback = (int)calculate.Map((int)dbGet, (int)Mindb, (int)Maxdb, (double)MaxRAW, (double)MinRAW);
 
                     //顯示讀取長度
-                    dbRstJoDell植針嘴相機             = dbGet;
-                    UIHelper.SetControlProperty(lbl_acpos_JoDell植針嘴相機,    () => lbl_acpos_JoDell植針嘴相機.Text   = dbRstJoDell植針嘴相機.ToString("F3"));
+                    dbRstJoDell植針嘴相機 = dbGet;
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell植針嘴相機, () => lbl_acpos_JoDell植針嘴相機.Text = dbRstJoDell植針嘴相機.ToString("F3"));
 
                     //顯示運動速度
-                    UIHelper.SetControlProperty(lbl_spd_JoDell植針嘴相機,    () => lbl_spd_JoDell植針嘴相機.Text     = dbSpeed.ToString("F3"));
+                    UIHelper.SetControlProperty(lbl_spd_JoDell植針嘴相機, () => lbl_spd_JoDell植針嘴相機.Text = dbSpeed.ToString("F3"));
                 }
 
                 //變更顏色
                 if (rslt == 4) {
                     UIHelper.SetControlProperty(select_JoDell植針嘴相機, () => select_JoDell植針嘴相機.BackColor = Color.Red);
-                    UIHelper.SetControlProperty(lbl_acpos_JoDell植針嘴相機,    () => lbl_acpos_JoDell植針嘴相機.BackColor = Color.White);
-                    UIHelper.SetControlProperty(lbl_spd_JoDell植針嘴相機,    () => lbl_spd_JoDell植針嘴相機.BackColor   = Color.White);
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell植針嘴相機, () => lbl_acpos_JoDell植針嘴相機.BackColor = Color.White);
+                    UIHelper.SetControlProperty(lbl_spd_JoDell植針嘴相機, () => lbl_spd_JoDell植針嘴相機.BackColor = Color.White);
                 } else {
                     UIHelper.SetControlProperty(select_JoDell植針嘴相機, () => select_JoDell植針嘴相機.BackColor = Color.Green);
-                    UIHelper.SetControlProperty(lbl_acpos_JoDell植針嘴相機,    () => lbl_acpos_JoDell植針嘴相機.BackColor = Color.Gray);
-                    UIHelper.SetControlProperty(lbl_spd_JoDell植針嘴相機,    () => lbl_spd_JoDell植針嘴相機.BackColor   = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_acpos_JoDell植針嘴相機, () => lbl_acpos_JoDell植針嘴相機.BackColor = Color.Gray);
+                    UIHelper.SetControlProperty(lbl_spd_JoDell植針嘴相機, () => lbl_spd_JoDell植針嘴相機.BackColor = Color.Gray);
                 }
 
             }  // end of JoDell植針嘴相機 讀取與顯示
@@ -2246,40 +2247,40 @@ namespace InjectorInspector
                     break;
 
                 case dbCheckArrived: {
-                    double dbMin = 0.0;
-                    double dbMax = 0.0;
-                    if(dbTargetPositionJoDell植針嘴相機 * 1.01 > dbTargetPositionJoDell植針嘴相機 * 0.99) { 
-                        dbMin = dbTargetPositionJoDell植針嘴相機 * 0.99 - 0.1;
-                        dbMax = dbTargetPositionJoDell植針嘴相機 * 1.01 + 0.1;
-                    } else { 
-                        dbMin = dbTargetPositionJoDell植針嘴相機 * 1.01 - 0.1;
-                        dbMax = dbTargetPositionJoDell植針嘴相機 * 0.99 + 0.1;
-                    }
-                    if( dbMin <= dbRstJoDell植針嘴相機 &&
-                                 dbRstJoDell植針嘴相機 <= dbMax) { 
-                        return dbAxisMoveOk;
-                    } else {
-                        return dbAxisMoveNg;
-                    }
-                } break;
+                        double dbMin = 0.0;
+                        double dbMax = 0.0;
+                        if (dbTargetPositionJoDell植針嘴相機 * 1.01 > dbTargetPositionJoDell植針嘴相機 * 0.99) {
+                            dbMin = dbTargetPositionJoDell植針嘴相機 * 0.99 - 0.1;
+                            dbMax = dbTargetPositionJoDell植針嘴相機 * 1.01 + 0.1;
+                        } else {
+                            dbMin = dbTargetPositionJoDell植針嘴相機 * 1.01 - 0.1;
+                            dbMax = dbTargetPositionJoDell植針嘴相機 * 0.99 + 0.1;
+                        }
+                        if (dbMin <= dbRstJoDell植針嘴相機 &&
+                                     dbRstJoDell植針嘴相機 <= dbMax) {
+                            return dbAxisMoveOk;
+                        } else {
+                            return dbAxisMoveNg;
+                        }
+                    } break;
 
                 default: {  //植針嘴 變更位置
-                    //伸長量overflow保護
-                    if( Mindb<= dbIncreaseJoDell植針嘴相機 && dbIncreaseJoDell植針嘴相機 <= Maxdb ) {
+                            //伸長量overflow保護
+                        if (Mindb <= dbIncreaseJoDell植針嘴相機 && dbIncreaseJoDell植針嘴相機 <= Maxdb) {
 
-                    } else if(dbIncreaseJoDell植針嘴相機 <= Mindb ) {
+                        } else if (dbIncreaseJoDell植針嘴相機 <= Mindb) {
                             dbIncreaseJoDell植針嘴相機 = (int)Mindb;
-                    } else if( Maxdb<= dbIncreaseJoDell植針嘴相機) {
+                        } else if (Maxdb <= dbIncreaseJoDell植針嘴相機) {
                             dbIncreaseJoDell植針嘴相機 = (int)Maxdb;
-                    }
+                        }
 
-                    // 取得欲變更的的浮點數
-                    double fChangeGate = calculate.Map(dbIncreaseJoDell植針嘴相機, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
+                        // 取得欲變更的的浮點數
+                        double fChangeGate = calculate.Map(dbIncreaseJoDell植針嘴相機, (double)Mindb, (double)Maxdb, (double)Maxdb, (double)Mindb);
                         dbTargetPositionJoDell植針嘴相機 = dbIncreaseJoDell植針嘴相機;
 
-                    //執行移動JoDell植針嘴
-                    clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
-                } break;
+                        //執行移動JoDell植針嘴
+                        clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_GoToPosition, fChangeGate);
+                    } break;
             }
 
             return dbRstJoDell植針嘴相機;
@@ -2321,7 +2322,7 @@ namespace InjectorInspector
         const int i計時300ms_Define = 30;
         public void Gkh_KeyUp(object sender, KeyEventArgs e)
         {
-            switch(e.KeyCode) {
+            switch (e.KeyCode) {
                 case Keys.Enter:
                     i計時300ms = 0;
 
@@ -2360,7 +2361,7 @@ namespace InjectorInspector
         {
             double rsult = 0.0;
 
-                   if (GetPara == "NeedleCircleParameter") {  //Socket針孔 真圓相似度
+            if (GetPara == "NeedleCircleParameter") {  //Socket針孔 真圓相似度
                 rsult = apiParaReadIndex("SaveParameterJason.json", 18);
             } else if (GetPara == "NeedleHeadLength") {  //針頭長
                 rsult = apiParaReadIndex("SaveParameterJason.json", 19);
@@ -2411,27 +2412,27 @@ namespace InjectorInspector
             inspector1.xInit();
 
             //先跳到第2頁
-            int iAimToPageIndex = 4-1;
+            int iAimToPageIndex = 4 - 1;
             tabControl1.SelectedTab = tabControl1.TabPages[iAimToPageIndex - 1];
 
             //InitSpeed Num Block
-            SpeedNozzleX.Value  = (int)dbInsertSpeedNozzleX;
-            SpeedNozzleY.Value  = (int)dbInsertSpeedNozzleY;
-            SpeedNozzleZ.Value  = (int)dbInsertSpeedNozzleZ;
-            SpeedNozzleR.Value  = (int)dbInsertSpeedNozzleR;
+            SpeedNozzleX.Value = (int)dbInsertSpeedNozzleX;
+            SpeedNozzleY.Value = (int)dbInsertSpeedNozzleY;
+            SpeedNozzleZ.Value = (int)dbInsertSpeedNozzleZ;
+            SpeedNozzleR.Value = (int)dbInsertSpeedNozzleR;
             SpeedCarriorX.Value = (int)dbInsertSpeedCarrierX;
             SpeedCarriorY.Value = (int)dbInsertSpeedCarrierY;
-            SpeedSetZ.Value     = (int)dbInsertSpeedSetZ;
-            SpeedSetR.Value     = (int)dbInsertSpeedSetR;
+            SpeedSetZ.Value = (int)dbInsertSpeedSetZ;
+            SpeedSetR.Value = (int)dbInsertSpeedSetR;
 
             //Light Thread
             {
-                Thread thread_LightTask   = new Thread(new ThreadStart(DoWork_Light));
-                Thread thread_NozzleTask  = new Thread(new ThreadStart(DoWork_Nozzle));
-                Thread thread_SetTask     = new Thread(new ThreadStart(DoWork_Set));
-                Thread thread_電動缸Task  = new Thread(new ThreadStart(DoWork_電動缸));
+                Thread thread_LightTask = new Thread(new ThreadStart(DoWork_Light));
+                Thread thread_NozzleTask = new Thread(new ThreadStart(DoWork_Nozzle));
+                Thread thread_SetTask = new Thread(new ThreadStart(DoWork_Set));
+                Thread thread_電動缸Task = new Thread(new ThreadStart(DoWork_電動缸));
                 Thread thread_CarriorTask = new Thread(new ThreadStart(DoWork_Carrior));
-                Thread thread_FileTask    = new Thread(new ThreadStart(DoWork_File));
+                Thread thread_FileTask = new Thread(new ThreadStart(DoWork_File));
 
                 thread_LightTask.Start();
                 thread_NozzleTask.Start();
@@ -2443,7 +2444,7 @@ namespace InjectorInspector
         }
         //---------------------------------------------------------------------------------------
         void DoWork_Light() {
-            while(true) {
+            while (true) {
                 Xavier_TASK1();  //面板按鈕以及指示燈
 
                 Console.WriteLine("DoWork_Light thread\r\n");
@@ -2451,7 +2452,7 @@ namespace InjectorInspector
             }
         }
         void DoWork_Nozzle() {
-            while(true) {
+            while (true) {
                 Xavier_TASK2();  //吸嘴軸組
 
                 Console.WriteLine("DoWork_Nozzle thread\r\n");
@@ -2459,7 +2460,7 @@ namespace InjectorInspector
             }
         }
         void DoWork_Set() {
-            while(true) {
+            while (true) {
                 Xavier_TASK3();  //植針軸組
 
                 Console.WriteLine("DoWork_Set thread\r\n");
@@ -2467,7 +2468,7 @@ namespace InjectorInspector
             }
         }
         void DoWork_電動缸() {
-            while(true) {
+            while (true) {
                 Xavier_TASK4();  //電動缸組_含抽針
 
                 Console.WriteLine("DoWork_電動缸 thread\r\n");
@@ -2566,18 +2567,18 @@ namespace InjectorInspector
         public void btn_AlarmRST_Click(object sender, EventArgs e)
         {
             int i;
-            for(i=0; i<20; i++) { 
+            for (i = 0; i < 20; i++) {
                 clsServoControlWMX3.WMX3_ClearAlarm(0);
                 clsServoControlWMX3.WMX3_ClearAlarm(1);
             }
 
-                clsServoControlWMX3.WMX3_ClearAlarm(2);
-                clsServoControlWMX3.WMX3_ClearAlarm(3);
-                clsServoControlWMX3.WMX3_ClearAlarm(4);
-                clsServoControlWMX3.WMX3_ClearAlarm(5);
-                clsServoControlWMX3.WMX3_ClearAlarm(6);
-                clsServoControlWMX3.WMX3_ClearAlarm(7);
-                clsServoControlWMX3.WMX3_ClearAlarm(8);
+            clsServoControlWMX3.WMX3_ClearAlarm(2);
+            clsServoControlWMX3.WMX3_ClearAlarm(3);
+            clsServoControlWMX3.WMX3_ClearAlarm(4);
+            clsServoControlWMX3.WMX3_ClearAlarm(5);
+            clsServoControlWMX3.WMX3_ClearAlarm(6);
+            clsServoControlWMX3.WMX3_ClearAlarm(7);
+            clsServoControlWMX3.WMX3_ClearAlarm(8);
         }
         //---------------------------------------------------------------------------------------
         public void btnStop_Click(object sender, EventArgs e)
@@ -2592,103 +2593,103 @@ namespace InjectorInspector
             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, isOn);
             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, isOn);
             clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, isOn);
-            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門,  isOn);
+            clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, isOn);
 
-            clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff,                isOn?1.0:0.0);
-            clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,                 isOn?1.0:0.0);
-            clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn,     isOn?1.0:0.0);
-            clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn,     isOn?1.0:0.0);
-            clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_MotorOn, isOn?1.0:0.0);
+            clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, isOn ? 1.0 : 0.0);
+            clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn, isOn ? 1.0 : 0.0);
+            clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, isOn ? 1.0 : 0.0);
+            clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, isOn ? 1.0 : 0.0);
+            clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_MotorOn, isOn ? 1.0 : 0.0);
         }
         //---------------------------------------------------------------------------------------
-        public bool enGC_吸嘴X軸          = false;
-        public bool enGC_吸嘴Y軸          = false;
-        public bool enGC_吸嘴Z軸          = false;
-        public bool enGC_吸嘴R軸          = false;
+        public bool enGC_吸嘴X軸 = false;
+        public bool enGC_吸嘴Y軸 = false;
+        public bool enGC_吸嘴Z軸 = false;
+        public bool enGC_吸嘴R軸 = false;
 
-        public bool enGC_載盤X軸          = false;
-        public bool enGC_載盤Y軸          = false;
+        public bool enGC_載盤X軸 = false;
+        public bool enGC_載盤Y軸 = false;
 
-        public bool enGC_植針Z軸          = false;
-        public bool enGC_植針R軸          = false;
+        public bool enGC_植針Z軸 = false;
+        public bool enGC_植針R軸 = false;
 
-        public bool enGC_工作門           = false;
+        public bool enGC_工作門 = false;
 
-        public bool enGC_IAI              = false;
+        public bool enGC_IAI = false;
 
         public bool enGC_JoDell植針嘴相機 = false;
-        public bool enGC_JoDell3D掃描     = false;
-        public bool enGC_JoDell吸針嘴     = false;
+        public bool enGC_JoDell3D掃描 = false;
+        public bool enGC_JoDell吸針嘴 = false;
 
         public void en_Group_Click(object sender, EventArgs e)
         {  // start of public void en_Group_Click(object sender, EventArgs e)
             if (enGC_吸嘴X軸 != en_吸嘴X軸.Checked) {
-                enGC_吸嘴X軸  = en_吸嘴X軸.Checked;
+                enGC_吸嘴X軸 = en_吸嘴X軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴X軸, enGC_吸嘴X軸);
             }
             if (enGC_吸嘴Y軸 != en_吸嘴Y軸.Checked) {
-                enGC_吸嘴Y軸  = en_吸嘴Y軸.Checked;
+                enGC_吸嘴Y軸 = en_吸嘴Y軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Y軸, enGC_吸嘴Y軸);
             }
             if (enGC_吸嘴Z軸 != en_吸嘴Z軸.Checked) {
-                enGC_吸嘴Z軸  = en_吸嘴Z軸.Checked;
+                enGC_吸嘴Z軸 = en_吸嘴Z軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴Z軸, enGC_吸嘴Z軸);
             }
             if (enGC_吸嘴R軸 != en_吸嘴R軸.Checked) {
-                enGC_吸嘴R軸  = en_吸嘴R軸.Checked;
+                enGC_吸嘴R軸 = en_吸嘴R軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, enGC_吸嘴R軸);
             }
 
             if (enGC_載盤X軸 != en_載盤X軸.Checked) {
-                enGC_載盤X軸  = en_載盤X軸.Checked;
+                enGC_載盤X軸 = en_載盤X軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤X軸, enGC_載盤X軸);
             }
             if (enGC_載盤Y軸 != en_載盤Y軸.Checked) {
-                enGC_載盤Y軸  = en_載盤Y軸.Checked;
+                enGC_載盤Y軸 = en_載盤Y軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.載盤Y軸, enGC_載盤Y軸);
             }
 
             if (enGC_植針Z軸 != en_植針Z軸.Checked) {
-                enGC_植針Z軸  = en_植針Z軸.Checked;
+                enGC_植針Z軸 = en_植針Z軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針Z軸, enGC_植針Z軸);
             }
             if (enGC_植針R軸 != en_植針R軸.Checked) {
-                enGC_植針R軸  = en_植針R軸.Checked;
+                enGC_植針R軸 = en_植針R軸.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.植針R軸, enGC_植針R軸);
             }
 
-            if (enGC_工作門 != en_工作門.Checked){
-                enGC_工作門  = en_工作門.Checked;
+            if (enGC_工作門 != en_工作門.Checked) {
+                enGC_工作門 = en_工作門.Checked;
                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.工作門, enGC_工作門);
             }
 
-            if (enGC_IAI != en_IAI.Checked){
-                enGC_IAI  = en_IAI.Checked;
+            if (enGC_IAI != en_IAI.Checked) {
+                enGC_IAI = en_IAI.Checked;
                 Thread.Sleep(10);
-                clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, (enGC_IAI)? 1.0:0.0);
+                clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_BrakeOff, (enGC_IAI) ? 1.0 : 0.0);
                 Thread.Sleep(10);
-                clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn,  (enGC_IAI)? 1.0:0.0);
+                clsServoControlWMX3.WMX3_IAI(addr_IAI.pxeaI_MotorOn, (enGC_IAI) ? 1.0 : 0.0);
             }
 
-            if (enGC_JoDell3D掃描 != en_JoDell3D掃描.Checked){
-                enGC_JoDell3D掃描  = en_JoDell3D掃描.Checked;
+            if (enGC_JoDell3D掃描 != en_JoDell3D掃描.Checked) {
+                enGC_JoDell3D掃描 = en_JoDell3D掃描.Checked;
 
                 clsServoControlWMX3.WMX3_JoDell3D掃描(addr_JODELL.pxeaI_MotorOn, (enGC_JoDell3D掃描) ? 1.0 : 0.0);
             }
 
-            if (enGC_JoDell吸針嘴 != en_JoDell吸針嘴.Checked){
-                enGC_JoDell吸針嘴  = en_JoDell吸針嘴.Checked;
+            if (enGC_JoDell吸針嘴 != en_JoDell吸針嘴.Checked) {
+                enGC_JoDell吸針嘴 = en_JoDell吸針嘴.Checked;
 
                 clsServoControlWMX3.WMX3_JoDell吸針嘴(addr_JODELL.pxeaI_MotorOn, (enGC_JoDell吸針嘴) ? 1.0 : 0.0);
             }
 
-            if (enGC_JoDell植針嘴相機 != en_JoDell植針嘴相機.Checked){
-                enGC_JoDell植針嘴相機  = en_JoDell植針嘴相機.Checked;
+            if (enGC_JoDell植針嘴相機 != en_JoDell植針嘴相機.Checked) {
+                enGC_JoDell植針嘴相機 = en_JoDell植針嘴相機.Checked;
 
                 clsServoControlWMX3.WMX3_JoDell植針嘴相機(addr_JODELL.pxeaI_MotorOn, (enGC_JoDell植針嘴相機) ? 1.0 : 0.0);
             }
 
-    }  // end of public void en_Group_Click(object sender, EventArgs e)
+        }  // end of public void en_Group_Click(object sender, EventArgs e)
         //---------------------------------------------------------------------------------------
         public WMX3軸定義 wmxId_RadioGroupChanged = WMX3軸定義.AXIS_START;
         public void RadioGroupChanged(object sender, EventArgs e)
@@ -2698,7 +2699,7 @@ namespace InjectorInspector
 
             //辨識選擇之軸
             if (selectedRadioButton != null && selectedRadioButton.Checked == true) {
-                       if (selectedRadioButton == select_吸嘴X軸) {
+                if (selectedRadioButton == select_吸嘴X軸) {
                     wmxId_RadioGroupChanged = WMX3軸定義.吸嘴X軸;
                 } else if (selectedRadioButton == select_吸嘴Y軸) {
                     wmxId_RadioGroupChanged = WMX3軸定義.吸嘴Y軸;
@@ -2728,34 +2729,34 @@ namespace InjectorInspector
             }
 
             //複製選擇之軸
-                   if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴X軸) {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴X軸.Text).ToString("F3")));
+            if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴X軸) {
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴X軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴Y軸) {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Y軸.Text).ToString("F3")));
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Y軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴Z軸) {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Z軸.Text).ToString("F3")));
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴Z軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.吸嘴R軸) {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴R軸.Text).ToString("F3")));
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (double.Parse(lbl_acpos_吸嘴R軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.載盤X軸) {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_載盤X軸.Text).ToString("F3")));
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (double.Parse(lbl_acpos_載盤X軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.載盤Y軸) {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_載盤Y軸.Text).ToString("F3")));
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (double.Parse(lbl_acpos_載盤Y軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.植針Z軸) {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_植針Z軸.Text).ToString("F3")));
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (double.Parse(lbl_acpos_植針Z軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.植針R軸) {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_植針R軸.Text).ToString("F3")));
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (double.Parse(lbl_acpos_植針R軸.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.工作門) {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_工作門.Text).ToString("F3")));
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (double.Parse(lbl_acpos_工作門.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.IAISocket孔檢測) {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_IAI.Text).ToString("F3")));
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (double.Parse(lbl_acpos_IAI.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.JoDell3D掃描) {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_JoDell3D掃描.Text).ToString("F3")));
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (double.Parse(lbl_acpos_JoDell3D掃描.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.JoDell吸針嘴) {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_JoDell吸針嘴.Text).ToString("F3")));
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (double.Parse(lbl_acpos_JoDell吸針嘴.Text).ToString("F3")));
             } else if (wmxId_RadioGroupChanged == WMX3軸定義.JoDell植針嘴相機) {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = (double.Parse(lbl_acpos_JoDell植針嘴相機.Text).ToString("F3")));
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (double.Parse(lbl_acpos_JoDell植針嘴相機.Text).ToString("F3")));
             } else {
-                UIHelper.SetControlProperty(txtABSpos,    () => txtABSpos.Text = "N/A");
+                UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = "N/A");
             }
 
         }  // end of public void RadioGroupChanged(object sender, EventArgs e)
@@ -2767,41 +2768,41 @@ namespace InjectorInspector
 
             //辨識選擇之Label
             if (SelectLabel != null) {
-                       if (SelectLabel == lbl擺放蓋板     ) { digitalToggle((int)WMX3IO對照.pxeIO_擺放座蓋板);
-                } else if (SelectLabel == lbl吸料真空閥   ) { digitalToggle((int)WMX3IO對照.pxeIO_吸料真空電磁閥);
-                } else if (SelectLabel == lbl堵料吹氣缸   ) { digitalToggle((int)WMX3IO對照.pxeIO_堵料吹氣缸);
-                } else if (SelectLabel == lbl接料區缸     ) { digitalToggle((int)WMX3IO對照.pxeIO_接料區氣桿);
-                } else if (SelectLabel == lbl植針吹氣     ) { digitalToggle((int)WMX3IO對照.pxeIO_植針吹氣);
-                } else if (SelectLabel == lbl收料區缸     ) { digitalToggle((int)WMX3IO對照.pxeIO_收料區缸);
-                } else if (SelectLabel == lbl堵料吹氣     ) { digitalToggle((int)WMX3IO對照.pxeIO_堵料吹氣);
-                } else if (SelectLabel == lbl_NA_25       ) { digitalToggle((int)WMX3IO對照.pxeIO_NA_O_07);
-                                                      
-                } else if (SelectLabel == lbl載盤真空閥   ) { digitalToggle((int)WMX3IO對照.pxeIO_載盤真空閥);
-                } else if (SelectLabel == lblsk真空2      ) { digitalToggle((int)WMX3IO對照.pxeIO_Socket真空2);
-                } else if (SelectLabel == lbl載盤破真空   ) { digitalToggle((int)WMX3IO對照.pxeIO_載盤破真空);
-                } else if (SelectLabel == lblsk破真空2    ) { digitalToggle((int)WMX3IO對照.pxeIO_Socket破真空2);
-                } else if (SelectLabel == lblsk真空1      ) { digitalToggle((int)WMX3IO對照.pxeIO_Socket真空1);
-                } else if (SelectLabel == lbl擺放座真空   ) { digitalToggle((int)WMX3IO對照.pxeIO_擺放座吸真空);
-                } else if (SelectLabel == lblsk破真空1    ) { digitalToggle((int)WMX3IO對照.pxeIO_Socket破真空1);
-                } else if (SelectLabel == lbl擺放破真空   ) { digitalToggle((int)WMX3IO對照.pxeIO_擺放座破真空);
-                                                         
-                } else if (SelectLabel == lbl取料吸嘴吸   ) { digitalToggle((int)WMX3IO對照.pxeIO_取料吸嘴吸);
-                } else if (SelectLabel == lbl下後左門鎖   ) { digitalToggle((int)WMX3IO對照.pxeIO_下後左門鎖);
-                } else if (SelectLabel == lbl取料吸嘴破舊 ) { digitalToggle((int)WMX3IO對照.pxeIO_取料吸嘴破真空舊);
-                } else if (SelectLabel == lbl下後右門鎖   ) { digitalToggle((int)WMX3IO對照.pxeIO_下後右門鎖);
-                } else if (SelectLabel == lbl植針Z煞車    ) { digitalToggle((int)WMX3IO對照.pxeIO_植針Z煞車);
-                } else if (SelectLabel == lblHEPA         ) { digitalToggle((int)WMX3IO對照.pxeIO_HEPA);
-                } else if (SelectLabel == lbl取料吸嘴破新 ) { digitalToggle((int)WMX3IO對照.pxeIO_取料吸嘴破真空新);
-                } else if (SelectLabel == lbl艙內燈       ) { digitalToggle((int)WMX3IO對照.pxeIO_LIGHT);
-                                                            
-                } else if (SelectLabel == lbl右按鈕綠燈   ) { digitalToggle((int)WMX3IO對照.pxeIO_面板右按鈕綠燈);
-                } else if (SelectLabel == lbl紅燈         ) { digitalToggle((int)WMX3IO對照.pxeIO_機台紅燈);
-                } else if (SelectLabel == lbl中按鈕綠燈   ) { digitalToggle((int)WMX3IO對照.pxeIO_面板中按鈕綠燈);
-                } else if (SelectLabel == lbl黃燈         ) { digitalToggle((int)WMX3IO對照.pxeIO_機台黃燈);
-                } else if (SelectLabel == lbl左按鈕紅燈   ) { digitalToggle((int)WMX3IO對照.pxeIO_面板左按鈕紅燈);
-                } else if (SelectLabel == lbl綠燈         ) { digitalToggle((int)WMX3IO對照.pxeIO_機台綠燈);
-                } else if (SelectLabel == lbl_NA_31       ) { digitalToggle((int)WMX3IO對照.pxeIO_NA_O_36);
-                } else if (SelectLabel == lblBuzzer       ) { digitalToggle((int)WMX3IO對照.pxeIO_Buzzer);
+                if (SelectLabel == lbl擺放蓋板) { digitalToggle((int)WMX3IO對照.pxeIO_擺放座蓋板);
+                } else if (SelectLabel == lbl吸料真空閥) { digitalToggle((int)WMX3IO對照.pxeIO_吸料真空電磁閥);
+                } else if (SelectLabel == lbl堵料吹氣缸) { digitalToggle((int)WMX3IO對照.pxeIO_堵料吹氣缸);
+                } else if (SelectLabel == lbl接料區缸) { digitalToggle((int)WMX3IO對照.pxeIO_接料區氣桿);
+                } else if (SelectLabel == lbl植針吹氣) { digitalToggle((int)WMX3IO對照.pxeIO_植針吹氣);
+                } else if (SelectLabel == lbl收料區缸) { digitalToggle((int)WMX3IO對照.pxeIO_收料區缸);
+                } else if (SelectLabel == lbl堵料吹氣) { digitalToggle((int)WMX3IO對照.pxeIO_堵料吹氣);
+                } else if (SelectLabel == lbl_NA_25) { digitalToggle((int)WMX3IO對照.pxeIO_NA_O_07);
+
+                } else if (SelectLabel == lbl載盤真空閥) { digitalToggle((int)WMX3IO對照.pxeIO_載盤真空閥);
+                } else if (SelectLabel == lblsk真空2) { digitalToggle((int)WMX3IO對照.pxeIO_Socket真空2);
+                } else if (SelectLabel == lbl載盤破真空) { digitalToggle((int)WMX3IO對照.pxeIO_載盤破真空);
+                } else if (SelectLabel == lblsk破真空2) { digitalToggle((int)WMX3IO對照.pxeIO_Socket破真空2);
+                } else if (SelectLabel == lblsk真空1) { digitalToggle((int)WMX3IO對照.pxeIO_Socket真空1);
+                } else if (SelectLabel == lbl擺放座真空) { digitalToggle((int)WMX3IO對照.pxeIO_擺放座吸真空);
+                } else if (SelectLabel == lblsk破真空1) { digitalToggle((int)WMX3IO對照.pxeIO_Socket破真空1);
+                } else if (SelectLabel == lbl擺放破真空) { digitalToggle((int)WMX3IO對照.pxeIO_擺放座破真空);
+
+                } else if (SelectLabel == lbl取料吸嘴吸) { digitalToggle((int)WMX3IO對照.pxeIO_取料吸嘴吸);
+                } else if (SelectLabel == lbl下後左門鎖) { digitalToggle((int)WMX3IO對照.pxeIO_下後左門鎖);
+                } else if (SelectLabel == lbl取料吸嘴破舊) { digitalToggle((int)WMX3IO對照.pxeIO_取料吸嘴破真空舊);
+                } else if (SelectLabel == lbl下後右門鎖) { digitalToggle((int)WMX3IO對照.pxeIO_下後右門鎖);
+                } else if (SelectLabel == lbl植針Z煞車) { digitalToggle((int)WMX3IO對照.pxeIO_植針Z煞車);
+                } else if (SelectLabel == lblHEPA) { digitalToggle((int)WMX3IO對照.pxeIO_HEPA);
+                } else if (SelectLabel == lbl取料吸嘴破新) { digitalToggle((int)WMX3IO對照.pxeIO_取料吸嘴破真空新);
+                } else if (SelectLabel == lbl艙內燈) { digitalToggle((int)WMX3IO對照.pxeIO_LIGHT);
+
+                } else if (SelectLabel == lbl右按鈕綠燈) { digitalToggle((int)WMX3IO對照.pxeIO_面板右按鈕綠燈);
+                } else if (SelectLabel == lbl紅燈) { digitalToggle((int)WMX3IO對照.pxeIO_機台紅燈);
+                } else if (SelectLabel == lbl中按鈕綠燈) { digitalToggle((int)WMX3IO對照.pxeIO_面板中按鈕綠燈);
+                } else if (SelectLabel == lbl黃燈) { digitalToggle((int)WMX3IO對照.pxeIO_機台黃燈);
+                } else if (SelectLabel == lbl左按鈕紅燈) { digitalToggle((int)WMX3IO對照.pxeIO_面板左按鈕紅燈);
+                } else if (SelectLabel == lbl綠燈) { digitalToggle((int)WMX3IO對照.pxeIO_機台綠燈);
+                } else if (SelectLabel == lbl_NA_31) { digitalToggle((int)WMX3IO對照.pxeIO_NA_O_36);
+                } else if (SelectLabel == lblBuzzer) { digitalToggle((int)WMX3IO對照.pxeIO_Buzzer);
                 }
             }  // end of if (SelectLabel != null) {
         }  // end of public void lbl_SetIO_Click(object sender, EventArgs e)
@@ -2810,21 +2811,21 @@ namespace InjectorInspector
         {
             System.Windows.Forms.NumericUpDown vluChg = sender as System.Windows.Forms.NumericUpDown;
 
-                   if(vluChg == SpeedNozzleX) {
+            if (vluChg == SpeedNozzleX) {
                 dbInsertSpeedNozzleX = (double)SpeedNozzleX.Value;
-            } else if(vluChg == SpeedNozzleY) {
+            } else if (vluChg == SpeedNozzleY) {
                 dbInsertSpeedNozzleY = (double)SpeedNozzleY.Value;
-            } else if(vluChg == SpeedNozzleZ) {
+            } else if (vluChg == SpeedNozzleZ) {
                 dbInsertSpeedNozzleZ = (double)SpeedNozzleZ.Value;
-            } else if(vluChg == SpeedNozzleR) {
+            } else if (vluChg == SpeedNozzleR) {
                 dbInsertSpeedNozzleR = (double)SpeedNozzleR.Value;
-            } else if(vluChg == SpeedCarriorX) {
+            } else if (vluChg == SpeedCarriorX) {
                 dbInsertSpeedCarrierX = (double)SpeedCarriorX.Value;
-            } else if(vluChg == SpeedCarriorY) {
+            } else if (vluChg == SpeedCarriorY) {
                 dbInsertSpeedCarrierY = (double)SpeedCarriorY.Value;
-            } else if(vluChg == SpeedSetZ) {
+            } else if (vluChg == SpeedSetZ) {
                 dbInsertSpeedSetZ = (double)SpeedSetZ.Value;
-            } else if(vluChg == SpeedSetR) {
+            } else if (vluChg == SpeedSetR) {
                 dbInsertSpeedSetR = (double)SpeedSetR.Value;
             }
         }
@@ -2836,34 +2837,34 @@ namespace InjectorInspector
 
             double result = double.Parse(txtABSpos.Text) + 0.0;
 
-                   if (ptrBtn == btn_plus_d001  ) { result += 0.001; ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_minus_d001 ) { result -= 0.001; ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_plus_d01   ) { result += 0.01;  ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_minus_d01  ) { result -= 0.01;  ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_plus_d1    ) { result += 0.1;   ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_minus_d1   ) { result -= 0.1;   ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_plus_1     ) { result += 1.0;   ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_minus_1    ) { result -= 1.0;   ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_plus_10    ) { result += 10.0;  ptrBtn = btnABSMove;
-            } else if (ptrBtn == btn_minus_10   ) { result -= 10.0;  ptrBtn = btnABSMove;
+            if (ptrBtn == btn_plus_d001) { result += 0.001; ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_minus_d001) { result -= 0.001; ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_plus_d01) { result += 0.01; ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_minus_d01) { result -= 0.01; ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_plus_d1) { result += 0.1; ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_minus_d1) { result -= 0.1; ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_plus_1) { result += 1.0; ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_minus_1) { result -= 1.0; ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_plus_10) { result += 10.0; ptrBtn = btnABSMove;
+            } else if (ptrBtn == btn_minus_10) { result -= 10.0; ptrBtn = btnABSMove;
             }
 
             if (ptrBtn == btnABSMove) {
                 //辨識選擇之軸
-                switch(wmxId_RadioGroupChanged) {
-                    case WMX3軸定義.吸嘴X軸:          if(enGC_吸嘴X軸          == true) { dbapiNozzleX(    result, 250);       } break;
-                    case WMX3軸定義.吸嘴Y軸:          if(enGC_吸嘴Y軸          == true) { dbapiNozzleY(    result, 100);       } break;
-                    case WMX3軸定義.吸嘴Z軸:          if(enGC_吸嘴Z軸          == true) { dbapiNozzleZ(    result,  20);       } break;
-                    case WMX3軸定義.吸嘴R軸:          if(enGC_吸嘴R軸          == true) { dbapiNozzleR(    result,  70);       } break;
-                    case WMX3軸定義.載盤X軸:          if(enGC_載盤X軸          == true) { dbapiCarrierX(   result, 190);       } break;
-                    case WMX3軸定義.載盤Y軸:          if(enGC_載盤Y軸          == true) { dbapiCarrierY(   result, 800);       } break;
-                    case WMX3軸定義.植針Z軸:          if(enGC_植針Z軸          == true) { dbapiSetZ(       result, 33);        } break;
-                    case WMX3軸定義.植針R軸:          if(enGC_植針R軸          == true) { dbapiSetR(       result, 360);       } break;
-                    case WMX3軸定義.工作門:           if(enGC_工作門           == true) { dbapiGate(       result, 580/4);     } break;
-                    case WMX3軸定義.IAISocket孔檢測:  if(enGC_IAI              == true) { dbapiIAI(        result);            } break;
-                    case WMX3軸定義.JoDell3D掃描:     if(enGC_JoDell3D掃描     == true) { dbapiJoDell3D掃描(result);           } break;
-                    case WMX3軸定義.JoDell吸針嘴:     if(enGC_JoDell吸針嘴     == true) { dbapiJoDell吸針嘴(result);           } break;
-                    case WMX3軸定義.JoDell植針嘴相機: if(enGC_JoDell植針嘴相機 == true) { dbapiJoDell植針嘴相機(result);       } break;
+                switch (wmxId_RadioGroupChanged) {
+                    case WMX3軸定義.吸嘴X軸: if (enGC_吸嘴X軸 == true) { dbapiNozzleX(result, 250); } break;
+                    case WMX3軸定義.吸嘴Y軸: if (enGC_吸嘴Y軸 == true) { dbapiNozzleY(result, 100); } break;
+                    case WMX3軸定義.吸嘴Z軸: if (enGC_吸嘴Z軸 == true) { dbapiNozzleZ(result, 20); } break;
+                    case WMX3軸定義.吸嘴R軸: if (enGC_吸嘴R軸 == true) { dbapiNozzleR(result, 70); } break;
+                    case WMX3軸定義.載盤X軸: if (enGC_載盤X軸 == true) { dbapiCarrierX(result, 190); } break;
+                    case WMX3軸定義.載盤Y軸: if (enGC_載盤Y軸 == true) { dbapiCarrierY(result, 800); } break;
+                    case WMX3軸定義.植針Z軸: if (enGC_植針Z軸 == true) { dbapiSetZ(result, 33); } break;
+                    case WMX3軸定義.植針R軸: if (enGC_植針R軸 == true) { dbapiSetR(result, 360); } break;
+                    case WMX3軸定義.工作門: if (enGC_工作門 == true) { dbapiGate(result, 580 / 4); } break;
+                    case WMX3軸定義.IAISocket孔檢測: if (enGC_IAI == true) { dbapiIAI(result); } break;
+                    case WMX3軸定義.JoDell3D掃描: if (enGC_JoDell3D掃描 == true) { dbapiJoDell3D掃描(result); } break;
+                    case WMX3軸定義.JoDell吸針嘴: if (enGC_JoDell吸針嘴 == true) { dbapiJoDell吸針嘴(result); } break;
+                    case WMX3軸定義.JoDell植針嘴相機: if (enGC_JoDell植針嘴相機 == true) { dbapiJoDell植針嘴相機(result); } break;
                 }
             }
 
@@ -2877,7 +2878,7 @@ namespace InjectorInspector
             double result = double.Parse(txtABSpos.Text);
             double dbdiff = double.Parse(edit_diff_value.Text);
 
-            if (ptrBtn == btn_plus ) {
+            if (ptrBtn == btn_plus) {
                 UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (result + dbdiff).ToString("F3"));
             } else if (ptrBtn == btn_minus) {
                 UIHelper.SetControlProperty(txtABSpos, () => txtABSpos.Text = (result - dbdiff).ToString("F3"));
@@ -2925,116 +2926,116 @@ namespace InjectorInspector
 
             //讀取 Yaskawa OutputIO                                                                                                   
             {
-                UIHelper.SetIndicator(lbl擺放蓋板,     digitalRead((int)(WMX3IO對照.pxeIO_擺放座蓋板))       == HIGH);
-                UIHelper.SetIndicator(lbl吸料真空閥,   digitalRead((int)(WMX3IO對照.pxeIO_吸料真空電磁閥))   == HIGH);
-                UIHelper.SetIndicator(lbl堵料吹氣缸,   digitalRead((int)(WMX3IO對照.pxeIO_堵料吹氣缸))       == HIGH);
-                UIHelper.SetIndicator(lbl接料區缸,     digitalRead((int)(WMX3IO對照.pxeIO_接料區氣桿))       == HIGH);
-                UIHelper.SetIndicator(lbl植針吹氣,     digitalRead((int)(WMX3IO對照.pxeIO_植針吹氣))         == HIGH);
-                UIHelper.SetIndicator(lbl收料區缸,     digitalRead((int)(WMX3IO對照.pxeIO_收料區缸))         == HIGH);
-                UIHelper.SetIndicator(lbl堵料吹氣,     digitalRead((int)(WMX3IO對照.pxeIO_堵料吹氣))         == HIGH);
-                UIHelper.SetIndicator(lbl_NA_25,       digitalRead((int)(WMX3IO對照.pxeIO_NA_O_07))          == HIGH);
+                UIHelper.SetIndicator(lbl擺放蓋板, digitalRead((int)(WMX3IO對照.pxeIO_擺放座蓋板)) == HIGH);
+                UIHelper.SetIndicator(lbl吸料真空閥, digitalRead((int)(WMX3IO對照.pxeIO_吸料真空電磁閥)) == HIGH);
+                UIHelper.SetIndicator(lbl堵料吹氣缸, digitalRead((int)(WMX3IO對照.pxeIO_堵料吹氣缸)) == HIGH);
+                UIHelper.SetIndicator(lbl接料區缸, digitalRead((int)(WMX3IO對照.pxeIO_接料區氣桿)) == HIGH);
+                UIHelper.SetIndicator(lbl植針吹氣, digitalRead((int)(WMX3IO對照.pxeIO_植針吹氣)) == HIGH);
+                UIHelper.SetIndicator(lbl收料區缸, digitalRead((int)(WMX3IO對照.pxeIO_收料區缸)) == HIGH);
+                UIHelper.SetIndicator(lbl堵料吹氣, digitalRead((int)(WMX3IO對照.pxeIO_堵料吹氣)) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_25, digitalRead((int)(WMX3IO對照.pxeIO_NA_O_07)) == HIGH);
 
-                UIHelper.SetIndicator(lbl載盤真空閥,   digitalRead((int)(WMX3IO對照.pxeIO_載盤真空閥))       == HIGH);
-                UIHelper.SetIndicator(lblsk真空2,      digitalRead((int)(WMX3IO對照.pxeIO_Socket真空2))      == HIGH);
-                UIHelper.SetIndicator(lbl載盤破真空,   digitalRead((int)(WMX3IO對照.pxeIO_載盤破真空))       == HIGH);
-                UIHelper.SetIndicator(lblsk破真空2,    digitalRead((int)(WMX3IO對照.pxeIO_Socket破真空2))    == HIGH);
-                UIHelper.SetIndicator(lblsk真空1,      digitalRead((int)(WMX3IO對照.pxeIO_Socket真空1))      == HIGH);
-                UIHelper.SetIndicator(lbl擺放座真空,   digitalRead((int)(WMX3IO對照.pxeIO_擺放座吸真空))     == HIGH);
-                UIHelper.SetIndicator(lblsk破真空1,    digitalRead((int)(WMX3IO對照.pxeIO_Socket破真空1))    == HIGH);
-                UIHelper.SetIndicator(lbl擺放破真空,   digitalRead((int)(WMX3IO對照.pxeIO_擺放座破真空))     == HIGH);
+                UIHelper.SetIndicator(lbl載盤真空閥, digitalRead((int)(WMX3IO對照.pxeIO_載盤真空閥)) == HIGH);
+                UIHelper.SetIndicator(lblsk真空2, digitalRead((int)(WMX3IO對照.pxeIO_Socket真空2)) == HIGH);
+                UIHelper.SetIndicator(lbl載盤破真空, digitalRead((int)(WMX3IO對照.pxeIO_載盤破真空)) == HIGH);
+                UIHelper.SetIndicator(lblsk破真空2, digitalRead((int)(WMX3IO對照.pxeIO_Socket破真空2)) == HIGH);
+                UIHelper.SetIndicator(lblsk真空1, digitalRead((int)(WMX3IO對照.pxeIO_Socket真空1)) == HIGH);
+                UIHelper.SetIndicator(lbl擺放座真空, digitalRead((int)(WMX3IO對照.pxeIO_擺放座吸真空)) == HIGH);
+                UIHelper.SetIndicator(lblsk破真空1, digitalRead((int)(WMX3IO對照.pxeIO_Socket破真空1)) == HIGH);
+                UIHelper.SetIndicator(lbl擺放破真空, digitalRead((int)(WMX3IO對照.pxeIO_擺放座破真空)) == HIGH);
 
-                UIHelper.SetIndicator(lbl取料吸嘴吸,   digitalRead((int)(WMX3IO對照.pxeIO_取料吸嘴吸))       == HIGH);
-                UIHelper.SetIndicator(lbl下後左門鎖,   digitalRead((int)(WMX3IO對照.pxeIO_下後左門鎖))       == HIGH);
+                UIHelper.SetIndicator(lbl取料吸嘴吸, digitalRead((int)(WMX3IO對照.pxeIO_取料吸嘴吸)) == HIGH);
+                UIHelper.SetIndicator(lbl下後左門鎖, digitalRead((int)(WMX3IO對照.pxeIO_下後左門鎖)) == HIGH);
                 UIHelper.SetIndicator(lbl取料吸嘴破舊, digitalRead((int)(WMX3IO對照.pxeIO_取料吸嘴破真空舊)) == HIGH);
-                UIHelper.SetIndicator(lbl下後右門鎖,   digitalRead((int)(WMX3IO對照.pxeIO_下後右門鎖))       == HIGH);
-                UIHelper.SetIndicator(lbl植針Z煞車,    digitalRead((int)(WMX3IO對照.pxeIO_植針Z煞車))        == HIGH);
-                UIHelper.SetIndicator(lblHEPA,         digitalRead((int)(WMX3IO對照.pxeIO_HEPA))             == HIGH);
+                UIHelper.SetIndicator(lbl下後右門鎖, digitalRead((int)(WMX3IO對照.pxeIO_下後右門鎖)) == HIGH);
+                UIHelper.SetIndicator(lbl植針Z煞車, digitalRead((int)(WMX3IO對照.pxeIO_植針Z煞車)) == HIGH);
+                UIHelper.SetIndicator(lblHEPA, digitalRead((int)(WMX3IO對照.pxeIO_HEPA)) == HIGH);
                 UIHelper.SetIndicator(lbl取料吸嘴破新, digitalRead((int)(WMX3IO對照.pxeIO_取料吸嘴破真空新)) == HIGH);
-                UIHelper.SetIndicator(lbl艙內燈,       digitalRead((int)(WMX3IO對照.pxeIO_LIGHT))            == HIGH);
+                UIHelper.SetIndicator(lbl艙內燈, digitalRead((int)(WMX3IO對照.pxeIO_LIGHT)) == HIGH);
 
-                UIHelper.SetIndicator(lbl右按鈕綠燈,   digitalRead((int)(WMX3IO對照.pxeIO_面板右按鈕綠燈))   == HIGH);
-                UIHelper.SetIndicator(lbl紅燈,         digitalRead((int)(WMX3IO對照.pxeIO_機台紅燈))         == HIGH);
-                UIHelper.SetIndicator(lbl中按鈕綠燈,   digitalRead((int)(WMX3IO對照.pxeIO_面板中按鈕綠燈))   == HIGH);
-                UIHelper.SetIndicator(lbl黃燈,         digitalRead((int)(WMX3IO對照.pxeIO_機台黃燈))         == HIGH);
-                UIHelper.SetIndicator(lbl左按鈕紅燈,   digitalRead((int)(WMX3IO對照.pxeIO_面板左按鈕紅燈))   == HIGH);
-                UIHelper.SetIndicator(lbl綠燈,         digitalRead((int)(WMX3IO對照.pxeIO_機台綠燈))         == HIGH);
-                UIHelper.SetIndicator(lbl_NA_31,       digitalRead((int)(WMX3IO對照.pxeIO_NA_O_36))          == HIGH);
-                UIHelper.SetIndicator(lblBuzzer,       digitalRead((int)(WMX3IO對照.pxeIO_Buzzer))           == HIGH);
+                UIHelper.SetIndicator(lbl右按鈕綠燈, digitalRead((int)(WMX3IO對照.pxeIO_面板右按鈕綠燈)) == HIGH);
+                UIHelper.SetIndicator(lbl紅燈, digitalRead((int)(WMX3IO對照.pxeIO_機台紅燈)) == HIGH);
+                UIHelper.SetIndicator(lbl中按鈕綠燈, digitalRead((int)(WMX3IO對照.pxeIO_面板中按鈕綠燈)) == HIGH);
+                UIHelper.SetIndicator(lbl黃燈, digitalRead((int)(WMX3IO對照.pxeIO_機台黃燈)) == HIGH);
+                UIHelper.SetIndicator(lbl左按鈕紅燈, digitalRead((int)(WMX3IO對照.pxeIO_面板左按鈕紅燈)) == HIGH);
+                UIHelper.SetIndicator(lbl綠燈, digitalRead((int)(WMX3IO對照.pxeIO_機台綠燈)) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_31, digitalRead((int)(WMX3IO對照.pxeIO_NA_O_36)) == HIGH);
+                UIHelper.SetIndicator(lblBuzzer, digitalRead((int)(WMX3IO對照.pxeIO_Buzzer)) == HIGH);
             }  // end of //讀取 Yaskawa OutputIO  
 
             //讀取 Yaskawa InputIO
             {
-                UIHelper.SetIndicator(lbl載盤Y後,      indicateRead((int)WMX3IO對照.pxeIO_載盤Y軸後極限)     == HIGH);
-                UIHelper.SetIndicator(lbl取料Y後,      indicateRead((int)WMX3IO對照.pxeIO_取料Y軸後極限)     == HIGH);
-                UIHelper.SetIndicator(lbl載盤Y前,      indicateRead((int)WMX3IO對照.pxeIO_載盤Y軸前極限)     == HIGH);
-                UIHelper.SetIndicator(lbl取料Y前,      indicateRead((int)WMX3IO對照.pxeIO_取料Y軸前極限)     == HIGH);
-                UIHelper.SetIndicator(lbl取料X後,      indicateRead((int)WMX3IO對照.pxeIO_取料X軸後極限)     == HIGH);
-                UIHelper.SetIndicator(lbl_NA_01,       indicateRead((int)WMX3IO對照.pxeIO_NA05)              == HIGH);
-                UIHelper.SetIndicator(lbl取料X前,      indicateRead((int)WMX3IO對照.pxeIO_取料X軸前極限)     == HIGH);
-                UIHelper.SetIndicator(lbl_NA_02,       indicateRead((int)WMX3IO對照.pxeIO_NA07)              == HIGH);
+                UIHelper.SetIndicator(lbl載盤Y後, indicateRead((int)WMX3IO對照.pxeIO_載盤Y軸後極限) == HIGH);
+                UIHelper.SetIndicator(lbl取料Y後, indicateRead((int)WMX3IO對照.pxeIO_取料Y軸後極限) == HIGH);
+                UIHelper.SetIndicator(lbl載盤Y前, indicateRead((int)WMX3IO對照.pxeIO_載盤Y軸前極限) == HIGH);
+                UIHelper.SetIndicator(lbl取料Y前, indicateRead((int)WMX3IO對照.pxeIO_取料Y軸前極限) == HIGH);
+                UIHelper.SetIndicator(lbl取料X後, indicateRead((int)WMX3IO對照.pxeIO_取料X軸後極限) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_01, indicateRead((int)WMX3IO對照.pxeIO_NA05) == HIGH);
+                UIHelper.SetIndicator(lbl取料X前, indicateRead((int)WMX3IO對照.pxeIO_取料X軸前極限) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_02, indicateRead((int)WMX3IO對照.pxeIO_NA07) == HIGH);
 
-                UIHelper.SetIndicator(lbl植針Z後,      indicateRead((int)WMX3IO對照.pxeIO_植針Z軸後極限)     == HIGH);
-                UIHelper.SetIndicator(lbl_NA_03,       indicateRead((int)WMX3IO對照.pxeIO_NA11)              == HIGH);
-                UIHelper.SetIndicator(lbl植針Z前,      indicateRead((int)WMX3IO對照.pxeIO_植針Z軸前極限)     == HIGH);
-                UIHelper.SetIndicator(lbl_NA_04,       indicateRead((int)WMX3IO對照.pxeIO_NA13)              == HIGH);
-                UIHelper.SetIndicator(lbl載盤X前,      indicateRead((int)WMX3IO對照.pxeIO_載盤X軸前極限)     == HIGH);
-                UIHelper.SetIndicator(lbl_NA_05,       indicateRead((int)WMX3IO對照.pxeIO_NA15)              == HIGH);
-                UIHelper.SetIndicator(lbl載盤X後,      indicateRead((int)WMX3IO對照.pxeIO_載盤X軸後極限)     == HIGH);
-                UIHelper.SetIndicator(lbl_NA_06,       indicateRead((int)WMX3IO對照.pxeIO_NA17)              == HIGH);
+                UIHelper.SetIndicator(lbl植針Z後, indicateRead((int)WMX3IO對照.pxeIO_植針Z軸後極限) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_03, indicateRead((int)WMX3IO對照.pxeIO_NA11) == HIGH);
+                UIHelper.SetIndicator(lbl植針Z前, indicateRead((int)WMX3IO對照.pxeIO_植針Z軸前極限) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_04, indicateRead((int)WMX3IO對照.pxeIO_NA13) == HIGH);
+                UIHelper.SetIndicator(lbl載盤X前, indicateRead((int)WMX3IO對照.pxeIO_載盤X軸前極限) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_05, indicateRead((int)WMX3IO對照.pxeIO_NA15) == HIGH);
+                UIHelper.SetIndicator(lbl載盤X後, indicateRead((int)WMX3IO對照.pxeIO_載盤X軸後極限) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_06, indicateRead((int)WMX3IO對照.pxeIO_NA17) == HIGH);
 
-                UIHelper.SetIndicator(lbl載盤空1,      indicateRead((int)WMX3IO對照.pxeIO_載盤真空檢1)       == HIGH);
-                UIHelper.SetIndicator(lblsk2空1,       indicateRead((int)WMX3IO對照.pxeIO_Socket2真空檢1)    == HIGH);
-                UIHelper.SetIndicator(lbl載盤空2,      indicateRead((int)WMX3IO對照.pxeIO_載盤真空檢2)       == HIGH);
-                UIHelper.SetIndicator(lblsk2空2,       indicateRead((int)WMX3IO對照.pxeIO_Socket2真空檢2)    == HIGH);
-                UIHelper.SetIndicator(lblsk1空1,       indicateRead((int)WMX3IO對照.pxeIO_Socket1真空檢1)    == HIGH);
-                UIHelper.SetIndicator(lbl擺放空1,      indicateRead((int)WMX3IO對照.pxeIO_擺放座真空檢1)     == HIGH);
-                UIHelper.SetIndicator(lblsk1空2,       indicateRead((int)WMX3IO對照.pxeIO_Socket1真空檢2)    == HIGH);
-                UIHelper.SetIndicator(lbl擺放空2,      indicateRead((int)WMX3IO對照.pxeIO_擺放座真空檢2)     == HIGH);
+                UIHelper.SetIndicator(lbl載盤空1, indicateRead((int)WMX3IO對照.pxeIO_載盤真空檢1) == HIGH);
+                UIHelper.SetIndicator(lblsk2空1, indicateRead((int)WMX3IO對照.pxeIO_Socket2真空檢1) == HIGH);
+                UIHelper.SetIndicator(lbl載盤空2, indicateRead((int)WMX3IO對照.pxeIO_載盤真空檢2) == HIGH);
+                UIHelper.SetIndicator(lblsk2空2, indicateRead((int)WMX3IO對照.pxeIO_Socket2真空檢2) == HIGH);
+                UIHelper.SetIndicator(lblsk1空1, indicateRead((int)WMX3IO對照.pxeIO_Socket1真空檢1) == HIGH);
+                UIHelper.SetIndicator(lbl擺放空1, indicateRead((int)WMX3IO對照.pxeIO_擺放座真空檢1) == HIGH);
+                UIHelper.SetIndicator(lblsk1空2, indicateRead((int)WMX3IO對照.pxeIO_Socket1真空檢2) == HIGH);
+                UIHelper.SetIndicator(lbl擺放空2, indicateRead((int)WMX3IO對照.pxeIO_擺放座真空檢2) == HIGH);
 
-                UIHelper.SetIndicator(lbl吸嘴空1,      indicateRead((int)WMX3IO對照.pxeIO_吸嘴真空檢1)       == HIGH);
-                UIHelper.SetIndicator(lbl_NA_07,       indicateRead((int)WMX3IO對照.pxeIO_NA31)              == HIGH);
-                UIHelper.SetIndicator(lbl吸嘴空2,      indicateRead((int)WMX3IO對照.pxeIO_吸嘴真空檢2)       == HIGH);
-                UIHelper.SetIndicator(lbl取料ng盒,     indicateRead((int)WMX3IO對照.pxeIO_取料NG收料盒)      == HIGH);
-                UIHelper.SetIndicator(lbl兩點壓1,      indicateRead((int)WMX3IO對照.pxeIO_兩點組合壓力檢1)   == HIGH);
-                UIHelper.SetIndicator(lbl堵料盒,       indicateRead((int)WMX3IO對照.pxeIO_堵料收料盒)        == HIGH);
-                UIHelper.SetIndicator(lbl兩點壓2,      indicateRead((int)WMX3IO對照.pxeIO_兩點組合壓力檢2)   == HIGH);
-                UIHelper.SetIndicator(lbl吸料盒,       indicateRead((int)WMX3IO對照.pxeIO_吸料收料盒)        == HIGH);
+                UIHelper.SetIndicator(lbl吸嘴空1, indicateRead((int)WMX3IO對照.pxeIO_吸嘴真空檢1) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_07, indicateRead((int)WMX3IO對照.pxeIO_NA31) == HIGH);
+                UIHelper.SetIndicator(lbl吸嘴空2, indicateRead((int)WMX3IO對照.pxeIO_吸嘴真空檢2) == HIGH);
+                UIHelper.SetIndicator(lbl取料ng盒, indicateRead((int)WMX3IO對照.pxeIO_取料NG收料盒) == HIGH);
+                UIHelper.SetIndicator(lbl兩點壓1, indicateRead((int)WMX3IO對照.pxeIO_兩點組合壓力檢1) == HIGH);
+                UIHelper.SetIndicator(lbl堵料盒, indicateRead((int)WMX3IO對照.pxeIO_堵料收料盒) == HIGH);
+                UIHelper.SetIndicator(lbl兩點壓2, indicateRead((int)WMX3IO對照.pxeIO_兩點組合壓力檢2) == HIGH);
+                UIHelper.SetIndicator(lbl吸料盒, indicateRead((int)WMX3IO對照.pxeIO_吸料收料盒) == HIGH);
 
-                UIHelper.SetIndicator(lbl復歸鈕,       indicateRead((int)WMX3IO對照.pxeIO_復歸按鈕)          == HIGH);
-                UIHelper.SetIndicator(lbl_NA_08,       indicateRead((int)WMX3IO對照.pxeIO_NA41)              == HIGH);
-                UIHelper.SetIndicator(lbl啟動鈕,       indicateRead((int)WMX3IO對照.pxeIO_啟動按鈕)          == HIGH);
-                UIHelper.SetIndicator(lbl_NA_09,       indicateRead((int)WMX3IO對照.pxeIO_NA43)              == HIGH);
-                UIHelper.SetIndicator(lbl停止鈕,       indicateRead((int)WMX3IO對照.pxeIO_停止按鈕)          == HIGH);
-                UIHelper.SetIndicator(lbl_NA_10,       indicateRead((int)WMX3IO對照.pxeIO_NA45)              == HIGH);
-                UIHelper.SetIndicator(lbl急停鈕,       indicateRead((int)WMX3IO對照.pxeIO_緊急停止按鈕)      == HIGH);
-                UIHelper.SetIndicator(lbl_NA_11,       indicateRead((int)WMX3IO對照.pxeIO_NA47)              == HIGH);
+                UIHelper.SetIndicator(lbl復歸鈕, indicateRead((int)WMX3IO對照.pxeIO_復歸按鈕) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_08, indicateRead((int)WMX3IO對照.pxeIO_NA41) == HIGH);
+                UIHelper.SetIndicator(lbl啟動鈕, indicateRead((int)WMX3IO對照.pxeIO_啟動按鈕) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_09, indicateRead((int)WMX3IO對照.pxeIO_NA43) == HIGH);
+                UIHelper.SetIndicator(lbl停止鈕, indicateRead((int)WMX3IO對照.pxeIO_停止按鈕) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_10, indicateRead((int)WMX3IO對照.pxeIO_NA45) == HIGH);
+                UIHelper.SetIndicator(lbl急停鈕, indicateRead((int)WMX3IO對照.pxeIO_緊急停止按鈕) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_11, indicateRead((int)WMX3IO對照.pxeIO_NA47) == HIGH);
 
-                UIHelper.SetIndicator(lbl_擺放座開,    indicateRead((int)WMX3IO對照.pxeIO_擺放座蓋板開)      == HIGH);
-                UIHelper.SetIndicator(lbl_NA_13,       indicateRead((int)WMX3IO對照.pxeIO_NA51)              == HIGH);
-                UIHelper.SetIndicator(lbl_擺放座關,    indicateRead((int)WMX3IO對照.pxeIO_擺放座蓋板合)      == HIGH);
-                UIHelper.SetIndicator(lbl_NA_15,       indicateRead((int)WMX3IO對照.pxeIO_NA53)              == HIGH);
-                UIHelper.SetIndicator(lbl_堵料桿進,    indicateRead((int)WMX3IO對照.pxeIO_堵料吹氣桿進)      == HIGH);
-                UIHelper.SetIndicator(lbl_NA_17,       indicateRead((int)WMX3IO對照.pxeIO_NA55)              == HIGH);
-                UIHelper.SetIndicator(lbl_堵料桿出,    indicateRead((int)WMX3IO對照.pxeIO_堵料吹氣桿出)      == HIGH);
-                UIHelper.SetIndicator(lbl_NA_19,       indicateRead((int)WMX3IO對照.pxeIO_NA57)              == HIGH);
+                UIHelper.SetIndicator(lbl_擺放座開, indicateRead((int)WMX3IO對照.pxeIO_擺放座蓋板開) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_13, indicateRead((int)WMX3IO對照.pxeIO_NA51) == HIGH);
+                UIHelper.SetIndicator(lbl_擺放座關, indicateRead((int)WMX3IO對照.pxeIO_擺放座蓋板合) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_15, indicateRead((int)WMX3IO對照.pxeIO_NA53) == HIGH);
+                UIHelper.SetIndicator(lbl_堵料桿進, indicateRead((int)WMX3IO對照.pxeIO_堵料吹氣桿進) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_17, indicateRead((int)WMX3IO對照.pxeIO_NA55) == HIGH);
+                UIHelper.SetIndicator(lbl_堵料桿出, indicateRead((int)WMX3IO對照.pxeIO_堵料吹氣桿出) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_19, indicateRead((int)WMX3IO對照.pxeIO_NA57) == HIGH);
 
-                UIHelper.SetIndicator(lbl上左右門,     indicateRead((int)WMX3IO對照.pxeIO_上罩左側右門)      == HIGH);
-                UIHelper.SetIndicator(lbl上右右門,     indicateRead((int)WMX3IO對照.pxeIO_上罩右側右門)      == HIGH);
-                UIHelper.SetIndicator(lbl上左左門,     indicateRead((int)WMX3IO對照.pxeIO_上罩左側左門)      == HIGH);
-                UIHelper.SetIndicator(lbl上右左門,     indicateRead((int)WMX3IO對照.pxeIO_上罩右側左門)      == HIGH);
-                UIHelper.SetIndicator(lbl上後右門,     indicateRead((int)WMX3IO對照.pxeIO_上罩後側右門)      == HIGH);
-                UIHelper.SetIndicator(lbl螢幕小門,     indicateRead((int)WMX3IO對照.pxeIO_螢幕旁小門)        == HIGH);
-                UIHelper.SetIndicator(lbl上後左門,     indicateRead((int)WMX3IO對照.pxeIO_上罩後側左門)      == HIGH);
-                UIHelper.SetIndicator(lbl_NA_20,       indicateRead((int)WMX3IO對照.pxeIO_NA67)              == HIGH);
+                UIHelper.SetIndicator(lbl上左右門, indicateRead((int)WMX3IO對照.pxeIO_上罩左側右門) == HIGH);
+                UIHelper.SetIndicator(lbl上右右門, indicateRead((int)WMX3IO對照.pxeIO_上罩右側右門) == HIGH);
+                UIHelper.SetIndicator(lbl上左左門, indicateRead((int)WMX3IO對照.pxeIO_上罩左側左門) == HIGH);
+                UIHelper.SetIndicator(lbl上右左門, indicateRead((int)WMX3IO對照.pxeIO_上罩右側左門) == HIGH);
+                UIHelper.SetIndicator(lbl上後右門, indicateRead((int)WMX3IO對照.pxeIO_上罩後側右門) == HIGH);
+                UIHelper.SetIndicator(lbl螢幕小門, indicateRead((int)WMX3IO對照.pxeIO_螢幕旁小門) == HIGH);
+                UIHelper.SetIndicator(lbl上後左門, indicateRead((int)WMX3IO對照.pxeIO_上罩後側左門) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_20, indicateRead((int)WMX3IO對照.pxeIO_NA67) == HIGH);
 
-                UIHelper.SetIndicator(lbl下左右門,     indicateRead((int)WMX3IO對照.pxeIO_下支架左側右門)    == HIGH);
-                UIHelper.SetIndicator(lbl下後左門,     indicateRead((int)WMX3IO對照.pxeIO_下支架後側左門)    == HIGH);
-                UIHelper.SetIndicator(lbl下左左門,     indicateRead((int)WMX3IO對照.pxeIO_下支架左側左門)    == HIGH);
-                UIHelper.SetIndicator(lbl下後右門,     indicateRead((int)WMX3IO對照.pxeIO_下支架後側右門)    == HIGH);
-                UIHelper.SetIndicator(lbl下右右門,     indicateRead((int)WMX3IO對照.pxeIO_下支架右側右門)    == HIGH);
-                UIHelper.SetIndicator(lbl_NA_23,       indicateRead((int)WMX3IO對照.pxeIO_NA75)              == HIGH);
-                UIHelper.SetIndicator(lbl下右左門,     indicateRead((int)WMX3IO對照.pxeIO_下支架右側左門)    == HIGH);
-                UIHelper.SetIndicator(lbl_NA_24,       indicateRead((int)WMX3IO對照.pxeIO_NA76)              == HIGH);
+                UIHelper.SetIndicator(lbl下左右門, indicateRead((int)WMX3IO對照.pxeIO_下支架左側右門) == HIGH);
+                UIHelper.SetIndicator(lbl下後左門, indicateRead((int)WMX3IO對照.pxeIO_下支架後側左門) == HIGH);
+                UIHelper.SetIndicator(lbl下左左門, indicateRead((int)WMX3IO對照.pxeIO_下支架左側左門) == HIGH);
+                UIHelper.SetIndicator(lbl下後右門, indicateRead((int)WMX3IO對照.pxeIO_下支架後側右門) == HIGH);
+                UIHelper.SetIndicator(lbl下右右門, indicateRead((int)WMX3IO對照.pxeIO_下支架右側右門) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_23, indicateRead((int)WMX3IO對照.pxeIO_NA75) == HIGH);
+                UIHelper.SetIndicator(lbl下右左門, indicateRead((int)WMX3IO對照.pxeIO_下支架右側左門) == HIGH);
+                UIHelper.SetIndicator(lbl_NA_24, indicateRead((int)WMX3IO對照.pxeIO_NA76) == HIGH);
             }  // end of //讀取 Yaskawa InputIO
 
         }  // end of public void tmr_ReadWMX3_Tick(object sender, EventArgs e)
@@ -3046,46 +3047,46 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //---------------------------------- Vibration implement --------------------------------
         //---------------------------------------------------------------------------------------
-        enum 柔震 { 震散     = 0,
-                    上下至中 = 1,
-                    左右至中 = 2,
-                    料倉     = 3,
+        enum 柔震 { 震散 = 0,
+            上下至中 = 1,
+            左右至中 = 2,
+            料倉 = 3,
         }; 柔震 e柔震 = 柔震.震散;
-        uint[] 頻率  = { 0188, 0180, 0169, 0220 },
+        uint[] 頻率 = { 0188, 0180, 0169, 0220 },
                相1始 = { 0000, 0297, 0000, 0000 }, 相1終 = { 0500, 0572, 0896, 0000 }, 相1力 = { 0750, 1000, 1000, 0000 },
                相2始 = { 0000, 0056, 0280, 0000 }, 相2終 = { 0500, 0070, 0902, 0000 }, 相2力 = { 0750, 1000, 1000, 0000 },
                相3始 = { 0000, 0485, 0235, 0000 }, 相3終 = { 0500, 0229, 0457, 0000 }, 相3力 = { 0750, 1000, 1000, 0000 },
                相4始 = { 0000, 0160, 0381, 0000 }, 相4終 = { 0500, 0318, 0464, 0000 }, 相4力 = { 0750, 1000, 1000, 0000 },
-               倉始  = { 0000, 0000, 0000, 0010 }, 倉終  = { 0000, 0000, 0000, 0100 }, 倉力  = { 0000, 0000, 0000, 0440 };
+               倉始 = { 0000, 0000, 0000, 0010 }, 倉終 = { 0000, 0000, 0000, 0100 }, 倉力 = { 0000, 0000, 0000, 0440 };
         //---------------------------------------------------------------------------------------
         public void lbl柔震index(object sender, EventArgs e)
         {
             System.Windows.Forms.Label SelectLabel = sender as System.Windows.Forms.Label;
             if (SelectLabel != null) {
-                       if (SelectLabel == lbl震散   ) { lbl震散.BackColor = Color.Red;   lbl上下收.BackColor = Color.Green; lbl左右收.BackColor = Color.Green; lbl料倉.BackColor = Color.Green;
-                } else if (SelectLabel == lbl上下收 ) { lbl震散.BackColor = Color.Green; lbl上下收.BackColor = Color.Red;   lbl左右收.BackColor = Color.Green; lbl料倉.BackColor = Color.Green;
-                } else if (SelectLabel == lbl左右收 ) { lbl震散.BackColor = Color.Green; lbl上下收.BackColor = Color.Green; lbl左右收.BackColor = Color.Red;   lbl料倉.BackColor = Color.Green;
-                } else if (SelectLabel == lbl料倉   ) { lbl震散.BackColor = Color.Green; lbl上下收.BackColor = Color.Green; lbl左右收.BackColor = Color.Green; lbl料倉.BackColor = Color.Red;
-                } 
+                if (SelectLabel == lbl震散) { lbl震散.BackColor = Color.Red; lbl上下收.BackColor = Color.Green; lbl左右收.BackColor = Color.Green; lbl料倉.BackColor = Color.Green;
+                } else if (SelectLabel == lbl上下收) { lbl震散.BackColor = Color.Green; lbl上下收.BackColor = Color.Red; lbl左右收.BackColor = Color.Green; lbl料倉.BackColor = Color.Green;
+                } else if (SelectLabel == lbl左右收) { lbl震散.BackColor = Color.Green; lbl上下收.BackColor = Color.Green; lbl左右收.BackColor = Color.Red; lbl料倉.BackColor = Color.Green;
+                } else if (SelectLabel == lbl料倉) { lbl震散.BackColor = Color.Green; lbl上下收.BackColor = Color.Green; lbl左右收.BackColor = Color.Green; lbl料倉.BackColor = Color.Red;
+                }
             }
         }
         //---------------------------------------------------------------------------------------
         public void btnVibrationInit_Click(object sender, EventArgs e) {
-                       if (lbl震散.BackColor   == Color.Red) { e柔震 = 柔震.震散;
-                } else if (lbl上下收.BackColor == Color.Red) { e柔震 = 柔震.上下至中;
-                } else if (lbl左右收.BackColor == Color.Red) { e柔震 = 柔震.左右至中;
-                } else if (lbl料倉.BackColor   == Color.Red) { e柔震 = 柔震.料倉;
-                }
+            if (lbl震散.BackColor == Color.Red) { e柔震 = 柔震.震散;
+            } else if (lbl上下收.BackColor == Color.Red) { e柔震 = 柔震.上下至中;
+            } else if (lbl左右收.BackColor == Color.Red) { e柔震 = 柔震.左右至中;
+            } else if (lbl料倉.BackColor == Color.Red) { e柔震 = 柔震.料倉;
+            }
 
             //Vibration
             clsVibration.apiEstablishTCPVibration();
             {
-                clsVibration.u32Frequency                   = 頻率[(int)e柔震];
+                clsVibration.u32Frequency = 頻率[(int)e柔震];
                 clsVibration.u32VibrationSource1_StartPhase = 相1始[(int)e柔震]; clsVibration.u32VibrationSource1_StopPhase = 相1終[(int)e柔震]; clsVibration.u32VibrationSource1_Power = 相1力[(int)e柔震];
                 clsVibration.u32VibrationSource2_StartPhase = 相2始[(int)e柔震]; clsVibration.u32VibrationSource2_StopPhase = 相2終[(int)e柔震]; clsVibration.u32VibrationSource2_Power = 相2力[(int)e柔震];
                 clsVibration.u32VibrationSource3_StartPhase = 相3始[(int)e柔震]; clsVibration.u32VibrationSource3_StopPhase = 相3終[(int)e柔震]; clsVibration.u32VibrationSource3_Power = 相3力[(int)e柔震];
                 clsVibration.u32VibrationSource4_StartPhase = 相4始[(int)e柔震]; clsVibration.u32VibrationSource4_StopPhase = 相4終[(int)e柔震]; clsVibration.u32VibrationSource4_Power = 相4力[(int)e柔震];
-                clsVibration.u32BlackDepotSource_StartPhase = 倉始[(int)e柔震];  clsVibration.u32BlackDepotSource_StopPhase = 倉終[(int)e柔震];  clsVibration.u32BlackDepotSource_Power = 倉力[(int)e柔震];
+                clsVibration.u32BlackDepotSource_StartPhase = 倉始[(int)e柔震]; clsVibration.u32BlackDepotSource_StopPhase = 倉終[(int)e柔震]; clsVibration.u32BlackDepotSource_Power = 倉力[(int)e柔震];
                 clsVibration.SetVibration(clsVibration.u32Frequency,
                                           clsVibration.u32VibrationSource1_StartPhase,
                                           clsVibration.u32VibrationSource1_StopPhase,
@@ -3134,21 +3135,21 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         //----------------------------- Flow Valve Control implement ----------------------------
         //---------------------------------------------------------------------------------------
-        public void dbapi_FlowValve_植針吹氣(int iValue) { 
-            if(iValue>=100) {
+        public void dbapi_FlowValve_植針吹氣(int iValue) {
+            if (iValue >= 100) {
                 iValue = 100;
             }
-            if(iValue<=0) {
+            if (iValue <= 0) {
                 iValue = 0;
             }
             UIHelper.SetControlProperty(vcb_植針吹氣流量閥, () => vcb_植針吹氣流量閥.Value = 100 - iValue);
             vcb流量閥_Scroll(vcb_植針吹氣流量閥, null);
         }
         public void dbapi_FlowValve_吸嘴破真空(int iValue) {
-            if(iValue>=100) {
+            if (iValue >= 100) {
                 iValue = 100;
             }
-            if(iValue<=0) {
+            if (iValue <= 0) {
                 iValue = 0;
             }
             UIHelper.SetControlProperty(vcb_吸嘴破真空流量閥, () => vcb_吸嘴破真空流量閥.Value = 100 - iValue);
@@ -3166,35 +3167,35 @@ namespace InjectorInspector
             Normal calculate = new Normal();
             double dbGet = 0.0;
 
-            if(vcb流量閥 == vcb_吸嘴破真空流量閥) {
-                dbGet = calculate.Map(vcb_吸嘴破真空流量閥.Value, 110, -10, -10, 110)/10;
+            if (vcb流量閥 == vcb_吸嘴破真空流量閥) {
+                dbGet = calculate.Map(vcb_吸嘴破真空流量閥.Value, 110, -10, -10, 110) / 10;
 
                 if (10.0 <= dbGet) {
                     dbGet = 10;
                 }
-                if(dbGet <= 0.0) {
+                if (dbGet <= 0.0) {
                     dbGet = 0;
                 }
-            } else if(vcb流量閥 == vcb_植針吹氣流量閥) {
-                dbGet = calculate.Map(vcb_植針吹氣流量閥.Value,  110, -10, -10, 110);
+            } else if (vcb流量閥 == vcb_植針吹氣流量閥) {
+                dbGet = calculate.Map(vcb_植針吹氣流量閥.Value, 110, -10, -10, 110);
 
                 if (100.0 <= dbGet) {
                     dbGet = 100;
                 }
-                if(dbGet <= 0.0) {
+                if (dbGet <= 0.0) {
                     dbGet = 0;
                 }
             }
 
-            double y = (double)( dbGet/10.0 );
+            double y = (double)(dbGet / 10.0);
             double x = (y + 2.5071) / 0.000454;
 
             int iGetValue = (int)x;
             byte[] aGetValue = BitConverter.GetBytes(iGetValue);
 
-            if(vcb流量閥 == vcb_吸嘴破真空流量閥) {
+            if (vcb流量閥 == vcb_吸嘴破真空流量閥) {
                 clsServoControlWMX3.WMX3_SetIO(ref aGetValue, (int)WMX3IO對照.pxeIO_Addr_AnalogOut_0, 2);
-            } else if(vcb流量閥 == vcb_植針吹氣流量閥) {
+            } else if (vcb流量閥 == vcb_植針吹氣流量閥) {
                 clsServoControlWMX3.WMX3_SetIO(ref aGetValue, (int)WMX3IO對照.pxeIO_Addr_AnalogOut_1, 2);
             }
 
@@ -3227,9 +3228,9 @@ namespace InjectorInspector
             //            iGetValue.ToString()    + " " +
             //            "y:" + y.ToString();
 
-            if(vcb流量閥 == vcb_吸嘴破真空流量閥) {
+            if (vcb流量閥 == vcb_吸嘴破真空流量閥) {
                 UIHelper.SetControlProperty(lbl_吸嘴破真空流量閥, () => lbl_吸嘴破真空流量閥.Text = string.Format("{0:F1}", y));
-            } else if(vcb流量閥 == vcb_植針吹氣流量閥) {
+            } else if (vcb流量閥 == vcb_植針吹氣流量閥) {
                 UIHelper.SetControlProperty(lbl_植針吹氣流量閥, () => lbl_植針吹氣流量閥.Text = string.Format("{0:F1}", y));
             }
 
@@ -3267,7 +3268,7 @@ namespace InjectorInspector
         //---------------------------------------- 和尚小佛 --------------------------------------
         //---------------------------------------------------------------------------------------
         public void tsmi_OpenFile_Click(object sender, EventArgs e)
-        { 
+        {
             if (OpenFile(this))
             {
                 tsmi_SaveFile.Enabled = true;
@@ -3280,7 +3281,7 @@ namespace InjectorInspector
                 // 檢查是否需要在主執行緒上執行
                 if (pic_Needles.InvokeRequired) {
                     // 如果是其他執行緒，使用 Invoke 方法
-                    pic_Needles.Invoke(new Action( 
+                    pic_Needles.Invoke(new Action(
                                                         () => {
                                                             pic_Needles.Refresh();
                                                         }
@@ -3307,7 +3308,7 @@ namespace InjectorInspector
             // 檢查是否需要在主執行緒上執行
             if (pic_Needles.InvokeRequired) {
                 // 如果是其他執行緒，使用 Invoke 方法
-                pic_Needles.Invoke(new Action( 
+                pic_Needles.Invoke(new Action(
                                                     () => {
                                                         pic_Needles.Refresh();
                                                     }
@@ -3336,15 +3337,15 @@ namespace InjectorInspector
                     (float)(2 * circle.Diameter / 2 * ScaleFactor)
                 );
 
-                if (circle.Display  == false) { fillBrush = new SolidBrush(HiddenNeedlesColor);   } else // 隱藏
-                if (circle.Disable  == true ) { fillBrush = new SolidBrush(EnableNeedlesColor);   } else // 禁用
-                if (circle.Reserve1 == true ) { fillBrush = new SolidBrush(Reserve1NeedlesColor); } else // 保留1
-                if (circle.Place    == true ) { fillBrush = new SolidBrush(PlaceNeedlesColor);    } else // 植針圓
-                if (circle.Remove   == true ) { fillBrush = new SolidBrush(RemoveNeedlesColor);   } else // 取針圓
-                if (circle.Replace  == true ) { fillBrush = new SolidBrush(ReplaceNeedlesColor);  } else // 換針圓
-                                              { fillBrush = new SolidBrush(DefaltNeedleColor);    }      // 預設圓
+                if (circle.Display == false) { fillBrush = new SolidBrush(HiddenNeedlesColor); } else // 隱藏
+                if (circle.Disable == true) { fillBrush = new SolidBrush(EnableNeedlesColor); } else // 禁用
+                if (circle.Reserve1 == true) { fillBrush = new SolidBrush(Reserve1NeedlesColor); } else // 保留1
+                if (circle.Place == true) { fillBrush = new SolidBrush(PlaceNeedlesColor); } else // 植針圓
+                if (circle.Remove == true) { fillBrush = new SolidBrush(RemoveNeedlesColor); } else // 取針圓
+                if (circle.Replace == true) { fillBrush = new SolidBrush(ReplaceNeedlesColor); } else // 換針圓
+                { fillBrush = new SolidBrush(DefaltNeedleColor); }      // 預設圓
 
-                if (circle == FocusedNeedle)  { fillBrush = new SolidBrush(FocusedNeedleColor);   } else // 點擊圓
+                if (circle == FocusedNeedle) { fillBrush = new SolidBrush(FocusedNeedleColor); } else // 點擊圓
                 if (circle == HighlightedNeedle) { fillBrush = new SolidBrush(HiddenNeedlesColor); }     // 觸擊圓
 
                 e.Graphics.FillEllipse(fillBrush, rectangleF);
@@ -3359,7 +3360,7 @@ namespace InjectorInspector
 
                 RectangleF DragBox = new RectangleF(
                     Drag_Boundary.minX,
-                    Drag_Boundary.minY, 
+                    Drag_Boundary.minY,
                     Drag_Boundary.width,
                     Drag_Boundary.height
                 );
@@ -3375,7 +3376,7 @@ namespace InjectorInspector
                 Brush fillBrush;
 
                 fillBrush = new SolidBrush(SelectedNeedlesColor);
-                
+
                 RectangleF rectangleF = new RectangleF(
                     (float)(circle.X * ScaleFactor - circle.Diameter / 2 * ScaleFactor),
                     (float)(circle.Y * ScaleFactor - circle.Diameter / 2 * ScaleFactor),
@@ -3390,8 +3391,8 @@ namespace InjectorInspector
         //---------------------------------------------------------------------------------------
         public void pic_Needles_MouseMove(object sender, MouseEventArgs e)
         {
-            RealMousePos.X = (e.X - Offset.X) / ZoomFactor ;
-            RealMousePos.Y = -(e.Y - Offset.Y) / ZoomFactor ;
+            RealMousePos.X = (e.X - Offset.X) / ZoomFactor;
+            RealMousePos.Y = -(e.Y - Offset.Y) / ZoomFactor;
 
             UIHelper.SetControlProperty(lbl_RealMousePos, () => lbl_RealMousePos.Text = "真實座標 : " + RealMousePos.ToString());
             UIHelper.SetControlProperty(lbl_PicMousePos, () => lbl_PicMousePos.Text = "繪圖座標 : " + e.Location.ToString());
@@ -3438,7 +3439,7 @@ namespace InjectorInspector
                 }
                 else
                 {
-                    IsMouseinCircle   = false;
+                    IsMouseinCircle = false;
                     HighlightedNeedle = null;
                 }
             }
@@ -3446,12 +3447,12 @@ namespace InjectorInspector
             if (IsMouseinCircle) {
                 ttp_NeedleInfo.SetToolTip(
                     pic_Needles,
-                    "流水號 : " + HighlightedNeedle.Index.ToString()        + "\n" +
-                    "名稱 : "   + (HighlightedNeedle.Name ?? "無")          + "\n" +  // 如果為 null, 顯示 "無"
-                    "Id : "     + (HighlightedNeedle.Id ?? "無")            + "\n" +
-                    "座標X : "  + HighlightedNeedle.X.ToString("F3")        + "\n" +
-                    "座標Y : "  + HighlightedNeedle.Y.ToString("F3")        + "\n" +
-                    "直徑 : "   + HighlightedNeedle.Diameter.ToString("F3") + "\n" 
+                    "流水號 : " + HighlightedNeedle.Index.ToString() + "\n" +
+                    "名稱 : " + (HighlightedNeedle.Name ?? "無") + "\n" +  // 如果為 null, 顯示 "無"
+                    "Id : " + (HighlightedNeedle.Id ?? "無") + "\n" +
+                    "座標X : " + HighlightedNeedle.X.ToString("F3") + "\n" +
+                    "座標Y : " + HighlightedNeedle.Y.ToString("F3") + "\n" +
+                    "直徑 : " + HighlightedNeedle.Diameter.ToString("F3") + "\n"
                 );
             }
             else
@@ -3462,7 +3463,7 @@ namespace InjectorInspector
             // 檢查是否需要在主執行緒上執行
             if (pic_Needles.InvokeRequired) {
                 // 如果是其他執行緒，使用 Invoke 方法
-                pic_Needles.Invoke(new Action( 
+                pic_Needles.Invoke(new Action(
                                                     () => {
                                                         pic_Needles.Refresh();
                                                     }
@@ -3551,7 +3552,7 @@ namespace InjectorInspector
                             // 檢查是否需要在主執行緒上執行
                             if (pic_Needles.InvokeRequired) {
                                 // 如果是其他執行緒，使用 Invoke 方法
-                                pic_Needles.Invoke(new Action( 
+                                pic_Needles.Invoke(new Action(
                                                                     () => {
                                                                         pic_Needles.Refresh();
                                                                     }
@@ -3600,7 +3601,7 @@ namespace InjectorInspector
             // 檢查是否需要在主執行緒上執行
             if (pic_Needles.InvokeRequired) {
                 // 如果是其他執行緒，使用 Invoke 方法
-                pic_Needles.Invoke(new Action( 
+                pic_Needles.Invoke(new Action(
                                                     () => {
                                                         pic_Needles.Refresh();
                                                     }
@@ -3615,20 +3616,20 @@ namespace InjectorInspector
         public void cms_pic_Needles_Opened(object sender, EventArgs e)
         {
             if (SelectedNeedles.Count != 0) {
-                tsmi_Place.Enabled    = true;
-                tsmi_Remove.Enabled   = true;
-                tsmi_Replace.Enabled  = true;
-                tsmi_Display.Enabled  = true;
-                tsmi_Enable.Enabled   = true;
-                tsmi_Reset.Enabled    = true;
+                tsmi_Place.Enabled = true;
+                tsmi_Remove.Enabled = true;
+                tsmi_Replace.Enabled = true;
+                tsmi_Display.Enabled = true;
+                tsmi_Enable.Enabled = true;
+                tsmi_Reset.Enabled = true;
                 tsmi_Reserve1.Enabled = true;
             } else {
-                tsmi_Place.Enabled    = false;
-                tsmi_Remove.Enabled   = false;
-                tsmi_Replace.Enabled  = false;
-                tsmi_Display.Enabled  = false;
-                tsmi_Enable.Enabled   = false;
-                tsmi_Reset.Enabled    = false;
+                tsmi_Place.Enabled = false;
+                tsmi_Remove.Enabled = false;
+                tsmi_Replace.Enabled = false;
+                tsmi_Display.Enabled = false;
+                tsmi_Enable.Enabled = false;
+                tsmi_Reset.Enabled = false;
                 tsmi_Reserve1.Enabled = false;
             }
         }
@@ -3642,20 +3643,20 @@ namespace InjectorInspector
                 switch (item.Text)
                 {
                     case "植針":
-                        Json.Needles[circle.Index].Place   = true;
-                        Json.Needles[circle.Index].Remove  = false;
+                        Json.Needles[circle.Index].Place = true;
+                        Json.Needles[circle.Index].Remove = false;
                         Json.Needles[circle.Index].Replace = false;
                         break;
 
                     case "取針":
-                        Json.Needles[circle.Index].Place   = false;
-                        Json.Needles[circle.Index].Remove  = true;
+                        Json.Needles[circle.Index].Place = false;
+                        Json.Needles[circle.Index].Remove = true;
                         Json.Needles[circle.Index].Replace = false;
                         break;
 
                     case "置換":
-                        Json.Needles[circle.Index].Place   = false;
-                        Json.Needles[circle.Index].Remove  = false;
+                        Json.Needles[circle.Index].Place = false;
+                        Json.Needles[circle.Index].Remove = false;
                         Json.Needles[circle.Index].Replace = true;
                         break;
 
@@ -3672,11 +3673,11 @@ namespace InjectorInspector
                         break;
 
                     case "清除":
-                        Json.Needles[circle.Index].Place    = false;
-                        Json.Needles[circle.Index].Remove   = false;
-                        Json.Needles[circle.Index].Replace  = false;
-                        Json.Needles[circle.Index].Display  = true;
-                        Json.Needles[circle.Index].Disable  = false;
+                        Json.Needles[circle.Index].Place = false;
+                        Json.Needles[circle.Index].Remove = false;
+                        Json.Needles[circle.Index].Replace = false;
+                        Json.Needles[circle.Index].Display = true;
+                        Json.Needles[circle.Index].Disable = false;
                         Json.Needles[circle.Index].Reserve1 = false;
 
                         show_grp_NeedleInfo(grp_NeedleInfo);
@@ -3714,14 +3715,14 @@ namespace InjectorInspector
                                 {
                                     Json.Needles[SelectedNeedle.Index].Place = rad_Place.Checked;
                                 }
-                            break;
+                                break;
 
                             case "rad_Remove":
                                 foreach (var SelectedNeedle in SelectedNeedles)
                                 {
                                     Json.Needles[SelectedNeedle.Index].Remove = rad_Remove.Checked;
                                 }
-                            break;
+                                break;
 
                             case "rad_Replace":
                                 foreach (var SelectedNeedle in SelectedNeedles)
@@ -3752,7 +3753,7 @@ namespace InjectorInspector
                                     chk_Reserve1.Checked = false;
                                     Json.Needles[SelectedNeedle.Index].Reserve1 = false;
                                 }
-                                
+
                                 break;
 
                             case "chk_Reserve1":
@@ -3773,11 +3774,11 @@ namespace InjectorInspector
                             case "btn_Reset":
                                 foreach (var SelectedNeedle in SelectedNeedles)
                                 {
-                                    Json.Needles[SelectedNeedle.Index].Place    = false;
-                                    Json.Needles[SelectedNeedle.Index].Remove   = false;
-                                    Json.Needles[SelectedNeedle.Index].Replace  = false;
-                                    Json.Needles[SelectedNeedle.Index].Display  = true;
-                                    Json.Needles[SelectedNeedle.Index].Disable  = false;
+                                    Json.Needles[SelectedNeedle.Index].Place = false;
+                                    Json.Needles[SelectedNeedle.Index].Remove = false;
+                                    Json.Needles[SelectedNeedle.Index].Replace = false;
+                                    Json.Needles[SelectedNeedle.Index].Display = true;
+                                    Json.Needles[SelectedNeedle.Index].Disable = false;
                                     Json.Needles[SelectedNeedle.Index].Reserve1 = false;
                                 }
 
@@ -3804,7 +3805,7 @@ namespace InjectorInspector
                     // 檢查是否需要在主執行緒上執行
                     if (pic_Needles.InvokeRequired) {
                         // 如果是其他執行緒，使用 Invoke 方法
-                        pic_Needles.Invoke(new Action( 
+                        pic_Needles.Invoke(new Action(
                                                             () => {
                                                                 pic_Needles.Refresh();
                                                             }
@@ -3892,7 +3893,7 @@ namespace InjectorInspector
             tsmi_SaveFile.Enabled = true;
             UIHelper.SetControlProperty(btn_SaveFile, () => btn_SaveFile.Enabled = true);
 
-            strFileName = new string(BarcodeBuffer.ToArray()).Trim(); 
+            strFileName = new string(BarcodeBuffer.ToArray()).Trim();
             try
             {
                 Json = JsonConvert.DeserializeObject<JSON>(File.ReadAllText(@"028\" + strFileName + ".json"));
@@ -3906,7 +3907,7 @@ namespace InjectorInspector
                 // 檢查是否需要在主執行緒上執行
                 if (pic_Needles.InvokeRequired) {
                     // 如果是其他執行緒，使用 Invoke 方法
-                    pic_Needles.Invoke(new Action( 
+                    pic_Needles.Invoke(new Action(
                                                         () => {
                                                             pic_Needles.Refresh();
                                                         }
@@ -3967,6 +3968,111 @@ namespace InjectorInspector
         #region 暫時或實驗中
         //---------------------------------------------------------------------------------------
         //------------------------------------- 暫時或實驗中 ------------------------------------
+        //---------------------------------------------------------------------------------------
+        enum e_iJob {
+            eiJob_Origin,
+            eiJob_X_Mmove,
+            eiJob_Y_Incease,
+        };
+        e_iJob eiJob = e_iJob.eiJob_Origin;
+
+        double dbTargetX = 178.7;
+        double dbTargetY = 354.8;
+        double dbTargetZ = 16.3;
+
+        double dbScannerX = 0.0;
+        double dbScannerY = 0.0;
+        double dbScannerZ = 0.0;
+
+        int iScanTime = -1;
+
+        bool bScanInit = false;
+        //bool bScanStart = false;
+        ReceiveSurface.ReceiveSurface RScanner;
+        //---------------------------------------------------------------------------------------
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+            if(!bScanInit) {
+                RScanner = new ReceiveSurface.ReceiveSurface();
+                RScanner.Init();
+                bScanInit = true;
+            }
+
+            if( (RScanner.sensor.State != GoState.Running) && 
+                (bScanInit)                                && 
+                (iScanTime == 11) ) {
+                RScanner.Start();
+            }
+
+            //馬達動作
+            if(iScanTime==-1) { 
+                //不做事
+
+            } else if(iScanTime==0) { 
+                dbTargetX = 178.7;
+                dbTargetY = 354.8;
+
+                if( (RScanner.sensor.State == GoState.Running) && (bScanInit) ) {
+                    RScanner.ReceiveData();
+                    RScanner.Stop();
+                }
+
+                iScanTime = -1;
+            } else if(iScanTime>0) { 
+
+                dbScannerX = dbapiCarrierX(dbRead, 0);
+                dbScannerY = dbapiCarrierY(dbRead, 0);
+                dbScannerZ = dbapiJoDell3D掃描(dbRead);
+                if( ( (dbTargetX -0.01 <= dbScannerX) && (dbScannerX <= dbTargetX +0.01) ) &&
+                    ( (dbTargetY -0.01 <= dbScannerY) && (dbScannerY <= dbTargetY +0.01) ) &&
+                    ( (dbTargetZ -0.01 <= dbScannerZ) && (dbScannerZ <= dbTargetZ +0.01) ) ) {
+                    //相等, 下一步
+                    switch(eiJob) {
+                        case e_iJob.eiJob_Origin:
+                            dbTargetX = 178.7;
+                            dbTargetY = 354.8;
+
+                            eiJob = e_iJob.eiJob_X_Mmove;
+                            break;
+                        case e_iJob.eiJob_X_Mmove:
+                            if(dbTargetX == 178.7) {
+                                dbTargetX = 8.7;
+                            } else if(dbTargetX == 8.7) {
+                                dbTargetX = 178.7;
+                            }
+
+                            RScanner.SoftwareTrigger();
+
+                            eiJob = e_iJob.eiJob_Y_Incease;
+                            break;
+                        case e_iJob.eiJob_Y_Incease: {
+                            dbTargetY += 13;
+
+                            if(iScanTime>0) { 
+                                eiJob = e_iJob.eiJob_X_Mmove;
+                                iScanTime--;
+                            } else if(iScanTime == 0) { 
+                                eiJob = e_iJob.eiJob_Origin;
+                            }
+                        } break;
+                    }
+                } else {
+                    //不相等
+                    dbapiCarrierX(dbTargetX, 20);
+                    dbapiCarrierY(dbTargetY, 2000);
+                    dbapiJoDell3D掃描(16.3);
+                }
+            }  // end of } else if(iScanTime>0) 
+        }
+        //---------------------------------------------------------------------------------------
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            iScanTime = 11;
+
+            timer1.Enabled = true;
+        }
+        //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
         public void button1_Click(object sender, EventArgs e)
         {

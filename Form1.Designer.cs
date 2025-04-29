@@ -389,6 +389,7 @@ namespace InjectorInspector
             this.select_吸嘴Y軸 = new System.Windows.Forms.RadioButton();
             this.select_吸嘴X軸 = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.lbl_讀取計數 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.lbl_2pCalibraLog = new System.Windows.Forms.Label();
@@ -441,6 +442,7 @@ namespace InjectorInspector
             this.btn_Connect = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.inspector1 = new Inspector.Inspector();
             this.cms_pic_Needles.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -4605,6 +4607,7 @@ namespace InjectorInspector
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.lbl_讀取計數);
             this.tabPage2.Controls.Add(this.label21);
             this.tabPage2.Controls.Add(this.lbl_2pCalibraLog);
@@ -4662,6 +4665,16 @@ namespace InjectorInspector
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(408, 120);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(85, 44);
+            this.button1.TabIndex = 246;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // lbl_讀取計數
             // 
@@ -5148,6 +5161,10 @@ namespace InjectorInspector
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1236, 825);
             this.tabControl1.TabIndex = 2;
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // inspector1
             // 
@@ -5694,6 +5711,8 @@ namespace InjectorInspector
         private Label SpdNozR;
         private Label SpdNozZ;
         private Label SpdNozY;
+        private Button button1;
+        private Timer timer1;
     }
 }
 

@@ -244,6 +244,13 @@
     copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\IOApi_CLRLib.dll" "$(TargetDir)"
     copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\WMX3Api_CLRLib.dll" "$(TargetDir)"
     xcopy /y /e /i "$(ProjectDir)\lmi\*.*" "$(TargetDir)\"
+) else (
+    copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\AdvancedMotionApi_CLRLib.dll" "$(TargetDir)"
+    copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\CoreMotionApi_CLRLib.dll" "$(TargetDir)"
+    copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\IMDll.dll" "$(TargetDir)"
+    copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\IOApi_CLRLib.dll" "$(TargetDir)"
+    copy /Y "$(ProgramFiles)\SoftServo\WMX3\Lib\WMX3Api_CLRLib.dll" "$(TargetDir)"
+    xcopy /y /e /i "$(ProjectDir)\lmi\*.*" "$(TargetDir)\"
 )
 
 REM 編譯完後刪除 packages 資料夾
