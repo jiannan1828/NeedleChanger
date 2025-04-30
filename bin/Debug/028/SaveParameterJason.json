@@ -268,5 +268,15 @@
     "u32Index": 53,
     "dbPosition": 0.20000000000000001,
     "strNote": "Socket\u8DDD\u96E2\u9650\u5236"
+  },
+  {
+    "u32Index": 54,
+    "dbPosition": 0,
+    "strNote": "\u53D6\u6599\u5438\u5634\u6C92\u88DD_\u7A7A\u8DD1\u53D6\u6599"
+  },
+  {
+    "u32Index": 55,
+    "dbPosition": 26,
+    "strNote": "NozzleZ\u4E0B\u964D\u81F3\u67D4\u9707\u53D6\u6599\u4F4D"
   }
 ]
