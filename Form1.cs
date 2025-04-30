@@ -4252,6 +4252,9 @@ namespace InjectorInspector
                                 //艙內燈打開
                                 digitalWrite((int)WMX3IO對照.pxeIO_LIGHT, LOW);
 
+                                //清除復歸
+                                btp6Home_告知系統回home完畢 = false;
+
                                 eWIndicatorSpeed = eWarningSpeed.xeeWS_狀態_急停;
                                 break;
 
