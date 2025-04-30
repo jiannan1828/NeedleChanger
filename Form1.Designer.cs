@@ -417,7 +417,6 @@ namespace InjectorInspector
             this.btn_Resume = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.btn_取得目標座標 = new System.Windows.Forms.Button();
             this.lbl_CycleTime = new System.Windows.Forms.Label();
             this.btn上膛 = new System.Windows.Forms.Button();
             this.lblLog = new System.Windows.Forms.Label();
@@ -4635,7 +4634,6 @@ namespace InjectorInspector
             this.tabPage2.Controls.Add(this.btn_Resume);
             this.tabPage2.Controls.Add(this.label15);
             this.tabPage2.Controls.Add(this.label14);
-            this.tabPage2.Controls.Add(this.btn_取得目標座標);
             this.tabPage2.Controls.Add(this.lbl_CycleTime);
             this.tabPage2.Controls.Add(this.btn上膛);
             this.tabPage2.Controls.Add(this.lblLog);
@@ -4922,15 +4920,6 @@ namespace InjectorInspector
             this.label14.Size = new System.Drawing.Size(62, 19);
             this.label14.TabIndex = 218;
             this.label14.Text = "label14";
-            // 
-            // btn_取得目標座標
-            // 
-            this.btn_取得目標座標.Location = new System.Drawing.Point(29, 323);
-            this.btn_取得目標座標.Name = "btn_取得目標座標";
-            this.btn_取得目標座標.Size = new System.Drawing.Size(134, 42);
-            this.btn_取得目標座標.TabIndex = 217;
-            this.btn_取得目標座標.Text = "取得目標座標";
-            this.btn_取得目標座標.UseVisualStyleBackColor = true;
             // 
             // lbl_CycleTime
             // 
@@ -5645,7 +5634,6 @@ namespace InjectorInspector
         public Button btn_Resume;
         public Label label15;
         public Label label14;
-        public Button btn_取得目標座標;
         public Label lbl_CycleTime;
         public Button btn上膛;
         public Label lblLog;

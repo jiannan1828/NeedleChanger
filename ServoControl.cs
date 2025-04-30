@@ -705,11 +705,13 @@ namespace InjectorInspector
                 Motion.PosCommand pos = new Motion.PosCommand();
 
                 pos.Profile.Type     = ProfileType.Trapezoidal;  //運動模式
-                pos.Axis             = axis;    //軸
-                pos.Target           = pivot;   //指定位置
-                pos.Profile.Velocity = speed;   //速度
-                pos.Profile.Acc      = accel;   //加速度
-                pos.Profile.Dec      = daccel;  //減速度
+                pos.Axis             = axis;     //軸
+                pos.Target           = pivot;    //指定位置
+                pos.Profile.Velocity = speed;    //速度
+              //pos.Profile.StartingVelocity = speed/3;    //初始速度
+              //pos.Profile.EndVelocity      = speed/3;    //終止速度
+                pos.Profile.Acc      = accel;    //加速度
+                pos.Profile.Dec      = daccel;   //減速度
 
                 //啟動POS運轉
                 rslt = motion.Motion.StartPos(pos);

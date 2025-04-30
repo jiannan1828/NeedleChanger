@@ -78,12 +78,12 @@ namespace InjectorInspector
     {
         //---------------------------------------------------------------------------------------
         //State Enum
-        public const double dbRead = 9916777216.99;
+        public const double dbRead         = 9916777216.99;
         public const double dbCheckArrived = 9916777254.87;
-        public const double dbAxisMoveOk = 9916777294.78;
-        public const double dbAxisMoveNg = 9916777209.87;
-        public const double dbAimToNext = 9916777299.77;
-        public const double dbSpecific = 9916777277.18;
+        public const double dbAxisMoveOk   = 9916777294.78;
+        public const double dbAxisMoveNg   = 9916777209.87;
+        public const double dbAimToNext    = 9916777299.77;
+        public const double dbSpecific     = 9916777277.18;
 
         //---------------------------------------------------------------------------------------
         //Debug config
@@ -799,11 +799,11 @@ namespace InjectorInspector
         public double dbapiNozzleX(double dbIncreaseNozzleX, double dbTargetSpeed)  //NozzleX
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 500000;
-            const int MinRAW = 0;
-            const double Maxdb = 500.0;
-            const double Mindb = 0.0;
-            const double Sum = 500000;
+            const int MaxRAW    = 500000;
+            const int MinRAW    = 0;
+            const double Maxdb  = 500.0;
+            const double Mindb  = 0.0;
+            const double Sum    = 500000;
             const double dbSpdF = Sum / Maxdb;
 
             double dbRstNozzleX = 0.0;
@@ -895,11 +895,11 @@ namespace InjectorInspector
                         dbTargetPositionNozzleX = dbIncreaseNozzleX;
 
                         //執行移動吸嘴
-                        int axis = (int)WMX3軸定義.吸嘴X軸;
+                        int axis     = (int)WMX3軸定義.吸嘴X軸;
                         int position = fChangeNozzleX;
-                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
-                        int accel = speed;
-                        int daccel = speed;
+                        int speed    = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel    = speed;
+                        int daccel   = speed;
                         clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
                     } break;
             }
@@ -921,11 +921,11 @@ namespace InjectorInspector
         public double dbapiNozzleY(double dbIncreaseNozzleY, double dbTargetSpeed)  //NozzleY
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 10000;
-            const int MinRAW = 0;
-            const double Maxdb = 100.0;
-            const double Mindb = 0.0;
-            const double Sum = 10000;
+            const int MaxRAW    = 10000;
+            const int MinRAW    = 0;
+            const double Maxdb  = 100.0;
+            const double Mindb  = 0.0;
+            const double Sum    = 10000;
             const double dbSpdF = Sum / Maxdb;
 
             double dbRstNozzleY = 0.0;
@@ -1010,11 +1010,11 @@ namespace InjectorInspector
                         dbTargetPositionNozzleY = dbIncreaseNozzleY;
 
                         //執行移動吸嘴
-                        int axis = (int)WMX3軸定義.吸嘴Y軸;
+                        int axis     = (int)WMX3軸定義.吸嘴Y軸;
                         int position = fChangeNozzleY;
-                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
-                        int accel = speed;
-                        int daccel = speed;
+                        int speed    = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel    = speed;
+                        int daccel   = speed;
                         clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
                     } break;
             }
@@ -1036,11 +1036,11 @@ namespace InjectorInspector
         public double dbapiNozzleZ(double dbIncreaseNozzleZ, double dbTargetSpeed)  //NozzleZ
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 41496;
-            const int MinRAW = -93;
-            const double Maxdb = 40.0;
-            const double Mindb = 0.0;
-            const double Sum = 40000;
+            const int MaxRAW    = 41496;
+            const int MinRAW    = -93;
+            const double Maxdb  = 40.0;
+            const double Mindb  = 0.0;
+            const double Sum    = 40000;
             const double dbSpdF = Sum / Maxdb;
 
             double dbRstNozzleZ = 0.0;
@@ -1125,11 +1125,11 @@ namespace InjectorInspector
                         dbTargetPositionNozzleZ = dbIncreaseNozzleZ;
 
                         //執行伸縮吸嘴
-                        int axis = (int)WMX3軸定義.吸嘴Z軸;
+                        int axis     = (int)WMX3軸定義.吸嘴Z軸;
                         int position = fChangeNozzleZ;
-                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
-                        int accel = speed;
-                        int daccel = speed;
+                        int speed    = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel    = speed;
+                        int daccel   = speed;
                         clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
                     } break;
             }
@@ -1152,11 +1152,11 @@ namespace InjectorInspector
         public double dbapiNozzleR(double dbIncreaseNozzleR, double dbTargetSpeed)  //NozzleR
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 24120;
-            const int MinRAW = -11880;
-            const double Maxdb = 360.0;
-            const double Mindb = 0.0;
-            const double Sum = 36000;
+            const int MaxRAW    = 24120;
+            const int MinRAW    = -11880;
+            const double Maxdb  = 360.0;
+            const double Mindb  = 0.0;
+            const double Sum    = 36000;
             const double dbSpdF = Sum / Maxdb;
 
             double dbRstNozzleR = 0.0;
@@ -1247,11 +1247,11 @@ namespace InjectorInspector
                         while (dbTargetPositionNozzleR < 0.0) { dbTargetPositionNozzleR += 360.0; }  //overflow
 
                         //執行旋轉吸嘴
-                        int axis = (int)WMX3軸定義.吸嘴R軸;
+                        int axis     = (int)WMX3軸定義.吸嘴R軸;
                         int position = fChangeNozzleR;
-                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
-                        int accel = speed * 2;
-                        int daccel = speed * 2;
+                        int speed    = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel    = speed;
+                        int daccel   = speed;
                         clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
                     } break;
             }
@@ -1273,11 +1273,11 @@ namespace InjectorInspector
         public double dbapiCarrierX(double dbIncreaseCarrierX, double dbTargetSpeed)  //CarrierX
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 190000;
-            const int MinRAW = 0;
-            const double Maxdb = 190.0;
-            const double Mindb = 0.0;
-            const double Sum = 190000;
+            const int MaxRAW    = 190000;
+            const int MinRAW    = 0;
+            const double Maxdb  = 190.0;
+            const double Mindb  = 0.0;
+            const double Sum    = 190000;
             const double dbSpdF = Sum / Maxdb;
 
             double dbRstCarrierX = 0.0;
@@ -1362,11 +1362,11 @@ namespace InjectorInspector
                         dbTargetPositionCarrierX = dbIncreaseCarrierX;
 
                         //執行移動載盤
-                        int axis = (int)WMX3軸定義.載盤X軸;
+                        int axis     = (int)WMX3軸定義.載盤X軸;
                         int position = fChangeCarrierX;
-                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
-                        int accel = speed;
-                        int daccel = speed;
+                        int speed    = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel    = speed;
+                        int daccel   = speed;
                         clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
                     } break;
             }
@@ -1388,11 +1388,11 @@ namespace InjectorInspector
         public double dbapiCarrierY(double dbIncreaseCarrierY, double dbTargetSpeed)  //CarrierY
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 800000;
-            const int MinRAW = 0;
-            const double Maxdb = 800.0;
-            const double Mindb = 0.0;
-            const double Sum = 800000;
+            const int MaxRAW    = 800000;
+            const int MinRAW    = 0;
+            const double Maxdb  = 800.0;
+            const double Mindb  = 0.0;
+            const double Sum    = 800000;
             const double dbSpdF = Sum / Maxdb;
 
             double dbRstCarrierY = 0.0;
@@ -1477,11 +1477,11 @@ namespace InjectorInspector
                         dbTargetPositionCarrierY = dbIncreaseCarrierY;
 
                         //執行移動載盤
-                        int axis = (int)WMX3軸定義.載盤Y軸;
+                        int axis     = (int)WMX3軸定義.載盤Y軸;
                         int position = fChangeCarrierY;
-                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
-                        int accel = speed;
-                        int daccel = speed;
+                        int speed    = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel    = speed;
+                        int daccel   = speed;
                         clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
                     } break;
             }
@@ -1504,11 +1504,11 @@ namespace InjectorInspector
         public double dbapiSetZ(double dbIncreaseSetZ, double dbTargetSpeed)  //SetZ
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 3300;
-            const int MinRAW = 0;
-            const double Maxdb = 33;
-            const double Mindb = 0.0;
-            const double Sum = 3300;
+            const int MaxRAW    = 3300;
+            const int MinRAW    = 0;
+            const double Maxdb  = 33;
+            const double Mindb  = 0.0;
+            const double Sum    = 3300;
             const double dbSpdF = Sum / Maxdb;
 
             double dbRstSetZ = 0.0;
@@ -1600,11 +1600,11 @@ namespace InjectorInspector
                         dbTargetPositionSetZ = dbIncreaseSetZ;
 
                         //執行移動植針Z軸
-                        int axis = (int)WMX3軸定義.植針Z軸;
+                        int axis     = (int)WMX3軸定義.植針Z軸;
                         int position = fChangeSetZ;
-                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
-                        int accel = speed;
-                        int daccel = speed;
+                        int speed    = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel    = speed;
+                        int daccel   = speed;
                         clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
                     } break;
             }
@@ -1625,11 +1625,11 @@ namespace InjectorInspector
         public double dbapiSetR(double dbIncreaseSetR, double dbTargetSpeed)  //SetR
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 360000;
-            const int MinRAW = 0;
-            const double Maxdb = 360.0;
-            const double Mindb = 0.0;
-            const double Sum = 360000;
+            const int MaxRAW    = 360000;
+            const int MinRAW    = 0;
+            const double Maxdb  = 360.0;
+            const double Mindb  = 0.0;
+            const double Sum    = 360000;
             const double dbSpdF = Sum / Maxdb;
 
             double dbRstSetR = 0.0;
@@ -1714,11 +1714,11 @@ namespace InjectorInspector
                         dbTargetPositionSetR = dbIncreaseSetR;
 
                         //執行移動植針R軸
-                        int axis = (int)WMX3軸定義.植針R軸;
+                        int axis     = (int)WMX3軸定義.植針R軸;
                         int position = fChangeSetR;
-                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
-                        int accel = speed;
-                        int daccel = speed;
+                        int speed    = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel    = speed;
+                        int daccel   = speed;
                         clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
                     } break;
             }
@@ -1741,11 +1741,11 @@ namespace InjectorInspector
         public double dbapiGate(double dbIncreaseGate, double dbTargetSpeed)  //Gate
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 58000;
-            const int MinRAW = 0;
-            const double Maxdb = 580.0;
-            const double Mindb = 0.0;
-            const double Sum = 58000;
+            const int MaxRAW    = 58000;
+            const int MinRAW    = 0;
+            const double Maxdb  = 580.0;
+            const double Mindb  = 0.0;
+            const double Sum    = 58000;
             const double dbSpdF = Sum / Maxdb;
 
             double dbRstGate = 0.0;
@@ -1830,11 +1830,11 @@ namespace InjectorInspector
                         dbTargetPositionGate = dbIncreaseGate;
 
                         //執行移動工作門
-                        int axis = (int)WMX3軸定義.工作門;
+                        int axis     = (int)WMX3軸定義.工作門;
                         int position = fChangeGate;
-                        int speed = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
-                        int accel = speed;
-                        int daccel = speed;
+                        int speed    = (int)(dbTargetSpeed * (MaxRAW / Maxdb));
+                        int accel    = speed;
+                        int daccel   = speed;
                         clsServoControlWMX3.WMX3_Pivot(axis, position, speed, accel, daccel);
                     } break;
             }
@@ -1848,11 +1848,11 @@ namespace InjectorInspector
         public double dbapiIAI(double dbIncreaseIAI)  //IAI
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 3000;
-            const int MinRAW = 0;
-            const double Maxdb = 30.0;
-            const double Mindb = 0.0;
-            const double Sum = 3000;
+            const int MaxRAW    = 3000;
+            const int MinRAW    = 0;
+            const double Maxdb  = 30.0;
+            const double Mindb  = 0.0;
+            const double Sum    = 3000;
             const double dbSpdF = Sum / Maxdb;
 
             double dbRstIAI = 0.0;
@@ -1957,11 +1957,11 @@ namespace InjectorInspector
         public double dbapiJoDell3D掃描(double dbIncreaseJoDell3D)  //JoDell3D掃描
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 3000;
-            const int MinRAW = 0;
-            const double Maxdb = 30.0;
-            const double Mindb = 0.0;
-            const double Sum = 3000;
+            const int MaxRAW    = 3000;
+            const int MinRAW    = 0;
+            const double Maxdb  = 30.0;
+            const double Mindb  = 0.0;
+            const double Sum    = 3000;
             const double dbSpdF = Sum / Maxdb;
 
             double dbRstJoDell3D掃描 = 0.0;
@@ -2067,11 +2067,11 @@ namespace InjectorInspector
         public double dbapiJoDell吸針嘴(double dbIncreaseJoDell吸針嘴)  //JoDell吸針嘴
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 3000;
-            const int MinRAW = 0;
-            const double Maxdb = 30.0;
-            const double Mindb = 0.0;
-            const double Sum = 3000;
+            const int MaxRAW    = 3000;
+            const int MinRAW    = 0;
+            const double Maxdb  = 30.0;
+            const double Mindb  = 0.0;
+            const double Sum    = 3000;
             const double dbSpdF = Sum / Maxdb;
 
             double dbRstJoDell吸針嘴 = 0.0;
@@ -2177,11 +2177,11 @@ namespace InjectorInspector
         public double dbapiJoDell植針嘴相機(double dbIncreaseJoDell植針嘴相機)  //JoDell植針嘴相機
         {
             Normal calculate = new Normal();
-            const int MaxRAW = 5000;
-            const int MinRAW = 0;
-            const double Maxdb = 50.0;
-            const double Mindb = 0.0;
-            const double Sum = 5000;
+            const int MaxRAW    = 5000;
+            const int MinRAW    = 0;
+            const double Maxdb  = 50.0;
+            const double Mindb  = 0.0;
+            const double Sum    = 5000;
             const double dbSpdF = Sum / Maxdb;
 
             double dbRstJoDell植針嘴相機 = 0.0;
@@ -5046,7 +5046,7 @@ namespace InjectorInspector
 
         public const double db取料Nozzle中心點X = 49.93;
         public const double db取料Nozzle中心點Y = 49.81;
-        public const double db取料Nozzle中心點Z = 26;
+        public const double db取料Nozzle中心點Z = 26.5;
         public const double db取料Nozzle中心點R = 1.34+0.7;
         public const double db吐料位下降Z高度   = 2.000;
 
@@ -5327,7 +5327,8 @@ namespace InjectorInspector
                         //檔案為植針檔案
                         Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2SET, (xeXavier_T2_Job)u32ISRDelayCNT);
                         Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc.pt2SET, xeXavier_T2_Job.tp2Insert_取針前動作準備);
-                    } else { 
+                    } else 
+                    if(eNeedleType == xeXavier_NeedleType.pT6Remove) { 
                         //檔案為取針檔案
                         Xavier_Task2_ISR_CNTTmp(xeXavier_T2_proc.pt2SET, (xeXavier_T2_Job)u32ISRDelayCNT);
                         Xavier_Task2_ISR_JobTmp(xeXavier_T2_proc.pt2SET, xeXavier_T2_Job.tp2RemoveSTART);
