@@ -4426,6 +4426,8 @@ namespace InjectorInspector
         //DeadLock Task3 Task5
             volatile public int iTask3_CNT = 0;
             volatile public int iTask5_CNT = 0;
+            volatile public bool bWhileFlag_1 = false;
+            volatile public bool bWhileFlag_2 = false;
 
         //---------------------------------------------------------------------------------------
         //---------------------------------------------------------------------------------------
@@ -5313,6 +5315,8 @@ namespace InjectorInspector
                             //吸嘴破真空開啟
                             digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, HIGH);
 
+                            double DelayTime = apiParaReadIndex("SaveParameterJason.json", 56);
+                            Thread.Sleep((int)DelayTime);
                             Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32ISRDelayCNT, xeXavier_T2_Job.tp2Insert_ISR_吸嘴Z縮回0);
                         }
                         Xavier_Task2_Debugprintf("tp2Insert_ISR_吸嘴軸組吐料作業\r\n");
@@ -6838,6 +6842,7 @@ namespace InjectorInspector
                                 if(CheckT3StopForGotoEvent() == xeXavier_T3_Job.tp3START) { 
                                     goto lblgoto_tp3START;
                                 }
+                                bWhileFlag_1 = false;
                                 goto lblgoto_tp3Insert_確認植針軸可進行植針_從_tp5Insert_告知植針軸組載盤組已移至植針位;
                             }
                         break;
@@ -6852,7 +6857,12 @@ namespace InjectorInspector
                                     if(rslt== xeXavier_Indicator.xeXI_狀態_停止) {
                                         break;
                                     }
+                                    if(bWhileFlag_1 == true) { 
+                                        goto lblgoto_escape;
+                                    }
                                 }
+                                lblgoto_escape:
+                                    bWhileFlag_1 = true;
 
                                 if(btp5Insert_告知植針軸組載盤組已移至植針位 == true) { 
                                     btp5Insert_告知植針軸組載盤組已移至植針位 = false;
@@ -6988,13 +6998,19 @@ namespace InjectorInspector
                         {
                             btp3Insert_告知載盤組_植針軸植針完畢 = true;
 
+                            bWhileFlag_2 = false;
                             Xavier_Task3_Debugprintf("tp3Insert_告知載盤組_植針軸植針完畢(2)\r\n");
                             while(iTask5_CNT!=(int)xeXavier_T5_Job.tp5Insert_確認可進行植針檢查_從_tp3Insert_告知載盤組_植針軸植針完畢) {
                                 xeXavier_Indicator rslt = apiGetMachineAction();
                                 if(rslt== xeXavier_Indicator.xeXI_狀態_停止) {
                                     break;
                                 }
+                                if(bWhileFlag_2 == true) { 
+                                    goto lblgoto_escape;
+                                }
                             }
+                            lblgoto_escape:
+                                bWhileFlag_2 = true;
 
                             Xavier_T3_delayCase(xeXavier_T3_proc.pt3SET, u32InsertDelayCNT, xeXavier_T3_Job.tp3Insert_確認植針結果_從_tp5Insert_告知系統植針成功_或_tp5Insert_告知系統植針失敗);
                         }
@@ -9239,14 +9255,21 @@ namespace InjectorInspector
                         {
                             btp5Insert_告知植針軸組載盤組已移至植針位 = true;
 
+                            bWhileFlag_1 = false;
                             Xavier_Task5_Debugprintf("tp5Insert_告知植針軸組載盤組已移至植針位(1)(START)\r\n");
                             while(iTask3_CNT!=(int)xeXavier_T3_Job.tp3Insert_確認植針軸可進行植針_從_tp5Insert_告知植針軸組載盤組已移至植針位) {
                                 xeXavier_Indicator rslt = apiGetMachineAction();
                                 if(rslt== xeXavier_Indicator.xeXI_狀態_停止) {
                                     break;
                                 }
+                                if(bWhileFlag_1 == true) { 
+                                    goto lblgoto_escape;
+                                }
                             }
+                            lblgoto_escape:
+                                bWhileFlag_1 = true;
 
+                            bWhileFlag_2 = false;
                             Xavier_T5_delayCase(xeXavier_T5_proc.pT5SET, u32InsertDelayCNT, xeXavier_T5_Job.tp5Insert_確認可進行植針檢查_從_tp3Insert_告知載盤組_植針軸植針完畢);
                         }
                         Xavier_Task5_Debugprintf("tp5Insert_告知植針軸組載盤組已移至植針位(STOP)\r\n");
@@ -9259,7 +9282,12 @@ namespace InjectorInspector
                                 if(rslt== xeXavier_Indicator.xeXI_狀態_停止) {
                                     break;
                                 }
+                                if(bWhileFlag_2==true) { 
+                                    goto lblgoto_escape;
+                                }
                             }
+                            lblgoto_escape:
+                            bWhileFlag_2 = true;
 
                             if(btp3Insert_告知載盤組_植針軸植針完畢 == true) { 
                                 btp3Insert_告知載盤組_植針軸植針完畢 = false;
