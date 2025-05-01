@@ -6918,8 +6918,17 @@ namespace InjectorInspector
                             iTask3_CNT = (int)xeXavier_T3_Job.tp3Insert_擺放座蓋板關;
                             Xavier_Task3_Debugprintf("tp3Insert_擺放座蓋板關\r\n");
                             {
-                                digitalWrite((int)WMX3IO對照.pxeIO_擺放座蓋板, HIGH);  //擺放座蓋板->閉合
-                                bool b擺放座蓋板閉合 = indicateRead((int)WMX3IO對照.pxeIO_擺放座蓋板合);
+                                bool b擺放座蓋板閉合 = false;
+
+                                double db空跑測試用; {
+                                    db空跑測試用 = apiParaReadIndex("SaveParameterJason.json", 54);
+                                }
+                                if(db空跑測試用 != 0) {
+                                    b擺放座蓋板閉合 = true;
+                                } else {
+                                    digitalWrite((int)WMX3IO對照.pxeIO_擺放座蓋板, HIGH);  //擺放座蓋板->閉合
+                                    b擺放座蓋板閉合 = indicateRead((int)WMX3IO對照.pxeIO_擺放座蓋板合);
+                                }
 
                                 if(b擺放座蓋板閉合 == true) { 
                                     if(CheckT3StopForGotoEvent() == xeXavier_T3_Job.tp3START) { 
