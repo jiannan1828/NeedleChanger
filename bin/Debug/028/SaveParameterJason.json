@@ -278,5 +278,10 @@
     "u32Index": 55,
     "dbPosition": 26,
     "strNote": "NozzleZ\u4E0B\u964D\u81F3\u67D4\u9707\u53D6\u6599\u4F4D"
+  },
+  {
+    "u32Index": 56,
+    "dbPosition": 1000,
+    "strNote": "\u98DB\u62CD\u5931\u6557\u5410\u6599\u5EF6\u9072\u6642\u9593"
   }
 ]
