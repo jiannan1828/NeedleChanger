@@ -7006,6 +7006,9 @@ namespace InjectorInspector
                                     if(bWhileFlag_1 == true) { 
                                         goto lblgoto_escape;
                                     }
+                                    if(eNeedleType == xeXavier_NeedleType.pT6Remove) {
+                                        goto lblgoto_TASKSTART;
+                                    }
                                 }
                                 lblgoto_escape:
                                     if(eNeedleType == xeXavier_NeedleType.pT6Remove) {
@@ -7177,6 +7180,9 @@ namespace InjectorInspector
                                 }
                                 if(bWhileFlag_2 == true) { 
                                     goto lblgoto_escape;
+                                }
+                                if(eNeedleType == xeXavier_NeedleType.pT6Remove) {
+                                    goto lblgoto_TASKSTART;
                                 }
                             }
                             lblgoto_escape:
@@ -9499,6 +9505,9 @@ namespace InjectorInspector
                                 if(bWhileFlag_1 == true) { 
                                     goto lblgoto_escape;
                                 }
+                                if(eNeedleType == xeXavier_NeedleType.pT6Remove) {
+                                    goto lblgoto_TASKSTART;
+                                }
                             }
                             lblgoto_escape:
                                 if(eNeedleType == xeXavier_NeedleType.pT6Remove) {
@@ -9521,6 +9530,9 @@ namespace InjectorInspector
                                 }
                                 if(bWhileFlag_2==true) { 
                                     goto lblgoto_escape;
+                                }
+                                if(eNeedleType == xeXavier_NeedleType.pT6Remove) {
+                                    goto lblgoto_TASKSTART;
                                 }
                             }
                             lblgoto_escape:
@@ -10258,6 +10270,8 @@ namespace InjectorInspector
                             btp6Home_告知系統回home完畢 = true;
 
                             btp6Insert_完成讀取直針資料檔     = false;
+
+                            eNeedleType  = xeXavier_NeedleType.pT6Null;
 
                             digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, HIGH);
                             Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_工作門開啟);
