@@ -9774,6 +9774,8 @@ namespace InjectorInspector
             tp6TakeAndDiscardSTART,
 
             tp6InsertSTART,
+                tp6Insert_工作門關閉,
+                tp6Insert_告知工作門已關閉,
                 tp6Insert_讀取兩點校正檔,
                 tp6Insert_告知載盤組已拿到兩點校正資料,
                 tp6Insert_確認載盤組完成XY兩點校正程序_從_tp5Insert_告知檔案組已完成兩點校正,
@@ -9984,6 +9986,7 @@ namespace InjectorInspector
                     case xeXavier_T6_Job.tp6Home_告知工作門已關閉:
                         {
                             btp6Home_告知工作門已關閉 = true;
+
                             digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, LOW);
                             Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32HomeDelayCNT, xeXavier_T6_Job.tp6Home_確認吸嘴軸組回home完畢_從_tp2Home_告知吸嘴軸組已回home完畢);
                         }
@@ -10064,10 +10067,32 @@ namespace InjectorInspector
                         bForceToLoadCalibrationJson = false;
                         bForceToLoadInsertJson      = false;
 
-                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_讀取兩點校正檔);
+                        Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_工作門關閉);
                     }
                     Xavier_Task6_Debugprintf("tp6InsertSTART\r\n");
                     break;
+                    case xeXavier_T6_Job.tp6Insert_工作門關閉:
+                        {
+                            digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, HIGH);
+
+                            dbapiGate_defaultSpeed(dbGate_關門);
+                            if(dbapiGate(dbCheckArrived, 0) == dbAxisMoveOk) {
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_告知工作門已關閉);
+                            } else { 
+                                Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_工作門關閉);
+                            }
+                        }
+                        Xavier_Task6_Debugprintf("tp6Insert_工作門關閉\r\n");
+                        break;
+                    case xeXavier_T6_Job.tp6Insert_告知工作門已關閉:
+                        {
+                            btp6Home_告知工作門已關閉 = true;
+
+                            digitalWrite((int)WMX3IO對照.pxeIO_Buzzer, LOW);
+                            Xavier_T6_delayCase(xeXavier_T6_proc.pT6SET, u32InsertDelayCNT, xeXavier_T6_Job.tp6Insert_讀取兩點校正檔);
+                        }
+                        Xavier_Task6_Debugprintf("tp6Insert_告知工作門已關閉\r\n");
+                        break;
                     case xeXavier_T6_Job.tp6Insert_讀取兩點校正檔:
                         {
                             if(bForceToLoadCalibrationJson == false) {
