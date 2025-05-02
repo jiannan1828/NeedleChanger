@@ -335,7 +335,7 @@ namespace InjectorInspector
 
             // 計算斜率
             double rise = By - Ay;   // 垂直變化
-            double run = Bx - Ax;   // 水平變化
+            double run  = Bx - Ax;   // 水平變化
 
             // 計算中心
             double Cx = (Ax + Bx) / 2,
@@ -5061,10 +5061,10 @@ namespace InjectorInspector
                       dbVelocityNozzleZ, 
                       dbVelocityNozzleR;
 
-        public const double db取料Nozzle中心點X = 49.93;
-        public const double db取料Nozzle中心點Y = 49.81;
-        public const double db取料Nozzle中心點R = 1.34+0.7;
-        public const double db吐料位下降Z高度   = 2.000;
+        public double db取料Nozzle中心點X = 49.93;
+        public double db取料Nozzle中心點Y = 49.81;
+        public double db取料Nozzle中心點R = 1.34+0.7;
+        public double db吐料位下降Z高度   = 2.000;
 
         public const double db下視覺取像X_Start = 105;
         public const double db下視覺取像X_END   = 243.000;
@@ -5646,6 +5646,10 @@ namespace InjectorInspector
                         lblgoto_tp2Insert_吸嘴軸組XYR移動至物料座標:
                             Xavier_Task2_Debugprintf("tp2Insert_吸嘴軸組XYR移動至物料座標\r\n");
                             {
+                                db取料Nozzle中心點X = apiParaReadIndex("SaveParameterJason.json", 58);
+                                db取料Nozzle中心點Y = apiParaReadIndex("SaveParameterJason.json", 59);
+                                db取料Nozzle中心點R = apiParaReadIndex("SaveParameterJason.json", 60);
+
                                 dbapiNozzleX_InsertSpeed(db取料Nozzle中心點X + dbPinX_tmrTakePinTick);
                                 dbapiNozzleY_InsertSpeed(db取料Nozzle中心點Y + dbPinY_tmrTakePinTick);
                                 dbapiNozzleR_InsertSpeed(db取料Nozzle中心點R + dbPinR_tmrTakePinTick);
@@ -5959,6 +5963,10 @@ namespace InjectorInspector
                         {
                             //吸嘴破真空開啟
                             digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, HIGH);
+
+                            //增加Delay
+                            double DelayTime = apiParaReadIndex("SaveParameterJason.json", 57);
+                            Thread.Sleep((int)DelayTime);
 
                             Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT+10/*改了10會踩到狗屎*/, xeXavier_T2_Job.tp2Insert_告知植針軸組可以進行放料作業);
                         }
