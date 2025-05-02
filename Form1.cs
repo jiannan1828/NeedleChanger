@@ -488,15 +488,15 @@ namespace InjectorInspector
         public const bool OFF = false;
 
         //Servo EtherCAT
-        public double dbInsertSpeedNozzleX = 3000;  //(500.0) * 0.1;
-        public double dbInsertSpeedNozzleY = 30000;  //(100.0) * 0.1;
-        public double dbInsertSpeedNozzleZ = 30000;  //( 40.0) * 0.1;
-        public double dbInsertSpeedNozzleR = 30000;  //(360.0) * 0.1;
-        public double dbInsertSpeedCarrierX = 2000;  //(190.0) * 0.1;
-        public double dbInsertSpeedCarrierY = 2000;  //(800.0) * 0.1;
-        public double dbInsertSpeedSetZ = 30000;  //( 33.0) * 0.1;
-        public double dbInsertSpeedSetR = 30000;  //(360.0) * 0.1;
-        public double dbInsertSpeedGate = (580.0) * 0.1;
+        public double dbInsertSpeedNozzleX  = 30;  //(500.0) * 0.1;
+        public double dbInsertSpeedNozzleY  = 30;  //(100.0) * 0.1;
+        public double dbInsertSpeedNozzleZ  = 30;  //( 40.0) * 0.1;
+        public double dbInsertSpeedNozzleR  = 30;  //(360.0) * 0.1;
+        public double dbInsertSpeedCarrierX = 20;  //(190.0) * 0.1;
+        public double dbInsertSpeedCarrierY = 20;  //(800.0) * 0.1;
+        public double dbInsertSpeedSetZ     = 30;  //( 33.0) * 0.1;
+        public double dbInsertSpeedSetR     = 30;  //(360.0) * 0.1;
+        public double dbInsertSpeedGate     = (580.0) * 0.1;
 
         //---------------------------------------------------------------------------------------
 
@@ -5458,7 +5458,7 @@ namespace InjectorInspector
                         break;
                     case xeXavier_T2_Job.tp2Home_吸嘴Z縮回0:
                         {
-                            dbapiNozzleZ_defaultSpeed(dbNozzleZ_Home位);
+                            dbapiNozzleZ_defaultSpeed(dbNozzleZ_Home位-1000);
                             if( (dbapiNozzleZ(dbCheckArrived, 0) == dbAxisMoveOk) ) { 
                                 UIHelper.SetControlProperty(en_吸嘴R軸,     () => en_吸嘴R軸.Checked = false);
                                 clsServoControlWMX3.WMX3_ServoOnOff((int)WMX3軸定義.吸嘴R軸, false); 
@@ -5585,7 +5585,15 @@ namespace InjectorInspector
                         break;
 
                 case xeXavier_T2_Job.tp2InsertSTART:
-                    Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_取針前動作準備);
+                    {
+                        //流量閥關閉
+                        dbapi_FlowValve_吸嘴破真空(0);
+
+                        //吸嘴破真空關閉
+                        digitalWrite((int)WMX3IO對照.pxeIO_取料吸嘴破真空新, LOW);
+
+                        Xavier_T2_delayCase(xeXavier_T2_proc.pt2SET, u32InsertDelayCNT, xeXavier_T2_Job.tp2Insert_取針前動作準備);
+                    }
                     Xavier_Task2_Debugprintf("tp2InsertSTART\r\n");
                     break;
                     case xeXavier_T2_Job.tp2Insert_取針前動作準備:
